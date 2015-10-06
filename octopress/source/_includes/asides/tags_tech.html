@@ -1,0 +1,11 @@
+<section>
+<h1>Tags</h1>
+
+
+{% for post in site.categories.tech %}
+  {% assign tags = post.tags | sort %}
+  {% for tag in tags %}
+    <ul><a href="/tags/{{tag}}">{{ tag }}</a></ul>
+  {% endfor %}
+{% endfor %}
+</section>

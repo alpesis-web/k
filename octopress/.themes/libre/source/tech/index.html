@@ -1,0 +1,42 @@
+---
+layout: default
+---
+
+
+<div class="blog-index">
+
+  {% assign index = true %}
+  {% for post in site.categories.tech %}
+  {% assign content = post.content %}
+    <article>
+      {% include article.html %}
+    </article>
+  {% endfor %}
+
+  <div class="pagination">
+
+    {% if paginator.next_page %}
+        <a class="prev" href="{{paginator.next_page_path}}">&larr; Older</a>
+    {% endif %}
+
+    <a href="/categories/tech">Tech Archives</a>
+
+    {% if paginator.previous_page %}
+        <a class="next" href="{{paginator.previous_page_path}}">Newer &rarr;</a>
+    {% endif %}
+
+  </div>
+
+</div>
+
+
+
+{% unless page.sidebar == false %}
+<aside class="sidebar">
+    {% if site.tech_asides.size %}
+        {% include_array tech_asides %}
+    {% else %}
+        {% include_array default_asides %}
+    {% endif %}
+</aside>
+{% endunless %}

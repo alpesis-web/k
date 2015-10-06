@@ -1,0 +1,46 @@
+#index-grid {
+    h1 {
+        margin: 1.5em 0 0;
+        padding-bottom: .2em;
+        border-bottom: 1px solid $sidebar-border;
+        @extend .side-shadow-border;
+        + p {
+            padding-top: .4em;
+        }
+    }
+    ul {
+        list-style: none;
+        margin: 0;
+    }
+    li {
+        list-style: none;
+        padding: .5em 0;
+        border-bottom: 1px solid $sidebar-border;
+        p: last-child {
+            margin-bottom: 0;
+        }
+    }
+    a {
+        @include transition(color .5s);
+    }
+    &:hover a {
+        color: $sidebar-link-color;
+        &:hover { color: $sidebar-link-color-hover; }
+    }
+   
+    .blog-recent-posts {
+      display: inline-block;
+      width: 100%;
+      div {
+        display: inline-block;
+        width: 31%;
+        padding: 1%;
+        float: left;
+      }
+    }
+
+    .github-projects {
+        display: inline-block;
+        width: 100%;
+    }
+};
