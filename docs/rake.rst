@@ -66,3 +66,5 @@ Deploy
     $ rake setup_github_pages
     $ rake generate
     $ rake deploy
+
+    $ echo "domain_name" >> source/CNAME
