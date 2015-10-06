@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Tech | Kelly Chan]]></title>
+  <link href="http://kellychan.github.io/k/categories/tech/atom.xml" rel="self"/>
+  <link href="http://kellychan.github.io/k/"/>
+  <updated>2015-10-06T20:59:06+08:00</updated>
+  <id>http://kellychan.github.io/k/</id>
+  <author>
+    <name><![CDATA[Kelly Chan]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Sample-post]]></title>
+    <link href="http://kellychan.github.io/k/tech/2015/10/06/sample-post/"/>
+    <updated>2015-10-06T16:28:36+08:00</updated>
+    <id>http://kellychan.github.io/k/tech/2015/10/06/sample-post</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+</feed>

@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Kelly Chan</title>
+  <title>Projects - Kelly Chan</title>
   <meta name="author" content="Kelly Chan">
 
   
-  <meta name="description" content=" Tech Sample-post Art Sample-post Life Sample-post ">
+  <meta name="description" content=" Projects GitHub Repos Status updating... @KellyChan on GitHub ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://kellychan.github.io/k/">
+  <link rel="canonical" href="http://kellychan.github.io/k/projects/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Kelly Chan" type="application/atom+xml">
@@ -34,7 +34,7 @@
 
 </head>
 
-<body   class="no-sidebar"  >
+<body   >
   <header role="banner"><ul class="soc">
 
   
@@ -88,52 +88,11 @@
       <div>
 <article role="article">
   
-  <div id="index-grid">
-
-<div class="blog-recent-posts">
-    <div>
-        <section>
-  <h1>Tech</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/tech/2015/10/06/sample-post/">Sample-post</a>
-      </li>
-    
-  </ul>
-</section>
-
-    </div>
-    <div>
-        <section>
-  <h1>Art</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/art/2015/10/06/sample-post/">Sample-post</a>
-      </li>
-    
-  </ul>
-</section>
-
-    </div>
-    <div>
-        <section>
-  <h1>Life</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/life/2015/10/06/sample-post/">Sample-post</a>
-      </li>
-    
-  </ul>
-</section>
-
-    </div>
-</div>
-
-
-</div>
+  <header>
+    <h1 class="entry-title">Projects</h1>
+  </header>
+  
+  
 
   
     <footer>
@@ -142,8 +101,43 @@
     </footer>
   
 </article>
-
 </div>
+
+<aside class="sidebar">
+  
+    
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/KellyChan">@KellyChan</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'KellyChan',
+            count: 10,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+  
+</aside>
 
 
     </div>
@@ -159,7 +153,10 @@
       var disqus_shortname = 'kwailamc';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://kellychan.github.io/k/projects/index.html';
+        var disqus_url = 'http://kellychan.github.io/k/projects/index.html';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>http://kellychan.github.io/k/art/2015/10/06/sample-post/</loc>
+    <lastmod>2015-10-06T16:28:42+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://kellychan.github.io/k/tech/2015/10/06/sample-post/</loc>
+    <lastmod>2015-10-06T16:28:36+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://kellychan.github.io/k/life/2015/10/06/sample-post/</loc>
+    <lastmod>2015-10-06T16:28:30+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://kellychan.github.io/k/art/</loc>
+  </url>
+  <url>
+    <loc>http://kellychan.github.io/k/</loc>
+  </url>
+  <url>
+    <loc>http://kellychan.github.io/k/life/</loc>
+  </url>
+  <url>
+    <loc>http://kellychan.github.io/k/tech/</loc>
+  </url>
+  <url>
+    <loc>http://kellychan.github.io/k/archives/</loc>
+  </url>
+  <url>
+    <loc>http://kellychan.github.io/k/projects/</loc>
+  </url>
+  <url>
+    <loc>http://kellychan.github.io/k/devkits/</loc>
+  </url>
+  <url>
+    <loc>http://kellychan.github.io/k/categories/life/</loc>
+  </url>
+  <url>
+    <loc>http://kellychan.github.io/k/categories/tech/</loc>
+  </url>
+  <url>
+    <loc>http://kellychan.github.io/k/categories/art/</loc>
+  </url>
+</urlset>
