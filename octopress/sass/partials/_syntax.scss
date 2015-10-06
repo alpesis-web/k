@@ -23,7 +23,7 @@
 }
 
 figure.code, .gist-file, pre {
-  @include box-shadow(rgba(#000, .06) 0 0 10px);
+   @include box-shadow(rgba(#000, .06) 0 0 10px);
   .highlight pre { @include box-shadow(none); }
 }
 
@@ -242,11 +242,17 @@ figure.code {
   margin-bottom: 0;
   @include border-top-radius(5px);
   font-family: "Helvetica Neue", Arial, "Lucida Grande", "Lucida Sans Unicode", Lucida, sans-serif;
-  background: #aaaaaa image-url("code_bg.png") top repeat-x;
+  background: #aaa image-url("code_bg.png") top repeat-x;
   border: 1px solid #565656;
   border-top-color: #cbcbcb;
   border-left-color: #a5a5a5;
   border-right-color: #a5a5a5;
+  // background: #eee image-url("code_bg.png") top repeat-x;
+  // border: 1px solid #c5c5c5;
+  // border-top-color: #cfcfcf;
+  // border-left-color: #cfcfcf;
+  // border-right-color: #cfcfcf;
+  // border-bottom-color: #cfcfcf;
   border-bottom: 0;
 }
 
