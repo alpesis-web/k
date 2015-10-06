@@ -118,13 +118,13 @@ facebook_like: false
 
 # Social Accounts
 twitter_link_button: true
-twitter_link: kwailamchan
+twitter_link: https://twitter.com/kwailamchan
 
 email_link_button: true
 email_link: support@arttechresearch.com
 
 pinterest_link_button: true
-pinterest_link:
+pinterest_link: https://www.pinterest.com/wailamchan/
 
 github_link_button: true
-github_link: http://github.com/KellyChan
+github_link: https://github.com/KellyChan
