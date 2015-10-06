@@ -26,10 +26,10 @@ email:
 #    Server Settings      #
 # ----------------------- #
 
-detach:  false
-port:    4000
-host:    0.0.0.0
-baseurl: "" # does not include hostname
+# detach:  false
+# port:    4000
+# host:    0.0.0.0
+# baseurl: "" # does not include hostname
 
 # ----------------------- #
 #    Jekyll & Plugins     #
