@@ -6,6 +6,13 @@ sidebar: false
 footer: true
 ---
 
+## OS
+
+- [Ubuntu](http://www.ubuntu.com/download/server)
+
+## VM
+
+- [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 
 ## Web 
 
