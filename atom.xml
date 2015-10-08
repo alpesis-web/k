@@ -4,7 +4,7 @@
   <title><![CDATA[Kelly Chan]]></title>
   <link href="http://k.arttechresearch.com/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2015-10-08T00:18:47+08:00</updated>
+  <updated>2015-10-08T13:55:22+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[Kelly Chan]]></name>
@@ -24,19 +24,108 @@
   
   <entry>
     <title type="html"><![CDATA[Sample-post]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/10/06/sample-post/"/>
-    <updated>2015-10-06T16:28:36+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/10/06/sample-post</id>
+    <link href="http://k.arttechresearch.com/life/2015/10/06/sample-post/"/>
+    <updated>2015-10-06T16:28:30+08:00</updated>
+    <id>http://k.arttechresearch.com/life/2015/10/06/sample-post</id>
     <content type="html"><![CDATA[
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Sample-post]]></title>
-    <link href="http://k.arttechresearch.com/life/2015/10/06/sample-post/"/>
-    <updated>2015-10-06T16:28:30+08:00</updated>
-    <id>http://k.arttechresearch.com/life/2015/10/06/sample-post</id>
-    <content type="html"><![CDATA[
+    <title type="html"><![CDATA[Installing Openstack Devstack]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/10/03/installing-openstack-devstack/"/>
+    <updated>2015-10-03T12:33:38+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/10/03/installing-openstack-devstack</id>
+    <content type="html"><![CDATA[<h3>Prequisition</h3>
+
+<p>Softwares:</p>
+
+<p>&ndash; (VM) <a href="https://www.virtualbox.org/wiki/Downloads">VirtualBox 5.0</a><br/>
+&ndash; (OS) <a href="http://www.ubuntu.com/download/server">Ubuntu Server 14.04.3</a><br/>
+&ndash; (SW) <a href="https://github.com/openstack-dev/devstack">Openstack</a></p>
+
+<p>Steps:</p>
+
+<p>&ndash; Installing VirtualBox<br/>
+&ndash; Installing Ubuntu 14.04.03<br/>
+&ndash; Installing Openstack<br/>
+&ndash; Testing</p>
+
+<h3>1. Installing VirtualBox</h3>
+
+<p>Go to <a href="https://www.virtualbox.org/wiki/Downloads">VirtualBox</a>, download and install on the local machine.</p>
+
+<h3>2. Installing Ubuntu</h3>
+
+<p>Go to <a href="http://www.ubuntu.com/download/server">Ubuntu</a> page, download the ubuntu server 14.04.03 (NOTE: Preferring 14.04.03) iso image.</p>
+
+<p>Once done, open VirtualBox, create a vm for Ubuntu server. The vm settings are:<br/>
+&ndash; memory: 2GB<br/>
+&ndash; storage: 100GB<br/>
+&ndash; <strong>network: briaged adapter (IMPORTANT), promiscuous mode with ALLOW ALL</strong></p>
+
+<p>Then, attach Ubuntu server iso file to the drive, double click the vm, the system will be jumped to the installation guide.</p>
+
+<p>When installing Ubuntu, the installation mode should be:<br/>
+&ndash; <strong>multi-server with MAAS (IMPORTANT)</strong></p>
+
+<p>Once done, restart and config the system:</p>
+
+<figure class='code'><figcaption><span>config system</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get update <span class="o">&amp;&amp;</span> upgrade
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install git
+</span><span class='line'><span class="nv">$ </span>git config --global user.name <span class="s2">&quot;username&quot;</span>
+</span><span class='line'><span class="nv">$ </span>git config --global user.email <span class="s2">&quot;user@example.com&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>3. Installing Openstack</h3>
+
+<p>Go to <a href="https://github.com/openstack-dev/devstack">Openstack</a>, download the repo and install:</p>
+
+<figure class='code'><figcaption><span>installing openstack</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># create a project folder and download the repo</span>
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /
+</span><span class='line'><span class="nv">$ </span>sudo mkdir openstack
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>openstack
+</span><span class='line'><span class="nv">$ </span>git clone https://github.com/openstack-dev/devstack.git
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>devstack
+</span><span class='line'><span class="nv">$ </span>git checkout stable/juno
+</span><span class='line'>
+</span><span class='line'><span class="c"># config user</span>
+</span><span class='line'><span class="nv">$ </span>sudo ./tools/create-stack-user.sh
+</span><span class='line'><span class="nv">$ </span>sudo chown -R stack:stack /openstack
+</span><span class='line'>
+</span><span class='line'><span class="c"># install</span>
+</span><span class='line'><span class="nv">$ </span>./stack.sh
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Trouble Shooting</p>
+
+<p><strong>(1)</strong> If something wrong, try <code>./unstack.sh</code> and then <code>./clean.sh</code>, restart and then <code>./stack.sh</code> again.</p>
+
+<p><strong>(2)</strong> If re-run <code>./stack.sh</code> and the python packages flag some issue, try to delete <code>/opt/stack/xxx</code>, and re-run <code>./stack.sh</code>.</p>
+
+<h3>4. Testing</h3>
+
+<p>Open a browser, enter the dashboard with <code>http://ip_address</code>, login with <code>admin/password</code> (NOTE: password was set at previous).</p>
 ]]></content>
   </entry>
   
