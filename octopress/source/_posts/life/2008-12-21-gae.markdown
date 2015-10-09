@@ -1,0 +1,33 @@
+---
+layout: post_life
+title: "GAE"
+date: 2008-12-21 09:07:00 +0800
+comments: true
+categories: [life]
+tags: [leisure]
+---
+
+
+
+在Google的云上开发要用GAE，设计到的技术包括：Python语言，Django，Javascript，HTML/CSS，另外就是Google的那些API。
+
+Google和Amazon的区别是什么？  
+Google的集成度高，因而不如Amazon灵活。  
+Google更适合网站应用，Amazon什么都可以。  
+
+为何会有这样的区别？  
+技术方案不同。  
+Amazon用的是虚拟机，连操作系统都可由用户选择；  
+而Google在更高的层面上实现分布，所以限制多。  
+
+什么叫“更高的层面”？  
+Google用Linux操作系统，但开发者够不到这层，甚至连文件读写都不允许。  
+Google开发了一个大的应用层，相当与分布操作系统吧，让大家的应用系统协同运转。  
+
+协同运转？可不可以理解成：有点像协同工作的那种？就像局域网里的share drive？  
+Google用他们开发的BigTable分布式数据库系统作为共享的数据存储元。  
+可以那样理解，在Google云上，什么都是share的，也是分布的  
+
+数据输送到哪里？  
+你的应用在哪台服务器上跑，数据被传送到哪个硬盘上，都是动态的。  
+底层我们不用管，Google也没交代，应用层的开发还是比较容易的。  

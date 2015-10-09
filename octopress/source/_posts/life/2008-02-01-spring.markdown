@@ -1,0 +1,15 @@
+---
+layout: post_life
+title: "Spring"
+date: 2008-02-01 21:21:00 +0800
+comments: true
+categories: [life]
+tags: [poem]
+---
+
+## 春
+
+新雨照残阳，  
+春色回草堂。  
+快人语新语，  
+乐在池中塘。  
