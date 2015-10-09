@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Life | Kelly Chan]]></title>
   <link href="http://k.arttechresearch.com/categories/life/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2015-10-08T23:06:20+08:00</updated>
+  <updated>2015-10-09T12:21:03+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[Kelly Chan]]></name>
@@ -12,6 +12,87 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Just for Fun]]></title>
+    <link href="http://k.arttechresearch.com/life/2014/09/02/just-for-fun/"/>
+    <updated>2014-09-02T11:35:22+08:00</updated>
+    <id>http://k.arttechresearch.com/life/2014/09/02/just-for-fun</id>
+    <content type="html"><![CDATA[<p>夜不能寐，遂起来看动漫。现在已经习惯用法英中切换，用于学习各种不同的表达，脑子里浮现出这样的句子：</p>
+
+<p><strong>我在用法语英文字幕看关于中国饮食的日本动漫。</strong></p>
+
+<p>玩味之处，是法、英、中、日都集合在句子里，我又试着把它转换成英语：</p>
+
+<p><strong>I am watching a Japanese comic in French that with the subtitle in English,
+which is about the Chinese cuisine.</strong></p>
+
+<p>玩味之处，还是把Japanese, French, English, Chinese融合到句子中。</p>
+
+<p>顺着思路，写了一道题：</p>
+
+<p>汉语等级考试之听力题，现在请听题：<br/>
+甲：我在用法语英文字幕看关于中国饮食的日本动漫。<br/>
+问题：请问我在看哪国的动画片？<br/>
+（1）法国<br/>
+（2）英国<br/>
+（3）中国<br/>
+（4）日本</p>
+
+<p>胡闹一下。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[What Makes a Successful Casual Game]]></title>
+    <link href="http://k.arttechresearch.com/life/2014/08/04/what-makes-a-successful-casual-game/"/>
+    <updated>2014-08-04T12:56:02+08:00</updated>
+    <id>http://k.arttechresearch.com/life/2014/08/04/what-makes-a-successful-casual-game</id>
+    <content type="html"><![CDATA[<p>Recently, I played both casual games: one is Circle the Cat which is the
+simplified version of Chinese Go, another is Fluppy Bird which is like a game
+we played in the childhold.</p>
+
+<p>I found they have some common factors:</p>
+
+<p>&ndash; It is easy to play, users just need to tap tap tap.<br/>
+&ndash; It is difficult to pass, it needs some strategies if the users want to pass the games.<br/>
+&ndash; Both are modified from the traditional games.</p>
+
+<p>Because it is easy to play, users can play it at the leisure time; because it
+is not easy to pass, it pushes the users to think about the strategies, and
+then shared the scores with their friends, that makes the game popular.</p>
+
+<p>In the contrast, as a developer, learns the strategies from the traditional games, designs the
+cartoon images which please the users, and uses the users' languages, perhaps it
+is one of the strategies when develop a casual game.</p>
+
+<h2>休闲游戏</h2>
+
+<p>近来玩了两款游戏，一个是在微信非常流行的《围住神经猫》，另一个是《Fluppy
+Bird》，发现两者有着共同的特点：</p>
+
+<p>&ndash; 玩法简单，神经猫只需点点点，小鸟也是。<br/>
+&ndash; 策略不简单，神经猫带着围棋的解法，小鸟需要时间习得平衡（时间、方向、重力）。<br/>
+&ndash; 两者都是传统游戏的改良，带上了可爱的界面，可亲民。神经猫改自围棋，披上了神经猫的网络用语；小鸟像小时候玩的小球不能碰着旁边的铁圈，也像小时候玩的飞机，披上了可爱的小鸟造型，也让人联想起愤怒的小鸟这款游戏。</p>
+
+<p>因为玩法简单，用户可以在闲暇的时候玩；因为策略不简单，激起了用户挑战的心理，再加上晒成绩或有排行榜，更增添了游戏传播的可能性。</p>
+
+<p>而作为开发者，把传统游戏修改为符合时代特征的语言和卡通形象，也是开发的一种思路吧。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Life Is a Movie]]></title>
+    <link href="http://k.arttechresearch.com/life/2014/08/04/life-is-a-movie/"/>
+    <updated>2014-08-04T12:56:02+08:00</updated>
+    <id>http://k.arttechresearch.com/life/2014/08/04/life-is-a-movie</id>
+    <content type="html"><![CDATA[<h2>人生如戏</h2>
+
+<p>人生比戏剧精彩。戏剧总会有终结的一刻，但人一天还在，故事就千变万化，不可预期。短短三两个小时，知道了一连串的故事，不是恍若隔世；将故事连成一串，足以成就一台连续剧。</p>
+
+<p>我说，真是人来人往；H说，自是如常。蝴蝶效应、连锁反应、多米诺骨牌，一个人的影响有多大，我必须再一次承认：当一个人赋予了更多的职责，每一步都足以牵连万千。但，人生如戏有意义吗？我还是回到原点：意义什么也不是。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Composing Song Ci With Chinese Herbs]]></title>
@@ -80,80 +161,6 @@ the more excited he felt, at the same time, little by little, the smaller his bo
 
 <p>最后，在一个夜晚，他追随着声音，往城出发了。他什么也没听到，
 但，当他越靠近城里，他听到的声音越来越清晰，他就越来越兴奋，同时，他的身体也逐渐地变得越来越小。最后，他融化了。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Everlasting Longing]]></title>
-    <link href="http://k.arttechresearch.com/life/2014/06/19/everlasting-longing/"/>
-    <updated>2014-06-19T13:17:03+08:00</updated>
-    <id>http://k.arttechresearch.com/life/2014/06/19/everlasting-longing</id>
-    <content type="html"><![CDATA[<h2>宋词：长相思</h2>
-
-<p>今读宋词，更多是一种情致，其平仄带来的语言的韵律美，就如一首歌。今读到的这首描写的是春光明媚，宛若江南景。</p>
-
-<p>花深红，花浅红，桃杏浅深花不同。年年吹暖风。<br/>
-莺语中，燕语中，唤起碧窗春睡浓。日高花影重。</p>
-
-<p>这首词表现出来的春光无限与色彩斑斓，春鸟啾啾的画面活灵活现，脑中浮现，一片生气盎然。甚是喜爱。
-它的是词牌名是《长相思》，双调三十六字，前后阕格式相同，各三平韵，一叠韵，一韵到底。其音韵如下：</p>
-
-<p>仄仄平，仄仄平，平仄平平仄仄平，平平仄仄平。<br/>
-仄平平，仄平平，仄仄平平平仄平，中平中仄平。</p>
-
-<p>依照这样的音韵，再看看白居易的《长相思》：</p>
-
-<p>汴水流，泗水流，流到瓜洲古渡头。吴山点点愁。<br/>
-思悠悠，恨悠悠，恨到归时方始休。月明人倚楼。</p>
-
-<p>这首词的色彩就暗淡了许多，点点离愁，闺怨涟涟，好生伤感。</p>
-
-<h2>Song Ci: Everlasting Longing</h2>
-
-<p>When I read the Chinese Song Ci (one of the Chinese poems in Song
-Dynastic), mostly, I could found it is one of the best ways to express the
-feelings of life. When I read the Song Ci, the tunes of the words are like a
-song. When I read it, I am singing.</p>
-
-<p>Today, I read a beautiful Song Ci which is shown that the pretty landscape in
-the spring, the florious flowers and the pretty cute singing birds. This
-reminds me the landscape in the eastern China in the spring.</p>
-
-<p>I tried to translate it like this:</p>
-
-<p>See the blomming flowers are red<br/>
-And the glorious flowers are red<br/>
-The colour of peaches, the colour of apricot, the flowers are coloured bright<br/>
-The soft winds come every year</p>
-
-<p>The orioles are singing<br/>
-And the swallow are singing<br/>
-So thus, at the window, I have these songs in my dreams<br/>
-The sun rise in the shadow of the flowers</p>
-
-<p>The tune of this Song Ci is everlasting longing, dual tunes with 36 Chinese
-characters, the first part are as the same as the second one. The tune is like
-this:</p>
-
-<p>ze ze ping, ze ze ping, ping ze ping ping ze ze ping, ping ping ze ze ping.<br/>
-ze ping ping, ze ping ping, ze ze ping ping ping ze ping, zhong ping zhong ze ping.</p>
-
-<p>Referred to this tune, let&rsquo;s read another Song Ci written by Bai Juyi (白居易),
-and was translated by Xu Yuanchong (许渊冲) like this:</p>
-
-<p>See the Bian River flow<br/>
-And the Si River flow<br/>
-By Ancient Ferry, mingling waves, they go<br/>
-The Southern hills reflect my woe</p>
-
-<p>My thought stretches endlessly<br/>
-My grief wretches endlessly<br/>
-So thus until my hudband comes to me<br/>
-Alone on moon-lit balcony</p>
-
-<p>I felt so sad when I read this poem, a girl was wating for her husband at
-night, when she thought of her husband, her sorrow was like the flowing water
-in the river, it was endless.</p>
 ]]></content>
   </entry>
   

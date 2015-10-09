@@ -1,0 +1,329 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Calculating the Probability of Forever Exist - Kelly Chan</title>
+  <meta name="author" content="Kelly Chan">
+
+  
+  <meta name="description" content="计算永远存在的概率 提问——某一事物永远存在的可能性是多少？ 观点——南卡罗来纳州coker college的David Eubanks： 试想，某事物每年都能存在的概率（或其他时间）是p。假设p存在，并且p不随时间变化，人们很容易就能得出因指数衰减，永存的可能性很小。
+除非p=1， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://k.arttechresearch.com/life/2008/12/21/calculating-the-probability-of-forever-exist/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Kelly Chan" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+<script type="text/javascript">
+
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-53625944-7', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+</head>
+
+<body   >
+  <header role="banner"><ul class="soc">
+
+  
+    <li><a class="soc-github" href="https://github.com/KellyChan"></a></li>
+  
+
+  
+    <li><a class="soc-twitter" href="https://twitter.com/kwailamchan"></a></li>
+  
+
+  
+    <li><a class="soc-pinterest" href="https://www.pinterest.com/wailamchan/"></a></li>
+  
+
+  
+    <li><a class="soc-email1 soc-icon-last" href="mailto:support@arttechresearch.com"></a></li>
+  
+</ul>
+
+<hgroup>
+  <h1><a href="/">Kelly Chan</a></h1>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="k.arttechresearch.com">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/tech">Tech</a></li>
+  <li><a href="/art">Art</a></li>
+  <li><a href="/life">Life</a></li>
+  <li><a href="/archives">Archives</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <li><a href="/devkits">Devkits</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Calculating the Probability of Forever Exist</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2008-12-21T09:50:18+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2008</span></span> <span class='time'>9:50 am</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://k.arttechresearch.com">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>计算永远存在的概率</h2>
+
+<p>提问——某一事物永远存在的可能性是多少？</p>
+
+<p>观点——南卡罗来纳州coker college的David Eubanks：</p>
+
+<ul>
+<li><p>试想，某事物每年都能存在的概率（或其他时间）是p。假设p存在，并且p不随时间变化，人们很容易就能得出因指数衰减，永存的可能性很小。</p></li>
+<li><p>除非p=1，否则存在n年的可能性接近于0。</p></li>
+<li><p>换言之，永远存在的可能性正是0。</p></li>
+</ul>
+
+
+<p>启示——不朽的路径：找到增加概率的方法</p>
+
+<p>举例——永存的硬盘数据</p>
+
+<p>每年都将数据复制到另外的硬盘上，n年后将会有n份拷贝。如果一个硬盘坏了，我们可以很容易的在另一个硬盘上重建数据。除非所有的硬盘同一时间损坏，所以这些数据就是永存的。</p>
+
+<p>但这种方法忽略了全球性的灾难，像彗星撞击地球，就能一次性毁掉全部硬盘。</p>
+
+<p>应用——</p>
+
+<p>（1）提问——人类不休指日可待？</p>
+
+<p>（2）假设方案——</p>
+
+<p>方案一：生命本身产生了许多生命形式并制造副本，散布到全球，他们使用不同的能量来源。</p>
+
+<p>方案二：单一的生物，运用其智慧避免灾难。“它必需收集关于环境安全并归纳性地预测，以避免死亡”——但单个人很难预测并习惯于可能的灾难。</p>
+
+<p>（3）论证——</p>
+
+<p>一、人类存在了数十亿年，有足够时间复制的生物，因此人类拥有深刻的生存本能。但我们却不能在开车时睡觉。</p>
+
+<p>二、模拟各种可能的环境灾难可能是足够的，但是，灾难会迫使我们重新评估我们评估灾难的方法，我们将陷于无休止重新评估的状态下。简而言之，这是一种我们极其不可能完成的计算，一年年的想办法提高生存的概论。</p>
+
+<p>（4）结论——人类不可能永远生存下去，宇宙中的其他智能生命也不能——“这是回答费米悖论所提问的，为什么星系中没有充满智能生命。”</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kelly Chan</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2008-12-21T09:50:18+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2008</span></span> <span class='time'>9:50 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/life/'>life</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://k.arttechresearch.com/life/2008/12/21/calculating-the-probability-of-forever-exist/" data-via="kwailamchan" data-counturl="http://k.arttechresearch.com/life/2008/12/21/calculating-the-probability-of-forever-exist/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/life/2008/12/09/the-warning-from-the-lord/" title="Previous Post: The Warning From The Lord">&laquo; The Warning From The Lord</a>
+      
+      
+        <a class="basic-alignment right" href="/life/2009/04/05/einsteins-view/" title="Next Post: The Einstein's View">The Einstein's View &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Life</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/life/2014/09/02/just-for-fun/">Just for Fun</a>
+      </li>
+    
+      <li class="post">
+        <a href="/life/2014/08/04/what-makes-a-successful-casual-game/">What Makes a Successful Casual Game</a>
+      </li>
+    
+      <li class="post">
+        <a href="/life/2014/08/04/life-is-a-movie/">Life Is a Movie</a>
+      </li>
+    
+      <li class="post">
+        <a href="/life/2014/07/09/composing-song-ci-with-chinese-herbs/">Composing Song Ci With Chinese Herbs</a>
+      </li>
+    
+      <li class="post">
+        <a href="/life/2014/07/04/un-bonhomme-de-neige/">Un Bonhomme De Neige</a>
+      </li>
+    
+      <li class="post">
+        <a href="/life/2014/06/19/everlasting-longing/">Everlasting Longing</a>
+      </li>
+    
+      <li class="post">
+        <a href="/life/2013/07/20/the-fox/">The Fox</a>
+      </li>
+    
+      <li class="post">
+        <a href="/life/2013/07/08/the-lord/">The Lord</a>
+      </li>
+    
+      <li class="post">
+        <a href="/life/2013/06/16/the-raytheon/">The Raytheon</a>
+      </li>
+    
+      <li class="post">
+        <a href="/life/2012/12/19/the-transgenosis/">The Transgenosis</a>
+      </li>
+    
+  </ul>
+</section>
+<section class="category-list">
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/categories/art/'>art (1)</a></li><li><a href='/categories/life/'>life (53)</a></li><li><a href='/categories/tech/'>tech (1)</a></li></ul>
+</section>
+<section class="tag-cloud">
+
+
+  <h1>Tags</h1>
+    <ul id="category-list"><a href='/tags/career' style='font-size: 96.47058823529412%'>career(3)</a> <a href='/tags/cloud' style='font-size: 90.0%'>cloud(1)</a> <a href='/tags/fiction' style='font-size: 106.17647058823529%'>fiction(6)</a> <a href='/tags/french' style='font-size: 90.0%'>french(1)</a> <a href='/tags/leisure' style='font-size: 200.0%'>leisure(35)</a> <a href='/tags/openstack' style='font-size: 90.0%'>openstack(1)</a> <a href='/tags/poem' style='font-size: 93.23529411764706%'>poem(2)</a> <a href='/tags/reading' style='font-size: 106.17647058823529%'>reading(6)</a> <a href='/tags/translation' style='font-size: 90.0%'>translation(1)</a> </ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013-2015 - Kelly Chan
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'kwailamc';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://k.arttechresearch.com/life/2008/12/21/calculating-the-probability-of-forever-exist/';
+        var disqus_url = 'http://k.arttechresearch.com/life/2008/12/21/calculating-the-probability-of-forever-exist/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
