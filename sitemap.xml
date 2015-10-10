@@ -17,10 +17,6 @@
     <lastmod>2014-08-04T12:56:02+08:00</lastmod>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/life/2014/08/04/life-is-a-movie/</loc>
-    <lastmod>2014-08-04T12:56:02+08:00</lastmod>
-  </url>
-  <url>
     <loc>http://k.arttechresearch.com/life/2014/07/09/composing-song-ci-with-chinese-herbs/</loc>
     <lastmod>2014-07-09T21:00:00+08:00</lastmod>
   </url>
@@ -31,6 +27,18 @@
   <url>
     <loc>http://k.arttechresearch.com/life/2014/06/19/everlasting-longing/</loc>
     <lastmod>2014-06-19T13:17:03+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/03/05/time-series-with-pandas/</loc>
+    <lastmod>2014-03-05T22:20:32+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/03/05/python-pandas/</loc>
+    <lastmod>2014-03-05T12:33:47+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/01/18/vim-commands/</loc>
+    <lastmod>2014-01-18T19:34:30+08:00</lastmod>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/life/2013/07/20/the-fox/</loc>
@@ -45,40 +53,12 @@
     <lastmod>2013-06-16T09:14:00+08:00</lastmod>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/life/2012/12/19/the-transgenosis/</loc>
-    <lastmod>2012-12-19T23:29:00+08:00</lastmod>
-  </url>
-  <url>
-    <loc>http://k.arttechresearch.com/life/2012/11/01/san-mao/</loc>
-    <lastmod>2012-11-01T21:33:00+08:00</lastmod>
-  </url>
-  <url>
-    <loc>http://k.arttechresearch.com/life/2012/10/30/the-beginning/</loc>
-    <lastmod>2012-10-30T21:02:00+08:00</lastmod>
-  </url>
-  <url>
-    <loc>http://k.arttechresearch.com/life/2012/10/27/the-sun-and-the-moon/</loc>
-    <lastmod>2012-10-27T00:31:00+08:00</lastmod>
-  </url>
-  <url>
-    <loc>http://k.arttechresearch.com/life/2011/09/29/the-blue/</loc>
-    <lastmod>2011-09-29T21:58:00+08:00</lastmod>
-  </url>
-  <url>
     <loc>http://k.arttechresearch.com/life/2011/09/08/6969/</loc>
     <lastmod>2011-09-08T07:53:00+08:00</lastmod>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/life/2011/08/21/my-piano-teacher/</loc>
-    <lastmod>2011-08-21T19:18:00+08:00</lastmod>
-  </url>
-  <url>
     <loc>http://k.arttechresearch.com/life/2011/08/20/the-time-difference/</loc>
     <lastmod>2011-08-20T20:54:00+08:00</lastmod>
-  </url>
-  <url>
-    <loc>http://k.arttechresearch.com/life/2011/08/14/what-is-the-art/</loc>
-    <lastmod>2011-08-14T09:36:00+08:00</lastmod>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/life/2010/09/27/one-problem-with-two-questions/</loc>
@@ -101,28 +81,16 @@
     <lastmod>2010-04-17T00:22:54+08:00</lastmod>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/life/2010/04/15/the-relations-between-matters/</loc>
-    <lastmod>2010-04-15T22:07:54+08:00</lastmod>
-  </url>
-  <url>
     <loc>http://k.arttechresearch.com/life/2010/04/15/how-to-master-a-new-subject/</loc>
     <lastmod>2010-04-15T21:03:54+08:00</lastmod>
-  </url>
-  <url>
-    <loc>http://k.arttechresearch.com/life/2010/03/01/the-multinational-communications/</loc>
-    <lastmod>2010-03-01T01:52:25+08:00</lastmod>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/life/2010/03/01/the-change-management-in-the-projects/</loc>
     <lastmod>2010-03-01T01:11:25+08:00</lastmod>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/life/2010/01/21/the-beauty-of-the-languages/</loc>
-    <lastmod>2010-01-21T02:52:14+08:00</lastmod>
-  </url>
-  <url>
-    <loc>http://k.arttechresearch.com/life/2010/01/14/the-probabilities-in-the-daily-words/</loc>
-    <lastmod>2010-01-14T00:24:14+08:00</lastmod>
+    <loc>http://k.arttechresearch.com/tech/2010/01/14/sqrt-newtons-method-of-successive-approximations/</loc>
+    <lastmod>2010-01-14T00:00:14+08:00</lastmod>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/life/2010/01/13/the-acts-of-the-mind/</loc>
@@ -173,16 +141,8 @@
     <lastmod>2008-12-09T01:14:18+08:00</lastmod>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/life/2008/11/22/at-the-subway/</loc>
-    <lastmod>2008-11-22T19:26:18+08:00</lastmod>
-  </url>
-  <url>
     <loc>http://k.arttechresearch.com/life/2008/11/18/some-thoughts-on-ai/</loc>
     <lastmod>2008-11-18T23:54:18+08:00</lastmod>
-  </url>
-  <url>
-    <loc>http://k.arttechresearch.com/life/2008/11/18/observation/</loc>
-    <lastmod>2008-11-18T19:57:18+08:00</lastmod>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/life/2008/11/15/if-one-person-has-three-eyes-is-normal/</loc>
@@ -213,10 +173,6 @@
     <lastmod>2008-10-21T05:41:22+08:00</lastmod>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/life/2008/06/14/the-depth/</loc>
-    <lastmod>2008-06-14T12:47:26+08:00</lastmod>
-  </url>
-  <url>
     <loc>http://k.arttechresearch.com/life/2008/05/30/the-giraffe-question/</loc>
     <lastmod>2008-05-30T00:27:26+08:00</lastmod>
   </url>
@@ -239,10 +195,6 @@
   <url>
     <loc>http://k.arttechresearch.com/life/2008/04/15/recursion/</loc>
     <lastmod>2008-04-15T01:45:00+08:00</lastmod>
-  </url>
-  <url>
-    <loc>http://k.arttechresearch.com/life/2008/04/04/the-standards/</loc>
-    <lastmod>2008-04-04T17:26:28+08:00</lastmod>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/life/2008/02/01/spring/</loc>
@@ -299,7 +251,25 @@
     <loc>http://k.arttechresearch.com/tags/fiction/</loc>
   </url>
   <url>
+    <loc>http://k.arttechresearch.com/tags/algorithm/</loc>
+  </url>
+  <url>
     <loc>http://k.arttechresearch.com/tags/career/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/vim/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/ide/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/python/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/pandas/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/time-series/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/french/</loc>

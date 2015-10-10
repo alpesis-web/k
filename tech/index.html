@@ -227,6 +227,1333 @@
 
     </article>
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/tech/2014/03/05/time-series-with-pandas/">Time Series With Pandas</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-03-05T22:20:32+08:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>10:20 pm</span></time>
+        
+           | <a href="/tech/2014/03/05/time-series-with-pandas/#disqus_thread"
+             data-disqus-identifier="http://k.arttechresearch.com/tech/2014/03/05/time-series-with-pandas/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>1. date and time</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c"># get datetime from system</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+</span><span class='line'><span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+</span><span class='line'><span class="n">now</span><span class="o">.</span><span class="n">year</span><span class="p">,</span> <span class="n">now</span><span class="o">.</span><span class="n">month</span><span class="p">,</span> <span class="n">now</span><span class="o">.</span><span class="n">day</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># calculate delta between days</span>
+</span><span class='line'><span class="n">delta</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2011</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span> <span class="o">-</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2008</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+</span><span class='line'><span class="n">delta</span><span class="o">.</span><span class="n">days</span>
+</span><span class='line'><span class="n">delta</span><span class="o">.</span><span class="n">seconds</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span>
+</span><span class='line'><span class="n">start</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2011</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+</span><span class='line'><span class="n">start</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+</span><span class='line'><span class="n">start</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">timedelta</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>convert datetime and string</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c"># convert with strftime</span>
+</span><span class='line'><span class="n">stamp</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2011</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</span><span class='line'><span class="nb">str</span><span class="p">(</span><span class="n">stamp</span><span class="p">)</span>
+</span><span class='line'><span class="n">stamp</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s">&#39;%Y-%m-</span><span class="si">%d</span><span class="s">&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">value</span> <span class="o">=</span> <span class="s">&#39;2011-01-03&#39;</span>
+</span><span class='line'><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="s">&#39;%Y-%m-</span><span class="si">%d</span><span class="s">&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">datestrs</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;7/6/2011&#39;</span><span class="p">,</span> <span class="s">&#39;8/6/2011&#39;</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&#39;%m/</span><span class="si">%d</span><span class="s">/%Y&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">datestrs</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># converte with parse</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">dateutil.parser</span> <span class="kn">import</span> <span class="n">parse</span>
+</span><span class='line'><span class="n">parse</span><span class="p">(</span><span class="s">&#39;2011-01-03&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">parse</span><span class="p">(</span><span class="s">&#39;Jan 31, 1997 10:45 PM&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">parse</span><span class="p">(</span><span class="s">&#39;6/12/2011&#39;</span><span class="p">,</span> <span class="n">dayfirst</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="c"># coverte with pandas</span>
+</span><span class='line'><span class="n">pandas</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">datestrs</span><span class="p">)</span>
+</span><span class='line'><span class="n">idx</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">datestrs</span> <span class="o">+</span> <span class="p">[</span><span class="bp">None</span><span class="p">])</span>
+</span><span class='line'><span class="n">idx</span>
+</span><span class='line'><span class="n">idx</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+</span><span class='line'><span class="n">pandas</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>2. time series</h3>
+
+<p>create dates with pandas</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">dates</span> <span class="o">=</span> <span class="p">[</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2011</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2011</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2011</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span>
+</span><span class='line'>         <span class="n">datetime</span><span class="p">(</span><span class="mi">2011</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2011</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2011</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">)]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">ts</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">6</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="n">dates</span><span class="p">)</span>
+</span><span class='line'><span class="n">ts</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">type</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span>
+</span><span class='line'><span class="n">ts</span><span class="o">.</span><span class="n">index</span>
+</span><span class='line'><span class="n">ts</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">dtype</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">stamp</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span class='line'><span class="n">stamp</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>indexing, selection, subsetting</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">stamp</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+</span><span class='line'><span class="n">ts</span><span class="p">[</span><span class="n">stamp</span><span class="p">]</span>
+</span><span class='line'><span class="n">ts</span><span class="p">[</span><span class="s">&#39;1/10/2011&#39;</span><span class="p">]</span>
+</span><span class='line'><span class="n">ts</span><span class="p">[</span><span class="s">&#39;20110110&#39;</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">longer_ts</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1000</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s">&#39;1/1/2000&#39;</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">1000</span><span class="p">))</span>
+</span><span class='line'><span class="n">longer_ts</span><span class="p">[</span><span class="s">&#39;2001&#39;</span><span class="p">]</span>
+</span><span class='line'><span class="n">longer_ts</span><span class="p">[</span><span class="s">&#39;2001-05&#39;</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">ts</span><span class="p">[</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2011</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">):]</span>
+</span><span class='line'><span class="n">ts</span><span class="p">[</span><span class="s">&#39;1/6/2011&#39;</span><span class="p">:</span><span class="s">&#39;1/11/2011&#39;</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">ts</span><span class="o">.</span><span class="n">truncate</span><span class="p">(</span><span class="n">after</span><span class="o">=</span><span class="s">&#39;1/9/2011&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">dates</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s">&#39;1/1/2000&#39;</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s">&#39;W-WED&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">long_df</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="n">dates</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;Colorado&#39;</span><span class="p">,</span> <span class="s">&#39;Texas&#39;</span><span class="p">,</span> <span class="s">&#39;New York&#39;</span><span class="p">,</span> <span class="s">&#39;Ohio&#39;</span><span class="p">])</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>time series with duplicate indices</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">dates</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DatetimeIndex</span><span class="p">([</span><span class="s">&#39;1/1/2000&#39;</span><span class="p">,</span> <span class="s">&#39;1/2/2000&#39;</span><span class="p">,</span> <span class="s">&#39;1/2/2000&#39;</span><span class="p">,</span> <span class="s">&#39;1/2/2000&#39;</span><span class="p">,</span> <span class="s">&#39;1/3/2000&#39;</span><span class="p">])</span>
+</span><span class='line'><span class="n">dup_ts</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="n">dates</span><span class="p">)</span>
+</span><span class='line'><span class="n">dup_ts</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">is_unique</span>
+</span><span class='line'><span class="n">dup_ts</span><span class="p">[</span><span class="s">&#39;1/3/2000&#39;</span><span class="p">]</span>
+</span><span class='line'><span class="n">dup_ts</span><span class="p">[</span><span class="s">&#39;1/2/2000&#39;</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">grouped</span> <span class="o">=</span> <span class="n">dup_ts</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span><span class='line'><span class="n">grouped</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</span><span class='line'><span class="n">grouped</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>date ranges, frequencies, shifting</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c"># 1. resample</span>
+</span><span class='line'><span class="n">ts</span>
+</span><span class='line'><span class="n">ts</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s">&#39;D&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># 2. date_range</span>
+</span><span class='line'><span class="n">index</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s">&#39;4/1/2012&#39;</span><span class="p">,</span> <span class="s">&#39;6/1/2012&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">pandas</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="s">&#39;4/1/2012&#39;</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+</span><span class='line'><span class="n">pandas</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">end</span><span class="o">=</span><span class="s">&#39;6/1/2012&#39;</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+</span><span class='line'><span class="n">pandas</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s">&#39;1/1/2000&#39;</span><span class="p">,</span> <span class="s">&#39;12/1/2000&#39;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s">&#39;BM&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">pandas</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s">&#39;5/2/2012 12:56:31&#39;</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</span><span class='line'><span class="n">pandas</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s">&#39;5/2/2012 12:56:31&#39;</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># 3. frequencies</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">from</span> <span class="nn">pandas.tseries.offsets</span> <span class="kn">import</span> <span class="n">Hour</span><span class="p">,</span> <span class="n">Minute</span>
+</span><span class='line'><span class="n">hour</span> <span class="o">=</span> <span class="n">Hour</span><span class="p">()</span>
+</span><span class='line'><span class="n">four_hours</span> <span class="o">=</span> <span class="n">Hour</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</span><span class='line'><span class="n">pandas</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s">&#39;1/1/2000&#39;</span><span class="p">,</span> <span class="s">&#39;1/3/2000 23:59&#39;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s">&#39;4h&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">Hour</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">Minute</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+</span><span class='line'><span class="n">pandas</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s">&#39;1/1/2000&#39;</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s">&#39;1h30min&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># 4. week of month</span>
+</span><span class='line'><span class="n">rng</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s">&#39;1/1/2012&#39;</span><span class="p">,</span> <span class="s">&#39;9/1/2012&#39;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s">&#39;WOM-3FRI&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="nb">list</span><span class="p">(</span><span class="n">rng</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># 5. shifting (leading/lagging)</span>
+</span><span class='line'><span class="n">ts</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span><span class="n">index</span><span class="o">=</span><span class="n">pandas</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s">&#39;1/1/2000&#39;</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s">&#39;M&#39;</span><span class="p">))</span>
+</span><span class='line'><span class="n">ts</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span><span class='line'><span class="n">ts</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+</span><span class='line'><span class="n">ts</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s">&#39;M&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">ts</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s">&#39;D&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">ts</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s">&#39;3D&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">ts</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s">&#39;90T&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># shifting dates with offsets</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">pandas.tseries.offsets</span> <span class="kn">import</span> <span class="n">Day</span><span class="p">,</span> <span class="n">MonthEnd</span>
+</span><span class='line'><span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2011</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">17</span><span class="p">)</span>
+</span><span class='line'><span class="n">now</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">Day</span><span class="p">()</span>
+</span><span class='line'><span class="n">now</span> <span class="o">+</span> <span class="n">MonthEnd</span><span class="p">()</span>
+</span><span class='line'><span class="n">now</span> <span class="o">+</span> <span class="n">MonthEnd</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">offset</span> <span class="o">=</span> <span class="n">MonthEnd</span><span class="p">()</span>
+</span><span class='line'><span class="n">offset</span><span class="o">.</span><span class="n">rollforward</span><span class="p">(</span><span class="n">now</span><span class="p">)</span>
+</span><span class='line'><span class="n">offset</span><span class="o">.</span><span class="n">rollback</span><span class="p">(</span><span class="n">now</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">ts</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span><span class="n">index</span><span class="o">=</span><span class="n">pandas</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s">&#39;1/15/2000&#39;</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s">&#39;4d&#39;</span><span class="p">))</span>
+</span><span class='line'><span class="n">ts</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">offset</span><span class="o">.</span><span class="n">rollforward</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</span><span class='line'><span class="n">ts</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s">&#39;M&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s">&#39;mean&#39;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>3. timezone handling</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">pytz</span>
+</span><span class='line'><span class="n">pytz</span><span class="o">.</span><span class="n">common_timezones</span><span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">:]</span>
+</span><span class='line'><span class="n">tz</span> <span class="o">=</span> <span class="n">pytz</span><span class="o">.</span><span class="n">timezone</span><span class="p">(</span><span class="s">&#39;US/Eastern&#39;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>localization and conversion</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">rng</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s">&#39;3/9/2012 9:30&#39;</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s">&#39;D&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">ts</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rng</span><span class="p">)),</span> <span class="n">index</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+</span><span class='line'><span class="k">print</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">tz</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">pandas</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s">&#39;3/9/2012 9:30&#39;</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s">&#39;D&#39;</span><span class="p">,</span> <span class="n">tz</span><span class="o">=</span><span class="s">&#39;UTC&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">ts_utc</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">tz_localize</span><span class="p">(</span><span class="s">&#39;UTC&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">ts_utc</span><span class="o">.</span><span class="n">index</span>
+</span><span class='line'><span class="n">ts_utc</span><span class="o">.</span><span class="n">tz_convert</span><span class="p">(</span><span class="s">&#39;US/Eastern&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">ts_eastern</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">tz_localize</span><span class="p">(</span><span class="s">&#39;US/Eastern&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">ts_eastern</span><span class="o">.</span><span class="n">tz_convert</span><span class="p">(</span><span class="s">&#39;UTC&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">ts_eastern</span><span class="o">.</span><span class="n">tz_convert</span><span class="p">(</span><span class="s">&#39;Europe/Berlin&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">ts</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">tz_localize</span><span class="p">(</span><span class="s">&#39;Asia/Shanghai&#39;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>operations with timezone</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">stamp</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s">&#39;2011-03-12 04:00&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">stamp_utc</span> <span class="o">=</span> <span class="n">stamp</span><span class="o">.</span><span class="n">tz_localize</span><span class="p">(</span><span class="s">&#39;utc&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">stamp_utc</span><span class="o">.</span><span class="n">tz_convert</span><span class="p">(</span><span class="s">&#39;US/Eastern&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">stamp_moscow</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s">&#39;2011-03-12 04:00&#39;</span><span class="p">,</span> <span class="n">tz</span><span class="o">=</span><span class="s">&#39;Europe/Moscow&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">stamp_utc</span><span class="o">.</span><span class="n">value</span>
+</span><span class='line'><span class="n">stamp_utc</span><span class="o">.</span><span class="n">tz_convert</span><span class="p">(</span><span class="s">&#39;US/Eastern&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">from</span> <span class="nn">pandas.tseries.offsets</span> <span class="kn">import</span> <span class="n">Hour</span>
+</span><span class='line'><span class="n">stamp</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s">&#39;2012-03-12 01:30&#39;</span><span class="p">,</span> <span class="n">tz</span><span class="o">=</span><span class="s">&#39;US/Eastern&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">stamp</span> <span class="o">+</span> <span class="n">Hour</span><span class="p">()</span>
+</span><span class='line'><span class="n">stamp</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s">&#39;2012-11-04 00:30&#39;</span><span class="p">,</span> <span class="n">tz</span><span class="o">=</span><span class="s">&#39;US/Eastern&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">stamp</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">Hour</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">rng</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s">&#39;3/7/2012 9:30&#39;</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s">&#39;B&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">ts</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rng</span><span class="p">)),</span> <span class="n">index</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+</span><span class='line'><span class="n">ts1</span> <span class="o">=</span> <span class="n">ts</span><span class="p">[:</span><span class="mi">7</span><span class="p">]</span><span class="o">.</span><span class="n">tz_localize</span><span class="p">(</span><span class="s">&#39;Europe/London&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">ts2</span> <span class="o">=</span> <span class="n">ts1</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span><span class="o">.</span><span class="n">tz_convert</span><span class="p">(</span><span class="s">&#39;Europe/Moscow&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">result</span> <span class="o">=</span> <span class="n">ts1</span> <span class="o">+</span> <span class="n">ts2</span>
+</span><span class='line'><span class="n">result</span><span class="o">.</span><span class="n">index</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>4. periods</h3>
+
+<p>periods of year, month, quarter</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c"># period of years</span>
+</span><span class='line'><span class="n">p</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">Period</span><span class="p">(</span><span class="mi">2007</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s">&#39;A-DEC&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">p</span> <span class="o">+</span> <span class="mi">5</span>
+</span><span class='line'><span class="n">p</span> <span class="o">-</span> <span class="mi">2</span>
+</span><span class='line'><span class="n">pandas</span><span class="o">.</span><span class="n">Period</span><span class="p">(</span><span class="s">&#39;2014&#39;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s">&#39;A-DEC&#39;</span><span class="p">)</span> <span class="o">-</span> <span class="n">p</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># period of months</span>
+</span><span class='line'><span class="n">rng</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">period_range</span><span class="p">(</span><span class="s">&#39;1/1/2000&#39;</span><span class="p">,</span> <span class="s">&#39;6/30/2000&#39;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s">&#39;M&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">pandas</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">6</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># period of quarter</span>
+</span><span class='line'><span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;2001Q3&#39;</span><span class="p">,</span> <span class="s">&#39;2002Q2&#39;</span><span class="p">,</span> <span class="s">&#39;2003Q1&#39;</span><span class="p">]</span>
+</span><span class='line'><span class="n">index</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">PeriodIndex</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s">&#39;Q-DEC&#39;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>period frequencies conversion</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">p</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">Period</span><span class="p">(</span><span class="s">&#39;2007&#39;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s">&#39;A-DEC&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">p</span><span class="o">.</span><span class="n">asfreq</span><span class="p">(</span><span class="s">&#39;M&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s">&#39;start&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">p</span><span class="o">.</span><span class="n">asfreq</span><span class="p">(</span><span class="s">&#39;M&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s">&#39;end&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">p</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">Period</span><span class="p">(</span><span class="s">&#39;2007&#39;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s">&#39;A-JUN&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">p</span><span class="o">.</span><span class="n">asfreq</span><span class="p">(</span><span class="s">&#39;M&#39;</span><span class="p">,</span> <span class="s">&#39;start&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">p</span><span class="o">.</span><span class="n">asfreq</span><span class="p">(</span><span class="s">&#39;M&#39;</span><span class="p">,</span> <span class="s">&#39;end&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">p</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">Period</span><span class="p">(</span><span class="s">&#39;2007-08&#39;</span><span class="p">,</span> <span class="s">&#39;M&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">p</span><span class="o">.</span><span class="n">asfreq</span><span class="p">(</span><span class="s">&#39;A-JUN&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">rng</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">period_range</span><span class="p">(</span><span class="s">&#39;2006&#39;</span><span class="p">,</span> <span class="s">&#39;2009&#39;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s">&#39;A-DEC&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">ts</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rng</span><span class="p">)),</span> <span class="n">index</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+</span><span class='line'><span class="n">ts</span><span class="o">.</span><span class="n">asfreq</span><span class="p">(</span><span class="s">&#39;M&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s">&#39;start&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">ts</span><span class="o">.</span><span class="n">asfreq</span><span class="p">(</span><span class="s">&#39;B&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s">&#39;end&#39;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>quarterly period frequencies</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">p</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">Period</span><span class="p">(</span><span class="s">&#39;2012Q4&#39;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s">&#39;Q-JAN&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">p</span><span class="o">.</span><span class="n">asfreq</span><span class="p">(</span><span class="s">&#39;D&#39;</span><span class="p">,</span> <span class="s">&#39;start&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">p</span><span class="o">.</span><span class="n">asfreq</span><span class="p">(</span><span class="s">&#39;D&#39;</span><span class="p">,</span> <span class="s">&#39;end&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># to get the timestamp at 4PM on the 2nd to last business day of the quarter</span>
+</span><span class='line'><span class="n">p4pm</span> <span class="o">=</span> <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">asfreq</span><span class="p">(</span><span class="s">&#39;B&#39;</span><span class="p">,</span> <span class="s">&#39;e&#39;</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">asfreq</span><span class="p">(</span><span class="s">&#39;T&#39;</span><span class="p">,</span> <span class="s">&#39;s&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">16</span> <span class="o">*</span> <span class="mi">60</span>
+</span><span class='line'><span class="n">p4pm</span><span class="o">.</span><span class="n">to_timestamp</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">rng</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">period_range</span><span class="p">(</span><span class="s">&#39;2011Q3&#39;</span><span class="p">,</span> <span class="s">&#39;2012Q4&#39;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s">&#39;Q-JAN&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">ts</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rng</span><span class="p">)),</span> <span class="n">index</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+</span><span class='line'><span class="n">new_rng</span> <span class="o">=</span> <span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">asfreq</span><span class="p">(</span><span class="s">&#39;B&#39;</span><span class="p">,</span> <span class="s">&#39;e&#39;</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">asfreq</span><span class="p">(</span><span class="s">&#39;T&#39;</span><span class="p">,</span> <span class="s">&#39;s&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">16</span> <span class="o">*</span> <span class="mi">60</span>
+</span><span class='line'><span class="n">ts</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">new_rng</span><span class="o">.</span><span class="n">to_timestamp</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>converting timestamps to periods</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">rng</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s">&#39;1/1/2000&#39;</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s">&#39;M&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">ts</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+</span><span class='line'><span class="n">pts</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">to_period</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">rng</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s">&#39;1/29/2000&#39;</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s">&#39;D&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">ts2</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">6</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+</span><span class='line'><span class="n">ts2</span><span class="o">.</span><span class="n">to_period</span><span class="p">(</span><span class="s">&#39;M&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">pts</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">to_period</span><span class="p">()</span>
+</span><span class='line'><span class="n">pts</span><span class="o">.</span><span class="n">to_timestamp</span><span class="p">(</span><span class="n">how</span><span class="o">=</span><span class="s">&#39;end&#39;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>5. resampling</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">rng</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s">&#39;1/1/2000&#39;</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s">&#39;D&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">ts</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rng</span><span class="p">)),</span> <span class="n">index</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+</span><span class='line'><span class="n">ts</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s">&#39;M&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s">&#39;mean&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">ts</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s">&#39;M&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s">&#39;mean&#39;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s">&#39;period&#39;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>downsampling</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">rng</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s">&#39;1/1/2000&#39;</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s">&#39;T&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">ts</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">12</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+</span><span class='line'><span class="n">ts</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s">&#39;5min&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s">&#39;sum&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">ts</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s">&#39;5min&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s">&#39;sum&#39;</span><span class="p">,</span> <span class="n">closed</span><span class="o">=</span><span class="s">&#39;left&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">ts</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s">&#39;5min&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s">&#39;sum&#39;</span><span class="p">,</span> <span class="n">closed</span><span class="o">=</span><span class="s">&#39;left&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;left&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># ohlc: open high low close</span>
+</span><span class='line'><span class="n">ts</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s">&#39;5min&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s">&#39;ohlc&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">ts</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s">&#39;5min&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s">&#39;sum&#39;</span><span class="p">,</span> <span class="n">loffset</span><span class="o">=</span><span class="s">&#39;-1s&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">rng</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s">&#39;1/1/2000&#39;</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s">&#39;D&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">ts</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+</span><span class='line'><span class="n">ts</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">month</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</span><span class='line'><span class="n">ts</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">weekday</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>upsampling and interpolation</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">frame</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+</span><span class='line'>                         <span class="n">index</span><span class="o">=</span><span class="n">pandas</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s">&#39;1/1/2000&#39;</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s">&#39;W-WED&#39;</span><span class="p">),</span>
+</span><span class='line'>                         <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;Colorado&#39;</span><span class="p">,</span> <span class="s">&#39;Texas&#39;</span><span class="p">,</span> <span class="s">&#39;New York&#39;</span><span class="p">,</span> <span class="s">&#39;Ohio&#39;</span><span class="p">])</span>
+</span><span class='line'><span class="n">frame</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
+</span><span class='line'><span class="n">df_daily</span> <span class="o">=</span> <span class="n">frame</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s">&#39;D&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">df_daily</span>
+</span><span class='line'><span class="n">frame</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s">&#39;D&#39;</span><span class="p">,</span> <span class="n">fill_method</span><span class="o">=</span><span class="s">&#39;ffill&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">frame</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s">&#39;D&#39;</span><span class="p">,</span> <span class="n">fill_method</span><span class="o">=</span><span class="s">&#39;ffill&#39;</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</span><span class='line'><span class="n">frame</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s">&#39;W-THU&#39;</span><span class="p">,</span> <span class="n">fill_method</span><span class="o">=</span><span class="s">&#39;ffill&#39;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>resampling with periods</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">frame</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+</span><span class='line'>                         <span class="n">index</span><span class="o">=</span><span class="n">pandas</span><span class="o">.</span><span class="n">period_range</span><span class="p">(</span><span class="s">&#39;1-2000&#39;</span><span class="p">,</span> <span class="s">&#39;12-2001&#39;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s">&#39;M&#39;</span><span class="p">),</span>
+</span><span class='line'>                         <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;Colorado&#39;</span><span class="p">,</span> <span class="s">&#39;Texas&#39;</span><span class="p">,</span> <span class="s">&#39;New York&#39;</span><span class="p">,</span> <span class="s">&#39;Ohio&#39;</span><span class="p">])</span>
+</span><span class='line'><span class="n">frame</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
+</span><span class='line'><span class="n">annual_frame</span> <span class="o">=</span> <span class="n">frame</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s">&#39;A-DEC&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s">&#39;mean&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">annual_frame</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s">&#39;Q-DEC&#39;</span><span class="p">,</span> <span class="n">fill_method</span><span class="o">=</span><span class="s">&#39;ffill&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">annual_frame</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s">&#39;Q-DEC&#39;</span><span class="p">,</span> <span class="n">fill_method</span><span class="o">=</span><span class="s">&#39;ffill&#39;</span><span class="p">,</span> <span class="n">convention</span><span class="o">=</span><span class="s">&#39;start&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">annual_frame</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s">&#39;Q-MAR&#39;</span><span class="p">,</span> <span class="n">fill_method</span><span class="o">=</span><span class="s">&#39;ffill&#39;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/tech/2014/03/05/python-pandas/">Python Pandas</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-03-05T12:33:47+08:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:33 pm</span></time>
+        
+           | <a href="/tech/2014/03/05/python-pandas/#disqus_thread"
+             data-disqus-identifier="http://k.arttechresearch.com/tech/2014/03/05/python-pandas/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>libraries</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>1. object creation</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c"># create array</span>
+</span><span class='line'><span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">])</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># create dates with dataframe</span>
+</span><span class='line'><span class="n">dates</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s">&#39;20130101&#39;</span><span class="p">,</span><span class="n">periods</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># create dataframe</span>
+</span><span class='line'><span class="n">df2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span> <span class="s">&#39;header1&#39;</span> <span class="p">:</span> <span class="mf">1.</span><span class="p">,</span>
+</span><span class='line'>                     <span class="s">&#39;header2&#39;</span> <span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s">&#39;20130102&#39;</span><span class="p">),</span>
+</span><span class='line'>                     <span class="s">&#39;header3&#39;</span> <span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)),</span><span class="n">dtype</span><span class="o">=</span><span class="s">&#39;float32&#39;</span><span class="p">),</span>
+</span><span class='line'>                     <span class="s">&#39;header4&#39;</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="s">&#39;int32&#39;</span><span class="p">),</span>
+</span><span class='line'>                     <span class="s">&#39;header5&#39;</span> <span class="p">:</span> <span class="s">&#39;foo&#39;</span> <span class="p">})</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># check data types of dataframe</span>
+</span><span class='line'><span class="n">dataframe</span><span class="o">.</span><span class="n">dtypes</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>2. viewing data</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c"># top/bottom rows of data</span>
+</span><span class='line'><span class="n">dataframe</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</span><span class='line'><span class="n">dataframe</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># index/row, columns and values</span>
+</span><span class='line'><span class="n">dataframe</span><span class="o">.</span><span class="n">index</span>
+</span><span class='line'><span class="n">dataframe</span><span class="o">.</span><span class="n">columns</span>
+</span><span class='line'><span class="n">dataframe</span><span class="o">.</span><span class="n">values</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># summary of numeric data</span>
+</span><span class='line'><span class="n">dataframe</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># data transpose</span>
+</span><span class='line'><span class="n">dataframe</span><span class="o">.</span><span class="n">T</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># sorting by header/names and values</span>
+</span><span class='line'><span class="n">dataframe</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</span><span class='line'><span class="n">dataframe</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s">&#39;columnName&#39;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>3. selection</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c"># get data by columns</span>
+</span><span class='line'><span class="n">dataframe</span><span class="p">[</span><span class="s">&#39;A&#39;</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># get data by rows</span>
+</span><span class='line'><span class="n">dataframe</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+</span><span class='line'><span class="n">dataframe</span><span class="p">[</span><span class="s">&#39;20130102&#39;</span><span class="p">:</span><span class="s">&#39;20130104&#39;</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># reshape dataframe</span>
+</span><span class='line'><span class="n">dataframe</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,[</span><span class="s">&#39;A&#39;</span><span class="p">,</span><span class="s">&#39;B&#39;</span><span class="p">]]</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># get one record with T</span>
+</span><span class='line'><span class="n">dataframe</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># get rows and columns as defined</span>
+</span><span class='line'><span class="n">dataframe</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+</span><span class='line'><span class="n">dataframe</span><span class="o">.</span><span class="n">iloc</span><span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]]</span>
+</span><span class='line'><span class="n">dataframe</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">,:]</span>
+</span><span class='line'><span class="n">dataframe</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># get a specific value/cell</span>
+</span><span class='line'><span class="n">dataframe</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+</span><span class='line'><span class="n">dataframe</span><span class="o">.</span><span class="n">iat</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>4. boolean index</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c"># filter data by a single column</span>
+</span><span class='line'><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">A</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># filter data by all columns</span>
+</span><span class='line'><span class="n">df</span><span class="p">[</span><span class="n">df</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>                   <span class="c"># if value &lt;= 0, it will return NaN</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>5. setting</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c"># set values by label, position and array</span>
+</span><span class='line'><span class="n">df</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">dates</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="s">&#39;A&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'><span class="n">df</span><span class="o">.</span><span class="n">iat</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s">&#39;D&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">5</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">df2</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</span><span class='line'><span class="n">df2</span><span class="p">[</span><span class="n">df2</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">df2</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># rename columns</span>
+</span><span class='line'><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;$a&#39;</span><span class="p">:</span> <span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;$b&#39;</span><span class="p">:</span> <span class="s">&#39;b&#39;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>6. missing values</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c"># drop any rows those have missing values</span>
+</span><span class='line'><span class="n">df1</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">how</span><span class="o">=</span><span class="s">&#39;any&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># fill missing values</span>
+</span><span class='line'><span class="n">df1</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># get the boolean mask where values are nan</span>
+</span><span class='line'><span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">df1</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>7. operations</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c"># mean</span>
+</span><span class='line'><span class="n">df</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># frequency count</span>
+</span><span class='line'><span class="n">df</span><span class="p">[</span><span class="s">&#39;A&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># correlation</span>
+</span><span class='line'><span class="n">df</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># string</span>
+</span><span class='line'><span class="n">s</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>8. merge</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c"># merge data by rows</span>
+</span><span class='line'><span class="n">pieces</span> <span class="o">=</span> <span class="p">[</span><span class="n">df</span><span class="p">[:</span><span class="mi">3</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">7</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="mi">7</span><span class="p">:]]</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># join</span>
+</span><span class='line'><span class="n">left</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s">&#39;key&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;foo&#39;</span><span class="p">,</span> <span class="s">&#39;foo&#39;</span><span class="p">],</span> <span class="s">&#39;lval&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]})</span>
+</span><span class='line'><span class="n">right</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s">&#39;key&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;foo&#39;</span><span class="p">,</span> <span class="s">&#39;foo&#39;</span><span class="p">],</span> <span class="s">&#39;rval&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]})</span>
+</span><span class='line'><span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s">&#39;key&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># append</span>
+</span><span class='line'><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;A&#39;</span><span class="p">,</span><span class="s">&#39;B&#39;</span><span class="p">,</span><span class="s">&#39;C&#39;</span><span class="p">,</span><span class="s">&#39;D&#39;</span><span class="p">])</span>
+</span><span class='line'><span class="n">s</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+</span><span class='line'><span class="n">df</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>9. grouping</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c"># (histogram)/group all columns by one column</span>
+</span><span class='line'><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s">&#39;A&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># (cross tabs)/group all columns by multi-columns</span>
+</span><span class='line'><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s">&#39;A&#39;</span><span class="p">,</span><span class="s">&#39;B&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>10. reshape</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c"># stack</span>
+</span><span class='line'><span class="n">tuples</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="p">[[</span><span class="s">&#39;bar&#39;</span><span class="p">,</span> <span class="s">&#39;bar&#39;</span><span class="p">,</span> <span class="s">&#39;baz&#39;</span><span class="p">,</span> <span class="s">&#39;baz&#39;</span><span class="p">,</span> <span class="s">&#39;foo&#39;</span><span class="p">,</span> <span class="s">&#39;foo&#39;</span><span class="p">,</span> <span class="s">&#39;qux&#39;</span><span class="p">,</span> <span class="s">&#39;qux&#39;</span><span class="p">],</span>
+</span><span class='line'>                    <span class="p">[</span><span class="s">&#39;one&#39;</span><span class="p">,</span> <span class="s">&#39;two&#39;</span><span class="p">,</span> <span class="s">&#39;one&#39;</span><span class="p">,</span> <span class="s">&#39;two&#39;</span><span class="p">,</span> <span class="s">&#39;one&#39;</span><span class="p">,</span> <span class="s">&#39;two&#39;</span><span class="p">,</span> <span class="s">&#39;one&#39;</span><span class="p">,</span> <span class="s">&#39;two&#39;</span><span class="p">]]))</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">MultiIndex</span><span class="o">.</span><span class="n">from_tuples</span><span class="p">(</span><span class="n">tuples</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;first&#39;</span><span class="p">,</span> <span class="s">&#39;second&#39;</span><span class="p">])</span>
+</span><span class='line'><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="s">&#39;B&#39;</span><span class="p">])</span>
+</span><span class='line'><span class="n">df2</span> <span class="o">=</span> <span class="n">df</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span>
+</span><span class='line'><span class="n">stacked</span> <span class="o">=</span> <span class="n">df2</span><span class="o">.</span><span class="n">stack</span><span class="p">()</span>
+</span><span class='line'><span class="n">stacked</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span>
+</span><span class='line'><span class="n">stacked</span><span class="o">.</span><span class="n">unstack</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'><span class="n">stacked</span><span class="o">.</span><span class="n">unstack</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># pivot table</span>
+</span><span class='line'><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s">&#39;A&#39;</span> <span class="p">:</span> <span class="p">[</span><span class="s">&#39;one&#39;</span><span class="p">,</span> <span class="s">&#39;one&#39;</span><span class="p">,</span> <span class="s">&#39;two&#39;</span><span class="p">,</span> <span class="s">&#39;three&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span><span class="p">,</span>
+</span><span class='line'>                   <span class="s">&#39;B&#39;</span> <span class="p">:</span> <span class="p">[</span><span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="s">&#39;B&#39;</span><span class="p">,</span> <span class="s">&#39;C&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span>
+</span><span class='line'>                   <span class="s">&#39;C&#39;</span> <span class="p">:</span> <span class="p">[</span><span class="s">&#39;foo&#39;</span><span class="p">,</span> <span class="s">&#39;foo&#39;</span><span class="p">,</span> <span class="s">&#39;foo&#39;</span><span class="p">,</span> <span class="s">&#39;bar&#39;</span><span class="p">,</span> <span class="s">&#39;bar&#39;</span><span class="p">,</span> <span class="s">&#39;bar&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span>
+</span><span class='line'>                   <span class="s">&#39;D&#39;</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">12</span><span class="p">),</span>
+</span><span class='line'>                   <span class="s">&#39;E&#39;</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">12</span><span class="p">)})</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">pd</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s">&#39;D&#39;</span><span class="p">,</span> <span class="n">rows</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="s">&#39;B&#39;</span><span class="p">],</span> <span class="n">cols</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;C&#39;</span><span class="p">])</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>11. get data in/out</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c"># csv in/out</span>
+</span><span class='line'><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">&#39;foo.csv&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s">&#39;foo.csv&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># excel in/out</span>
+</span><span class='line'><span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s">&#39;foo.xlsx&#39;</span><span class="p">,</span> <span class="s">&#39;Sheet1&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">na_values</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;NA&#39;</span><span class="p">])</span>
+</span><span class='line'><span class="n">df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="s">&#39;foo.xlsx&#39;</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s">&#39;Sheet1&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># HDF5 in/out</span>
+</span><span class='line'><span class="n">d</span><span class="o">.</span><span class="n">read_hdf</span><span class="p">(</span><span class="s">&#39;foo.h5&#39;</span><span class="p">,</span><span class="s">&#39;df&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">df</span><span class="o">.</span><span class="n">to_hdf</span><span class="p">(</span><span class="s">&#39;foo.h5&#39;</span><span class="p">,</span><span class="s">&#39;df&#39;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/tech/2014/01/18/vim-commands/">Vim Commands</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-01-18T19:34:30+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>7:34 pm</span></time>
+        
+           | <a href="/tech/2014/01/18/vim-commands/#disqus_thread"
+             data-disqus-identifier="http://k.arttechresearch.com/tech/2014/01/18/vim-commands/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><ul>
+<li>normal mode: to edit a file</li>
+<li>command mode: to edit a file with commands</li>
+</ul>
+
+
+<h2>1. Normal Mode</h2>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;"> Type                  </th>
+<th style="text-align:left;"> Action                </th>
+<th style="text-align:left;"> Command                                      </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> edit                  </td>
+<td style="text-align:left;"> insert                </td>
+<td style="text-align:left;"> i                                            </td>
+</tr>
+<tr>
+<td style="text-align:left;">                       </td>
+<td style="text-align:left;"> delete                </td>
+<td style="text-align:left;"> x                                            </td>
+</tr>
+<tr>
+<td style="text-align:left;">                       </td>
+<td style="text-align:left;"> exit                  </td>
+<td style="text-align:left;"> esc                                          </td>
+</tr>
+<tr>
+<td style="text-align:left;"> move                  </td>
+<td style="text-align:left;"> left, right, down, up </td>
+<td style="text-align:left;"> h, l, j, k                                   </td>
+</tr>
+<tr>
+<td style="text-align:left;">                       </td>
+<td style="text-align:left;"> back word             </td>
+<td style="text-align:left;"> b                                            </td>
+</tr>
+<tr>
+<td style="text-align:left;">                       </td>
+<td style="text-align:left;"> next word             </td>
+<td style="text-align:left;"> w                                            </td>
+</tr>
+<tr>
+<td style="text-align:left;">                       </td>
+<td style="text-align:left;"> end of line           </td>
+<td style="text-align:left;"> $                                            </td>
+</tr>
+<tr>
+<td style="text-align:left;">                       </td>
+<td style="text-align:left;"> page up               </td>
+<td style="text-align:left;"> ctrl + u                                     </td>
+</tr>
+<tr>
+<td style="text-align:left;">                       </td>
+<td style="text-align:left;"> page down             </td>
+<td style="text-align:left;"> ctrl + d                                     </td>
+</tr>
+<tr>
+<td style="text-align:left;">                       </td>
+<td style="text-align:left;"> top of the file       </td>
+<td style="text-align:left;"> gg                                           </td>
+</tr>
+<tr>
+<td style="text-align:left;"> copy, paste, change   </td>
+<td style="text-align:left;"> yank, copy            </td>
+<td style="text-align:left;"> y(xxx)                                       </td>
+</tr>
+<tr>
+<td style="text-align:left;">                       </td>
+<td style="text-align:left;"> cureent line          </td>
+<td style="text-align:left;"> yy                                           </td>
+</tr>
+<tr>
+<td style="text-align:left;">                       </td>
+<td style="text-align:left;"> paste                 </td>
+<td style="text-align:left;"> p                                            </td>
+</tr>
+<tr>
+<td style="text-align:left;">                       </td>
+<td style="text-align:left;"> change                </td>
+<td style="text-align:left;"> c                                            </td>
+</tr>
+<tr>
+<td style="text-align:left;">                       </td>
+<td style="text-align:left;"> change word           </td>
+<td style="text-align:left;"> cw                                           </td>
+</tr>
+<tr>
+<td style="text-align:left;"> search, find, replace </td>
+<td style="text-align:left;"> search                </td>
+<td style="text-align:left;"> /(word)                                      </td>
+</tr>
+<tr>
+<td style="text-align:left;">                       </td>
+<td style="text-align:left;"> search to top         </td>
+<td style="text-align:left;"> #                                            </td>
+</tr>
+<tr>
+<td style="text-align:left;">                       </td>
+<td style="text-align:left;"> search to end         </td>
+<td style="text-align:left;"> *                                            </td>
+</tr>
+<tr>
+<td style="text-align:left;">                       </td>
+<td style="text-align:left;"> find                  </td>
+<td style="text-align:left;"> f(a letter)                                  </td>
+</tr>
+<tr>
+<td style="text-align:left;">                       </td>
+<td style="text-align:left;"> find former           </td>
+<td style="text-align:left;"> ,                                            </td>
+</tr>
+<tr>
+<td style="text-align:left;">                       </td>
+<td style="text-align:left;"> find next             </td>
+<td style="text-align:left;"> ;                                            </td>
+</tr>
+<tr>
+<td style="text-align:left;"> delete                </td>
+<td style="text-align:left;"> delelte a line        </td>
+<td style="text-align:left;"> dd                                           </td>
+</tr>
+<tr>
+<td style="text-align:left;"> fold                  </td>
+<td style="text-align:left;"> fold                  </td>
+<td style="text-align:left;"> zc                                           </td>
+</tr>
+<tr>
+<td style="text-align:left;">                       </td>
+<td style="text-align:left;"> unfold (single)       </td>
+<td style="text-align:left;"> zo                                           </td>
+</tr>
+<tr>
+<td style="text-align:left;">                       </td>
+<td style="text-align:left;"> unfold (all)          </td>
+<td style="text-align:left;"> zr                                           </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>Note: all for editing.</p>
+
+<h2>2. Command Mode</h2>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;"> Type                  </th>
+<th style="text-align:left;"> Action                </th>
+<th style="text-align:left;"> Command                                      </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> coding                </td>
+<td style="text-align:left;"> shift                 </td>
+<td style="text-align:left;"> :line,line&lt; or :line,line>                   </td>
+</tr>
+<tr>
+<td style="text-align:left;"> files                 </td>
+<td style="text-align:left;"> save                  </td>
+<td style="text-align:left;"> :w                                           </td>
+</tr>
+<tr>
+<td style="text-align:left;">                       </td>
+<td style="text-align:left;"> open                  </td>
+<td style="text-align:left;"> :e                                           </td>
+</tr>
+<tr>
+<td style="text-align:left;"> buffer                </td>
+<td style="text-align:left;"> switch                </td>
+<td style="text-align:left;"> :b<n>                                        </td>
+</tr>
+<tr>
+<td style="text-align:left;">                       </td>
+<td style="text-align:left;"> close                 </td>
+<td style="text-align:left;"> :bd                                          </td>
+</tr>
+<tr>
+<td style="text-align:left;"> copy, replce          </td>
+<td style="text-align:left;"> copy paragraph        </td>
+<td style="text-align:left;"> :&lt;line,line> copy &lt;line,line>                </td>
+</tr>
+<tr>
+<td style="text-align:left;">                       </td>
+<td style="text-align:left;"> replace               </td>
+<td style="text-align:left;"> :%s/(words)/(words replaced)/g, g for global </td>
+</tr>
+</tbody>
+</table>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/tech/2010/01/14/sqrt-newtons-method-of-successive-approximations/">Sqrt Newton's Method of Successive Approximations</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2010-01-14T00:00:14+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2010</span></span> <span class='time'>12:00 am</span></time>
+        
+           | <a href="/tech/2010/01/14/sqrt-newtons-method-of-successive-approximations/#disqus_thread"
+             data-disqus-identifier="http://k.arttechresearch.com/tech/2010/01/14/sqrt-newtons-method-of-successive-approximations/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="http://media-cache-ec0.pinimg.com/736x/4d/5d/8a/4d5d8aeb52644182af61a7eac04cdfc9.jpg" /></p>
+
+<h3>Algorithm</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>1. Guess
+</span><span class='line'>
+</span><span class='line'>2. Good-enough?
+</span><span class='line'>                  | Guess^2 - Radicant | &lt; Predetermined Tolerance
+</span><span class='line'>
+</span><span class='line'>If yes, Guess = Root
+</span><span class='line'>   else, Improve Guess
+</span><span class='line'>
+</span><span class='line'>3. Improve
+</span><span class='line'>                  Quotient = Radicant / Guess
+</span><span class='line'>                  Average  = ( Guess + Quotient ) / 2
+</span><span class='line'>                  Guess    = Average</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Importance: Radicant -> Large/Small -> very small fraction of the Guess -> STOP?</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="p">(</span><span class="n">define</span> <span class="p">(</span><span class="nb">sqrt</span> <span class="n">x</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">sqrt</span><span class="o">-</span><span class="n">iter</span> <span class="mf">1.0</span> <span class="n">x</span><span class="p">))</span>
+</span><span class='line'><span class="p">(</span><span class="n">define</span> <span class="p">(</span><span class="nb">sqrt</span><span class="o">-</span><span class="n">iter</span> <span class="n">guess</span> <span class="n">x</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="n">good</span><span class="o">-</span><span class="n">enough</span><span class="p">?</span> <span class="n">guess</span> <span class="n">x</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">guess</span>
+</span><span class='line'>      <span class="p">(</span><span class="nb">sqrt</span><span class="o">-</span><span class="n">iter</span> <span class="p">(</span><span class="n">improve</span> <span class="n">guess</span> <span class="n">x</span><span class="p">)</span> <span class="n">x</span><span class="p">)))</span>
+</span><span class='line'><span class="p">(</span><span class="n">define</span> <span class="p">(</span><span class="n">good</span><span class="o">-</span><span class="n">enough</span><span class="p">?</span> <span class="n">guess</span> <span class="n">x</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="o">&lt;</span> <span class="p">(</span><span class="nb">abs</span> <span class="p">(</span><span class="o">-</span> <span class="p">(</span><span class="n">square</span> <span class="n">guess</span><span class="p">)</span> <span class="n">x</span><span class="p">))</span> <span class="mf">0.001</span><span class="p">))</span>
+</span><span class='line'><span class="p">(</span><span class="n">define</span> <span class="p">(</span><span class="n">improve</span> <span class="n">guess</span> <span class="n">x</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="n">average</span> <span class="n">guess</span> <span class="p">(</span><span class="o">/</span> <span class="n">x</span> <span class="n">guess</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Block Structure</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="p">(</span><span class="n">define</span> <span class="p">(</span><span class="nb">sqrt</span> <span class="n">x</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="n">define</span> <span class="p">(</span><span class="n">good</span><span class="o">-</span><span class="n">enough</span><span class="p">?</span> <span class="n">guess</span> <span class="n">x</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">(</span><span class="o">&lt;</span> <span class="p">(</span><span class="nb">abs</span> <span class="p">(</span><span class="o">-</span> <span class="p">(</span><span class="n">square</span> <span class="n">guess</span><span class="p">)</span> <span class="n">x</span><span class="p">))</span> <span class="mf">0.001</span><span class="p">))</span>
+</span><span class='line'>  <span class="p">(</span><span class="n">define</span> <span class="p">(</span><span class="n">improve</span> <span class="n">guess</span> <span class="n">x</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">(</span><span class="n">average</span> <span class="n">guess</span> <span class="p">(</span><span class="o">/</span> <span class="n">x</span> <span class="n">guess</span><span class="p">)))</span>
+</span><span class='line'>  <span class="p">(</span><span class="n">define</span> <span class="p">(</span><span class="nb">sqrt</span><span class="o">-</span><span class="n">iter</span> <span class="n">guess</span> <span class="n">x</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="n">good</span><span class="o">-</span><span class="n">enough</span><span class="p">?</span> <span class="n">guess</span> <span class="n">x</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">guess</span>
+</span><span class='line'>        <span class="p">(</span><span class="nb">sqrt</span><span class="o">-</span><span class="n">iter</span> <span class="p">(</span><span class="n">improve</span> <span class="n">guess</span> <span class="n">x</span><span class="p">)</span> <span class="n">x</span><span class="p">)))</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">sqrt</span><span class="o">-</span><span class="n">iter</span> <span class="mf">1.0</span> <span class="n">x</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>References:<br/>
+&ndash; <a href="http://mitpress.mit.edu/sicp/full-text/book/book-Z-H-10.html#%_sec_1.1.7">Square Roots by Newton&rsquo;s Method</a><br/>
+&ndash; <a href="http://mitpress.mit.edu/sicp/">Structure and Interpretation of Computer Programs</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
 
   <div class="pagination">
 
@@ -253,17 +1580,33 @@
         <a href="/tech/2015/10/03/installing-openstack-devstack/">Installing Openstack Devstack</a>
       </li>
     
+      <li class="post">
+        <a href="/tech/2014/03/05/time-series-with-pandas/">Time Series With Pandas</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2014/03/05/python-pandas/">Python Pandas</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2014/01/18/vim-commands/">Vim Commands</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2010/01/14/sqrt-newtons-method-of-successive-approximations/">Sqrt Newton's Method of Successive Approximations</a>
+      </li>
+    
   </ul>
 </section>
 <section class="category-list">
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/categories/art/'>art (1)</a></li><li><a href='/categories/life/'>life (62)</a></li><li><a href='/categories/tech/'>tech (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/categories/art/'>art (1)</a></li><li><a href='/categories/life/'>life (46)</a></li><li><a href='/categories/tech/'>tech (5)</a></li></ul>
 </section>
 <section class="tag-cloud">
 
 
   <h1>Tags</h1>
-    <ul id="category-list"><a href='/tags/career' style='font-size: 95.64102564102564%'>career(3)</a> <a href='/tags/cloud' style='font-size: 90.0%'>cloud(1)</a> <a href='/tags/fiction' style='font-size: 104.1025641025641%'>fiction(6)</a> <a href='/tags/french' style='font-size: 90.0%'>french(1)</a> <a href='/tags/leisure' style='font-size: 200.0%'>leisure(40)</a> <a href='/tags/openstack' style='font-size: 90.0%'>openstack(1)</a> <a href='/tags/poem' style='font-size: 98.46153846153847%'>poem(4)</a> <a href='/tags/reading' style='font-size: 109.74358974358975%'>reading(8)</a> <a href='/tags/translation' style='font-size: 90.0%'>translation(1)</a> </ul>
+    <ul id="category-list"><a href='/tags/algorithm' style='font-size: 90.0%'>algorithm(1)</a> <a href='/tags/career' style='font-size: 94.58333333333333%'>career(2)</a> <a href='/tags/cloud' style='font-size: 90.0%'>cloud(1)</a> <a href='/tags/fiction' style='font-size: 112.91666666666667%'>fiction(6)</a> <a href='/tags/french' style='font-size: 90.0%'>french(1)</a> <a href='/tags/ide' style='font-size: 90.0%'>ide(1)</a> <a href='/tags/leisure' style='font-size: 200.0%'>leisure(25)</a> <a href='/tags/openstack' style='font-size: 90.0%'>openstack(1)</a> <a href='/tags/pandas' style='font-size: 94.58333333333333%'>pandas(2)</a> <a href='/tags/poem' style='font-size: 103.75%'>poem(4)</a> <a href='/tags/python' style='font-size: 94.58333333333333%'>python(2)</a> <a href='/tags/reading' style='font-size: 122.08333333333334%'>reading(8)</a> <a href='/tags/time-series' style='font-size: 90.0%'>time series(1)</a> <a href='/tags/translation' style='font-size: 90.0%'>translation(1)</a> <a href='/tags/vim' style='font-size: 90.0%'>vim(1)</a> </ul>
 </section>
 
     
