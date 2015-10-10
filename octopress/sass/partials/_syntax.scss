@@ -15,7 +15,7 @@
     background: $base02 $noise-bg !important;
     border-right: 1px solid darken($base03, 2) !important;
     @include box-shadow(lighten($base02, 2) -1px 0 inset);
-    text-shadow: darken($base02, 10) 0 -1px;
+    // text-shadow: darken($base02, 10) 0 -1px;
   }
   span { color: $base01 !important; }
   padding: .8em !important;
@@ -236,23 +236,23 @@ figure.code {
   text-align: center;
   font-size: 13px;
   line-height: 2em;
-  text-shadow: #cbcccc 0 1px 0;
+  // text-shadow: #cbcccc 0 1px 0;
   color: #474747;
+  color: #8a8a8a;
   font-weight: normal;
   margin-bottom: 0;
   @include border-top-radius(5px);
   font-family: "Helvetica Neue", Arial, "Lucida Grande", "Lucida Sans Unicode", Lucida, sans-serif;
-  background: #aaa image-url("code_bg.png") top repeat-x;
-  border: 1px solid #565656;
-  border-top-color: #cbcbcb;
-  border-left-color: #a5a5a5;
-  border-right-color: #a5a5a5;
-  // background: #eee image-url("code_bg.png") top repeat-x;
-  // border: 1px solid #c5c5c5;
-  // border-top-color: #cfcfcf;
-  // border-left-color: #cfcfcf;
-  // border-right-color: #cfcfcf;
-  // border-bottom-color: #cfcfcf;
+  // background: #aaa image-url("code_bg.png") top repeat-x;
+  // border: 1px solid #565656;
+  // border-top-color: #cbcbcb;
+  // border-left-color: #a5a5a5;
+  // border-right-color: #a5a5a5;
+  background: #f2f2f2;
+  border: 1px solid #f2f2f2;
+  border-top-color: #e6e6e6;
+  border-left-color: #e6e6e6;
+  border-right-color: #e6e6e6;
   border-bottom: 0;
 }
 
