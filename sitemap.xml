@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://k.arttechresearch.com/art/2015/10/06/sample-post/</loc>
-    <lastmod>2015-10-06T16:28:42+08:00</lastmod>
+    <loc>http://k.arttechresearch.com/art/2015/10/11/inside-a-french-chateau-by-kraemer-gallery/</loc>
+    <lastmod>2015-10-11T22:46:04+08:00</lastmod>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tech/2015/10/03/installing-openstack-devstack/</loc>
@@ -558,5 +558,11 @@
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/cloud/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/exhibition/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/antique/</loc>
   </url>
 </urlset>
