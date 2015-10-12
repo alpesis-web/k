@@ -1,0 +1,592 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Jekyll - Kelly Chan</title>
+  <meta name="author" content="Kelly Chan">
+
+  
+  <meta name="description" content="1. Installation Prequisition ruby > 1.9.3
+gem Installation 1
+2
+3
+4
+$ gem install jekyll
+$ jekyll new project_name
+$ cd project_name
+$ jekyll serve -- &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://k.arttechresearch.com/tech/2014/05/21/jekyll/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Kelly Chan" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+<script type="text/javascript">
+
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-53625944-7', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+</head>
+
+<body   >
+  <header role="banner"><ul class="soc">
+
+  
+    <li><a class="soc-github" href="https://github.com/KellyChan"></a></li>
+  
+
+  
+    <li><a class="soc-twitter" href="https://twitter.com/kwailamchan"></a></li>
+  
+
+  
+    <li><a class="soc-pinterest" href="https://www.pinterest.com/wailamchan/"></a></li>
+  
+
+  
+    <li><a class="soc-email1 soc-icon-last" href="mailto:support@arttechresearch.com"></a></li>
+  
+</ul>
+
+<hgroup>
+  <h1><a href="/">Kelly Chan</a></h1>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="k.arttechresearch.com">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/tech">Tech</a></li>
+  <li><a href="/art">Art</a></li>
+  <li><a href="/life">Life</a></li>
+  <li><a href="/archives">Archives</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <li><a href="/devkits">Devkits</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Jekyll</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-21T10:59:28+08:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>10:59 am</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://k.arttechresearch.com">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>1. Installation</h2>
+
+<p>Prequisition</p>
+
+<ul>
+<li>ruby > 1.9.3</li>
+<li>gem</li>
+</ul>
+
+
+<p>Installation</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>gem install jekyll
+</span><span class='line'><span class="nv">$ </span>jekyll new project_name
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>project_name
+</span><span class='line'><span class="nv">$ </span>jekyll serve --watch
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Files</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>.
+</span><span class='line'><span class="p">|</span>--- _includes/                                           <span class="c"># HTML partials</span>
+</span><span class='line'><span class="p">|</span>        <span class="p">|</span>------- head.html
+</span><span class='line'><span class="p">|</span>        <span class="p">|</span>------- header.html
+</span><span class='line'><span class="p">|</span>        <span class="p">|</span>------- footer.html
+</span><span class='line'><span class="p">|</span>--- _layouts/                                            <span class="c"># templates</span>
+</span><span class='line'><span class="p">|</span>        <span class="p">|</span>------- default.html   <span class="o">(</span>head/header/footer<span class="o">)</span>
+</span><span class='line'><span class="p">|</span>                    <span class="p">|</span>--------- page.html
+</span><span class='line'><span class="p">|</span>                                   <span class="p">|</span>------ posts.md
+</span><span class='line'><span class="p">|</span>                                   <span class="p">|</span>------ projects.md
+</span><span class='line'><span class="p">|</span>                    <span class="p">|</span>--------- post.html
+</span><span class='line'><span class="p">|</span>--- _posts/                                              <span class="c"># posts</span>
+</span><span class='line'><span class="p">|</span>
+</span><span class='line'><span class="p">|</span>--- css/
+</span><span class='line'><span class="p">|</span>--- javascript/
+</span><span class='line'><span class="p">|</span>
+</span><span class='line'><span class="p">|</span>--- index.html                                           <span class="c"># html page</span>
+</span><span class='line'><span class="p">|</span>--- posts.md                                             <span class="c"># html page</span>
+</span><span class='line'><span class="p">|</span>--- projects.md                                          <span class="c"># html page</span>
+</span><span class='line'><span class="p">|</span>
+</span><span class='line'><span class="p">|</span>--- _config.yml                                          <span class="c"># config file</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>2. Configuration</h2>
+
+<p><code>_config.yml</code></p>
+
+<h2>3. Front End</h2>
+
+<h3>3.1. Templates</h3>
+
+<h4>3.1.1. template variables</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>.
+</span><span class='line'><span class="p">|</span>--- site
+</span><span class='line'><span class="p">|</span>      <span class="p">|</span>--- site.title
+</span><span class='line'><span class="p">|</span>      <span class="p">|</span>--- site.email
+</span><span class='line'><span class="p">|</span>      <span class="p">|</span>--- site.username
+</span><span class='line'><span class="p">|</span>      <span class="p">|</span>--- site.description
+</span><span class='line'><span class="p">|</span>      <span class="p">|</span>--- site.baseurl
+</span><span class='line'><span class="p">|</span>      <span class="p">|</span>--- site.url
+</span><span class='line'><span class="p">|</span>
+</span><span class='line'><span class="p">|</span>--- page
+</span><span class='line'><span class="p">|</span>      <span class="p">|</span>--- page.title
+</span><span class='line'><span class="p">|</span>
+</span><span class='line'><span class="p">|</span>--- post
+</span><span class='line'>       <span class="p">|</span>--- post.title
+</span><span class='line'>       <span class="p">|</span>--- post.url
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>3.1.2. partials</h4>
+
+<p>categories and tags</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'>{/% for category in page.categories %} {/{category}}
+</span><span class='line'>{/% endfor %}
+</span><span class='line'>
+</span><span class='line'>{/% for tag in page.tags %} {/{tag}}
+</span><span class='line'>{/% endfor %}
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>rss</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">&quot;rss-subscribe&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    subscribe <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;{\{ &quot;</span><span class="err">/</span><span class="na">feed</span><span class="err">.</span><span class="na">xml</span><span class="err">&quot;</span> <span class="err">|</span> <span class="na">prepend:</span> <span class="na">site</span><span class="err">.</span><span class="na">baseurl</span> <span class="err">}}&quot;</span><span class="nt">&gt;</span>via RSS<span class="nt">&lt;/a&gt;</span>
+</span><span class='line'><span class="nt">&lt;/p&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>pagination</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">&quot;pageNav&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;a</span> <span class="err">{\%</span> <span class="na">if</span> <span class="na">page</span><span class="err">.</span><span class="na">previous</span> <span class="err">%}</span> <span class="na">href=</span><span class="s">&quot;{\{ site.url }}{\{page.previous.url}}&quot;</span>
+</span><span class='line'>       <span class="err">{\%</span> <span class="na">endif</span> <span class="err">%}</span>
+</span><span class='line'>       <span class="err">{\%</span> <span class="na">unless</span> <span class="na">page</span><span class="err">.</span><span class="na">previous</span> <span class="err">%}</span>
+</span><span class='line'>       <span class="err">{\%</span> <span class="na">endunless</span> <span class="err">%}</span>
+</span><span class='line'>    <span class="nt">&gt;</span>Previous<span class="nt">&lt;/a&gt;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nt">&lt;a</span> <span class="err">{\%</span> <span class="na">if</span> <span class="na">page</span><span class="err">.</span><span class="na">next</span> <span class="err">%}</span> <span class="na">href=</span><span class="s">&quot;{\{ site.url }}{\{ page.next.url }}&quot;</span>
+</span><span class='line'>       <span class="err">{\%</span> <span class="na">endif</span> <span class="err">%}</span>
+</span><span class='line'>       <span class="err">{\%</span> <span class="na">unless</span> <span class="na">page</span><span class="err">.</span><span class="na">next</span> <span class="err">%}</span>
+</span><span class='line'>       <span class="err">{\%</span> <span class="na">endunless</span> <span class="err">%}</span>
+</span><span class='line'>    <span class="nt">&gt;</span>Next<span class="nt">&lt;/a&gt;</span>
+</span><span class='line'><span class="nt">&lt;/span&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>date and time</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'>{\% capture y %} {\{ post.date | date: &quot;%Y&quot; }}
+</span><span class='line'>    {\% endcapture %}
+</span><span class='line'>    {\% if year != y %}
+</span><span class='line'>        {\% assign year = y %}
+</span><span class='line'>        <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">&quot;post-year&quot;</span><span class="nt">&gt;</span>{\{ y }}<span class="nt">&lt;/li&gt;</span>
+</span><span class='line'>{\% endif %}
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>3.2. CSS</h3>
+
+<h4>3.2.1. layouts</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'>margin -&gt; border -&gt; padding
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>3.2.2. partials</h4>
+
+<p>table</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="nt">table</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">display</span><span class="o">:</span> <span class="k">block</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">font-family</span><span class="o">:</span> <span class="k">sans-serif</span><span class="p">;</span>
+</span><span class='line'>  <span class="o">-</span><span class="n">webkit</span><span class="o">-</span><span class="k">font</span><span class="o">-</span><span class="n">smoothing</span><span class="o">:</span> <span class="n">antialiased</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">font-size</span><span class="o">:</span> <span class="m">115%</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">overflow</span><span class="o">:</span> <span class="k">auto</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">width</span><span class="o">:</span> <span class="k">auto</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">th</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">background-color</span><span class="o">:</span> <span class="k">rgb</span><span class="p">(</span><span class="m">112</span><span class="o">,</span> <span class="m">196</span><span class="o">,</span> <span class="m">105</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">color</span><span class="o">:</span> <span class="nb">white</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">font-weight</span><span class="o">:</span> <span class="k">normal</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">padding</span><span class="o">:</span> <span class="m">20px</span> <span class="m">30px</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">text-align</span><span class="o">:</span> <span class="k">center</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">td</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">background-color</span><span class="o">:</span> <span class="k">rgb</span><span class="p">(</span><span class="m">238</span><span class="o">,</span> <span class="m">238</span><span class="o">,</span> <span class="m">238</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">color</span><span class="o">:</span> <span class="k">rgb</span><span class="p">(</span><span class="m">111</span><span class="o">,</span> <span class="m">111</span><span class="o">,</span> <span class="m">111</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">padding</span><span class="o">:</span> <span class="m">20px</span> <span class="m">30px</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>3.3. Javascript</h3>
+
+<h4>3.3.1. Scripts</h4>
+
+<h4>3.3.2. Libraries</h4>
+
+<p><a href="http://www.mathjax.org/">MathJax</a></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span>
+</span><span class='line'>        <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>4. Backend</h2>
+
+<h2>5. Plugins</h2>
+
+<h2>6. Markdown</h2>
+
+<h3>6.1. links</h3>
+
+<h3>6.2. syntax</h3>
+
+<h2>References</h2>
+
+<ol>
+<li>Toolkits: <a href="http://jekyllrb.com/">Jekyll</a>, <a href="http://www.w3schools.com/tags/ref_colorpicker.asp">CSS Color Picker</a></li>
+<li>Libraries: <a href="http://www.mathjax.org/">MathJax</a></li>
+<li>Templates: <a href="https://github.com/jhamrick/blog">Jessica Hamrick</a>, <a href="https://github.com/kejinlu/kejinlu.github.com">Geek Lu</a>, <a href="http://blog.ixxoo.me/">likebeta&rsquo;s Blog</a>, <a href="https://github.com/jekyll/jekyll/wiki/Sites">Offical Sites</a>, <a href="http://yuanyong.org/blog/collect-jekyll-theme.html">Jekyll Themes</a>, <a href="https://github.com/enml/blog">enml</a></li>
+<li>Tutorials: <a href="http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference">MathJax basic tutorial and quick reference</a>, <a href="http://www.calculatorium.com/mathjax-quick-start-tutorial/">MathJax Quick Start Tutorial</a></li>
+<li>CSS: <a href="http://www.freshdesignweb.com/free-css-tables.html">40+ Free Beautiful CSS Table Templates</a></li>
+</ol>
+
+</div>
+
+
+
+  <footer>
+
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kelly Chan</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-05-21T10:59:28+08:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>10:59 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/tech/'>tech</a>
+  
+</span>
+
+
+    </p>
+
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://k.arttechresearch.com/tech/2014/05/21/jekyll/" data-via="kwailamchan" data-counturl="http://k.arttechresearch.com/tech/2014/05/21/jekyll/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/tech/2014/04/21/data-structure-and-algorithms/" title="Previous Post: Data Structure and Algorithms">&laquo; Data Structure and Algorithms</a>
+      
+      
+        <a class="basic-alignment right" href="/tech/2014/05/21/css/" title="Next Post: CSS">CSS &raquo;</a>
+      
+    </p>
+
+  </footer>
+
+</article>
+
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Tech</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/tech/2015/10/03/installing-openstack-devstack/">Installing Openstack Devstack</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2014/06/03/bike-sharing-demand/">Bike Sharing Demand</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2014/05/28/forest-cover-type-prediction/">Forest Cover Type Prediction</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2014/05/24/text-classification-with-naive-bayes/">Text Classification With Naive Bayes</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2014/05/23/python-syntax/">Python Syntax</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2014/05/21/css/">CSS</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2014/05/21/jekyll/">Jekyll</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2014/04/21/data-structure-and-algorithms/">Data Structure and Algorithms</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2014/03/07/emacs/">Emacs</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2014/03/05/time-series-with-pandas/">Time Series With Pandas</a>
+      </li>
+    
+  </ul>
+</section>
+<section class="category-list">
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/categories/art/'>art (1)</a></li><li><a href='/categories/life/'>life (43)</a></li><li><a href='/categories/tech/'>tech (13)</a></li></ul>
+</section>
+<section class="tag-cloud">
+
+
+  <h1>Tags</h1>
+    <ul id="category-list"><a href='/tags/algorithm' style='font-size: 95.0%'>algorithm(2)</a> <a href='/tags/career' style='font-size: 95.0%'>career(2)</a> <a href='/tags/classification' style='font-size: 95.0%'>classification(2)</a> <a href='/tags/cloud' style='font-size: 90.0%'>cloud(1)</a> <a href='/tags/css' style='font-size: 90.0%'>css(1)</a> <a href='/tags/emacs' style='font-size: 90.0%'>emacs(1)</a> <a href='/tags/fiction' style='font-size: 115.0%'>fiction(6)</a> <a href='/tags/french' style='font-size: 90.0%'>french(1)</a> <a href='/tags/ide' style='font-size: 95.0%'>ide(2)</a> <a href='/tags/jekyll' style='font-size: 90.0%'>jekyll(1)</a> <a href='/tags/leisure' style='font-size: 200.0%'>leisure(23)</a> <a href='/tags/machine-learning' style='font-size: 100.0%'>machine learning(3)</a> <a href='/tags/nlp' style='font-size: 90.0%'>nlp(1)</a> <a href='/tags/nltk' style='font-size: 90.0%'>nltk(1)</a> <a href='/tags/openstack' style='font-size: 90.0%'>openstack(1)</a> <a href='/tags/pandas' style='font-size: 95.0%'>pandas(2)</a> <a href='/tags/poem' style='font-size: 105.0%'>poem(4)</a> <a href='/tags/prediction' style='font-size: 90.0%'>prediction(1)</a> <a href='/tags/python' style='font-size: 120.0%'>python(7)</a> <a href='/tags/reading' style='font-size: 120.0%'>reading(7)</a> <a href='/tags/ruby' style='font-size: 90.0%'>ruby(1)</a> <a href='/tags/time-series' style='font-size: 90.0%'>time series(1)</a> <a href='/tags/translation' style='font-size: 90.0%'>translation(1)</a> <a href='/tags/vim' style='font-size: 90.0%'>vim(1)</a> </ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2006-2015 - Kelly Chan
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'kwailamc';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://k.arttechresearch.com/tech/2014/05/21/jekyll/';
+        var disqus_url = 'http://k.arttechresearch.com/tech/2014/05/21/jekyll/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

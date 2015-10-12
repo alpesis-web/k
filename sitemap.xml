@@ -29,6 +29,38 @@
     <lastmod>2014-06-19T13:17:03+08:00</lastmod>
   </url>
   <url>
+    <loc>http://k.arttechresearch.com/tech/2014/06/03/bike-sharing-demand/</loc>
+    <lastmod>2014-06-03T14:49:22+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/05/28/forest-cover-type-prediction/</loc>
+    <lastmod>2014-05-28T15:00:00+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/05/24/text-classification-with-naive-bayes/</loc>
+    <lastmod>2014-05-24T01:05:22+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/05/23/python-syntax/</loc>
+    <lastmod>2014-05-23T13:21:29+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/05/21/css/</loc>
+    <lastmod>2014-05-21T22:35:50+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/05/21/jekyll/</loc>
+    <lastmod>2014-05-21T10:59:28+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/04/21/data-structure-and-algorithms/</loc>
+    <lastmod>2014-04-21T09:24:12+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/03/07/emacs/</loc>
+    <lastmod>2014-03-07T17:22:32+08:00</lastmod>
+  </url>
+  <url>
     <loc>http://k.arttechresearch.com/tech/2014/03/05/time-series-with-pandas/</loc>
     <lastmod>2014-03-05T22:20:32+08:00</lastmod>
   </url>
@@ -129,10 +161,6 @@
     <lastmod>2009-04-05T21:33:18+08:00</lastmod>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/life/2008/12/21/calculating-the-probability-of-forever-exist/</loc>
-    <lastmod>2008-12-21T09:50:18+08:00</lastmod>
-  </url>
-  <url>
     <loc>http://k.arttechresearch.com/life/2008/12/21/gae/</loc>
     <lastmod>2008-12-21T09:07:00+08:00</lastmod>
   </url>
@@ -157,20 +185,12 @@
     <lastmod>2008-11-08T08:39:00+08:00</lastmod>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/life/2008/10/30/the-truth/</loc>
-    <lastmod>2008-10-30T14:54:22+08:00</lastmod>
-  </url>
-  <url>
     <loc>http://k.arttechresearch.com/life/2008/10/28/xiao-li/</loc>
     <lastmod>2008-10-28T10:00:00+08:00</lastmod>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/life/2008/10/28/cloud-computing/</loc>
     <lastmod>2008-10-28T09:30:00+08:00</lastmod>
-  </url>
-  <url>
-    <loc>http://k.arttechresearch.com/life/2008/10/21/statistics/</loc>
-    <lastmod>2008-10-21T05:41:22+08:00</lastmod>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/life/2008/05/30/the-giraffe-question/</loc>
@@ -270,6 +290,33 @@
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/time-series/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/emacs/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/ruby/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/jekyll/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/css/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/nlp/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/machine-learning/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/classification/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/nltk/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/prediction/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/french/</loc>

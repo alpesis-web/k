@@ -469,7 +469,19 @@ import matplotlib.pyplot as plt 1. object creation 1
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c"># csv in/out</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c"># tsv in/out</span>
+</span><span class='line'><span class="n">pd</span><span class="o">.</span><span class="n">read_table</span><span class="p">(</span><span class="n">dataPath</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># json in/out</span>
+</span><span class='line'><span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="n">dataPath</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># csv in/out</span>
 </span><span class='line'><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">&#39;foo.csv&#39;</span><span class="p">)</span>
 </span><span class='line'><span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s">&#39;foo.csv&#39;</span><span class="p">)</span>
 </span><span class='line'>
@@ -481,6 +493,90 @@ import matplotlib.pyplot as plt 1. object creation 1
 </span><span class='line'><span class="n">d</span><span class="o">.</span><span class="n">read_hdf</span><span class="p">(</span><span class="s">&#39;foo.h5&#39;</span><span class="p">,</span><span class="s">&#39;df&#39;</span><span class="p">)</span>
 </span><span class='line'><span class="n">df</span><span class="o">.</span><span class="n">to_hdf</span><span class="p">(</span><span class="s">&#39;foo.h5&#39;</span><span class="p">,</span><span class="s">&#39;df&#39;</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
+
+
+<h3>12. working with columns</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c"># get features</span>
+</span><span class='line'><span class="n">features</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">col</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;Id&#39;</span><span class="p">,</span> <span class="s">&#39;Cover_Type&#39;</span><span class="p">]]</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># delete columns</span>
+</span><span class='line'><span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s">&#39;col&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># map labels</span>
+</span><span class='line'><span class="n">coded</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;Good&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;Not Good&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">}</span>
+</span><span class='line'><span class="n">data</span><span class="p">[</span><span class="s">&#39;IsHoliday&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;IsHoliday&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">coded</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># split columns</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">splitDatetime</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+</span><span class='line'>    <span class="n">sub</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39; &#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">columns</span> <span class="o">=</span> <span class="s">&quot;date time&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+</span><span class='line'>    <span class="n">time</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">sub</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;:&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">columns</span> <span class="o">=</span> <span class="s">&quot;hour minute second&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+</span><span class='line'>    <span class="n">data</span><span class="p">[</span><span class="s">&#39;date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sub</span><span class="p">[</span><span class="s">&#39;date&#39;</span><span class="p">]</span>
+</span><span class='line'>    <span class="n">data</span><span class="p">[</span><span class="s">&#39;time&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">time</span><span class="p">[</span><span class="s">&#39;hour&#39;</span><span class="p">]</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">data</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># shift and fillna</span>
+</span><span class='line'><span class="n">df</span><span class="p">[</span><span class="s">&#39;ENTRIESn_hourly&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s">&#39;ENTRIESn&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="s">&#39;ENTRIESn&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">()</span>
+</span><span class='line'><span class="n">df</span><span class="p">[</span><span class="s">&#39;ENTRIESn_hourly&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s">&#39;ENTRIESn_hourly&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>13. working with rows</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c"># drop duplicates</span>
+</span><span class='line'><span class="n">df</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>14. working with datasets</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c"># merge data</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">combineStore</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">stores</span><span class="p">):</span>
+</span><span class='line'>    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">stores</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="s">&quot;Store&quot;</span><span class="p">,</span> \
+</span><span class='line'>                                  <span class="n">right_on</span><span class="o">=</span><span class="s">&quot;Store&quot;</span><span class="p">,</span> \
+</span><span class='line'>                                  <span class="n">how</span><span class="o">=</span><span class="s">&quot;left&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">data</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>15. statitics</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c"># correlation</span>
+</span><span class='line'><span class="n">df</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
 
 </div>
 
@@ -556,32 +652,52 @@ import matplotlib.pyplot as plt 1. object creation 1
       </li>
     
       <li class="post">
+        <a href="/tech/2014/06/03/bike-sharing-demand/">Bike Sharing Demand</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2014/05/28/forest-cover-type-prediction/">Forest Cover Type Prediction</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2014/05/24/text-classification-with-naive-bayes/">Text Classification With Naive Bayes</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2014/05/23/python-syntax/">Python Syntax</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2014/05/21/css/">CSS</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2014/05/21/jekyll/">Jekyll</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2014/04/21/data-structure-and-algorithms/">Data Structure and Algorithms</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2014/03/07/emacs/">Emacs</a>
+      </li>
+    
+      <li class="post">
         <a href="/tech/2014/03/05/time-series-with-pandas/">Time Series With Pandas</a>
-      </li>
-    
-      <li class="post">
-        <a href="/tech/2014/03/05/python-pandas/">Python Pandas</a>
-      </li>
-    
-      <li class="post">
-        <a href="/tech/2014/01/18/vim-commands/">Vim Commands</a>
-      </li>
-    
-      <li class="post">
-        <a href="/tech/2010/01/14/sqrt-newtons-method-of-successive-approximations/">Sqrt Newton's Method of Successive Approximations</a>
       </li>
     
   </ul>
 </section>
 <section class="category-list">
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/categories/art/'>art (1)</a></li><li><a href='/categories/life/'>life (46)</a></li><li><a href='/categories/tech/'>tech (5)</a></li></ul>
+    <ul id="category-list"><li><a href='/categories/art/'>art (1)</a></li><li><a href='/categories/life/'>life (43)</a></li><li><a href='/categories/tech/'>tech (13)</a></li></ul>
 </section>
 <section class="tag-cloud">
 
 
   <h1>Tags</h1>
-    <ul id="category-list"><a href='/tags/algorithm' style='font-size: 90.0%'>algorithm(1)</a> <a href='/tags/career' style='font-size: 94.58333333333333%'>career(2)</a> <a href='/tags/cloud' style='font-size: 90.0%'>cloud(1)</a> <a href='/tags/fiction' style='font-size: 112.91666666666667%'>fiction(6)</a> <a href='/tags/french' style='font-size: 90.0%'>french(1)</a> <a href='/tags/ide' style='font-size: 90.0%'>ide(1)</a> <a href='/tags/leisure' style='font-size: 200.0%'>leisure(25)</a> <a href='/tags/openstack' style='font-size: 90.0%'>openstack(1)</a> <a href='/tags/pandas' style='font-size: 94.58333333333333%'>pandas(2)</a> <a href='/tags/poem' style='font-size: 103.75%'>poem(4)</a> <a href='/tags/python' style='font-size: 94.58333333333333%'>python(2)</a> <a href='/tags/reading' style='font-size: 122.08333333333334%'>reading(8)</a> <a href='/tags/time-series' style='font-size: 90.0%'>time series(1)</a> <a href='/tags/translation' style='font-size: 90.0%'>translation(1)</a> <a href='/tags/vim' style='font-size: 90.0%'>vim(1)</a> </ul>
+    <ul id="category-list"><a href='/tags/algorithm' style='font-size: 95.0%'>algorithm(2)</a> <a href='/tags/career' style='font-size: 95.0%'>career(2)</a> <a href='/tags/classification' style='font-size: 95.0%'>classification(2)</a> <a href='/tags/cloud' style='font-size: 90.0%'>cloud(1)</a> <a href='/tags/css' style='font-size: 90.0%'>css(1)</a> <a href='/tags/emacs' style='font-size: 90.0%'>emacs(1)</a> <a href='/tags/fiction' style='font-size: 115.0%'>fiction(6)</a> <a href='/tags/french' style='font-size: 90.0%'>french(1)</a> <a href='/tags/ide' style='font-size: 95.0%'>ide(2)</a> <a href='/tags/jekyll' style='font-size: 90.0%'>jekyll(1)</a> <a href='/tags/leisure' style='font-size: 200.0%'>leisure(23)</a> <a href='/tags/machine-learning' style='font-size: 100.0%'>machine learning(3)</a> <a href='/tags/nlp' style='font-size: 90.0%'>nlp(1)</a> <a href='/tags/nltk' style='font-size: 90.0%'>nltk(1)</a> <a href='/tags/openstack' style='font-size: 90.0%'>openstack(1)</a> <a href='/tags/pandas' style='font-size: 95.0%'>pandas(2)</a> <a href='/tags/poem' style='font-size: 105.0%'>poem(4)</a> <a href='/tags/prediction' style='font-size: 90.0%'>prediction(1)</a> <a href='/tags/python' style='font-size: 120.0%'>python(7)</a> <a href='/tags/reading' style='font-size: 120.0%'>reading(7)</a> <a href='/tags/ruby' style='font-size: 90.0%'>ruby(1)</a> <a href='/tags/time-series' style='font-size: 90.0%'>time series(1)</a> <a href='/tags/translation' style='font-size: 90.0%'>translation(1)</a> <a href='/tags/vim' style='font-size: 90.0%'>vim(1)</a> </ul>
 </section>
 
   

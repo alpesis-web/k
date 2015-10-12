@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tech | Kelly Chan]]></title>
   <link href="http://k.arttechresearch.com/categories/tech/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2015-10-10T21:55:40+08:00</updated>
+  <updated>2015-10-12T12:44:35+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[Kelly Chan]]></name>
@@ -92,786 +92,831 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Time Series With Pandas]]></title>
-    <link href="http://k.arttechresearch.com/tech/2014/03/05/time-series-with-pandas/"/>
-    <updated>2014-03-05T22:20:32+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2014/03/05/time-series-with-pandas</id>
-    <content type="html"><![CDATA[<h3>1. date and time</h3>
-
-<pre><code class="python"># get datetime from system
-from datetime import datetime
-now = datetime.now()
-now.year, now.month, now.day
-
-# calculate delta between days
-delta = datetime(2011, 1, 7) - datetime(2008, 6, 24, 8, 15)
-delta.days
-delta.seconds
-
-from datetime import timedelta
-start = datetime(2011, 1, 7)
-start + timedelta(12)
-start - 2 * timedelta(12)
-</code></pre>
-
-<p>convert datetime and string</p>
-
-<pre><code class="python"># convert with strftime
-stamp = datetime(2011, 1, 3)
-str(stamp)
-stamp.strftime('%Y-%m-%d')
-
-value = '2011-01-03'
-datetime.strptime(value, '%Y-%m-%d')
-
-datestrs = ['7/6/2011', '8/6/2011']
-[datetime.strptime(x, '%m/%d/%Y') for x in datestrs]
-
-# converte with parse
-from dateutil.parser import parse
-parse('2011-01-03')
-parse('Jan 31, 1997 10:45 PM')
-parse('6/12/2011', dayfirst=True)
-
-
-# coverte with pandas
-pandas.to_datetime(datestrs)
-idx = pd.to_datetime(datestrs + [None])
-idx
-idx[2]
-pandas.isnull(idx)
-</code></pre>
-
-<h3>2. time series</h3>
-
-<p>create dates with pandas</p>
-
-<pre><code class="python">from datetime import datetime
-
-dates = [datetime(2011, 1, 2), datetime(2011, 1, 5), datetime(2011, 1, 7), 
-         datetime(2011, 1, 8), datetime(2011, 1, 10), datetime(2011, 1, 12)]
-
-ts = pandas.Series(np.random.randn(6), index=dates)
-ts
-
-type(ts)
-ts.index
-ts.index.dtype
-
-stamp = ts.index[0]
-stamp
-</code></pre>
-
-<p>indexing, selection, subsetting</p>
-
-<pre><code class="python">stamp = ts.index[2]
-ts[stamp]
-ts['1/10/2011']
-ts['20110110']
-
-longer_ts = pandas.Series(np.random.randn(1000), index=pd.date_range('1/1/2000', periods=1000))
-longer_ts['2001']
-longer_ts['2001-05']
-
-ts[datetime(2011, 1, 7):]
-ts['1/6/2011':'1/11/2011']
-
-ts.truncate(after='1/9/2011')
-
-dates = pandas.date_range('1/1/2000', periods=100, freq='W-WED')
-long_df = pandas.DataFrame(np.random.randn(100, 4), index=dates, columns=['Colorado', 'Texas', 'New York', 'Ohio'])
-</code></pre>
-
-<p>time series with duplicate indices</p>
-
-<pre><code class="python">dates = pandas.DatetimeIndex(['1/1/2000', '1/2/2000', '1/2/2000', '1/2/2000', '1/3/2000'])
-dup_ts = pandas.Series(np.arange(5), index=dates)
-dup_ts.index.is_unique
-dup_ts['1/3/2000']
-dup_ts['1/2/2000']
-
-grouped = dup_ts.groupby(level=0)
-grouped.mean()
-grouped.count()
-</code></pre>
-
-<p>date ranges, frequencies, shifting</p>
-
-<pre><code class="python"># 1. resample
-ts
-ts.resample('D')
-
-# 2. date_range
-index = pandas.date_range('4/1/2012', '6/1/2012')
-
-pandas.date_range(start='4/1/2012', periods=20)
-pandas.date_range(end='6/1/2012', periods=20)
-pandas.date_range('1/1/2000', '12/1/2000', freq='BM')
-
-pandas.date_range('5/2/2012 12:56:31', periods=5)
-pandas.date_range('5/2/2012 12:56:31', periods=5, normalize=True)
-
-# 3. frequencies
-
-from pandas.tseries.offsets import Hour, Minute
-hour = Hour()
-four_hours = Hour(4)
-pandas.date_range('1/1/2000', '1/3/2000 23:59', freq='4h')
-
-Hour(2) + Minute(30)
-pandas.date_range('1/1/2000', periods=10, freq='1h30min')
-
-# 4. week of month
-rng = pandas.date_range('1/1/2012', '9/1/2012', freq='WOM-3FRI')
-list(rng)
-
-# 5. shifting (leading/lagging)
-ts = pandas.Series(np.random.randn(4),index=pandas.date_range('1/1/2000', periods=4, freq='M'))
-ts.shift(2)
-ts.shift(-2)
-ts.shift(2, freq='M')
-ts.shift(3, freq='D')
-ts.shift(1, freq='3D')
-ts.shift(1, freq='90T')
-
-# shifting dates with offsets
-from pandas.tseries.offsets import Day, MonthEnd
-now = datetime(2011, 11, 17)
-now + 3 * Day()
-now + MonthEnd()
-now + MonthEnd(2)
-
-offset = MonthEnd()
-offset.rollforward(now)
-offset.rollback(now)
-
-ts = pandas.Series(np.random.randn(20),index=pandas.date_range('1/15/2000', periods=20, freq='4d'))
-ts.groupby(offset.rollforward).mean()
-ts.resample('M', how='mean')
-</code></pre>
-
-<h3>3. timezone handling</h3>
-
-<pre><code class="python">import pytz
-pytz.common_timezones[-5:]
-tz = pytz.timezone('US/Eastern')
-</code></pre>
-
-<p>localization and conversion</p>
-
-<pre><code class="python">rng = pandas.date_range('3/9/2012 9:30', periods=6, freq='D')
-ts = pandas.Series(np.random.randn(len(rng)), index=rng)
-print(ts.index.tz)
-
-pandas.date_range('3/9/2012 9:30', periods=10, freq='D', tz='UTC')
-ts_utc = ts.tz_localize('UTC')
-ts_utc.index
-ts_utc.tz_convert('US/Eastern')
-
-ts_eastern = ts.tz_localize('US/Eastern')
-ts_eastern.tz_convert('UTC')
-ts_eastern.tz_convert('Europe/Berlin')
-ts.index.tz_localize('Asia/Shanghai')
-</code></pre>
-
-<p>operations with timezone</p>
-
-<pre><code class="python">stamp = pandas.Timestamp('2011-03-12 04:00')
-stamp_utc = stamp.tz_localize('utc')
-stamp_utc.tz_convert('US/Eastern')
-stamp_moscow = pandas.Timestamp('2011-03-12 04:00', tz='Europe/Moscow')
-
-stamp_utc.value
-stamp_utc.tz_convert('US/Eastern').value
-
-from pandas.tseries.offsets import Hour
-stamp = pandas.Timestamp('2012-03-12 01:30', tz='US/Eastern')
-stamp + Hour()
-stamp = pandas.Timestamp('2012-11-04 00:30', tz='US/Eastern')
-stamp + 2 * Hour()
-
-rng = pandas.date_range('3/7/2012 9:30', periods=10, freq='B')
-ts = pandas.Series(np.random.randn(len(rng)), index=rng)
-ts1 = ts[:7].tz_localize('Europe/London')
-ts2 = ts1[2:].tz_convert('Europe/Moscow')
-result = ts1 + ts2
-result.index
-</code></pre>
-
-<h3>4. periods</h3>
-
-<p>periods of year, month, quarter</p>
-
-<pre><code class="python"># period of years
-p = pandas.Period(2007, freq='A-DEC')
-p + 5
-p - 2
-pandas.Period('2014', freq='A-DEC') - p
-
-# period of months
-rng = pandas.period_range('1/1/2000', '6/30/2000', freq='M')
-pandas.Series(np.random.randn(6), index=rng)
-
-# period of quarter
-values = ['2001Q3', '2002Q2', '2003Q1']
-index = pandas.PeriodIndex(values, freq='Q-DEC')
-</code></pre>
-
-<p>period frequencies conversion</p>
-
-<pre><code class="python">p = pandas.Period('2007', freq='A-DEC')
-p.asfreq('M', how='start')
-p.asfreq('M', how='end')
-
-p = pandas.Period('2007', freq='A-JUN')
-p.asfreq('M', 'start')
-p.asfreq('M', 'end')
-
-p = pandas.Period('2007-08', 'M')
-p.asfreq('A-JUN')
-
-rng = pandas.period_range('2006', '2009', freq='A-DEC')
-ts = pandas.Series(np.random.randn(len(rng)), index=rng)
-ts.asfreq('M', how='start')
-ts.asfreq('B', how='end')
-</code></pre>
-
-<p>quarterly period frequencies</p>
-
-<pre><code class="python">p = pandas.Period('2012Q4', freq='Q-JAN')
-p.asfreq('D', 'start')
-p.asfreq('D', 'end')
-
-# to get the timestamp at 4PM on the 2nd to last business day of the quarter
-p4pm = (p.asfreq('B', 'e') - 1).asfreq('T', 's') + 16 * 60
-p4pm.to_timestamp()
-
-rng = pandas.period_range('2011Q3', '2012Q4', freq='Q-JAN')
-ts = pandas.Series(np.arange(len(rng)), index=rng)
-new_rng = (rng.asfreq('B', 'e') - 1).asfreq('T', 's') + 16 * 60
-ts.index = new_rng.to_timestamp()
-</code></pre>
-
-<p>converting timestamps to periods</p>
-
-<pre><code class="python">rng = pandas.date_range('1/1/2000', periods=3, freq='M')
-ts = pandas.Series(np.random.randn(3), index=rng)
-pts = ts.to_period()
-
-rng = pandas.date_range('1/29/2000', periods=6, freq='D')
-ts2 = pandas.Series(np.random.randn(6), index=rng)
-ts2.to_period('M')
-pts = ts.to_period()
-pts.to_timestamp(how='end')
-</code></pre>
-
-<h3>5. resampling</h3>
-
-<pre><code class="python">rng = pandas.date_range('1/1/2000', periods=100, freq='D')
-ts = pandas.Series(np.random.randn(len(rng)), index=rng)
-ts.resample('M', how='mean')
-ts.resample('M', how='mean', kind='period')
-</code></pre>
-
-<p>downsampling</p>
-
-<pre><code class="python">rng = pandas.date_range('1/1/2000', periods=12, freq='T')
-ts = pandas.Series(np.arange(12), index=rng)
-ts.resample('5min', how='sum')
-ts.resample('5min', how='sum', closed='left')
-ts.resample('5min', how='sum', closed='left', label='left')
-
-# ohlc: open high low close
-ts.resample('5min', how='ohlc')
-ts.resample('5min', how='sum', loffset='-1s')
-
-rng = pandas.date_range('1/1/2000', periods=100, freq='D')
-ts = pandas.Series(np.arange(100), index=rng)
-ts.groupby(lambda x: x.month).mean()
-ts.groupby(lambda x: x.weekday).mean()
-</code></pre>
-
-<p>upsampling and interpolation</p>
-
-<pre><code class="python">frame = pandas.DataFrame(np.random.randn(2, 4),
-                         index=pandas.date_range('1/1/2000', periods=2, freq='W-WED'),
-                         columns=['Colorado', 'Texas', 'New York', 'Ohio'])
-frame[:5]
-df_daily = frame.resample('D')
-df_daily
-frame.resample('D', fill_method='ffill')
-frame.resample('D', fill_method='ffill', limit=2)
-frame.resample('W-THU', fill_method='ffill')
-</code></pre>
-
-<p>resampling with periods</p>
-
-<pre><code class="python">frame = pandas.DataFrame(np.random.randn(24, 4),
-                         index=pandas.period_range('1-2000', '12-2001', freq='M'),
-                         columns=['Colorado', 'Texas', 'New York', 'Ohio'])
-frame[:5]
-annual_frame = frame.resample('A-DEC', how='mean')
-annual_frame.resample('Q-DEC', fill_method='ffill')
-annual_frame.resample('Q-DEC', fill_method='ffill', convention='start')
-annual_frame.resample('Q-MAR', fill_method='ffill')
-</code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Python Pandas]]></title>
-    <link href="http://k.arttechresearch.com/tech/2014/03/05/python-pandas/"/>
-    <updated>2014-03-05T12:33:47+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2014/03/05/python-pandas</id>
-    <content type="html"><![CDATA[<p>libraries</p>
-
-<pre><code class="python">import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-</code></pre>
-
-<h3>1. object creation</h3>
-
-<pre><code class="python"># create array
-s = pd.Series([1,3,5,np.nan,6,8])
-
-# create dates with dataframe
-dates = pd.date_range('20130101',periods=6)
-
-# create dataframe
-df2 = pd.DataFrame({ 'header1' : 1.,
-                     'header2' : pd.Timestamp('20130102'),
-                     'header3' : pd.Series(1,index=list(range(4)),dtype='float32'),
-                     'header4' : np.array([3] * 4,dtype='int32'),
-                     'header5' : 'foo' })
-
-# check data types of dataframe
-dataframe.dtypes 
-</code></pre>
-
-<h3>2. viewing data</h3>
-
-<pre><code class="python"># top/bottom rows of data
-dataframe.head()
-dataframe.tail(3)
-
-# index/row, columns and values
-dataframe.index
-dataframe.columns
-dataframe.values
-
-# summary of numeric data
-dataframe.describe()
-
-# data transpose
-dataframe.T
-
-# sorting by header/names and values
-dataframe.sort_index(axis=1, ascending=False)
-dataframe.sort(columns='columnName')
-</code></pre>
-
-<h3>3. selection</h3>
-
-<pre><code class="python"># get data by columns
-dataframe['A']
-
-# get data by rows
-dataframe[0:3]
-dataframe['20130102':'20130104']
-
-# reshape dataframe
-dataframe.loc[:,['A','B']]
-
-# get one record with T
-dataframe.iloc[3]
-
-# get rows and columns as defined
-dataframe.iloc[3:5,0:2]
-dataframe.iloc[[1,2,4],[0,2]]
-dataframe.iloc[1:3,:]
-dataframe.iloc[:,1:3]
-
-# get a specific value/cell
-dataframe.iloc[1,1]
-dataframe.iat[1,1]
-</code></pre>
-
-<h3>4. boolean index</h3>
-
-<pre><code class="python"># filter data by a single column
-df[df.A &gt; 0]
-
-# filter data by all columns
-df[df &gt; 0]                   # if value &lt;= 0, it will return NaN
-</code></pre>
-
-<h3>5. setting</h3>
-
-<pre><code class="python"># set values by label, position and array
-df.at[dates[0],'A'] = 0
-df.iat[0,1] = 0
-df.loc[:,'D'] = np.array([5] * len(df))
-
-df2 = df.copy()
-df2[df2 &gt; 0] = -df2
-
-# rename columns
-df = df.rename(columns={'$a': 'a', '$b': 'b'}, inplace=True)
-</code></pre>
-
-<h3>6. missing values</h3>
-
-<pre><code class="python"># drop any rows those have missing values
-df1.dropna(how='any')
-
-# fill missing values
-df1.fillna(value=5)
-
-# get the boolean mask where values are nan
-pd.isnull(df1)
-</code></pre>
-
-<h3>7. operations</h3>
-
-<pre><code class="python"># mean
-df.mean()
-
-# frequency count
-df['A'].value_counts()
-
-# correlation
-df.corr()
-
-# string
-s.str.lower()
-</code></pre>
-
-<h3>8. merge</h3>
-
-<pre><code class="python"># merge data by rows
-pieces = [df[:3], df[3:7], df[7:]]
-
-# join
-left = pd.DataFrame({'key': ['foo', 'foo'], 'lval': [1, 2]})
-right = pd.DataFrame({'key': ['foo', 'foo'], 'rval': [4, 5]})
-pd.merge(left, right, on='key')
-
-# append
-df = pd.DataFrame(np.random.randn(8, 4), columns=['A','B','C','D'])
-s = df.iloc[3]
-df.append(s, ignore_index=True)
-</code></pre>
-
-<h3>9. grouping</h3>
-
-<pre><code class="python"># (histogram)/group all columns by one column
-df.groupby('A').sum()
-
-# (cross tabs)/group all columns by multi-columns
-df.groupby(['A','B']).sum()
-</code></pre>
-
-<h3>10. reshape</h3>
-
-<pre><code class="python"># stack
-tuples = list(zip(*[['bar', 'bar', 'baz', 'baz', 'foo', 'foo', 'qux', 'qux'],
-                    ['one', 'two', 'one', 'two', 'one', 'two', 'one', 'two']]))
-
-index = pd.MultiIndex.from_tuples(tuples, names=['first', 'second'])
-df = pd.DataFrame(np.random.randn(8, 2), index=index, columns=['A', 'B'])
-df2 = df[:4]
-stacked = df2.stack()
-stacked.unstack()
-stacked.unstack(1)
-stacked.unstack(0)
-
-# pivot table
-df = pd.DataFrame({'A' : ['one', 'one', 'two', 'three'] * 3,
-                   'B' : ['A', 'B', 'C'] * 4,
-                   'C' : ['foo', 'foo', 'foo', 'bar', 'bar', 'bar'] * 2,
-                   'D' : np.random.randn(12),
-                   'E' : np.random.randn(12)})
-
-pd.pivot_table(df, values='D', rows=['A', 'B'], cols=['C'])
-</code></pre>
-
-<h3>11. get data in/out</h3>
-
-<pre><code class="python"># csv in/out
-pd.read_csv('foo.csv')
-df.to_csv('foo.csv')
-
-# excel in/out
-pd.read_excel('foo.xlsx', 'Sheet1', index_col=None, na_values=['NA'])
-df.to_excel('foo.xlsx', sheet_name='Sheet1')
-
-# HDF5 in/out
-d.read_hdf('foo.h5','df')
-df.to_hdf('foo.h5','df')
-</code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Vim Commands]]></title>
-    <link href="http://k.arttechresearch.com/tech/2014/01/18/vim-commands/"/>
-    <updated>2014-01-18T19:34:30+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2014/01/18/vim-commands</id>
-    <content type="html"><![CDATA[<ul>
-<li>normal mode: to edit a file</li>
-<li>command mode: to edit a file with commands</li>
+    <title type="html"><![CDATA[Bike Sharing Demand]]></title>
+    <link href="http://k.arttechresearch.com/tech/2014/06/03/bike-sharing-demand/"/>
+    <updated>2014-06-03T14:49:22+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2014/06/03/bike-sharing-demand</id>
+    <content type="html"><![CDATA[<p>The project is to predict the count of bikes sharing per day per hour.</p>
+
+<ul>
+<li><a href="http://www.kaggle.com/c/bike-sharing-demand">description</a>: bike sharing demand at Kaggle</li>
+<li><a href="http://www.kaggle.com/c/bike-sharing-demand/data">data</a>: data source of this project at Kaggle</li>
+<li><a href="https://github.com/KellyChan/kaggle-bike-sharing-demand">codes</a>: the source codes of this project are available at Github</li>
 </ul>
 
 
-<h2>1. Normal Mode</h2>
+<h2>1. Features</h2>
 
-<table>
-<thead>
-<tr>
-<th style="text-align:left;"> Type                  </th>
-<th style="text-align:left;"> Action                </th>
-<th style="text-align:left;"> Command                                      </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;"> edit                  </td>
-<td style="text-align:left;"> insert                </td>
-<td style="text-align:left;"> i                                            </td>
-</tr>
-<tr>
-<td style="text-align:left;">                       </td>
-<td style="text-align:left;"> delete                </td>
-<td style="text-align:left;"> x                                            </td>
-</tr>
-<tr>
-<td style="text-align:left;">                       </td>
-<td style="text-align:left;"> exit                  </td>
-<td style="text-align:left;"> esc                                          </td>
-</tr>
-<tr>
-<td style="text-align:left;"> move                  </td>
-<td style="text-align:left;"> left, right, down, up </td>
-<td style="text-align:left;"> h, l, j, k                                   </td>
-</tr>
-<tr>
-<td style="text-align:left;">                       </td>
-<td style="text-align:left;"> back word             </td>
-<td style="text-align:left;"> b                                            </td>
-</tr>
-<tr>
-<td style="text-align:left;">                       </td>
-<td style="text-align:left;"> next word             </td>
-<td style="text-align:left;"> w                                            </td>
-</tr>
-<tr>
-<td style="text-align:left;">                       </td>
-<td style="text-align:left;"> end of line           </td>
-<td style="text-align:left;"> $                                            </td>
-</tr>
-<tr>
-<td style="text-align:left;">                       </td>
-<td style="text-align:left;"> page up               </td>
-<td style="text-align:left;"> ctrl + u                                     </td>
-</tr>
-<tr>
-<td style="text-align:left;">                       </td>
-<td style="text-align:left;"> page down             </td>
-<td style="text-align:left;"> ctrl + d                                     </td>
-</tr>
-<tr>
-<td style="text-align:left;">                       </td>
-<td style="text-align:left;"> top of the file       </td>
-<td style="text-align:left;"> gg                                           </td>
-</tr>
-<tr>
-<td style="text-align:left;"> copy, paste, change   </td>
-<td style="text-align:left;"> yank, copy            </td>
-<td style="text-align:left;"> y(xxx)                                       </td>
-</tr>
-<tr>
-<td style="text-align:left;">                       </td>
-<td style="text-align:left;"> cureent line          </td>
-<td style="text-align:left;"> yy                                           </td>
-</tr>
-<tr>
-<td style="text-align:left;">                       </td>
-<td style="text-align:left;"> paste                 </td>
-<td style="text-align:left;"> p                                            </td>
-</tr>
-<tr>
-<td style="text-align:left;">                       </td>
-<td style="text-align:left;"> change                </td>
-<td style="text-align:left;"> c                                            </td>
-</tr>
-<tr>
-<td style="text-align:left;">                       </td>
-<td style="text-align:left;"> change word           </td>
-<td style="text-align:left;"> cw                                           </td>
-</tr>
-<tr>
-<td style="text-align:left;"> search, find, replace </td>
-<td style="text-align:left;"> search                </td>
-<td style="text-align:left;"> /(word)                                      </td>
-</tr>
-<tr>
-<td style="text-align:left;">                       </td>
-<td style="text-align:left;"> search to top         </td>
-<td style="text-align:left;"> #                                            </td>
-</tr>
-<tr>
-<td style="text-align:left;">                       </td>
-<td style="text-align:left;"> search to end         </td>
-<td style="text-align:left;"> *                                            </td>
-</tr>
-<tr>
-<td style="text-align:left;">                       </td>
-<td style="text-align:left;"> find                  </td>
-<td style="text-align:left;"> f(a letter)                                  </td>
-</tr>
-<tr>
-<td style="text-align:left;">                       </td>
-<td style="text-align:left;"> find former           </td>
-<td style="text-align:left;"> ,                                            </td>
-</tr>
-<tr>
-<td style="text-align:left;">                       </td>
-<td style="text-align:left;"> find next             </td>
-<td style="text-align:left;"> ;                                            </td>
-</tr>
-<tr>
-<td style="text-align:left;"> delete                </td>
-<td style="text-align:left;"> delelte a line        </td>
-<td style="text-align:left;"> dd                                           </td>
-</tr>
-<tr>
-<td style="text-align:left;"> fold                  </td>
-<td style="text-align:left;"> fold                  </td>
-<td style="text-align:left;"> zc                                           </td>
-</tr>
-<tr>
-<td style="text-align:left;">                       </td>
-<td style="text-align:left;"> unfold (single)       </td>
-<td style="text-align:left;"> zo                                           </td>
-</tr>
-<tr>
-<td style="text-align:left;">                       </td>
-<td style="text-align:left;"> unfold (all)          </td>
-<td style="text-align:left;"> zr                                           </td>
-</tr>
-</tbody>
-</table>
+<p>prediction: count = casual + registered</p>
+
+<pre><code>count - number of total rentals
+casual - number of non-registered user rentals initiated
+registered - number of registered user rentals initiated
+</code></pre>
+
+<p>features</p>
+
+<pre><code>datetime - hourly date + timestamp  
+season -  1 = spring, 2 = summer, 3 = fall, 4 = winter 
+holiday - whether the day is considered a holiday
+workingday - whether the day is neither a weekend nor holiday
+weather - 1: Clear, Few clouds, Partly cloudy, Partly cloudy 
+          2: Mist + Cloudy, Mist + Broken clouds, Mist + Few clouds, Mist 
+          3: Light Snow, Light Rain + Thunderstorm + Scattered clouds, Light Rain + Scattered clouds 
+          4: Heavy Rain + Ice Pallets + Thunderstorm + Mist, Snow + Fog 
+temp - temperature in Celsius
+atemp - "feels like" temperature in Celsius
+humidity - relative humidity
+windspeed - wind speed
+</code></pre>
+
+<h2>2. Evaluation</h2>
+
+<p>Submissions are evaluated one the Root Mean Squared Logarithmic Error (RMSLE). The RMSLE is calculated as</p>
+
+<p>$$\sqrt{\frac 1n \sum_1<sup>n</sup> (log(p_i + 1) - log(a_i + 1))<sup>2</sup> }$$</p>
+
+<p>Where:</p>
+
+<ul>
+<li>$$n$$ is the number of hours in the test set</li>
+<li>$$p_i$$ is your predicted count</li>
+<li>$$a_i$$ is the actual count</li>
+<li>$$log(x)$$ is the natural logarithm</li>
+</ul>
 
 
-<p>Note: all for editing.</p>
+<h2>3. Algorithms</h2>
 
-<h2>2. Command Mode</h2>
+<p>algorithms:</p>
 
-<table>
-<thead>
-<tr>
-<th style="text-align:left;"> Type                  </th>
-<th style="text-align:left;"> Action                </th>
-<th style="text-align:left;"> Command                                      </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;"> coding                </td>
-<td style="text-align:left;"> shift                 </td>
-<td style="text-align:left;"> :line,line&lt; or :line,line>                   </td>
-</tr>
-<tr>
-<td style="text-align:left;"> files                 </td>
-<td style="text-align:left;"> save                  </td>
-<td style="text-align:left;"> :w                                           </td>
-</tr>
-<tr>
-<td style="text-align:left;">                       </td>
-<td style="text-align:left;"> open                  </td>
-<td style="text-align:left;"> :e                                           </td>
-</tr>
-<tr>
-<td style="text-align:left;"> buffer                </td>
-<td style="text-align:left;"> switch                </td>
-<td style="text-align:left;"> :b<n>                                        </td>
-</tr>
-<tr>
-<td style="text-align:left;">                       </td>
-<td style="text-align:left;"> close                 </td>
-<td style="text-align:left;"> :bd                                          </td>
-</tr>
-<tr>
-<td style="text-align:left;"> copy, replce          </td>
-<td style="text-align:left;"> copy paragraph        </td>
-<td style="text-align:left;"> :&lt;line,line> copy &lt;line,line>                </td>
-</tr>
-<tr>
-<td style="text-align:left;">                       </td>
-<td style="text-align:left;"> replace               </td>
-<td style="text-align:left;"> :%s/(words)/(words replaced)/g, g for global </td>
-</tr>
-</tbody>
-</table>
+<ul>
+<li>decision tree regressor</li>
+<li>extra tree regressor</li>
+<li>random forest regressor</li>
+</ul>
+
+
+<h2>4. Practice</h2>
+
+<pre><code class="python">dataPath = "G:/vimFiles/python/kaggle/201406-bike/data/"
+outPath = "G:/vimFiles/python/kaggle/201406-bike/src/outputs/results/"
+
+import pandas as pd
+
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.ensemble import ExtraTreesRegressor
+from sklearn.ensemble import RandomForestRegressor
+
+def loadData(datafile):
+    return pd.read_csv(datafile)
+
+def splitDatetime(data):
+    sub = pd.DataFrame(data.datetime.str.split(' ').tolist(), columns = "date time".split())
+    date = pd.DataFrame(sub.date.str.split('-').tolist(), columns="year month day".split())
+    time = pd.DataFrame(sub.time.str.split(':').tolist(), columns = "hour minute second".split())
+    data['year'] = date['year']
+    data['month'] = date['month']
+    data['day'] = date['day']
+    data['hour'] = time['hour'].astype(int)
+    return data
+
+def createDecisionTree():
+    est = DecisionTreeRegressor()
+    return est
+
+def createRandomForest():
+    est = RandomForestRegressor(n_estimators=100)
+    return est
+
+def createExtraTree():
+    est = ExtraTreesRegressor()
+    return est
+
+def predict(est, train, test, features, target):
+
+    est.fit(train[features], train[target])
+
+    with open(outPath + "submission-randomforest.csv", 'wb') as f:
+        f.write("datetime,count\n")
+
+        for index, value in enumerate(list(est.predict(test[features]))):
+            f.write("%s,%s\n" % (test['datetime'].loc[index], int(value)))
+
+
+def main():
+
+    train = loadData(dataPath + "train.csv")
+    test = loadData(dataPath + "test.csv")
+
+    train = splitDatetime(train)
+    test = splitDatetime(test)
+
+    target = 'count'
+    features = [col for col in train.columns if col not in ['datetime', 'casual', 'registered', 'count']]
+
+    est = createRandomForest()
+    predict(est, train, test, features, target)
+
+
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Forest Cover Type Prediction]]></title>
+    <link href="http://k.arttechresearch.com/tech/2014/05/28/forest-cover-type-prediction/"/>
+    <updated>2014-05-28T15:00:00+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2014/05/28/forest-cover-type-prediction</id>
+    <content type="html"><![CDATA[<p>This project is to predict the forest cover type with the cartography data provided by US Geological Survey and USFS.</p>
+
+<ul>
+<li><a href="http://www.kaggle.com/c/forest-cover-type-prediction">description</a>: forest cover type prediction at Kaggle</li>
+<li><a href="http://www.kaggle.com/c/forest-cover-type-prediction/data">data</a>: data source of this project at Kaggle</li>
+<li><a href="https://github.com/KellyChan/kaggle-forest-cover-type-prediction">codes</a>: the source codes of this project are available at Github</li>
+</ul>
+
+
+<h2>1. Working Process</h2>
+
+<ul>
+<li>step 1. combining binary variables (Wilderness_Area and Soil_Type) as one</li>
+<li>step 2. applying machine learning algorithms (random forest)</li>
+<li>step 3. evaluating the accuracy of prediction</li>
+</ul>
+
+
+<h2>2. Preprocessing</h2>
+
+<p>combining binary variables (Wilderness_Area, Soil_Type)</p>
+
+<h2>3. Classification</h2>
+
+<p>datasets</p>
+
+<ul>
+<li>raw data</li>
+<li>punched data</li>
+</ul>
+
+
+<p>algorithms</p>
+
+<ul>
+<li>decision tree</li>
+<li>random forest</li>
+<li>extra tree: raw data worked much better than punched data.</li>
+<li>adaboost</li>
+</ul>
+
+
+<h2>4. Evaluation</h2>
+
+<p>% of corrections</p>
+
+<h2>5. Practice</h2>
+
+<h3>step1. data punching</h3>
+
+<p>combining binary variables - Wilderness_Area, Soil_Type</p>
+
+<p>NOTE: Pandas is good at handling with data by batch, it is much faster than processing each record one by one.</p>
+
+<pre><code class="python">dataPath = "path/kaggle/201405-Forest/data/"
+outPath = "path/kaggle/201405-Forest/src/outputs/data/"
+
+import pandas as pd
+
+def loadData(datafile):
+    return pd.read_csv(datafile)
+
+def createWildernessArea(data):
+
+    for i in range(4):
+        coded = {'1': i+1, '0': 0}
+        col = 'Wilderness_Area' + str(i+1)
+        data[col] = data[col].astype(str).map(coded)
+
+    data['Wilderness_Area'] = data['Wilderness_Area1'] + \
+                              data['Wilderness_Area2'] + \
+                              data['Wilderness_Area3'] + \
+                              data['Wilderness_Area4']
+
+    for i in range(4):
+        col = 'Wilderness_Area' + str(i+1)
+        data = data.drop(col, 1)
+
+    return data
+
+def createSoilType(data):
+
+    for i in range(40):
+        coded = {'1': i+1, '0': 0}
+        col = 'Soil_Type' + str(i+1)
+        data[col] = data[col].astype(str).map(coded)    
+
+    data['Soil_Type'] = 0
+    for i in range(40):
+        col = 'Soil_Type' + str(i+1)
+        data['Soil_Type'] += data[col] 
+
+    for i in range(40):
+        col = 'Soil_Type' + str(i+1)
+        data = data.drop(col, 1)
+
+    return data
+
+def main():
+    train = loadData(dataPath + "train.csv")
+    test = loadData(dataPath + "test.csv")
+
+    train = createWildernessArea(train)
+    train = createSoilType(train)
+    train.to_csv(outPath + "train.csv")
+
+    test = createWildernessArea(test)
+    test = createSoilType(test)
+    test.to_csv(outPath + "test.csv")
+
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+
+<h3>step2. classification with trees</h3>
+
+<pre><code class="python">"""
+Function Tree
+
+- chooseDataset
+     |------ loadData
+
+- chooseAlgorithms
+     |------ createDecisionTree
+     |------ createRandomForest
+     |------ createExtraTree
+     |------ createAdaBoost
+
+"""
+
+rawPath = "G:/vimFiles/python/kaggle/201405-Forest/data/"
+dataPath = "G:/vimFiles/python/kaggle/201405-Forest/src/outputs/data/"
+outPath = "G:/vimFiles/python/kaggle/201405-Forest/src/outputs/results/"
+
+import pandas as pd
+
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import ExtraTreesClassifier
+from sklearn.ensemble import AdaBoostClassifier
+
+def loadData(datafile):
+    return pd.read_csv(datafile)
+
+
+def createDecisionTree():
+    clf = DecisionTreeClassifier(max_depth=None, min_samples_split=1, random_state=0)
+    return clf
+
+def createRandomForest():
+    clf = RandomForestClassifier(n_estimators=500, max_depth=None, min_samples_split=1, random_state=0)
+    return clf
+
+def createExtraTree():
+    clf = ExtraTreesClassifier(n_estimators=500, max_depth=None, min_samples_split=1, random_state=0)
+    return clf
+
+def createAdaBoost():
+    dt = DecisionTreeClassifier(max_depth=None, min_samples_split=1, random_state=0)
+    clf = AdaBoostClassifier(dt, n_estimators=300)
+    return clf
+
+def classify(clf, train, cols, target, test, filePath):
+    clf.fit(train[cols], train[target])
+
+    with open(filePath, "wb") as outfile:
+        outfile.write("Id,Cover_Type\n")
+        for index, value in enumerate(list(clf.predict(test[cols]))):
+            outfile.write("%s,%s\n" % (test['Id'].loc[index], value))
+
+
+def chooseDataset(dataset):
+    if dataset == 1:
+        train = loadData(rawPath + "train.csv")
+        test = loadData(rawPath + "test.csv")
+    elif dataset == 2:
+        train = loadData(dataPath + "train.csv")
+        test = loadData(dataPath + "test.csv")
+    return train, test
+
+def chooseAlgorithms(algo, train, test, target, features):
+
+    if algo == 0:
+
+        clf = createDecisionTree()
+        classify(clf, train, features, target, test, outPath+"submission-decisiontree.csv")        
+
+        clf = createRandomForest()
+        classify(clf, train, features, target, test, outPath+"submission-randomforest.csv")
+
+        clf = createExtraTree()
+        classify(clf, train, features, target, test, outPath+"submission-extratree.csv")
+
+        clf = createAdaBoost()
+        classify(clf, train, features, target, test, outPath+"submission-adaboost.csv")
+
+    elif algo == 1:
+        clf = createDecisionTree()
+        classify(clf, train, features, target, test, outPath+"submission-decisiontree.csv")
+
+    elif algo == 2:
+        clf = createRandomForest()
+        classify(clf, train, features, target, test, outPath+"submission-randomforest.csv")
+
+    elif algo == 3:
+        clf = createExtraTree()
+        classify(clf, train, features, target, test, outPath+"submission-extratree.csv")
+
+    elif algo == 4:
+        clf = createAdaBoost()
+        classify(clf, train, features, target, test, outPath+"submission-adaboost.csv")
+
+
+def main():
+
+    """ selections: dataset and algorithms
+
+    dataset:
+    - 1: raw data - Wilderness_Area, Soil_Type are binary codes
+    - 2: punched data - Wilderness_Area, Soil_Type are combined
+
+    algo: algorithms
+    - 0: all
+    - 1: decision tree
+    - 2: random forest
+    - 3: extra tree
+    - 4: adaboost
+    """
+    dataset = 1
+    algo = 1
+
+    train, test = chooseDataset(dataset)
+
+    target = 'Cover_Type'
+    features = [col for col in train.columns if col not in ['Id', 'Cover_Type', 'Unnamed']]
+
+    chooseAlgorithms(algo, train, test, target, features)
+
+
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+
+<h2>6. Data formats</h2>
+
+<p>predict(submission): <code>Id</code>, <code>Cover_Type</code></p>
+
+<pre><code>Cover_Type (7 types, integers 1 to 7) - Forest Cover Type designation
+
+1 - Spruce/Fir
+2 - Lodgepole Pine
+3 - Ponderosa Pine
+4 - Cottonwood/Willow
+5 - Aspen
+6 - Douglas-fir
+7 - Krummholz
+</code></pre>
+
+<p>train/test: <code>Id</code></p>
+
+<p>features</p>
+
+<pre><code>Elevation - Elevation in meters
+Aspect - Aspect in degrees azimuth
+Slope - Slope in degrees
+
+Horizontal_Distance_To_Hydrology - Horz Dist to nearest surface water features
+Vertical_Distance_To_Hydrology - Vert Dist to nearest surface water features
+Horizontal_Distance_To_Roadways - Horz Dist to nearest roadway
+Horizontal_Distance_To_Fire_Points - Horz Dist to nearest wildfire ignition points
+
+Hillshade_9am (0 to 255 index) - Hillshade index at 9am, summer solstice
+Hillshade_Noon (0 to 255 index) - Hillshade index at noon, summer solstice
+Hillshade_3pm (0 to 255 index) - Hillshade index at 3pm, summer solstice
+
+Wilderness_Area (4 areas, 0 = absence, 1 = presence) - Wilderness area designation
+- 1 - Rawah Wilderness Area
+- 2 - Neota Wilderness Area
+- 3 - Comanche Peak Wilderness Area
+- 4 - Cache la Poudre Wilderness Area
+
+Soil_Type (40 types, 0 = absence, 1 = presence) - Soil Type designation
+- 1 Cathedral family - Rock outcrop complex, extremely stony. 
+- 2 Vanet - Ratake families complex, very stony.
+- 3 Haploborolis - Rock outcrop complex, rubbly.
+- 4 Ratake family - Rock outcrop complex, rubbly.
+- 5 Vanet family - Rock outcrop complex complex, rubbly.
+- 6 Vanet - Wetmore families - Rock outcrop complex, stony.
+- 7 Gothic family.
+- 8 Supervisor - Limber families complex.
+- 9 Troutville family, very stony.
+- 10 Bullwark - Catamount families - Rock outcrop complex, rubbly.
+- 11 Bullwark - Catamount families - Rock land complex, rubbly.
+- 12 Legault family - Rock land complex, stony.
+- 13 Catamount family - Rock land - Bullwark family complex, rubbly.
+- 14 Pachic Argiborolis - Aquolis complex.
+- 15 unspecified in the USFS Soil and ELU Survey.
+- 16 Cryaquolis - Cryoborolis complex.
+- 17 Gateview family - Cryaquolis complex.
+- 18 Rogert family, very stony.
+- 19 Typic Cryaquolis - Borohemists complex.
+- 20 Typic Cryaquepts - Typic Cryaquolls complex.
+- 21 Typic Cryaquolls - Leighcan family, till substratum complex.
+- 22 Leighcan family, till substratum, extremely bouldery.
+- 23 Leighcan family, till substratum - Typic Cryaquolls complex.
+- 24 Leighcan family, extremely stony.
+- 25 Leighcan family, warm, extremely stony.
+- 26 Granile - Catamount families complex, very stony.
+- 27 Leighcan family, warm - Rock outcrop complex, extremely stony.
+- 28 Leighcan family - Rock outcrop complex, extremely stony.
+- 29 Como - Legault families complex, extremely stony.
+- 30 Como family - Rock land - Legault family complex, extremely stony.
+- 31 Leighcan - Catamount families complex, extremely stony.
+- 32 Catamount family - Rock outcrop - Leighcan family complex, extremely stony.
+- 33 Leighcan - Catamount families - Rock outcrop complex, extremely stony.
+- 34 Cryorthents - Rock land complex, extremely stony.
+- 35 Cryumbrepts - Rock outcrop - Cryaquepts complex.
+- 36 Bross family - Rock land - Cryumbrepts complex, extremely stony.
+- 37 Rock outcrop - Cryumbrepts - Cryorthents complex, extremely stony.
+- 38 Leighcan - Moran families - Cryaquolls complex, extremely stony.
+- 39 Moran family - Cryorthents - Leighcan family complex, extremely stony.
+- 40 Moran family - Cryorthents - Rock land complex, extremely stony.
+</code></pre>
+
+<h2>Reference</h2>
+
+<ul>
+<li><a href="http://en.wikipedia.org/wiki/Aspect_(geography">Aspect Geography</a>)</li>
+</ul>
 
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Sqrt Newton's Method of Successive Approximations]]></title>
-    <link href="http://k.arttechresearch.com/tech/2010/01/14/sqrt-newtons-method-of-successive-approximations/"/>
-    <updated>2010-01-14T00:00:14+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2010/01/14/sqrt-newtons-method-of-successive-approximations</id>
-    <content type="html"><![CDATA[<p><img src="http://media-cache-ec0.pinimg.com/736x/4d/5d/8a/4d5d8aeb52644182af61a7eac04cdfc9.jpg" /></p>
+    <title type="html"><![CDATA[Text Classification With Naive Bayes]]></title>
+    <link href="http://k.arttechresearch.com/tech/2014/05/24/text-classification-with-naive-bayes/"/>
+    <updated>2014-05-24T01:05:22+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2014/05/24/text-classification-with-naive-bayes</id>
+    <content type="html"><![CDATA[<h2>1. Working Process</h2>
 
-<h3>Algorithm</h3>
+<p>general process</p>
 
-<pre><code>    1. Guess
-
-    2. Good-enough?
-                      | Guess^2 - Radicant | &lt; Predetermined Tolerance
-
-    If yes, Guess = Root
-       else, Improve Guess
-
-    3. Improve
-                      Quotient = Radicant / Guess
-                      Average  = ( Guess + Quotient ) / 2
-                      Guess    = Average
+<pre><code>raw text --&gt; keywords --&gt; features --&gt; train --&gt; clasifier
+raw text              --&gt; features --&gt; test  --&gt; classify
 </code></pre>
 
-<p>Importance: Radicant -> Large/Small -> very small fraction of the Guess -> STOP?</p>
+<p>example: sentimental analysis for tweets</p>
 
-<pre><code class="perl">(define (sqrt x)
-  (sqrt-iter 1.0 x))
-(define (sqrt-iter guess x)
-  (if (good-enough? guess x)
-      guess
-      (sqrt-iter (improve guess x) x)))
-(define (good-enough? guess x)
-  (&lt; (abs (- (square guess) x)) 0.001))
-(define (improve guess x)
-  (average guess (/ x guess)))
+<pre><code>positive/negative tweets --&gt; keywords --&gt; features --&gt; train --&gt; clasifier
+unlabeled tweets                      --&gt; features --&gt; test  --&gt; classify
 </code></pre>
 
-<p>Block Structure</p>
+<h2>2. Feature Extraction</h2>
 
-<pre><code class="perl">(define (sqrt x)
-  (define (good-enough? guess x)
-    (&lt; (abs (- (square guess) x)) 0.001))
-  (define (improve guess x)
-    (average guess (/ x guess)))
-  (define (sqrt-iter guess x)
-    (if (good-enough? guess x)
-        guess
-        (sqrt-iter (improve guess x) x)))
-  (sqrt-iter 1.0 x))
+<p>keyword extraction: wordFreqDict</p>
+
+<pre><code>wordFreqDict = {keyword1: 90,
+                keyword2: 30,
+                keyword3: 3,
+                ...}
 </code></pre>
 
-<p>References:<br/>
-&ndash; <a href="http://mitpress.mit.edu/sicp/full-text/book/book-Z-H-10.html#%_sec_1.1.7">Square Roots by Newton&rsquo;s Method</a><br/>
-&ndash; <a href="http://mitpress.mit.edu/sicp/">Structure and Interpretation of Computer Programs</a></p>
+<p>feature extraction: True/False table</p>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;"> tweet                </th>
+<th style="text-align:left;"> keyword1 </th>
+<th style="text-align:left;"> keyword2 </th>
+<th style="text-align:left;"> keyword3 </th>
+<th style="text-align:left;"> &hellip; </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> &ldquo;I like this dog.&rdquo;   </td>
+<td style="text-align:left;"> True     </td>
+<td style="text-align:left;"> False    </td>
+<td style="text-align:left;"> True     </td>
+<td style="text-align:left;"> &hellip; </td>
+</tr>
+<tr>
+<td style="text-align:left;"> &ldquo;Beautiful morning.&rdquo; </td>
+<td style="text-align:left;"> False    </td>
+<td style="text-align:left;"> False    </td>
+<td style="text-align:left;"> False    </td>
+<td style="text-align:left;"> &hellip; </td>
+</tr>
+<tr>
+<td style="text-align:left;"> &hellip;                  </td>
+<td style="text-align:left;"> &hellip;      </td>
+<td style="text-align:left;"> &hellip;      </td>
+<td style="text-align:left;"> &hellip;      </td>
+<td style="text-align:left;"> &hellip; </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>.</p>
+
+<p>train data: features + label</p>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;"> tweet                </th>
+<th style="text-align:left;"> keyword1 </th>
+<th style="text-align:left;"> keyword2 </th>
+<th style="text-align:left;"> keyword3 </th>
+<th style="text-align:left;"> &hellip; </th>
+<th style="text-align:left;"> label    </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> &ldquo;I like this dog.&rdquo;   </td>
+<td style="text-align:left;"> True     </td>
+<td style="text-align:left;"> False    </td>
+<td style="text-align:left;"> True     </td>
+<td style="text-align:left;"> &hellip; </td>
+<td style="text-align:left;"> Positive </td>
+</tr>
+<tr>
+<td style="text-align:left;"> &ldquo;Beautiful morning.&rdquo; </td>
+<td style="text-align:left;"> False    </td>
+<td style="text-align:left;"> False    </td>
+<td style="text-align:left;"> False    </td>
+<td style="text-align:left;"> &hellip; </td>
+<td style="text-align:left;"> Positive </td>
+</tr>
+<tr>
+<td style="text-align:left;"> &hellip;                  </td>
+<td style="text-align:left;"> &hellip;      </td>
+<td style="text-align:left;"> &hellip;      </td>
+<td style="text-align:left;"> &hellip;      </td>
+<td style="text-align:left;"> &hellip; </td>
+<td style="text-align:left;"> &hellip;      </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>.</p>
+
+<h2>3. Practice</h2>
+
+<p>function construct</p>
+
+<pre><code>    |----- [test-features]: extractFeatures(dataX, keywords)
+    |----- [train]: createTrain(fullData, keywords)
+              |----- [features]: extractFeatures(dataX, keywords)
+              |----- [keywords]: createKeywords(fullData)
+                        |----- [fullData]: generateFullData(data1, data2)
+                                     |----- [rawData]: loadData()
+</code></pre>
+
+<p>data format</p>
+
+<pre><code>- rawData: [('word word ...', 'label'), ... ]
+- fullData: [([words], label), ([words], label), ...]
+
+- features: {word: True/False}
+- train: [({features}, label), ({features}, label), ...]
+- test: ['word word ...', 'word word ...', ...]
+</code></pre>
+
+<p>source</p>
+
+<pre><code class="python">import nltk
+
+def loadData():
+    """ loading raw data """
+
+    pos_tweets = [('I love this car', 'positive'),
+                  ('This view is amazing', 'positive'),
+                  ('I feel great this morning', 'positive'),
+                  ('I am so excited about the concert', 'positive'),
+                  ('He is my best friend', 'positive')]
+
+    neg_tweets = [('I do not like this car', 'negative'),
+                  ('This view is horrible', 'negative'),
+                  ('I feel tired this morning', 'negative'),
+                  ('I am not looking forward to the concert', 'negative'),
+                  ('He is my enemy', 'negative')]
+
+    return pos_tweets, neg_tweets
+
+def generateFullData(data1, data2):
+    """ generating full data with feature and label 
+
+    fullData: [([words], label), ([words], label), ...]
+    """
+
+    fullData = []
+
+    for (words, label) in data1 + data2:
+        words_filterred = [e.lower() for e in words.split() if len(e) &gt;= 3]
+        fullData.append((words_filterred, label))
+    return fullData
+
+def createKeywords(data):
+    """ generating word dictionary from all words """
+
+    wordlist = []
+    for (words, label) in data:
+        wordlist.extend(words)  # combining all words in a list
+
+    wordDict = nltk.FreqDist(wordlist)  # generating frquencies of each word
+    return wordDict.keys() 
+
+def extractFeatures(dataX, keywords):
+    """ extracting word table with true/false 
+
+    features: {word: True/False}
+    """
+
+    dataX_wordSet = set(dataX)
+
+    features = {}
+    for word in keywords:
+        # creating true/false table
+        features['contains(%s)' % word] = (word in dataX_wordSet)  
+    return features
+
+def createTrain(data, keywords):
+    """ creating train data
+
+    train: [({features}, label), ({features}, label), ...]
+    - features: {word: True/False}
+    """
+
+    train = []
+    for record in data:
+        # format: ({word: True/False}, label)
+        train.append((extractFeatures(record[0], keywords), record[1]))  
+
+    # if only have one argument, it also can be written by apply_features
+    #train = nltk.classify.apply_features(extractFeatures, data)
+
+    return train
+
+def classifyNB(testX, train, keywords):
+    """ classifying label with naive bayes """
+
+    # creating Naive Bayes classifier
+    classifier = nltk.NaiveBayesClassifier.train(train)
+
+    # extracting features from raw testX and predicting label
+    testX = extractFeatures(testX.split(), keywords)
+    predClass = classifier.classify(testX)
+    return predClass
+
+
+def main():
+
+    # loading data and combining as one
+    pos_tweets, neg_tweets = loadData()
+    tweets = generateFullData(pos_tweets, neg_tweets)
+
+    # extracting keywords and train data
+    keywords = createKeywords(tweets)
+    train = createTrain(tweets, keywords)
+
+    # predicting label
+    testX = 'Larry is my friend'
+    predClass = classifyNB(testX, train, keywords)
+    print predClass
+
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+
+<h2>Reference</h2>
+
+<ol>
+<li><a href="http://www.laurentluce.com/posts/twitter-sentiment-analysis-using-python-and-nltk/">Twitter sentiment analysis using Python and NLTK</a></li>
+</ol>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Python Syntax]]></title>
+    <link href="http://k.arttechresearch.com/tech/2014/05/23/python-syntax/"/>
+    <updated>2014-05-23T13:21:29+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2014/05/23/python-syntax</id>
+    <content type="html"><![CDATA[<h2>1. Default Functions</h2>
+
+<h3>1.1. string</h3>
+
+<pre><code class="python"># check subset
+if "xxx" in aString:
+    has_string = True
+
+# join two sets
+set1 = ['a', 'b', 'c']
+set2 = ['b', 'c', 'd']
+fullset = set(list(set1) + list(set2))
+fullset = list(set(set1 + set2))
+
+# remove empty strings
+a = 'abc  '
+print len(a)
+print len(a.strip())
+</code></pre>
+
+<h3>1.2. IO</h3>
+
+<pre><code class="python"># output with csv
+with open(outPath+"submission-randomforest.csv", "wb") as outfile:
+    outfile.write("Id,Cover_Type\n")
+    for index, value in enumerate(list(clf.predict(test[cols]))):
+        outfile.write("%s,%s\n" % (test['Id'].loc[index], value))
+</code></pre>
+
+<h3>1.3. random</h3>
+
+<pre><code class="python">random.uniform(10, 20)  #   a &lt;= n &lt;= b  
+
+random.random()  #  0 &lt;= n &lt; 1.0
+random.randint(12, 20)  
+random.randrange(10, 100, 2)  # [10, 12, 14, 16, ... 96, 98]
+random.choice(range(10, 100, 2))
+random.choice(["JGood", "is", "a", "handsome", "boy"])  
+
+p = ["Python", "is", "powerful", "simple", "and so on..."]  
+random.shuffle(p) 
+
+list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]  
+slice = random.sample(list, 5)
+</code></pre>
+
+<h2>2. Default Packages</h2>
+
+<h3>2.1. datetime</h3>
+
+<pre><code class="python">import datetime
+
+# calculating days: minus
+d1 = datetime.datetime(2009, 3, 23)
+d2 = datetime.datetime(2009, 10, 7)
+(d1 - d2).days
+
+# calculating days: plus
+d1 = datetime.datetime.now()
+d3 = d1 + datetime.timedelta(days=10)
+d3.ctime()
+
+# calculating seconds
+starttime = datetime.datetime.now()
+endtime = datetime.datetime.now()
+(endtime - starttime).seconds
+</code></pre>
+
+<h3>2.2. JSON</h3>
+
+<p>json</p>
+
+<pre><code class="python">import json
+from pprint import pprint
+
+jsonfile = open(dataPath + fileName)
+data = json.load(jsonfile)
+pprint(data)
+jsonfile.close()
+</code></pre>
+
+<p>simplejson</p>
+
+<pre><code class="python">import simplejson as json
+
+print(json.dumps(jsonData, sort_keys=True, indent=4 * ' '))
+</code></pre>
+
+<h3>2.3. os</h3>
+
+<pre><code class="python">import os
+
+# get the current url of the file folder
+outputs = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'outputs')
+</code></pre>
 ]]></content>
   </entry>
   
