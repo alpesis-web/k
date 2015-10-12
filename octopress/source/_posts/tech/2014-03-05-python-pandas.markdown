@@ -201,6 +201,12 @@ pd.pivot_table(df, values='D', rows=['A', 'B'], cols=['C'])
 ### 11. get data in/out
 
 ```python
+# tsv in/out
+pd.read_table(dataPath)
+
+# json in/out
+pd.read_json(dataPath)
+
 # csv in/out
 pd.read_csv('foo.csv')
 df.to_csv('foo.csv')
@@ -213,3 +219,56 @@ df.to_excel('foo.xlsx', sheet_name='Sheet1')
 d.read_hdf('foo.h5','df')
 df.to_hdf('foo.h5','df')
 ```
+
+### 12. working with columns
+
+```python
+# get features
+features = [col for col in data.columns if col not in ['Id', 'Cover_Type']]
+
+# delete columns
+data = data.drop('col', 1)
+
+# map labels
+coded = {'Good': 1, 'Not Good': -1}
+data['IsHoliday'] = data['IsHoliday'].astype(str).map(coded)
+
+# split columns
+def splitDatetime(data):
+    sub = pd.DataFrame(data.datetime.str.split(' ').tolist(), columns = "date time".split())
+    time = pd.DataFrame(sub.time.str.split(':').tolist(), columns = "hour minute second".split())
+    data['date'] = sub['date']
+    data['time'] = time['hour']
+    return data
+
+# shift and fillna
+df['ENTRIESn_hourly'] = df['ENTRIESn'] - df['ENTRIESn'].shift()
+df['ENTRIESn_hourly'] = df['ENTRIESn_hourly'].fillna(1)
+```
+
+### 13. working with rows
+
+```python
+# drop duplicates
+df.drop_duplicates()
+```
+
+### 14. working with datasets
+
+```python
+# merge data
+def combineStore(data, stores):
+    data = pd.merge(data, stores, left_on="Store", \
+                                  right_on="Store", \
+                                  how="left")
+    return data
+```
+
+### 15. statitics
+
+```python
+# correlation
+df.corr()
+```
+
+

@@ -128,6 +128,18 @@ date and time
 {\% endif %}
 ```
 
+audio
+
+```html
+<audio src="/music/good_enough.mp3" controls>	
+	<embed 
+	src="/music/good_enough.mp3"
+	width="180"
+	height="90"
+	loop="false"
+	autostart="false" />
+</audio>
+```
 
 ### 3.2. CSS
 

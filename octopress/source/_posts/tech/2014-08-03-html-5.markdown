@@ -1,0 +1,410 @@
+---
+layout: post_tech
+title: "HTML 5"
+date: 2014-08-03 03:10:02 +0800
+comments: true
+categories: [tech]
+tags: [html]
+---
+
+## 1. Elements
+
+### 1.1. New elements
+
+```
+- canvas: `<canvas>`
+- media: `<audio>`, `<embed>`, `<source>`, `<track>`, `<video>` 
+- form: `<datalist>`, `<keygen>`, `<output>`
+- semantic: `<aside>`, `<bdi>`, `<details>`, `<dialog>`, `<figcaption>`, `<figure>`, `<footer>`, `<header>`, `<main>`, `<mark>`, `<menuitem>`, `<meter>`, `<nav>`, `<progress>`, `<rp>`, `<rt>`, `<ruby>`, `<section>`, `<summary>`, `<time>`, `<wbr>`
+```
+
+### 1.2. Removed elements
+
+```
+`<sefont>`, `<big>`, `<center>`, `<dir>`, `<font>`, `<frame>`, `<frameset>`, `<noframes>`, `<strike>`, `<tt>`
+```
+
+## 2. Examples
+
+layouts
+
+    |------------------------------------|
+    |   <header>                         |
+    |------------------------------------|
+    |   <nav>                            |
+    |------------------------------------|
+    |   <section>        |               |
+    |--------------------| <aside>       |
+    |   <article>        |               |
+    |------------------------------------|
+    |   <footer>                         |
+    |------------------------------------|
+
+section
+
+```html section
+<section>
+  <h1>WWF</h1>
+  <p>The World Wide Fund for Nature (WWF) is....</p>
+</section>
+```
+
+article
+
+```html article
+<article>
+  <h1>Internet Explorer 9</h1>
+  <p>Windows Internet Explorer 9 (abbreviated as IE9) was released to
+  the  public on March 14, 2011 at 21:00 PDT.....</p>
+</article>
+```
+
+nav
+
+```html nav
+<nav>
+<a href="/html/">HTML</a> |
+<a href="/css/">CSS</a> |
+<a href="/js/">JavaScript</a> |
+<a href="/jquery/">jQuery</a>
+</nav>
+```
+
+aside
+
+```html aside
+<p>My family and I visited The Epcot center this summer.</p>
+<aside>
+  <h4>Epcot Center</h4>
+  <p>The Epcot Center is a theme park in Disney World, Florida.</p>
+</aside>
+```
+
+header
+
+```html header
+<article>
+  <header>
+    <h1>Internet Explorer 9</h1>
+    <p><time pubdate datetime="2011-03-15"></time></p>
+  </header>
+  <p>Windows Internet Explorer 9 (abbreviated as IE9) was released to
+  the  public on March 14, 2011 at 21:00 PDT.....</p>
+</article>
+```
+
+footer
+
+```html footer
+<footer>
+  <p>Posted by: Hege Refsnes</p>
+  <p><time pubdate datetime="2012-03-01"></time></p>
+</footer>
+```
+
+figure / figcaption
+
+```html figure/figcaption
+<figure>
+  <img src="img_pulpit.jpg" alt="The Pulpit Rock" width="304" height="228">
+  <figcaption>Fig1. - The Pulpit Pock, Norway.</figcaption>
+</figure>
+```
+
+Integrated IE 8 and earlier
+
+```html
+<!--[if lt IE 9]><script src="html5shiv.js"></script><![endif]-->
+
+header, section, footer, aside, nav, main, article, figure { 
+    display: block; 
+}
+```
+
+input types
+
+```html input types
+<!-- color -->
+Select your favorite color: <input type="color" name="favcolor">
+
+<!-- date -->
+Birthday: <input type="date" name="bday">
+
+<!-- datetime -->
+Birthday (date and time): <input type="datetime" name="bdaytime">
+
+<!-- datetime-local -->
+Birthday (date and time): <input type="datetime-local" name="bdaytime">
+
+<!-- email -->
+E-mail: <input type="email" name="email">
+
+<!-- month -->
+Birthday (month and year): <input type="month" name="bdaymonth">
+
+<!-- number -->
+Quantity (between 1 and 5): <input type="number" name="quantity" min="1" max="5">
+
+<!-- range -->
+<input type="range" name="points" min="1" max="10">
+
+<!-- search -->
+Search Google: <input type="search" name="googlesearch">
+
+<!-- tel -->
+Telephone: <input type="tel" name="usrtel">
+
+<!-- type -->
+Select a time: <input type="time" name="usr_time">
+
+<!-- url -->
+Add your homepage: <input type="url" name="homepage">
+
+<!-- week -->
+Select a week: <input type="week" name="week_year">
+```
+
+form 
+
+```html form
+<!-- datalist -->
+<input list="browsers">
+<datalist id="browsers">
+  <option value="Internet Explorer">
+  <option value="Firefox">
+  <option value="Chrome">
+  <option value="Opera">
+  <option value="Safari">
+</datalist>
+
+<!-- keygen -->
+<form action="demo_keygen.asp" method="get">
+Username: <input type="text" name="usr_name">
+Encryption: <keygen name="security">
+<input type="submit">
+</form>
+
+<!-- output -->
+<form oninput="x.value=parseInt(a.value)+parseInt(b.value)">0
+<input type="range" id="a" value="50">100 +
+<input type="number" id="b" value="50">=
+<output name="x" for="a b"></output>
+</form>
+```
+
+form with new attributes
+
+```
+- `<form>`: `autocomplete`, `novalidate`
+- `<input>`: `autocomplete`, `autofocus`, `form`, `formaction`, `formenctype`, `formmethod`, `formnovalidate`, `formtarget`, `height`, `width`, `list`, `min`, `max`, `multiple`, `pattern (regexp)`, `placeholder`, `required`, `step`	
+```
+
+```html form with new attributes
+<!-- <form> / <input> autocomplete -->
+<form action="demo_form.asp" autocomplete="on">
+  First name:<input type="text" name="fname"><br>
+  Last name: <input type="text" name="lname"><br>
+  E-mail: <input type="email" name="email" autocomplete="off"><br>
+  <input type="submit">
+</form>
+
+<!-- <form> novalidate -->
+<form action="demo_form.asp" novalidate>
+  E-mail: <input type="email" name="user_email">
+  <input type="submit">
+</form>
+
+<!-- <input> autofocus -->
+First name:<input type="text" name="fname" autofocus>
+
+<!-- <input> form -->
+<form action="demo_form.asp" id="form1">
+  First name: <input type="text" name="fname"><br>
+  <input type="submit" value="Submit">
+</form>
+Last name: <input type="text" name="lname" form="form1">
+
+<!-- <input> formaction -->
+<form action="demo_form.asp">
+  First name: <input type="text" name="fname"><br>
+  Last name: <input type="text" name="lname"><br>
+  <input type="submit" value="Submit"><br>
+  <input type="submit" formaction="demo_admin.asp"
+  value="Submit as admin">
+</form>
+
+<!-- <input> formenctype -->
+<form action="demo_post_enctype.asp" method="post">
+  First name: <input type="text" name="fname"><br>
+  <input type="submit" value="Submit">
+  <input type="submit" formenctype="multipart/form-data"
+  value="Submit as Multipart/form-data">
+</form>
+
+<!-- <input> formmethod -->
+<form action="demo_form.asp" method="get">
+  First name: <input type="text" name="fname"><br>
+  Last name: <input type="text" name="lname"><br>
+  <input type="submit" value="Submit">
+  <input type="submit" formmethod="post" formaction="demo_post.asp"
+  value="Submit using POST">
+</form>
+
+<!-- <input> formnovalidate -->
+<form action="demo_form.asp">
+  E-mail: <input type="email" name="userid"><br>
+  <input type="submit" value="Submit"><br>
+  <input type="submit" formnovalidate value="Submit without validation">
+</form>
+
+<!-- <input> formtarget -->
+<form action="demo_form.asp">
+  First name: <input type="text" name="fname"><br>
+  Last name: <input type="text" name="lname"><br>
+  <input type="submit" value="Submit as normal">
+  <input type="submit" formtarget="_blank"
+  value="Submit to a new window">
+</form>
+
+<!-- <input> height and width -->
+<input type="image" src="img_submit.gif" alt="Submit" width="48" height="48">
+
+<!-- <input> list -->
+<input list="browsers">
+<datalist id="browsers">
+  <option value="Internet Explorer">
+  <option value="Firefox">
+  <option value="Chrome">
+  <option value="Opera">
+  <option value="Safari">
+</datalist>
+
+<!-- <input> min and max -->
+Enter a date before 1980-01-01:
+<input type="date" name="bday" max="1979-12-31">
+Enter a date after 2000-01-01:
+<input type="date" name="bday" min="2000-01-02">
+Quantity (between 1 and 5):
+<input type="number" name="quantity" min="1" max="5">
+
+<!-- <input> multiple -->
+Select images: <input type="file" name="img" multiple>
+
+<!-- <input> pattern -->
+Country code: <input type="text" name="country_code" pattern="[A-Za-z]{3}" title="Three letter country code">
+
+<!-- <input> placeholder -->
+<input type="text" name="fname" placeholder="First name">
+
+<!-- <input> required -->
+Username: <input type="text" name="usrname" required>
+
+<!-- <input> step -->
+<input type="number" name="points" step="3">
+```	
+
+graphics
+
+```html graphics
+<canvas id="myCanvas" width="200" height="100"></canvas>
+<canvas id="myCanvas" width="200" height="100" style="border:1px solid #000000;"></canvas>
+
+<script>
+var c = document.getElementById("myCanvas");
+var ctx = c.getContext("2d");
+ctx.fillStyle = "#FF0000";
+ctx.fillRect(0,0,150,75);
+</script>
+
+<script>
+var c = document.getElementById("myCanvas");
+var ctx = c.getContext("2d");
+ctx.moveTo(0,0);
+ctx.lineTo(200,100);
+ctx.stroke();
+</script>
+
+<script>
+var c = document.getElementById("myCanvas");
+var ctx = c.getContext("2d");
+ctx.beginPath();
+ctx.arc(95,50,40,0,2*Math.PI);
+ctx.stroke();
+</script>
+
+<script>
+var c = document.getElementById("myCanvas");
+var ctx = c.getContext("2d");
+ctx.font = "30px Arial";
+ctx.fillText("Hello World",10,50);
+</script>
+
+<script>
+var c = document.getElementById("myCanvas");
+var ctx = c.getContext("2d");
+
+// Create gradient
+var grd = ctx.createLinearGradient(0,0,200,0);
+grd.addColorStop(0,"red");
+grd.addColorStop(1,"white");
+
+// Fill with gradient
+ctx.fillStyle = grd;
+ctx.fillRect(10,10,150,80);
+</script>
+
+<script>
+var c = document.getElementById("myCanvas");
+var ctx = c.getContext("2d");
+
+// Create gradient
+var grd = ctx.createRadialGradient(75,50,5,90,60,100);
+grd.addColorStop(0,"red");
+grd.addColorStop(1,"white");
+
+// Fill with gradient
+ctx.fillStyle = grd;
+ctx.fillRect(10,10,150,80);
+</script>
+
+<script>
+var c = document.getElementById("myCanvas");
+var ctx = c.getContext("2d");
+var img = document.getElementById("scream");
+ctx.drawImage(img,10,10);
+</script>
+```
+
+SVG
+
+```html SVG
+<!DOCTYPE html>
+<html>
+<body>
+
+<svg width="300" height="200">
+  <polygon points="100,10 40,198 190,78 10,78 160,198"
+  style="fill:lime;stroke:purple;stroke-width:5;fill-rule:evenodd;" />
+</svg>
+
+</body>
+</html>
+```
+
+media
+
+```html media
+<!-- video -->
+<video width="320" height="240" controls>
+  <source src="movie.mp4" type="video/mp4">
+  <source src="movie.ogg" type="video/ogg">
+Your browser does not support the video tag.
+</video>
+
+<!-- audio -->
+<audio controls>
+  <source src="horse.ogg" type="audio/ogg">
+  <source src="horse.mp3" type="audio/mpeg">
+Your browser does not support the audio element.
+</audio>
+```

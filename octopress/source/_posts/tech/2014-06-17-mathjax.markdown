@@ -1,0 +1,61 @@
+---
+layout: post_tech
+title: "MathJax"
+date: 2014-06-17 14:41:25 +0800
+comments: true
+categories: [tech]
+tags: [javascript, mathjax]
+---
+
+## 1. Installation
+
+## 2. Syntax
+
+| Type                         | Formula                       | Example                        |
+|:-----------------------------|:------------------------------|:-------------------------------|
+| display                      | `$$...$$`                     |                                |
+| greek letters with lowercase | `\alpha`                      | $$\alpha$$                     |
+|                              | `\beta`                       | $$\beta$$                      |
+|                              | `\omega`                      | $$\omega$$                     |
+| greek letters with uppercase | `\Gamma`                      | $$\Gamma$$                     |
+|                              | `\Delta`                      | $$\Delta$$                     |
+|                              | `\Omega`                      | $$\Omega$$                     |
+| superscripts                 | `^`                           |                                |
+| subscripts                   | `_`                           | $$x_i^2$$                      |
+| grouping                     | `{...}`                       | $$x^{y^z}$$                    |
+| parentheses                  | `\left( and \right)`          | $$\left(\right)$$              |
+|                              | `\{ and \}`                   | $$\{\}$$                       |
+|                              | `\langle` and `\rangle`       | $$\langle\rangle$$             |
+|                              | `\lceil` and `\rceil`         | $$\langle\rangle$$             |
+|                              | `$$\lfloor$$`and`$$\rfloor$$` | $$\lfloor\rfloor$$             |
+| invisible parentheses        | `.`                           | $$\left.\frac12\right\rbrace$$ |
+| sums                         | `\sum`                        | $$\sum_1^n$$                   |
+| integrals                    | `\int`                        | $$\int$$                       |
+|                              | `\prod`                       | $$\prod$$                      |
+|                              | `\bigcup`                     | $$\bigcup$$                    |
+|                              | `\bigcap`                     | $$\bigcap$$                    |
+|                              | `\iint`                       | $$\iint$$                      |
+| fractions                    | `\frac ab`                    | $$\frac ab$$                   |
+|                              | `\frac{a+a}{b+1}`             | $$\frac{a+1}{b+1}$$            |
+| radical signs                | `\sqrt{x^3}`                  | $$\sqrt{x^3}$$                 |
+|                              | `\sqrt[3]{\frac xy}`          | $$\sqrt[3]{\frac xy}$$         |
+| functions                    | `\lim`                        | $$\lim$$ - `\lim`              |
+|                              | `\sin`                        | $$\sin$$                       |
+|                              | `\max`                        | $$\max$$                       |
+|                              | `\ln`                         | $$\ln$$                        |
+| spaces                       | `a b`                         | $$a b$$                        |
+|                              | `\,`                          | $$a\,b$$                       |
+|                              | `\;`                          | $$a\;b$$                       |
+|                              | `\quad`                       | $$a\quad b$$                   |
+|                              | `\qquad`                      | $$a\qquad b$$                  |
+| ccents and diacritical marks | `\hat`                        | $$\hat x$$                     |
+|                              | `\widehat`                    | $$\widehat{ab}$$               |
+|                              | `\bar`                        | $$\bar x$$                     |
+|                              | `\overline`                   | $$\overline{xyz}$$             |
+|                              | `\vec`                        | $$\vec x$$                     |
+|                              | `\overrightarrow`             | $$\overrightarrow{xy}$$        |
+|                              | `\dot and \ddot`              | $$\dot x \ddot x$$             |
+| special characters           | `\$`                          | $$\$$$                         |
+|                              | `\{`                          | $$\{$$                         |
+|                              | `\_`                          | $$\_$$                         |
+
