@@ -1,0 +1,564 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Summarization on the Machine Learning Algorithms - Kelly Chan</title>
+  <meta name="author" content="Kelly Chan">
+
+  
+  <meta name="description" content="Table of Contents 1. Classification
+2. Prediction
+3. Unsupervised Learning
+4. Dimensionality Reduction
+5. Big Data and Map Reduce 1. Classification &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://k.arttechresearch.com/tech/2014/07/30/summarization-on-the-machine-learning-algorithms/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Kelly Chan" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+<script type="text/javascript">
+
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-53625944-7', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+</head>
+
+<body   >
+  <header role="banner"><ul class="soc">
+
+  
+    <li><a class="soc-github" href="https://github.com/KellyChan"></a></li>
+  
+
+  
+    <li><a class="soc-twitter" href="https://twitter.com/kwailamchan"></a></li>
+  
+
+  
+    <li><a class="soc-pinterest" href="https://www.pinterest.com/wailamchan/"></a></li>
+  
+
+  
+    <li><a class="soc-email1 soc-icon-last" href="mailto:support@arttechresearch.com"></a></li>
+  
+</ul>
+
+<hgroup>
+  <h1><a href="/">Kelly Chan</a></h1>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="k.arttechresearch.com">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/tech">Tech</a></li>
+  <li><a href="/art">Art</a></li>
+  <li><a href="/life">Life</a></li>
+  <li><a href="/archives">Archives</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <li><a href="/devkits">Devkits</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Summarization on the Machine Learning Algorithms</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-07-30T12:00:00+08:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 pm</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://k.arttechresearch.com">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Table of Contents</p>
+
+<ul>
+<li>1. Classification</li>
+<li>2. Prediction</li>
+<li>3. Unsupervised Learning</li>
+<li>4. Dimensionality Reduction</li>
+<li>5. Big Data and Map Reduce</li>
+</ul>
+
+
+<h2>1. Classification</h2>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;"> Algorithm  </th>
+<th style="text-align:left;"> Maths                   </th>
+<th style="text-align:left;"> Data     </th>
+<th style="text-align:left;"> Pros       </th>
+<th style="text-align:left;"> Cons        </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> kNN        </td>
+<td style="text-align:left;"> euclidean distance: sqrt{sum(xi-xj)<sup>2</sup>} </td>
+<td style="text-align:left;"> Numeric values, nominal values </td>
+<td style="text-align:left;"> High accuracy, insensitive to outliers, no assumptions about data </td>
+<td style="text-align:left;"> Computationally expensive, requires a lot of memory </td>
+</tr>
+<tr>
+<td style="text-align:left;"> Decision Tree </td>
+<td style="text-align:left;"> shannon entropy: - p(x) * log(p(x)) </td>
+<td style="text-align:left;"> Numeric values, nominal values </td>
+<td style="text-align:left;"> Computationally cheap to use, easy for humans to understand learned results, missing values OK, can deal with irrelevant features </td>
+<td style="text-align:left;"> Prone to overfitting </td>
+</tr>
+<tr>
+<td style="text-align:left;"> Naive Bayes </td>
+<td style="text-align:left;"> bayes, ln(a * b) = lna + lnb, lnf(x)~ f(x) </td>
+<td style="text-align:left;"> Nominal values </td>
+<td style="text-align:left;"> Works with a small amount of data, handles multiple classes </td>
+<td style="text-align:left;"> Sensitive to how the input data is prepared </td>
+</tr>
+<tr>
+<td style="text-align:left;"> Logistic Regression </td>
+<td style="text-align:left;"> sigmoid: 1/(1+e^-z), gradient ascent/descent: w = w +/- alpha * delta(f(w)) </td>
+<td style="text-align:left;"> Numeric values, nominal values </td>
+<td style="text-align:left;"> Computationally inexpensive, easy to implement, knowledge representation easy to interpret </td>
+<td style="text-align:left;"> Prone to underfitting, may have low accuracy </td>
+</tr>
+<tr>
+<td style="text-align:left;"> Support Vector Machine </td>
+<td style="text-align:left;"> hyperplane: arg max{min (label * W<sup>T</sup> * x+b) * 1/|W|}, SMO algorithm (Sequential Minimal Optimization): finds alpha (increased/decreased) and b, alpha criteria: outside margin boundary, not already clamped/bounded </td>
+<td style="text-align:left;"> Numeric values, nominal values </td>
+<td style="text-align:left;"> Low generalization error, computationally inexpensive, easy to interpret results </td>
+<td style="text-align:left;"> Sensitive to tuning parameters and kernel choice; natively only handles binary classification </td>
+</tr>
+<tr>
+<td style="text-align:left;"> AdaBoost Meta-Algorithm </td>
+<td style="text-align:left;"> boosting/bagging: (boosting) weighted sum of all classifiers, error = # of misclassified / # of examples, alpha = &frac12; * ln (1 - error / error), weightedVector = probability * exp(-1 * alpha * categoryMatrix * classifiedMatrix) </td>
+<td style="text-align:left;"> Numeric values, nominal values </td>
+<td style="text-align:left;"> Low generalization error, easy to code, works with most classifiers, no parameters to adjust </td>
+<td style="text-align:left;"> Sensitive to outliers </td>
+</tr>
+</tbody>
+</table>
+
+
+<h2>2. Prediction</h2>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;"> Algorithm  </th>
+<th style="text-align:left;"> Maths                   </th>
+<th style="text-align:left;"> Data     </th>
+<th style="text-align:left;"> Pros       </th>
+<th style="text-align:left;"> Cons        </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> Linear Regression </td>
+<td style="text-align:left;"> *  </td>
+<td style="text-align:left;"> Numeric values, nominal values </td>
+<td style="text-align:left;"> Easy to interpret results, computationally inexpensive </td>
+<td style="text-align:left;"> Poorly models nonlinear data </td>
+</tr>
+<tr>
+<td style="text-align:left;"> Tree-based Regression </td>
+<td style="text-align:left;"> bestFeatureSplit: targetMean, targetVariance </td>
+<td style="text-align:left;"> Numeric values, nominal values </td>
+<td style="text-align:left;"> Fits complex, nonlinear data </td>
+<td style="text-align:left;"> Difficult to interpret results </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>* (Linear Regression) Maths</p>
+
+<ul>
+<li><p>regression - (X<sup>T</sup> * X) inversed</p>
+
+<ul>
+<li>Y = X<sup>T</sup> * W</li>
+<li>W = (X<sup>T</sup> * X)<sup>-1</sup> * X<sup>T</sup> * Y</li>
+</ul>
+</li>
+<li><p>locally weighted linear regression (LWLR) - (X<sup>T</sup> * X) inversed</p>
+
+<ul>
+<li>yHat = (X<sup>T</sup> * W * X)<sup>-1</sup> * X<sup>T</sup> * W * y</li>
+<li>(kernel) W = exp (|xi - x|/(-2k<sup>2</sup>)), constant k - how much to weight nearby points</li>
+</ul>
+</li>
+<li><p>ridge regression - (X<sup>T</sup> * X) NOT inversed</p>
+
+<ul>
+<li>Y = X<sup>T</sup> * X + lambda * I</li>
+<li>W = (X<sup>T</sup> * X + lambda * I)<sup>-1</sup> * X<sup>T</sup> * y</li>
+</ul>
+</li>
+<li><p>forward stagewise regression - greedy algorithm</p>
+
+<ul>
+<li>lasso</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>3. Unsupervised Learning</h2>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;"> Algorithm  </th>
+<th style="text-align:left;"> Maths                   </th>
+<th style="text-align:left;"> Data     </th>
+<th style="text-align:left;"> Pros       </th>
+<th style="text-align:left;"> Cons        </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> Unlabeled items grouping: k-means clustering </td>
+<td style="text-align:left;"> mean, euclidean distance: (x-y)<sup>2</sup>, squared error: distnace<sup>2</sup> </td>
+<td style="text-align:left;"> Numeric values </td>
+<td style="text-align:left;"> Easy to implement </td>
+<td style="text-align:left;">  Can converge at local minima; slow on very large datasets </td>
+</tr>
+<tr>
+<td style="text-align:left;"> Association analysis: apriori </td>
+<td style="text-align:left;"> probability, confidence </td>
+<td style="text-align:left;"> Numeric values, nominal values </td>
+<td style="text-align:left;"> Easy to code up </td>
+<td style="text-align:left;"> May be slow on large datasets </td>
+</tr>
+<tr>
+<td style="text-align:left;"> Frequent itemsets finding: FP-growth </td>
+<td style="text-align:left;"> frequency count, tree (data structure) </td>
+<td style="text-align:left;"> Nominal values </td>
+<td style="text-align:left;"> Usually faster than Apriori </td>
+<td style="text-align:left;"> Difficult to implement; certain datasets degrade the performance </td>
+</tr>
+</tbody>
+</table>
+
+
+<h2>4. Dimensionality Reduction</h2>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;"> Algorithm  </th>
+<th style="text-align:left;"> Maths                   </th>
+<th style="text-align:left;"> Data     </th>
+<th style="text-align:left;"> Pros       </th>
+<th style="text-align:left;"> Cons        </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> Principal Component Analysis (PCA) </td>
+<td style="text-align:left;"> covariance, eigenValues, eigenVectors </td>
+<td style="text-align:left;"> Numerical values </td>
+<td style="text-align:left;"> Reduces complexity of data, indentifies most important features </td>
+<td style="text-align:left;"> May not be needed, could throw away useful information </td>
+</tr>
+<tr>
+<td style="text-align:left;"> Singular Value Decomposition (SVD) </td>
+<td style="text-align:left;"> [DATA]m<em>n = [U]m</em>m [SIGMA]m<em>n [V<sup>T</sup>]n</em>n </td>
+<td style="text-align:left;"> Numeric values </td>
+<td style="text-align:left;"> Simplifies data, removes noise, may improve algorithm results </td>
+<td style="text-align:left;"> Transformed data may be difficult to understand </td>
+</tr>
+</tbody>
+</table>
+
+
+<h2>5. Big Data and Map Reduce</h2>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;"> Algorithm  </th>
+<th style="text-align:left;"> Maths                   </th>
+<th style="text-align:left;"> Data     </th>
+<th style="text-align:left;"> Pros       </th>
+<th style="text-align:left;"> Cons        </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> MapReduce  </td>
+<td style="text-align:left;"> </td>
+<td style="text-align:left;"> Numeric values, nominal values </td>
+<td style="text-align:left;"> Processes a massive job in a short period of time </td>
+<td style="text-align:left;"> Algorithms must be rewritten; requires understanding of systems engineering </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>MapReduce: a framework for distributed computing</p>
+
+<h3>5.1. Machine Learning Algorithms for MapReduce</h3>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;"> Algorithm                          </th>
+<th style="text-align:left;"> MapReduce                                                                   </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> Naive Bayes                        </td>
+<td style="text-align:left;"> mapper - results of the probability of a feature, reducer - sum up results  </td>
+</tr>
+<tr>
+<td style="text-align:left;"> k-Nearest Neighbors (kNN)          </td>
+<td style="text-align:left;"> tree: to narrow search for cloest vectors                                   </td>
+</tr>
+<tr>
+<td style="text-align:left;"> Support Vector Machines (SVM)      </td>
+<td style="text-align:left;"> Pegasos algorithm: stochastic gradient descent                              </td>
+</tr>
+<tr>
+<td style="text-align:left;"> Singular Value Decomposition (SVD) </td>
+<td style="text-align:left;"> Lanczos algorithm: find the singular values in a large matrix               </td>
+</tr>
+<tr>
+<td style="text-align:left;"> k-means Clustering                 </td>
+<td style="text-align:left;"> Canopy clustering                                                           </td>
+</tr>
+</tbody>
+</table>
+
+</div>
+
+
+
+  <footer>
+
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kelly Chan</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-07-30T12:00:00+08:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/tech/'>tech</a>
+  
+</span>
+
+
+    </p>
+
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://k.arttechresearch.com/tech/2014/07/30/summarization-on-the-machine-learning-algorithms/" data-via="kwailamchan" data-counturl="http://k.arttechresearch.com/tech/2014/07/30/summarization-on-the-machine-learning-algorithms/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/tech/2014/07/29/unbalanced-coin/" title="Previous Post: Unbalanced Coin">&laquo; Unbalanced Coin</a>
+      
+      
+        <a class="basic-alignment right" href="/tech/2014/07/31/ascii-and-unicode/" title="Next Post: ASCII and Unicode">ASCII and Unicode &raquo;</a>
+      
+    </p>
+
+  </footer>
+
+</article>
+
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Tech</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/tech/2015/10/03/installing-openstack-devstack/">Installing Openstack Devstack</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/05/01/installing-jenkins-on-ubuntu/">Installing Jenkins on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/05/01/installing-cloudera-hadoop-on-ubuntu/">Installing Cloudera Hadoop on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/05/01/configurating-nginx-for-django-projects-on-ubuntu/">Configurating Nginx for Django Projects on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/05/01/setting-up-mysql-on-ubuntu/">Setting Up MySQL on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/04/26/installing-emacs-on-ubuntu/">Installing Emacs on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/04/25/automatically-running-shell-scripts-on-ubuntu/">Automatically Running Shell Scripts on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/04/25/it-could-not-access-network-on-ubuntu/">It Could Not Access Network on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/04/25/installing-pycharm-on-ubuntu-12.04/">Installing PyCharm on Ubuntu 12.04</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/02/11/setup-a-git-server/">Setup a Git Server</a>
+      </li>
+    
+  </ul>
+</section>
+<section class="category-list">
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/categories/art/'>art (1)</a></li><li><a href='/categories/life/'>life (43)</a></li><li><a href='/categories/tech/'>tech (50)</a></li></ul>
+</section>
+<section class="tag-cloud">
+
+
+  <h1>Tags</h1>
+    <ul id="category-list"><a href='/tags/algorithm' style='font-size: 118.69565217391305%'>algorithm(7)</a> <a href='/tags/api' style='font-size: 90.0%'>api(1)</a> <a href='/tags/ascii' style='font-size: 90.0%'>ascii(1)</a> <a href='/tags/beautifulsoup' style='font-size: 90.0%'>beautifulsoup(1)</a> <a href='/tags/career' style='font-size: 94.78260869565217%'>career(2)</a> <a href='/tags/classification' style='font-size: 94.78260869565217%'>classification(2)</a> <a href='/tags/cloud' style='font-size: 90.0%'>cloud(1)</a> <a href='/tags/cloudera' style='font-size: 90.0%'>cloudera(1)</a> <a href='/tags/computer-vision' style='font-size: 90.0%'>computer vision(1)</a> <a href='/tags/crawler' style='font-size: 94.78260869565217%'>crawler(2)</a> <a href='/tags/css' style='font-size: 90.0%'>css(1)</a> <a href='/tags/data' style='font-size: 90.0%'>data(1)</a> <a href='/tags/django' style='font-size: 94.78260869565217%'>django(2)</a> <a href='/tags/dns' style='font-size: 90.0%'>dns(1)</a> <a href='/tags/emacs' style='font-size: 94.78260869565217%'>emacs(2)</a> <a href='/tags/fiction' style='font-size: 113.91304347826087%'>fiction(6)</a> <a href='/tags/french' style='font-size: 90.0%'>french(1)</a> <a href='/tags/git' style='font-size: 90.0%'>git(1)</a> <a href='/tags/github' style='font-size: 90.0%'>github(1)</a> <a href='/tags/gunicorn' style='font-size: 90.0%'>gunicorn(1)</a> <a href='/tags/hadoop' style='font-size: 90.0%'>hadoop(1)</a> <a href='/tags/html' style='font-size: 90.0%'>html(1)</a> <a href='/tags/ide' style='font-size: 94.78260869565217%'>ide(2)</a> <a href='/tags/javascript' style='font-size: 90.0%'>javascript(1)</a> <a href='/tags/jekyll' style='font-size: 90.0%'>jekyll(1)</a> <a href='/tags/jenkins' style='font-size: 90.0%'>jenkins(1)</a> <a href='/tags/leisure' style='font-size: 195.2173913043478%'>leisure(23)</a> <a href='/tags/linux' style='font-size: 109.13043478260869%'>linux(5)</a> <a href='/tags/machine-learning' style='font-size: 137.82608695652175%'>machine learning(11)</a> <a href='/tags/mathjax' style='font-size: 90.0%'>mathjax(1)</a> <a href='/tags/mysql' style='font-size: 94.78260869565217%'>mysql(2)</a> <a href='/tags/network' style='font-size: 90.0%'>network(1)</a> <a href='/tags/nginx' style='font-size: 90.0%'>nginx(1)</a> <a href='/tags/nlp' style='font-size: 113.91304347826087%'>nlp(6)</a> <a href='/tags/nltk' style='font-size: 90.0%'>nltk(1)</a> <a href='/tags/openstack' style='font-size: 90.0%'>openstack(1)</a> <a href='/tags/pandas' style='font-size: 94.78260869565217%'>pandas(2)</a> <a href='/tags/poem' style='font-size: 104.34782608695652%'>poem(4)</a> <a href='/tags/prediction' style='font-size: 90.0%'>prediction(1)</a> <a href='/tags/pycharm' style='font-size: 90.0%'>pycharm(1)</a> <a href='/tags/python' style='font-size: 200.0%'>python(24)</a> <a href='/tags/reading' style='font-size: 118.69565217391305%'>reading(7)</a> <a href='/tags/regex' style='font-size: 90.0%'>regex(1)</a> <a href='/tags/ruby' style='font-size: 90.0%'>ruby(1)</a> <a href='/tags/supervisor' style='font-size: 90.0%'>supervisor(1)</a> <a href='/tags/time-series' style='font-size: 90.0%'>time series(1)</a> <a href='/tags/translation' style='font-size: 90.0%'>translation(1)</a> <a href='/tags/ubuntu' style='font-size: 123.47826086956522%'>ubuntu(8)</a> <a href='/tags/unicode' style='font-size: 90.0%'>unicode(1)</a> <a href='/tags/vim' style='font-size: 90.0%'>vim(1)</a> <a href='/tags/web' style='font-size: 94.78260869565217%'>web(2)</a> </ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2006-2015 - Kelly Chan
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'kwailamc';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://k.arttechresearch.com/tech/2014/07/30/summarization-on-the-machine-learning-algorithms/';
+        var disqus_url = 'http://k.arttechresearch.com/tech/2014/07/30/summarization-on-the-machine-learning-algorithms/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

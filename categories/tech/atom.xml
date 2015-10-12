@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tech | Kelly Chan]]></title>
   <link href="http://k.arttechresearch.com/categories/tech/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2015-10-12T12:44:35+08:00</updated>
+  <updated>2015-10-12T22:24:18+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[Kelly Chan]]></name>
@@ -92,830 +92,650 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Bike Sharing Demand]]></title>
-    <link href="http://k.arttechresearch.com/tech/2014/06/03/bike-sharing-demand/"/>
-    <updated>2014-06-03T14:49:22+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2014/06/03/bike-sharing-demand</id>
-    <content type="html"><![CDATA[<p>The project is to predict the count of bikes sharing per day per hour.</p>
+    <title type="html"><![CDATA[Installing Jenkins on Ubuntu]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/05/01/installing-jenkins-on-ubuntu/"/>
+    <updated>2015-05-01T11:46:00+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/05/01/installing-jenkins-on-ubuntu</id>
+    <content type="html"><![CDATA[<h2>Jenkins</h2>
 
-<ul>
-<li><a href="http://www.kaggle.com/c/bike-sharing-demand">description</a>: bike sharing demand at Kaggle</li>
-<li><a href="http://www.kaggle.com/c/bike-sharing-demand/data">data</a>: data source of this project at Kaggle</li>
-<li><a href="https://github.com/KellyChan/kaggle-bike-sharing-demand">codes</a>: the source codes of this project are available at Github</li>
-</ul>
+<p>installation</p>
 
-
-<h2>1. Features</h2>
-
-<p>prediction: count = casual + registered</p>
-
-<pre><code>count - number of total rentals
-casual - number of non-registered user rentals initiated
-registered - number of registered user rentals initiated
+<pre><code>wget -q -O - https://jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -
+sudo sh -c 'echo deb http://pkg.jenkins-ci.org/debian binary/ &gt; /etc/apt/sources.list.d/jenkins.list'
+sudo apt-get update
+sudo apt-get install jenkins
 </code></pre>
 
-<p>features</p>
+<p>open the link: <a href="http://202.120.83.101:8080">http://202.120.83.101:8080</a></p>
 
-<pre><code>datetime - hourly date + timestamp  
-season -  1 = spring, 2 = summer, 3 = fall, 4 = winter 
-holiday - whether the day is considered a holiday
-workingday - whether the day is neither a weekend nor holiday
-weather - 1: Clear, Few clouds, Partly cloudy, Partly cloudy 
-          2: Mist + Cloudy, Mist + Broken clouds, Mist + Few clouds, Mist 
-          3: Light Snow, Light Rain + Thunderstorm + Scattered clouds, Light Rain + Scattered clouds 
-          4: Heavy Rain + Ice Pallets + Thunderstorm + Mist, Snow + Fog 
-temp - temperature in Celsius
-atemp - "feels like" temperature in Celsius
-humidity - relative humidity
-windspeed - wind speed
+<h2>Nginx</h2>
+
+<p>installation</p>
+
+<pre><code>sudo aptitude -y install nginx
+
+# remove default setting
+cd /etc/nginx/sites-available
+sudo cp default default.backup
+sudo rm default ../sites-enabled/default
 </code></pre>
 
-<h2>2. Evaluation</h2>
-
-<p>Submissions are evaluated one the Root Mean Squared Logarithmic Error (RMSLE). The RMSLE is calculated as</p>
-
-<p>$$\sqrt{\frac 1n \sum_1<sup>n</sup> (log(p_i + 1) - log(a_i + 1))<sup>2</sup> }$$</p>
-
-<p>Where:</p>
-
-<ul>
-<li>$$n$$ is the number of hours in the test set</li>
-<li>$$p_i$$ is your predicted count</li>
-<li>$$a_i$$ is the actual count</li>
-<li>$$log(x)$$ is the natural logarithm</li>
-</ul>
-
-
-<h2>3. Algorithms</h2>
-
-<p>algorithms:</p>
-
-<ul>
-<li>decision tree regressor</li>
-<li>extra tree regressor</li>
-<li>random forest regressor</li>
-</ul>
-
-
-<h2>4. Practice</h2>
-
-<pre><code class="python">dataPath = "G:/vimFiles/python/kaggle/201406-bike/data/"
-outPath = "G:/vimFiles/python/kaggle/201406-bike/src/outputs/results/"
-
-import pandas as pd
-
-from sklearn.tree import DecisionTreeRegressor
-from sklearn.ensemble import ExtraTreesRegressor
-from sklearn.ensemble import RandomForestRegressor
-
-def loadData(datafile):
-    return pd.read_csv(datafile)
-
-def splitDatetime(data):
-    sub = pd.DataFrame(data.datetime.str.split(' ').tolist(), columns = "date time".split())
-    date = pd.DataFrame(sub.date.str.split('-').tolist(), columns="year month day".split())
-    time = pd.DataFrame(sub.time.str.split(':').tolist(), columns = "hour minute second".split())
-    data['year'] = date['year']
-    data['month'] = date['month']
-    data['day'] = date['day']
-    data['hour'] = time['hour'].astype(int)
-    return data
-
-def createDecisionTree():
-    est = DecisionTreeRegressor()
-    return est
-
-def createRandomForest():
-    est = RandomForestRegressor(n_estimators=100)
-    return est
-
-def createExtraTree():
-    est = ExtraTreesRegressor()
-    return est
-
-def predict(est, train, test, features, target):
-
-    est.fit(train[features], train[target])
-
-    with open(outPath + "submission-randomforest.csv", 'wb') as f:
-        f.write("datetime,count\n")
-
-        for index, value in enumerate(list(est.predict(test[features]))):
-            f.write("%s,%s\n" % (test['datetime'].loc[index], int(value)))
-
-
-def main():
-
-    train = loadData(dataPath + "train.csv")
-    test = loadData(dataPath + "test.csv")
-
-    train = splitDatetime(train)
-    test = splitDatetime(test)
-
-    target = 'count'
-    features = [col for col in train.columns if col not in ['datetime', 'casual', 'registered', 'count']]
-
-    est = createRandomForest()
-    predict(est, train, test, features, target)
-
-
-
-if __name__ == "__main__":
-    main()
-</code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Forest Cover Type Prediction]]></title>
-    <link href="http://k.arttechresearch.com/tech/2014/05/28/forest-cover-type-prediction/"/>
-    <updated>2014-05-28T15:00:00+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2014/05/28/forest-cover-type-prediction</id>
-    <content type="html"><![CDATA[<p>This project is to predict the forest cover type with the cartography data provided by US Geological Survey and USFS.</p>
-
-<ul>
-<li><a href="http://www.kaggle.com/c/forest-cover-type-prediction">description</a>: forest cover type prediction at Kaggle</li>
-<li><a href="http://www.kaggle.com/c/forest-cover-type-prediction/data">data</a>: data source of this project at Kaggle</li>
-<li><a href="https://github.com/KellyChan/kaggle-forest-cover-type-prediction">codes</a>: the source codes of this project are available at Github</li>
-</ul>
-
-
-<h2>1. Working Process</h2>
-
-<ul>
-<li>step 1. combining binary variables (Wilderness_Area and Soil_Type) as one</li>
-<li>step 2. applying machine learning algorithms (random forest)</li>
-<li>step 3. evaluating the accuracy of prediction</li>
-</ul>
-
-
-<h2>2. Preprocessing</h2>
-
-<p>combining binary variables (Wilderness_Area, Soil_Type)</p>
-
-<h2>3. Classification</h2>
-
-<p>datasets</p>
-
-<ul>
-<li>raw data</li>
-<li>punched data</li>
-</ul>
-
-
-<p>algorithms</p>
-
-<ul>
-<li>decision tree</li>
-<li>random forest</li>
-<li>extra tree: raw data worked much better than punched data.</li>
-<li>adaboost</li>
-</ul>
-
-
-<h2>4. Evaluation</h2>
-
-<p>% of corrections</p>
-
-<h2>5. Practice</h2>
-
-<h3>step1. data punching</h3>
-
-<p>combining binary variables - Wilderness_Area, Soil_Type</p>
-
-<p>NOTE: Pandas is good at handling with data by batch, it is much faster than processing each record one by one.</p>
-
-<pre><code class="python">dataPath = "path/kaggle/201405-Forest/data/"
-outPath = "path/kaggle/201405-Forest/src/outputs/data/"
-
-import pandas as pd
-
-def loadData(datafile):
-    return pd.read_csv(datafile)
-
-def createWildernessArea(data):
-
-    for i in range(4):
-        coded = {'1': i+1, '0': 0}
-        col = 'Wilderness_Area' + str(i+1)
-        data[col] = data[col].astype(str).map(coded)
-
-    data['Wilderness_Area'] = data['Wilderness_Area1'] + \
-                              data['Wilderness_Area2'] + \
-                              data['Wilderness_Area3'] + \
-                              data['Wilderness_Area4']
-
-    for i in range(4):
-        col = 'Wilderness_Area' + str(i+1)
-        data = data.drop(col, 1)
-
-    return data
-
-def createSoilType(data):
-
-    for i in range(40):
-        coded = {'1': i+1, '0': 0}
-        col = 'Soil_Type' + str(i+1)
-        data[col] = data[col].astype(str).map(coded)    
-
-    data['Soil_Type'] = 0
-    for i in range(40):
-        col = 'Soil_Type' + str(i+1)
-        data['Soil_Type'] += data[col] 
-
-    for i in range(40):
-        col = 'Soil_Type' + str(i+1)
-        data = data.drop(col, 1)
-
-    return data
-
-def main():
-    train = loadData(dataPath + "train.csv")
-    test = loadData(dataPath + "test.csv")
-
-    train = createWildernessArea(train)
-    train = createSoilType(train)
-    train.to_csv(outPath + "train.csv")
-
-    test = createWildernessArea(test)
-    test = createSoilType(test)
-    test.to_csv(outPath + "test.csv")
-
-
-if __name__ == '__main__':
-    main()
+<p>/etc.nginx.sites-available: add the configurations of jenkins</p>
+
+<pre><code>sudo nano jenkins
+upstream app_server {
+    server 127.0.0.1:8080 fail_timeout=0;
+}
+
+server {
+    listen 80;
+    listen [::]:80 default ipv6only=on;
+    server_name ci.yourcompany.com;
+
+    location / {
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_redirect off;
+
+        if (!-f $request_filename) {
+            proxy_pass http://app_server;
+            break;
+        }
+    }
+}
 </code></pre>
 
-<h3>step2. classification with trees</h3>
+<p>adding the link</p>
 
-<pre><code class="python">"""
-Function Tree
-
-- chooseDataset
-     |------ loadData
-
-- chooseAlgorithms
-     |------ createDecisionTree
-     |------ createRandomForest
-     |------ createExtraTree
-     |------ createAdaBoost
-
-"""
-
-rawPath = "G:/vimFiles/python/kaggle/201405-Forest/data/"
-dataPath = "G:/vimFiles/python/kaggle/201405-Forest/src/outputs/data/"
-outPath = "G:/vimFiles/python/kaggle/201405-Forest/src/outputs/results/"
-
-import pandas as pd
-
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.ensemble import ExtraTreesClassifier
-from sklearn.ensemble import AdaBoostClassifier
-
-def loadData(datafile):
-    return pd.read_csv(datafile)
-
-
-def createDecisionTree():
-    clf = DecisionTreeClassifier(max_depth=None, min_samples_split=1, random_state=0)
-    return clf
-
-def createRandomForest():
-    clf = RandomForestClassifier(n_estimators=500, max_depth=None, min_samples_split=1, random_state=0)
-    return clf
-
-def createExtraTree():
-    clf = ExtraTreesClassifier(n_estimators=500, max_depth=None, min_samples_split=1, random_state=0)
-    return clf
-
-def createAdaBoost():
-    dt = DecisionTreeClassifier(max_depth=None, min_samples_split=1, random_state=0)
-    clf = AdaBoostClassifier(dt, n_estimators=300)
-    return clf
-
-def classify(clf, train, cols, target, test, filePath):
-    clf.fit(train[cols], train[target])
-
-    with open(filePath, "wb") as outfile:
-        outfile.write("Id,Cover_Type\n")
-        for index, value in enumerate(list(clf.predict(test[cols]))):
-            outfile.write("%s,%s\n" % (test['Id'].loc[index], value))
-
-
-def chooseDataset(dataset):
-    if dataset == 1:
-        train = loadData(rawPath + "train.csv")
-        test = loadData(rawPath + "test.csv")
-    elif dataset == 2:
-        train = loadData(dataPath + "train.csv")
-        test = loadData(dataPath + "test.csv")
-    return train, test
-
-def chooseAlgorithms(algo, train, test, target, features):
-
-    if algo == 0:
-
-        clf = createDecisionTree()
-        classify(clf, train, features, target, test, outPath+"submission-decisiontree.csv")        
-
-        clf = createRandomForest()
-        classify(clf, train, features, target, test, outPath+"submission-randomforest.csv")
-
-        clf = createExtraTree()
-        classify(clf, train, features, target, test, outPath+"submission-extratree.csv")
-
-        clf = createAdaBoost()
-        classify(clf, train, features, target, test, outPath+"submission-adaboost.csv")
-
-    elif algo == 1:
-        clf = createDecisionTree()
-        classify(clf, train, features, target, test, outPath+"submission-decisiontree.csv")
-
-    elif algo == 2:
-        clf = createRandomForest()
-        classify(clf, train, features, target, test, outPath+"submission-randomforest.csv")
-
-    elif algo == 3:
-        clf = createExtraTree()
-        classify(clf, train, features, target, test, outPath+"submission-extratree.csv")
-
-    elif algo == 4:
-        clf = createAdaBoost()
-        classify(clf, train, features, target, test, outPath+"submission-adaboost.csv")
-
-
-def main():
-
-    """ selections: dataset and algorithms
-
-    dataset:
-    - 1: raw data - Wilderness_Area, Soil_Type are binary codes
-    - 2: punched data - Wilderness_Area, Soil_Type are combined
-
-    algo: algorithms
-    - 0: all
-    - 1: decision tree
-    - 2: random forest
-    - 3: extra tree
-    - 4: adaboost
-    """
-    dataset = 1
-    algo = 1
-
-    train, test = chooseDataset(dataset)
-
-    target = 'Cover_Type'
-    features = [col for col in train.columns if col not in ['Id', 'Cover_Type', 'Unnamed']]
-
-    chooseAlgorithms(algo, train, test, target, features)
-
-
-
-if __name__ == '__main__':
-    main()
+<pre><code>sudo ln -s /etc/nginx/sites-available/jenkins /etc/nginx/sites-enabled/
 </code></pre>
 
-<h2>6. Data formats</h2>
+<p>start service</p>
 
-<p>predict(submission): <code>Id</code>, <code>Cover_Type</code></p>
-
-<pre><code>Cover_Type (7 types, integers 1 to 7) - Forest Cover Type designation
-
-1 - Spruce/Fir
-2 - Lodgepole Pine
-3 - Ponderosa Pine
-4 - Cottonwood/Willow
-5 - Aspen
-6 - Douglas-fir
-7 - Krummholz
+<pre><code>sudo service nginx restart
 </code></pre>
 
-<p>train/test: <code>Id</code></p>
+<h2>Configurating Jenkins</h2>
 
-<p>features</p>
+<p>installing java</p>
 
-<pre><code>Elevation - Elevation in meters
-Aspect - Aspect in degrees azimuth
-Slope - Slope in degrees
-
-Horizontal_Distance_To_Hydrology - Horz Dist to nearest surface water features
-Vertical_Distance_To_Hydrology - Vert Dist to nearest surface water features
-Horizontal_Distance_To_Roadways - Horz Dist to nearest roadway
-Horizontal_Distance_To_Fire_Points - Horz Dist to nearest wildfire ignition points
-
-Hillshade_9am (0 to 255 index) - Hillshade index at 9am, summer solstice
-Hillshade_Noon (0 to 255 index) - Hillshade index at noon, summer solstice
-Hillshade_3pm (0 to 255 index) - Hillshade index at 3pm, summer solstice
-
-Wilderness_Area (4 areas, 0 = absence, 1 = presence) - Wilderness area designation
-- 1 - Rawah Wilderness Area
-- 2 - Neota Wilderness Area
-- 3 - Comanche Peak Wilderness Area
-- 4 - Cache la Poudre Wilderness Area
-
-Soil_Type (40 types, 0 = absence, 1 = presence) - Soil Type designation
-- 1 Cathedral family - Rock outcrop complex, extremely stony. 
-- 2 Vanet - Ratake families complex, very stony.
-- 3 Haploborolis - Rock outcrop complex, rubbly.
-- 4 Ratake family - Rock outcrop complex, rubbly.
-- 5 Vanet family - Rock outcrop complex complex, rubbly.
-- 6 Vanet - Wetmore families - Rock outcrop complex, stony.
-- 7 Gothic family.
-- 8 Supervisor - Limber families complex.
-- 9 Troutville family, very stony.
-- 10 Bullwark - Catamount families - Rock outcrop complex, rubbly.
-- 11 Bullwark - Catamount families - Rock land complex, rubbly.
-- 12 Legault family - Rock land complex, stony.
-- 13 Catamount family - Rock land - Bullwark family complex, rubbly.
-- 14 Pachic Argiborolis - Aquolis complex.
-- 15 unspecified in the USFS Soil and ELU Survey.
-- 16 Cryaquolis - Cryoborolis complex.
-- 17 Gateview family - Cryaquolis complex.
-- 18 Rogert family, very stony.
-- 19 Typic Cryaquolis - Borohemists complex.
-- 20 Typic Cryaquepts - Typic Cryaquolls complex.
-- 21 Typic Cryaquolls - Leighcan family, till substratum complex.
-- 22 Leighcan family, till substratum, extremely bouldery.
-- 23 Leighcan family, till substratum - Typic Cryaquolls complex.
-- 24 Leighcan family, extremely stony.
-- 25 Leighcan family, warm, extremely stony.
-- 26 Granile - Catamount families complex, very stony.
-- 27 Leighcan family, warm - Rock outcrop complex, extremely stony.
-- 28 Leighcan family - Rock outcrop complex, extremely stony.
-- 29 Como - Legault families complex, extremely stony.
-- 30 Como family - Rock land - Legault family complex, extremely stony.
-- 31 Leighcan - Catamount families complex, extremely stony.
-- 32 Catamount family - Rock outcrop - Leighcan family complex, extremely stony.
-- 33 Leighcan - Catamount families - Rock outcrop complex, extremely stony.
-- 34 Cryorthents - Rock land complex, extremely stony.
-- 35 Cryumbrepts - Rock outcrop - Cryaquepts complex.
-- 36 Bross family - Rock land - Cryumbrepts complex, extremely stony.
-- 37 Rock outcrop - Cryumbrepts - Cryorthents complex, extremely stony.
-- 38 Leighcan - Moran families - Cryaquolls complex, extremely stony.
-- 39 Moran family - Cryorthents - Leighcan family complex, extremely stony.
-- 40 Moran family - Cryorthents - Rock land complex, extremely stony.
+<pre><code>sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+sudo apt-get install oracle-java7-installer
+sudo update-java-alternatives -s java-7-oracle  
+sudo update-alternatives --config java
 </code></pre>
 
-<h2>Reference</h2>
+<p>configurating java home</p>
 
-<ul>
-<li><a href="http://en.wikipedia.org/wiki/Aspect_(geography">Aspect Geography</a>)</li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Text Classification With Naive Bayes]]></title>
-    <link href="http://k.arttechresearch.com/tech/2014/05/24/text-classification-with-naive-bayes/"/>
-    <updated>2014-05-24T01:05:22+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2014/05/24/text-classification-with-naive-bayes</id>
-    <content type="html"><![CDATA[<h2>1. Working Process</h2>
-
-<p>general process</p>
-
-<pre><code>raw text --&gt; keywords --&gt; features --&gt; train --&gt; clasifier
-raw text              --&gt; features --&gt; test  --&gt; classify
+<pre><code>sudo nano $HOME/.bashrc
 </code></pre>
 
-<p>example: sentimental analysis for tweets</p>
+<p>adding the configuration</p>
 
-<pre><code>positive/negative tweets --&gt; keywords --&gt; features --&gt; train --&gt; clasifier
-unlabeled tweets                      --&gt; features --&gt; test  --&gt; classify
-</code></pre>
-
-<h2>2. Feature Extraction</h2>
-
-<p>keyword extraction: wordFreqDict</p>
-
-<pre><code>wordFreqDict = {keyword1: 90,
-                keyword2: 30,
-                keyword3: 3,
-                ...}
-</code></pre>
-
-<p>feature extraction: True/False table</p>
-
-<table>
-<thead>
-<tr>
-<th style="text-align:left;"> tweet                </th>
-<th style="text-align:left;"> keyword1 </th>
-<th style="text-align:left;"> keyword2 </th>
-<th style="text-align:left;"> keyword3 </th>
-<th style="text-align:left;"> &hellip; </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;"> &ldquo;I like this dog.&rdquo;   </td>
-<td style="text-align:left;"> True     </td>
-<td style="text-align:left;"> False    </td>
-<td style="text-align:left;"> True     </td>
-<td style="text-align:left;"> &hellip; </td>
-</tr>
-<tr>
-<td style="text-align:left;"> &ldquo;Beautiful morning.&rdquo; </td>
-<td style="text-align:left;"> False    </td>
-<td style="text-align:left;"> False    </td>
-<td style="text-align:left;"> False    </td>
-<td style="text-align:left;"> &hellip; </td>
-</tr>
-<tr>
-<td style="text-align:left;"> &hellip;                  </td>
-<td style="text-align:left;"> &hellip;      </td>
-<td style="text-align:left;"> &hellip;      </td>
-<td style="text-align:left;"> &hellip;      </td>
-<td style="text-align:left;"> &hellip; </td>
-</tr>
-</tbody>
-</table>
-
-
-<p>.</p>
-
-<p>train data: features + label</p>
-
-<table>
-<thead>
-<tr>
-<th style="text-align:left;"> tweet                </th>
-<th style="text-align:left;"> keyword1 </th>
-<th style="text-align:left;"> keyword2 </th>
-<th style="text-align:left;"> keyword3 </th>
-<th style="text-align:left;"> &hellip; </th>
-<th style="text-align:left;"> label    </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;"> &ldquo;I like this dog.&rdquo;   </td>
-<td style="text-align:left;"> True     </td>
-<td style="text-align:left;"> False    </td>
-<td style="text-align:left;"> True     </td>
-<td style="text-align:left;"> &hellip; </td>
-<td style="text-align:left;"> Positive </td>
-</tr>
-<tr>
-<td style="text-align:left;"> &ldquo;Beautiful morning.&rdquo; </td>
-<td style="text-align:left;"> False    </td>
-<td style="text-align:left;"> False    </td>
-<td style="text-align:left;"> False    </td>
-<td style="text-align:left;"> &hellip; </td>
-<td style="text-align:left;"> Positive </td>
-</tr>
-<tr>
-<td style="text-align:left;"> &hellip;                  </td>
-<td style="text-align:left;"> &hellip;      </td>
-<td style="text-align:left;"> &hellip;      </td>
-<td style="text-align:left;"> &hellip;      </td>
-<td style="text-align:left;"> &hellip; </td>
-<td style="text-align:left;"> &hellip;      </td>
-</tr>
-</tbody>
-</table>
-
-
-<p>.</p>
-
-<h2>3. Practice</h2>
-
-<p>function construct</p>
-
-<pre><code>    |----- [test-features]: extractFeatures(dataX, keywords)
-    |----- [train]: createTrain(fullData, keywords)
-              |----- [features]: extractFeatures(dataX, keywords)
-              |----- [keywords]: createKeywords(fullData)
-                        |----- [fullData]: generateFullData(data1, data2)
-                                     |----- [rawData]: loadData()
-</code></pre>
-
-<p>data format</p>
-
-<pre><code>- rawData: [('word word ...', 'label'), ... ]
-- fullData: [([words], label), ([words], label), ...]
-
-- features: {word: True/False}
-- train: [({features}, label), ({features}, label), ...]
-- test: ['word word ...', 'word word ...', ...]
+<pre><code># set JAVA_HOME
+JAVA_HOME=/usr/lib/jvm/java-7-oracle/ 
+export JAVA_HOME
+PATH=$PATH:$JAVA_HOME
+export PATH
 </code></pre>
 
 <p>source</p>
 
-<pre><code class="python">import nltk
-
-def loadData():
-    """ loading raw data """
-
-    pos_tweets = [('I love this car', 'positive'),
-                  ('This view is amazing', 'positive'),
-                  ('I feel great this morning', 'positive'),
-                  ('I am so excited about the concert', 'positive'),
-                  ('He is my best friend', 'positive')]
-
-    neg_tweets = [('I do not like this car', 'negative'),
-                  ('This view is horrible', 'negative'),
-                  ('I feel tired this morning', 'negative'),
-                  ('I am not looking forward to the concert', 'negative'),
-                  ('He is my enemy', 'negative')]
-
-    return pos_tweets, neg_tweets
-
-def generateFullData(data1, data2):
-    """ generating full data with feature and label 
-
-    fullData: [([words], label), ([words], label), ...]
-    """
-
-    fullData = []
-
-    for (words, label) in data1 + data2:
-        words_filterred = [e.lower() for e in words.split() if len(e) &gt;= 3]
-        fullData.append((words_filterred, label))
-    return fullData
-
-def createKeywords(data):
-    """ generating word dictionary from all words """
-
-    wordlist = []
-    for (words, label) in data:
-        wordlist.extend(words)  # combining all words in a list
-
-    wordDict = nltk.FreqDist(wordlist)  # generating frquencies of each word
-    return wordDict.keys() 
-
-def extractFeatures(dataX, keywords):
-    """ extracting word table with true/false 
-
-    features: {word: True/False}
-    """
-
-    dataX_wordSet = set(dataX)
-
-    features = {}
-    for word in keywords:
-        # creating true/false table
-        features['contains(%s)' % word] = (word in dataX_wordSet)  
-    return features
-
-def createTrain(data, keywords):
-    """ creating train data
-
-    train: [({features}, label), ({features}, label), ...]
-    - features: {word: True/False}
-    """
-
-    train = []
-    for record in data:
-        # format: ({word: True/False}, label)
-        train.append((extractFeatures(record[0], keywords), record[1]))  
-
-    # if only have one argument, it also can be written by apply_features
-    #train = nltk.classify.apply_features(extractFeatures, data)
-
-    return train
-
-def classifyNB(testX, train, keywords):
-    """ classifying label with naive bayes """
-
-    # creating Naive Bayes classifier
-    classifier = nltk.NaiveBayesClassifier.train(train)
-
-    # extracting features from raw testX and predicting label
-    testX = extractFeatures(testX.split(), keywords)
-    predClass = classifier.classify(testX)
-    return predClass
-
-
-def main():
-
-    # loading data and combining as one
-    pos_tweets, neg_tweets = loadData()
-    tweets = generateFullData(pos_tweets, neg_tweets)
-
-    # extracting keywords and train data
-    keywords = createKeywords(tweets)
-    train = createTrain(tweets, keywords)
-
-    # predicting label
-    testX = 'Larry is my friend'
-    predClass = classifyNB(testX, train, keywords)
-    print predClass
-
-
-if __name__ == '__main__':
-    main()
+<pre><code>source $HOME/.bashrc
+echo $JAVA_HOME
 </code></pre>
 
-<h2>Reference</h2>
+<p>configurating jenkins</p>
 
-<ol>
-<li><a href="http://www.laurentluce.com/posts/twitter-sentiment-analysis-using-python-and-nltk/">Twitter sentiment analysis using Python and NLTK</a></li>
-</ol>
+<ul>
+<li><p>Manage Jenkins -> Configure System -> JDK/Ant/Maven</p></li>
+<li><p>Manage Jenkins -> Configure Global Security -> security/matrix/admin</p></li>
+<li><p>restart jenkins, sign up with admin</p></li>
+<li><p>Manage Jenkins -> Manage Plugins -> Git Plugin</p></li>
+</ul>
 
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Python Syntax]]></title>
-    <link href="http://k.arttechresearch.com/tech/2014/05/23/python-syntax/"/>
-    <updated>2014-05-23T13:21:29+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2014/05/23/python-syntax</id>
-    <content type="html"><![CDATA[<h2>1. Default Functions</h2>
+    <title type="html"><![CDATA[Installing Cloudera Hadoop on Ubuntu]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/05/01/installing-cloudera-hadoop-on-ubuntu/"/>
+    <updated>2015-05-01T11:10:00+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/05/01/installing-cloudera-hadoop-on-ubuntu</id>
+    <content type="html"><![CDATA[<p>NOTE: All hosts should be finished all the steps listed below.</p>
 
-<h3>1.1. string</h3>
+<h2>Preparation</h2>
 
-<pre><code class="python"># check subset
-if "xxx" in aString:
-    has_string = True
+<p>hosts</p>
 
-# join two sets
-set1 = ['a', 'b', 'c']
-set2 = ['b', 'c', 'd']
-fullset = set(list(set1) + list(set2))
-fullset = list(set(set1 + set2))
-
-# remove empty strings
-a = 'abc  '
-print len(a)
-print len(a.strip())
+<pre><code>202.120.83.101 insight-master
+202.120.83.102 insight-slave1
+202.120.83.103 insight-slave2
+202.120.83.104 insight-slave3
+202.120.83.105 insight-slave4
 </code></pre>
 
-<h3>1.2. IO</h3>
+<p>updating softwares</p>
 
-<pre><code class="python"># output with csv
-with open(outPath+"submission-randomforest.csv", "wb") as outfile:
-    outfile.write("Id,Cover_Type\n")
-    for index, value in enumerate(list(clf.predict(test[cols]))):
-        outfile.write("%s,%s\n" % (test['Id'].loc[index], value))
+<pre><code>sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get dist-upgrade
 </code></pre>
 
-<h3>1.3. random</h3>
+<p>modifing the hosts</p>
 
-<pre><code class="python">random.uniform(10, 20)  #   a &lt;= n &lt;= b  
-
-random.random()  #  0 &lt;= n &lt; 1.0
-random.randint(12, 20)  
-random.randrange(10, 100, 2)  # [10, 12, 14, 16, ... 96, 98]
-random.choice(range(10, 100, 2))
-random.choice(["JGood", "is", "a", "handsome", "boy"])  
-
-p = ["Python", "is", "powerful", "simple", "and so on..."]  
-random.shuffle(p) 
-
-list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]  
-slice = random.sample(list, 5)
+<pre><code>sudo nano /etc/hosts
 </code></pre>
 
-<h2>2. Default Packages</h2>
+<p>hosts</p>
 
-<h3>2.1. datetime</h3>
+<pre><code>127.0.0.1       localhost
+#127.0.1.1      insight
 
-<pre><code class="python">import datetime
-
-# calculating days: minus
-d1 = datetime.datetime(2009, 3, 23)
-d2 = datetime.datetime(2009, 10, 7)
-(d1 - d2).days
-
-# calculating days: plus
-d1 = datetime.datetime.now()
-d3 = d1 + datetime.timedelta(days=10)
-d3.ctime()
-
-# calculating seconds
-starttime = datetime.datetime.now()
-endtime = datetime.datetime.now()
-(endtime - starttime).seconds
+# Cloudera-Hadoop Cluster
+202.120.83.101 insight-master
+202.120.83.102 insight-slave1
+202.120.83.103 insight-slave2
+202.120.83.104 insight-slave3
+202.120.83.105 insight-slave4
 </code></pre>
 
-<h3>2.2. JSON</h3>
+<p>ssh</p>
 
-<p>json</p>
+<pre><code>sudo apt-get install ssh
 
-<pre><code class="python">import json
-from pprint import pprint
+ssh-keygen -t rsa
 
-jsonfile = open(dataPath + fileName)
-data = json.load(jsonfile)
-pprint(data)
-jsonfile.close()
+# copy the publick key
+cat /home/insight/.ssh/id_rsa.pub
+sudo nano /home/insight/.ssh/authorized_keys
 </code></pre>
 
-<p>simplejson</p>
+<p>authorized_keys</p>
 
-<pre><code class="python">import simplejson as json
+<pre><code># 202.120.83.101
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+JcGP7MopXAdZUJR1AK7tCXHELACXh++6kxUf1FCAwdooJ8MlLiqMJTgCCSNMghiB0w442XB+lohQmFPDTLJDRaTZxbCvo82aD0sJ1slaxZDuu5/B3hv+pO7Nz4P1CHLw6JHsY+ml48GjX2FhI/iYDFg0RyEt3d91f+Bha9nubB3+uh9MGhAfpxsxMlc1J4/GTm6F1YfGV5aVfrztEM07bqVVaMS6tT0wrp5L57IzBhdcTOhd9asEmO/OpCQLytoIFS5kTv+M6bTU23ChMj7Df4BNEr2idwqUI/h3zx/jT25LR6qryWiwxZ2jho1yYUMM3jN6LqKSKXOarcrwgjOX insight@insight
 
-print(json.dumps(jsonData, sort_keys=True, indent=4 * ' '))
+# 202.120.83.102
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDHa6O+7kg+T6+G5UMhiPqG9PLcNu0LvO5VPIsuTMbWaer8w8ZRJE2R1KMlXmowMpiADFxeGWUEhruxyDp16JFv/axYc67dfvS1SSJiuNnAZ5PDQ7EIbPcOZqP7641XWY1kHrYbBr4gWnb/EectDQAzdb3GScWlEAu9/vamu7baHfm6C2X+0o3m3nkfB2i/Fd35TGL0xMJx3H/oOcX7Jm8MqCSgdJwIqBxilfqRrHC4VICYB2zDmzFNpgWEPlZZ0do1BKXOBddKMU7c0tgRCcuPLtMWJkIrEZIR7K9UGY7GniXA2Zq8GytjZj1215CyXaLQD9XhC5f0td3KxgmWCzxN insight@insight
+
+# 202.120.83.103
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDeICFND0O2JSt7lXo7r8cFiqhFpZ9Vbc9AG2yQau6xQPvbwPZd6xtCljUWMTAMhdKOFsJp6TbYPWQr25HYUxw+7VUziN1dyXrfchRB4uBQqvYmwcay2vBJlZRAfEK1Ahm6LumXi+kozmHm+7SjBhY/24IRxLf+G1g7ldNW3jLx+GNXtHffH9mw6Uc/ihV/AaFHThR1s4j28mLTBMwVxAHSXadwN863u/hd9rsES7vpxKRNK6U3TymPE5gIRPkXTO5xoxoGKX9E8ClKjl7/D1/sOJI0WZWhlslhSQDGLpMLU1uwK8RT5f4saqZyOv9kva7ad1gIYXXibmhzuct7sk67 insight@insight
+
+# 202.120.83.104
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCbDG89bL9yNik01Xo2fhf8QHh1MzWcvIRIfK1GyGOh5b8LvaE3iZtX2RKYI4CCzvJ6y3A8peTWUuRZSV0lO7cpyOIoFIFRHScSuLulv8dHj0gYyjsH66R6lbnFYk72Ih/XzRUSH8Fo4Ar+eXWVZfBzWZWTL3ftRR7fmc5mZP+4IH7LdgZI2Wgb/GwksCx09vlMQmiQzHIYRs3iD6fsfL5prvcPKHYmwqslZcrBuy9nW2s0un3yRTeWwxYgRT15CHKXeOq5N+H0WxORCkY7FvLttPQbaAhbldvnir3NaIwCnds7vOvry5dm79LJzIC+2br7WQ2spUGCRtrzw8IcO4N9 insight@insight
+
+# 202.120.83.105
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDAjeDr/HcUsjs7xq7MlpFnGbr/hDr9SaQhet4Fp8UQnQKwuFVtUqP48Dwr0sVYY8xueqhylI2q9wL+rovIk2T1DKeD+z0BX9P1C3CrcHNMpirEotdQd2OGGwsIEMTeMugox1oER3LWLjGBcxZ71KOx2INSxBq/6EoDSOhMIbVH0ZC9fPdG/mEScf3VmvzBT1UwyewZVoVPqSr6NmOJ1RVxKA9c0P7hHtBTcUhwFNLgitM8ca6Y4eL6DsTuIl3zQA+dSnpa8IudCY1oARnphQInHIa9wCrnMCAEgRqPHfyRwg8hcOrOerWEq2Q95m15dPoIrmfy8T63p0zrhKXN34lJ insight@insight
 </code></pre>
 
-<h3>2.3. os</h3>
+<p>validation</p>
 
-<pre><code class="python">import os
+<pre><code>ssh 202.120.83.xxx
+</code></pre>
 
-# get the current url of the file folder
-outputs = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'outputs')
+<h2>MySQL</h2>
+
+<p>installation</p>
+
+<pre><code>sudo apt-get install mysql-server libmysql-java
+</code></pre>
+
+<p>configuration</p>
+
+<pre><code>sudo nano /etc/mysql/conf.d/mysql_cloudera_manager.cnf
+</code></pre>
+
+<p>mysql_cloudera_manager.cnf</p>
+
+<pre><code>[mysqld]
+transaction-isolation=READ-COMMITTED
+# Disabling symbolic-links is recommended to prevent assorted security risks;
+# to do so, uncomment this line:
+# symbolic-links=0
+
+key_buffer              = 16M
+key_buffer_size         = 32M
+max_allowed_packet      = 16M
+thread_stack            = 256K
+thread_cache_size       = 64
+query_cache_limit       = 8M
+query_cache_size        = 64M
+query_cache_type        = 1
+# Important: see Configuring the Databases and Setting max_connections
+max_connections         = 550
+
+# log-bin should be on a disk with enough free space
+log-bin=/var/log/mysql/mysql_binary_log
+
+# For MySQL version 5.1.8 or later. Comment out binlog_format for older versions.
+binlog_format           = mixed
+
+read_buffer_size = 2M
+read_rnd_buffer_size = 16M
+sort_buffer_size = 8M
+join_buffer_size = 8M
+
+# InnoDB settings
+innodb_file_per_table = 1
+innodb_flush_log_at_trx_commit  = 2
+innodb_log_buffer_size          = 64M
+innodb_buffer_pool_size         = 4G
+innodb_thread_concurrency       = 8
+innodb_flush_method             = O_DIRECT
+innodb_log_file_size = 512M
+
+[mysqld_safe]
+log-error=/var/log/mysqld.log
+pid-file=/var/run/mysqld/mysqld.pid
+</code></pre>
+
+<p>configurating my.cnf</p>
+
+<pre><code>sudo nano /etc/mysql/my.cnf
+
+# comment the bind-address
+# bind-address   = 127.0.0.1
+</code></pre>
+
+<p>configurating innodb</p>
+
+<pre><code>sudo su
+mv /var/lib/mysql/ib_logfile* /var/tmp/
+exit
+</code></pre>
+
+<p>initialization</p>
+
+<pre><code>sudo service mysql restart
+mysql -uroot -p
+
+create database amon DEFAULT CHARACTER SET utf8;
+grant all on amon.* TO 'amon'@'%' IDENTIFIED BY 'amon_password';
+grant all on amon.* TO 'amon'@'insight-master' IDENTIFIED BY 'amon_password';
+create database smon DEFAULT CHARACTER SET utf8;
+grant all on smon.* TO 'smon'@'%' IDENTIFIED BY 'smon_password';
+grant all on smon.* TO 'smon'@'insight-master' IDENTIFIED BY 'smon_password';
+create database rman DEFAULT CHARACTER SET utf8;
+grant all on rman.* TO 'rman'@'%' IDENTIFIED BY 'rman_password';
+grant all on rman.* TO 'rman'@'insight-master' IDENTIFIED BY 'rman_password';
+create database hmon DEFAULT CHARACTER SET utf8;
+grant all on hmon.* TO 'hmon'@'%' IDENTIFIED BY 'hmon_password';
+grant all on hmon.* TO 'hmon'@'insight-master' IDENTIFIED BY 'hmon_password';
+create database hive DEFAULT CHARACTER SET utf8;
+grant all on hive.* TO 'hive'@'%' IDENTIFIED BY 'hive_password';
+grant all on hive.* TO 'hive'@'insight-master' IDENTIFIED BY 'hive_password';
+
+create database nav DEFAULT CHARACTER SET utf8;
+grant all on nav.* TO 'nav'@'%' IDENTIFIED BY 'nav_password';
+grant all on nav.* TO 'nav'@'insight-master' IDENTIFIED BY 'nav_password';
+
+create database navms DEFAULT CHARACTER SET utf8;
+grant all on navms.* TO 'navms'@'%' IDENTIFIED BY 'navms_password';
+grant all on navms.* TO 'navms'@'insight-master' IDENTIFIED BY 'navms_password';
+</code></pre>
+
+<h2>Cloudera Manager</h2>
+
+<p>installing java</p>
+
+<pre><code>sudo apt-get install python-software-properties
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+
+sudo nano /etc/apt/sources.list.d/cloudera.list
+</code></pre>
+
+<p>cloudera.list</p>
+
+<pre><code>deb [arch=amd64] http://archive.cloudera.com/cdh5/ubuntu/precise/amd64/cdh precise-cdh5 contrib
+deb-src http://archive.cloudera.com/cdh5/ubuntu/precise/amd64/cdh precise-cdh5 contrib
+deb [arch=amd64] http://archive.cloudera.com/cm5/ubuntu/precise/amd64/cm precise-cm5 contrib
+deb-src http://archive.cloudera.com/cm5/ubuntu/precise/amd64/cm precise-cm5 contrib
+</code></pre>
+
+<p>adding key</p>
+
+<pre><code>curl -s http://archive.cloudera.com/cdh5/ubuntu/precise/amd64/cdh/archive.key | sudo apt-key add -
+sudo apt-get update
+</code></pre>
+
+<p>installing manager by manual</p>
+
+<pre><code>sudo apt-get -q -y --force-yes install oracle-j2sdk1.7 cloudera-manager-server-db cloudera-manager-server cloudera-manager-daemons cloudera-manager-agent
+
+# config cloudera-manager-server db
+sudo /usr/share/cmf/schema/scm_prepare_database.sh mysql  -uroot -p --scm-host localhost scm scm scm_password
+
+# start service
+service cloudera-scm-server-db initdb
+service cloudera-scm-server-db start
+service cloudera-scm-server start
+</code></pre>
+
+<p>installing manager automatically</p>
+
+<pre><code>sudo ./cloudera-mangaer-installer.bin
+</code></pre>
+
+<p>steps:</p>
+
+<pre><code>apt-get -q -y --force-yes install oracle-j2sdk1.7 cloudera-manager-server-db cloudera-manager-server cloudera-manager-daemons
+service cloudera-scm-server-db initdb
+service cloudera-scm-server-db start
+service cloudera-scm-server start
+</code></pre>
+
+<h2>Cloudera Agent</h2>
+
+<p>installing java</p>
+
+<pre><code>sudo apt-get install python-software-properties
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+sudo apt-get install oracle-j2sdk1.7
+</code></pre>
+
+<p>adding sources</p>
+
+<pre><code>sudo nano /etc/apt/sources.list.d/cloudera.list
+</code></pre>
+
+<p>cloudera.list</p>
+
+<pre><code>deb [arch=amd64] http://archive.cloudera.com/cdh5/ubuntu/precise/amd64/cdh precise-cdh5 contrib
+deb-src http://archive.cloudera.com/cdh5/ubuntu/precise/amd64/cdh precise-cdh5 contrib
+deb [arch=amd64] http://archive.cloudera.com/cm5/ubuntu/precise/amd64/cm precise-cm5 contrib
+deb-src http://archive.cloudera.com/cm5/ubuntu/precise/amd64/cm precise-cm5 contrib
+</code></pre>
+
+<p>adding keys</p>
+
+<pre><code>curl -s http://archive.cloudera.com/cdh5/ubuntu/precise/amd64/cdh/archive.key | sudo apt-key add -
+sudo apt-get update
+</code></pre>
+
+<p>installing agent</p>
+
+<pre><code>sudo apt-get install cloudera-manager-agent cloudera-manager-daemons
+</code></pre>
+
+<p>configurating agent</p>
+
+<pre><code>sudo nano /etc/cloudera-scm-agent/config.ini
+</code></pre>
+
+<p>config.ini</p>
+
+<pre><code>server_host=insight-master  # master host name
+</code></pre>
+
+<p>start services</p>
+
+<pre><code>sudo service cloudera-scm-agent  restart
+</code></pre>
+
+<h2>Cloudera Hadoop</h2>
+
+<p>restart agents on slaves</p>
+
+<pre><code>sudo service cloudera-scm-agent  restart
+</code></pre>
+
+<p>restart master</p>
+
+<pre><code>sudo service cloudera-scm-server restart
+sudo service cloudera-scm-agent  restart
+</code></pre>
+
+<p>open the link on browser:</p>
+
+<ul>
+<li><a href="http://202.120.83.101:7180">http://202.120.83.101:7180</a></li>
+<li>username/password: admin/admin</li>
+</ul>
+
+
+<p>steps:</p>
+
+<ul>
+<li><p>step1. login</p></li>
+<li><p>step2. welcome</p></li>
+<li><p>step3. select hosts</p></li>
+<li><p>step4. express-wizard</p></li>
+<li><p>step5. install parcel</p></li>
+<li><p>step6. host inspector</p></li>
+</ul>
+
+
+<p>updating swappiness</p>
+
+<pre><code>vagrant ssh insight-master/insight-slave1/insight-slave2/insight-slave3/insight-slave4 # for all hosts
+sudo nano /proc/sys/vm/swappiness
+
+# modification
+60 -&gt; 0
+</code></pre>
+
+<ul>
+<li><p>step7. select services</p></li>
+<li><p>step8. assign roles</p></li>
+<li><p>step9. config db</p></li>
+<li><p>step10. review steps</p></li>
+<li><p>step11. start services</p></li>
+<li><p>step12. done</p></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Configurating Nginx for Django Projects on Ubuntu]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/05/01/configurating-nginx-for-django-projects-on-ubuntu/"/>
+    <updated>2015-05-01T10:54:00+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/05/01/configurating-nginx-for-django-projects-on-ubuntu</id>
+    <content type="html"><![CDATA[<h2>1. Nginx</h2>
+
+<p>installation</p>
+
+<pre><code class="bash">$ sudo apt-get install nginx
+</code></pre>
+
+<p>configurating users</p>
+
+<pre><code class="bash">$ sudo groupadd --system edx
+$ sudo useradd --system --gid edx --home /edx/analytics/apps/edx-analytics-data-api analyticsapi
+$ sudo useradd --system --gid edx --home /edx/analytics/apps/edx-analytics-dashboard analyticsdashboard
+
+$ sudo chown -R insight:insight /edx/analytics/apps/edx-analytics-data-api
+$ sudo chmod -R g+w /edx/analytics/apps/edx-analytics-data-api
+
+$ sudo chown -R insight:insight /edx/analytics/apps/edx-analytics-dashboard
+$ sudo chmod -R g+w /edx/analytics/apps/edx-analytics-dashboard
+</code></pre>
+
+<h2>2. Supervisor</h2>
+
+<p>installation</p>
+
+<pre><code class="bash">$ sudo apt-get install supervisor
+</code></pre>
+
+<p>configurating supervisor</p>
+
+<pre><code class="bash">$ cd /edx/analytics
+$ mkdir -p var/logs
+$ cd var/logs
+$ touch gunicorn_supervisor.log 
+</code></pre>
+
+<h2>3. Django Project</h2>
+
+<p>django settings</p>
+
+<pre><code class="bash">$ cd /edx/analytics/apps/edx-analytics-data-api/app/analyticsdataserver/settings
+$ nano production.py
+</code></pre>
+
+<p>gunicorn</p>
+
+<pre><code class="bash">$ cd /edx/analytics/apps/edx-analytics-data-api
+$ source api_env/bin/activate
+$ cd app
+$ pip install gunicorn
+$ pip install setproctitle
+
+$ cd app
+$ gunicorn analyticsdataserver.wsgi:application --bind 0.0.0.0:9001
+
+$ cd /edx/analytics/apps/edx-analytics-data-api/api_env/bin
+$ sudo nano gunicorn_start
+$ sudo chown insight:insight gunicorn_start
+$ sudo chmod u+x gunicorn_start
+</code></pre>
+
+<p>gunicorn_start</p>
+
+<pre><code class="bash">#!/bin/bash
+NAME="analyticsapi" # Name of the application
+DJANGODIR=/edx/analytics/apps/edx-analytics-data-api/ # Django project directory
+SOCKFILE=/edx/analytics/apps/edx-analytics-data-api/var/run/gunicorn.sock # we will communicte using this unix socket
+USER=insight # the user to run as
+GROUP=edx # the group to run as
+NUM_WORKERS=3 # how many worker processes should Gunicorn spawn
+DJANGO_SETTINGS_MODULE=analyticsdataserver.settings # which settings file should Django use
+
+echo "Starting $NAME" 
+
+# Activate the virtual environment
+cd $DJANGODIR
+source api_env/bin/activate
+#export DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE
+export PYTHONPATH=/edx/analytics/apps/edx-analytics-data-api/api_env/bin/python
+
+# Create the run directory if it doesn't exist
+RUNDIR=$(dirname $SOCKFILE)
+test -d $RUNDIR || mkdir -p $RUNDIR
+
+# Start your Django Unicorn
+# Programs meant to be run under supervisor should not daemonize themselves (do not use --daemon)
+cd app
+gunicorn \
+--name $NAME \
+--workers $NUM_WORKERS  \
+analyticsdataserver.wsgi:application --bind 0.0.0.0:9001
+</code></pre>
+
+<p>supervisor</p>
+
+<pre><code class="bash">$ sudo nano /etc/supervisor/conf.d/analyticsapi.conf
+</code></pre>
+
+<p>analyticsapi.conf</p>
+
+<pre><code class="bash">[program:analyticsapi]
+command = /edx/analytics/apps/edx-analytics-data-api/api_env/bin/gunicorn_start                    ; Command to start app
+user = insight                                                                                     ; User to run as
+stdout_logfile = /edx/analytics/apps/edx-analytics-data-api/var/logs/gunicorn_supervisor.log       ; Where to write log messages
+redirect_stderr = true                                                                             ; Save stderr in the same log
+</code></pre>
+
+<p>run</p>
+
+<pre><code class="bash">$ sudo supervisorctl reread
+$ sudo supervisorctl update
+$ sudo supervisorctl start analyticsapi
+</code></pre>
+
+<h2>4. Configurating Nginx</h2>
+
+<p>modification</p>
+
+<pre><code class="bash">$ sudo nano /etc/nginx/sites-available/analyticsapi
+</code></pre>
+
+<p>analyticsapi</p>
+
+<pre><code class="bash">server {
+listen   8088;
+server_name 202.120.83.105;
+
+client_max_body_size 4G;
+
+access_log /edx/analytics/apps/edx-analytics-data-api/var/logs/nginx-access.log;
+error_log /edx/analytics/apps/edx-analytics-data-api/var/logs/nginx-error.log;
+
+location ~ ^/static/ {
+    autoindex on;
+    expires 1y;
+    root /edx/analytics/apps/edx-analytics-data-api/app/;
+    #alias  /edx/analytics/apps/edx-analytics-data-api/app/assets;
+    #alias http://202.120.83.105/static/rest_framework_swagger;
+}
+
+location ~ ^/media/ {         
+    root /edx/analytics/apps/edx-analytics-data-api/app/; 
+    expires 24h;
+    access_log   off;
+}
+
+location / {
+    try_files $uri @proxy;
+}
+
+location @proxy {
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $http_host;
+    proxy_redirect off;
+    proxy_pass http://0.0.0.0:9001;
+}
+} 
+</code></pre>
+
+<p>run</p>
+
+<pre><code class="bash">$ sudo ln -s /etc/nginx/sites-available/analyticsapi /etc/nginx/sites-enabled/analyticsapi
+$ sudo service nginx restart
+</code></pre>
+
+<h3>5. Testing</h3>
+
+<p>open the link: <a href="http://202.120.83.105:8088">http://202.120.83.105:8088</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Setting Up MySQL on Ubuntu]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/05/01/setting-up-mysql-on-ubuntu/"/>
+    <updated>2015-05-01T10:50:00+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/05/01/setting-up-mysql-on-ubuntu</id>
+    <content type="html"><![CDATA[<p>installation</p>
+
+<pre><code class="bash">$ sudo apt-get install mysql-server libmysql-java
+</code></pre>
+
+<p>configuration</p>
+
+<pre><code class="bash">$ sudo nano /etc/mysql/my.cnf
+
+# comment bind-address
+# bind-address = 127.0.0.1
+</code></pre>
+
+<p>configurating database</p>
+
+<pre><code class="bash">$ sudo service mysql restart
+$ mysql -uroot -p
+
+$ create database analytics DEFAULT CHARACTER SET utf8;
+$ grant all on analytics.* TO 'insight'@'%' IDENTIFIED BY 'analytics_password';
+$ grant all on analytics.* TO 'insight'@'202.120.83.105' IDENTIFIED BY 'analytics_password';
+$ grant all on analytics.* TO 'insight'@'202.120.83.101' IDENTIFIED BY 'analytics_password';
+
+$ GRANT ALL ON *.* TO insight@'localhost'  IDENTIFIED BY 'insight' WITH GRANT OPTION;
+
+$ exit;
 </code></pre>
 ]]></content>
   </entry>

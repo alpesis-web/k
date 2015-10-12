@@ -1,0 +1,564 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Stanford NLP 1 - Introduction - Kelly Chan</title>
+  <meta name="author" content="Kelly Chan">
+
+  
+  <meta name="description" content="1. What is Natural Language Processing? Answers IBM’s Watson (Feb 16 2011)
+Information Extraction email: creating a new calendar entry from email &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://k.arttechresearch.com/tech/2014/06/19/stanford-nlp-1-introduction/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Kelly Chan" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+<script type="text/javascript">
+
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-53625944-7', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+</head>
+
+<body   >
+  <header role="banner"><ul class="soc">
+
+  
+    <li><a class="soc-github" href="https://github.com/KellyChan"></a></li>
+  
+
+  
+    <li><a class="soc-twitter" href="https://twitter.com/kwailamchan"></a></li>
+  
+
+  
+    <li><a class="soc-pinterest" href="https://www.pinterest.com/wailamchan/"></a></li>
+  
+
+  
+    <li><a class="soc-email1 soc-icon-last" href="mailto:support@arttechresearch.com"></a></li>
+  
+</ul>
+
+<hgroup>
+  <h1><a href="/">Kelly Chan</a></h1>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="k.arttechresearch.com">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/tech">Tech</a></li>
+  <li><a href="/art">Art</a></li>
+  <li><a href="/life">Life</a></li>
+  <li><a href="/archives">Archives</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <li><a href="/devkits">Devkits</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Stanford NLP 1 - Introduction</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-19T17:42:24+08:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>19</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>5:42 pm</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://k.arttechresearch.com">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>1. What is Natural Language Processing?</h2>
+
+<p>Answers</p>
+
+<ul>
+<li>IBM’s Watson (Feb 16 2011)</li>
+<li>Information Extraction
+
+<ul>
+<li>email: creating a new calendar entry from email</li>
+<li>sentiment analysis: product feedback</li>
+</ul>
+</li>
+<li>Machine Translation
+
+<ul>
+<li>fully automatic</li>
+<li>helping human translators</li>
+</ul>
+</li>
+</ul>
+
+
+<p>language Technology</p>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;"> mostly solved                  </th>
+<th style="text-align:left;"> making good progress            </th>
+<th style="text-align:left;"> still really hard       </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> Spam detection                 </td>
+<td style="text-align:left;"> Sentiment analysis              </td>
+<td style="text-align:left;"> Question answering (QA) </td>
+</tr>
+<tr>
+<td style="text-align:left;"> Part-of-speech (POS) tagging   </td>
+<td style="text-align:left;"> Coreference resolution          </td>
+<td style="text-align:left;"> Paraphrase              </td>
+</tr>
+<tr>
+<td style="text-align:left;"> Named entity recognition (NER) </td>
+<td style="text-align:left;"> Word sense disambiguation (WSD) </td>
+<td style="text-align:left;"> Summarization           </td>
+</tr>
+<tr>
+<td style="text-align:left;">                                </td>
+<td style="text-align:left;"> Parsing                         </td>
+<td style="text-align:left;"> Dialog                  </td>
+</tr>
+<tr>
+<td style="text-align:left;">                                </td>
+<td style="text-align:left;"> Machine translation (MT)        </td>
+<td style="text-align:left;">                         </td>
+</tr>
+<tr>
+<td style="text-align:left;">                                </td>
+<td style="text-align:left;"> Information extraction (IE)     </td>
+<td style="text-align:left;">                         </td>
+</tr>
+</tbody>
+</table>
+
+
+<h2>2. The Hard Problems</h2>
+
+<h3>2.1. Ambiguity makes NLP hard: “Crash blossoms”</h3>
+
+<p>Type 1:</p>
+
+<p>Violinist Linked to JAL Crash Blossoms</p>
+
+<ul>
+<li>[Violinist] Linked to [JAL Crash Blossoms]</li>
+<li>[Violinist Linked to JAL] Crash [Blossoms]</li>
+</ul>
+
+
+<p>Teacher Strikes Idle Kids</p>
+
+<ul>
+<li>[Teacher Strikes] Idle [Kids]</li>
+<li>[Teacher] Strikes [Idle Kids]</li>
+</ul>
+
+
+<p>Type 2:</p>
+
+<p>Red Tape Holds Up New Bridges</p>
+
+<ul>
+<li>Holds Up: delay</li>
+<li>Holds Up: to support</li>
+</ul>
+
+
+<p>Others:</p>
+
+<ul>
+<li>Hospitals Are Sued by 7 Foot Doctors</li>
+<li>Juvenile Court to Try Shooting Defendant</li>
+<li>Local High School Dropouts Cut in Half</li>
+</ul>
+
+
+<h3>2.2. Ambiguity is pervasive</h3>
+
+<p>Fed raises interest rates</p>
+
+<p>phrase structure 1</p>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:center;"> Fed </th>
+<th style="text-align:center;"> raises  </th>
+<th style="text-align:center;"> interest </th>
+<th style="text-align:center;"> rates  </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;"> N   </td>
+<td style="text-align:center;"> V       </td>
+<td style="text-align:center;"> N        </td>
+<td style="text-align:center;"> N      </td>
+</tr>
+<tr>
+<td style="text-align:center;"> NP  </td>
+<td style="text-align:center;">         </td>
+<td style="text-align:center;"> NP                </td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;"> VP                          </td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:center;"> S                                 </td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+
+<p>phrase structure 2</p>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:center;"> Fed </th>
+<th style="text-align:center;"> raises  </th>
+<th style="text-align:center;"> interest </th>
+<th style="text-align:center;"> rates  </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;"> N   </td>
+<td style="text-align:center;"> N       </td>
+<td style="text-align:center;">          </td>
+<td style="text-align:center;"> N      </td>
+</tr>
+<tr>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">         </td>
+<td style="text-align:center;"> V        </td>
+<td style="text-align:center;"> VP     </td>
+</tr>
+<tr>
+<td style="text-align:center;"> NP  </td>
+<td style="text-align:center;">         </td>
+<td style="text-align:center;"> VP       </td>
+<td style="text-align:center;">        </td>
+</tr>
+<tr>
+<td style="text-align:center;"> S                                 </td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+
+<p>Fed raises interest rates 0.5%</p>
+
+<ul>
+<li>[Fed raises interest] rates [0.5%]</li>
+</ul>
+
+
+<h2>3. Solutions</h2>
+
+<p>Making progress on this problem</p>
+
+<p>The task is difficult! What tools do we need?</p>
+
+<ul>
+<li>knowledge about language</li>
+<li>knowledge about the world</li>
+<li>a way to combine knowledge sources</li>
+</ul>
+
+
+<p>How we generally do this:</p>
+
+<ul>
+<li>probabilistic models built from language data
+
+<ul>
+<li>P(“maison” -> “house”) high</li>
+<li>P(“L’avocat general” -> “the general avocado”) low</li>
+</ul>
+</li>
+<li>luckily, rough text features can often do half the job</li>
+</ul>
+
+
+<h2>4. Class</h2>
+
+<p>Teaches key theory and methods for statistical NLP:</p>
+
+<ul>
+<li>viterbi</li>
+<li>naive bayes, maxent classifiers</li>
+<li>n-gram language modeling</li>
+<li>statistical parsing</li>
+<li>inverted index, tf-idf, vector models of meaning</li>
+</ul>
+
+
+<p>For practical, robust real-world applications</p>
+
+<ul>
+<li>information extraction</li>
+<li>spelling correction</li>
+<li>information retrieval</li>
+<li>sentiment analysis</li>
+</ul>
+
+
+<h2>5. Skills</h2>
+
+<ul>
+<li>simple linear algebra (vectors, matrics)</li>
+<li>basic probability theory</li>
+<li>java or python programming</li>
+</ul>
+
+
+<h2>Reference</h2>
+
+<ul>
+<li><a href="https://www.youtube.com/watch?v=nfoudtpBV68&amp;index=1&amp;list=PL6397E4B26D00A269">Stanford NLP 1</a></li>
+</ul>
+
+</div>
+
+
+
+  <footer>
+
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kelly Chan</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-06-19T17:42:24+08:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>19</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>5:42 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/tech/'>tech</a>
+  
+</span>
+
+
+    </p>
+
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://k.arttechresearch.com/tech/2014/06/19/stanford-nlp-1-introduction/" data-via="kwailamchan" data-counturl="http://k.arttechresearch.com/tech/2014/06/19/stanford-nlp-1-introduction/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/life/2014/06/19/everlasting-longing/" title="Previous Post: Everlasting Longing">&laquo; Everlasting Longing</a>
+      
+      
+        <a class="basic-alignment right" href="/tech/2014/06/19/stanford-nlp-2-basic-text-processsing/" title="Next Post: Stanford NLP 2 - Basic Text Processsing">Stanford NLP 2 - Basic Text Processsing &raquo;</a>
+      
+    </p>
+
+  </footer>
+
+</article>
+
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Tech</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/tech/2015/10/03/installing-openstack-devstack/">Installing Openstack Devstack</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/05/01/installing-jenkins-on-ubuntu/">Installing Jenkins on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/05/01/installing-cloudera-hadoop-on-ubuntu/">Installing Cloudera Hadoop on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/05/01/configurating-nginx-for-django-projects-on-ubuntu/">Configurating Nginx for Django Projects on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/05/01/setting-up-mysql-on-ubuntu/">Setting Up MySQL on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/04/26/installing-emacs-on-ubuntu/">Installing Emacs on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/04/25/automatically-running-shell-scripts-on-ubuntu/">Automatically Running Shell Scripts on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/04/25/it-could-not-access-network-on-ubuntu/">It Could Not Access Network on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/04/25/installing-pycharm-on-ubuntu-12.04/">Installing PyCharm on Ubuntu 12.04</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/02/11/setup-a-git-server/">Setup a Git Server</a>
+      </li>
+    
+  </ul>
+</section>
+<section class="category-list">
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/categories/art/'>art (1)</a></li><li><a href='/categories/life/'>life (43)</a></li><li><a href='/categories/tech/'>tech (50)</a></li></ul>
+</section>
+<section class="tag-cloud">
+
+
+  <h1>Tags</h1>
+    <ul id="category-list"><a href='/tags/algorithm' style='font-size: 118.69565217391305%'>algorithm(7)</a> <a href='/tags/api' style='font-size: 90.0%'>api(1)</a> <a href='/tags/ascii' style='font-size: 90.0%'>ascii(1)</a> <a href='/tags/beautifulsoup' style='font-size: 90.0%'>beautifulsoup(1)</a> <a href='/tags/career' style='font-size: 94.78260869565217%'>career(2)</a> <a href='/tags/classification' style='font-size: 94.78260869565217%'>classification(2)</a> <a href='/tags/cloud' style='font-size: 90.0%'>cloud(1)</a> <a href='/tags/cloudera' style='font-size: 90.0%'>cloudera(1)</a> <a href='/tags/computer-vision' style='font-size: 90.0%'>computer vision(1)</a> <a href='/tags/crawler' style='font-size: 94.78260869565217%'>crawler(2)</a> <a href='/tags/css' style='font-size: 90.0%'>css(1)</a> <a href='/tags/data' style='font-size: 90.0%'>data(1)</a> <a href='/tags/django' style='font-size: 94.78260869565217%'>django(2)</a> <a href='/tags/dns' style='font-size: 90.0%'>dns(1)</a> <a href='/tags/emacs' style='font-size: 94.78260869565217%'>emacs(2)</a> <a href='/tags/fiction' style='font-size: 113.91304347826087%'>fiction(6)</a> <a href='/tags/french' style='font-size: 90.0%'>french(1)</a> <a href='/tags/git' style='font-size: 90.0%'>git(1)</a> <a href='/tags/github' style='font-size: 90.0%'>github(1)</a> <a href='/tags/gunicorn' style='font-size: 90.0%'>gunicorn(1)</a> <a href='/tags/hadoop' style='font-size: 90.0%'>hadoop(1)</a> <a href='/tags/html' style='font-size: 90.0%'>html(1)</a> <a href='/tags/ide' style='font-size: 94.78260869565217%'>ide(2)</a> <a href='/tags/javascript' style='font-size: 90.0%'>javascript(1)</a> <a href='/tags/jekyll' style='font-size: 90.0%'>jekyll(1)</a> <a href='/tags/jenkins' style='font-size: 90.0%'>jenkins(1)</a> <a href='/tags/leisure' style='font-size: 195.2173913043478%'>leisure(23)</a> <a href='/tags/linux' style='font-size: 109.13043478260869%'>linux(5)</a> <a href='/tags/machine-learning' style='font-size: 137.82608695652175%'>machine learning(11)</a> <a href='/tags/mathjax' style='font-size: 90.0%'>mathjax(1)</a> <a href='/tags/mysql' style='font-size: 94.78260869565217%'>mysql(2)</a> <a href='/tags/network' style='font-size: 90.0%'>network(1)</a> <a href='/tags/nginx' style='font-size: 90.0%'>nginx(1)</a> <a href='/tags/nlp' style='font-size: 113.91304347826087%'>nlp(6)</a> <a href='/tags/nltk' style='font-size: 90.0%'>nltk(1)</a> <a href='/tags/openstack' style='font-size: 90.0%'>openstack(1)</a> <a href='/tags/pandas' style='font-size: 94.78260869565217%'>pandas(2)</a> <a href='/tags/poem' style='font-size: 104.34782608695652%'>poem(4)</a> <a href='/tags/prediction' style='font-size: 90.0%'>prediction(1)</a> <a href='/tags/pycharm' style='font-size: 90.0%'>pycharm(1)</a> <a href='/tags/python' style='font-size: 200.0%'>python(24)</a> <a href='/tags/reading' style='font-size: 118.69565217391305%'>reading(7)</a> <a href='/tags/regex' style='font-size: 90.0%'>regex(1)</a> <a href='/tags/ruby' style='font-size: 90.0%'>ruby(1)</a> <a href='/tags/supervisor' style='font-size: 90.0%'>supervisor(1)</a> <a href='/tags/time-series' style='font-size: 90.0%'>time series(1)</a> <a href='/tags/translation' style='font-size: 90.0%'>translation(1)</a> <a href='/tags/ubuntu' style='font-size: 123.47826086956522%'>ubuntu(8)</a> <a href='/tags/unicode' style='font-size: 90.0%'>unicode(1)</a> <a href='/tags/vim' style='font-size: 90.0%'>vim(1)</a> <a href='/tags/web' style='font-size: 94.78260869565217%'>web(2)</a> </ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2006-2015 - Kelly Chan
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'kwailamc';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://k.arttechresearch.com/tech/2014/06/19/stanford-nlp-1-introduction/';
+        var disqus_url = 'http://k.arttechresearch.com/tech/2014/06/19/stanford-nlp-1-introduction/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

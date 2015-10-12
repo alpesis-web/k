@@ -1,0 +1,406 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Generating Passwords - Kelly Chan</title>
+  <meta name="author" content="Kelly Chan">
+
+  
+  <meta name="description" content="Generating all 4-digit passwords combining digits 0-9, uppercases A-Z and
+lowercases a-z. 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://k.arttechresearch.com/tech/2014/09/07/generating-passwords/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Kelly Chan" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+<script type="text/javascript">
+
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-53625944-7', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+</head>
+
+<body   >
+  <header role="banner"><ul class="soc">
+
+  
+    <li><a class="soc-github" href="https://github.com/KellyChan"></a></li>
+  
+
+  
+    <li><a class="soc-twitter" href="https://twitter.com/kwailamchan"></a></li>
+  
+
+  
+    <li><a class="soc-pinterest" href="https://www.pinterest.com/wailamchan/"></a></li>
+  
+
+  
+    <li><a class="soc-email1 soc-icon-last" href="mailto:support@arttechresearch.com"></a></li>
+  
+</ul>
+
+<hgroup>
+  <h1><a href="/">Kelly Chan</a></h1>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="k.arttechresearch.com">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/tech">Tech</a></li>
+  <li><a href="/art">Art</a></li>
+  <li><a href="/life">Life</a></li>
+  <li><a href="/archives">Archives</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <li><a href="/devkits">Devkits</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Generating Passwords</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-09-07T22:01:00+08:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>10:01 pm</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://k.arttechresearch.com">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Generating all 4-digit passwords combining digits 0-9, uppercases A-Z and
+lowercases a-z.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">os</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">chars</span><span class="o">=</span><span class="p">[</span>
+</span><span class='line'>            <span class="s">&#39;0&#39;</span><span class="p">,</span><span class="s">&#39;1&#39;</span><span class="p">,</span><span class="s">&#39;2&#39;</span><span class="p">,</span><span class="s">&#39;3&#39;</span><span class="p">,</span><span class="s">&#39;4&#39;</span><span class="p">,</span><span class="s">&#39;5&#39;</span><span class="p">,</span><span class="s">&#39;6&#39;</span><span class="p">,</span><span class="s">&#39;7&#39;</span><span class="p">,</span><span class="s">&#39;8&#39;</span><span class="p">,</span><span class="s">&#39;9&#39;</span><span class="p">,</span>
+</span><span class='line'>            <span class="s">&#39;a&#39;</span><span class="p">,</span><span class="s">&#39;b&#39;</span><span class="p">,</span><span class="s">&#39;c&#39;</span><span class="p">,</span><span class="s">&#39;d&#39;</span><span class="p">,</span><span class="s">&#39;e&#39;</span><span class="p">,</span><span class="s">&#39;f&#39;</span><span class="p">,</span><span class="s">&#39;g&#39;</span><span class="p">,</span><span class="s">&#39;h&#39;</span><span class="p">,</span><span class="s">&#39;i&#39;</span><span class="p">,</span><span class="s">&#39;j&#39;</span><span class="p">,</span><span class="s">&#39;k&#39;</span><span class="p">,</span><span class="s">&#39;l&#39;</span><span class="p">,</span><span class="s">&#39;m&#39;</span><span class="p">,</span><span class="s">&#39;n&#39;</span><span class="p">,</span><span class="s">&#39;o&#39;</span><span class="p">,</span><span class="s">&#39;p&#39;</span><span class="p">,</span><span class="s">&#39;q&#39;</span><span class="p">,</span><span class="s">&#39;r&#39;</span><span class="p">,</span><span class="s">&#39;s&#39;</span><span class="p">,</span><span class="s">&#39;t&#39;</span><span class="p">,</span><span class="s">&#39;u&#39;</span><span class="p">,</span><span class="s">&#39;v&#39;</span><span class="p">,</span><span class="s">&#39;w&#39;</span><span class="p">,</span><span class="s">&#39;x&#39;</span><span class="p">,</span><span class="s">&#39;y&#39;</span><span class="p">,</span><span class="s">&#39;z&#39;</span><span class="p">,</span>
+</span><span class='line'>            <span class="s">&#39;A&#39;</span><span class="p">,</span><span class="s">&#39;B&#39;</span><span class="p">,</span><span class="s">&#39;C&#39;</span><span class="p">,</span><span class="s">&#39;D&#39;</span><span class="p">,</span><span class="s">&#39;E&#39;</span><span class="p">,</span><span class="s">&#39;F&#39;</span><span class="p">,</span><span class="s">&#39;G&#39;</span><span class="p">,</span><span class="s">&#39;H&#39;</span><span class="p">,</span><span class="s">&#39;I&#39;</span><span class="p">,</span><span class="s">&#39;J&#39;</span><span class="p">,</span><span class="s">&#39;K&#39;</span><span class="p">,</span><span class="s">&#39;L&#39;</span><span class="p">,</span><span class="s">&#39;M&#39;</span><span class="p">,</span><span class="s">&#39;N&#39;</span><span class="p">,</span><span class="s">&#39;O&#39;</span><span class="p">,</span><span class="s">&#39;P&#39;</span><span class="p">,</span><span class="s">&#39;Q&#39;</span><span class="p">,</span><span class="s">&#39;R&#39;</span><span class="p">,</span><span class="s">&#39;S&#39;</span><span class="p">,</span><span class="s">&#39;T&#39;</span><span class="p">,</span><span class="s">&#39;U&#39;</span><span class="p">,</span><span class="s">&#39;V&#39;</span><span class="p">,</span><span class="s">&#39;W&#39;</span><span class="p">,</span><span class="s">&#39;X&#39;</span><span class="p">,</span><span class="s">&#39;Y&#39;</span><span class="p">,</span><span class="s">&#39;Z&#39;</span><span class="p">,</span>
+</span><span class='line'>                <span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">base</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">chars</span><span class="p">)</span>  <span class="c"># 62</span>
+</span><span class='line'>    <span class="n">end</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">chars</span><span class="p">)</span><span class="o">**</span><span class="mi">4</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">outputs</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">)),</span> <span class="s">&#39;outputs&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">outputs</span><span class="o">+</span><span class="s">&quot;/dict.txt&quot;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+</span><span class='line'>            <span class="n">n</span> <span class="o">=</span> <span class="n">i</span>
+</span><span class='line'>            <span class="n">char0</span> <span class="o">=</span> <span class="n">chars</span><span class="p">[</span><span class="n">n</span><span class="o">%</span><span class="n">base</span><span class="p">]</span>
+</span><span class='line'>            <span class="n">n</span> <span class="o">=</span> <span class="n">n</span> <span class="o">/</span> <span class="n">base</span>
+</span><span class='line'>            <span class="n">char1</span> <span class="o">=</span> <span class="n">chars</span><span class="p">[</span><span class="n">n</span><span class="o">%</span><span class="n">base</span><span class="p">]</span>
+</span><span class='line'>            <span class="n">n</span> <span class="o">=</span> <span class="n">n</span> <span class="o">/</span> <span class="n">base</span>
+</span><span class='line'>            <span class="n">char2</span> <span class="o">=</span> <span class="n">chars</span><span class="p">[</span><span class="n">n</span><span class="o">%</span><span class="n">base</span><span class="p">]</span>
+</span><span class='line'>            <span class="n">n</span> <span class="o">=</span> <span class="n">n</span> <span class="o">/</span> <span class="n">base</span>
+</span><span class='line'>            <span class="n">char3</span> <span class="o">=</span> <span class="n">chars</span><span class="p">[</span><span class="n">n</span><span class="o">%</span><span class="n">base</span><span class="p">]</span>
+</span><span class='line'>            <span class="c">#print i, char3, char2, char1, char0</span>
+</span><span class='line'>            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">char3</span><span class="o">+</span><span class="n">char2</span><span class="o">+</span><span class="n">char1</span><span class="o">+</span><span class="n">char0</span><span class="o">+</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c">#with open(outputs+&quot;/dict.txt&quot;, &#39;rb&#39;) as f:</span>
+</span><span class='line'>    <span class="c">#    for line in f.readlines()[-100:]:</span>
+</span><span class='line'>    <span class="c">#        print line</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span class='line'>    <span class="n">main</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+
+
+
+  <footer>
+
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kelly Chan</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-09-07T22:01:00+08:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>10:01 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/tech/'>tech</a>
+  
+</span>
+
+
+    </p>
+
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://k.arttechresearch.com/tech/2014/09/07/generating-passwords/" data-via="kwailamchan" data-counturl="http://k.arttechresearch.com/tech/2014/09/07/generating-passwords/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/tech/2014/09/03/python-unicodeencodeerror/" title="Previous Post: Python UnicodeEncodeError">&laquo; Python UnicodeEncodeError</a>
+      
+      
+        <a class="basic-alignment right" href="/tech/2014/09/07/morse-code/" title="Next Post: Morse Codes">Morse Codes &raquo;</a>
+      
+    </p>
+
+  </footer>
+
+</article>
+
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Tech</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/tech/2015/10/03/installing-openstack-devstack/">Installing Openstack Devstack</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/05/01/installing-jenkins-on-ubuntu/">Installing Jenkins on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/05/01/installing-cloudera-hadoop-on-ubuntu/">Installing Cloudera Hadoop on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/05/01/configurating-nginx-for-django-projects-on-ubuntu/">Configurating Nginx for Django Projects on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/05/01/setting-up-mysql-on-ubuntu/">Setting Up MySQL on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/04/26/installing-emacs-on-ubuntu/">Installing Emacs on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/04/25/automatically-running-shell-scripts-on-ubuntu/">Automatically Running Shell Scripts on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/04/25/it-could-not-access-network-on-ubuntu/">It Could Not Access Network on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/04/25/installing-pycharm-on-ubuntu-12.04/">Installing PyCharm on Ubuntu 12.04</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/02/11/setup-a-git-server/">Setup a Git Server</a>
+      </li>
+    
+  </ul>
+</section>
+<section class="category-list">
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/categories/art/'>art (1)</a></li><li><a href='/categories/life/'>life (43)</a></li><li><a href='/categories/tech/'>tech (50)</a></li></ul>
+</section>
+<section class="tag-cloud">
+
+
+  <h1>Tags</h1>
+    <ul id="category-list"><a href='/tags/algorithm' style='font-size: 118.69565217391305%'>algorithm(7)</a> <a href='/tags/api' style='font-size: 90.0%'>api(1)</a> <a href='/tags/ascii' style='font-size: 90.0%'>ascii(1)</a> <a href='/tags/beautifulsoup' style='font-size: 90.0%'>beautifulsoup(1)</a> <a href='/tags/career' style='font-size: 94.78260869565217%'>career(2)</a> <a href='/tags/classification' style='font-size: 94.78260869565217%'>classification(2)</a> <a href='/tags/cloud' style='font-size: 90.0%'>cloud(1)</a> <a href='/tags/cloudera' style='font-size: 90.0%'>cloudera(1)</a> <a href='/tags/computer-vision' style='font-size: 90.0%'>computer vision(1)</a> <a href='/tags/crawler' style='font-size: 94.78260869565217%'>crawler(2)</a> <a href='/tags/css' style='font-size: 90.0%'>css(1)</a> <a href='/tags/data' style='font-size: 90.0%'>data(1)</a> <a href='/tags/django' style='font-size: 94.78260869565217%'>django(2)</a> <a href='/tags/dns' style='font-size: 90.0%'>dns(1)</a> <a href='/tags/emacs' style='font-size: 94.78260869565217%'>emacs(2)</a> <a href='/tags/fiction' style='font-size: 113.91304347826087%'>fiction(6)</a> <a href='/tags/french' style='font-size: 90.0%'>french(1)</a> <a href='/tags/git' style='font-size: 90.0%'>git(1)</a> <a href='/tags/github' style='font-size: 90.0%'>github(1)</a> <a href='/tags/gunicorn' style='font-size: 90.0%'>gunicorn(1)</a> <a href='/tags/hadoop' style='font-size: 90.0%'>hadoop(1)</a> <a href='/tags/html' style='font-size: 90.0%'>html(1)</a> <a href='/tags/ide' style='font-size: 94.78260869565217%'>ide(2)</a> <a href='/tags/javascript' style='font-size: 90.0%'>javascript(1)</a> <a href='/tags/jekyll' style='font-size: 90.0%'>jekyll(1)</a> <a href='/tags/jenkins' style='font-size: 90.0%'>jenkins(1)</a> <a href='/tags/leisure' style='font-size: 195.2173913043478%'>leisure(23)</a> <a href='/tags/linux' style='font-size: 109.13043478260869%'>linux(5)</a> <a href='/tags/machine-learning' style='font-size: 137.82608695652175%'>machine learning(11)</a> <a href='/tags/mathjax' style='font-size: 90.0%'>mathjax(1)</a> <a href='/tags/mysql' style='font-size: 94.78260869565217%'>mysql(2)</a> <a href='/tags/network' style='font-size: 90.0%'>network(1)</a> <a href='/tags/nginx' style='font-size: 90.0%'>nginx(1)</a> <a href='/tags/nlp' style='font-size: 113.91304347826087%'>nlp(6)</a> <a href='/tags/nltk' style='font-size: 90.0%'>nltk(1)</a> <a href='/tags/openstack' style='font-size: 90.0%'>openstack(1)</a> <a href='/tags/pandas' style='font-size: 94.78260869565217%'>pandas(2)</a> <a href='/tags/poem' style='font-size: 104.34782608695652%'>poem(4)</a> <a href='/tags/prediction' style='font-size: 90.0%'>prediction(1)</a> <a href='/tags/pycharm' style='font-size: 90.0%'>pycharm(1)</a> <a href='/tags/python' style='font-size: 200.0%'>python(24)</a> <a href='/tags/reading' style='font-size: 118.69565217391305%'>reading(7)</a> <a href='/tags/regex' style='font-size: 90.0%'>regex(1)</a> <a href='/tags/ruby' style='font-size: 90.0%'>ruby(1)</a> <a href='/tags/supervisor' style='font-size: 90.0%'>supervisor(1)</a> <a href='/tags/time-series' style='font-size: 90.0%'>time series(1)</a> <a href='/tags/translation' style='font-size: 90.0%'>translation(1)</a> <a href='/tags/ubuntu' style='font-size: 123.47826086956522%'>ubuntu(8)</a> <a href='/tags/unicode' style='font-size: 90.0%'>unicode(1)</a> <a href='/tags/vim' style='font-size: 90.0%'>vim(1)</a> <a href='/tags/web' style='font-size: 94.78260869565217%'>web(2)</a> </ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2006-2015 - Kelly Chan
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'kwailamc';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://k.arttechresearch.com/tech/2014/09/07/generating-passwords/';
+        var disqus_url = 'http://k.arttechresearch.com/tech/2014/09/07/generating-passwords/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

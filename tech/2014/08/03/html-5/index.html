@@ -1,0 +1,1008 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>HTML 5 - Kelly Chan</title>
+  <meta name="author" content="Kelly Chan">
+
+  
+  <meta name="description" content="1. Elements 1.1. New elements 1
+2
+3
+4
+- canvas: `&lt;canvas&gt;`
+- media: `&lt;audio&gt;`, `&lt;embed&gt;`, `&lt;source&gt;`, `&lt;track&gt;`, `&lt; &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://k.arttechresearch.com/tech/2014/08/03/html-5/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Kelly Chan" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+<script type="text/javascript">
+
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-53625944-7', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+</head>
+
+<body   >
+  <header role="banner"><ul class="soc">
+
+  
+    <li><a class="soc-github" href="https://github.com/KellyChan"></a></li>
+  
+
+  
+    <li><a class="soc-twitter" href="https://twitter.com/kwailamchan"></a></li>
+  
+
+  
+    <li><a class="soc-pinterest" href="https://www.pinterest.com/wailamchan/"></a></li>
+  
+
+  
+    <li><a class="soc-email1 soc-icon-last" href="mailto:support@arttechresearch.com"></a></li>
+  
+</ul>
+
+<hgroup>
+  <h1><a href="/">Kelly Chan</a></h1>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="k.arttechresearch.com">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/tech">Tech</a></li>
+  <li><a href="/art">Art</a></li>
+  <li><a href="/life">Life</a></li>
+  <li><a href="/archives">Archives</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <li><a href="/devkits">Devkits</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">HTML 5</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-03T03:10:02+08:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>3</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>3:10 am</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://k.arttechresearch.com">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>1. Elements</h2>
+
+<h3>1.1. New elements</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>- canvas: `&lt;canvas&gt;`
+</span><span class='line'>- media: `&lt;audio&gt;`, `&lt;embed&gt;`, `&lt;source&gt;`, `&lt;track&gt;`, `&lt;video&gt;` 
+</span><span class='line'>- form: `&lt;datalist&gt;`, `&lt;keygen&gt;`, `&lt;output&gt;`
+</span><span class='line'>- semantic: `&lt;aside&gt;`, `&lt;bdi&gt;`, `&lt;details&gt;`, `&lt;dialog&gt;`, `&lt;figcaption&gt;`, `&lt;figure&gt;`, `&lt;footer&gt;`, `&lt;header&gt;`, `&lt;main&gt;`, `&lt;mark&gt;`, `&lt;menuitem&gt;`, `&lt;meter&gt;`, `&lt;nav&gt;`, `&lt;progress&gt;`, `&lt;rp&gt;`, `&lt;rt&gt;`, `&lt;ruby&gt;`, `&lt;section&gt;`, `&lt;summary&gt;`, `&lt;time&gt;`, `&lt;wbr&gt;`</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>1.2. Removed elements</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>`&lt;sefont&gt;`, `&lt;big&gt;`, `&lt;center&gt;`, `&lt;dir&gt;`, `&lt;font&gt;`, `&lt;frame&gt;`, `&lt;frameset&gt;`, `&lt;noframes&gt;`, `&lt;strike&gt;`, `&lt;tt&gt;`</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>2. Examples</h2>
+
+<p>layouts</p>
+
+<pre><code>|------------------------------------|
+|   &lt;header&gt;                         |
+|------------------------------------|
+|   &lt;nav&gt;                            |
+|------------------------------------|
+|   &lt;section&gt;        |               |
+|--------------------| &lt;aside&gt;       |
+|   &lt;article&gt;        |               |
+|------------------------------------|
+|   &lt;footer&gt;                         |
+|------------------------------------|
+</code></pre>
+
+<p>section</p>
+
+<figure class='code'><figcaption><span>section</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;section&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;h1&gt;</span>WWF<span class="nt">&lt;/h1&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;p&gt;</span>The World Wide Fund for Nature (WWF) is....<span class="nt">&lt;/p&gt;</span>
+</span><span class='line'><span class="nt">&lt;/section&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>article</p>
+
+<figure class='code'><figcaption><span>article</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;article&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;h1&gt;</span>Internet Explorer 9<span class="nt">&lt;/h1&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;p&gt;</span>Windows Internet Explorer 9 (abbreviated as IE9) was released to
+</span><span class='line'>  the  public on March 14, 2011 at 21:00 PDT.....<span class="nt">&lt;/p&gt;</span>
+</span><span class='line'><span class="nt">&lt;/article&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>nav</p>
+
+<figure class='code'><figcaption><span>nav</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;nav&gt;</span>
+</span><span class='line'><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;/html/&quot;</span><span class="nt">&gt;</span>HTML<span class="nt">&lt;/a&gt;</span> |
+</span><span class='line'><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;/css/&quot;</span><span class="nt">&gt;</span>CSS<span class="nt">&lt;/a&gt;</span> |
+</span><span class='line'><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;/js/&quot;</span><span class="nt">&gt;</span>JavaScript<span class="nt">&lt;/a&gt;</span> |
+</span><span class='line'><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;/jquery/&quot;</span><span class="nt">&gt;</span>jQuery<span class="nt">&lt;/a&gt;</span>
+</span><span class='line'><span class="nt">&lt;/nav&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>aside</p>
+
+<figure class='code'><figcaption><span>aside</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;p&gt;</span>My family and I visited The Epcot center this summer.<span class="nt">&lt;/p&gt;</span>
+</span><span class='line'><span class="nt">&lt;aside&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;h4&gt;</span>Epcot Center<span class="nt">&lt;/h4&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;p&gt;</span>The Epcot Center is a theme park in Disney World, Florida.<span class="nt">&lt;/p&gt;</span>
+</span><span class='line'><span class="nt">&lt;/aside&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>header</p>
+
+<figure class='code'><figcaption><span>header</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;article&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;header&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;h1&gt;</span>Internet Explorer 9<span class="nt">&lt;/h1&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;p&gt;&lt;time</span> <span class="na">pubdate</span> <span class="na">datetime=</span><span class="s">&quot;2011-03-15&quot;</span><span class="nt">&gt;&lt;/time&gt;&lt;/p&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/header&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;p&gt;</span>Windows Internet Explorer 9 (abbreviated as IE9) was released to
+</span><span class='line'>  the  public on March 14, 2011 at 21:00 PDT.....<span class="nt">&lt;/p&gt;</span>
+</span><span class='line'><span class="nt">&lt;/article&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>footer</p>
+
+<figure class='code'><figcaption><span>footer</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;footer&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;p&gt;</span>Posted by: Hege Refsnes<span class="nt">&lt;/p&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;p&gt;&lt;time</span> <span class="na">pubdate</span> <span class="na">datetime=</span><span class="s">&quot;2012-03-01&quot;</span><span class="nt">&gt;&lt;/time&gt;&lt;/p&gt;</span>
+</span><span class='line'><span class="nt">&lt;/footer&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>figure / figcaption</p>
+
+<figure class='code'><figcaption><span>figure/figcaption</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;figure&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">&quot;img_pulpit.jpg&quot;</span> <span class="na">alt=</span><span class="s">&quot;The Pulpit Rock&quot;</span> <span class="na">width=</span><span class="s">&quot;304&quot;</span> <span class="na">height=</span><span class="s">&quot;228&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;figcaption&gt;</span>Fig1. - The Pulpit Pock, Norway.<span class="nt">&lt;/figcaption&gt;</span>
+</span><span class='line'><span class="nt">&lt;/figure&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Integrated IE 8 and earlier</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="c">&lt;!--[if lt IE 9]&gt;&lt;script src=&quot;html5shiv.js&quot;&gt;&lt;/script&gt;&lt;![endif]--&gt;</span>
+</span><span class='line'>
+</span><span class='line'>header, section, footer, aside, nav, main, article, figure {
+</span><span class='line'>    display: block;
+</span><span class='line'>}
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>input types</p>
+
+<figure class='code'><figcaption><span>input types</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="c">&lt;!-- color --&gt;</span>
+</span><span class='line'>Select your favorite color: <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;color&quot;</span> <span class="na">name=</span><span class="s">&quot;favcolor&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&lt;!-- date --&gt;</span>
+</span><span class='line'>Birthday: <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;date&quot;</span> <span class="na">name=</span><span class="s">&quot;bday&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&lt;!-- datetime --&gt;</span>
+</span><span class='line'>Birthday (date and time): <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;datetime&quot;</span> <span class="na">name=</span><span class="s">&quot;bdaytime&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&lt;!-- datetime-local --&gt;</span>
+</span><span class='line'>Birthday (date and time): <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;datetime-local&quot;</span> <span class="na">name=</span><span class="s">&quot;bdaytime&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&lt;!-- email --&gt;</span>
+</span><span class='line'>E-mail: <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;email&quot;</span> <span class="na">name=</span><span class="s">&quot;email&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&lt;!-- month --&gt;</span>
+</span><span class='line'>Birthday (month and year): <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;month&quot;</span> <span class="na">name=</span><span class="s">&quot;bdaymonth&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&lt;!-- number --&gt;</span>
+</span><span class='line'>Quantity (between 1 and 5): <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;number&quot;</span> <span class="na">name=</span><span class="s">&quot;quantity&quot;</span> <span class="na">min=</span><span class="s">&quot;1&quot;</span> <span class="na">max=</span><span class="s">&quot;5&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&lt;!-- range --&gt;</span>
+</span><span class='line'><span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;range&quot;</span> <span class="na">name=</span><span class="s">&quot;points&quot;</span> <span class="na">min=</span><span class="s">&quot;1&quot;</span> <span class="na">max=</span><span class="s">&quot;10&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&lt;!-- search --&gt;</span>
+</span><span class='line'>Search Google: <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;search&quot;</span> <span class="na">name=</span><span class="s">&quot;googlesearch&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&lt;!-- tel --&gt;</span>
+</span><span class='line'>Telephone: <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;tel&quot;</span> <span class="na">name=</span><span class="s">&quot;usrtel&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&lt;!-- type --&gt;</span>
+</span><span class='line'>Select a time: <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;time&quot;</span> <span class="na">name=</span><span class="s">&quot;usr_time&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&lt;!-- url --&gt;</span>
+</span><span class='line'>Add your homepage: <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;url&quot;</span> <span class="na">name=</span><span class="s">&quot;homepage&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&lt;!-- week --&gt;</span>
+</span><span class='line'>Select a week: <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;week&quot;</span> <span class="na">name=</span><span class="s">&quot;week_year&quot;</span><span class="nt">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>form</p>
+
+<figure class='code'><figcaption><span>form</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="c">&lt;!-- datalist --&gt;</span>
+</span><span class='line'><span class="nt">&lt;input</span> <span class="na">list=</span><span class="s">&quot;browsers&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'><span class="nt">&lt;datalist</span> <span class="na">id=</span><span class="s">&quot;browsers&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">&quot;Internet Explorer&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">&quot;Firefox&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">&quot;Chrome&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">&quot;Opera&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">&quot;Safari&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'><span class="nt">&lt;/datalist&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&lt;!-- keygen --&gt;</span>
+</span><span class='line'><span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">&quot;demo_keygen.asp&quot;</span> <span class="na">method=</span><span class="s">&quot;get&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>Username: <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;usr_name&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>Encryption: <span class="nt">&lt;keygen</span> <span class="na">name=</span><span class="s">&quot;security&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'><span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;submit&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'><span class="nt">&lt;/form&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&lt;!-- output --&gt;</span>
+</span><span class='line'><span class="nt">&lt;form</span> <span class="na">oninput=</span><span class="s">&quot;x.value=parseInt(a.value)+parseInt(b.value)&quot;</span><span class="nt">&gt;</span>0
+</span><span class='line'><span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;range&quot;</span> <span class="na">id=</span><span class="s">&quot;a&quot;</span> <span class="na">value=</span><span class="s">&quot;50&quot;</span><span class="nt">&gt;</span>100 +
+</span><span class='line'><span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;number&quot;</span> <span class="na">id=</span><span class="s">&quot;b&quot;</span> <span class="na">value=</span><span class="s">&quot;50&quot;</span><span class="nt">&gt;</span>=
+</span><span class='line'><span class="nt">&lt;output</span> <span class="na">name=</span><span class="s">&quot;x&quot;</span> <span class="na">for=</span><span class="s">&quot;a b&quot;</span><span class="nt">&gt;&lt;/output&gt;</span>
+</span><span class='line'><span class="nt">&lt;/form&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>form with new attributes</p>
+
+<figure class='code'><figcaption><span>form</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'>- `<span class="nt">&lt;form&gt;</span>`: `autocomplete`, `novalidate`
+</span><span class='line'>- `<span class="nt">&lt;input&gt;</span>`: `autocomplete`, `autofocus`, `form`, `formaction`, `formenctype`, `formmethod`, `formnovalidate`, `formtarget`, `height`, `width`, `list`, `min`, `max`, `multiple`, `pattern (regexp)`, `placeholder`, `required`, `step` 
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>form with new attributes</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="c">&lt;!-- &lt;form&gt; / &lt;input&gt; autocomplete --&gt;</span>
+</span><span class='line'><span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">&quot;demo_form.asp&quot;</span> <span class="na">autocomplete=</span><span class="s">&quot;on&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  First name:<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;fname&quot;</span><span class="nt">&gt;&lt;br&gt;</span>
+</span><span class='line'>  Last name: <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;lname&quot;</span><span class="nt">&gt;&lt;br&gt;</span>
+</span><span class='line'>  E-mail: <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;email&quot;</span> <span class="na">name=</span><span class="s">&quot;email&quot;</span> <span class="na">autocomplete=</span><span class="s">&quot;off&quot;</span><span class="nt">&gt;&lt;br&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;submit&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'><span class="nt">&lt;/form&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&lt;!-- &lt;form&gt; novalidate --&gt;</span>
+</span><span class='line'><span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">&quot;demo_form.asp&quot;</span> <span class="na">novalidate</span><span class="nt">&gt;</span>
+</span><span class='line'>  E-mail: <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;email&quot;</span> <span class="na">name=</span><span class="s">&quot;user_email&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;submit&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'><span class="nt">&lt;/form&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&lt;!-- &lt;input&gt; autofocus --&gt;</span>
+</span><span class='line'>First name:<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;fname&quot;</span> <span class="na">autofocus</span><span class="nt">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&lt;!-- &lt;input&gt; form --&gt;</span>
+</span><span class='line'><span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">&quot;demo_form.asp&quot;</span> <span class="na">id=</span><span class="s">&quot;form1&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  First name: <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;fname&quot;</span><span class="nt">&gt;&lt;br&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;submit&quot;</span> <span class="na">value=</span><span class="s">&quot;Submit&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'><span class="nt">&lt;/form&gt;</span>
+</span><span class='line'>Last name: <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;lname&quot;</span> <span class="na">form=</span><span class="s">&quot;form1&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&lt;!-- &lt;input&gt; formaction --&gt;</span>
+</span><span class='line'><span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">&quot;demo_form.asp&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  First name: <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;fname&quot;</span><span class="nt">&gt;&lt;br&gt;</span>
+</span><span class='line'>  Last name: <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;lname&quot;</span><span class="nt">&gt;&lt;br&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;submit&quot;</span> <span class="na">value=</span><span class="s">&quot;Submit&quot;</span><span class="nt">&gt;&lt;br&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;submit&quot;</span> <span class="na">formaction=</span><span class="s">&quot;demo_admin.asp&quot;</span>
+</span><span class='line'>  <span class="na">value=</span><span class="s">&quot;Submit as admin&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'><span class="nt">&lt;/form&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&lt;!-- &lt;input&gt; formenctype --&gt;</span>
+</span><span class='line'><span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">&quot;demo_post_enctype.asp&quot;</span> <span class="na">method=</span><span class="s">&quot;post&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  First name: <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;fname&quot;</span><span class="nt">&gt;&lt;br&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;submit&quot;</span> <span class="na">value=</span><span class="s">&quot;Submit&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;submit&quot;</span> <span class="na">formenctype=</span><span class="s">&quot;multipart/form-data&quot;</span>
+</span><span class='line'>  <span class="na">value=</span><span class="s">&quot;Submit as Multipart/form-data&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'><span class="nt">&lt;/form&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&lt;!-- &lt;input&gt; formmethod --&gt;</span>
+</span><span class='line'><span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">&quot;demo_form.asp&quot;</span> <span class="na">method=</span><span class="s">&quot;get&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  First name: <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;fname&quot;</span><span class="nt">&gt;&lt;br&gt;</span>
+</span><span class='line'>  Last name: <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;lname&quot;</span><span class="nt">&gt;&lt;br&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;submit&quot;</span> <span class="na">value=</span><span class="s">&quot;Submit&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;submit&quot;</span> <span class="na">formmethod=</span><span class="s">&quot;post&quot;</span> <span class="na">formaction=</span><span class="s">&quot;demo_post.asp&quot;</span>
+</span><span class='line'>  <span class="na">value=</span><span class="s">&quot;Submit using POST&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'><span class="nt">&lt;/form&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&lt;!-- &lt;input&gt; formnovalidate --&gt;</span>
+</span><span class='line'><span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">&quot;demo_form.asp&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  E-mail: <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;email&quot;</span> <span class="na">name=</span><span class="s">&quot;userid&quot;</span><span class="nt">&gt;&lt;br&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;submit&quot;</span> <span class="na">value=</span><span class="s">&quot;Submit&quot;</span><span class="nt">&gt;&lt;br&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;submit&quot;</span> <span class="na">formnovalidate</span> <span class="na">value=</span><span class="s">&quot;Submit without validation&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'><span class="nt">&lt;/form&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&lt;!-- &lt;input&gt; formtarget --&gt;</span>
+</span><span class='line'><span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">&quot;demo_form.asp&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  First name: <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;fname&quot;</span><span class="nt">&gt;&lt;br&gt;</span>
+</span><span class='line'>  Last name: <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;lname&quot;</span><span class="nt">&gt;&lt;br&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;submit&quot;</span> <span class="na">value=</span><span class="s">&quot;Submit as normal&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;submit&quot;</span> <span class="na">formtarget=</span><span class="s">&quot;_blank&quot;</span>
+</span><span class='line'>  <span class="na">value=</span><span class="s">&quot;Submit to a new window&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'><span class="nt">&lt;/form&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&lt;!-- &lt;input&gt; height and width --&gt;</span>
+</span><span class='line'><span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;image&quot;</span> <span class="na">src=</span><span class="s">&quot;img_submit.gif&quot;</span> <span class="na">alt=</span><span class="s">&quot;Submit&quot;</span> <span class="na">width=</span><span class="s">&quot;48&quot;</span> <span class="na">height=</span><span class="s">&quot;48&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&lt;!-- &lt;input&gt; list --&gt;</span>
+</span><span class='line'><span class="nt">&lt;input</span> <span class="na">list=</span><span class="s">&quot;browsers&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'><span class="nt">&lt;datalist</span> <span class="na">id=</span><span class="s">&quot;browsers&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">&quot;Internet Explorer&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">&quot;Firefox&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">&quot;Chrome&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">&quot;Opera&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">&quot;Safari&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'><span class="nt">&lt;/datalist&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&lt;!-- &lt;input&gt; min and max --&gt;</span>
+</span><span class='line'>Enter a date before 1980-01-01:
+</span><span class='line'><span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;date&quot;</span> <span class="na">name=</span><span class="s">&quot;bday&quot;</span> <span class="na">max=</span><span class="s">&quot;1979-12-31&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>Enter a date after 2000-01-01:
+</span><span class='line'><span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;date&quot;</span> <span class="na">name=</span><span class="s">&quot;bday&quot;</span> <span class="na">min=</span><span class="s">&quot;2000-01-02&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>Quantity (between 1 and 5):
+</span><span class='line'><span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;number&quot;</span> <span class="na">name=</span><span class="s">&quot;quantity&quot;</span> <span class="na">min=</span><span class="s">&quot;1&quot;</span> <span class="na">max=</span><span class="s">&quot;5&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&lt;!-- &lt;input&gt; multiple --&gt;</span>
+</span><span class='line'>Select images: <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;file&quot;</span> <span class="na">name=</span><span class="s">&quot;img&quot;</span> <span class="na">multiple</span><span class="nt">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&lt;!-- &lt;input&gt; pattern --&gt;</span>
+</span><span class='line'>Country code: <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;country_code&quot;</span> <span class="na">pattern=</span><span class="s">&quot;[A-Za-z]{3}&quot;</span> <span class="na">title=</span><span class="s">&quot;Three letter country code&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&lt;!-- &lt;input&gt; placeholder --&gt;</span>
+</span><span class='line'><span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;fname&quot;</span> <span class="na">placeholder=</span><span class="s">&quot;First name&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&lt;!-- &lt;input&gt; required --&gt;</span>
+</span><span class='line'>Username: <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;usrname&quot;</span> <span class="na">required</span><span class="nt">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&lt;!-- &lt;input&gt; step --&gt;</span>
+</span><span class='line'><span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;number&quot;</span> <span class="na">name=</span><span class="s">&quot;points&quot;</span> <span class="na">step=</span><span class="s">&quot;3&quot;</span><span class="nt">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<p>graphics</p>
+
+<figure class='code'><figcaption><span>graphics</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;canvas</span> <span class="na">id=</span><span class="s">&quot;myCanvas&quot;</span> <span class="na">width=</span><span class="s">&quot;200&quot;</span> <span class="na">height=</span><span class="s">&quot;100&quot;</span><span class="nt">&gt;&lt;/canvas&gt;</span>
+</span><span class='line'><span class="nt">&lt;canvas</span> <span class="na">id=</span><span class="s">&quot;myCanvas&quot;</span> <span class="na">width=</span><span class="s">&quot;200&quot;</span> <span class="na">height=</span><span class="s">&quot;100&quot;</span> <span class="na">style=</span><span class="s">&quot;border:1px solid #000000;&quot;</span><span class="nt">&gt;&lt;/canvas&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;script&gt;</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;myCanvas&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">ctx</span> <span class="o">=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s2">&quot;2d&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="nx">ctx</span><span class="p">.</span><span class="nx">fillStyle</span> <span class="o">=</span> <span class="s2">&quot;#FF0000&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nx">ctx</span><span class="p">.</span><span class="nx">fillRect</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="mi">75</span><span class="p">);</span>
+</span><span class='line'><span class="nt">&lt;/script&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;script&gt;</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;myCanvas&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">ctx</span> <span class="o">=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s2">&quot;2d&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="nx">ctx</span><span class="p">.</span><span class="nx">moveTo</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+</span><span class='line'><span class="nx">ctx</span><span class="p">.</span><span class="nx">lineTo</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span><span class="mi">100</span><span class="p">);</span>
+</span><span class='line'><span class="nx">ctx</span><span class="p">.</span><span class="nx">stroke</span><span class="p">();</span>
+</span><span class='line'><span class="nt">&lt;/script&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;script&gt;</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;myCanvas&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">ctx</span> <span class="o">=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s2">&quot;2d&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="nx">ctx</span><span class="p">.</span><span class="nx">beginPath</span><span class="p">();</span>
+</span><span class='line'><span class="nx">ctx</span><span class="p">.</span><span class="nx">arc</span><span class="p">(</span><span class="mi">95</span><span class="p">,</span><span class="mi">50</span><span class="p">,</span><span class="mi">40</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span><span class="p">);</span>
+</span><span class='line'><span class="nx">ctx</span><span class="p">.</span><span class="nx">stroke</span><span class="p">();</span>
+</span><span class='line'><span class="nt">&lt;/script&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;script&gt;</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;myCanvas&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">ctx</span> <span class="o">=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s2">&quot;2d&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="nx">ctx</span><span class="p">.</span><span class="nx">font</span> <span class="o">=</span> <span class="s2">&quot;30px Arial&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nx">ctx</span><span class="p">.</span><span class="nx">fillText</span><span class="p">(</span><span class="s2">&quot;Hello World&quot;</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">50</span><span class="p">);</span>
+</span><span class='line'><span class="nt">&lt;/script&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;script&gt;</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;myCanvas&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">ctx</span> <span class="o">=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s2">&quot;2d&quot;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// Create gradient</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">grd</span> <span class="o">=</span> <span class="nx">ctx</span><span class="p">.</span><span class="nx">createLinearGradient</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">200</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+</span><span class='line'><span class="nx">grd</span><span class="p">.</span><span class="nx">addColorStop</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="s2">&quot;red&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="nx">grd</span><span class="p">.</span><span class="nx">addColorStop</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s2">&quot;white&quot;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// Fill with gradient</span>
+</span><span class='line'><span class="nx">ctx</span><span class="p">.</span><span class="nx">fillStyle</span> <span class="o">=</span> <span class="nx">grd</span><span class="p">;</span>
+</span><span class='line'><span class="nx">ctx</span><span class="p">.</span><span class="nx">fillRect</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="mi">80</span><span class="p">);</span>
+</span><span class='line'><span class="nt">&lt;/script&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;script&gt;</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;myCanvas&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">ctx</span> <span class="o">=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s2">&quot;2d&quot;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// Create gradient</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">grd</span> <span class="o">=</span> <span class="nx">ctx</span><span class="p">.</span><span class="nx">createRadialGradient</span><span class="p">(</span><span class="mi">75</span><span class="p">,</span><span class="mi">50</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">90</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">100</span><span class="p">);</span>
+</span><span class='line'><span class="nx">grd</span><span class="p">.</span><span class="nx">addColorStop</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="s2">&quot;red&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="nx">grd</span><span class="p">.</span><span class="nx">addColorStop</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s2">&quot;white&quot;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// Fill with gradient</span>
+</span><span class='line'><span class="nx">ctx</span><span class="p">.</span><span class="nx">fillStyle</span> <span class="o">=</span> <span class="nx">grd</span><span class="p">;</span>
+</span><span class='line'><span class="nx">ctx</span><span class="p">.</span><span class="nx">fillRect</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">150</span><span class="p">,</span><span class="mi">80</span><span class="p">);</span>
+</span><span class='line'><span class="nt">&lt;/script&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;script&gt;</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;myCanvas&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">ctx</span> <span class="o">=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s2">&quot;2d&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">img</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;scream&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="nx">ctx</span><span class="p">.</span><span class="nx">drawImage</span><span class="p">(</span><span class="nx">img</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">);</span>
+</span><span class='line'><span class="nt">&lt;/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>SVG</p>
+
+<figure class='code'><figcaption><span>SVG</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="cp">&lt;!DOCTYPE html&gt;</span>
+</span><span class='line'><span class="nt">&lt;html&gt;</span>
+</span><span class='line'><span class="nt">&lt;body&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;svg</span> <span class="na">width=</span><span class="s">&quot;300&quot;</span> <span class="na">height=</span><span class="s">&quot;200&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;polygon</span> <span class="na">points=</span><span class="s">&quot;100,10 40,198 190,78 10,78 160,198&quot;</span>
+</span><span class='line'>  <span class="na">style=</span><span class="s">&quot;fill:lime;stroke:purple;stroke-width:5;fill-rule:evenodd;&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'><span class="nt">&lt;/svg&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;/body&gt;</span>
+</span><span class='line'><span class="nt">&lt;/html&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>media</p>
+
+<figure class='code'><figcaption><span>media</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="c">&lt;!-- video --&gt;</span>
+</span><span class='line'><span class="nt">&lt;video</span> <span class="na">width=</span><span class="s">&quot;320&quot;</span> <span class="na">height=</span><span class="s">&quot;240&quot;</span> <span class="na">controls</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;source</span> <span class="na">src=</span><span class="s">&quot;movie.mp4&quot;</span> <span class="na">type=</span><span class="s">&quot;video/mp4&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;source</span> <span class="na">src=</span><span class="s">&quot;movie.ogg&quot;</span> <span class="na">type=</span><span class="s">&quot;video/ogg&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>Your browser does not support the video tag.
+</span><span class='line'><span class="nt">&lt;/video&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&lt;!-- audio --&gt;</span>
+</span><span class='line'><span class="nt">&lt;audio</span> <span class="na">controls</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;source</span> <span class="na">src=</span><span class="s">&quot;horse.ogg&quot;</span> <span class="na">type=</span><span class="s">&quot;audio/ogg&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;source</span> <span class="na">src=</span><span class="s">&quot;horse.mp3&quot;</span> <span class="na">type=</span><span class="s">&quot;audio/mpeg&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>Your browser does not support the audio element.
+</span><span class='line'><span class="nt">&lt;/audio&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+
+
+
+  <footer>
+
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kelly Chan</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-08-03T03:10:02+08:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>3</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>3:10 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/tech/'>tech</a>
+  
+</span>
+
+
+    </p>
+
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://k.arttechresearch.com/tech/2014/08/03/html-5/" data-via="kwailamchan" data-counturl="http://k.arttechresearch.com/tech/2014/08/03/html-5/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/tech/2014/07/31/ascii-and-unicode/" title="Previous Post: ASCII and Unicode">&laquo; ASCII and Unicode</a>
+      
+      
+        <a class="basic-alignment right" href="/life/2014/08/04/what-makes-a-successful-casual-game/" title="Next Post: What Makes A Successful Casual Game">What Makes A Successful Casual Game &raquo;</a>
+      
+    </p>
+
+  </footer>
+
+</article>
+
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Tech</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/tech/2015/10/03/installing-openstack-devstack/">Installing Openstack Devstack</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/05/01/installing-jenkins-on-ubuntu/">Installing Jenkins on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/05/01/installing-cloudera-hadoop-on-ubuntu/">Installing Cloudera Hadoop on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/05/01/configurating-nginx-for-django-projects-on-ubuntu/">Configurating Nginx for Django Projects on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/05/01/setting-up-mysql-on-ubuntu/">Setting Up MySQL on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/04/26/installing-emacs-on-ubuntu/">Installing Emacs on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/04/25/automatically-running-shell-scripts-on-ubuntu/">Automatically Running Shell Scripts on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/04/25/it-could-not-access-network-on-ubuntu/">It Could Not Access Network on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/04/25/installing-pycharm-on-ubuntu-12.04/">Installing PyCharm on Ubuntu 12.04</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/02/11/setup-a-git-server/">Setup a Git Server</a>
+      </li>
+    
+  </ul>
+</section>
+<section class="category-list">
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/categories/art/'>art (1)</a></li><li><a href='/categories/life/'>life (43)</a></li><li><a href='/categories/tech/'>tech (50)</a></li></ul>
+</section>
+<section class="tag-cloud">
+
+
+  <h1>Tags</h1>
+    <ul id="category-list"><a href='/tags/algorithm' style='font-size: 118.69565217391305%'>algorithm(7)</a> <a href='/tags/api' style='font-size: 90.0%'>api(1)</a> <a href='/tags/ascii' style='font-size: 90.0%'>ascii(1)</a> <a href='/tags/beautifulsoup' style='font-size: 90.0%'>beautifulsoup(1)</a> <a href='/tags/career' style='font-size: 94.78260869565217%'>career(2)</a> <a href='/tags/classification' style='font-size: 94.78260869565217%'>classification(2)</a> <a href='/tags/cloud' style='font-size: 90.0%'>cloud(1)</a> <a href='/tags/cloudera' style='font-size: 90.0%'>cloudera(1)</a> <a href='/tags/computer-vision' style='font-size: 90.0%'>computer vision(1)</a> <a href='/tags/crawler' style='font-size: 94.78260869565217%'>crawler(2)</a> <a href='/tags/css' style='font-size: 90.0%'>css(1)</a> <a href='/tags/data' style='font-size: 90.0%'>data(1)</a> <a href='/tags/django' style='font-size: 94.78260869565217%'>django(2)</a> <a href='/tags/dns' style='font-size: 90.0%'>dns(1)</a> <a href='/tags/emacs' style='font-size: 94.78260869565217%'>emacs(2)</a> <a href='/tags/fiction' style='font-size: 113.91304347826087%'>fiction(6)</a> <a href='/tags/french' style='font-size: 90.0%'>french(1)</a> <a href='/tags/git' style='font-size: 90.0%'>git(1)</a> <a href='/tags/github' style='font-size: 90.0%'>github(1)</a> <a href='/tags/gunicorn' style='font-size: 90.0%'>gunicorn(1)</a> <a href='/tags/hadoop' style='font-size: 90.0%'>hadoop(1)</a> <a href='/tags/html' style='font-size: 90.0%'>html(1)</a> <a href='/tags/ide' style='font-size: 94.78260869565217%'>ide(2)</a> <a href='/tags/javascript' style='font-size: 90.0%'>javascript(1)</a> <a href='/tags/jekyll' style='font-size: 90.0%'>jekyll(1)</a> <a href='/tags/jenkins' style='font-size: 90.0%'>jenkins(1)</a> <a href='/tags/leisure' style='font-size: 195.2173913043478%'>leisure(23)</a> <a href='/tags/linux' style='font-size: 109.13043478260869%'>linux(5)</a> <a href='/tags/machine-learning' style='font-size: 137.82608695652175%'>machine learning(11)</a> <a href='/tags/mathjax' style='font-size: 90.0%'>mathjax(1)</a> <a href='/tags/mysql' style='font-size: 94.78260869565217%'>mysql(2)</a> <a href='/tags/network' style='font-size: 90.0%'>network(1)</a> <a href='/tags/nginx' style='font-size: 90.0%'>nginx(1)</a> <a href='/tags/nlp' style='font-size: 113.91304347826087%'>nlp(6)</a> <a href='/tags/nltk' style='font-size: 90.0%'>nltk(1)</a> <a href='/tags/openstack' style='font-size: 90.0%'>openstack(1)</a> <a href='/tags/pandas' style='font-size: 94.78260869565217%'>pandas(2)</a> <a href='/tags/poem' style='font-size: 104.34782608695652%'>poem(4)</a> <a href='/tags/prediction' style='font-size: 90.0%'>prediction(1)</a> <a href='/tags/pycharm' style='font-size: 90.0%'>pycharm(1)</a> <a href='/tags/python' style='font-size: 200.0%'>python(24)</a> <a href='/tags/reading' style='font-size: 118.69565217391305%'>reading(7)</a> <a href='/tags/regex' style='font-size: 90.0%'>regex(1)</a> <a href='/tags/ruby' style='font-size: 90.0%'>ruby(1)</a> <a href='/tags/supervisor' style='font-size: 90.0%'>supervisor(1)</a> <a href='/tags/time-series' style='font-size: 90.0%'>time series(1)</a> <a href='/tags/translation' style='font-size: 90.0%'>translation(1)</a> <a href='/tags/ubuntu' style='font-size: 123.47826086956522%'>ubuntu(8)</a> <a href='/tags/unicode' style='font-size: 90.0%'>unicode(1)</a> <a href='/tags/vim' style='font-size: 90.0%'>vim(1)</a> <a href='/tags/web' style='font-size: 94.78260869565217%'>web(2)</a> </ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2006-2015 - Kelly Chan
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'kwailamc';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://k.arttechresearch.com/tech/2014/08/03/html-5/';
+        var disqus_url = 'http://k.arttechresearch.com/tech/2014/08/03/html-5/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

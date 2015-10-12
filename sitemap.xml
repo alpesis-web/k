@@ -9,12 +9,128 @@
     <lastmod>2015-10-03T12:33:38+08:00</lastmod>
   </url>
   <url>
+    <loc>http://k.arttechresearch.com/tech/2015/05/01/installing-jenkins-on-ubuntu/</loc>
+    <lastmod>2015-05-01T11:46:00+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2015/05/01/installing-cloudera-hadoop-on-ubuntu/</loc>
+    <lastmod>2015-05-01T11:10:00+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2015/05/01/configurating-nginx-for-django-projects-on-ubuntu/</loc>
+    <lastmod>2015-05-01T10:54:00+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2015/05/01/setting-up-mysql-on-ubuntu/</loc>
+    <lastmod>2015-05-01T10:50:00+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2015/04/26/installing-emacs-on-ubuntu/</loc>
+    <lastmod>2015-04-26T23:48:00+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2015/04/25/automatically-running-shell-scripts-on-ubuntu/</loc>
+    <lastmod>2015-04-25T14:17:14+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2015/04/25/it-could-not-access-network-on-ubuntu/</loc>
+    <lastmod>2015-04-25T14:08:20+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2015/04/25/installing-pycharm-on-ubuntu-12.04/</loc>
+    <lastmod>2015-04-25T10:08:14+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2015/02/11/setup-a-git-server/</loc>
+    <lastmod>2015-02-11T02:00:14+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/09/16/python-django/</loc>
+    <lastmod>2014-09-16T19:32:00+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/09/09/parsing-the-catalogs-from-lowes/</loc>
+    <lastmod>2014-09-09T20:59:00+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/09/08/mechanize/</loc>
+    <lastmod>2014-09-08T21:15:00+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/09/07/morse-code/</loc>
+    <lastmod>2014-09-07T22:53:00+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/09/07/generating-passwords/</loc>
+    <lastmod>2014-09-07T22:01:00+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/09/03/python-unicodeencodeerror/</loc>
+    <lastmod>2014-09-03T20:22:00+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/09/02/multiplication-tables/</loc>
+    <lastmod>2014-09-02T20:10:00+08:00</lastmod>
+  </url>
+  <url>
     <loc>http://k.arttechresearch.com/life/2014/09/02/just-for-fun/</loc>
     <lastmod>2014-09-02T11:35:22+08:00</lastmod>
   </url>
   <url>
+    <loc>http://k.arttechresearch.com/tech/2014/08/07/multiple-github-pages-and-custom-domains-via-dns/</loc>
+    <lastmod>2014-08-07T17:58:22+08:00</lastmod>
+  </url>
+  <url>
     <loc>http://k.arttechresearch.com/life/2014/08/04/what-makes-a-successful-casual-game/</loc>
     <lastmod>2014-08-04T12:56:02+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/08/03/html-5/</loc>
+    <lastmod>2014-08-03T03:10:02+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/07/31/ascii-and-unicode/</loc>
+    <lastmod>2014-07-31T22:20:00+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/07/30/summarization-on-the-machine-learning-algorithms/</loc>
+    <lastmod>2014-07-30T12:00:00+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/07/29/unbalanced-coin/</loc>
+    <lastmod>2014-07-29T22:54:00+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/07/29/binary-search/</loc>
+    <lastmod>2014-07-29T22:33:00+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/07/18/bash-scripting-with-ftp/</loc>
+    <lastmod>2014-07-18T13:38:22+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/07/18/printing-a-schedule/</loc>
+    <lastmod>2014-07-18T13:19:22+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/07/18/working-mysql-with-python/</loc>
+    <lastmod>2014-07-18T13:12:22+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/07/13/regular-expression/</loc>
+    <lastmod>2014-07-13T12:46:55+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/07/13/data-apis/</loc>
+    <lastmod>2014-07-13T02:39:10+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/07/12/downloading-images-by-batch/</loc>
+    <lastmod>2014-07-12T20:35:22+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/07/12/beautiful-soup/</loc>
+    <lastmod>2014-07-12T17:56:44+08:00</lastmod>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/life/2014/07/09/composing-song-ci-with-chinese-herbs/</loc>
@@ -25,8 +141,40 @@
     <lastmod>2014-07-04T01:45:00+08:00</lastmod>
   </url>
   <url>
+    <loc>http://k.arttechresearch.com/tech/2014/06/23/stanford-nlp-5-spelling-correction-and-the-noisy-channel/</loc>
+    <lastmod>2014-06-23T20:25:12+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/06/23/stanford-nlp-4-language-modeling/</loc>
+    <lastmod>2014-06-23T13:49:23+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/06/20/stanford-nlp-3-minimum-edit-distance/</loc>
+    <lastmod>2014-06-20T12:57:12+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/06/19/stanford-nlp-2-basic-text-processsing/</loc>
+    <lastmod>2014-06-19T20:18:34+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/06/19/stanford-nlp-1-introduction/</loc>
+    <lastmod>2014-06-19T17:42:24+08:00</lastmod>
+  </url>
+  <url>
     <loc>http://k.arttechresearch.com/life/2014/06/19/everlasting-longing/</loc>
     <lastmod>2014-06-19T13:17:03+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/06/17/mathjax/</loc>
+    <lastmod>2014-06-17T14:41:25+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/06/17/facial-detection/</loc>
+    <lastmod>2014-06-17T10:04:55+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/06/13/summary-on-machine-learning-algorithms/</loc>
+    <lastmod>2014-06-13T13:28:30+08:00</lastmod>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tech/2014/06/03/bike-sharing-demand/</loc>
@@ -319,10 +467,91 @@
     <loc>http://k.arttechresearch.com/tags/prediction/</loc>
   </url>
   <url>
+    <loc>http://k.arttechresearch.com/tags/computer-vision/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/javascript/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/mathjax/</loc>
+  </url>
+  <url>
     <loc>http://k.arttechresearch.com/tags/french/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/translation/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/beautifulsoup/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/crawler/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/api/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/data/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/regex/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/mysql/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/unicode/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/ascii/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/html/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/web/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/dns/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/github/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/django/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/git/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/pycharm/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/ubuntu/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/linux/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/network/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/nginx/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/supervisor/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/gunicorn/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/cloudera/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/hadoop/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/jenkins/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/openstack/</loc>

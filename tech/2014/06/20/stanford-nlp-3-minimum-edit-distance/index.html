@@ -1,0 +1,1979 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Stanford NLP 3 - Minimum Edit Distance - Kelly Chan</title>
+  <meta name="author" content="Kelly Chan">
+
+  
+  <meta name="description" content="1. Definition of Minimum Edit Distance 1.1. How similar are two strings? spell correction the user typed &ldquo;graffe&rdquo;, which is closest? graf &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://k.arttechresearch.com/tech/2014/06/20/stanford-nlp-3-minimum-edit-distance/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Kelly Chan" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+<script type="text/javascript">
+
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-53625944-7', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+</head>
+
+<body   >
+  <header role="banner"><ul class="soc">
+
+  
+    <li><a class="soc-github" href="https://github.com/KellyChan"></a></li>
+  
+
+  
+    <li><a class="soc-twitter" href="https://twitter.com/kwailamchan"></a></li>
+  
+
+  
+    <li><a class="soc-pinterest" href="https://www.pinterest.com/wailamchan/"></a></li>
+  
+
+  
+    <li><a class="soc-email1 soc-icon-last" href="mailto:support@arttechresearch.com"></a></li>
+  
+</ul>
+
+<hgroup>
+  <h1><a href="/">Kelly Chan</a></h1>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="k.arttechresearch.com">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/tech">Tech</a></li>
+  <li><a href="/art">Art</a></li>
+  <li><a href="/life">Life</a></li>
+  <li><a href="/archives">Archives</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <li><a href="/devkits">Devkits</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Stanford NLP 3 - Minimum Edit Distance</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-20T12:57:12+08:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>20</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:57 pm</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://k.arttechresearch.com">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>1. Definition of Minimum Edit Distance</h2>
+
+<h3>1.1. How similar are two strings?</h3>
+
+<ul>
+<li>spell correction
+
+<ul>
+<li>the user typed &ldquo;graffe&rdquo;, which is closest?
+
+<ul>
+<li>graf</li>
+<li>graft</li>
+<li>grail</li>
+<li>giraffe</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>computational biology</p>
+
+<ul>
+<li><p>align two sequences of nucleotides</p>
+
+<p>  <code>AGGCTATCACCTGACCTCCAGGCCGATGCCC</code><br/>
+  <code>TAGCTATCACGACCGCGGTCGATTTGCCGAC</code></p></li>
+<li><p>resulting alignment:</p>
+
+<p>  <code>-AGGCTATCACCTGACCTCCAGGCCGA--TGCCC---</code><br/>
+  <code>TAG-CTATCAC--GACCGC--GGTCGATTTGCCCGAC</code></p></li>
+</ul>
+</li>
+<li><p>also for machine translation, information extraction, speech recognition</p></li>
+</ul>
+
+
+<h3>1.2. Edit Distance</h3>
+
+<ul>
+<li>the minimum edit distance between two strings</li>
+<li>is the minimum number of editing operations
+
+<ul>
+<li>insertion</li>
+<li>deletion</li>
+<li>substitution</li>
+</ul>
+</li>
+<li>needed to transform one into the other</li>
+</ul>
+
+
+<h3>1.3. Minimum Edit Distance</h3>
+
+<ul>
+<li>two strings and their alignment</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>I N T E * N T I O N 
+</span><span class='line'>| | | | | | | | | |  
+</span><span class='line'>* E X E C U T I O N  
+</span><span class='line'>d s s   i s        
+</span><span class='line'>
+</span><span class='line'>- d: deletion
+</span><span class='line'>- s: substitution
+</span><span class='line'>- i: insertion</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>if each operation has cost of 1
+
+<ul>
+<li>distance between these is 5</li>
+</ul>
+</li>
+<li>if substituions cost 2 (Levenshtein)
+
+<ul>
+<li>distance between them is 8</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>1.4. Alignment in Computational Biology</h3>
+
+<ul>
+<li><p>given a sequence of bases</p>
+
+<p>  <code>AGGCTATCACCTGACCTCCAGGCCGATGCCC</code><br/>
+  <code>TAGCTAGCACGACCGCGGTCGATTTGCCCGAC</code></p></li>
+<li><p>an alignment:</p></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>-AGGCTATCACCTGACCTCCAGGCCGA--TGCCC---
+</span><span class='line'>TAG-CTAGCAC--GACCGC--GGTCGATTTGCCCGAC</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>given two sequences, alignn each letter to a letter or gap</li>
+</ul>
+
+
+<h3>1.5. Other uese of Edit Distance in NLP</h3>
+
+<ul>
+<li>evaluating machine translation and speech recognition</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>R Spokesman confirms     senior government adviser was shot
+</span><span class='line'>H Spokesman said     the senior            adviser was shot dead
+</span><span class='line'>             S        I             D                        I</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>named entity extraction and entity coreference
+
+<ul>
+<li><code>IBM Inc.</code> announced today</li>
+<li><code>IBM</code> profits</li>
+<li><code>Stanford President John Hennessy</code> announnced yesterday</li>
+<li>for <code>Stanford University President John Hennessy</code></li>
+</ul>
+</li>
+</ul>
+
+
+<h3>1.6. How to find the Min Edit Distance?</h3>
+
+<ul>
+<li>searching for a path (sequence of edits) from the start string to the final string
+
+<ul>
+<li>initial state: the word we&rsquo;re tranforming</li>
+<li>operators: insert, delte, substitute</li>
+<li>goal state: the word we&rsquo;re trying to get to</li>
+<li>path cost: what we want to minimize - the number of edits</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>intention
+</span><span class='line'>   |---- Del ---&gt; ntention
+</span><span class='line'>   |---- Ins ---&gt; eintention
+</span><span class='line'>   |---- Sub ---&gt; entention</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>1.7. Minimum Edit as Search</h3>
+
+<ul>
+<li>but the space of all edit sequences is huge
+
+<ul>
+<li>we can&rsquo;t afford to navigate naively</li>
+<li>lots of distinct paths wind up at the same state
+
+<ul>
+<li>we don&rsquo;t have to keep track of all of them</li>
+<li>just the shortest path to each of those revisted states</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>1.8. Defining Min Edit Distance</h3>
+
+<ul>
+<li>for two strings
+
+<ul>
+<li>X of length n</li>
+<li>Y of length m</li>
+</ul>
+</li>
+<li>we define D(i,j)
+
+<ul>
+<li>the edit distance between X[1..i] and Y[1..j]
+
+<ul>
+<li>i.e., the first i characters of X and the first j characters of Y</li>
+</ul>
+</li>
+<li>the edit distance between X and Y is thus D(n,m)</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>2. Computing Minimum Edit Distance</h2>
+
+<h3>2.1. Dynamic Programming for Minimum Edit Distance</h3>
+
+<ul>
+<li>dynamic programming: a tabular computation of D(n, m)</li>
+<li>solving problems by combining solutions to subproblems</li>
+<li>bottom-up
+
+<ul>
+<li>we compute D(i,j) for small i,j</li>
+<li>and compute larger D(i,j) based on previously computed smaller values</li>
+<li>i.e., compute D(i,j) for all i(0 &lt; i &lt; n) and j(0 &lt; j &lt; m)</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>2.2. Defining Min Edit Distance (Levenshtein)</h3>
+
+<ul>
+<li>initialization
+
+<ul>
+<li>D(i,0) = i</li>
+<li>D(0,j) = j</li>
+</ul>
+</li>
+<li>recurrence relation:</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>for each i = 1...M
+</span><span class='line'>    for each j = 1...N
+</span><span class='line'>        D(i,j) = min { D(i-1,j) + 1  &lt;- delete
+</span><span class='line'>                     { D(i,j-1) + 1  &lt;- insert
+</span><span class='line'>                     { D(i-1,j-1) + 2; if X(i) &lt;&gt; Y(j)  &lt;- substitute
+</span><span class='line'>                                    0; if X(i) == Y(j)</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>termination
+
+<ul>
+<li>D(N,M) is distance</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>2.3. The Edit Distance Table</h3>
+
+<ul>
+<li>initialization</li>
+</ul>
+
+
+<table>
+<thead>
+<tr>
+<th style="text-align:center;">   </th>
+<th style="text-align:center;">   </th>
+<th style="text-align:center;">   </th>
+<th style="text-align:center;">   </th>
+<th style="text-align:center;">   </th>
+<th style="text-align:center;">   </th>
+<th style="text-align:center;">   </th>
+<th style="text-align:center;">   </th>
+<th style="text-align:center;">   </th>
+<th style="text-align:center;">   </th>
+<th style="text-align:center;">   </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;"> N </td>
+<td style="text-align:center;"> 9 </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+</tr>
+<tr>
+<td style="text-align:center;"> O </td>
+<td style="text-align:center;"> 8 </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+</tr>
+<tr>
+<td style="text-align:center;"> I </td>
+<td style="text-align:center;"> 7 </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+</tr>
+<tr>
+<td style="text-align:center;"> T </td>
+<td style="text-align:center;"> 6 </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+</tr>
+<tr>
+<td style="text-align:center;"> N </td>
+<td style="text-align:center;"> 5 </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+</tr>
+<tr>
+<td style="text-align:center;"> E </td>
+<td style="text-align:center;"> 4 </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+</tr>
+<tr>
+<td style="text-align:center;"> T </td>
+<td style="text-align:center;"> 3 </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+</tr>
+<tr>
+<td style="text-align:center;"> N </td>
+<td style="text-align:center;"> 2 </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+</tr>
+<tr>
+<td style="text-align:center;"> I </td>
+<td style="text-align:center;"> 1 </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;">   </td>
+</tr>
+<tr>
+<td style="text-align:center;"> # </td>
+<td style="text-align:center;"> 0 </td>
+<td style="text-align:center;"> 1 </td>
+<td style="text-align:center;"> 2 </td>
+<td style="text-align:center;"> 3 </td>
+<td style="text-align:center;"> 4 </td>
+<td style="text-align:center;"> 5 </td>
+<td style="text-align:center;"> 6 </td>
+<td style="text-align:center;"> 7 </td>
+<td style="text-align:center;"> 8 </td>
+<td style="text-align:center;"> 9 </td>
+</tr>
+<tr>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;"> # </td>
+<td style="text-align:center;"> E </td>
+<td style="text-align:center;"> X </td>
+<td style="text-align:center;"> E </td>
+<td style="text-align:center;"> C </td>
+<td style="text-align:center;"> U </td>
+<td style="text-align:center;"> T </td>
+<td style="text-align:center;"> I </td>
+<td style="text-align:center;"> O </td>
+<td style="text-align:center;"> N </td>
+</tr>
+</tbody>
+</table>
+
+
+<ul>
+<li>recurrence relation</li>
+</ul>
+
+
+<table>
+<thead>
+<tr>
+<th style="text-align:center;">   </th>
+<th style="text-align:center;">   </th>
+<th style="text-align:center;">   </th>
+<th style="text-align:center;">   </th>
+<th style="text-align:center;">    </th>
+<th style="text-align:center;">    </th>
+<th style="text-align:center;">    </th>
+<th style="text-align:center;">    </th>
+<th style="text-align:center;">    </th>
+<th style="text-align:center;">    </th>
+<th style="text-align:center;">    </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;"> N </td>
+<td style="text-align:center;"> 9 </td>
+<td style="text-align:center;"> 8 </td>
+<td style="text-align:center;"> 9 </td>
+<td style="text-align:center;"> 10 </td>
+<td style="text-align:center;"> 11 </td>
+<td style="text-align:center;"> 12 </td>
+<td style="text-align:center;"> 11 </td>
+<td style="text-align:center;"> 10 </td>
+<td style="text-align:center;"> 9  </td>
+<td style="text-align:center;"> 8  |  &lt;- L = 8</td>
+</tr>
+<tr>
+<td style="text-align:center;"> O </td>
+<td style="text-align:center;"> 8 </td>
+<td style="text-align:center;"> 7 </td>
+<td style="text-align:center;"> 8 </td>
+<td style="text-align:center;"> 9  </td>
+<td style="text-align:center;"> 10 </td>
+<td style="text-align:center;"> 11 </td>
+<td style="text-align:center;"> 10 </td>
+<td style="text-align:center;"> 9  </td>
+<td style="text-align:center;"> 8  </td>
+<td style="text-align:center;"> 9  </td>
+</tr>
+<tr>
+<td style="text-align:center;"> I </td>
+<td style="text-align:center;"> 7 </td>
+<td style="text-align:center;"> 6 </td>
+<td style="text-align:center;"> 7 </td>
+<td style="text-align:center;"> 8  </td>
+<td style="text-align:center;"> 9  </td>
+<td style="text-align:center;"> 10 </td>
+<td style="text-align:center;"> 9  </td>
+<td style="text-align:center;"> 8  </td>
+<td style="text-align:center;"> 9  </td>
+<td style="text-align:center;"> 10 </td>
+</tr>
+<tr>
+<td style="text-align:center;"> T </td>
+<td style="text-align:center;"> 6 </td>
+<td style="text-align:center;"> 5 </td>
+<td style="text-align:center;"> 6 </td>
+<td style="text-align:center;"> 7  </td>
+<td style="text-align:center;"> 8  </td>
+<td style="text-align:center;"> 9  </td>
+<td style="text-align:center;"> 8  </td>
+<td style="text-align:center;"> 9  </td>
+<td style="text-align:center;"> 10 </td>
+<td style="text-align:center;"> 11 </td>
+</tr>
+<tr>
+<td style="text-align:center;"> N </td>
+<td style="text-align:center;"> 5 </td>
+<td style="text-align:center;"> 4 </td>
+<td style="text-align:center;"> 5 </td>
+<td style="text-align:center;"> 6  </td>
+<td style="text-align:center;"> 7  </td>
+<td style="text-align:center;"> 8  </td>
+<td style="text-align:center;"> 9  </td>
+<td style="text-align:center;"> 10 </td>
+<td style="text-align:center;"> 11 </td>
+<td style="text-align:center;"> 10 </td>
+</tr>
+<tr>
+<td style="text-align:center;"> E </td>
+<td style="text-align:center;"> 4 </td>
+<td style="text-align:center;"> 3 </td>
+<td style="text-align:center;"> 4 </td>
+<td style="text-align:center;"> 5  </td>
+<td style="text-align:center;"> 6  </td>
+<td style="text-align:center;"> 7  </td>
+<td style="text-align:center;"> 8  </td>
+<td style="text-align:center;"> 9  </td>
+<td style="text-align:center;"> 10 </td>
+<td style="text-align:center;"> 9  </td>
+</tr>
+<tr>
+<td style="text-align:center;"> T </td>
+<td style="text-align:center;"> 3 </td>
+<td style="text-align:center;"> 4 </td>
+<td style="text-align:center;"> 5 </td>
+<td style="text-align:center;"> 6  </td>
+<td style="text-align:center;"> 7  </td>
+<td style="text-align:center;"> 8  </td>
+<td style="text-align:center;"> 7  </td>
+<td style="text-align:center;"> 8  </td>
+<td style="text-align:center;"> 9  </td>
+<td style="text-align:center;"> 8  </td>
+</tr>
+<tr>
+<td style="text-align:center;"> N </td>
+<td style="text-align:center;"> 2 </td>
+<td style="text-align:center;"> 3 </td>
+<td style="text-align:center;"> 4 </td>
+<td style="text-align:center;"> 5  </td>
+<td style="text-align:center;"> 6  </td>
+<td style="text-align:center;"> 7  </td>
+<td style="text-align:center;"> 8  </td>
+<td style="text-align:center;"> 7  </td>
+<td style="text-align:center;"> 8  </td>
+<td style="text-align:center;"> 7  </td>
+</tr>
+<tr>
+<td style="text-align:center;"> I </td>
+<td style="text-align:center;"> 1 </td>
+<td style="text-align:center;"> 2 </td>
+<td style="text-align:center;"> 3 </td>
+<td style="text-align:center;"> 4  </td>
+<td style="text-align:center;"> 5  </td>
+<td style="text-align:center;"> 6  </td>
+<td style="text-align:center;"> 7  </td>
+<td style="text-align:center;"> 6  </td>
+<td style="text-align:center;"> 7  </td>
+<td style="text-align:center;"> 8  </td>
+</tr>
+<tr>
+<td style="text-align:center;"> # </td>
+<td style="text-align:center;"> 0 </td>
+<td style="text-align:center;"> 1 </td>
+<td style="text-align:center;"> 2 </td>
+<td style="text-align:center;"> 3  </td>
+<td style="text-align:center;"> 4  </td>
+<td style="text-align:center;"> 5  </td>
+<td style="text-align:center;"> 6  </td>
+<td style="text-align:center;"> 7  </td>
+<td style="text-align:center;"> 8  </td>
+<td style="text-align:center;"> 9  </td>
+</tr>
+<tr>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;"> # </td>
+<td style="text-align:center;"> E </td>
+<td style="text-align:center;"> X </td>
+<td style="text-align:center;"> E  </td>
+<td style="text-align:center;"> C  </td>
+<td style="text-align:center;"> U  </td>
+<td style="text-align:center;"> T  </td>
+<td style="text-align:center;"> I  </td>
+<td style="text-align:center;"> O  </td>
+<td style="text-align:center;"> N  </td>
+</tr>
+</tbody>
+</table>
+
+
+<h2>3. Bactrace for Computing Alignments</h2>
+
+<h3>3.1. Computing alignments</h3>
+
+<ul>
+<li>edit distance isn&rsquo;t sufficient
+
+<ul>
+<li>we often need to align each character of the two strings to each other</li>
+</ul>
+</li>
+<li>we do this by keeping a &ldquo;backtrace&rdquo;</li>
+<li>every time we enter a cell, remember where we came from</li>
+<li>when we each the end,
+
+<ul>
+<li>trace back the path from the upper right corner to read off the alignment</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>3.2. MinEdit with Backtrace</h3>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:center;">   </th>
+<th style="text-align:center;">   </th>
+<th style="text-align:center;">              </th>
+<th style="text-align:center;">              </th>
+<th style="text-align:center;">               </th>
+<th style="text-align:center;">               </th>
+<th style="text-align:center;">               </th>
+<th style="text-align:center;">               </th>
+<th style="text-align:center;">               </th>
+<th style="text-align:center;">               </th>
+<th style="text-align:center;">           </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;"> N </td>
+<td style="text-align:center;"> 9 </td>
+<td style="text-align:center;"> (S)        8 </td>
+<td style="text-align:center;"> (SW, W, S) 9 </td>
+<td style="text-align:center;"> (SW, W, S) 10 </td>
+<td style="text-align:center;"> (SW, W, S) 11 </td>
+<td style="text-align:center;"> (SW, W, S) 12 </td>
+<td style="text-align:center;"> (S)        11 </td>
+<td style="text-align:center;"> (S)        10 </td>
+<td style="text-align:center;"> (S)        9  </td>
+<td style="text-align:center;"> (SW)   8  </td>
+</tr>
+<tr>
+<td style="text-align:center;"> O </td>
+<td style="text-align:center;"> 8 </td>
+<td style="text-align:center;"> (S)        7 </td>
+<td style="text-align:center;"> (SW, W, S) 8 </td>
+<td style="text-align:center;"> (SW, W, S) 9  </td>
+<td style="text-align:center;"> (SW, W, S) 10 </td>
+<td style="text-align:center;"> (SW, W, S) 11 </td>
+<td style="text-align:center;"> (S)        10 </td>
+<td style="text-align:center;"> (S)        9  </td>
+<td style="text-align:center;"> (SW)       8  </td>
+<td style="text-align:center;"> (W)    9  </td>
+</tr>
+<tr>
+<td style="text-align:center;"> I </td>
+<td style="text-align:center;"> 7 </td>
+<td style="text-align:center;"> (S)        6 </td>
+<td style="text-align:center;"> (SW, W, S) 7 </td>
+<td style="text-align:center;"> (SW, W, S) 8  </td>
+<td style="text-align:center;"> (SW, W, S) 9  </td>
+<td style="text-align:center;"> (SW, W, S) 10 </td>
+<td style="text-align:center;"> (S)        9  </td>
+<td style="text-align:center;"> (SW)       8  </td>
+<td style="text-align:center;"> (W)        9  </td>
+<td style="text-align:center;"> (W)    10 </td>
+</tr>
+<tr>
+<td style="text-align:center;"> T </td>
+<td style="text-align:center;"> 6 </td>
+<td style="text-align:center;"> (S)        5 </td>
+<td style="text-align:center;"> (SW, W, S) 6 </td>
+<td style="text-align:center;"> (SW, W, S) 7  </td>
+<td style="text-align:center;"> (SW, W, S) 8  </td>
+<td style="text-align:center;"> (SW, W, S) 9  </td>
+<td style="text-align:center;"> (SW)       8  </td>
+<td style="text-align:center;"> (W)        9  </td>
+<td style="text-align:center;"> (W)        10 </td>
+<td style="text-align:center;"> (W, S) 11 </td>
+</tr>
+<tr>
+<td style="text-align:center;"> N </td>
+<td style="text-align:center;"> 5 </td>
+<td style="text-align:center;"> (S)        4 </td>
+<td style="text-align:center;"> (SW, W, S) 5 </td>
+<td style="text-align:center;"> (SW, W, S) 6  </td>
+<td style="text-align:center;"> (SW, W, S) 7  </td>
+<td style="text-align:center;"> (SW, W, S) 8  </td>
+<td style="text-align:center;"> (SW, W, S) 9  </td>
+<td style="text-align:center;"> (SW, W, S) 10 </td>
+<td style="text-align:center;"> (SW, W, S) 11 </td>
+<td style="text-align:center;"> (S)    9  </td>
+</tr>
+<tr>
+<td style="text-align:center;"> T </td>
+<td style="text-align:center;"> 3 </td>
+<td style="text-align:center;"> (SW, W, S) 4 </td>
+<td style="text-align:center;"> (SW, W, S) 5 </td>
+<td style="text-align:center;"> (SW, W, S) 6  </td>
+<td style="text-align:center;"> (SW, W, S) 7  </td>
+<td style="text-align:center;"> (SW, W, S) 8  </td>
+<td style="text-align:center;"> (SW)       7  </td>
+<td style="text-align:center;"> (W, S)     8  </td>
+<td style="text-align:center;"> (SW, W, S) 9  </td>
+<td style="text-align:center;"> (S)    8  </td>
+</tr>
+<tr>
+<td style="text-align:center;"> N </td>
+<td style="text-align:center;"> 2 </td>
+<td style="text-align:center;"> (SW, W, S) 3 </td>
+<td style="text-align:center;"> (SW, W, S) 4 </td>
+<td style="text-align:center;"> (SW, W, S) 5  </td>
+<td style="text-align:center;"> (SW, W, S) 6  </td>
+<td style="text-align:center;"> (SW, W, S) 7  </td>
+<td style="text-align:center;"> (SW, W, S) 8  </td>
+<td style="text-align:center;"> (S)        7  </td>
+<td style="text-align:center;"> (SW, W, S) 8  </td>
+<td style="text-align:center;"> (SW)   7  </td>
+</tr>
+<tr>
+<td style="text-align:center;"> I </td>
+<td style="text-align:center;"> 1 </td>
+<td style="text-align:center;"> (SW, W, S) 2 </td>
+<td style="text-align:center;"> (SW, W, S) 3 </td>
+<td style="text-align:center;"> (SW, W, S) 4  </td>
+<td style="text-align:center;"> (SW, W, S) 5  </td>
+<td style="text-align:center;"> (SW, W, S) 6  </td>
+<td style="text-align:center;"> (SW, W, S) 7  </td>
+<td style="text-align:center;"> (SW)       6  </td>
+<td style="text-align:center;"> (W)        7  </td>
+<td style="text-align:center;"> (W)    8  </td>
+</tr>
+<tr>
+<td style="text-align:center;"> # </td>
+<td style="text-align:center;"> 0 </td>
+<td style="text-align:center;"> 1            </td>
+<td style="text-align:center;"> 2            </td>
+<td style="text-align:center;"> 3             </td>
+<td style="text-align:center;"> 4             </td>
+<td style="text-align:center;"> 5             </td>
+<td style="text-align:center;"> 6             </td>
+<td style="text-align:center;"> 7             </td>
+<td style="text-align:center;"> 8             </td>
+<td style="text-align:center;"> 9         </td>
+</tr>
+<tr>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;"> # </td>
+<td style="text-align:center;"> E            </td>
+<td style="text-align:center;"> X            </td>
+<td style="text-align:center;"> E             </td>
+<td style="text-align:center;"> C             </td>
+<td style="text-align:center;"> U             </td>
+<td style="text-align:center;"> T             </td>
+<td style="text-align:center;"> I             </td>
+<td style="text-align:center;"> O             </td>
+<td style="text-align:center;"> N         </td>
+</tr>
+</tbody>
+</table>
+
+
+<ul>
+<li>S: South for down</li>
+<li>W: West for left</li>
+<li>SW: South West</li>
+</ul>
+
+
+<h3>3.3. Adding Backtrace to Minimum Edit Distance</h3>
+
+<ul>
+<li>base conditions
+
+<ul>
+<li>D(i,0) = i</li>
+<li>D(0,j) - j</li>
+</ul>
+</li>
+<li>recurrence relation</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>for each i = 1...M
+</span><span class='line'>    for each j = 1...N
+</span><span class='line'>        D(i,j) = min { D(i-1,j) + 1  &lt;- deletion
+</span><span class='line'>                     { D(i,j-1) + 1  &lt;- insertion
+</span><span class='line'>                     { D(i-1,j-1) + 2; if X(i) &lt;&gt; Y(j)  &lt;- substitution
+</span><span class='line'>                                    0; if X(i) == Y(j)
+</span><span class='line'>
+</span><span class='line'>        ptr(i,j) = { LEFT  &lt;- insertion
+</span><span class='line'>                   { DOWN  &lt;- deletion
+</span><span class='line'>                   { DIAG  &lt;- substitution</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>termination:
+
+<ul>
+<li>D(N,M) is distance</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>3.4. The Distance Matrix</h3>
+
+<ul>
+<li>every non-decreasing path</li>
+<li>from (0,0) to (M,N)</li>
+<li>corresponds to an alignment of the two sequences</li>
+<li>an optimal alignment is composed of optimal subalignments</li>
+</ul>
+
+
+<table>
+<thead>
+<tr>
+<th style="text-align:center;">       </th>
+<th style="text-align:center;">    </th>
+<th style="text-align:center;">    </th>
+<th style="text-align:center;">     </th>
+<th style="text-align:center;">     </th>
+<th style="text-align:center;">     </th>
+<th style="text-align:center;">     </th>
+<th style="text-align:center;">     </th>
+<th style="text-align:center;">     </th>
+<th style="text-align:center;">       </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;"> Xn    </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;"> (M,N) </td>
+</tr>
+<tr>
+<td style="text-align:center;"> &hellip;   </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">       </td>
+</tr>
+<tr>
+<td style="text-align:center;"> &hellip;   </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">       </td>
+</tr>
+<tr>
+<td style="text-align:center;"> &hellip;   </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">       </td>
+</tr>
+<tr>
+<td style="text-align:center;"> &hellip;   </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">       </td>
+</tr>
+<tr>
+<td style="text-align:center;"> &hellip;   </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">       </td>
+</tr>
+<tr>
+<td style="text-align:center;"> &hellip;   </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">       </td>
+</tr>
+<tr>
+<td style="text-align:center;"> x1    </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">       </td>
+</tr>
+<tr>
+<td style="text-align:center;"> x0    </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">       </td>
+</tr>
+<tr>
+<td style="text-align:center;"> (0,0) </td>
+<td style="text-align:center;"> y0 </td>
+<td style="text-align:center;"> y1 </td>
+<td style="text-align:center;"> &hellip; </td>
+<td style="text-align:center;"> &hellip; </td>
+<td style="text-align:center;"> &hellip; </td>
+<td style="text-align:center;"> &hellip; </td>
+<td style="text-align:center;"> &hellip; </td>
+<td style="text-align:center;"> &hellip; </td>
+<td style="text-align:center;"> Ym    </td>
+</tr>
+</tbody>
+</table>
+
+
+<h3>3.5. Result of Backtrace</h3>
+
+<ul>
+<li>two strings and their alignment</li>
+</ul>
+
+
+<h3>3.6. Performance</h3>
+
+<ul>
+<li>time: O(nm)</li>
+<li>space: O(nm)</li>
+<li>backtrace: O (n+m)</li>
+</ul>
+
+
+<h2>4. Weighted Minimum Edit Distance</h2>
+
+<h3>4.1. Weighted Edit Distance</h3>
+
+<ul>
+<li>why would we add weights to the computation?
+
+<ul>
+<li>spell correction: some letters are more likely to be mistyped than others</li>
+<li>biology: certain kinds of deletions or insertions are more likely than others</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>4.2. Confusion matrix for spelling errors</h3>
+
+<p>sub[X,Y] = substitution of X(incorrect) for Y(correct)<br/>
+<img src="http://media-cache-ec0.pinimg.com/736x/51/99/a9/5199a999530b83f37b93593bbddb03f0.jpg"/></p>
+
+<h3>4.3. Weighted Min Edit Distance</h3>
+
+<ul>
+<li>initialization
+
+<ul>
+<li>D(0,0) = 0</li>
+<li>D(i,0) = D(i-1,0) + del[x(i)];  1 &lt; i &lt;= N</li>
+<li>D(0,j) = D(0,j-1) + ins[y(j)];  1 &lt; j &lt;= M</li>
+</ul>
+</li>
+<li>recurrence relation:</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>D(i,j) = min { D(i-1,j)    + del[x(i)]
+</span><span class='line'>             { D(i,j-1)    + ins[y(j)]
+</span><span class='line'>             { D(i-1,j-1)  + sub[x(i),y(j)]</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>termination:
+
+<ul>
+<li>D(N,M) is distance</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>4.4. Where did the name, dynamic programming, come from?</h3>
+
+<ul>
+<li><p>Richard Bellman, &ldquo;Eye of the Hurricane: an autobiography&rdquo; 1984</p>
+
+<pre><code>  ... The 1950s were not good years for mathematical research. [the] Secretary of Defense ... had a pathological fear and hatred of the word, research ...
+
+  I decided therefore to use the word, "programming".
+
+  I wanted to get across the idea that this was dynamic, this was multistage... I thought, let's ... take a word that  has an absolutely precise meaning, namely dynamic... it's impossible to use the word, dynamic, in a pejorative sense. Try thinking of some combination that will possibly give it a pejorative meaning. It's impossible.
+
+  Thus, I thought dynamic programming was a good name. It was something not even a Congressman could object to.
+</code></pre></li>
+</ul>
+
+
+<h2>5. Minimum Edit Distance in Computational Biology</h2>
+
+<h3>5.1. Sequence Alignment</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>AGGCTATCACCTGACCTCCAGGCCGATGCCC
+</span><span class='line'>TAGCTATCACGACCGCGGTCGATTTGCCCGAC
+</span><span class='line'>
+</span><span class='line'>-AGGCTATCACCTGACCTCCAGGCCGA--TGCCC---
+</span><span class='line'>TAG-CTAGCAC--GACCGC--GGTCGATTTGCCCGAC</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>5.2. Why sequence alignment?</h3>
+
+<ul>
+<li>comparing genes or regions from different species
+
+<ul>
+<li>to find important regions</li>
+<li>determine function</li>
+<li>uncover evolutionary forces</li>
+</ul>
+</li>
+<li>assembling fragments to sequence DNA</li>
+<li>compare individuals to looking for mutations</li>
+</ul>
+
+
+<h3>5.3. Alignments in two fields</h3>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;"> NLP                  </th>
+<th style="text-align:left;"> Computational Biology  </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> distance (minimized) </td>
+<td style="text-align:left;"> similarity (maximized) </td>
+</tr>
+<tr>
+<td style="text-align:left;"> weights              </td>
+<td style="text-align:left;"> scores                 </td>
+</tr>
+</tbody>
+</table>
+
+
+<h3>5.4. The Needleman-Wunsch Algorithm</h3>
+
+<ul>
+<li>initialization:
+
+<ul>
+<li>D(i,0) = -i * d</li>
+<li>D(0,j) = -j * d</li>
+</ul>
+</li>
+<li>recurrence relation:</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>D(i,j) = max { D(i-1,j)   - d
+</span><span class='line'>             { D(i,j-1)   - d
+</span><span class='line'>             { D(i-1,j-1) + s[x(i),y(j)]</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>termination:
+
+<ul>
+<li>D(N,M) is distance</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>5.5. The Needleman-Wunsch Matrix</h3>
+
+<ul>
+<li>note that the origin is at the upper left</li>
+</ul>
+
+
+<table>
+<thead>
+<tr>
+<th style="text-align:center;">       </th>
+<th style="text-align:center;">    </th>
+<th style="text-align:center;">    </th>
+<th style="text-align:center;">     </th>
+<th style="text-align:center;">     </th>
+<th style="text-align:center;">     </th>
+<th style="text-align:center;">     </th>
+<th style="text-align:center;">     </th>
+<th style="text-align:center;">     </th>
+<th style="text-align:center;">       </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">       </td>
+<td style="text-align:center;"> X1 </td>
+<td style="text-align:center;"> X2 </td>
+<td style="text-align:center;"> &hellip; </td>
+<td style="text-align:center;"> &hellip; </td>
+<td style="text-align:center;"> &hellip; </td>
+<td style="text-align:center;"> &hellip; </td>
+<td style="text-align:center;"> &hellip; </td>
+<td style="text-align:center;"> &hellip; </td>
+<td style="text-align:center;"> Xm    </td>
+</tr>
+<tr>
+<td style="text-align:center;"> Y1    </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">       </td>
+</tr>
+<tr>
+<td style="text-align:center;"> &hellip;   </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">       </td>
+</tr>
+<tr>
+<td style="text-align:center;"> &hellip;   </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">       </td>
+</tr>
+<tr>
+<td style="text-align:center;"> &hellip;   </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">       </td>
+</tr>
+<tr>
+<td style="text-align:center;"> &hellip;   </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">       </td>
+</tr>
+<tr>
+<td style="text-align:center;"> &hellip;   </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">       </td>
+</tr>
+<tr>
+<td style="text-align:center;"> &hellip;   </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">       </td>
+</tr>
+<tr>
+<td style="text-align:center;"> &hellip;   </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">       </td>
+</tr>
+<tr>
+<td style="text-align:center;"> Yn    </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">       </td>
+</tr>
+</tbody>
+</table>
+
+
+<h3>5.6. A variant of the basic algorithm</h3>
+
+<ul>
+<li>maybe it is ok to have an unlimited # of gaps in the beginning and end</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>----------CTATCACCTGACCTCCAGGCCGATGCCCCTTCCGGC
+</span><span class='line'>GCGAGTTCATCTATCAC--GACCGC--GGTCG--------------</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>if so, we don&rsquo;t want to penalize gaps at the ends</li>
+</ul>
+
+
+<h3>5.7. Different types of overlaps</h3>
+
+<p>2 overlapping &ldquo;reads&rdquo; from a sequencing project</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>----------||||||||||||||
+</span><span class='line'>          ||||||||||||||-------------------------
+</span><span class='line'>
+</span><span class='line'>          ||||||||||||||-------------------------
+</span><span class='line'>----------||||||||||||||</span></code></pre></td></tr></table></div></figure>
+
+
+<p>search for a moouse gene withinn a human chromosome</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>-----------|||||||||-----------------
+</span><span class='line'>           |||||||||
+</span><span class='line'>
+</span><span class='line'>           |||||||||
+</span><span class='line'>-----------|||||||||-----------------</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>5.8. The Overlap Detection variant</h3>
+
+<p>changes:</p>
+
+<ul>
+<li>initialization
+
+<ul>
+<li>for all i,j,
+
+<ul>
+<li>F(i,0) = 0  &lt;&ndash; - i * d</li>
+<li>F(0,j) = 0  &lt;&ndash; - j * d</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>termination</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Fopt = max { max_i F(i, N)
+</span><span class='line'>           { max_j F(M, j)</span></code></pre></td></tr></table></div></figure>
+
+
+<table>
+<thead>
+<tr>
+<th style="text-align:center;">       </th>
+<th style="text-align:center;">    </th>
+<th style="text-align:center;">    </th>
+<th style="text-align:center;">     </th>
+<th style="text-align:center;">     </th>
+<th style="text-align:center;">     </th>
+<th style="text-align:center;">     </th>
+<th style="text-align:center;">     </th>
+<th style="text-align:center;">     </th>
+<th style="text-align:center;">       </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">       </td>
+<td style="text-align:center;"> X1 </td>
+<td style="text-align:center;"> X2 </td>
+<td style="text-align:center;"> &hellip; </td>
+<td style="text-align:center;"> &hellip; </td>
+<td style="text-align:center;"> &hellip; </td>
+<td style="text-align:center;"> &hellip; </td>
+<td style="text-align:center;"> &hellip; </td>
+<td style="text-align:center;"> &hellip; </td>
+<td style="text-align:center;"> Xm    </td>
+</tr>
+<tr>
+<td style="text-align:center;"> Y1    </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">  1  </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">       </td>
+</tr>
+<tr>
+<td style="text-align:center;"> &hellip;   </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">  1  </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">       </td>
+</tr>
+<tr>
+<td style="text-align:center;"> &hellip;   </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">  1  </td>
+<td style="text-align:center;">  1  </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">       </td>
+</tr>
+<tr>
+<td style="text-align:center;"> &hellip;   </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">  1  </td>
+<td style="text-align:center;">       </td>
+</tr>
+<tr>
+<td style="text-align:center;"> &hellip;   </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">  1  </td>
+<td style="text-align:center;">       </td>
+</tr>
+<tr>
+<td style="text-align:center;"> &hellip;   </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">   1   </td>
+</tr>
+<tr>
+<td style="text-align:center;"> &hellip;   </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">       </td>
+</tr>
+<tr>
+<td style="text-align:center;"> &hellip;   </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">       </td>
+</tr>
+<tr>
+<td style="text-align:center;"> Yn    </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">    </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">     </td>
+<td style="text-align:center;">       </td>
+</tr>
+</tbody>
+</table>
+
+
+<h3>5.9. The Local Alignment Problem</h3>
+
+<ul>
+<li>given two strings
+
+<ul>
+<li>x = x1&hellip;xm</li>
+<li>y = y1&hellip;yn</li>
+</ul>
+</li>
+<li><p>find substrings x', y' whose similarity (optimal global alignment value) is maximum</p>
+
+<p>  x = aaaacc<code>cccggg</code>gtta<br/>
+  y = tt<code>cccggg</code>aaccaacc</p></li>
+</ul>
+
+
+<h3>5.10. The Simith-Waterman algorithm</h3>
+
+<p>idea: Ignore badly aligning regions</p>
+
+<p>modifications to Needleman-Wunsch:</p>
+
+<ul>
+<li>initialization:
+
+<ul>
+<li>F(0,j) = 0</li>
+<li>F(i,0) = 0</li>
+</ul>
+</li>
+<li>iteration</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>F(i,j) = max { F(i-1,j)    - d
+</span><span class='line'>             { F(i,j-1)    - d
+</span><span class='line'>             { F(i-1, j-1) + s(xi,yj)</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>termination
+
+<ul>
+<li>if we want the best local alignment
+
+<ul>
+<li>Fopt = max_i,j F(i,j)</li>
+<li>find Fopt and trance back</li>
+</ul>
+</li>
+<li>if we want all local alignments scoring > t
+
+<ul>
+<li>for all i,j find F(i,j) > t, and trace back?</li>
+<li>complicated by overlapping local alignments</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>5.11. Local alignment example</h3>
+
+<p>X = <code>ATCAT</code><br/>
+Y = <code>ATTAT</code>C</p>
+
+<p>X =    <code>ATC</code>AT<br/>
+Y = ATT<code>ATC</code></p>
+
+<p>let:<br/>
+- m = 1 (1 point for match)
+- d = 1 (-1 point for del/ins/sub)</p>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:center;">   </th>
+<th style="text-align:center;">   </th>
+<th style="text-align:center;"> A </th>
+<th style="text-align:center;"> T </th>
+<th style="text-align:center;"> T </th>
+<th style="text-align:center;"> A </th>
+<th style="text-align:center;"> T </th>
+<th style="text-align:center;"> C </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">   </td>
+<td style="text-align:center;"> 0 </td>
+<td style="text-align:center;"> 0 </td>
+<td style="text-align:center;"> 0 </td>
+<td style="text-align:center;"> 0 </td>
+<td style="text-align:center;"> 0 </td>
+<td style="text-align:center;"> 0 </td>
+<td style="text-align:center;"> 0 </td>
+</tr>
+<tr>
+<td style="text-align:center;"> A </td>
+<td style="text-align:center;"> 0 </td>
+<td style="text-align:center;"> 1 </td>
+<td style="text-align:center;"> 0 </td>
+<td style="text-align:center;"> 0 </td>
+<td style="text-align:center;"> 1 </td>
+<td style="text-align:center;"> 0 </td>
+<td style="text-align:center;"> 0 </td>
+</tr>
+<tr>
+<td style="text-align:center;"> T </td>
+<td style="text-align:center;"> 0 </td>
+<td style="text-align:center;"> 0 </td>
+<td style="text-align:center;"> 2 </td>
+<td style="text-align:center;"> 1 </td>
+<td style="text-align:center;"> 0 </td>
+<td style="text-align:center;"> 2 </td>
+<td style="text-align:center;"> 0 </td>
+</tr>
+<tr>
+<td style="text-align:center;"> C </td>
+<td style="text-align:center;"> 0 </td>
+<td style="text-align:center;"> 0 </td>
+<td style="text-align:center;"> 1 </td>
+<td style="text-align:center;"> 1 </td>
+<td style="text-align:center;"> 0 </td>
+<td style="text-align:center;"> 1 </td>
+<td style="text-align:center;"> 3 </td>
+</tr>
+<tr>
+<td style="text-align:center;"> A </td>
+<td style="text-align:center;"> 0 </td>
+<td style="text-align:center;"> 1 </td>
+<td style="text-align:center;"> 0 </td>
+<td style="text-align:center;"> 0 </td>
+<td style="text-align:center;"> 2 </td>
+<td style="text-align:center;"> 1 </td>
+<td style="text-align:center;"> 2 </td>
+</tr>
+<tr>
+<td style="text-align:center;"> T </td>
+<td style="text-align:center;"> 0 </td>
+<td style="text-align:center;"> 0 </td>
+<td style="text-align:center;"> 2 </td>
+<td style="text-align:center;"> 0 </td>
+<td style="text-align:center;"> 1 </td>
+<td style="text-align:center;"> 3 </td>
+<td style="text-align:center;"> 2 </td>
+</tr>
+</tbody>
+</table>
+
+
+<h2>References</h2>
+
+<ol>
+<li>video courses: <a href="https://www.youtube.com/watch?v=CXfJNzD43OI&amp;index=7&amp;list=PL6397E4B26D00A269">part 1</a>, <a href="https://www.youtube.com/watch?v=z_CB7Gih_Mg&amp;list=PL6397E4B26D00A269&amp;index=8">part 2</a>, <a href="https://www.youtube.com/watch?v=iQVp4Mq6s6k&amp;index=9&amp;list=PL6397E4B26D00A269">part 3</a>, <a href="https://www.youtube.com/watch?v=ScdU0cHmxfE&amp;index=10&amp;list=PL6397E4B26D00A269">part 4</a>, <a href="https://www.youtube.com/watch?v=Q0TGn4wkuoE&amp;index=11&amp;list=PL6397E4B26D00A269">part 5</a></li>
+</ol>
+
+</div>
+
+
+
+  <footer>
+
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kelly Chan</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-06-20T12:57:12+08:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>20</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:57 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/tech/'>tech</a>
+  
+</span>
+
+
+    </p>
+
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://k.arttechresearch.com/tech/2014/06/20/stanford-nlp-3-minimum-edit-distance/" data-via="kwailamchan" data-counturl="http://k.arttechresearch.com/tech/2014/06/20/stanford-nlp-3-minimum-edit-distance/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/tech/2014/06/19/stanford-nlp-2-basic-text-processsing/" title="Previous Post: Stanford NLP 2 - Basic Text Processsing">&laquo; Stanford NLP 2 - Basic Text Processsing</a>
+      
+      
+        <a class="basic-alignment right" href="/tech/2014/06/23/stanford-nlp-4-language-modeling/" title="Next Post: Stanford NLP 4 - Language Modeling">Stanford NLP 4 - Language Modeling &raquo;</a>
+      
+    </p>
+
+  </footer>
+
+</article>
+
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Tech</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/tech/2015/10/03/installing-openstack-devstack/">Installing Openstack Devstack</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/05/01/installing-jenkins-on-ubuntu/">Installing Jenkins on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/05/01/installing-cloudera-hadoop-on-ubuntu/">Installing Cloudera Hadoop on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/05/01/configurating-nginx-for-django-projects-on-ubuntu/">Configurating Nginx for Django Projects on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/05/01/setting-up-mysql-on-ubuntu/">Setting Up MySQL on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/04/26/installing-emacs-on-ubuntu/">Installing Emacs on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/04/25/automatically-running-shell-scripts-on-ubuntu/">Automatically Running Shell Scripts on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/04/25/it-could-not-access-network-on-ubuntu/">It Could Not Access Network on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/04/25/installing-pycharm-on-ubuntu-12.04/">Installing PyCharm on Ubuntu 12.04</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/02/11/setup-a-git-server/">Setup a Git Server</a>
+      </li>
+    
+  </ul>
+</section>
+<section class="category-list">
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/categories/art/'>art (1)</a></li><li><a href='/categories/life/'>life (43)</a></li><li><a href='/categories/tech/'>tech (50)</a></li></ul>
+</section>
+<section class="tag-cloud">
+
+
+  <h1>Tags</h1>
+    <ul id="category-list"><a href='/tags/algorithm' style='font-size: 118.69565217391305%'>algorithm(7)</a> <a href='/tags/api' style='font-size: 90.0%'>api(1)</a> <a href='/tags/ascii' style='font-size: 90.0%'>ascii(1)</a> <a href='/tags/beautifulsoup' style='font-size: 90.0%'>beautifulsoup(1)</a> <a href='/tags/career' style='font-size: 94.78260869565217%'>career(2)</a> <a href='/tags/classification' style='font-size: 94.78260869565217%'>classification(2)</a> <a href='/tags/cloud' style='font-size: 90.0%'>cloud(1)</a> <a href='/tags/cloudera' style='font-size: 90.0%'>cloudera(1)</a> <a href='/tags/computer-vision' style='font-size: 90.0%'>computer vision(1)</a> <a href='/tags/crawler' style='font-size: 94.78260869565217%'>crawler(2)</a> <a href='/tags/css' style='font-size: 90.0%'>css(1)</a> <a href='/tags/data' style='font-size: 90.0%'>data(1)</a> <a href='/tags/django' style='font-size: 94.78260869565217%'>django(2)</a> <a href='/tags/dns' style='font-size: 90.0%'>dns(1)</a> <a href='/tags/emacs' style='font-size: 94.78260869565217%'>emacs(2)</a> <a href='/tags/fiction' style='font-size: 113.91304347826087%'>fiction(6)</a> <a href='/tags/french' style='font-size: 90.0%'>french(1)</a> <a href='/tags/git' style='font-size: 90.0%'>git(1)</a> <a href='/tags/github' style='font-size: 90.0%'>github(1)</a> <a href='/tags/gunicorn' style='font-size: 90.0%'>gunicorn(1)</a> <a href='/tags/hadoop' style='font-size: 90.0%'>hadoop(1)</a> <a href='/tags/html' style='font-size: 90.0%'>html(1)</a> <a href='/tags/ide' style='font-size: 94.78260869565217%'>ide(2)</a> <a href='/tags/javascript' style='font-size: 90.0%'>javascript(1)</a> <a href='/tags/jekyll' style='font-size: 90.0%'>jekyll(1)</a> <a href='/tags/jenkins' style='font-size: 90.0%'>jenkins(1)</a> <a href='/tags/leisure' style='font-size: 195.2173913043478%'>leisure(23)</a> <a href='/tags/linux' style='font-size: 109.13043478260869%'>linux(5)</a> <a href='/tags/machine-learning' style='font-size: 137.82608695652175%'>machine learning(11)</a> <a href='/tags/mathjax' style='font-size: 90.0%'>mathjax(1)</a> <a href='/tags/mysql' style='font-size: 94.78260869565217%'>mysql(2)</a> <a href='/tags/network' style='font-size: 90.0%'>network(1)</a> <a href='/tags/nginx' style='font-size: 90.0%'>nginx(1)</a> <a href='/tags/nlp' style='font-size: 113.91304347826087%'>nlp(6)</a> <a href='/tags/nltk' style='font-size: 90.0%'>nltk(1)</a> <a href='/tags/openstack' style='font-size: 90.0%'>openstack(1)</a> <a href='/tags/pandas' style='font-size: 94.78260869565217%'>pandas(2)</a> <a href='/tags/poem' style='font-size: 104.34782608695652%'>poem(4)</a> <a href='/tags/prediction' style='font-size: 90.0%'>prediction(1)</a> <a href='/tags/pycharm' style='font-size: 90.0%'>pycharm(1)</a> <a href='/tags/python' style='font-size: 200.0%'>python(24)</a> <a href='/tags/reading' style='font-size: 118.69565217391305%'>reading(7)</a> <a href='/tags/regex' style='font-size: 90.0%'>regex(1)</a> <a href='/tags/ruby' style='font-size: 90.0%'>ruby(1)</a> <a href='/tags/supervisor' style='font-size: 90.0%'>supervisor(1)</a> <a href='/tags/time-series' style='font-size: 90.0%'>time series(1)</a> <a href='/tags/translation' style='font-size: 90.0%'>translation(1)</a> <a href='/tags/ubuntu' style='font-size: 123.47826086956522%'>ubuntu(8)</a> <a href='/tags/unicode' style='font-size: 90.0%'>unicode(1)</a> <a href='/tags/vim' style='font-size: 90.0%'>vim(1)</a> <a href='/tags/web' style='font-size: 94.78260869565217%'>web(2)</a> </ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2006-2015 - Kelly Chan
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'kwailamc';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://k.arttechresearch.com/tech/2014/06/20/stanford-nlp-3-minimum-edit-distance/';
+        var disqus_url = 'http://k.arttechresearch.com/tech/2014/06/20/stanford-nlp-3-minimum-edit-distance/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

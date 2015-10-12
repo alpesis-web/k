@@ -1,0 +1,1082 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Parsing the Catalogs From Lowes - Kelly Chan</title>
+  <meta name="author" content="Kelly Chan">
+
+  
+  <meta name="description" content="1. Introduction I needed to get the catalogs from Lowe&rsquo;s which was
+including the department and catagories. category #
+categories
+item #
+model &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://k.arttechresearch.com/tech/2014/09/09/parsing-the-catalogs-from-lowes/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Kelly Chan" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+<script type="text/javascript">
+
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-53625944-7', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+</head>
+
+<body   >
+  <header role="banner"><ul class="soc">
+
+  
+    <li><a class="soc-github" href="https://github.com/KellyChan"></a></li>
+  
+
+  
+    <li><a class="soc-twitter" href="https://twitter.com/kwailamchan"></a></li>
+  
+
+  
+    <li><a class="soc-pinterest" href="https://www.pinterest.com/wailamchan/"></a></li>
+  
+
+  
+    <li><a class="soc-email1 soc-icon-last" href="mailto:support@arttechresearch.com"></a></li>
+  
+</ul>
+
+<hgroup>
+  <h1><a href="/">Kelly Chan</a></h1>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="k.arttechresearch.com">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/tech">Tech</a></li>
+  <li><a href="/art">Art</a></li>
+  <li><a href="/life">Life</a></li>
+  <li><a href="/archives">Archives</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <li><a href="/devkits">Devkits</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Parsing the Catalogs From Lowes</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-09-09T20:59:00+08:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>8:59 pm</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://k.arttechresearch.com">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>1. Introduction</h2>
+
+<p>I needed to get the catalogs from <a href="http://www.lowes.com">Lowe&rsquo;s</a> which was
+including the department and catagories.</p>
+
+<ul>
+<li>category #</li>
+<li>categories</li>
+<li>item #</li>
+<li>model #</li>
+<li>product #</li>
+<li>product name</li>
+</ul>
+
+
+<h2>2. Steps</h2>
+
+<ul>
+<li>step1. analyze the site struture</li>
+<li>step2. parse all urls of department/categories those containing product info</li>
+<li>step3. parse the product info from the urls one by one</li>
+<li>step4. clean the data with standard formats</li>
+<li>step5. load the data into database</li>
+</ul>
+
+
+<h2>3. Tools</h2>
+
+<ul>
+<li>language: Python</li>
+<li>libraries: re, beautifulsoup, mechanize</li>
+</ul>
+
+
+<h2>4. Notes</h2>
+
+<ul>
+<li>If crawling data is denied by a site, simulating a browser to click the urls.</li>
+<li>Parsing the data from a same container (div).</li>
+<li>URL/href contains a lot of information, especially the data of product ID,
+dept ID, category ID etc.</li>
+<li>Record all the exceptions, and then re-check.</li>
+<li>It will cost more time if writing the data frequently, but it can record the
+process well if writing the data by a small batch.</li>
+</ul>
+
+
+<h2>5. Source Codes</h2>
+
+<ul>
+<li>step2. parse all urls of department/categories those containing product info</li>
+<li>step3. parse the product info from the urls one by one</li>
+<li>step4. clean the data with standard formats</li>
+</ul>
+
+
+<h3>5.1. parse all urls of department/categories those containing product info</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">os</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">sys</span>
+</span><span class='line'><span class="nb">reload</span><span class="p">(</span><span class="n">sys</span><span class="p">)</span>
+</span><span class='line'><span class="n">sys</span><span class="o">.</span><span class="n">setdefaultencoding</span><span class="p">(</span> <span class="s">&quot;utf-8&quot;</span> <span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">re</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">time</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">urllib</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">urllib2</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">pandas</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">getHTML</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c">#time.sleep(1.00)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;User-Agent&#39;</span> <span class="p">:</span> <span class="s">&quot;Mozilla/5.0 (Windows NT 6.0; WOW64) AppleWebKit/534.24 (KHTML, like Gecko) Chrome/11.0.696.16 Safari/534.24&quot;</span><span class="p">}</span>
+</span><span class='line'>    <span class="n">req</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="bp">None</span><span class="p">,</span><span class="n">headers</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">html</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">req</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</span><span class='line'>    <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">soup</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">extractAttribute</span><span class="p">(</span><span class="n">contents</span><span class="p">,</span> <span class="n">pattern</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">pattern</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">contents</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">extractURL</span><span class="p">(</span><span class="n">soup</span><span class="p">):</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">results</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;ul&#39;</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;class&#39;</span><span class="p">:</span> <span class="s">&#39;categories sep&#39;</span><span class="p">})</span>
+</span><span class='line'>    <span class="c">#print results</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c"># links</span>
+</span><span class='line'>    <span class="n">pattern</span> <span class="o">=</span> <span class="s">r&quot;&quot;&quot;&lt;a href=&quot;(.*) title=.*&gt;&quot;&quot;&quot;</span>
+</span><span class='line'>    <span class="n">links</span> <span class="o">=</span> <span class="n">extractAttribute</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">pattern</span><span class="p">)</span>
+</span><span class='line'>    <span class="c">#print links</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">links</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">extract</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">soup</span> <span class="o">=</span> <span class="n">getHTML</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">data</span> <span class="o">=</span> <span class="n">extractURL</span><span class="p">(</span><span class="n">soup</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">data</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">dfs</span><span class="p">(</span><span class="n">links</span><span class="p">,</span> <span class="n">baseurl</span><span class="p">,</span> <span class="n">fileName</span><span class="p">):</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="n">links</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">thisLink</span> <span class="o">=</span> <span class="n">link</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;&quot;&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">thisURL</span> <span class="o">=</span> <span class="n">baseurl</span> <span class="o">+</span> <span class="n">thisLink</span>
+</span><span class='line'>        <span class="n">newURLs</span> <span class="o">=</span> <span class="n">extract</span><span class="p">(</span><span class="n">thisURL</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">if</span> <span class="n">newURLs</span><span class="p">:</span>
+</span><span class='line'>            <span class="n">dfs</span><span class="p">(</span><span class="n">newURLs</span><span class="p">,</span> <span class="n">baseurl</span><span class="p">,</span> <span class="n">fileName</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">else</span><span class="p">:</span>
+</span><span class='line'>            <span class="n">outCSV</span><span class="p">(</span><span class="n">fileName</span><span class="p">,</span> <span class="n">thisLink</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">outCSV</span><span class="p">(</span><span class="n">fileName</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fileName</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">url</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">baseurl</span> <span class="o">=</span> <span class="s">&quot;http://www.lowes.com&quot;</span>
+</span><span class='line'>    <span class="n">url</span> <span class="o">=</span> <span class="s">&quot;http://www.lowes.com/Hidden-Catalogs/_/N-1z138z4/pl#!&quot;</span>
+</span><span class='line'>    <span class="n">outPath</span> <span class="o">=</span> <span class="s">&quot;G:/vimFiles/freelance/20140903-eCatalog/src/outputs/&quot;</span>
+</span><span class='line'>    <span class="n">fullurls</span> <span class="o">=</span> <span class="s">&quot;lowes-catalogs-fullurls.csv&quot;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">outPath</span><span class="o">+</span><span class="n">fullurls</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">outPath</span><span class="o">+</span><span class="n">cateName</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">links</span> <span class="o">=</span> <span class="n">extract</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">dfs</span><span class="p">(</span><span class="n">links</span><span class="p">,</span> <span class="n">baseurl</span><span class="p">,</span> <span class="n">outPath</span><span class="o">+</span><span class="n">fullurls</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c">#with open(outPath+fullurls, &#39;wb&#39;) as f:</span>
+</span><span class='line'>    <span class="c">#    for line in data:</span>
+</span><span class='line'>    <span class="c">#        f.write(&quot;%s\n&quot; % line)</span>
+</span><span class='line'>    <span class="c">#f.close()</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+</span><span class='line'>    <span class="n">main</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>5.2. parse the product info from the urls one by one</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+<span class='line-number'>121</span>
+<span class='line-number'>122</span>
+<span class='line-number'>123</span>
+<span class='line-number'>124</span>
+<span class='line-number'>125</span>
+<span class='line-number'>126</span>
+<span class='line-number'>127</span>
+<span class='line-number'>128</span>
+<span class='line-number'>129</span>
+<span class='line-number'>130</span>
+<span class='line-number'>131</span>
+<span class='line-number'>132</span>
+<span class='line-number'>133</span>
+<span class='line-number'>134</span>
+<span class='line-number'>135</span>
+<span class='line-number'>136</span>
+<span class='line-number'>137</span>
+<span class='line-number'>138</span>
+<span class='line-number'>139</span>
+<span class='line-number'>140</span>
+<span class='line-number'>141</span>
+<span class='line-number'>142</span>
+<span class='line-number'>143</span>
+<span class='line-number'>144</span>
+<span class='line-number'>145</span>
+<span class='line-number'>146</span>
+<span class='line-number'>147</span>
+<span class='line-number'>148</span>
+<span class='line-number'>149</span>
+<span class='line-number'>150</span>
+<span class='line-number'>151</span>
+<span class='line-number'>152</span>
+<span class='line-number'>153</span>
+<span class='line-number'>154</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">os</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">sys</span>
+</span><span class='line'><span class="nb">reload</span><span class="p">(</span><span class="n">sys</span><span class="p">)</span>
+</span><span class='line'><span class="n">sys</span><span class="o">.</span><span class="n">setdefaultencoding</span><span class="p">(</span> <span class="s">&quot;utf-8&quot;</span> <span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">mechanize</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">cookielib</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">re</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">time</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">urllib</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">urllib2</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">pandas</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">openBrowser</span><span class="p">():</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c"># Browser </span>
+</span><span class='line'>    <span class="n">br</span> <span class="o">=</span> <span class="n">mechanize</span><span class="o">.</span><span class="n">Browser</span><span class="p">()</span>
+</span><span class='line'>    <span class="c"># Cookie Jar </span>
+</span><span class='line'>    <span class="n">cj</span> <span class="o">=</span> <span class="n">cookielib</span><span class="o">.</span><span class="n">LWPCookieJar</span><span class="p">()</span>
+</span><span class='line'>    <span class="n">br</span><span class="o">.</span><span class="n">set_cookiejar</span><span class="p">(</span><span class="n">cj</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c"># Browser options </span>
+</span><span class='line'>    <span class="n">br</span><span class="o">.</span><span class="n">set_handle_equiv</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+</span><span class='line'>    <span class="c">#br.set_handle_gzip(True) </span>
+</span><span class='line'>    <span class="n">br</span><span class="o">.</span><span class="n">set_handle_redirect</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">br</span><span class="o">.</span><span class="n">set_handle_referer</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">br</span><span class="o">.</span><span class="n">set_handle_robots</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c"># Follows refresh 0 but not hangs on refresh &gt; 0 </span>
+</span><span class='line'>    <span class="n">br</span><span class="o">.</span><span class="n">set_handle_refresh</span><span class="p">(</span><span class="n">mechanize</span><span class="o">.</span><span class="n">_http</span><span class="o">.</span><span class="n">HTTPRefreshProcessor</span><span class="p">(),</span> <span class="n">max_time</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">br</span><span class="o">.</span><span class="n">addheaders</span> <span class="o">=</span> <span class="p">[(</span><span class="s">&#39;User-agent&#39;</span><span class="p">,</span> <span class="s">&#39;Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.1) Gecko/2008071615 Fedora/3.0.1-1.fc9 Firefox/3.0.1&#39;</span><span class="p">)]</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">br</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">getSoup</span><span class="p">(</span><span class="n">br</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c"># Open url</span>
+</span><span class='line'>    <span class="n">r</span> <span class="o">=</span> <span class="n">br</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">html</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">soup</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">loadURLs</span><span class="p">(</span><span class="n">dataFile</span><span class="p">):</span>
+</span><span class='line'>    <span class="n">urls</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class='line'>    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">dataFile</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
+</span><span class='line'>            <span class="n">urls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">urls</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">getPages</span><span class="p">(</span><span class="n">soup</span><span class="p">):</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">results</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;span&#39;</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;class&#39;</span><span class="p">:</span> <span class="s">&#39;totalPages&#39;</span><span class="p">})</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">results</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">pages</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">get_text</span><span class="p">())</span>
+</span><span class='line'>    <span class="k">else</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">pages</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">pages</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">filterRE</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">pattern</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">pattern</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">results</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">getProducts</span><span class="p">(</span><span class="n">content</span><span class="p">):</span>
+</span><span class='line'>    <span class="n">products</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class='line'>    <span class="n">links</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">results</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s">&#39;h3&#39;</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;class&#39;</span><span class="p">:</span> <span class="s">&#39;productTitle&#39;</span><span class="p">})</span>
+</span><span class='line'>    <span class="c">#print results</span>
+</span><span class='line'>    <span class="n">pattern1</span> <span class="o">=</span> <span class="s">r&quot;&lt;a href=.*&gt;([\d\w\u4e00-\u9fa5\s].*)&lt;/a&gt;&quot;</span>
+</span><span class='line'>    <span class="n">results1</span> <span class="o">=</span> <span class="n">filterRE</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">pattern1</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results1</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">products</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c">#print products</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">pattern2</span> <span class="o">=</span> <span class="s">r&#39;&lt;a href=&quot;(.*)&quot; name=.*&gt;&#39;</span>
+</span><span class='line'>    <span class="n">results2</span> <span class="o">=</span> <span class="n">filterRE</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">pattern2</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results2</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">links</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c">#print links</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">products</span><span class="p">,</span> <span class="n">links</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">baseurl</span> <span class="o">=</span> <span class="s">&quot;http://www.lowes.com&quot;</span>
+</span><span class='line'>    <span class="n">outPath</span> <span class="o">=</span> <span class="s">&quot;G:/vimFiles/freelance/20140903-eCatalog/src/outputs/&quot;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">br</span> <span class="o">=</span> <span class="n">openBrowser</span><span class="p">()</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">21</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">fileName</span> <span class="o">=</span> <span class="s">&quot;lowes-catalogs-fullurls-</span><span class="si">%s</span><span class="s">.csv&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">urls</span> <span class="o">=</span> <span class="n">loadURLs</span><span class="p">(</span><span class="n">outPath</span><span class="o">+</span><span class="n">fileName</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">outCSV</span> <span class="o">=</span> <span class="n">outPath</span><span class="o">+</span><span class="s">&quot;products-&quot;</span><span class="o">+</span><span class="n">fileName</span>
+</span><span class='line'>        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">outCSV</span><span class="p">):</span>
+</span><span class='line'>            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">outCSV</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">urls</span><span class="p">:</span>
+</span><span class='line'>            <span class="n">thisURL</span> <span class="o">=</span> <span class="n">baseurl</span> <span class="o">+</span> <span class="n">url</span>
+</span><span class='line'>            <span class="n">soup</span> <span class="o">=</span> <span class="n">getSoup</span><span class="p">(</span><span class="n">br</span><span class="p">,</span> <span class="n">thisURL</span><span class="p">)</span>
+</span><span class='line'>            <span class="n">pages</span> <span class="o">=</span> <span class="n">getPages</span><span class="p">(</span><span class="n">soup</span><span class="p">)</span>
+</span><span class='line'>            <span class="c">#print soup</span>
+</span><span class='line'>            <span class="c">#print pages</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="k">if</span> <span class="n">pages</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span><span class='line'>                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">outPath</span><span class="o">+</span><span class="s">&quot;error-no-products.csv&quot;</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">nf</span><span class="p">:</span>
+</span><span class='line'>                    <span class="n">nf</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">thisURL</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="k">elif</span> <span class="n">pages</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="n">content</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;ul&#39;</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;id&#39;</span><span class="p">:</span> <span class="s">&#39;productResults&#39;</span><span class="p">})</span>
+</span><span class='line'>                <span class="n">products</span><span class="p">,</span> <span class="n">links</span> <span class="o">=</span> <span class="n">getProducts</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">products</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">links</span><span class="p">):</span>
+</span><span class='line'>
+</span><span class='line'>                    <span class="n">data</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s">&#39;product&#39;</span><span class="p">:</span> <span class="n">products</span><span class="p">,</span> <span class="s">&#39;prodURL&#39;</span><span class="p">:</span> <span class="n">links</span><span class="p">})</span>
+</span><span class='line'>                    <span class="n">data</span><span class="p">[</span><span class="s">&#39;deptURL&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">thisURL</span>
+</span><span class='line'>
+</span><span class='line'>                    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">outCSV</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+</span><span class='line'>                        <span class="n">data</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</span><span class='line'>                <span class="k">else</span><span class="p">:</span>
+</span><span class='line'>                    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">outPath</span><span class="o">+</span><span class="s">&quot;error-one-page.csv&quot;</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">tf</span><span class="p">:</span>
+</span><span class='line'>                        <span class="n">tf</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">thisURL</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="k">else</span><span class="p">:</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">pages</span><span class="p">):</span>
+</span><span class='line'>                    <span class="n">pageURL</span> <span class="o">=</span> <span class="n">thisURL</span> <span class="o">+</span> <span class="s">&quot;?&amp;rpp=32&amp;page=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">page</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>                    <span class="n">thisSoup</span> <span class="o">=</span> <span class="n">getSoup</span><span class="p">(</span><span class="n">br</span><span class="p">,</span> <span class="n">pageURL</span><span class="p">)</span>
+</span><span class='line'>                    <span class="n">content</span> <span class="o">=</span> <span class="n">thisSoup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;ul&#39;</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;id&#39;</span><span class="p">:</span> <span class="s">&#39;productResults&#39;</span><span class="p">})</span>
+</span><span class='line'>                    <span class="n">products</span><span class="p">,</span> <span class="n">links</span> <span class="o">=</span> <span class="n">getProducts</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+</span><span class='line'>                    <span class="c">#print pageURL</span>
+</span><span class='line'>
+</span><span class='line'>                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">products</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">links</span><span class="p">):</span>
+</span><span class='line'>
+</span><span class='line'>                        <span class="n">data</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s">&#39;product&#39;</span><span class="p">:</span> <span class="n">products</span><span class="p">,</span> <span class="s">&#39;prodURL&#39;</span><span class="p">:</span> <span class="n">links</span><span class="p">})</span>
+</span><span class='line'>                        <span class="n">data</span><span class="p">[</span><span class="s">&#39;deptURL&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pageURL</span>
+</span><span class='line'>
+</span><span class='line'>                        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">outCSV</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+</span><span class='line'>                             <span class="n">data</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>                    <span class="k">else</span><span class="p">:</span>
+</span><span class='line'>                        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">outPath</span><span class="o">+</span><span class="s">&quot;error-more-pages.csv&quot;</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">pf</span><span class="p">:</span>
+</span><span class='line'>                            <span class="n">pf</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">pageURL</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span class='line'>    <span class="n">main</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>5.3. clean the data with standard formats</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">re</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">loadContent</span><span class="p">(</span><span class="n">dataFile</span><span class="p">):</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">dataFile</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">content</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</span><span class='line'>    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">content</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">filterRE</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">pattern</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">pattern</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">content</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">extractAttrs</span><span class="p">(</span><span class="n">content</span><span class="p">):</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">names</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class='line'>    <span class="c">#ids = []</span>
+</span><span class='line'>    <span class="n">itemIDs</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class='line'>    <span class="n">cateIDs</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class='line'>    <span class="n">modelIDs</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class='line'>    <span class="n">prodIDs</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class='line'>    <span class="n">depts</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>    <span class="c"># names</span>
+</span><span class='line'>    <span class="n">pattern</span> <span class="o">=</span> <span class="s">r&quot;.*,(.*),http://www.lowes.com/.*&quot;</span>
+</span><span class='line'>    <span class="n">results</span> <span class="o">=</span> <span class="n">filterRE</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">pattern</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c"># ids </span>
+</span><span class='line'>    <span class="c">#pattern = r&quot;/pd_(.*)_.*__\??&quot;</span>
+</span><span class='line'>    <span class="c">#results = filterRE(content, pattern)</span>
+</span><span class='line'>    <span class="c">#for result in results:</span>
+</span><span class='line'>    <span class="c">#    ids.append(result)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c"># itemIDs</span>
+</span><span class='line'>    <span class="n">pattern</span> <span class="o">=</span> <span class="s">r&quot;/pd_(\d+)-?&quot;</span>
+</span><span class='line'>    <span class="n">results</span> <span class="o">=</span> <span class="n">filterRE</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">pattern</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">itemIDs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c"># cateIDs</span>
+</span><span class='line'>    <span class="n">pattern</span> <span class="o">=</span> <span class="s">r&quot;/pd_\d+-(\d+)-?&quot;</span>
+</span><span class='line'>    <span class="n">results</span> <span class="o">=</span> <span class="n">filterRE</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">pattern</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">cateIDs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c"># modelIDs</span>
+</span><span class='line'>    <span class="n">pattern</span> <span class="o">=</span> <span class="s">r&quot;/pd_\d+-\d+-(.*)_.*__\??&quot;</span>
+</span><span class='line'>    <span class="n">results</span> <span class="o">=</span> <span class="n">filterRE</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">pattern</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">modelIDs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;+&#39;</span><span class="p">,</span> <span class="s">&#39; &#39;</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c"># prodIDs</span>
+</span><span class='line'>    <span class="c">#pattern = r&quot;productId=(\d+)&amp;amp;&quot;</span>
+</span><span class='line'>    <span class="n">pattern</span> <span class="o">=</span> <span class="s">r&quot;productId=(\d+)&quot;</span>
+</span><span class='line'>    <span class="n">results</span> <span class="o">=</span> <span class="n">filterRE</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">pattern</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">prodIDs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c"># depts</span>
+</span><span class='line'>    <span class="n">pattern</span> <span class="o">=</span> <span class="s">r&quot;http://www.lowes.com/(.*)/_/N-.*&quot;</span>
+</span><span class='line'>    <span class="n">results</span> <span class="o">=</span> <span class="n">filterRE</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">pattern</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">depts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;-&#39;</span><span class="p">,</span> <span class="s">&#39; &#39;</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">cates</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">dept</span> <span class="ow">in</span> <span class="n">depts</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">cates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dept</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c">#print len(names)</span>
+</span><span class='line'>    <span class="c">#print len(itemIDs)</span>
+</span><span class='line'>    <span class="c">#print len(cateIDs)</span>
+</span><span class='line'>    <span class="c">#print len(modelIDs)</span>
+</span><span class='line'>    <span class="c">#print len(prodIDs)</span>
+</span><span class='line'>    <span class="c">#print len(cates)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">attrs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s">&#39;prodName&#39;</span><span class="p">:</span> <span class="n">names</span><span class="p">,</span>
+</span><span class='line'>                          <span class="s">&#39;itemID&#39;</span><span class="p">:</span> <span class="n">itemIDs</span><span class="p">,</span>
+</span><span class='line'>                          <span class="s">&#39;cateID&#39;</span><span class="p">:</span> <span class="n">cateIDs</span><span class="p">,</span>
+</span><span class='line'>                          <span class="s">&#39;modelID&#39;</span><span class="p">:</span> <span class="n">modelIDs</span><span class="p">,</span>
+</span><span class='line'>                          <span class="s">&#39;prodID&#39;</span><span class="p">:</span> <span class="n">prodIDs</span><span class="p">,</span>
+</span><span class='line'>                          <span class="s">&#39;cates&#39;</span><span class="p">:</span> <span class="n">cates</span><span class="p">})</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">attrs</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">dataPath</span> <span class="o">=</span> <span class="s">&quot;G:/vimFiles/freelance/20140903-eCatalog/data/lowes/products/&quot;</span>
+</span><span class='line'>    <span class="n">outPath</span> <span class="o">=</span> <span class="s">&quot;G:/vimFiles/freelance/20140903-eCatalog/src/outputs/&quot;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c">#for i in range(21):</span>
+</span><span class='line'>    <span class="c">#    dataFile = &quot;products-lowes-catalogs-fullurls-%s.csv&quot; % str(i)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c">#    content = loadContent(dataPath+dataFile)</span>
+</span><span class='line'>    <span class="c">#    attrs = extractAttrs(content)</span>
+</span><span class='line'>    <span class="c">#    attrs.to_csv(outPath+&quot;clean-&quot;+dataFile, header=True, index=False)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c">#dataFile = &quot;products-error-one-page.csv&quot;</span>
+</span><span class='line'>    <span class="c">#dataFile = &quot;products-error-more-pages.csv&quot;</span>
+</span><span class='line'>    <span class="n">dataFile</span> <span class="o">=</span> <span class="s">&quot;products-error-no-products.csv&quot;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">content</span> <span class="o">=</span> <span class="n">loadContent</span><span class="p">(</span><span class="n">dataPath</span><span class="o">+</span><span class="n">dataFile</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">attrs</span> <span class="o">=</span> <span class="n">extractAttrs</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">attrs</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">outPath</span><span class="o">+</span><span class="s">&quot;clean-&quot;</span><span class="o">+</span><span class="n">dataFile</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span class='line'>    <span class="n">main</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+
+
+
+  <footer>
+
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kelly Chan</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-09-09T20:59:00+08:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>8:59 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/tech/'>tech</a>
+  
+</span>
+
+
+    </p>
+
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://k.arttechresearch.com/tech/2014/09/09/parsing-the-catalogs-from-lowes/" data-via="kwailamchan" data-counturl="http://k.arttechresearch.com/tech/2014/09/09/parsing-the-catalogs-from-lowes/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/tech/2014/09/08/mechanize/" title="Previous Post: Mechanize">&laquo; Mechanize</a>
+      
+      
+        <a class="basic-alignment right" href="/tech/2014/09/16/python-django/" title="Next Post: Python Django">Python Django &raquo;</a>
+      
+    </p>
+
+  </footer>
+
+</article>
+
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Tech</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/tech/2015/10/03/installing-openstack-devstack/">Installing Openstack Devstack</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/05/01/installing-jenkins-on-ubuntu/">Installing Jenkins on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/05/01/installing-cloudera-hadoop-on-ubuntu/">Installing Cloudera Hadoop on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/05/01/configurating-nginx-for-django-projects-on-ubuntu/">Configurating Nginx for Django Projects on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/05/01/setting-up-mysql-on-ubuntu/">Setting Up MySQL on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/04/26/installing-emacs-on-ubuntu/">Installing Emacs on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/04/25/automatically-running-shell-scripts-on-ubuntu/">Automatically Running Shell Scripts on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/04/25/it-could-not-access-network-on-ubuntu/">It Could Not Access Network on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/04/25/installing-pycharm-on-ubuntu-12.04/">Installing PyCharm on Ubuntu 12.04</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/02/11/setup-a-git-server/">Setup a Git Server</a>
+      </li>
+    
+  </ul>
+</section>
+<section class="category-list">
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/categories/art/'>art (1)</a></li><li><a href='/categories/life/'>life (43)</a></li><li><a href='/categories/tech/'>tech (50)</a></li></ul>
+</section>
+<section class="tag-cloud">
+
+
+  <h1>Tags</h1>
+    <ul id="category-list"><a href='/tags/algorithm' style='font-size: 118.69565217391305%'>algorithm(7)</a> <a href='/tags/api' style='font-size: 90.0%'>api(1)</a> <a href='/tags/ascii' style='font-size: 90.0%'>ascii(1)</a> <a href='/tags/beautifulsoup' style='font-size: 90.0%'>beautifulsoup(1)</a> <a href='/tags/career' style='font-size: 94.78260869565217%'>career(2)</a> <a href='/tags/classification' style='font-size: 94.78260869565217%'>classification(2)</a> <a href='/tags/cloud' style='font-size: 90.0%'>cloud(1)</a> <a href='/tags/cloudera' style='font-size: 90.0%'>cloudera(1)</a> <a href='/tags/computer-vision' style='font-size: 90.0%'>computer vision(1)</a> <a href='/tags/crawler' style='font-size: 94.78260869565217%'>crawler(2)</a> <a href='/tags/css' style='font-size: 90.0%'>css(1)</a> <a href='/tags/data' style='font-size: 90.0%'>data(1)</a> <a href='/tags/django' style='font-size: 94.78260869565217%'>django(2)</a> <a href='/tags/dns' style='font-size: 90.0%'>dns(1)</a> <a href='/tags/emacs' style='font-size: 94.78260869565217%'>emacs(2)</a> <a href='/tags/fiction' style='font-size: 113.91304347826087%'>fiction(6)</a> <a href='/tags/french' style='font-size: 90.0%'>french(1)</a> <a href='/tags/git' style='font-size: 90.0%'>git(1)</a> <a href='/tags/github' style='font-size: 90.0%'>github(1)</a> <a href='/tags/gunicorn' style='font-size: 90.0%'>gunicorn(1)</a> <a href='/tags/hadoop' style='font-size: 90.0%'>hadoop(1)</a> <a href='/tags/html' style='font-size: 90.0%'>html(1)</a> <a href='/tags/ide' style='font-size: 94.78260869565217%'>ide(2)</a> <a href='/tags/javascript' style='font-size: 90.0%'>javascript(1)</a> <a href='/tags/jekyll' style='font-size: 90.0%'>jekyll(1)</a> <a href='/tags/jenkins' style='font-size: 90.0%'>jenkins(1)</a> <a href='/tags/leisure' style='font-size: 195.2173913043478%'>leisure(23)</a> <a href='/tags/linux' style='font-size: 109.13043478260869%'>linux(5)</a> <a href='/tags/machine-learning' style='font-size: 137.82608695652175%'>machine learning(11)</a> <a href='/tags/mathjax' style='font-size: 90.0%'>mathjax(1)</a> <a href='/tags/mysql' style='font-size: 94.78260869565217%'>mysql(2)</a> <a href='/tags/network' style='font-size: 90.0%'>network(1)</a> <a href='/tags/nginx' style='font-size: 90.0%'>nginx(1)</a> <a href='/tags/nlp' style='font-size: 113.91304347826087%'>nlp(6)</a> <a href='/tags/nltk' style='font-size: 90.0%'>nltk(1)</a> <a href='/tags/openstack' style='font-size: 90.0%'>openstack(1)</a> <a href='/tags/pandas' style='font-size: 94.78260869565217%'>pandas(2)</a> <a href='/tags/poem' style='font-size: 104.34782608695652%'>poem(4)</a> <a href='/tags/prediction' style='font-size: 90.0%'>prediction(1)</a> <a href='/tags/pycharm' style='font-size: 90.0%'>pycharm(1)</a> <a href='/tags/python' style='font-size: 200.0%'>python(24)</a> <a href='/tags/reading' style='font-size: 118.69565217391305%'>reading(7)</a> <a href='/tags/regex' style='font-size: 90.0%'>regex(1)</a> <a href='/tags/ruby' style='font-size: 90.0%'>ruby(1)</a> <a href='/tags/supervisor' style='font-size: 90.0%'>supervisor(1)</a> <a href='/tags/time-series' style='font-size: 90.0%'>time series(1)</a> <a href='/tags/translation' style='font-size: 90.0%'>translation(1)</a> <a href='/tags/ubuntu' style='font-size: 123.47826086956522%'>ubuntu(8)</a> <a href='/tags/unicode' style='font-size: 90.0%'>unicode(1)</a> <a href='/tags/vim' style='font-size: 90.0%'>vim(1)</a> <a href='/tags/web' style='font-size: 94.78260869565217%'>web(2)</a> </ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2006-2015 - Kelly Chan
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'kwailamc';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://k.arttechresearch.com/tech/2014/09/09/parsing-the-catalogs-from-lowes/';
+        var disqus_url = 'http://k.arttechresearch.com/tech/2014/09/09/parsing-the-catalogs-from-lowes/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
