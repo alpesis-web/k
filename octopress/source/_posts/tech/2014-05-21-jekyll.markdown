@@ -1,0 +1,220 @@
+---
+layout: post_tech
+title: "Jekyll"
+date: 2014-05-21 10:59:28 +0800
+comments: true
+categories: [tech]
+tags: [ruby, jekyll]
+---
+
+## 1. Installation
+
+Prequisition
+
+- ruby > 1.9.3
+- gem
+
+
+Installation
+
+```bash
+$ gem install jekyll
+$ jekyll new project_name
+$ cd project_name
+$ jekyll serve --watch
+```
+
+Files
+
+```
+.
+|--- _includes/                                           # HTML partials
+|        |------- head.html     
+|        |------- header.html            
+|        |------- footer.html
+|--- _layouts/                                            # templates
+|        |------- default.html   (head/header/footer)
+|                    |--------- page.html
+|                                   |------ posts.md
+|                                   |------ projects.md
+|                    |--------- post.html  
+|--- _posts/                                              # posts
+|
+|--- css/
+|--- javascript/
+|
+|--- index.html                                           # html page
+|--- posts.md                                             # html page
+|--- projects.md                                          # html page
+|
+|--- _config.yml                                          # config file
+```
+
+## 2. Configuration
+
+`_config.yml`
+
+
+## 3. Front End
+
+### 3.1. Templates
+
+#### 3.1.1. template variables
+
+```
+.
+|--- site
+|      |--- site.title
+|      |--- site.email
+|      |--- site.username
+|      |--- site.description
+|      |--- site.baseurl
+|      |--- site.url
+|
+|--- page
+|      |--- page.title
+|
+|--- post
+       |--- post.title
+       |--- post.url
+```
+
+#### 3.1.2. partials
+
+categories and tags
+
+```html
+{/% for category in page.categories %} {/{category}} 
+{/% endfor %}
+
+{/% for tag in page.tags %} {/{tag}} 
+{/% endfor %}
+```
+
+rss
+
+```html
+<p class="rss-subscribe">
+    subscribe <a href="{\{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a>
+</p>
+```
+
+pagination
+
+```html
+<span class="pageNav">
+    <a {\% if page.previous %} href="{\{ site.url }}{\{page.previous.url}}"
+       {\% endif %}
+       {\% unless page.previous %}
+       {\% endunless %}
+    >Previous</a>
+
+    <a {\% if page.next %} href="{\{ site.url }}{\{ page.next.url }}"
+       {\% endif %}
+       {\% unless page.next %}
+       {\% endunless %}
+    >Next</a>
+</span>
+```
+
+date and time
+
+```html
+{\% capture y %} {\{ post.date | date: "%Y" }}
+    {\% endcapture %}
+    {\% if year != y %}
+        {\% assign year = y %}
+        <li class="post-year">{\{ y }}</li>
+{\% endif %}
+```
+
+
+### 3.2. CSS
+
+#### 3.2.1. layouts
+
+```
+margin -> border -> padding
+```
+
+#### 3.2.2. partials
+
+table 
+
+```css
+table {
+  display: block;
+  font-family: sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 115%;
+  overflow: auto;
+  width: auto;
+}
+
+th {
+  background-color: rgb(112, 196, 105);
+  color: white;
+  font-weight: normal;
+  padding: 20px 30px;
+  text-align: center;
+}
+
+td {
+  background-color: rgb(238, 238, 238);
+  color: rgb(111, 111, 111);
+  padding: 20px 30px;
+}
+```
+
+### 3.3. Javascript
+
+
+#### 3.3.1. Scripts
+
+#### 3.3.2. Libraries
+
+[MathJax](http://www.mathjax.org/)
+
+```javascript
+<script type="text/javascript" 
+        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+```
+
+## 4. Backend
+
+## 5. Plugins
+
+## 6. Markdown
+
+### 6.1. links
+
+
+### 6.2. syntax
+
+
+## References
+
+1. Toolkits: [Jekyll][jekyll-docs], [CSS Color Picker][css-color-picker]
+2. Libraries: [MathJax][mathjax]
+3. Templates: [Jessica Hamrick][example-jhamrick], [Geek Lu][example-geeklu], [likebeta's Blog][likebeta], [Offical Sites][jekyll-sites], [Jekyll Themes][jekyll-themes], [enml][enml]
+4. Tutorials: [MathJax basic tutorial and quick reference][mathjax-basic], [MathJax Quick Start Tutorial][mathjax-quick-start]
+5. CSS: [40+ Free Beautiful CSS Table Templates][css-table]
+
+   [jekyll-docs]: http://jekyllrb.com/
+   [css-color-picker]: http://www.w3schools.com/tags/ref_colorpicker.asp
+
+   [mathjax]: http://www.mathjax.org/
+
+   [example-jhamrick]: https://github.com/jhamrick/blog
+   [example-geeklu]: https://github.com/kejinlu/kejinlu.github.com
+   [likebeta]: http://blog.ixxoo.me/
+   [jekyll-sites]: https://github.com/jekyll/jekyll/wiki/Sites
+   [jekyll-themes]: http://yuanyong.org/blog/collect-jekyll-theme.html
+   [enml]: https://github.com/enml/blog
+
+   [mathjax-basic]: http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference
+   [mathjax-quick-start]: http://www.calculatorium.com/mathjax-quick-start-tutorial/
+
+   [css-table]: http://www.freshdesignweb.com/free-css-tables.html
+

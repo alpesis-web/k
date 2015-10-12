@@ -1,0 +1,175 @@
+---
+layout: post_tech
+title: "Emacs"
+date: 2014-03-07 17:22:32 +0800
+comments: true
+categories: [tech]
+tags: [ide, emacs]
+---
+
+## 1. Installation
+
+Ubuntu
+
+```bash
+$ sudo apt-get install emacs
+```
+
+## 2. Commands
+
+keys:
+
+- `C-x`: `ctrl+x`, to control buffers/files
+- `M-x`: `Alt+x`, to run commands
+- `RET`: enter
+
+
+command: `C-x`
+
+|Type | Cmd     | description                                                    |
+|:----|:--------|:---------------------------------------------------------------|
+| C-c | C-c C-c | run script                                                     |
+|     | C-c C-p | open python interpreter                                        |
+| C-g |         | quit                                                           |
+| C-h | C-h i   | the info dir                                                   |
+|     | C-h C-h | help                                                           |
+| C-s |         | search forward                                                 |
+| C-r |         | search backward                                                |
+| C-k |         | kill the current line                                          |
+| C-y |         | yank the current line                                          |
+| C-x | C-x b   | switch buffers                                                 |
+|     | C-x k   | kill the current buffer                                        |
+|     | C-x ->  | right-cycle through buffers                                    |
+|     | C-x <-  | left-cycle through buffers                                     |
+|     | C-x o   | change active window to next window                            |
+|     | C-x 0   | close the active window                                        |
+|     | C-x 1   | close all windows except the active window                     |
+|     | C-x 2   | split the active window vertically into two horizontal windows |
+|     | C-x 3   | split the active window horizontally into two vertical windows |
+|     | C-x C-c | close emacs                                                    |
+|     | C-x C-f | open file                                                      |
+|     | C-x C-s | save file                                                      |
+|     | C-x C-w | save file as                                                   |
+
+note: `C-x` for controlling buffers and files 
+
+Command: `M-x`
+
+
+|Type | Cmd                    | description                                                    |
+|:----|:-----------------------|:---------------------------------------------------------------|
+| M-% |                        | find and replace                                               |
+| M-w |                        | copy                                                           |
+| M-x | M-x color-theme-select | select color theme                                             |
+|     | M-x list-packages      | open package list                                              |
+|     | M-x shell RET          | open shell                                                     |
+
+## 3. Configuration
+
+### 3.1. Settings
+
+`.emacs`
+
+```perl
+;--------------------;
+;;; User Interface ;;;
+;--------------------;
+
+; ignore case when searching
+(setq case-fold-search t)
+
+;----------------------;
+;;; Windows & Frames ;;;
+;----------------------;
+
+; language
+(setq current-language-environment "English")
+
+; don't show the tool bar
+(tool-bar-mode -1)
+
+; display line numbers of the window
+(global-linum-mode t)
+; show the current line and column numbers in the stats bar as well
+(line-number-mode t)
+(column-number-mode t)
+```
+
+### 3.2. Theming
+
+installation
+
+- download [color theme](http://download.savannah.gnu.org/releases/color-theme/)
+- unzip the folder to `~/.emacs.d/plugins/color-theme-6.6.0`
+
+configuration
+
+```perl
+; color theme
+(add-to-list 'load-path "~/.emacs.d/plugins/color-theme-6.6.0")
+(require 'color-theme)
+(color-theme-initialize)  
+(setq color-theme-is-global t)
+(color-theme-billw)
+```
+
+selection
+
+- `M-x color-theme-select`
+
+### 3.3. Plugins
+
+installation
+
+- type `M-x list-packages`
+- search the package list, select and install
+- config in `.emacs`
+
+plugins
+
+- [ido](http://www.emacswiki.org/emacs/InteractivelyDoThings)
+- [auto-complete](http://www.emacswiki.org/emacs/AutoComplete)
+- [python-mode](https://launchpad.net/python-mode)
+
+### 3.3.1. ido
+
+config
+
+```perl
+(require 'ido)
+(ido-mode t)
+```
+
+testing
+
+- `M-x ido-mode`: enable ido-mode
+- `M-x b`: switch buffers
+
+### 3.3.2. auto-complete
+
+config
+
+```perl
+(add-to-list 'load-path "~/.emacs.d/auto-complete-1.3.1")
+(require 'auto-complete)
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
+(require 'auto-complete-config)
+(ac-config-default)
+(global-auto-complete-mode t)
+```
+
+
+### 3.3.3. python-mode
+
+config 
+
+```perl
+(setq py-install-directory "~/.emacs.d/plugins/python-mode")
+(add-to-list 'load-path py-install-directory)
+(require 'python-mode)
+```
+
+testing
+
+- `M-x locate-library RET`
+- `python-mode RET`

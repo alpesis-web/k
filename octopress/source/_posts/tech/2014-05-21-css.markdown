@@ -1,0 +1,165 @@
+---
+layout: post_tech
+title: "CSS"
+date: 2014-05-21 22:35:50 +0800
+comments: true
+categories: [tech]
+tags: [css]
+---
+
+## 1. Syntax
+
+### 1.1. css construct
+
+```css
+selector{property: value;}
+```
+
+### 1.2. css embeded
+
+in-line (attribute)
+
+```html
+<html>
+	  <head>
+		<title>Example</title>
+	  </head>
+	  <body style="background-color: #FF0000;">
+		<p>This is a red page</p>
+	  </body>
+</html>
+```
+
+internal (tag)
+
+```html
+<html>
+	  <head>
+		<title>Example</title>
+		<style type="text/css">
+		  body {background-color: #FF0000;}
+		</style>
+	  </head>
+	  <body>
+		<p>This is a red page</p>
+	  </body>
+</html>
+```
+
+external (link)
+
+```html
+<link rel="stylesheet" type="text/css" href="style/style.css" />
+```
+
+
+## 2. Selectors
+
+| Type  | Selector       | Example                                      |
+|:------|:---------------|:---------------------------------------------|
+| class | .class-name {} |                                              |
+| id    | #id-name {}    |                                              |
+| span  | span {}        |                                              |
+| div   | div {}         |                                              |
+| links | a {}           | a{color: blue;}                              |
+|       | a:link {}      | a:link {color: red;}                         |
+|       | a:visited {}   | a:visited {color: red;}                      |
+|       | a:active {}    | a:active {background-color: #FFFF00;}        |
+|       | a:hover {}     | a:hover {color: orange; font-style: italic;} |
+
+
+## 3. Properties
+
+| Type  | Property       | Values                                      |
+|:------|:---------------|:---------------------------------------------|
+| colors | color     | color: #ff0000/red; |
+|        | background | background: #FFCC66 url("butterfly.gif") no-repeat fixed right bottom; |
+|        | background-color | background-color: #FFCC66; |
+|        | background-image | background-image: url("butterfly.gif"); |
+|        | background-repeat | background-repeat: no-repeat/repeat/repeat-x/repeat-y; |
+|        | background-attachment | background-attachment: fixed/scroll; |
+|        |background-position | background-position: right bottom/right top/2cm 2cm/50% 25%; |
+| fonts  | font | font: italic bold 30px arial, sans-serif; |
+|        | font-style | font-style: normal/italic/oblique; |
+|        | font-weight | font-weight: normal/bold; |
+|        | font-size | font-size: 30px/12pt/120%/1em; |
+|        | font-family | font-family: arial, verdana, sans-serif; |
+|        | font-variant | font-variant: normal/small-caps; |
+| text   | text-indent | text-indent: 30px; |
+|        | text-align | text-align: right/left/center/justify; |
+|        | text-decoration | text-decoration: underline/overline/line-through; |
+|        | text-transform | text-transform: uppercase/capitalize; |
+|        | letter-spacing | letter-spacing: 6px/3px; |
+| box    | margin | margin-top/margin-right/margin-bottom/margin-left: 20px; |
+|        | border | (shown below) |
+|        | padding | padding-top/padding-right/padding-bottom/padding-left: 20px; |
+|        | content | width/height: 10px; |
+| floating | float | float: left/right; |
+|          | clear | clear: left/right/both/none; |
+| positioning | position | position:absolute/relative; |
+|             | position properties | top/left/bottom/right: 100px; |
+| layers      | z-index | z-index: 1 / 2 / 3 / 4 / 5; |
+
+note:   
+- box: margin -> border -> padding -> content  
+- direction: top/bottom/right/left  
+
+border 
+
+```css
+border-width: thin/medium/thick/10px;
+border-color: #123456/rgb(123,123,123)/yellow;
+border-style: dotted/dashed/solid/double/groove/ridge/inset/outset;
+
+border-top/right/bottom/left-width: thin/medium/thick/10px;
+border-top/right/bottom/left-color: #123456/rgb(123,123,123)/yellow;
+border-top/right/bottom/left-style: dotted/dashed/solid/double/groove/ridge/inset/outset;
+```
+
+layers
+
+```css
+#ten_of_diamonds {
+	position: absolute;
+	left: 100px;
+	top: 100px;
+	z-index: 1;
+}
+
+#jack_of_diamonds {
+	position: absolute;
+	left: 115px;
+	top: 115px;
+	z-index: 2;
+}
+
+#queen_of_diamonds {
+	position: absolute;
+	left: 130px;
+	top: 130px;
+	z-index: 3;
+}
+
+#king_of_diamonds {
+	position: absolute;
+	left: 145px;
+	top: 145px;
+	z-index: 4;
+}
+
+#ace_of_diamonds {
+	position: absolute;
+	left: 160px;
+	top: 160px;
+	z-index: 5;
+}
+```
+
+
+## References
+
+1. [CSS Tutorial][css-tutorial]
+2. [CSS Validator][css-validator]
+
+   [css-tutorial]: http://html.net/tutorials/css/
+   [css-validator]: http://jigsaw.w3.org/css-validator/
