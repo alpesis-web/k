@@ -5,23 +5,39 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Rain - Kelly Chan</title>
+  <title>Using MathJax With Octopress - Kelly Chan</title>
   <meta name="author" content="Kelly Chan">
 
   
-  <meta name="description" content="雨 雨
-洗尽繁华
-送上清新一曲 你
-悄无声息离去
-抛下九千烦丝 抛了过去
-何管未来
-丢弃当今何世
-该道是——
-存者偷生
-死者长矣 雨
-赠你离别一曲
-伴你茫然消逝
-">
+  <meta name="description" content="1. Adding MathJax 1
+$ vim octopress/_includes/mathjax.html mathjax.html 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+&lt &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,7 +46,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://k.arttechresearch.com/life/2006/05/29/rain/">
+  <link rel="canonical" href="http://k.arttechresearch.com/tech/2015/10/13/using-mathjax-with-octopress/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Kelly Chan" type="application/atom+xml">
@@ -144,7 +160,7 @@
   
   <header>
     
-      <h1 class="entry-title">Rain</h1>
+      <h1 class="entry-title">Using MathJax With Octopress</h1>
     
     
       <p class="meta">
@@ -153,7 +169,7 @@
 
 
 
-<time class='entry-date' datetime='2006-05-29T11:15:00+08:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>29</span><span class='date-suffix'>th</span>, <span class='date-year'>2006</span></span> <span class='time'>11:15 am</span></time>
+<time class='entry-date' datetime='2015-10-13T10:26:29+08:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>10:26 am</span></time>
         
            | <a href="#disqus_thread"
              data-disqus-identifier="http://k.arttechresearch.com">Comments</a>
@@ -163,30 +179,93 @@
   </header>
 
 
-<div class="entry-content"><h2>雨</h2>
+<div class="entry-content"><h2>1. Adding MathJax</h2>
 
-<p>雨<br/>
-洗尽繁华<br/>
-送上清新一曲</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>vim octopress/_includes/mathjax.html
+</span></code></pre></td></tr></table></div></figure>
 
-<p>你<br/>
-悄无声息离去<br/>
-抛下九千烦丝</p>
 
-<p>抛了过去<br/>
-何管未来<br/>
-丢弃当今何世<br/>
-该道是——<br/>
-存者偷生<br/>
-死者长矣</p>
+<p>mathjax.html</p>
 
-<p>雨<br/>
-赠你离别一曲<br/>
-伴你茫然消逝</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="c">&lt;!-- MathJax --&gt;</span>
+</span><span class='line'><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/x-mathjax-config&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nx">MathJax</span><span class="p">.</span><span class="nx">Hub</span><span class="p">.</span><span class="nx">Config</span><span class="p">({</span>
+</span><span class='line'>    <span class="nx">tex2jax</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">inlineMath</span><span class="o">:</span> <span class="p">[</span> <span class="p">[</span><span class="s1">&#39;$&#39;</span><span class="p">,</span><span class="s1">&#39;$&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;\\(&quot;</span><span class="p">,</span><span class="s2">&quot;\\)&quot;</span><span class="p">]</span> <span class="p">],</span>
+</span><span class='line'>      <span class="nx">processEscapes</span><span class="o">:</span> <span class="kc">true</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'><span class="nt">&lt;/script&gt;</span>
+</span><span class='line'><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/x-mathjax-config&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nx">MathJax</span><span class="p">.</span><span class="nx">Hub</span><span class="p">.</span><span class="nx">Config</span><span class="p">({</span>
+</span><span class='line'>      <span class="nx">tex2jax</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">skipTags</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;script&#39;</span><span class="p">,</span> <span class="s1">&#39;noscript&#39;</span><span class="p">,</span> <span class="s1">&#39;style&#39;</span><span class="p">,</span> <span class="s1">&#39;textarea&#39;</span><span class="p">,</span> <span class="s1">&#39;pre&#39;</span><span class="p">,</span> <span class="s1">&#39;code&#39;</span><span class="p">]</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'><span class="nt">&lt;/script&gt;</span>
+</span><span class='line'><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/x-mathjax-config&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nx">MathJax</span><span class="p">.</span><span class="nx">Hub</span><span class="p">.</span><span class="nx">Queue</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">all</span> <span class="o">=</span> <span class="nx">MathJax</span><span class="p">.</span><span class="nx">Hub</span><span class="p">.</span><span class="nx">getAllJax</span><span class="p">(),</span> <span class="nx">i</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">for</span><span class="p">(</span><span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">all</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">all</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">SourceElement</span><span class="p">().</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">className</span> <span class="o">+=</span> <span class="s1">&#39; has-jax&#39;</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'><span class="nt">&lt;/script&gt;</span>
+</span><span class='line'><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span>
+</span><span class='line'>   <span class="na">src=</span><span class="s">&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'><span class="nt">&lt;/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>2. Including MathJax in head.html</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>vim octopress/_includes/head.html
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>head.html</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'>{\% include mathjax.html %\}
+</span></code></pre></td></tr></table></div></figure>
+
+
+
 </div>
 
 
+
   <footer>
+
     <p class="meta">
       
   
@@ -198,12 +277,12 @@
 
 
 
-<time class='entry-date' datetime='2006-05-29T11:15:00+08:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>29</span><span class='date-suffix'>th</span>, <span class='date-year'>2006</span></span> <span class='time'>11:15 am</span></time>
+<time class='entry-date' datetime='2015-10-13T10:26:29+08:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>10:26 am</span></time>
       
 
 <span class="categories">
   
-    <a class='category' href='/categories/life/'>life</a>
+    <a class='category' href='/categories/tech/'>tech</a>
   
 </span>
 
@@ -212,30 +291,35 @@
 
 <span class="categories">
   
-    <a class='tag' href='/tags/poem/'>poem</a>
+    <a class='tag' href='/tags/javascript/'>javascript</a>, <a class='tag' href='/tags/mathjax/'>mathjax</a>, <a class='tag' href='/tags/octopress/'>octopress</a>, <a class='tag' href='/tags/ruby/'>ruby</a>
   
 </span>
 
 
     </p>
+
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://k.arttechresearch.com/life/2006/05/29/rain/" data-via="kwailamchan" data-counturl="http://k.arttechresearch.com/life/2006/05/29/rain/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://k.arttechresearch.com/tech/2015/10/13/using-mathjax-with-octopress/" data-via="kwailamchan" data-counturl="http://k.arttechresearch.com/tech/2015/10/13/using-mathjax-with-octopress/" >Tweet</a>
   
   
   
 </div>
 
     
+
     <p class="meta">
       
+        <a class="basic-alignment left" href="/art/2015/10/11/inside-a-french-chateau-by-kraemer-gallery/" title="Previous Post: Inside A French Chateau by Kraemer Gallery">&laquo; Inside A French Chateau by Kraemer Gallery</a>
       
-        <a class="basic-alignment right" href="/life/2007/12/07/the-scientific-attitude/" title="Next Post: The Scientific Attitude">The Scientific Attitude &raquo;</a>
       
     </p>
+
   </footer>
+
 </article>
+
 
   <section>
     <h1>Comments</h1>
@@ -245,50 +329,51 @@
 
 </div>
 
+
 <aside class="sidebar">
   
     <section>
-  <h1>Life</h1>
+  <h1>Tech</h1>
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/life/2014/09/02/just-for-fun/">Just for Fun</a>
+        <a href="/tech/2015/10/13/using-mathjax-with-octopress/">Using MathJax With Octopress</a>
       </li>
     
       <li class="post">
-        <a href="/life/2014/08/04/what-makes-a-successful-casual-game/">What Makes a Successful Casual Game</a>
+        <a href="/tech/2015/10/03/installing-openstack-devstack/">Installing Openstack Devstack</a>
       </li>
     
       <li class="post">
-        <a href="/life/2014/07/09/composing-song-ci-with-chinese-herbs/">Composing Song Ci With Chinese Herbs</a>
+        <a href="/tech/2015/05/01/installing-jenkins-on-ubuntu/">Installing Jenkins on Ubuntu</a>
       </li>
     
       <li class="post">
-        <a href="/life/2014/07/04/un-bonhomme-de-neige/">Un Bonhomme De Neige</a>
+        <a href="/tech/2015/05/01/installing-cloudera-hadoop-on-ubuntu/">Installing Cloudera Hadoop on Ubuntu</a>
       </li>
     
       <li class="post">
-        <a href="/life/2014/06/19/everlasting-longing/">Everlasting Longing</a>
+        <a href="/tech/2015/05/01/configurating-nginx-for-django-projects-on-ubuntu/">Configurating Nginx for Django Projects on Ubuntu</a>
       </li>
     
       <li class="post">
-        <a href="/life/2013/07/20/the-fox/">The Fox</a>
+        <a href="/tech/2015/05/01/setting-up-mysql-on-ubuntu/">Setting Up MySQL on Ubuntu</a>
       </li>
     
       <li class="post">
-        <a href="/life/2013/07/08/the-lord/">The Lord</a>
+        <a href="/tech/2015/04/26/installing-emacs-on-ubuntu/">Installing Emacs on Ubuntu</a>
       </li>
     
       <li class="post">
-        <a href="/life/2013/06/16/the-raytheon/">The Raytheon</a>
+        <a href="/tech/2015/04/25/automatically-running-shell-scripts-on-ubuntu/">Automatically Running Shell Scripts on Ubuntu</a>
       </li>
     
       <li class="post">
-        <a href="/life/2011/09/08/6969/">6969</a>
+        <a href="/tech/2015/04/25/it-could-not-access-network-on-ubuntu/">It Could Not Access Network on Ubuntu</a>
       </li>
     
       <li class="post">
-        <a href="/life/2011/08/20/the-time-difference/">The Time Difference</a>
+        <a href="/tech/2015/04/25/installing-pycharm-on-ubuntu-12.04/">Installing PyCharm on Ubuntu 12.04</a>
       </li>
     
   </ul>
@@ -322,8 +407,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://k.arttechresearch.com/life/2006/05/29/rain/';
-        var disqus_url = 'http://k.arttechresearch.com/life/2006/05/29/rain/';
+        var disqus_identifier = 'http://k.arttechresearch.com/tech/2015/10/13/using-mathjax-with-octopress/';
+        var disqus_url = 'http://k.arttechresearch.com/tech/2015/10/13/using-mathjax-with-octopress/';
         var disqus_script = 'embed.js';
       
     (function () {

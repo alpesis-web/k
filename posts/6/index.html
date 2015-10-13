@@ -9,7 +9,7 @@
   <meta name="author" content="Kelly Chan">
 
   
-  <meta name="description" content="Tech Installing Openstack Devstack Installing Jenkins on Ubuntu Installing Cloudera Hadoop on Ubuntu Configurating Nginx for Django Projects on &hellip;">
+  <meta name="description" content="Tech Using MathJax With Octopress Installing Openstack Devstack Installing Jenkins on Ubuntu Installing Cloudera Hadoop on Ubuntu Configurating &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,34 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  <!-- MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript"
+   src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
 
   
 
@@ -111,6 +139,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/tech/2015/10/13/using-mathjax-with-octopress/">Using MathJax With Octopress</a>
+      </li>
+    
+      <li class="post">
         <a href="/tech/2015/10/03/installing-openstack-devstack/">Installing Openstack Devstack</a>
       </li>
     
@@ -144,10 +176,6 @@
     
       <li class="post">
         <a href="/tech/2015/04/25/installing-pycharm-on-ubuntu-12.04/">Installing PyCharm on Ubuntu 12.04</a>
-      </li>
-    
-      <li class="post">
-        <a href="/tech/2015/02/11/setup-a-git-server/">Setup a Git Server</a>
       </li>
     
   </ul>

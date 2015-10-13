@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tech | Kelly Chan]]></title>
   <link href="http://k.arttechresearch.com/categories/tech/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2015-10-13T01:40:29+08:00</updated>
+  <updated>2015-10-13T11:08:35+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[Kelly Chan]]></name>
@@ -12,6 +12,71 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Using MathJax With Octopress]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/10/13/using-mathjax-with-octopress/"/>
+    <updated>2015-10-13T10:26:29+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/10/13/using-mathjax-with-octopress</id>
+    <content type="html"><![CDATA[<h2>1. Adding MathJax</h2>
+
+<pre><code class="bash">$ vim octopress/_includes/mathjax.html
+</code></pre>
+
+<p>mathjax.html</p>
+
+<p>```html</p>
+
+<!-- MathJax -->
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+
+<script type="text/javascript"
+   src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<pre><code>
+## 2. Including MathJax in head.html
+</code></pre>
+
+<p>$ vim octopress/_includes/head.html
+```</p>
+
+<p>head.html</p>
+
+<pre><code class="html">{\% include mathjax.html %\}
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Installing Openstack Devstack]]></title>
@@ -100,10 +165,10 @@
 
 <p>installation</p>
 
-<pre><code>wget -q -O - https://jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -
-sudo sh -c 'echo deb http://pkg.jenkins-ci.org/debian binary/ &gt; /etc/apt/sources.list.d/jenkins.list'
-sudo apt-get update
-sudo apt-get install jenkins
+<pre><code class="bash">$ wget -q -O - https://jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -
+$ sudo sh -c 'echo deb http://pkg.jenkins-ci.org/debian binary/ &gt; /etc/apt/sources.list.d/jenkins.list'
+$ sudo apt-get update
+$ sudo apt-get install jenkins
 </code></pre>
 
 <p>open the link: <a href="http://202.120.83.101:8080">http://202.120.83.101:8080</a></p>
@@ -112,68 +177,69 @@ sudo apt-get install jenkins
 
 <p>installation</p>
 
-<pre><code>sudo aptitude -y install nginx
+<pre><code class="bash">$ sudo aptitude -y install nginx
 
 # remove default setting
-cd /etc/nginx/sites-available
-sudo cp default default.backup
-sudo rm default ../sites-enabled/default
+$ cd /etc/nginx/sites-available
+$ sudo cp default default.backup
+$ sudo rm default ../sites-enabled/default
 </code></pre>
 
 <p>/etc.nginx.sites-available: add the configurations of jenkins</p>
 
-<pre><code>sudo nano jenkins
+<pre><code class="bash">$ sudo nano jenkins
+
 upstream app_server {
-    server 127.0.0.1:8080 fail_timeout=0;
+server 127.0.0.1:8080 fail_timeout=0;
 }
 
 server {
-    listen 80;
-    listen [::]:80 default ipv6only=on;
-    server_name ci.yourcompany.com;
+listen 80;
+listen [::]:80 default ipv6only=on;
+server_name ci.yourcompany.com;
 
-    location / {
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header Host $http_host;
-        proxy_redirect off;
+location / {
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $http_host;
+    proxy_redirect off;
 
-        if (!-f $request_filename) {
-            proxy_pass http://app_server;
-            break;
-        }
+    if (!-f $request_filename) {
+    proxy_pass http://app_server;
+    break;
     }
+}
 }
 </code></pre>
 
 <p>adding the link</p>
 
-<pre><code>sudo ln -s /etc/nginx/sites-available/jenkins /etc/nginx/sites-enabled/
+<pre><code class="bash">$ sudo ln -s /etc/nginx/sites-available/jenkins /etc/nginx/sites-enabled/
 </code></pre>
 
 <p>start service</p>
 
-<pre><code>sudo service nginx restart
+<pre><code class="bash">$ sudo service nginx restart
 </code></pre>
 
 <h2>Configurating Jenkins</h2>
 
 <p>installing java</p>
 
-<pre><code>sudo add-apt-repository ppa:webupd8team/java
-sudo apt-get update
-sudo apt-get install oracle-java7-installer
-sudo update-java-alternatives -s java-7-oracle  
-sudo update-alternatives --config java
+<pre><code class="bash">$ sudo add-apt-repository ppa:webupd8team/java
+$ sudo apt-get update
+$ sudo apt-get install oracle-java7-installer
+$ sudo update-java-alternatives -s java-7-oracle  
+$ sudo update-alternatives --config java
 </code></pre>
 
 <p>configurating java home</p>
 
-<pre><code>sudo nano $HOME/.bashrc
+<pre><code class="bash">$ sudo nano $HOME/.bashrc
 </code></pre>
 
 <p>adding the configuration</p>
 
-<pre><code># set JAVA_HOME
+<pre><code class="bash"># set JAVA_HOME
 JAVA_HOME=/usr/lib/jvm/java-7-oracle/ 
 export JAVA_HOME
 PATH=$PATH:$JAVA_HOME
@@ -182,7 +248,7 @@ export PATH
 
 <p>source</p>
 
-<pre><code>source $HOME/.bashrc
+<pre><code class="bash">source $HOME/.bashrc
 echo $JAVA_HOME
 </code></pre>
 
@@ -218,14 +284,14 @@ echo $JAVA_HOME
 
 <p>updating softwares</p>
 
-<pre><code>sudo apt-get update
-sudo apt-get upgrade
-sudo apt-get dist-upgrade
+<pre><code class="bash">$ sudo apt-get update
+$ sudo apt-get upgrade
+$ sudo apt-get dist-upgrade
 </code></pre>
 
 <p>modifing the hosts</p>
 
-<pre><code>sudo nano /etc/hosts
+<pre><code class="bash">$ sudo nano /etc/hosts
 </code></pre>
 
 <p>hosts</p>
@@ -243,18 +309,18 @@ sudo apt-get dist-upgrade
 
 <p>ssh</p>
 
-<pre><code>sudo apt-get install ssh
+<pre><code class="bash">$ sudo apt-get install ssh
 
-ssh-keygen -t rsa
+$ ssh-keygen -t rsa
 
-# copy the publick key
-cat /home/insight/.ssh/id_rsa.pub
-sudo nano /home/insight/.ssh/authorized_keys
+$ # copy the publick key
+$ cat /home/insight/.ssh/id_rsa.pub
+$ sudo nano /home/insight/.ssh/authorized_keys
 </code></pre>
 
 <p>authorized_keys</p>
 
-<pre><code># 202.120.83.101
+<pre><code class="bash"># 202.120.83.101
 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+JcGP7MopXAdZUJR1AK7tCXHELACXh++6kxUf1FCAwdooJ8MlLiqMJTgCCSNMghiB0w442XB+lohQmFPDTLJDRaTZxbCvo82aD0sJ1slaxZDuu5/B3hv+pO7Nz4P1CHLw6JHsY+ml48GjX2FhI/iYDFg0RyEt3d91f+Bha9nubB3+uh9MGhAfpxsxMlc1J4/GTm6F1YfGV5aVfrztEM07bqVVaMS6tT0wrp5L57IzBhdcTOhd9asEmO/OpCQLytoIFS5kTv+M6bTU23ChMj7Df4BNEr2idwqUI/h3zx/jT25LR6qryWiwxZ2jho1yYUMM3jN6LqKSKXOarcrwgjOX insight@insight
 
 # 202.120.83.102
@@ -272,24 +338,24 @@ ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDAjeDr/HcUsjs7xq7MlpFnGbr/hDr9SaQhet4Fp8UQ
 
 <p>validation</p>
 
-<pre><code>ssh 202.120.83.xxx
+<pre><code class="bash">$ ssh 202.120.83.xxx
 </code></pre>
 
 <h2>MySQL</h2>
 
 <p>installation</p>
 
-<pre><code>sudo apt-get install mysql-server libmysql-java
+<pre><code class="bash">$ sudo apt-get install mysql-server libmysql-java
 </code></pre>
 
 <p>configuration</p>
 
-<pre><code>sudo nano /etc/mysql/conf.d/mysql_cloudera_manager.cnf
+<pre><code class="bash">$ sudo nano /etc/mysql/conf.d/mysql_cloudera_manager.cnf
 </code></pre>
 
 <p>mysql_cloudera_manager.cnf</p>
 
-<pre><code>[mysqld]
+<pre><code class="bash">[mysqld]
 transaction-isolation=READ-COMMITTED
 # Disabling symbolic-links is recommended to prevent assorted security risks;
 # to do so, uncomment this line:
@@ -333,7 +399,7 @@ pid-file=/var/run/mysqld/mysqld.pid
 
 <p>configurating my.cnf</p>
 
-<pre><code>sudo nano /etc/mysql/my.cnf
+<pre><code class="bash">sudo nano /etc/mysql/my.cnf
 
 # comment the bind-address
 # bind-address   = 127.0.0.1
@@ -341,55 +407,55 @@ pid-file=/var/run/mysqld/mysqld.pid
 
 <p>configurating innodb</p>
 
-<pre><code>sudo su
-mv /var/lib/mysql/ib_logfile* /var/tmp/
-exit
+<pre><code class="bash">$ sudo su
+$ mv /var/lib/mysql/ib_logfile* /var/tmp/
+$ exit
 </code></pre>
 
 <p>initialization</p>
 
-<pre><code>sudo service mysql restart
-mysql -uroot -p
+<pre><code class="bash">$ sudo service mysql restart
+$ mysql -uroot -p
 
-create database amon DEFAULT CHARACTER SET utf8;
-grant all on amon.* TO 'amon'@'%' IDENTIFIED BY 'amon_password';
-grant all on amon.* TO 'amon'@'insight-master' IDENTIFIED BY 'amon_password';
-create database smon DEFAULT CHARACTER SET utf8;
-grant all on smon.* TO 'smon'@'%' IDENTIFIED BY 'smon_password';
-grant all on smon.* TO 'smon'@'insight-master' IDENTIFIED BY 'smon_password';
-create database rman DEFAULT CHARACTER SET utf8;
-grant all on rman.* TO 'rman'@'%' IDENTIFIED BY 'rman_password';
-grant all on rman.* TO 'rman'@'insight-master' IDENTIFIED BY 'rman_password';
-create database hmon DEFAULT CHARACTER SET utf8;
-grant all on hmon.* TO 'hmon'@'%' IDENTIFIED BY 'hmon_password';
-grant all on hmon.* TO 'hmon'@'insight-master' IDENTIFIED BY 'hmon_password';
-create database hive DEFAULT CHARACTER SET utf8;
-grant all on hive.* TO 'hive'@'%' IDENTIFIED BY 'hive_password';
-grant all on hive.* TO 'hive'@'insight-master' IDENTIFIED BY 'hive_password';
+mysql&gt; create database amon DEFAULT CHARACTER SET utf8;
+mysql&gt; grant all on amon.* TO 'amon'@'%' IDENTIFIED BY 'amon_password';
+mysql&gt; grant all on amon.* TO 'amon'@'insight-master' IDENTIFIED BY 'amon_password';
+mysql&gt; create database smon DEFAULT CHARACTER SET utf8;
+mysql&gt; grant all on smon.* TO 'smon'@'%' IDENTIFIED BY 'smon_password';
+mysql&gt; grant all on smon.* TO 'smon'@'insight-master' IDENTIFIED BY 'smon_password';
+mysql&gt; create database rman DEFAULT CHARACTER SET utf8;
+mysql&gt; grant all on rman.* TO 'rman'@'%' IDENTIFIED BY 'rman_password';
+mysql&gt; grant all on rman.* TO 'rman'@'insight-master' IDENTIFIED BY 'rman_password';
+mysql&gt; create database hmon DEFAULT CHARACTER SET utf8;
+mysql&gt; grant all on hmon.* TO 'hmon'@'%' IDENTIFIED BY 'hmon_password';
+mysql&gt; grant all on hmon.* TO 'hmon'@'insight-master' IDENTIFIED BY 'hmon_password';
+mysql&gt; create database hive DEFAULT CHARACTER SET utf8;
+mysql&gt; grant all on hive.* TO 'hive'@'%' IDENTIFIED BY 'hive_password';
+mysql&gt; grant all on hive.* TO 'hive'@'insight-master' IDENTIFIED BY 'hive_password';
 
-create database nav DEFAULT CHARACTER SET utf8;
-grant all on nav.* TO 'nav'@'%' IDENTIFIED BY 'nav_password';
-grant all on nav.* TO 'nav'@'insight-master' IDENTIFIED BY 'nav_password';
+mysql&gt; create database nav DEFAULT CHARACTER SET utf8;
+mysql&gt; grant all on nav.* TO 'nav'@'%' IDENTIFIED BY 'nav_password';
+mysql&gt; grant all on nav.* TO 'nav'@'insight-master' IDENTIFIED BY 'nav_password';
 
-create database navms DEFAULT CHARACTER SET utf8;
-grant all on navms.* TO 'navms'@'%' IDENTIFIED BY 'navms_password';
-grant all on navms.* TO 'navms'@'insight-master' IDENTIFIED BY 'navms_password';
+mysql&gt; create database navms DEFAULT CHARACTER SET utf8;
+mysql&gt; grant all on navms.* TO 'navms'@'%' IDENTIFIED BY 'navms_password';
+mysql&gt; grant all on navms.* TO 'navms'@'insight-master' IDENTIFIED BY 'navms_password';
 </code></pre>
 
 <h2>Cloudera Manager</h2>
 
 <p>installing java</p>
 
-<pre><code>sudo apt-get install python-software-properties
-sudo add-apt-repository ppa:webupd8team/java
-sudo apt-get update
+<pre><code class="bash">$ sudo apt-get install python-software-properties
+$ sudo add-apt-repository ppa:webupd8team/java
+$ sudo apt-get update
 
-sudo nano /etc/apt/sources.list.d/cloudera.list
+$ sudo nano /etc/apt/sources.list.d/cloudera.list
 </code></pre>
 
 <p>cloudera.list</p>
 
-<pre><code>deb [arch=amd64] http://archive.cloudera.com/cdh5/ubuntu/precise/amd64/cdh precise-cdh5 contrib
+<pre><code class="bash">deb [arch=amd64] http://archive.cloudera.com/cdh5/ubuntu/precise/amd64/cdh precise-cdh5 contrib
 deb-src http://archive.cloudera.com/cdh5/ubuntu/precise/amd64/cdh precise-cdh5 contrib
 deb [arch=amd64] http://archive.cloudera.com/cm5/ubuntu/precise/amd64/cm precise-cm5 contrib
 deb-src http://archive.cloudera.com/cm5/ubuntu/precise/amd64/cm precise-cm5 contrib
@@ -397,54 +463,54 @@ deb-src http://archive.cloudera.com/cm5/ubuntu/precise/amd64/cm precise-cm5 cont
 
 <p>adding key</p>
 
-<pre><code>curl -s http://archive.cloudera.com/cdh5/ubuntu/precise/amd64/cdh/archive.key | sudo apt-key add -
-sudo apt-get update
+<pre><code class="bash">$ curl -s http://archive.cloudera.com/cdh5/ubuntu/precise/amd64/cdh/archive.key | sudo apt-key add -
+$ sudo apt-get update
 </code></pre>
 
 <p>installing manager by manual</p>
 
-<pre><code>sudo apt-get -q -y --force-yes install oracle-j2sdk1.7 cloudera-manager-server-db cloudera-manager-server cloudera-manager-daemons cloudera-manager-agent
+<pre><code class="bash">$ sudo apt-get -q -y --force-yes install oracle-j2sdk1.7 cloudera-manager-server-db cloudera-manager-server cloudera-manager-daemons cloudera-manager-agent
 
-# config cloudera-manager-server db
-sudo /usr/share/cmf/schema/scm_prepare_database.sh mysql  -uroot -p --scm-host localhost scm scm scm_password
+$ # config cloudera-manager-server db
+$ sudo /usr/share/cmf/schema/scm_prepare_database.sh mysql  -uroot -p --scm-host localhost scm scm scm_password
 
-# start service
-service cloudera-scm-server-db initdb
-service cloudera-scm-server-db start
-service cloudera-scm-server start
+$ # start service
+$ service cloudera-scm-server-db initdb
+$ service cloudera-scm-server-db start
+$ service cloudera-scm-server start
 </code></pre>
 
 <p>installing manager automatically</p>
 
-<pre><code>sudo ./cloudera-mangaer-installer.bin
+<pre><code class="bash">$ sudo ./cloudera-mangaer-installer.bin
 </code></pre>
 
 <p>steps:</p>
 
-<pre><code>apt-get -q -y --force-yes install oracle-j2sdk1.7 cloudera-manager-server-db cloudera-manager-server cloudera-manager-daemons
-service cloudera-scm-server-db initdb
-service cloudera-scm-server-db start
-service cloudera-scm-server start
+<pre><code class="bash">$ apt-get -q -y --force-yes install oracle-j2sdk1.7 cloudera-manager-server-db cloudera-manager-server cloudera-manager-daemons
+$ service cloudera-scm-server-db initdb
+$ service cloudera-scm-server-db start
+$ service cloudera-scm-server start
 </code></pre>
 
 <h2>Cloudera Agent</h2>
 
 <p>installing java</p>
 
-<pre><code>sudo apt-get install python-software-properties
-sudo add-apt-repository ppa:webupd8team/java
-sudo apt-get update
-sudo apt-get install oracle-j2sdk1.7
+<pre><code class="bash">$ sudo apt-get install python-software-properties
+$ sudo add-apt-repository ppa:webupd8team/java
+$ sudo apt-get update
+$ sudo apt-get install oracle-j2sdk1.7
 </code></pre>
 
 <p>adding sources</p>
 
-<pre><code>sudo nano /etc/apt/sources.list.d/cloudera.list
+<pre><code class="bash">$ sudo nano /etc/apt/sources.list.d/cloudera.list
 </code></pre>
 
 <p>cloudera.list</p>
 
-<pre><code>deb [arch=amd64] http://archive.cloudera.com/cdh5/ubuntu/precise/amd64/cdh precise-cdh5 contrib
+<pre><code class="bash">deb [arch=amd64] http://archive.cloudera.com/cdh5/ubuntu/precise/amd64/cdh precise-cdh5 contrib
 deb-src http://archive.cloudera.com/cdh5/ubuntu/precise/amd64/cdh precise-cdh5 contrib
 deb [arch=amd64] http://archive.cloudera.com/cm5/ubuntu/precise/amd64/cm precise-cm5 contrib
 deb-src http://archive.cloudera.com/cm5/ubuntu/precise/amd64/cm precise-cm5 contrib
@@ -452,41 +518,41 @@ deb-src http://archive.cloudera.com/cm5/ubuntu/precise/amd64/cm precise-cm5 cont
 
 <p>adding keys</p>
 
-<pre><code>curl -s http://archive.cloudera.com/cdh5/ubuntu/precise/amd64/cdh/archive.key | sudo apt-key add -
-sudo apt-get update
+<pre><code class="bash">$ curl -s http://archive.cloudera.com/cdh5/ubuntu/precise/amd64/cdh/archive.key | sudo apt-key add -
+$ sudo apt-get update
 </code></pre>
 
 <p>installing agent</p>
 
-<pre><code>sudo apt-get install cloudera-manager-agent cloudera-manager-daemons
+<pre><code class="bash">$ sudo apt-get install cloudera-manager-agent cloudera-manager-daemons
 </code></pre>
 
 <p>configurating agent</p>
 
-<pre><code>sudo nano /etc/cloudera-scm-agent/config.ini
+<pre><code class="bash">$ sudo nano /etc/cloudera-scm-agent/config.ini
 </code></pre>
 
 <p>config.ini</p>
 
-<pre><code>server_host=insight-master  # master host name
+<pre><code class="bash">server_host=insight-master  # master host name
 </code></pre>
 
 <p>start services</p>
 
-<pre><code>sudo service cloudera-scm-agent  restart
+<pre><code class="bash">$ sudo service cloudera-scm-agent  restart
 </code></pre>
 
 <h2>Cloudera Hadoop</h2>
 
 <p>restart agents on slaves</p>
 
-<pre><code>sudo service cloudera-scm-agent  restart
+<pre><code class="bash">$ sudo service cloudera-scm-agent  restart
 </code></pre>
 
 <p>restart master</p>
 
-<pre><code>sudo service cloudera-scm-server restart
-sudo service cloudera-scm-agent  restart
+<pre><code class="bash">$ sudo service cloudera-scm-server restart
+$  sudo service cloudera-scm-agent  restart
 </code></pre>
 
 <p>open the link on browser:</p>
@@ -511,7 +577,7 @@ sudo service cloudera-scm-agent  restart
 
 <p>updating swappiness</p>
 
-<pre><code>vagrant ssh insight-master/insight-slave1/insight-slave2/insight-slave3/insight-slave4 # for all hosts
+<pre><code class="bash">vagrant ssh insight-master/insight-slave1/insight-slave2/insight-slave3/insight-slave4 # for all hosts
 sudo nano /proc/sys/vm/swappiness
 
 # modification
@@ -702,41 +768,6 @@ $ sudo service nginx restart
 <h3>5. Testing</h3>
 
 <p>open the link: <a href="http://202.120.83.105:8088">http://202.120.83.105:8088</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Setting Up MySQL on Ubuntu]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/05/01/setting-up-mysql-on-ubuntu/"/>
-    <updated>2015-05-01T10:50:00+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/05/01/setting-up-mysql-on-ubuntu</id>
-    <content type="html"><![CDATA[<p>installation</p>
-
-<pre><code class="bash">$ sudo apt-get install mysql-server libmysql-java
-</code></pre>
-
-<p>configuration</p>
-
-<pre><code class="bash">$ sudo nano /etc/mysql/my.cnf
-
-# comment bind-address
-# bind-address = 127.0.0.1
-</code></pre>
-
-<p>configurating database</p>
-
-<pre><code class="bash">$ sudo service mysql restart
-$ mysql -uroot -p
-
-$ create database analytics DEFAULT CHARACTER SET utf8;
-$ grant all on analytics.* TO 'insight'@'%' IDENTIFIED BY 'analytics_password';
-$ grant all on analytics.* TO 'insight'@'202.120.83.105' IDENTIFIED BY 'analytics_password';
-$ grant all on analytics.* TO 'insight'@'202.120.83.101' IDENTIFIED BY 'analytics_password';
-
-$ GRANT ALL ON *.* TO insight@'localhost'  IDENTIFIED BY 'insight' WITH GRANT OPTION;
-
-$ exit;
-</code></pre>
 ]]></content>
   </entry>
   
