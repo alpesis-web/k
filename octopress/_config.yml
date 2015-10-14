@@ -71,9 +71,9 @@ default_asides: []
 # page_asides:
 projects_asides: [asides/github.html]
 tech_asides: [asides/recent_posts_tech.html, asides/category_list_tech.html, asides/tag_cloud.html]
-art_asides: [asides/recent_posts_art.html, asides/category_list.html, asides/tag_cloud.html]
-life_asides: [asides/recent_posts_life.html, asides/category_list.html, asides/tag_cloud.html]
-archives_asides: [asides/category_list.html, asides/tag_cloud.html]
+art_asides: [asides/recent_posts_art.html, asides/category_list_art.html, asides/tag_cloud.html]
+life_asides: [asides/recent_posts_life.html, asides/category_list_life.html, asides/tag_cloud.html]
+archives_asides: [asides/category_list.html, asides/category_list_tech.html, asides/category_list_art.html, asides/category_list_life.html, asides/tag_cloud.html]
 
 # ----------------------- #
 #   3rd Party Settings    #
