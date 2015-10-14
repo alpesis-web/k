@@ -1,0 +1,455 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>MySQL - Kelly Chan</title>
+  <meta name="author" content="Kelly Chan">
+
+  
+  <meta name="description" content="1. Installation Ubuntu 1
+2
+3
+$ sudo apt-get install mysql-server
+$ sudo service mysql start/stop/restart
+$ mysql -u root -p 2. Commands 2.1. database &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://k.arttechresearch.com/tech/2014/11/13/mysql/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Kelly Chan" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  <!-- MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript"
+   src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+  
+
+<script type="text/javascript">
+
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-53625944-7', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+</head>
+
+<body   >
+  <header role="banner"><ul class="soc">
+
+  
+    <li><a class="soc-github" href="https://github.com/KellyChan"></a></li>
+  
+
+  
+    <li><a class="soc-twitter" href="https://twitter.com/kwailamchan"></a></li>
+  
+
+  
+    <li><a class="soc-pinterest" href="https://www.pinterest.com/wailamchan/"></a></li>
+  
+
+  
+    <li><a class="soc-email1 soc-icon-last" href="mailto:support@arttechresearch.com"></a></li>
+  
+</ul>
+
+<hgroup>
+  <h1><a href="/">Kelly Chan</a></h1>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="k.arttechresearch.com">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/tech">Tech</a></li>
+  <li><a href="/art">Art</a></li>
+  <li><a href="/life">Life</a></li>
+  <li><a href="/archives">Archives</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <li><a href="/devkits">Devkits</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+
+    
+      <h1 class="entry-title">MySQL</h1>
+    
+
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-11-13T16:41:10+08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>4:41 pm</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://k.arttechresearch.com">Comments</a>
+        
+      </p>
+    
+
+  </header>
+
+
+
+  <div class="entry-content"><h2>1. Installation</h2>
+
+<p>Ubuntu</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install mysql-server
+</span><span class='line'><span class="nv">$ </span>sudo service mysql start/stop/restart
+</span><span class='line'><span class="nv">$ </span>mysql -u root -p
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>2. Commands</h2>
+
+<h3>2.1. database</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mysql&gt; SHOW DATABASES<span class="p">;</span>
+</span><span class='line'>mysql&gt; CREATE DATABASE database name<span class="p">;</span>
+</span><span class='line'>mysql&gt;  DROP DATABASE database name<span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>2.2. schemas</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mysql&gt;  USE database_name<span class="p">;</span>
+</span><span class='line'>mysql&gt; SHOW tables<span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>2.3. tables</h3>
+
+<p>create a table</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mysql&gt; CREATE TABLE potluck <span class="o">(</span>id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+</span><span class='line'>name VARCHAR<span class="o">(</span>20<span class="o">)</span>,
+</span><span class='line'>food VARCHAR<span class="o">(</span>30<span class="o">)</span>,
+</span><span class='line'>confirmed CHAR<span class="o">(</span>1<span class="o">)</span>,
+</span><span class='line'>signup_date DATE<span class="o">)</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>insert a record</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mysql&gt; INSERT INTO <span class="sb">`</span>potluck<span class="sb">`</span> <span class="o">(</span><span class="sb">`</span>id<span class="sb">`</span>,<span class="sb">`</span>name<span class="sb">`</span>,<span class="sb">`</span>food<span class="sb">`</span>,<span class="sb">`</span>confirmed<span class="sb">`</span>,<span class="sb">`</span>signup_date<span class="sb">`</span><span class="o">)</span> VALUES <span class="o">(</span>NULL, <span class="s2">&quot;John&quot;</span>, <span class="s2">&quot;Casserole&quot;</span>,<span class="s2">&quot;Y&quot;</span>, <span class="s1">&#39;2012-04-11&#39;</span><span class="o">)</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>update a record</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mysql&gt; UPDATE <span class="sb">`</span>potluck<span class="sb">`</span>
+</span><span class='line'>SET
+</span><span class='line'><span class="sb">`</span>confirmed<span class="sb">`</span> <span class="o">=</span> <span class="s1">&#39;Y&#39;</span>
+</span><span class='line'>WHERE <span class="sb">`</span>potluck<span class="sb">`</span>.<span class="sb">`</span>name<span class="sb">`</span> <span class="o">=</span><span class="s1">&#39;Sandy&#39;</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>delete a column/row</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mysql&gt; ALTER TABLE potluck ADD email VARCHAR<span class="o">(</span>40<span class="o">)</span><span class="p">;</span>
+</span><span class='line'>mysql&gt; DELETE from <span class="o">[</span>table name<span class="o">]</span> where <span class="o">[</span>column name<span class="o">]=[</span>field text<span class="o">]</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>3. Configurations</h2>
+</div>
+
+
+
+  <footer>
+
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kelly Chan</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-11-13T16:41:10+08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>4:41 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/tech/'>tech</a>
+  
+</span>
+
+
+      
+
+<span class="categories">
+  
+    <a class='tag' href='/tags/db/'>db</a>, <a class='tag' href='/tags/mysql/'>mysql</a>, <a class='tag' href='/tags/sql/'>sql</a>
+  
+</span>
+
+
+    </p>
+
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://k.arttechresearch.com/tech/2014/11/13/mysql/" data-via="kwailamchan" data-counturl="http://k.arttechresearch.com/tech/2014/11/13/mysql/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/tech/2014/11/12/ansible/" title="Previous Post: Ansible">&laquo; Ansible</a>
+      
+      
+        <a class="basic-alignment right" href="/tech/2014/11/27/package-managers/" title="Next Post: Package Managers">Package Managers &raquo;</a>
+      
+    </p>
+
+  </footer>
+
+</article>
+
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Tech</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/tech/2015/10/13/using-mathjax-with-octopress/">Using MathJax With Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/10/03/installing-openstack-devstack/">Installing Openstack Devstack</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/05/01/setting-up-mysql-on-ubuntu/">Setting Up MySQL on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/04/26/installing-emacs-on-ubuntu/">Installing Emacs on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/04/25/automatically-running-shell-scripts-on-ubuntu/">Automatically Running Shell Scripts on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/04/25/it-could-not-access-network-on-ubuntu/">It Could Not Access Network on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/04/25/installing-pycharm-on-ubuntu-12.04/">Installing PyCharm on Ubuntu 12.04</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/02/11/setup-a-git-server/">Setup a Git Server</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/02/01/configurating-nginx-for-django-projects-on-ubuntu/">Configurating Nginx for Django Projects on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2014/12/15/installing-jenkins-on-ubuntu/">Installing Jenkins on Ubuntu</a>
+      </li>
+    
+  </ul>
+</section>
+<section class="category-list">
+    <h1>Projects</h1>
+    <ul id="category-list">
+        <li><a href="/tags/edx">edX</a></li>
+    </ul>
+
+    <h1>Programming</h1>
+    <ul id="category-list">
+        <li><a href="/tags/python">Python</a></li>
+        <li><a href="/tags/ruby">Ruby</a></li>
+        <li><a href="/tags/nodejs">Node.js</a></li>
+        <li><a href="/tags/javascript">Javascript</a></li>
+        <li><a href="/tags/html">HTML</a></li>
+        <li>
+            <span><a href="/tags/css">CSS</a></span> / 
+            <span><a href="/tags/sass">SASS</a></span>   
+        </li>
+    </ul>
+
+    <h1>Devops</h1>
+    <ul id="category-list">
+        <li>
+            <span><a href="/tags/linux">Linux</a></span> /
+            <span><a href="/tags/ubuntu">Ubuntu</a></span>
+        </li>
+        <li>
+            <span><a href="/tags/vagrant">Vagrant</a></span> /
+            <span><a href="/tags/docker">Docker</a></span>
+        </li>
+        <li><a href="/tags/ansible">Ansible</a></li>
+    </ul>
+   
+</section>
+<section class="tag-cloud">
+
+
+  <h1>Tags</h1>
+    <ul id="category-list"><a href='/tags/algorithm' style='font-size: 117.5%'>algorithm(7)</a> <a href='/tags/ansible' style='font-size: 94.58333333333333%'>ansible(2)</a> <a href='/tags/antique' style='font-size: 90.0%'>antique(1)</a> <a href='/tags/api' style='font-size: 90.0%'>api(1)</a> <a href='/tags/ascii' style='font-size: 90.0%'>ascii(1)</a> <a href='/tags/beautifulsoup' style='font-size: 90.0%'>beautifulsoup(1)</a> <a href='/tags/career' style='font-size: 94.58333333333333%'>career(2)</a> <a href='/tags/classification' style='font-size: 94.58333333333333%'>classification(2)</a> <a href='/tags/cloud' style='font-size: 90.0%'>cloud(1)</a> <a href='/tags/cloudera' style='font-size: 90.0%'>cloudera(1)</a> <a href='/tags/computer-vision' style='font-size: 90.0%'>computer vision(1)</a> <a href='/tags/crawler' style='font-size: 94.58333333333333%'>crawler(2)</a> <a href='/tags/css' style='font-size: 90.0%'>css(1)</a> <a href='/tags/data' style='font-size: 90.0%'>data(1)</a> <a href='/tags/db' style='font-size: 90.0%'>db(1)</a> <a href='/tags/devops' style='font-size: 99.16666666666667%'>devops(3)</a> <a href='/tags/django' style='font-size: 94.58333333333333%'>django(2)</a> <a href='/tags/dns' style='font-size: 90.0%'>dns(1)</a> <a href='/tags/docker' style='font-size: 90.0%'>docker(1)</a> <a href='/tags/edx' style='font-size: 99.16666666666667%'>edX(3)</a> <a href='/tags/edx-analytics' style='font-size: 94.58333333333333%'>edX Analytics(2)</a> <a href='/tags/edx-platform' style='font-size: 90.0%'>edX Platform(1)</a> <a href='/tags/emacs' style='font-size: 94.58333333333333%'>emacs(2)</a> <a href='/tags/exhibition' style='font-size: 90.0%'>exhibition(1)</a> <a href='/tags/fiction' style='font-size: 112.91666666666667%'>fiction(6)</a> <a href='/tags/french' style='font-size: 90.0%'>french(1)</a> <a href='/tags/git' style='font-size: 90.0%'>git(1)</a> <a href='/tags/github' style='font-size: 90.0%'>github(1)</a> <a href='/tags/gunicorn' style='font-size: 90.0%'>gunicorn(1)</a> <a href='/tags/hadoop' style='font-size: 90.0%'>hadoop(1)</a> <a href='/tags/html' style='font-size: 90.0%'>html(1)</a> <a href='/tags/ide' style='font-size: 94.58333333333333%'>ide(2)</a> <a href='/tags/javascript' style='font-size: 99.16666666666667%'>javascript(3)</a> <a href='/tags/jekyll' style='font-size: 90.0%'>jekyll(1)</a> <a href='/tags/jenkins' style='font-size: 90.0%'>jenkins(1)</a> <a href='/tags/leisure' style='font-size: 190.83333333333331%'>leisure(23)</a> <a href='/tags/linux' style='font-size: 117.5%'>linux(7)</a> <a href='/tags/machine-learning' style='font-size: 135.83333333333334%'>machine learning(11)</a> <a href='/tags/mathjax' style='font-size: 94.58333333333333%'>mathjax(2)</a> <a href='/tags/mysql' style='font-size: 99.16666666666667%'>mysql(3)</a> <a href='/tags/network' style='font-size: 90.0%'>network(1)</a> <a href='/tags/nginx' style='font-size: 90.0%'>nginx(1)</a> <a href='/tags/nlp' style='font-size: 112.91666666666667%'>nlp(6)</a> <a href='/tags/nltk' style='font-size: 90.0%'>nltk(1)</a> <a href='/tags/nodejs' style='font-size: 90.0%'>nodejs(1)</a> <a href='/tags/octopress' style='font-size: 90.0%'>octopress(1)</a> <a href='/tags/openstack' style='font-size: 90.0%'>openstack(1)</a> <a href='/tags/pandas' style='font-size: 94.58333333333333%'>pandas(2)</a> <a href='/tags/poem' style='font-size: 103.75%'>poem(4)</a> <a href='/tags/prediction' style='font-size: 90.0%'>prediction(1)</a> <a href='/tags/pycharm' style='font-size: 90.0%'>pycharm(1)</a> <a href='/tags/python' style='font-size: 200.0%'>python(25)</a> <a href='/tags/reading' style='font-size: 117.5%'>reading(7)</a> <a href='/tags/regex' style='font-size: 90.0%'>regex(1)</a> <a href='/tags/ruby' style='font-size: 99.16666666666667%'>ruby(3)</a> <a href='/tags/sql' style='font-size: 90.0%'>sql(1)</a> <a href='/tags/supervisor' style='font-size: 90.0%'>supervisor(1)</a> <a href='/tags/time-series' style='font-size: 90.0%'>time series(1)</a> <a href='/tags/translation' style='font-size: 90.0%'>translation(1)</a> <a href='/tags/ubuntu' style='font-size: 122.08333333333334%'>ubuntu(8)</a> <a href='/tags/unicode' style='font-size: 90.0%'>unicode(1)</a> <a href='/tags/vagrant' style='font-size: 90.0%'>vagrant(1)</a> <a href='/tags/vim' style='font-size: 90.0%'>vim(1)</a> <a href='/tags/vm' style='font-size: 90.0%'>vm(1)</a> <a href='/tags/web' style='font-size: 94.58333333333333%'>web(2)</a> </ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2006-2015 - Kelly Chan
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'kwailamc';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://k.arttechresearch.com/tech/2014/11/13/mysql/';
+        var disqus_url = 'http://k.arttechresearch.com/tech/2014/11/13/mysql/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

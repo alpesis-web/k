@@ -1,0 +1,955 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Vagrant - Kelly Chan</title>
+  <meta name="author" content="Kelly Chan">
+
+  
+  <meta name="description" content="1. Installation 1.1. Ubuntu 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+$ sudo apt-get install dpkg-dev virtualbox-dkms $ cd /tmp
+$ wget https://dl.bintray.com/ &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://k.arttechresearch.com/tech/2014/10/15/vagrant/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Kelly Chan" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  <!-- MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript"
+   src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+  
+
+<script type="text/javascript">
+
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-53625944-7', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+</head>
+
+<body   >
+  <header role="banner"><ul class="soc">
+
+  
+    <li><a class="soc-github" href="https://github.com/KellyChan"></a></li>
+  
+
+  
+    <li><a class="soc-twitter" href="https://twitter.com/kwailamchan"></a></li>
+  
+
+  
+    <li><a class="soc-pinterest" href="https://www.pinterest.com/wailamchan/"></a></li>
+  
+
+  
+    <li><a class="soc-email1 soc-icon-last" href="mailto:support@arttechresearch.com"></a></li>
+  
+</ul>
+
+<hgroup>
+  <h1><a href="/">Kelly Chan</a></h1>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="k.arttechresearch.com">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/tech">Tech</a></li>
+  <li><a href="/art">Art</a></li>
+  <li><a href="/life">Life</a></li>
+  <li><a href="/archives">Archives</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <li><a href="/devkits">Devkits</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+
+    
+      <h1 class="entry-title">Vagrant</h1>
+    
+
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-10-15T11:17:29+08:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>11:17 am</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://k.arttechresearch.com">Comments</a>
+        
+      </p>
+    
+
+  </header>
+
+
+
+  <div class="entry-content"><h2>1. Installation</h2>
+
+<h3>1.1. Ubuntu</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install dpkg-dev virtualbox-dkms
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /tmp
+</span><span class='line'><span class="nv">$ </span>wget https://dl.bintray.com/mitchellh/vagrant/vagrant_1.7.2_i686.deb          <span class="c"># 32-bit</span>
+</span><span class='line'><span class="nv">$ </span>wget https://dl.bintray.com/mitchellh/vagrant/vagrant_1.7.2_x86_64.deb        <span class="c"># 64-bit</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo dpkg -i vagrant_1.7.2_i686.deb
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install linux-headers-<span class="k">$(</span>uname -r<span class="k">)</span>
+</span><span class='line'><span class="nv">$ </span>sudo dpkg-reconfigure virtualbox-dkms
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span><span class="c"># plugin</span>
+</span><span class='line'><span class="nv">$ </span>vagrant plugin install vagrant-vbguest
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>2. Vagrant Commands</h2>
+
+<h3>2.1. Get Started</h3>
+
+<p>manage a vm</p>
+
+<figure class='code'><figcaption><span>manage a vm</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>vagrant box add box_name box_path/box_name
+</span><span class='line'><span class="nv">$ </span>vagrant init box_name
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>vagrant up
+</span><span class='line'><span class="nv">$ </span>vagrant up --provider<span class="o">=</span>vmware_fusion
+</span><span class='line'><span class="nv">$ </span>vagrant up --provider<span class="o">=</span>aws
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>vagrant ssh
+</span><span class='line'><span class="nv">$ </span>vagrant provision
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>vagrant login
+</span><span class='line'><span class="nv">$ </span>vagrant share
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>vagrant <span class="nb">suspend</span>
+</span><span class='line'><span class="nv">$ </span>vagrant halt
+</span><span class='line'><span class="nv">$ </span>vagrant destroy
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>help</p>
+
+<figure class='code'><figcaption><span>vagrant help</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>vagrant xxx -h
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>2.2. Vagrant Box, Package</h3>
+
+<p>vagrant box</p>
+
+<figure class='code'><figcaption><span>vagrant box commands</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>vagrant box add box_name box_path/box_name
+</span><span class='line'><span class="nv">$ </span>vagrant box list
+</span><span class='line'><span class="nv">$ </span>vagrant box outdated --global
+</span><span class='line'><span class="nv">$ </span>vagrant box remove NAME
+</span><span class='line'><span class="nv">$ </span>vagrant box repackage NAME PROVIDER VERSION
+</span><span class='line'><span class="nv">$ </span>vagrant box update
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>vagrant box add ADDRESS
+</span><span class='line'><span class="nv">$ </span>vagrant box add ADDRESS --box-version VALUE
+</span><span class='line'>                          --cacert CERTFILE
+</span><span class='line'>                          --capath CERTDIR
+</span><span class='line'>                          --cert CERTFILE
+</span><span class='line'>                          --clean
+</span><span class='line'>                          --force
+</span><span class='line'>                          --insecure
+</span><span class='line'>                          --provider PROVIDER
+</span><span class='line'>
+</span><span class='line'>                          --checksum VALUE
+</span><span class='line'>                          --checksum-type TYPE
+</span><span class='line'>                          --name VALUE
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>vagrant box remove NAME --box-version VALUE
+</span><span class='line'>                          --force
+</span><span class='line'>                          --provider VALUE
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>vagrant box update --box VALUE
+</span><span class='line'>                     --provider VALUE
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>vagrant package</p>
+
+<figure class='code'><figcaption><span>vagrant package</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>vagrant package --base NAME
+</span><span class='line'>                  --output NAME
+</span><span class='line'>                  --include x,y,z
+</span><span class='line'>                  --vagrantfile FILE
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>2.3. Vagrant Connect, Share, Rdp</h3>
+
+<p>vagrant connect</p>
+
+<figure class='code'><figcaption><span>vagrant connect</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>vagrant connect NAME --disable-static-ip
+</span><span class='line'>                       --static-ip IP
+</span><span class='line'>                       --ssh
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>vagrant share</p>
+
+<figure class='code'><figcaption><span>vagrant share</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>vagrant share --disable-http
+</span><span class='line'>                --http PORT
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>vagrant rdp</p>
+
+<figure class='code'><figcaption><span>vagrant rdp</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>vagrant rdp -- /span
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>2.4. Vagrant Init, Up, Destroy, Halt, Reload, Resume/Suspend</h3>
+
+<p>vagrant init</p>
+
+<figure class='code'><figcaption><span>vagrant init</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>vagrant init <span class="o">[</span>box-name<span class="o">]</span> <span class="o">[</span>box-url<span class="o">]</span> --force
+</span><span class='line'>                                    --minimal
+</span><span class='line'>                                    --output FILE
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>vagrant up</p>
+
+<figure class='code'><figcaption><span>vagrant up</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>vagrant up --<span class="o">[</span>no-<span class="o">]</span>destroy-on-error
+</span><span class='line'>             --<span class="o">[</span>no-<span class="o">]</span>parallel
+</span><span class='line'>             --provider x
+</span><span class='line'>             --provision
+</span><span class='line'>             --provision-with x,y,z
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>vagrant destroy</p>
+
+<figure class='code'><figcaption><span>vagrant destroy</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>vagrant destroy -f
+</span><span class='line'>                  --force
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>vagrant halt</p>
+
+<figure class='code'><figcaption><span>vagrant halt</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>vagrant halt -f
+</span><span class='line'>               --force
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>vagrant reload</p>
+
+<figure class='code'><figcaption><span>vagrant reload</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>vagrant reload --provision
+</span><span class='line'>                 --provision-with x,y,z
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>vagrant resume/suspend</p>
+
+<figure class='code'><figcaption><span>vagrant resume/suspend</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>vagrant resume
+</span><span class='line'><span class="nv">$ </span>vagrant <span class="nb">suspend</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>2.5. Vagrant Login, SSH, SSH-Config</h3>
+
+<p>vagrant login</p>
+
+<figure class='code'><figcaption><span>vagrant login</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>vagrant login --check
+</span><span class='line'>                --logout
+</span><span class='line'>                --token
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>vagrant ssh</p>
+
+<figure class='code'><figcaption><span>vagrant ssh</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>vagrant ssh -c COMMAND
+</span><span class='line'>              --command COMMAND
+</span><span class='line'>              -p
+</span><span class='line'>              --plain
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>vagrant ssh-config</p>
+
+<figure class='code'><figcaption><span>vagrant ssh-config</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>vagrant ssh-config --host NAME
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>2.6. Vagrant Status and Version</h3>
+
+<p>vagrant status</p>
+
+<figure class='code'><figcaption><span>vagrant status</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>vagrant status
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>vagrant global-status</p>
+
+<figure class='code'><figcaption><span>vagrant global-status</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>vagrant global-status --prune
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>vagrant version</p>
+
+<figure class='code'><figcaption><span>vagrant version</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>vagrant version
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>2.7. Vagrant Provision</h3>
+
+<p>vagrant provision</p>
+
+<figure class='code'><figcaption><span>vagrant provision</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>vagrant provision --provision-with x,y,z
+</span><span class='line'><span class="nv">$ </span>vagrant provision --provision-with shell
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>2.8. Vagrant Plugin</h3>
+
+<p>vagrant plugin</p>
+
+<figure class='code'><figcaption><span>vagrant plugin</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>vagrant plugin install NAME --entry-point ENTRYPOINT
+</span><span class='line'>                              --plugin-source SOURCE
+</span><span class='line'>                              --plugin-version VERSION
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>vagrant plugin uninstall NAME
+</span><span class='line'><span class="nv">$ </span>vagrant plugin license NAME LICENSE_FILE
+</span><span class='line'><span class="nv">$ </span>vagrant plugin list
+</span><span class='line'><span class="nv">$ </span>vagrant plugin update NAME
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>2.9. Vagrant Help</h3>
+
+<p>vagrant help</p>
+
+<figure class='code'><figcaption><span>vagrant help</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>vagrant -h
+</span><span class='line'><span class="nv">$ </span>vagrant list-commands
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>3. Vagrantfile</h2>
+
+<h3>3.1. Configuration Version</h3>
+
+<figure class='code'><figcaption><span>configuration version</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">Vagrant</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+</span><span class='line'>  <span class="c1"># ...</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>3.2. Minimum Vagrant Version</h3>
+
+<figure class='code'><figcaption><span>minimum vagrant version</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">Vagrant</span><span class="o">.</span><span class="n">require_version</span> <span class="s2">&quot;&gt;= 1.3.5&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>3.3. Loop Over VM Definitions</h3>
+
+<figure class='code'><figcaption><span>loop over vm definitions</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="p">(</span><span class="mi">1</span><span class="o">.</span><span class="n">.</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">i</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">define</span> <span class="s2">&quot;node-</span><span class="si">#{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">do</span> <span class="o">|</span><span class="n">node</span><span class="o">|</span>
+</span><span class='line'>    <span class="n">node</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provision</span> <span class="s2">&quot;shell&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="ss">inline</span><span class="p">:</span> <span class="s2">&quot;echo hello from node </span><span class="si">#{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>3.4. config.vm</h3>
+
+<figure class='code'><figcaption><span>config.vm</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">boot_timeout</span>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">graceful_halt_timeout</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box</span>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box_check_update</span>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box_download_checksum</span>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box_download_checksum_type</span>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box_download_checksum</span>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box_download_client_cert</span>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box_download_ca_cert</span>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box_download_ca_path</span>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box_download_insecure</span>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box_download_location_trusted</span>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">vm_box_url</span>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box_version</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">communicator</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">guest</span>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">hostname</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">network</span>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">usable_port_range</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">post_up_message</span>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provider</span>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provision</span>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">synced_folder</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>3.4.1. box</h4>
+
+<h4>3.4.2. provisioning</h4>
+
+<p>vagrant provision with shell scripts</p>
+
+<p><code>vagrant provision</code> for running shell scripts</p>
+
+<figure class='code'><figcaption><span>bootstrap.sh</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/usr/bin/env bash</span>
+</span><span class='line'>
+</span><span class='line'>apt-get update
+</span><span class='line'>apt-get install -y apache2
+</span><span class='line'><span class="k">if</span> ! <span class="o">[</span> -L /var/www <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span><span class='line'>  rm -rf /var/www
+</span><span class='line'>  ln -fs /vagrant /var/www
+</span><span class='line'><span class="k">fi</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>Vagrantfile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">Vagrant</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="s2">&quot;2&quot;</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box</span> <span class="o">=</span> <span class="s2">&quot;hashicorp/precise32&quot;</span>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provision</span> <span class="ss">:shell</span><span class="p">,</span> <span class="ss">path</span><span class="p">:</span> <span class="s2">&quot;bootstrap.sh&quot;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>3.4.3. networking</h4>
+
+<figure class='code'><figcaption><span>Vagrantfile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">Vagrant</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="s2">&quot;2&quot;</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box</span> <span class="o">=</span> <span class="s2">&quot;hashicorp/precise32&quot;</span>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provision</span> <span class="ss">:shell</span><span class="p">,</span> <span class="ss">path</span><span class="p">:</span> <span class="s2">&quot;bootstrap.sh&quot;</span>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">network</span> <span class="ss">:forwarded_port</span><span class="p">,</span> <span class="ss">guest</span><span class="p">:</span> <span class="mi">80</span><span class="p">,</span> <span class="ss">host</span><span class="p">:</span> <span class="mi">4567</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>3.4.4. synced folders</h4>
+
+<h4>3.4.5. multi-machines</h4>
+
+<h4>3.4.6. providers</h4>
+
+<h4>3.4.7. plugins</h4>
+
+<h4>3.4.8. push</h4>
+
+<h4>3.4.9. debug and env_vars</h4>
+
+<h3>3.5. config.ssh</h3>
+
+<figure class='code'><figcaption><span>config.ssh</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">ssh</span><span class="o">.</span><span class="n">username</span>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">ssh</span><span class="o">.</span><span class="n">password</span>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">ssh</span><span class="o">.</span><span class="n">host</span>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">ssh</span><span class="o">.</span><span class="n">port</span>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">ssh</span><span class="o">.</span><span class="n">guest_port</span>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">ssh</span><span class="o">.</span><span class="n">private_key_path</span>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">ssh</span><span class="o">.</span><span class="n">forward_agent</span>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">ssh</span><span class="o">.</span><span class="n">forward_x11</span>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">ssh</span><span class="o">.</span><span class="n">insert_key</span>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">ssh</span><span class="o">.</span><span class="n">proxy_command</span>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">ssh</span><span class="o">.</span><span class="n">pty</span>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">ssh</span><span class="o">.</span><span class="n">shell</span>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">ssh</span><span class="o">.</span><span class="n">sudo_command</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>3.6. config.winrm</h3>
+
+<figure class='code'><figcaption><span>config.winrm</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">winrm</span><span class="o">.</span><span class="n">username</span>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">winrm</span><span class="o">.</span><span class="n">password</span>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">winrm</span><span class="o">.</span><span class="n">host</span>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">winrm</span><span class="o">.</span><span class="n">port</span>
+</span><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">winrm</span><span class="o">.</span><span class="n">guest_port</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>3.7. config.vagrant</h3>
+
+<figure class='code'><figcaption><span>config.vagrant</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">vagrant</span><span class="o">.</span><span class="n">host</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>References</h2>
+
+<ol>
+<li><a href="https://www.vagrantup.com">Vagrant Official Site</a></li>
+<li><a href="">Vagrant Source Code</a></li>
+<li><a href="https://www.vagrantup.com/downloads.html">Vagrant Downloads</a></li>
+<li><a href="https://docs.vagrantup.com/v2/">Vagrant Documentation</a></li>
+</ol>
+
+</div>
+
+
+
+  <footer>
+
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kelly Chan</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-10-15T11:17:29+08:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>11:17 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/tech/'>tech</a>
+  
+</span>
+
+
+      
+
+<span class="categories">
+  
+    <a class='tag' href='/tags/devops/'>devops</a>, <a class='tag' href='/tags/vagrant/'>vagrant</a>, <a class='tag' href='/tags/vm/'>vm</a>
+  
+</span>
+
+
+    </p>
+
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://k.arttechresearch.com/tech/2014/10/15/vagrant/" data-via="kwailamchan" data-counturl="http://k.arttechresearch.com/tech/2014/10/15/vagrant/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/tech/2014/09/16/python-django/" title="Previous Post: Python Django">&laquo; Python Django</a>
+      
+      
+        <a class="basic-alignment right" href="/tech/2014/10/16/installing-edx-platform/" title="Next Post: Installing edX Platform">Installing edX Platform &raquo;</a>
+      
+    </p>
+
+  </footer>
+
+</article>
+
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Tech</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/tech/2015/10/13/using-mathjax-with-octopress/">Using MathJax With Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/10/03/installing-openstack-devstack/">Installing Openstack Devstack</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/05/01/setting-up-mysql-on-ubuntu/">Setting Up MySQL on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/04/26/installing-emacs-on-ubuntu/">Installing Emacs on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/04/25/automatically-running-shell-scripts-on-ubuntu/">Automatically Running Shell Scripts on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/04/25/it-could-not-access-network-on-ubuntu/">It Could Not Access Network on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/04/25/installing-pycharm-on-ubuntu-12.04/">Installing PyCharm on Ubuntu 12.04</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/02/11/setup-a-git-server/">Setup a Git Server</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/02/01/configurating-nginx-for-django-projects-on-ubuntu/">Configurating Nginx for Django Projects on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2014/12/15/installing-jenkins-on-ubuntu/">Installing Jenkins on Ubuntu</a>
+      </li>
+    
+  </ul>
+</section>
+<section class="category-list">
+    <h1>Projects</h1>
+    <ul id="category-list">
+        <li><a href="/tags/edx">edX</a></li>
+    </ul>
+
+    <h1>Programming</h1>
+    <ul id="category-list">
+        <li><a href="/tags/python">Python</a></li>
+        <li><a href="/tags/ruby">Ruby</a></li>
+        <li><a href="/tags/nodejs">Node.js</a></li>
+        <li><a href="/tags/javascript">Javascript</a></li>
+        <li><a href="/tags/html">HTML</a></li>
+        <li>
+            <span><a href="/tags/css">CSS</a></span> / 
+            <span><a href="/tags/sass">SASS</a></span>   
+        </li>
+    </ul>
+
+    <h1>Devops</h1>
+    <ul id="category-list">
+        <li>
+            <span><a href="/tags/linux">Linux</a></span> /
+            <span><a href="/tags/ubuntu">Ubuntu</a></span>
+        </li>
+        <li>
+            <span><a href="/tags/vagrant">Vagrant</a></span> /
+            <span><a href="/tags/docker">Docker</a></span>
+        </li>
+        <li><a href="/tags/ansible">Ansible</a></li>
+    </ul>
+   
+</section>
+<section class="tag-cloud">
+
+
+  <h1>Tags</h1>
+    <ul id="category-list"><a href='/tags/algorithm' style='font-size: 117.5%'>algorithm(7)</a> <a href='/tags/ansible' style='font-size: 94.58333333333333%'>ansible(2)</a> <a href='/tags/antique' style='font-size: 90.0%'>antique(1)</a> <a href='/tags/api' style='font-size: 90.0%'>api(1)</a> <a href='/tags/ascii' style='font-size: 90.0%'>ascii(1)</a> <a href='/tags/beautifulsoup' style='font-size: 90.0%'>beautifulsoup(1)</a> <a href='/tags/career' style='font-size: 94.58333333333333%'>career(2)</a> <a href='/tags/classification' style='font-size: 94.58333333333333%'>classification(2)</a> <a href='/tags/cloud' style='font-size: 90.0%'>cloud(1)</a> <a href='/tags/cloudera' style='font-size: 90.0%'>cloudera(1)</a> <a href='/tags/computer-vision' style='font-size: 90.0%'>computer vision(1)</a> <a href='/tags/crawler' style='font-size: 94.58333333333333%'>crawler(2)</a> <a href='/tags/css' style='font-size: 90.0%'>css(1)</a> <a href='/tags/data' style='font-size: 90.0%'>data(1)</a> <a href='/tags/db' style='font-size: 90.0%'>db(1)</a> <a href='/tags/devops' style='font-size: 99.16666666666667%'>devops(3)</a> <a href='/tags/django' style='font-size: 94.58333333333333%'>django(2)</a> <a href='/tags/dns' style='font-size: 90.0%'>dns(1)</a> <a href='/tags/docker' style='font-size: 90.0%'>docker(1)</a> <a href='/tags/edx' style='font-size: 99.16666666666667%'>edX(3)</a> <a href='/tags/edx-analytics' style='font-size: 94.58333333333333%'>edX Analytics(2)</a> <a href='/tags/edx-platform' style='font-size: 90.0%'>edX Platform(1)</a> <a href='/tags/emacs' style='font-size: 94.58333333333333%'>emacs(2)</a> <a href='/tags/exhibition' style='font-size: 90.0%'>exhibition(1)</a> <a href='/tags/fiction' style='font-size: 112.91666666666667%'>fiction(6)</a> <a href='/tags/french' style='font-size: 90.0%'>french(1)</a> <a href='/tags/git' style='font-size: 90.0%'>git(1)</a> <a href='/tags/github' style='font-size: 90.0%'>github(1)</a> <a href='/tags/gunicorn' style='font-size: 90.0%'>gunicorn(1)</a> <a href='/tags/hadoop' style='font-size: 90.0%'>hadoop(1)</a> <a href='/tags/html' style='font-size: 90.0%'>html(1)</a> <a href='/tags/ide' style='font-size: 94.58333333333333%'>ide(2)</a> <a href='/tags/javascript' style='font-size: 99.16666666666667%'>javascript(3)</a> <a href='/tags/jekyll' style='font-size: 90.0%'>jekyll(1)</a> <a href='/tags/jenkins' style='font-size: 90.0%'>jenkins(1)</a> <a href='/tags/leisure' style='font-size: 190.83333333333331%'>leisure(23)</a> <a href='/tags/linux' style='font-size: 117.5%'>linux(7)</a> <a href='/tags/machine-learning' style='font-size: 135.83333333333334%'>machine learning(11)</a> <a href='/tags/mathjax' style='font-size: 94.58333333333333%'>mathjax(2)</a> <a href='/tags/mysql' style='font-size: 99.16666666666667%'>mysql(3)</a> <a href='/tags/network' style='font-size: 90.0%'>network(1)</a> <a href='/tags/nginx' style='font-size: 90.0%'>nginx(1)</a> <a href='/tags/nlp' style='font-size: 112.91666666666667%'>nlp(6)</a> <a href='/tags/nltk' style='font-size: 90.0%'>nltk(1)</a> <a href='/tags/nodejs' style='font-size: 90.0%'>nodejs(1)</a> <a href='/tags/octopress' style='font-size: 90.0%'>octopress(1)</a> <a href='/tags/openstack' style='font-size: 90.0%'>openstack(1)</a> <a href='/tags/pandas' style='font-size: 94.58333333333333%'>pandas(2)</a> <a href='/tags/poem' style='font-size: 103.75%'>poem(4)</a> <a href='/tags/prediction' style='font-size: 90.0%'>prediction(1)</a> <a href='/tags/pycharm' style='font-size: 90.0%'>pycharm(1)</a> <a href='/tags/python' style='font-size: 200.0%'>python(25)</a> <a href='/tags/reading' style='font-size: 117.5%'>reading(7)</a> <a href='/tags/regex' style='font-size: 90.0%'>regex(1)</a> <a href='/tags/ruby' style='font-size: 99.16666666666667%'>ruby(3)</a> <a href='/tags/sql' style='font-size: 90.0%'>sql(1)</a> <a href='/tags/supervisor' style='font-size: 90.0%'>supervisor(1)</a> <a href='/tags/time-series' style='font-size: 90.0%'>time series(1)</a> <a href='/tags/translation' style='font-size: 90.0%'>translation(1)</a> <a href='/tags/ubuntu' style='font-size: 122.08333333333334%'>ubuntu(8)</a> <a href='/tags/unicode' style='font-size: 90.0%'>unicode(1)</a> <a href='/tags/vagrant' style='font-size: 90.0%'>vagrant(1)</a> <a href='/tags/vim' style='font-size: 90.0%'>vim(1)</a> <a href='/tags/vm' style='font-size: 90.0%'>vm(1)</a> <a href='/tags/web' style='font-size: 94.58333333333333%'>web(2)</a> </ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2006-2015 - Kelly Chan
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'kwailamc';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://k.arttechresearch.com/tech/2014/10/15/vagrant/';
+        var disqus_url = 'http://k.arttechresearch.com/tech/2014/10/15/vagrant/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
