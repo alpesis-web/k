@@ -1,7 +1,7 @@
 ---
 layout: post_tech
 titlde: "Installing Jenkins on Ubuntu"
-date:   2015-05-01 11:46:00 +0800
+date:   2014-12-15 11:46:00 +0800
 comments: true
 categories: [tech]
 tags: [jenkins, ubuntu]

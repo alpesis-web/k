@@ -309,15 +309,9 @@ config.vm.provision
 config.vm.synced_folder
 ```
 
-networking
+#### 3.4.1. box
 
-```ruby Vagrantfile
-Vagrant.configure("2") do |config|
-  config.vm.box = "hashicorp/precise32"
-  config.vm.provision :shell, path: "bootstrap.sh"
-  config.vm.network :forwarded_port, guest: 80, host: 4567
-end
-```
+#### 3.4.2. provisioning
 
 vagrant provision with shell scripts
 
@@ -340,6 +334,28 @@ Vagrant.configure("2") do |config|
   config.vm.provision :shell, path: "bootstrap.sh"
 end
 ```
+
+#### 3.4.3. networking
+
+```ruby Vagrantfile
+Vagrant.configure("2") do |config|
+  config.vm.box = "hashicorp/precise32"
+  config.vm.provision :shell, path: "bootstrap.sh"
+  config.vm.network :forwarded_port, guest: 80, host: 4567
+end
+```
+
+#### 3.4.4. synced folders
+
+#### 3.4.5. multi-machines
+
+#### 3.4.6. providers
+
+#### 3.4.7. plugins
+
+#### 3.4.8. push
+
+#### 3.4.9. debug and env_vars
 
 ### 3.5. config.ssh
 
@@ -375,7 +391,6 @@ config.winrm.guest_port
 config.vagrant.host
 ```
 
-## 4. Vagrant Plugins
 
 ## References
 

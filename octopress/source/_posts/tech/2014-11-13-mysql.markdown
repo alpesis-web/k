@@ -1,0 +1,73 @@
+---
+layout: post_tech
+title: "MySQL"
+date: 2014-11-13 16:41:10 +0800
+comments: true
+categories: [tech]
+tags: [sql, mysql, db]
+---
+
+## 1. Installation
+
+Ubuntu
+
+```bash
+$ sudo apt-get install mysql-server
+$ sudo service mysql start/stop/restart
+$ mysql -u root -p
+```
+
+## 2. Commands
+
+### 2.1. database
+
+```bash
+mysql> SHOW DATABASES;
+mysql> CREATE DATABASE database name;
+mysql>  DROP DATABASE database name;
+```
+
+### 2.2. schemas
+
+```bash
+mysql>  USE database_name;
+mysql> SHOW tables; 
+```
+
+### 2.3. tables
+
+create a table
+
+```bash
+mysql> CREATE TABLE potluck (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
+name VARCHAR(20),
+food VARCHAR(30),
+confirmed CHAR(1), 
+signup_date DATE);
+```
+
+insert a record
+
+```bash
+mysql> INSERT INTO `potluck` (`id`,`name`,`food`,`confirmed`,`signup_date`) VALUES (NULL, "John", "Casserole","Y", '2012-04-11');
+```
+
+update a record
+
+```bash
+mysql> UPDATE `potluck` 
+SET 
+`confirmed` = 'Y' 
+WHERE `potluck`.`name` ='Sandy';
+```
+
+delete a column/row
+
+```bash
+mysql> ALTER TABLE potluck ADD email VARCHAR(40);
+mysql> DELETE from [table name] where [column name]=[field text];
+```
+
+
+## 3. Configurations
+

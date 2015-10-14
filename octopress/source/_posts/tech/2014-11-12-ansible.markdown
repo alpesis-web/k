@@ -1,0 +1,123 @@
+---
+layout: post_tech
+title: "Ansible"
+date: 2014-11-12 15:35:13 +0800
+comments: true
+categories: [tech]
+tags: [ansible, devops]
+---
+
+## 1. Installation
+
+Ubuntu
+
+```bash
+$ sudo apt-get install software-properties-common
+$ sudo apt-add-repository ppa:ansible/ansible
+$ sudo apt-get update
+$ sudo apt-get install ansible
+```
+
+pip
+
+```bash
+$ sudo easy_install pip
+$ pip install ansible
+```
+
+## 2. Overview
+
+### 2.1. Folder Construct
+
+```
+./
+|
+|-- playbooks
+|       |
+|       |---- host_vars/           # host vars
+|       |---- group_vars/
+|       |---- roles/               # tasks
+|       |---- playbook.yml         # playbooks
+|       |---- hosts                # inventories
+|       |---- ansible.cfg
+|
+|-- README.md
+|-- AUTHOR
+```
+
+
+### 2.2. Commands
+
+```bash
+$ ansible ...
+$ ansible-playbook ...
+```
+
+## 3. Ansible Commands
+
+### 3.1. ansible
+
+```bash
+$ ansible -i xxx -m xxx -u xxx -a xxx
+$ ansible webservers -i xxx -m xxx -u xxx -a xxx
+$ ansible all -i xxx -m xxx -u xxx -a xxx
+$ ansible all -i hosts -m ping
+```
+
+### 3.2. ansible-playbook
+
+```bash
+$ ansible-playbook playbook.yml --list-hosts
+$ ansible-playbook -c user -i hosts playbook.yml --ask-pass --sudo
+```
+
+
+## 4. Playbooks
+
+
+### 4.1. playbooks
+
+```yml
+- name: Configure instance(s)
+  hosts: all
+  sudo: True
+  gather_facts: True
+  vars:
+    disable_edx_services: true
+    mongo_enable_journal: false
+  roles:
+    - common
+    - app
+```
+
+### 4.2. roles
+
+folder construct
+
+```
+./
+|
+|-- defaults/
+|-- files/
+|-- handlers/
+|-- meta/
+|-- tasks/
+|-- templates/
+```
+
+
+#### 4.2.1. variables
+
+#### 4.2.2. jinja2
+
+#### 4.2.3. loops
+
+#### 4.2.4. blocks
+
+#### 4.2.5. strageties
+
+## References
+
+- [Ansible Official Site](http://www.ansible.com)
+- [Ansible Official Document](http://docs.ansible.com/ansible/index.html)
+- [ansible-tuto](https://github.com/leucos/ansible-tuto)

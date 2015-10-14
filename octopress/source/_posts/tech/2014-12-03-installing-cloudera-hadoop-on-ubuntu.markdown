@@ -1,7 +1,7 @@
 ---
 layout: post_tech
 title:  "Installing Cloudera Hadoop on Ubuntu"
-date:   2015-05-01 11:10:00 +0800
+date:   2014-12-03 11:10:00 +0800
 comments: true
 categories: [tech]
 tags: [cloudera, hadoop, linux, ubuntu]

@@ -1,7 +1,7 @@
 ---
 layout: post_tech
 title:  "Configurating Nginx for Django Projects on Ubuntu"
-date:   2015-05-01 10:54:00 +0800
+date:   2015-02-01 10:54:00 +0800
 comments: true
 categories: [tech]
 tags: [nginx, ubuntu, linux, supervisor, gunicorn, django]
