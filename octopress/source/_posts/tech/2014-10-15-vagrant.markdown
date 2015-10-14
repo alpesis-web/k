@@ -1,0 +1,385 @@
+---
+layout: post_tech
+title: "Vagrant"
+date: 2014-10-15 11:17:29 +0800
+comments: true
+categories: [tech]
+tags: [vagrant, vm, devops]
+---
+
+## 1. Installation
+
+### 1.1. Ubuntu
+
+```bash
+$ sudo apt-get install dpkg-dev virtualbox-dkms
+
+$ cd /tmp
+$ wget https://dl.bintray.com/mitchellh/vagrant/vagrant_1.7.2_i686.deb          # 32-bit
+$ wget https://dl.bintray.com/mitchellh/vagrant/vagrant_1.7.2_x86_64.deb        # 64-bit
+
+$ sudo dpkg -i vagrant_1.7.2_i686.deb
+$ sudo apt-get install linux-headers-$(uname -r)
+$ sudo dpkg-reconfigure virtualbox-dkms
+
+$ # plugin
+$ vagrant plugin install vagrant-vbguest
+```
+
+## 2. Vagrant Commands
+
+### 2.1. Get Started
+
+manage a vm
+
+```bash manage a vm
+$ vagrant box add box_name box_path/box_name
+$ vagrant init box_name
+
+$ vagrant up
+$ vagrant up --provider=vmware_fusion
+$ vagrant up --provider=aws
+
+$ vagrant ssh
+$ vagrant provision
+
+$ vagrant login
+$ vagrant share
+
+$ vagrant suspend
+$ vagrant halt
+$ vagrant destroy
+```
+
+help
+
+```bash vagrant help
+$ vagrant xxx -h
+```
+
+### 2.2. Vagrant Box, Package
+
+vagrant box 
+
+```bash vagrant box commands
+$ vagrant box add box_name box_path/box_name
+$ vagrant box list
+$ vagrant box outdated --global
+$ vagrant box remove NAME
+$ vagrant box repackage NAME PROVIDER VERSION
+$ vagrant box update
+
+$ vagrant box add ADDRESS
+$ vagrant box add ADDRESS --box-version VALUE
+                          --cacert CERTFILE
+                          --capath CERTDIR
+                          --cert CERTFILE
+                          --clean
+                          --force
+                          --insecure
+                          --provider PROVIDER
+
+                          --checksum VALUE
+                          --checksum-type TYPE
+                          --name VALUE
+
+$ vagrant box remove NAME --box-version VALUE 
+                          --force
+                          --provider VALUE
+
+$ vagrant box update --box VALUE
+                     --provider VALUE
+```
+
+vagrant package
+
+```bash vagrant package
+$ vagrant package --base NAME
+                  --output NAME
+                  --include x,y,z
+                  --vagrantfile FILE 
+```
+
+### 2.3. Vagrant Connect, Share, Rdp
+
+vagrant connect 
+
+```bash vagrant connect
+$ vagrant connect NAME --disable-static-ip
+                       --static-ip IP
+                       --ssh
+```
+
+vagrant share
+
+```bash vagrant share
+$ vagrant share --disable-http
+                --http PORT
+```
+
+vagrant rdp
+
+```bash vagrant rdp
+$ vagrant rdp -- /span
+```
+
+### 2.4. Vagrant Init, Up, Destroy, Halt, Reload, Resume/Suspend
+
+vagrant init
+
+```bash vagrant init
+$ vagrant init [box-name] [box-url] --force
+                                    --minimal
+                                    --output FILE
+```
+
+vagrant up
+
+```bash vagrant up
+$ vagrant up --[no-]destroy-on-error
+             --[no-]parallel
+             --provider x
+             --provision
+             --provision-with x,y,z
+```
+
+vagrant destroy
+
+```bash vagrant destroy
+$ vagrant destroy -f
+                  --force
+```
+
+vagrant halt
+
+```bash vagrant halt
+$ vagrant halt -f
+               --force
+```
+
+vagrant reload
+
+```bash vagrant reload
+$ vagrant reload --provision
+                 --provision-with x,y,z
+```
+
+vagrant resume/suspend
+
+```bash vagrant resume/suspend
+$ vagrant resume
+$ vagrant suspend
+```
+
+### 2.5. Vagrant Login, SSH, SSH-Config
+
+vagrant login
+
+```bash vagrant login
+$ vagrant login --check
+                --logout
+                --token
+```
+vagrant ssh
+
+```bash vagrant ssh
+$ vagrant ssh -c COMMAND
+              --command COMMAND
+              -p
+              --plain
+```
+
+vagrant ssh-config
+
+```bash vagrant ssh-config
+$ vagrant ssh-config --host NAME
+```
+
+### 2.6. Vagrant Status and Version
+
+vagrant status
+
+```bash vagrant status
+$ vagrant status
+```
+
+
+vagrant global-status
+
+```bash vagrant global-status
+$ vagrant global-status --prune
+```
+
+vagrant version
+
+```bash vagrant version
+$ vagrant version
+```
+
+### 2.7. Vagrant Provision
+
+vagrant provision
+
+```bash vagrant provision
+$ vagrant provision --provision-with x,y,z
+$ vagrant provision --provision-with shell
+```
+
+### 2.8. Vagrant Plugin
+
+vagrant plugin
+
+```bash vagrant plugin
+$ vagrant plugin install NAME --entry-point ENTRYPOINT
+                              --plugin-source SOURCE
+                              --plugin-version VERSION
+
+$ vagrant plugin uninstall NAME
+$ vagrant plugin license NAME LICENSE_FILE
+$ vagrant plugin list
+$ vagrant plugin update NAME
+```
+
+### 2.9. Vagrant Help
+
+vagrant help
+
+```bash vagrant help
+$ vagrant -h
+$ vagrant list-commands
+```
+
+## 3. Vagrantfile
+
+### 3.1. Configuration Version
+
+```ruby configuration version
+Vagrant.configure(2) do |config|
+  # ...
+end
+```
+
+### 3.2. Minimum Vagrant Version
+
+```ruby minimum vagrant version
+Vagrant.require_version ">= 1.3.5"
+```
+
+### 3.3. Loop Over VM Definitions
+
+```ruby loop over vm definitions
+(1..3).each do |i|
+  config.vm.define "node-#{i}" do |node|
+    node.vm.provision "shell",
+      inline: "echo hello from node #{i}"
+  end
+end
+```
+
+### 3.4. config.vm
+
+```ruby config.vm
+config.vm.boot_timeout
+config.vm.graceful_halt_timeout
+
+config.vm.box
+config.vm.box_check_update
+config.vm.box_download_checksum
+config.vm.box_download_checksum_type
+config.vm.box_download_checksum
+config.vm.box_download_client_cert 
+config.vm.box_download_ca_cert
+config.vm.box_download_ca_path
+config.vm.box_download_insecure
+config.vm.box_download_location_trusted
+config.vm_box_url
+config.vm.box_version
+
+config.vm.communicator
+
+config.vm.guest
+config.vm.hostname
+
+config.vm.network 
+config.vm.usable_port_range
+
+config.vm.post_up_message
+config.vm.provider
+config.vm.provision
+config.vm.synced_folder
+```
+
+networking
+
+```ruby Vagrantfile
+Vagrant.configure("2") do |config|
+  config.vm.box = "hashicorp/precise32"
+  config.vm.provision :shell, path: "bootstrap.sh"
+  config.vm.network :forwarded_port, guest: 80, host: 4567
+end
+```
+
+vagrant provision with shell scripts
+
+`vagrant provision` for running shell scripts
+
+```bash bootstrap.sh
+#!/usr/bin/env bash
+
+apt-get update
+apt-get install -y apache2
+if ! [ -L /var/www ]; then
+  rm -rf /var/www
+  ln -fs /vagrant /var/www
+fi
+```
+
+```ruby Vagrantfile
+Vagrant.configure("2") do |config|
+  config.vm.box = "hashicorp/precise32"
+  config.vm.provision :shell, path: "bootstrap.sh"
+end
+```
+
+### 3.5. config.ssh
+
+```ruby config.ssh
+config.ssh.username
+config.ssh.password 
+config.ssh.host
+config.ssh.port
+config.ssh.guest_port
+config.ssh.private_key_path
+config.ssh.forward_agent
+config.ssh.forward_x11
+config.ssh.insert_key
+config.ssh.proxy_command
+config.ssh.pty
+config.ssh.shell
+config.ssh.sudo_command
+```
+
+### 3.6. config.winrm
+
+```ruby config.winrm
+config.winrm.username
+config.winrm.password
+config.winrm.host
+config.winrm.port 
+config.winrm.guest_port
+```
+
+### 3.7. config.vagrant
+
+```ruby config.vagrant
+config.vagrant.host
+```
+
+## 4. Vagrant Plugins
+
+## References
+
+1. [Vagrant Official Site](https://www.vagrantup.com)
+2. [Vagrant Source Code]()
+3. [Vagrant Downloads](https://www.vagrantup.com/downloads.html)
+4. [Vagrant Documentation](https://docs.vagrantup.com/v2/)
