@@ -4,7 +4,7 @@
   <title><![CDATA[Kelly Chan]]></title>
   <link href="http://k.arttechresearch.com/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2015-10-14T20:54:22+08:00</updated>
+  <updated>2015-10-15T12:21:32+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[Kelly Chan]]></name>
@@ -316,6 +316,1142 @@
 <p>Their prestigious collectors included through the times: the Rothschilds, the Camondos and Comte Boni de Castellanes, then Hery Ford Jr, Christian Dior, J.Paul Getty, the Agnelli family, Jackie Kennedy and Karl Lagerifeld.</p>
 
 <p>The prestige of the Kraemer name continues to rest on the personal discretion of the family and their exacting professional standards of authenticity, beauty, rarity and charm. For more than a century, Kraemer &amp; Cie has been the source of significant example of French 18th century decorative arts that are now in the permanent collections of major museums in Qurope and the United States.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Adding Tag Generator in Octopress]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/10/06/adding-tag-generator-in-octopress/"/>
+    <updated>2015-10-06T05:42:01+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/10/06/adding-tag-generator-in-octopress</id>
+    <content type="html"><![CDATA[<p>Feature: add the links for the tags.</p>
+
+<p>Steps:</p>
+
+<ol>
+<li>update the ruby plugin: <code>octopress/plugins/tag_generator.rb</code></li>
+<li>update the html in source: <code>octopress/source/_layouts/tag_index.html</code></li>
+<li>update the <code>tag_dir</code> in _config.yml: <code>octopress/_config.yml</code></li>
+</ol>
+
+
+<h2>1. Plugin: tag_generator.rb</h2>
+
+<figure class='code'><figcaption><span>tag_generator.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+<span class='line-number'>121</span>
+<span class='line-number'>122</span>
+<span class='line-number'>123</span>
+<span class='line-number'>124</span>
+<span class='line-number'>125</span>
+<span class='line-number'>126</span>
+<span class='line-number'>127</span>
+<span class='line-number'>128</span>
+<span class='line-number'>129</span>
+<span class='line-number'>130</span>
+<span class='line-number'>131</span>
+<span class='line-number'>132</span>
+<span class='line-number'>133</span>
+<span class='line-number'>134</span>
+<span class='line-number'>135</span>
+<span class='line-number'>136</span>
+<span class='line-number'>137</span>
+<span class='line-number'>138</span>
+<span class='line-number'>139</span>
+<span class='line-number'>140</span>
+<span class='line-number'>141</span>
+<span class='line-number'>142</span>
+<span class='line-number'>143</span>
+<span class='line-number'>144</span>
+<span class='line-number'>145</span>
+<span class='line-number'>146</span>
+<span class='line-number'>147</span>
+<span class='line-number'>148</span>
+<span class='line-number'>149</span>
+<span class='line-number'>150</span>
+<span class='line-number'>151</span>
+<span class='line-number'>152</span>
+<span class='line-number'>153</span>
+<span class='line-number'>154</span>
+<span class='line-number'>155</span>
+<span class='line-number'>156</span>
+<span class='line-number'>157</span>
+<span class='line-number'>158</span>
+<span class='line-number'>159</span>
+<span class='line-number'>160</span>
+<span class='line-number'>161</span>
+<span class='line-number'>162</span>
+<span class='line-number'>163</span>
+<span class='line-number'>164</span>
+<span class='line-number'>165</span>
+<span class='line-number'>166</span>
+<span class='line-number'>167</span>
+<span class='line-number'>168</span>
+<span class='line-number'>169</span>
+<span class='line-number'>170</span>
+<span class='line-number'>171</span>
+<span class='line-number'>172</span>
+<span class='line-number'>173</span>
+<span class='line-number'>174</span>
+<span class='line-number'>175</span>
+<span class='line-number'>176</span>
+<span class='line-number'>177</span>
+<span class='line-number'>178</span>
+<span class='line-number'>179</span>
+<span class='line-number'>180</span>
+<span class='line-number'>181</span>
+<span class='line-number'>182</span>
+<span class='line-number'>183</span>
+<span class='line-number'>184</span>
+<span class='line-number'>185</span>
+<span class='line-number'>186</span>
+<span class='line-number'>187</span>
+<span class='line-number'>188</span>
+<span class='line-number'>189</span>
+<span class='line-number'>190</span>
+<span class='line-number'>191</span>
+<span class='line-number'>192</span>
+<span class='line-number'>193</span>
+<span class='line-number'>194</span>
+<span class='line-number'>195</span>
+<span class='line-number'>196</span>
+<span class='line-number'>197</span>
+<span class='line-number'>198</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># encoding: utf-8</span>
+</span><span class='line'><span class="c1">#</span>
+</span><span class='line'><span class="c1"># Jekyll tag page generator.</span>
+</span><span class='line'><span class="c1">#</span>
+</span><span class='line'><span class="c1"># Based on Jekyll tag category generator:</span>
+</span><span class='line'><span class="c1">#</span>
+</span><span class='line'><span class="c1">#     http://recursive-design.com/projects/jekyll-plugins/</span>
+</span><span class='line'><span class="c1">#</span>
+</span><span class='line'><span class="c1">#     Version: 0.1.4 (201101061053)</span>
+</span><span class='line'><span class="c1">#</span>
+</span><span class='line'><span class="c1">#     Copyright (c) 2010 Dave Perrett, http://recursive-design.com/</span>
+</span><span class='line'><span class="c1">#     Licensed under the MIT license (http://www.opensource.org/licenses/mit-license.php)</span>
+</span><span class='line'><span class="c1">#</span>
+</span><span class='line'><span class="c1"># A generator that creates tag pages for jekyll sites.</span>
+</span><span class='line'><span class="c1">#</span>
+</span><span class='line'><span class="c1"># Included filters :</span>
+</span><span class='line'><span class="c1"># - tag_links:      Outputs the list of tags as comma-separated &lt;a&gt; links.</span>
+</span><span class='line'><span class="c1"># - date_to_html_string: Outputs the post.date as formatted html, with hooks for CSS styling.</span>
+</span><span class='line'><span class="c1">#</span>
+</span><span class='line'><span class="c1"># Available _config.yml settings :</span>
+</span><span class='line'><span class="c1"># - tag_dir:          The subfolder to build tag pages in (default is &#39;tags&#39;).</span>
+</span><span class='line'><span class="c1"># - tag_title_prefix: The string used before the tag name in the page title (default is</span>
+</span><span class='line'><span class="c1">#                          &#39;Tag: &#39;).</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;stringex&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">module</span> <span class="nn">Jekyll</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1"># The TagIndex class creates a single tag page for the specified tag.</span>
+</span><span class='line'>  <span class="k">class</span> <span class="nc">TagIndex</span> <span class="o">&lt;</span> <span class="no">Page</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1"># Initializes a new TagIndex.</span>
+</span><span class='line'>    <span class="c1">#</span>
+</span><span class='line'>    <span class="c1">#  +base+         is the String path to the &lt;source&gt;.</span>
+</span><span class='line'>    <span class="c1">#  +tag_dir+ is the String path between &lt;source&gt; and the tag folder.</span>
+</span><span class='line'>    <span class="c1">#  +tag+     is the tag currently being processed.</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">site</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">tag_dir</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
+</span><span class='line'>      <span class="vi">@site</span> <span class="o">=</span> <span class="n">site</span>
+</span><span class='line'>      <span class="vi">@base</span> <span class="o">=</span> <span class="n">base</span>
+</span><span class='line'>      <span class="vi">@dir</span>  <span class="o">=</span> <span class="n">tag_dir</span>
+</span><span class='line'>      <span class="vi">@name</span> <span class="o">=</span> <span class="s1">&#39;index.html&#39;</span>
+</span><span class='line'>      <span class="nb">self</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="vi">@name</span><span class="p">)</span>
+</span><span class='line'>      <span class="c1"># Read the YAML data from the layout page.</span>
+</span><span class='line'>      <span class="nb">self</span><span class="o">.</span><span class="n">read_yaml</span><span class="p">(</span><span class="no">File</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="s1">&#39;_layouts&#39;</span><span class="p">),</span> <span class="s1">&#39;tag_index.html&#39;</span><span class="p">)</span>
+</span><span class='line'>      <span class="nb">self</span><span class="o">.</span><span class="n">data</span><span class="o">[</span><span class="s1">&#39;tag&#39;</span><span class="o">]</span>    <span class="o">=</span> <span class="n">tag</span>
+</span><span class='line'>      <span class="c1"># Set the title for this page.</span>
+</span><span class='line'>      <span class="n">title_prefix</span>             <span class="o">=</span> <span class="n">site</span><span class="o">.</span><span class="n">config</span><span class="o">[</span><span class="s1">&#39;tag_title_prefix&#39;</span><span class="o">]</span> <span class="o">||</span> <span class="s1">&#39;Tag: &#39;</span>
+</span><span class='line'>      <span class="nb">self</span><span class="o">.</span><span class="n">data</span><span class="o">[</span><span class="s1">&#39;title&#39;</span><span class="o">]</span>       <span class="o">=</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">title_prefix</span><span class="si">}#{</span><span class="n">tag</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>      <span class="c1"># Set the meta-description for this page.</span>
+</span><span class='line'>      <span class="n">meta_description_prefix</span>  <span class="o">=</span> <span class="n">site</span><span class="o">.</span><span class="n">config</span><span class="o">[</span><span class="s1">&#39;tag_meta_description_prefix&#39;</span><span class="o">]</span> <span class="o">||</span> <span class="s1">&#39;Tag: &#39;</span>
+</span><span class='line'>      <span class="nb">self</span><span class="o">.</span><span class="n">data</span><span class="o">[</span><span class="s1">&#39;description&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">meta_description_prefix</span><span class="si">}#{</span><span class="n">tag</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1"># The TagFeed class creates an Atom feed for the specified tag.</span>
+</span><span class='line'>  <span class="k">class</span> <span class="nc">TagFeed</span> <span class="o">&lt;</span> <span class="no">Page</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1"># Initializes a new TagFeed.</span>
+</span><span class='line'>    <span class="c1">#</span>
+</span><span class='line'>    <span class="c1">#  +base+         is the String path to the &lt;source&gt;.</span>
+</span><span class='line'>    <span class="c1">#  +tag_dir+ is the String path between &lt;source&gt; and the tag folder.</span>
+</span><span class='line'>    <span class="c1">#  +tag+     is the tag currently being processed.</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">site</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">tag_dir</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
+</span><span class='line'>      <span class="vi">@site</span> <span class="o">=</span> <span class="n">site</span>
+</span><span class='line'>      <span class="vi">@base</span> <span class="o">=</span> <span class="n">base</span>
+</span><span class='line'>      <span class="vi">@dir</span>  <span class="o">=</span> <span class="n">tag_dir</span>
+</span><span class='line'>      <span class="vi">@name</span> <span class="o">=</span> <span class="s1">&#39;atom.xml&#39;</span>
+</span><span class='line'>      <span class="nb">self</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="vi">@name</span><span class="p">)</span>
+</span><span class='line'>      <span class="c1"># Read the YAML data from the layout page.</span>
+</span><span class='line'>      <span class="nb">self</span><span class="o">.</span><span class="n">read_yaml</span><span class="p">(</span><span class="no">File</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="s1">&#39;_includes/custom&#39;</span><span class="p">),</span> <span class="s1">&#39;tag_feed.xml&#39;</span><span class="p">)</span>
+</span><span class='line'>      <span class="nb">self</span><span class="o">.</span><span class="n">data</span><span class="o">[</span><span class="s1">&#39;tag&#39;</span><span class="o">]</span>    <span class="o">=</span> <span class="n">tag</span>
+</span><span class='line'>      <span class="c1"># Set the title for this page.</span>
+</span><span class='line'>      <span class="n">title_prefix</span>             <span class="o">=</span> <span class="n">site</span><span class="o">.</span><span class="n">config</span><span class="o">[</span><span class="s1">&#39;tag_title_prefix&#39;</span><span class="o">]</span> <span class="o">||</span> <span class="s1">&#39;Tag: &#39;</span>
+</span><span class='line'>      <span class="nb">self</span><span class="o">.</span><span class="n">data</span><span class="o">[</span><span class="s1">&#39;title&#39;</span><span class="o">]</span>       <span class="o">=</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">title_prefix</span><span class="si">}#{</span><span class="n">tag</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>      <span class="c1"># Set the meta-description for this page.</span>
+</span><span class='line'>      <span class="n">meta_description_prefix</span>  <span class="o">=</span> <span class="n">site</span><span class="o">.</span><span class="n">config</span><span class="o">[</span><span class="s1">&#39;tag_meta_description_prefix&#39;</span><span class="o">]</span> <span class="o">||</span> <span class="s1">&#39;Tag: &#39;</span>
+</span><span class='line'>      <span class="nb">self</span><span class="o">.</span><span class="n">data</span><span class="o">[</span><span class="s1">&#39;description&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">meta_description_prefix</span><span class="si">}#{</span><span class="n">tag</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="c1"># Set the correct feed URL.</span>
+</span><span class='line'>      <span class="nb">self</span><span class="o">.</span><span class="n">data</span><span class="o">[</span><span class="s1">&#39;feed_url&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">tag_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1"># The Site class is a built-in Jekyll class with access to global site config information.</span>
+</span><span class='line'>  <span class="k">class</span> <span class="nc">Site</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1"># Creates an instance of TagIndex for each tag page, renders it, and</span>
+</span><span class='line'>    <span class="c1"># writes the output to a file.</span>
+</span><span class='line'>    <span class="c1">#</span>
+</span><span class='line'>    <span class="c1">#  +tag_dir+ is the String path to the tag folder.</span>
+</span><span class='line'>    <span class="c1">#  +tag+     is the tag currently being processed.</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">write_tag_index</span><span class="p">(</span><span class="n">tag_dir</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">index</span> <span class="o">=</span> <span class="no">TagIndex</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="nb">self</span><span class="p">,</span> <span class="nb">self</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="n">tag_dir</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">index</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="nb">self</span><span class="o">.</span><span class="n">layouts</span><span class="p">,</span> <span class="n">site_payload</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">index</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">self</span><span class="o">.</span><span class="n">dest</span><span class="p">)</span>
+</span><span class='line'>      <span class="c1"># Record the fact that this page has been added, otherwise Site::cleanup will remove it.</span>
+</span><span class='line'>      <span class="nb">self</span><span class="o">.</span><span class="n">pages</span> <span class="o">&lt;&lt;</span> <span class="n">index</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="c1"># Create an Atom-feed for each index.</span>
+</span><span class='line'>      <span class="k">if</span> <span class="nb">self</span><span class="o">.</span><span class="n">config</span><span class="o">[</span><span class="s1">&#39;tag_feeds&#39;</span><span class="o">]</span>
+</span><span class='line'>        <span class="n">feed</span> <span class="o">=</span> <span class="no">TagFeed</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="nb">self</span><span class="p">,</span> <span class="nb">self</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="n">tag_dir</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">feed</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="nb">self</span><span class="o">.</span><span class="n">layouts</span><span class="p">,</span> <span class="n">site_payload</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">feed</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">self</span><span class="o">.</span><span class="n">dest</span><span class="p">)</span>
+</span><span class='line'>        <span class="c1"># Record the fact that this page has been added, otherwise Site::cleanup will remove it.</span>
+</span><span class='line'>        <span class="nb">self</span><span class="o">.</span><span class="n">pages</span> <span class="o">&lt;&lt;</span> <span class="n">feed</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1"># Loops through the list of tag pages and processes each one.</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">write_tag_indexes</span>
+</span><span class='line'>      <span class="k">if</span> <span class="nb">self</span><span class="o">.</span><span class="n">layouts</span><span class="o">.</span><span class="n">key?</span> <span class="s1">&#39;tag_index&#39;</span>
+</span><span class='line'>        <span class="n">dir</span> <span class="o">=</span> <span class="nb">self</span><span class="o">.</span><span class="n">config</span><span class="o">[</span><span class="s1">&#39;tag_dir&#39;</span><span class="o">]</span> <span class="o">||</span> <span class="s1">&#39;tags&#39;</span>
+</span><span class='line'>        <span class="nb">self</span><span class="o">.</span><span class="n">tags</span><span class="o">.</span><span class="n">keys</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">tag</span><span class="o">|</span>
+</span><span class='line'>          <span class="nb">self</span><span class="o">.</span><span class="n">write_tag_index</span><span class="p">(</span><span class="no">File</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dir</span><span class="p">,</span> <span class="n">tag</span><span class="o">.</span><span class="n">to_url</span><span class="p">),</span> <span class="n">tag</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="c1"># Throw an exception if the layout couldn&#39;t be found.</span>
+</span><span class='line'>      <span class="k">else</span>
+</span><span class='line'>        <span class="k">raise</span> <span class="o">&lt;&lt;-</span><span class="no">ERR</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="sh">===============================================</span>
+</span><span class='line'><span class="sh"> Error for tag_generator.rb plugin</span>
+</span><span class='line'><span class="sh">-----------------------------------------------</span>
+</span><span class='line'><span class="sh"> No &#39;tag_index.hmtl&#39; in source/_layouts/</span>
+</span><span class='line'><span class="sh"> Perhaps you haven&#39;t installed a theme yet.</span>
+</span><span class='line'><span class="sh">===============================================</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">ERR</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1"># Jekyll hook - the generate method is called by jekyll, and generates all of the tag pages.</span>
+</span><span class='line'>  <span class="k">class</span> <span class="nc">GenerateTags</span> <span class="o">&lt;</span> <span class="no">Generator</span>
+</span><span class='line'>    <span class="n">safe</span> <span class="kp">true</span>
+</span><span class='line'>    <span class="n">priority</span> <span class="ss">:low</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="n">site</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">site</span><span class="o">.</span><span class="n">write_tag_indexes</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1"># Adds some extra filters used during the tag creation process.</span>
+</span><span class='line'>  <span class="k">module</span> <span class="nn">Filters</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1"># Outputs a list of tags as comma-separated &lt;a&gt; links. This is used</span>
+</span><span class='line'>    <span class="c1"># to output the tag list for each post on a tag page.</span>
+</span><span class='line'>    <span class="c1">#</span>
+</span><span class='line'>    <span class="c1">#  +tags+ is the list of tags to format.</span>
+</span><span class='line'>    <span class="c1">#</span>
+</span><span class='line'>    <span class="c1"># Returns string</span>
+</span><span class='line'>    <span class="c1">#</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">tag_links</span><span class="p">(</span><span class="n">tags</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">tags</span> <span class="o">=</span> <span class="n">tags</span><span class="o">.</span><span class="n">sort!</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="o">|</span><span class="n">c</span><span class="o">|</span> <span class="n">tag_link</span> <span class="n">c</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="k">case</span> <span class="n">tags</span><span class="o">.</span><span class="n">length</span>
+</span><span class='line'>      <span class="k">when</span> <span class="mi">0</span>
+</span><span class='line'>        <span class="s2">&quot;&quot;</span>
+</span><span class='line'>      <span class="k">when</span> <span class="mi">1</span>
+</span><span class='line'>        <span class="n">tags</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="n">to_s</span>
+</span><span class='line'>      <span class="k">else</span>
+</span><span class='line'>        <span class="s2">&quot;</span><span class="si">#{</span><span class="n">tags</span><span class="o">[</span><span class="mi">0</span><span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">-</span><span class="mi">1</span><span class="o">].</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">, </span><span class="si">#{</span><span class="n">tags</span><span class="o">[-</span><span class="mi">1</span><span class="o">]</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1"># Outputs a single tag as an &lt;a&gt; link.</span>
+</span><span class='line'>    <span class="c1">#</span>
+</span><span class='line'>    <span class="c1">#  +tag+ is a tag string to format as an &lt;a&gt; link</span>
+</span><span class='line'>    <span class="c1">#</span>
+</span><span class='line'>    <span class="c1"># Returns string</span>
+</span><span class='line'>    <span class="c1">#</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">tag_link</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">dir</span> <span class="o">=</span> <span class="vi">@context</span><span class="o">.</span><span class="n">registers</span><span class="o">[</span><span class="ss">:site</span><span class="o">].</span><span class="n">config</span><span class="o">[</span><span class="s1">&#39;tag_dir&#39;</span><span class="o">]</span>
+</span><span class='line'>      <span class="s2">&quot;&lt;a class=&#39;tag&#39; href=&#39;/</span><span class="si">#{</span><span class="n">dir</span><span class="si">}</span><span class="s2">/</span><span class="si">#{</span><span class="n">tag</span><span class="o">.</span><span class="n">to_url</span><span class="si">}</span><span class="s2">/&#39;&gt;</span><span class="si">#{</span><span class="n">tag</span><span class="si">}</span><span class="s2">&lt;/a&gt;&quot;</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1"># Outputs the post.date as formatted html, with hooks for CSS styling.</span>
+</span><span class='line'>    <span class="c1">#</span>
+</span><span class='line'>    <span class="c1">#  +date+ is the date object to format as HTML.</span>
+</span><span class='line'>    <span class="c1">#</span>
+</span><span class='line'>    <span class="c1"># Returns string</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">date_to_html_string</span><span class="p">(</span><span class="n">date</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">result</span> <span class="o">=</span> <span class="s1">&#39;&lt;span class=&quot;month&quot;&gt;&#39;</span> <span class="o">+</span> <span class="n">date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%b&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">upcase</span> <span class="o">+</span> <span class="s1">&#39;&lt;/span&gt; &#39;</span>
+</span><span class='line'>      <span class="n">result</span> <span class="o">+=</span> <span class="n">date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;&lt;span class=&quot;day&quot;&gt;%d&lt;/span&gt; &#39;</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">result</span> <span class="o">+=</span> <span class="n">date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;&lt;span class=&quot;year&quot;&gt;%Y&lt;/span&gt; &#39;</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">result</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>2. Layouts: tag_index.html</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>cp octopress/source/_layouts/category_index.html octopress/source/_layouts/tag_index.html
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Update the <code>category</code> as <code>tag</code>.</p>
+
+<h2>3. Config: tag_dir</h2>
+
+<figure class='code'><figcaption><span>_config.yml</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="l-Scalar-Plain">tag_dir</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">tags</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>4. Testing</h2>
+
+<p><code>rake generate</code> and <code>rake preview</code>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Adding Tag Cloud in Octopress]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/10/06/adding-tag-cloud-in-octopress/"/>
+    <updated>2015-10-06T05:20:09+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/10/06/adding-tag-cloud-in-octopress</id>
+    <content type="html"><![CDATA[<p>Features: tag cloud and category list with counts.</p>
+
+<p>Steps:</p>
+
+<ol>
+<li>update the ruby plugin: <code>plugins/tag_cloud.rb</code></li>
+<li>update the html templates: <code>source/_includes/asides/tag_cloud.html</code>, <code>source/_includes/asides/category_list.html</code></li>
+<li>update the sass files: <code>sass/plugins/_tag_cloud.scss</code>, <code>sass/plugins/_category_list.scss</code></li>
+</ol>
+
+
+<h2>1. Plugin: tag_cloud.rb</h2>
+
+<figure class='code'><figcaption><span>tag_cloud.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># encoding: utf-8</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># Tag Cloud for Octopress</span>
+</span><span class='line'><span class="c1"># =======================</span>
+</span><span class='line'><span class="c1">#</span>
+</span><span class='line'><span class="c1"># Description:</span>
+</span><span class='line'><span class="c1"># ------------</span>
+</span><span class='line'><span class="c1"># Easy output tag cloud and category list.</span>
+</span><span class='line'><span class="c1">#</span>
+</span><span class='line'><span class="c1"># Syntax:</span>
+</span><span class='line'><span class="c1"># -------</span>
+</span><span class='line'><span class="c1">#     {\% tag_cloud [counter:true] %\}</span>
+</span><span class='line'><span class="c1">#     {\% category_list [counter:true] %\}</span>
+</span><span class='line'><span class="c1">#</span>
+</span><span class='line'><span class="c1"># Example:</span>
+</span><span class='line'><span class="c1"># --------</span>
+</span><span class='line'><span class="c1"># In some template files, you can add the following markups.</span>
+</span><span class='line'><span class="c1">#</span>
+</span><span class='line'><span class="c1"># ### source/_includes/custom/asides/tag_cloud.html ###</span>
+</span><span class='line'><span class="c1">#</span>
+</span><span class='line'><span class="c1">#     `&lt;section&gt;`</span>
+</span><span class='line'><span class="c1">#       `&lt;h1&gt;Tag Cloud&lt;/h1&gt;`</span>
+</span><span class='line'><span class="c1">#         `&lt;span id=&quot;tag-cloud&quot;&gt;{\% tag_cloud %\}&lt;/span&gt;`</span>
+</span><span class='line'><span class="c1">#     `&lt;/section&gt;`</span>
+</span><span class='line'><span class="c1">#</span>
+</span><span class='line'><span class="c1"># ### source/_includes/custom/asides/category_list.html ###</span>
+</span><span class='line'><span class="c1">#</span>
+</span><span class='line'><span class="c1">#     `&lt;section&gt;`</span>
+</span><span class='line'><span class="c1">#       `&lt;h1&gt;Categories&lt;/h1&gt;`</span>
+</span><span class='line'><span class="c1">#         `&lt;ul id=&quot;category-list&quot;&gt;{\% category_list counter:true %\}&lt;/ul&gt;`</span>
+</span><span class='line'><span class="c1">#     `&lt;/section&gt;`</span>
+</span><span class='line'><span class="c1">#</span>
+</span><span class='line'><span class="c1"># Notes:</span>
+</span><span class='line'><span class="c1"># ------</span>
+</span><span class='line'><span class="c1"># Be sure to insert above template files into `default_asides` array in `_config.yml`.</span>
+</span><span class='line'><span class="c1"># And also you can define styles for &#39;tag-cloud&#39; or &#39;category-list&#39; in a `.scss` file.</span>
+</span><span class='line'><span class="c1"># (ex: `sass/custom/_styles.scss`)</span>
+</span><span class='line'><span class="c1">#</span>
+</span><span class='line'><span class="c1"># Licence:</span>
+</span><span class='line'><span class="c1"># --------</span>
+</span><span class='line'><span class="c1"># Distributed under the [MIT License][MIT].</span>
+</span><span class='line'><span class="c1">#</span>
+</span><span class='line'><span class="c1"># [MIT]: http://www.opensource.org/licenses/mit-license.php</span>
+</span><span class='line'><span class="c1">#</span>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;stringex&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">module</span> <span class="nn">Jekyll</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">class</span> <span class="nc">TagCloud</span> <span class="o">&lt;</span> <span class="no">Liquid</span><span class="o">::</span><span class="no">Tag</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">tag_name</span><span class="p">,</span> <span class="n">markup</span><span class="p">,</span> <span class="n">tokens</span><span class="p">)</span>
+</span><span class='line'>      <span class="vi">@opts</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span class='line'>      <span class="k">if</span> <span class="n">markup</span><span class="o">.</span><span class="n">strip</span> <span class="o">=~</span> <span class="sr">/\s*counter:(\w+)/i</span>
+</span><span class='line'>        <span class="vi">@opts</span><span class="o">[</span><span class="s1">&#39;counter&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="p">(</span><span class="vg">$1</span> <span class="o">==</span> <span class="s1">&#39;true&#39;</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">markup</span> <span class="o">=</span> <span class="n">markup</span><span class="o">.</span><span class="n">strip</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sr">/counter:\w+/i</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>      <span class="k">super</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">lists</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span class='line'>      <span class="n">max</span><span class="p">,</span> <span class="n">min</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span>
+</span><span class='line'>      <span class="n">config</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">registers</span><span class="o">[</span><span class="ss">:site</span><span class="o">].</span><span class="n">config</span>
+</span><span class='line'>      <span class="n">tag_dir</span> <span class="o">=</span> <span class="n">config</span><span class="o">[</span><span class="s1">&#39;root&#39;</span><span class="o">]</span> <span class="o">+</span> <span class="n">config</span><span class="o">[</span><span class="s1">&#39;tag_dir&#39;</span><span class="o">]</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span>
+</span><span class='line'>      <span class="n">tags</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">registers</span><span class="o">[</span><span class="ss">:site</span><span class="o">].</span><span class="n">tags</span>
+</span><span class='line'>      <span class="n">tags</span><span class="o">.</span><span class="n">keys</span><span class="o">.</span><span class="n">sort_by</span><span class="p">{</span> <span class="o">|</span><span class="n">str</span><span class="o">|</span> <span class="n">str</span><span class="o">.</span><span class="n">downcase</span> <span class="p">}</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">tag</span><span class="o">|</span>
+</span><span class='line'>        <span class="n">count</span> <span class="o">=</span> <span class="n">tags</span><span class="o">[</span><span class="n">tag</span><span class="o">].</span><span class="n">count</span>
+</span><span class='line'>        <span class="n">lists</span><span class="o">[</span><span class="n">tag</span><span class="o">]</span> <span class="o">=</span> <span class="n">count</span>
+</span><span class='line'>        <span class="n">max</span> <span class="o">=</span> <span class="n">count</span> <span class="k">if</span> <span class="n">count</span> <span class="o">&gt;</span> <span class="n">max</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="n">html</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</span><span class='line'>      <span class="n">lists</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span> <span class="n">tag</span><span class="p">,</span> <span class="n">counter</span> <span class="o">|</span>
+</span><span class='line'>        <span class="n">url</span> <span class="o">=</span> <span class="n">tag_dir</span> <span class="o">+</span> <span class="n">tag</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/_|\P{Word}/</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/-{2,}/</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">downcase</span>
+</span><span class='line'>        <span class="n">style</span> <span class="o">=</span> <span class="s2">&quot;font-size: </span><span class="si">#{</span><span class="mi">90</span> <span class="o">+</span> <span class="p">(</span><span class="mi">110</span> <span class="o">*</span> <span class="nb">Float</span><span class="p">(</span><span class="n">counter</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">max</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span><span class="si">}</span><span class="s2">%&quot;</span>
+</span><span class='line'>        <span class="n">html</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;&lt;a href=&#39;</span><span class="si">#{</span><span class="n">url</span><span class="si">}</span><span class="s2">&#39; style=&#39;</span><span class="si">#{</span><span class="n">style</span><span class="si">}</span><span class="s2">&#39;&gt;</span><span class="si">#{</span><span class="n">tag</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>        <span class="k">if</span> <span class="vi">@opts</span><span class="o">[</span><span class="s1">&#39;counter&#39;</span><span class="o">]</span>
+</span><span class='line'>          <span class="n">html</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;(</span><span class="si">#{</span><span class="n">tags</span><span class="o">[</span><span class="n">tag</span><span class="o">].</span><span class="n">count</span><span class="si">}</span><span class="s2">)&quot;</span>
+</span><span class='line'>        <span class="k">end</span>
+</span><span class='line'>        <span class="n">html</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;&lt;/a&gt; &quot;</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>      <span class="n">html</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">class</span> <span class="nc">CategoryList</span> <span class="o">&lt;</span> <span class="no">Liquid</span><span class="o">::</span><span class="no">Tag</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">tag_name</span><span class="p">,</span> <span class="n">markup</span><span class="p">,</span> <span class="n">tokens</span><span class="p">)</span>
+</span><span class='line'>      <span class="vi">@opts</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span class='line'>      <span class="k">if</span> <span class="n">markup</span><span class="o">.</span><span class="n">strip</span> <span class="o">=~</span> <span class="sr">/\s*counter:(\w+)/i</span>
+</span><span class='line'>        <span class="vi">@opts</span><span class="o">[</span><span class="s1">&#39;counter&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="p">(</span><span class="vg">$1</span> <span class="o">==</span> <span class="s1">&#39;true&#39;</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">markup</span> <span class="o">=</span> <span class="n">markup</span><span class="o">.</span><span class="n">strip</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sr">/counter:\w+/i</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>      <span class="k">super</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">html</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span class='line'>      <span class="n">config</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">registers</span><span class="o">[</span><span class="ss">:site</span><span class="o">].</span><span class="n">config</span>
+</span><span class='line'>      <span class="n">category_dir</span> <span class="o">=</span> <span class="n">config</span><span class="o">[</span><span class="s1">&#39;category_dir&#39;</span><span class="o">]</span>
+</span><span class='line'>      <span class="n">categories</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">registers</span><span class="o">[</span><span class="ss">:site</span><span class="o">].</span><span class="n">categories</span>
+</span><span class='line'>      <span class="n">categories</span><span class="o">.</span><span class="n">keys</span><span class="o">.</span><span class="n">sort_by</span><span class="p">{</span> <span class="o">|</span><span class="n">str</span><span class="o">|</span> <span class="n">str</span><span class="o">.</span><span class="n">downcase</span> <span class="p">}</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">category</span><span class="o">|</span>
+</span><span class='line'>        <span class="n">html</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;&lt;li&gt;&lt;a href=&#39;/</span><span class="si">#{</span><span class="n">category_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">#{</span><span class="n">category</span><span class="o">.</span><span class="n">to_url</span><span class="si">}</span><span class="s2">/&#39;&gt;</span><span class="si">#{</span><span class="n">category</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>        <span class="k">if</span> <span class="vi">@opts</span><span class="o">[</span><span class="s1">&#39;counter&#39;</span><span class="o">]</span>
+</span><span class='line'>          <span class="n">html</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot; (</span><span class="si">#{</span><span class="n">categories</span><span class="o">[</span><span class="n">category</span><span class="o">].</span><span class="n">count</span><span class="si">}</span><span class="s2">)&quot;</span>
+</span><span class='line'>        <span class="k">end</span>
+</span><span class='line'>        <span class="n">html</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;&lt;/a&gt;&lt;/li&gt;&quot;</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>      <span class="n">html</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">Liquid</span><span class="o">::</span><span class="no">Template</span><span class="o">.</span><span class="n">register_tag</span><span class="p">(</span><span class="s1">&#39;tag_cloud&#39;</span><span class="p">,</span> <span class="no">Jekyll</span><span class="o">::</span><span class="no">TagCloud</span><span class="p">)</span>
+</span><span class='line'><span class="no">Liquid</span><span class="o">::</span><span class="no">Template</span><span class="o">.</span><span class="n">register_tag</span><span class="p">(</span><span class="s1">&#39;category_list&#39;</span><span class="p">,</span> <span class="no">Jekyll</span><span class="o">::</span><span class="no">CategoryList</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>2. HTML: source/_includes/</h2>
+
+<p>tag_cloud.html</p>
+
+<figure class='code'><figcaption><span>tag_cloud.html</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;section</span> <span class="na">class=</span><span class="s">&quot;tag-cloud&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;h1&gt;</span>Tags<span class="nt">&lt;/h1&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;ul</span> <span class="na">id=</span><span class="s">&quot;category-list&quot;</span><span class="nt">&gt;</span>{\% tag_cloud counter:true %\}<span class="nt">&lt;/ul&gt;</span>
+</span><span class='line'><span class="nt">&lt;/section&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>category_list.html</p>
+
+<figure class='code'><figcaption><span>category_list.html</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;section</span> <span class="na">class=</span><span class="s">&quot;category-list&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;h1&gt;</span>Summary<span class="nt">&lt;/h1&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;ul</span> <span class="na">id=</span><span class="s">&quot;category-list&quot;</span><span class="nt">&gt;</span>{\% category_list counter:true %\}<span class="nt">&lt;/ul&gt;</span>
+</span><span class='line'><span class="nt">&lt;/section&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>3. SASS: sass/plugins</h2>
+
+<p>_tag_cloud.scss</p>
+
+<figure class='code'><figcaption><span>_tag_cloud.scss</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="o">&lt;</span><span class="nt">section</span> <span class="nt">class</span><span class="o">=</span><span class="s2">&quot;category-list&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nt">h1</span><span class="o">&gt;</span><span class="nt">Summary</span><span class="o">&lt;/</span><span class="nt">h1</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="nt">ul</span> <span class="nt">id</span><span class="o">=</span><span class="s2">&quot;category-list&quot;</span><span class="o">&gt;</span><span class="p">{</span><span class="o">%</span> <span class="n">category_list</span> <span class="n">counter</span><span class="o">:</span><span class="n">true</span> <span class="o">%</span><span class="p">}</span><span class="o">&lt;/</span><span class="nt">ul</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="nt">section</span><span class="o">&gt;</span>
+</span><span class='line'><span class="nt">kelly-2</span><span class="nd">:octopress</span> <span class="nt">kelly</span><span class="o">$</span> <span class="nt">cat</span> <span class="nt">sass</span><span class="o">/</span><span class="nt">plugins</span><span class="o">/</span><span class="nt">_tag_cloud</span><span class="nc">.scss</span>
+</span><span class='line'><span class="nc">.tag-cloud</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">ul</span> <span class="err">{</span>
+</span><span class='line'>        <span class="k">padding</span><span class="o">:</span> <span class="m">.5em</span> <span class="m">0</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="nt">a</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">text-decoration</span><span class="o">:</span> <span class="k">none</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="err">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>_category_list.scss</p>
+
+<figure class='code'><figcaption><span>_category_list.scss</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="nc">.category-list</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">a</span> <span class="err">{</span>
+</span><span class='line'>  <span class="k">text-decoration</span><span class="o">:</span> <span class="k">none</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="err">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>4. Testing</h2>
+
+<p>Include the <code>tag_cloud.html</code> and <code>category_list.html</code> in a page, and then run <code>rake generate</code> and <code>rake preview</code>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Adding the Social Icons in Octopress]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/10/06/adding-the-social-icons-in-octopress/"/>
+    <updated>2015-10-06T05:04:17+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/10/06/adding-the-social-icons-in-octopress</id>
+    <content type="html"><![CDATA[<h2>1. Perfections: design the icons</h2>
+
+<p>Go to <a href="http://perfecticons.com">Perfections</a>, choose the icons you need, select the styles, and then generate the codes.</p>
+
+<p>Once done, download the <code>fonts.zip</code>.</p>
+
+<h2>2. Octopress: integrate the icons</h2>
+
+<ul>
+<li>copy the <code>fonts.zip</code> to <code>octopress/source/assets/fonts/</code></li>
+<li>copy the html file to <code>octopress/source/_includes/social.html</code>, and then modify the variables</li>
+<li>add the <code>social.html</code> to a page</li>
+<li>copy the css file to <code>octopress/sass/partials/_socials.scss</code></li>
+<li>update the links in <code>octopress/_config.yml</code></li>
+</ul>
+
+
+<p>Once done, run <code>rake generate</code> and <code>rake preview</code> to check.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Octopress Construct]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/10/06/octopress-construct/"/>
+    <updated>2015-10-06T04:06:04+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/10/06/octopress-construct</id>
+    <content type="html"><![CDATA[<h2>1. Folder Construct</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>./
+</span><span class='line'>|---- source/                                   # templates
+</span><span class='line'>|---- sass/                                     # scss
+</span><span class='line'>|---- ./themes/                                 # themes
+</span><span class='line'>|          |---- classic/                       # a theme contains source and sass
+</span><span class='line'>|                   |---- source/
+</span><span class='line'>|                   |---- sass/
+</span><span class='line'>|---- plugins/                                   # ruby plugins
+</span><span class='line'>|
+</span><span class='line'>|---- Gemfile                                    # gemfile
+</span><span class='line'>|---- Rakefile                                   # rakefile
+</span><span class='line'>|---- config.rb
+</span><span class='line'>|---- config.ru
+</span><span class='line'>|---- _config.yml                                # site config file
+</span><span class='line'>|
+</span><span class='line'>|---- public/                                    # the generated pages
+</span><span class='line'>|---- _deploy/                                   # the files for deployment</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>2. Static Pages</h2>
+
+<h3>2.1. source</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>source/
+</span><span class='line'>  |---- _includes/                  # template partials
+</span><span class='line'>  |---- _layouts/                   # page layouts
+</span><span class='line'>  |
+</span><span class='line'>  |---- page/                       # page construct
+</span><span class='line'>  |---- index.html                  # index
+</span><span class='line'>  |
+</span><span class='line'>  |
+</span><span class='line'>  |---- javascripts/
+</span><span class='line'>  |---- stylesheets/
+</span><span class='line'>  |---- assets/                     # fonts and others
+</span><span class='line'>  |---- images/</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>2.1.1. templates</h4>
+
+<p><code>index.html</code> and <code>page/index.html</code> are the top layers, they are extended from <code>_layouts</code> which is contatining the page templates.</p>
+
+<p>All the page layouts <code>_layouts</code> are extended from the <code>_includes</code> partials.</p>
+
+<p>If you would like to start a new page, follow the steps:</p>
+
+<ul>
+<li>type <code>rake new_page['page_name']</code></li>
+<li>go to <code>page_name</code></li>
+<li><code>vim index.html</code></li>
+<li>update the layouts and head_vars</li>
+<li>update the contents, for example, include a partial from <code>_includes</code> or rewrite the content corresponding to the requirements</li>
+</ul>
+
+
+<h4>2.1.2. static files</h4>
+
+<p>Put the images in the <code>images</code>, put the fonts and other files in <code>assets</code>, put the javascripts in <code>javascripts</code>.</p>
+
+<p>NOTE: For the stylesheets, you can update the styles in <code>sass/</code>.</p>
+
+<h3>2.2. sass</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sass/
+</span><span class='line'>  |---- screen.scss
+</span><span class='line'>            |---- custom/
+</span><span class='line'>            |---- _base.scss                               # the global settings
+</span><span class='line'>            |         |---- _utilities.scss                # mixins
+</span><span class='line'>            |         |---- _solarized.scss                # codes
+</span><span class='line'>            |         |---- _theme.scss                    # theme
+</span><span class='line'>            |         |---- _typography.scss               # DOM elements
+</span><span class='line'>            |         |---- _layout.scss                   # layouts
+</span><span class='line'>            |
+</span><span class='line'>            |---- _partials.scss                           # the partial settings
+</span><span class='line'>            |         |---- _header.scss
+</span><span class='line'>            |         |---- _navigation.scss
+</span><span class='line'>            |         |---- _blog.scss
+</span><span class='line'>            |         |---- _sharing.scss                  # sharing
+</span><span class='line'>            |         |---- _syntax.scss                   # codes
+</span><span class='line'>            |         |---- _archives.scss
+</span><span class='line'>            |         |---- _sidebar.scss
+</span><span class='line'>            |         |---- _footer.scss
+</span><span class='line'>            |
+</span><span class='line'>            |---- plugins/                                 # plugin styles</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>2.3. .themes</h3>
+
+<p>The theme related files are <code>source</code> and <code>sass</code>.</p>
+
+<p>If install a theme, the step is just copy the <code>source</code> and <code>sass</code> to <code>octopress/</code>, and then replace the old files.</p>
+
+<p>If create a theme, vise versa, just copy <code>octopress/source</code> and <code>octopress/sass</code> to <code>.themes/theme_name</code>.</p>
+
+<h4>2.3.1. Installing a theme</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>octopress/.themes
+</span><span class='line'><span class="nv">$ </span>git clone https://a_new_theme_url
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>octopress/
+</span><span class='line'><span class="nv">$ </span>rake install<span class="o">[</span><span class="s1">&#39;theme_name&#39;</span><span class="o">]</span>
+</span><span class='line'><span class="nv">$ </span>rake generate
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>2.3.2. Creating a theme</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>octopress
+</span><span class='line'><span class="nv">$ </span>mkdir .themes/theme_name
+</span><span class='line'><span class="nv">$ </span>cp -R <span class="nb">source</span> .themes/theme_name/source
+</span><span class='line'><span class="nv">$ </span>cp -<span class="nv">$ </span>sass .themes/theme_name/sass
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>3. Plugins</h2>
+
+<p>You can extend various of features by ruby plugins.</p>
+
+<p>If you perfer creating a plugin by yourself, follow the steps:</p>
+
+<ul>
+<li><code>cd plugins</code></li>
+<li><code>vim plugin_name.rb</code></li>
+<li>write the features</li>
+<li>update <code>Gemfile</code> if some packages required</li>
+<li>go to <code>source/_includes/plugins</code>, write the corresponding template</li>
+<li>go to <code>source/</code>, include the plugin in the pages</li>
+<li><code>vim _config.yml</code>, write the config variables if needed</li>
+<li>go to <code>sass/plugins</code>, write the coresponding style`</li>
+<li><code>rake generate</code></li>
+<li><code>rake preview</code></li>
+</ul>
+
+
+<h2>4. Configuration</h2>
+
+<h3>4.1. _config.yml</h3>
+
+<p>Since Octopress is the extension of Jekyll, you can check the Jekyll configuration documents for the detailed config variables.</p>
+
+<h2>5. Commands</h2>
+
+<h3>5.1. Gemfile</h3>
+
+<p>Update the gems in the <code>Gemfile</code>, especially when you update the plugins.</p>
+
+<h3>5.2. Rakefile</h3>
+
+<p>Update the commands in the <code>Rakefile</code>.</p>
+
+<h4>5.2.1. Default commands</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>rake generate
+</span><span class='line'><span class="nv">$ </span>rake watch
+</span><span class='line'><span class="nv">$ </span>rake preview
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>rake new_post<span class="o">[</span><span class="s1">&#39;post_name&#39;</span><span class="o">]</span>
+</span><span class='line'><span class="nv">$ </span>rake new_page<span class="o">[</span><span class="s1">&#39;page_name&#39;</span><span class="o">]</span>
+</span><span class='line'><span class="nv">$ </span>rake isolate
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>rake integrate
+</span><span class='line'><span class="nv">$ </span>rake update_sytle
+</span><span class='line'><span class="nv">$ </span>rake update_source
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>rake deploy
+</span><span class='line'><span class="nv">$ </span>rake gen_deploy
+</span><span class='line'><span class="nv">$ </span>rake rsync
+</span><span class='line'><span class="nv">$ </span>rake set_root_dir
+</span><span class='line'><span class="nv">$ </span>rake setup_github_pages
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Reference</h2>
+
+<ul>
+<li><a href="http://octopress.org/docs/">Octopress Docs</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Installing Octopress]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/10/06/installing-octopress/"/>
+    <updated>2015-10-06T03:54:31+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/10/06/installing-octopress</id>
+    <content type="html"><![CDATA[<h2>1. Prequisitions</h2>
+
+<ul>
+<li>Ubuntu 14.04</li>
+<li>Node.js</li>
+<li>RVM</li>
+<li>Ruby 2.1.1</li>
+<li>Gem</li>
+<li>Bundler</li>
+<li>Rake</li>
+</ul>
+
+
+<p>Node.js</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install nodejs
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>RVM and Ruby</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+</span><span class='line'><span class="nv">$ </span><span class="se">\c</span>url -sSL https://get.rvm.io <span class="p">|</span> bash -s stable
+</span><span class='line'><span class="nv">$ </span>rvm install 2.1.1
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>2. Octopress</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git clone git://github.com/imathis/octopress.git octopress
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>octopress
+</span><span class='line'><span class="nv">$ </span>gem install bundler
+</span><span class='line'><span class="nv">$ </span>bundle install
+</span><span class='line'><span class="nv">$ </span>rake install
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>3. Testing</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>rake generate
+</span><span class='line'><span class="nv">$ </span>rake preview
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>link: <a href="http://localhost:4000">http://localhost:4000</a></p>
+
+<h2>References</h2>
+
+<ol>
+<li><a href="http://octopress.org/docs/setup/">Octopress</a></li>
+<li><a href="https://github.com/imathis/octopress">Octopress Source Code</a></li>
+</ol>
+
 ]]></content>
   </entry>
   
@@ -2420,1196 +3556,6 @@
 
 
 <h2>3. Configurations</h2>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Ansible]]></title>
-    <link href="http://k.arttechresearch.com/tech/2014/11/12/ansible/"/>
-    <updated>2014-11-12T15:35:13+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2014/11/12/ansible</id>
-    <content type="html"><![CDATA[<h2>1. Installation</h2>
-
-<p>Ubuntu</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install software-properties-common
-</span><span class='line'><span class="nv">$ </span>sudo apt-add-repository ppa:ansible/ansible
-</span><span class='line'><span class="nv">$ </span>sudo apt-get update
-</span><span class='line'><span class="nv">$ </span>sudo apt-get install ansible
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>pip</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo easy_install pip
-</span><span class='line'><span class="nv">$ </span>pip install ansible
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>2. Overview</h2>
-
-<h3>2.1. Folder Construct</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>./
-</span><span class='line'><span class="p">|</span>
-</span><span class='line'><span class="p">|</span>-- playbooks
-</span><span class='line'><span class="p">|</span>       <span class="p">|</span>
-</span><span class='line'><span class="p">|</span>       <span class="p">|</span>---- host_vars/           <span class="c"># host vars</span>
-</span><span class='line'><span class="p">|</span>       <span class="p">|</span>---- group_vars/
-</span><span class='line'><span class="p">|</span>       <span class="p">|</span>---- roles/               <span class="c"># tasks</span>
-</span><span class='line'><span class="p">|</span>       <span class="p">|</span>---- playbook.yml         <span class="c"># playbooks</span>
-</span><span class='line'><span class="p">|</span>       <span class="p">|</span>---- hosts                <span class="c"># inventories</span>
-</span><span class='line'><span class="p">|</span>       <span class="p">|</span>---- ansible.cfg
-</span><span class='line'><span class="p">|</span>
-</span><span class='line'><span class="p">|</span>-- README.md
-</span><span class='line'><span class="p">|</span>-- AUTHOR
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>2.2. Commands</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>ansible ...
-</span><span class='line'><span class="nv">$ </span>ansible-playbook ...
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>3. Ansible Commands</h2>
-
-<h3>3.1. ansible</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>ansible -i xxx -m xxx -u xxx -a xxx
-</span><span class='line'><span class="nv">$ </span>ansible webservers -i xxx -m xxx -u xxx -a xxx
-</span><span class='line'><span class="nv">$ </span>ansible all -i xxx -m xxx -u xxx -a xxx
-</span><span class='line'><span class="nv">$ </span>ansible all -i hosts -m ping
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>3.2. ansible-playbook</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>ansible-playbook playbook.yml --list-hosts
-</span><span class='line'><span class="nv">$ </span>ansible-playbook -c user -i hosts playbook.yml --ask-pass --sudo
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>4. Playbooks</h2>
-
-<h3>4.1. playbooks</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="p-Indicator">-</span> <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Configure instance(s)</span>
-</span><span class='line'>  <span class="l-Scalar-Plain">hosts</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">all</span>
-</span><span class='line'>  <span class="l-Scalar-Plain">sudo</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">True</span>
-</span><span class='line'>  <span class="l-Scalar-Plain">gather_facts</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">True</span>
-</span><span class='line'>  <span class="l-Scalar-Plain">vars</span><span class="p-Indicator">:</span>
-</span><span class='line'>    <span class="l-Scalar-Plain">disable_edx_services</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">true</span>
-</span><span class='line'>    <span class="l-Scalar-Plain">mongo_enable_journal</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">false</span>
-</span><span class='line'>  <span class="l-Scalar-Plain">roles</span><span class="p-Indicator">:</span>
-</span><span class='line'>    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">common</span>
-</span><span class='line'>    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">app</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>4.2. roles</h3>
-
-<p>folder construct</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="l-Scalar-Plain">./</span>
-</span><span class='line'><span class="l-Scalar-Plain">|</span>
-</span><span class='line'><span class="l-Scalar-Plain">|-- defaults/</span>
-</span><span class='line'><span class="l-Scalar-Plain">|-- files/</span>
-</span><span class='line'><span class="l-Scalar-Plain">|-- handlers/</span>
-</span><span class='line'><span class="l-Scalar-Plain">|-- meta/</span>
-</span><span class='line'><span class="l-Scalar-Plain">|-- tasks/</span>
-</span><span class='line'><span class="l-Scalar-Plain">|-- templates/</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h4>4.2.1. variables</h4>
-
-<h4>4.2.2. jinja2</h4>
-
-<h4>4.2.3. loops</h4>
-
-<h4>4.2.4. blocks</h4>
-
-<h4>4.2.5. strageties</h4>
-
-<h2>References</h2>
-
-<ul>
-<li><a href="http://www.ansible.com">Ansible Official Site</a></li>
-<li><a href="http://docs.ansible.com/ansible/index.html">Ansible Official Document</a></li>
-<li><a href="https://github.com/leucos/ansible-tuto">ansible-tuto</a></li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Linux Commands]]></title>
-    <link href="http://k.arttechresearch.com/tech/2014/11/02/linux-commands/"/>
-    <updated>2014-11-02T14:10:18+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2014/11/02/linux-commands</id>
-    <content type="html"><![CDATA[<h2>1. Linux File System</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>/
-</span><span class='line'>/boot
-</span><span class='line'>
-</span><span class='line'>/etc
-</span><span class='line'>
-</span><span class='line'>/bin, /usr/bin
-</span><span class='line'>/sbin, /usr/sbin
-</span><span class='line'>/usr
-</span><span class='line'>/usr/local
-</span><span class='line'>
-</span><span class='line'>/var
-</span><span class='line'>/lib
-</span><span class='line'>
-</span><span class='line'>/home
-</span><span class='line'>/root
-</span><span class='line'>
-</span><span class='line'>/tmp
-</span><span class='line'>
-</span><span class='line'>/dev
-</span><span class='line'>/proc
-</span><span class='line'>/media,/mnt</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>2. Shell</h2>
-
-<h3>2.1. Navigation</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">pwd</span>                      <span class="c"># working directory</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span>ls                       <span class="c"># list</span>
-</span><span class='line'><span class="nv">$ </span>ls -l
-</span><span class='line'><span class="nv">$ </span>ls -la
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>2.2. Manipulating files</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>cp
-</span><span class='line'><span class="nv">$ </span>cp -i                          <span class="c"># interactive</span>
-</span><span class='line'><span class="nv">$ </span>cp -R                          <span class="c"># all</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span>mv
-</span><span class='line'><span class="nv">$ </span>mv -i
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span>rm
-</span><span class='line'><span class="nv">$ </span>rm -i
-</span><span class='line'><span class="nv">$ </span>rm -r
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span>mkdir
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>2.3. Working with commands</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">type</span>                           <span class="c"># display info about the cmd </span>
-</span><span class='line'><span class="nv">$ </span><span class="nb">type type</span>
-</span><span class='line'><span class="nv">$ </span><span class="nb">type </span>ls
-</span><span class='line'><span class="nv">$ </span><span class="nb">type </span>cp
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span>which                          <span class="c"># locate a cmd</span>
-</span><span class='line'><span class="nv">$ </span>which ls
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span><span class="nb">help</span>                           <span class="c"># display reference for shell builtin</span>
-</span><span class='line'><span class="nv">$ </span><span class="nb">help</span> -m <span class="nb">cd</span>
-</span><span class='line'><span class="nv">$ </span>mkdir --help
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span>man                            <span class="c"># display an on-line cmd reference</span>
-</span><span class='line'><span class="nv">$ </span>man ls
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>2.4. I/O redirection</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>ls &gt; list_file.txt                             <span class="c"># output with overwritten</span>
-</span><span class='line'><span class="nv">$ </span>ls &gt;&gt; list_file.txt                            <span class="c"># output with appending</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span>sort &lt; file_list.txt                           <span class="c"># input</span>
-</span><span class='line'><span class="nv">$ </span>sort &lt; file_list.txt &gt; sorted_file_list.txt    <span class="c"># input and then output</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="c"># pipeline</span>
-</span><span class='line'><span class="nv">$ </span>ls -l <span class="p">|</span> less
-</span><span class='line'><span class="nv">$ </span>ls -lt <span class="p">|</span> head                                  <span class="c"># display the 10 newest files</span>
-</span><span class='line'><span class="nv">$ </span>du <span class="p">|</span> sort -nr
-</span><span class='line'><span class="nv">$ </span>find . -type f -print <span class="p">|</span> wc -l
-</span><span class='line'>
-</span><span class='line'><span class="c"># filters</span>
-</span><span class='line'><span class="nv">$ </span>sort
-</span><span class='line'><span class="nv">$ </span>uniq
-</span><span class='line'><span class="nv">$ </span>grep
-</span><span class='line'><span class="nv">$ </span>fmt
-</span><span class='line'><span class="nv">$ </span>pr
-</span><span class='line'><span class="nv">$ </span>head/tail
-</span><span class='line'><span class="nv">$ </span>tr
-</span><span class='line'><span class="nv">$ </span>sed
-</span><span class='line'><span class="nv">$ </span>awk
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span>cat poorly_formatted_report.txt <span class="p">|</span> fmt <span class="p">|</span> pr <span class="p">|</span> lpr
-</span><span class='line'><span class="nv">$ </span>cat unsorted_list_with_dupes.txt <span class="p">|</span> sort <span class="p">|</span> uniq <span class="p">|</span> pr <span class="p">|</span> lpr
-</span><span class='line'><span class="nv">$ </span>tar tzvf name_of_file.tar.gz <span class="p">|</span> less
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>2.5. Expansion</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">echo </span>this is a <span class="nb">test</span>
-</span><span class='line'><span class="nv">$ </span><span class="nb">echo</span> *
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span>ls
-</span><span class='line'><span class="nv">$ </span><span class="nb">echo </span>D*
-</span><span class='line'><span class="nv">$ </span><span class="nb">echo</span> *s
-</span><span class='line'><span class="nv">$ </span><span class="nb">echo</span> <span class="o">[[</span>:upper:<span class="o">]]</span>*
-</span><span class='line'><span class="nv">$ </span><span class="nb">echo</span> /usr/*/share
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span><span class="nb">echo</span> ~
-</span><span class='line'><span class="nv">$ </span><span class="nb">echo</span> ~foo
-</span><span class='line'><span class="nv">$ </span><span class="nb">echo</span> <span class="k">$((</span><span class="m">2</span> <span class="o">+</span> <span class="m">2</span><span class="k">))</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span><span class="nb">echo </span>Front-<span class="o">{</span>A,B,C<span class="o">}</span>-Back
-</span><span class='line'><span class="nv">$ </span><span class="nb">echo </span>Number_<span class="o">{</span>1..5<span class="o">}</span>
-</span><span class='line'><span class="nv">$ </span><span class="nb">echo</span> <span class="o">{</span>Z..A<span class="o">}</span>
-</span><span class='line'><span class="nv">$ </span><span class="nb">echo </span>a<span class="o">{</span>A<span class="o">{</span>1,2<span class="o">}</span>,B<span class="o">{</span>3,4<span class="o">}}</span>b
-</span><span class='line'><span class="nv">$ </span><span class="nb">echo </span>a<span class="o">{</span>A<span class="o">{</span>1,2<span class="o">}</span>,B<span class="o">{</span>3,4<span class="o">}}</span>b
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span><span class="nb">echo</span> <span class="nv">$USER</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span><span class="nb">echo</span> <span class="k">$(</span>ls<span class="k">)</span>
-</span><span class='line'><span class="nv">$ </span>ls -l <span class="k">$(</span>which cp<span class="k">)</span>
-</span><span class='line'><span class="nv">$ </span>file <span class="k">$(</span>ls /usr/bin/* <span class="p">|</span> grep bin/zip<span class="k">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>2.6. Permissions</h3>
-
-<p><code>-rwxrwxrwx</code></p>
-
-<ul>
-<li><code>-</code>: file type</li>
-<li><code>rwx</code>: read, write, execute, first - file owner, second - group owner, third - other users</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>rwx rwx rwx <span class="m">111</span> <span class="m">111</span> <span class="m">111</span> <span class="m">777</span>
-</span><span class='line'>rw- rw- rw- <span class="m">110</span> <span class="m">110</span> <span class="m">110</span> <span class="m">666</span>
-</span><span class='line'>rwx --- --- <span class="m">111</span> <span class="m">000</span> <span class="m">000</span> <span class="m">700</span>
-</span><span class='line'>
-</span><span class='line'>rwxrwxrwx <span class="m">777</span>
-</span><span class='line'>rwxr-xr-x <span class="m">755</span>
-</span><span class='line'>rwx------ <span class="m">700</span>
-</span><span class='line'>rw-rw-rw- <span class="m">666</span>
-</span><span class='line'>rw-r--r-- <span class="m">644</span>
-</span><span class='line'>rw------- <span class="m">600</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>commands</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>chmod
-</span><span class='line'><span class="nv">$ </span>chown
-</span><span class='line'><span class="nv">$ </span>chgrp
-</span><span class='line'><span class="nv">$ </span>su
-</span><span class='line'><span class="nv">$ </span>sudo
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>2.7. Job control</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>ps                 <span class="c"># list the processes running on the system</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span><span class="nb">kill</span>               <span class="c"># send a signal to one or more processes (usually to &quot;kill&quot; a process)</span>
-</span><span class='line'><span class="nv">$ </span><span class="nb">kill</span> -1/SIGHUP
-</span><span class='line'><span class="nv">$ </span><span class="nb">kill</span> -2/SIGINT
-</span><span class='line'><span class="nv">$ </span><span class="nb">kill</span> -15/SIGTERM
-</span><span class='line'><span class="nv">$ </span><span class="nb">kill</span> -9/SIGKILL
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span><span class="nb">jobs</span>               <span class="c"># an alternate way of listing your own processes</span>
-</span><span class='line'><span class="nv">$ </span><span class="nb">bg</span>                 <span class="c"># put a process in the background</span>
-</span><span class='line'><span class="nv">$ </span><span class="nb">fg</span>                 <span class="c"># put a process in the forground</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>2. Shell Scripts</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/bash</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>2.1. Variables</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/bash</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># sysinfo_page - A script to produce an HTML file</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">title</span><span class="o">=</span><span class="s2">&quot;System Information for $HOSTNAME&quot;</span>
-</span><span class='line'><span class="nv">RIGHT_NOW</span><span class="o">=</span><span class="k">$(</span>date +<span class="s2">&quot;%x %r %Z&quot;</span><span class="k">)</span>
-</span><span class='line'><span class="nv">TIME_STAMP</span><span class="o">=</span><span class="s2">&quot;Updated on $RIGHT_NOW by $USER&quot;</span>
-</span><span class='line'>
-</span><span class='line'>cat <span class="s">&lt;&lt;- _EOF_</span>
-</span><span class='line'><span class="s">    &lt;html&gt;</span>
-</span><span class='line'><span class="s">    &lt;head&gt;</span>
-</span><span class='line'><span class="s">        &lt;title&gt;</span>
-</span><span class='line'><span class="s">        $title</span>
-</span><span class='line'><span class="s">        &lt;/title&gt;</span>
-</span><span class='line'><span class="s">    &lt;/head&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="s">    &lt;body&gt;</span>
-</span><span class='line'><span class="s">    &lt;h1&gt;$title&lt;/h1&gt;</span>
-</span><span class='line'><span class="s">    &lt;p&gt;$TIME_STAMP&lt;/p&gt;</span>
-</span><span class='line'><span class="s">    &lt;/body&gt;</span>
-</span><span class='line'><span class="s">    &lt;/html&gt;</span>
-</span><span class='line'><span class="s">_EOF_</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>2.2. shell functions</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/bash</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># sysinfo_page - A script to produce an system information HTML file</span>
-</span><span class='line'>
-</span><span class='line'><span class="c">##### Constants</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">TITLE</span><span class="o">=</span><span class="s2">&quot;System Information for $HOSTNAME&quot;</span>
-</span><span class='line'><span class="nv">RIGHT_NOW</span><span class="o">=</span><span class="k">$(</span>date +<span class="s2">&quot;%x %r %Z&quot;</span><span class="k">)</span>
-</span><span class='line'><span class="nv">TIME_STAMP</span><span class="o">=</span><span class="s2">&quot;Updated on $RIGHT_NOW by $USER&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="c">##### Functions</span>
-</span><span class='line'>
-</span><span class='line'>system_info<span class="o">()</span>
-</span><span class='line'><span class="o">{</span>
-</span><span class='line'>    <span class="c"># Temporary function stub</span>
-</span><span class='line'>    <span class="nb">echo</span> <span class="s2">&quot;function system_info&quot;</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>show_uptime<span class="o">()</span>
-</span><span class='line'><span class="o">{</span>
-</span><span class='line'>    <span class="c"># Temporary function stub</span>
-</span><span class='line'>    <span class="nb">echo</span> <span class="s2">&quot;function show_uptime&quot;</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>drive_space<span class="o">()</span>
-</span><span class='line'><span class="o">{</span>
-</span><span class='line'>    <span class="c"># Temporary function stub</span>
-</span><span class='line'>    <span class="nb">echo</span> <span class="s2">&quot;function drive_space&quot;</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>home_space<span class="o">()</span>
-</span><span class='line'><span class="o">{</span>
-</span><span class='line'>    <span class="c"># Temporary function stub</span>
-</span><span class='line'>    <span class="nb">echo</span> <span class="s2">&quot;function home_space&quot;</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="c">##### Main</span>
-</span><span class='line'>
-</span><span class='line'>cat <span class="s">&lt;&lt;- _EOF_</span>
-</span><span class='line'><span class="s">  &lt;html&gt;</span>
-</span><span class='line'><span class="s">  &lt;head&gt;</span>
-</span><span class='line'><span class="s">      &lt;title&gt;$TITLE&lt;/title&gt;</span>
-</span><span class='line'><span class="s">  &lt;/head&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="s">  &lt;body&gt;</span>
-</span><span class='line'><span class="s">      &lt;h1&gt;$TITLE&lt;/h1&gt;</span>
-</span><span class='line'><span class="s">      &lt;p&gt;$TIME_STAMP&lt;/p&gt;</span>
-</span><span class='line'><span class="s">      $(system_info)</span>
-</span><span class='line'><span class="s">      $(show_uptime)</span>
-</span><span class='line'><span class="s">      $(drive_space)</span>
-</span><span class='line'><span class="s">      $(home_space)</span>
-</span><span class='line'><span class="s">  &lt;/body&gt;</span>
-</span><span class='line'><span class="s">  &lt;/html&gt;</span>
-</span><span class='line'><span class="s">_EOF_</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>2.3. flow control</h3>
-
-<h4>2.3.1. if</h4>
-
-<figure class='code'><figcaption><span>if</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="k">if</span> <span class="o">[</span> -f .bash_profile <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-</span><span class='line'>    <span class="nb">echo</span> <span class="s2">&quot;You have a .bash_profile. Things are fine.&quot;</span>
-</span><span class='line'><span class="k">else</span>
-</span><span class='line'>    <span class="nb">echo</span> <span class="s2">&quot;Yikes! You have no .bash_profile!&quot;</span>
-</span><span class='line'><span class="k">fi</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="c"># Alternate form</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">if</span> <span class="o">[</span> -f .bash_profile <span class="o">]</span>
-</span><span class='line'><span class="k">then</span>
-</span><span class='line'>    <span class="nb">echo</span> <span class="s2">&quot;You have a .bash_profile. Things are fine.&quot;</span>
-</span><span class='line'><span class="k">else</span>
-</span><span class='line'>    <span class="nb">echo</span> <span class="s2">&quot;Yikes! You have no .bash_profile!&quot;</span>
-</span><span class='line'><span class="k">fi</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># Another alternate form</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">if</span> <span class="o">[</span> -f .bash_profile <span class="o">]</span>
-</span><span class='line'><span class="k">then</span> <span class="nb">echo</span> <span class="s2">&quot;You have a .bash_profile. Things are fine.&quot;</span>
-</span><span class='line'><span class="k">else</span> <span class="nb">echo</span> <span class="s2">&quot;Yikes! You have no .bash_profile!&quot;</span>
-</span><span class='line'><span class="k">fi</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>test</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>-d file         True <span class="k">if</span> file is a directory
-</span><span class='line'>-e file         True <span class="k">if</span> file exists
-</span><span class='line'>-f file         True <span class="k">if</span> file exists and is a regular file
-</span><span class='line'>-L file         True <span class="k">if</span> file is a symbolic link
-</span><span class='line'>-r file         True <span class="k">if</span> file is a file readable by you
-</span><span class='line'>-w file         True <span class="k">if</span> file is a file writable by you
-</span><span class='line'>-x file         True <span class="k">if</span> file is a file executable by you
-</span><span class='line'>file1 -nt file2 True <span class="k">if</span> file1 is newer than <span class="o">(</span>according to modification <span class="nb">time</span><span class="o">)</span> file2
-</span><span class='line'>file1 -ot file2 True <span class="k">if</span> file1 is older than file2
-</span><span class='line'>-z string       True <span class="k">if</span> string is empty
-</span><span class='line'>-n string       True <span class="k">if</span> string is not empty
-</span><span class='line'><span class="nv">str1</span> <span class="o">=</span> str2     True <span class="k">if</span> string1 equals string2
-</span><span class='line'>str1 !<span class="o">=</span> str2    True <span class="k">if</span> string1 does not equal string2
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>exit</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="m">0</span>       success
-</span><span class='line'><span class="m">1</span>       failure
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h4>2.3.2. case</h4>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/bash</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">echo</span> -n <span class="s2">&quot;Type a digit or a letter &gt; &quot;</span>
-</span><span class='line'><span class="nb">read </span>character
-</span><span class='line'><span class="k">case</span> <span class="nv">$character</span> in
-</span><span class='line'>                                <span class="c"># Check for letters</span>
-</span><span class='line'>    <span class="o">[[</span>:lower:<span class="o">]]</span> <span class="p">|</span> <span class="o">[[</span>:upper:<span class="o">]]</span> <span class="o">)</span> <span class="nb">echo</span> <span class="s2">&quot;You typed the letter $character&quot;</span>
-</span><span class='line'>                                <span class="p">;;</span>
-</span><span class='line'>
-</span><span class='line'>                                <span class="c"># Check for digits</span>
-</span><span class='line'>    <span class="o">[</span>0-9<span class="o">]</span> <span class="o">)</span>                     <span class="nb">echo</span> <span class="s2">&quot;You typed the digit $character&quot;</span>
-</span><span class='line'>                                <span class="p">;;</span>
-</span><span class='line'>
-</span><span class='line'>                                <span class="c"># Check for anything else</span>
-</span><span class='line'>    * <span class="o">)</span>                         <span class="nb">echo</span> <span class="s2">&quot;You did not type a letter or a digit&quot;</span>
-</span><span class='line'><span class="k">esac</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h4>2.3.3. loops</h4>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/bash</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">number</span><span class="o">=</span>0
-</span><span class='line'><span class="k">while</span> <span class="o">[</span> <span class="s2">&quot;$number&quot;</span> -lt <span class="m">10</span> <span class="o">]</span><span class="p">;</span> <span class="k">do</span>
-</span><span class='line'>    <span class="nb">echo</span> <span class="s2">&quot;Number = $number&quot;</span>
-</span><span class='line'>    <span class="nv">number</span><span class="o">=</span><span class="k">$((</span>number <span class="o">+</span> <span class="m">1</span><span class="k">))</span>
-</span><span class='line'><span class="k">done</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">number</span><span class="o">=</span>0
-</span><span class='line'><span class="k">until</span> <span class="o">[</span> <span class="s2">&quot;$number&quot;</span> -ge <span class="m">10</span> <span class="o">]</span><span class="p">;</span> <span class="k">do</span>
-</span><span class='line'>    <span class="nb">echo</span> <span class="s2">&quot;Number = $number&quot;</span>
-</span><span class='line'>    <span class="nv">number</span><span class="o">=</span><span class="k">$((</span>number <span class="o">+</span> <span class="m">1</span><span class="k">))</span>
-</span><span class='line'><span class="k">done</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">count</span><span class="o">=</span>0
-</span><span class='line'><span class="k">for</span> i in <span class="k">$(</span>cat ~/.bash_profile<span class="k">)</span><span class="p">;</span> <span class="k">do</span>
-</span><span class='line'>    <span class="nv">count</span><span class="o">=</span><span class="k">$((</span>count <span class="o">+</span> <span class="m">1</span><span class="k">))</span>
-</span><span class='line'>    <span class="nb">echo</span> <span class="s2">&quot;Word $count ($i) contains $(echo -n $i | wc -c) characters&quot;</span>
-</span><span class='line'><span class="k">done</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Reference</h2>
-
-<ul>
-<li><a href="http://www.linuxcommand.org/index.php">Linux Command</a></li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Installing edX Analytics Data API]]></title>
-    <link href="http://k.arttechresearch.com/tech/2014/11/02/installing-edx-analytics-data-api/"/>
-    <updated>2014-11-02T13:44:48+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2014/11/02/installing-edx-analytics-data-api</id>
-    <content type="html"><![CDATA[<h2>1. Install in a single server</h2>
-
-<h3>1.1. Download the repo</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>mkdir -p edx
-</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>edx
-</span><span class='line'><span class="nv">$ </span>git clone https://github.com/edx/edx-analytics-data-api.git
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>1.2. Install the requirements</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>edx-analytics-data-api
-</span><span class='line'><span class="nv">$ </span>make develop
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>1.3. Testing</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>./manage.py migrate --noinput
-</span><span class='line'><span class="nv">$ </span>./manage.py migrate --noinput --database<span class="o">=</span>analytics
-</span><span class='line'><span class="nv">$ </span>./manage.py set_api_key &lt;username&gt; &lt;token&gt;
-</span><span class='line'><span class="nv">$ </span>make loaddata
-</span><span class='line'><span class="nv">$ </span>./manage.py runserver
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>link: <a href="http://localhost:9001">http://localhost:9001</a></p>
-
-<h2>2. Install by ansible scripts</h2>
-
-<h3>2.1. Download configuration</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>mkdir edx
-</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>edx
-</span><span class='line'><span class="nv">$ </span>git clone https://github.com/edx/configuration.git
-</span><span class='line'><span class="nv">$ </span>pip install -r requirements.txt
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>2.2. Install edx-analytics-data-api</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>configuration/playbooks
-</span><span class='line'><span class="nv">$ </span>sudo ansible-playbook -c <span class="nb">local</span> ./run_role.yml -e <span class="s2">&quot;analytics-api&quot;</span>  -i <span class="s2">&quot;localhost,&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>2.3. Testing</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /edx/edxapp/edx-analytics-api
-</span><span class='line'><span class="nv">$ </span><span class="nb">source </span>venvs/edx-analytics-api/bin/activate
-</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>edx-analytics-api
-</span><span class='line'><span class="nv">$ </span>make develop
-</span><span class='line'><span class="nv">$ </span>./manage.py migrate --noinput
-</span><span class='line'><span class="nv">$ </span>./manage.py migrate --noinput --database<span class="o">=</span>analytics
-</span><span class='line'><span class="nv">$ </span>./manage.py set_api_key &lt;username&gt; &lt;token&gt;
-</span><span class='line'><span class="nv">$ </span>make loaddata
-</span><span class='line'><span class="nv">$ </span>./manage.py runserver 0.0.0.0:9001
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>References</h2>
-
-<ul>
-<li><a href="https://github.com/edx/configuration/">configuration</a></li>
-<li><a href="https://github.com/edx/edx-analytics-data-api">edx-analytics-data-api</a></li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Installing edX Analytics Dashboard]]></title>
-    <link href="http://k.arttechresearch.com/tech/2014/11/01/installing-edx-analytics-dashboard/"/>
-    <updated>2014-11-01T13:29:38+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2014/11/01/installing-edx-analytics-dashboard</id>
-    <content type="html"><![CDATA[<h2>1. Install in a single server</h2>
-
-<h3>1. Prequistions</h3>
-
-<ul>
-<li>Python 2.7.x (not tested with Python 3.x)</li>
-<li>gettext</li>
-<li>npm</li>
-<li>JDK 7+</li>
-</ul>
-
-
-<h3>2. Download the repo</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>mkdir -p edx
-</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>edx
-</span><span class='line'><span class="nv">$ </span>git clone https://github.com/edx/edx-analytics-dashboard.git
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>3. Install the requirements</h3>
-
-<p>install by manually</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>edx-analytics-dashboard
-</span><span class='line'><span class="nv">$ </span>pip install -r requirements.txt
-</span><span class='line'><span class="nv">$ </span>bundle install
-</span><span class='line'><span class="nv">$ </span>bower install
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>install by commands</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>make develop
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>4. Testing</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>make migrate
-</span><span class='line'><span class="nv">$ </span>./manage.py runserver 0.0.0.0:9000
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>2. Install with ansible scripts</h2>
-
-<h3>2.1. Download configuration</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>mkdir edx
-</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>edx
-</span><span class='line'><span class="nv">$ </span>git clone https://github.com/edx/configuration.git
-</span><span class='line'><span class="nv">$ </span>pip install -r requirements.txt
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>2.2. Install edx-analytics-dashboard</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>configuration/playbooks
-</span><span class='line'><span class="nv">$ </span>sudo ansible-playbook -c <span class="nb">local</span> ./run_role.yml -e <span class="s2">&quot;insights&quot;</span>  -i <span class="s2">&quot;localhost,&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p></p>
-
-<h3>2.3. Testing</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /edx/edxapp/insights
-</span><span class='line'><span class="nv">$ </span><span class="nb">source </span>venvs/insights/bin/activate
-</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>edx-analytics-dashboard
-</span><span class='line'><span class="nv">$ </span>make migrate
-</span><span class='line'><span class="nv">$ </span>./manage.py runserver 0.0.0.0:9000
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>References</h2>
-
-<ul>
-<li><a href="https://github.com/edx/configuration/">configuration</a></li>
-<li><a href="https://github.com/edx/edx-analytics-dashboard/">edx-analytics-dashboard</a></li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Installing edX Platform]]></title>
-    <link href="http://k.arttechresearch.com/tech/2014/10/16/installing-edx-platform/"/>
-    <updated>2014-10-16T13:08:29+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2014/10/16/installing-edx-platform</id>
-    <content type="html"><![CDATA[<h2>1. Devstack</h2>
-
-<h3>1.1. Prequsition</h3>
-
-<ul>
-<li>Vagrant</li>
-<li>VirtualBox</li>
-<li>Ubuntu 12.04</li>
-</ul>
-
-
-<h3>1.2. Download box</h3>
-
-<p>download Vagrantfile</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>mkdir -p edx/devstack
-</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>edx/devstack
-</span><span class='line'><span class="nv">$ </span>curl -L https://raw.githubusercontent.com/edx/configuration/master/vagrant/release/devstack/Vagrantfile &gt; Vagrantfile
-</span><span class='line'><span class="nv">$ </span>vim Vagrantfile
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Look for the url of the specific box, download it, and then <code>vagrant box add ...</code></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>vagrant box add box_name box_path/box_name
-</span><span class='line'><span class="nv">$ </span>vagrant box list
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>1.3. Create edX VM</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>vagrant plugin install vagrant-vbguest
-</span><span class='line'><span class="nv">$ </span>vagrant up
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>NOTE: It will cost a lot of time on downloading and provisioning, please make sure the network connection is good.</p>
-
-<h3>1.4. Testing</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>vagrant ssh
-</span><span class='line'><span class="nv">$ </span>sudo su edxapp
-</span><span class='line'><span class="nv">$ </span>paver devstack lms
-</span><span class='line'><span class="nv">$ </span>paver devstack studio
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>links:</p>
-
-<ul>
-<li>LMS: <a href="http://localhost:8000">http://localhost:8000</a></li>
-<li>CMS/Studio: <a href="http://localhost:8001">http://localhost:8001</a></li>
-</ul>
-
-
-<p>accounts:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>staff@example.com <span class="o">(</span>password: edx<span class="o">)</span>
-</span><span class='line'>audit@example.com <span class="o">(</span>password: edx<span class="o">)</span>
-</span><span class='line'>verify@example.com <span class="o">(</span>password: edx<span class="o">)</span>
-</span><span class='line'>honor@example.com <span class="o">(</span>password: edx<span class="o">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>2. Fullstack</h2>
-
-<h3>2.1. Fullstack</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>mkdir fullstack
-</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>fullstack
-</span><span class='line'><span class="nv">$ </span>curl -L https://raw.githubusercontent.com/edx/configuration/master/vagrant/release/fullstack/Vagrantfile &gt; Vagrantfile
-</span><span class='line'><span class="nv">$ </span>vagrant plugin install vagrant-hostsupdater
-</span><span class='line'><span class="nv">$ </span>vagrant up
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>2.2. Testing</h3>
-
-<p>Links:</p>
-
-<ul>
-<li>LMS: <a href="http://192.168.33.10/">http://192.168.33.10/</a></li>
-<li>Studio: <a href="http://192.168.33.10:18010/">http://192.168.33.10:18010/</a></li>
-</ul>
-
-
-<p>Accounts:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>staff@example.com <span class="o">(</span>password: edx<span class="o">)</span>
-</span><span class='line'>audit@example.com <span class="o">(</span>password: edx<span class="o">)</span>
-</span><span class='line'>verify@example.com <span class="o">(</span>password: edx<span class="o">)</span>
-</span><span class='line'>honor@example.com <span class="o">(</span>password: edx<span class="o">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>References</h2>
-
-<ul>
-<li><a href="https://github.com/edx/configuration/wiki/edX-Developer-Stack">edX Developer Stack</a></li>
-<li><a href="https://github.com/edx/configuration/wiki/edx-Full-stack--installation-using-Vagrant-Virtualbox">edx Full stack installation using Vagrant Virtualbox</a></li>
-</ul>
-
 ]]></content>
   </entry>
   

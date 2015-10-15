@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tech | Kelly Chan]]></title>
   <link href="http://k.arttechresearch.com/categories/tech/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2015-10-14T20:54:22+08:00</updated>
+  <updated>2015-10-15T12:21:32+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[Kelly Chan]]></name>
@@ -79,251 +79,636 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Installing Openstack Devstack]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/10/03/installing-openstack-devstack/"/>
-    <updated>2015-10-03T12:33:38+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/10/03/installing-openstack-devstack</id>
-    <content type="html"><![CDATA[<h3>Prequisition</h3>
-
-<p>Softwares:</p>
-
-<p>&ndash; (VM) <a href="https://www.virtualbox.org/wiki/Downloads">VirtualBox 5.0</a><br/>
-&ndash; (OS) <a href="http://www.ubuntu.com/download/server">Ubuntu Server 14.04.3</a><br/>
-&ndash; (SW) <a href="https://github.com/openstack-dev/devstack">Openstack</a></p>
+    <title type="html"><![CDATA[Adding Tag Generator in Octopress]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/10/06/adding-tag-generator-in-octopress/"/>
+    <updated>2015-10-06T05:42:01+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/10/06/adding-tag-generator-in-octopress</id>
+    <content type="html"><![CDATA[<p>Feature: add the links for the tags.</p>
 
 <p>Steps:</p>
 
-<p>&ndash; Installing VirtualBox<br/>
-&ndash; Installing Ubuntu 14.04.03<br/>
-&ndash; Installing Openstack<br/>
-&ndash; Testing</p>
+<ol>
+<li>update the ruby plugin: <code>octopress/plugins/tag_generator.rb</code></li>
+<li>update the html in source: <code>octopress/source/_layouts/tag_index.html</code></li>
+<li>update the <code>tag_dir</code> in _config.yml: <code>octopress/_config.yml</code></li>
+</ol>
 
-<h3>1. Installing VirtualBox</h3>
 
-<p>Go to <a href="https://www.virtualbox.org/wiki/Downloads">VirtualBox</a>, download and install on the local machine.</p>
+<h2>1. Plugin: tag_generator.rb</h2>
 
-<h3>2. Installing Ubuntu</h3>
+<pre><code class="ruby tag_generator.rb"># encoding: utf-8
+#
+# Jekyll tag page generator.
+#
+# Based on Jekyll tag category generator:
+#
+#     http://recursive-design.com/projects/jekyll-plugins/
+#
+#     Version: 0.1.4 (201101061053)
+#
+#     Copyright (c) 2010 Dave Perrett, http://recursive-design.com/
+#     Licensed under the MIT license (http://www.opensource.org/licenses/mit-license.php)
+#
+# A generator that creates tag pages for jekyll sites.
+#
+# Included filters :
+# - tag_links:      Outputs the list of tags as comma-separated &lt;a&gt; links.
+# - date_to_html_string: Outputs the post.date as formatted html, with hooks for CSS styling.
+#
+# Available _config.yml settings :
+# - tag_dir:          The subfolder to build tag pages in (default is 'tags').
+# - tag_title_prefix: The string used before the tag name in the page title (default is
+#                          'Tag: ').
 
-<p>Go to <a href="http://www.ubuntu.com/download/server">Ubuntu</a> page, download the ubuntu server 14.04.03 (NOTE: Preferring 14.04.03) iso image.</p>
+require 'stringex'
 
-<p>Once done, open VirtualBox, create a vm for Ubuntu server. The vm settings are:<br/>
-&ndash; memory: 2GB<br/>
-&ndash; storage: 100GB<br/>
-&ndash; <strong>network: briaged adapter (IMPORTANT), promiscuous mode with ALLOW ALL</strong></p>
+module Jekyll
 
-<p>Then, attach Ubuntu server iso file to the drive, double click the vm, the system will be jumped to the installation guide.</p>
+  # The TagIndex class creates a single tag page for the specified tag.
+  class TagIndex &lt; Page
 
-<p>When installing Ubuntu, the installation mode should be:<br/>
-&ndash; <strong>multi-server with MAAS (IMPORTANT)</strong></p>
+    # Initializes a new TagIndex.
+    #
+    #  +base+         is the String path to the &lt;source&gt;.
+    #  +tag_dir+ is the String path between &lt;source&gt; and the tag folder.
+    #  +tag+     is the tag currently being processed.
+    def initialize(site, base, tag_dir, tag)
+      @site = site
+      @base = base
+      @dir  = tag_dir
+      @name = 'index.html'
+      self.process(@name)
+      # Read the YAML data from the layout page.
+      self.read_yaml(File.join(base, '_layouts'), 'tag_index.html')
+      self.data['tag']    = tag
+      # Set the title for this page.
+      title_prefix             = site.config['tag_title_prefix'] || 'Tag: '
+      self.data['title']       = "#{title_prefix}#{tag}"
+      # Set the meta-description for this page.
+      meta_description_prefix  = site.config['tag_meta_description_prefix'] || 'Tag: '
+      self.data['description'] = "#{meta_description_prefix}#{tag}"
+    end
 
-<p>Once done, restart and config the system:</p>
+  end
 
-<pre><code class="bash config system">    $ sudo apt-get update &amp;&amp; upgrade
-    $ sudo apt-get install git
-    $ git config --global user.name "username"
-    $ git config --global user.email "user@example.com"
+  # The TagFeed class creates an Atom feed for the specified tag.
+  class TagFeed &lt; Page
+
+    # Initializes a new TagFeed.
+    #
+    #  +base+         is the String path to the &lt;source&gt;.
+    #  +tag_dir+ is the String path between &lt;source&gt; and the tag folder.
+    #  +tag+     is the tag currently being processed.
+    def initialize(site, base, tag_dir, tag)
+      @site = site
+      @base = base
+      @dir  = tag_dir
+      @name = 'atom.xml'
+      self.process(@name)
+      # Read the YAML data from the layout page.
+      self.read_yaml(File.join(base, '_includes/custom'), 'tag_feed.xml')
+      self.data['tag']    = tag
+      # Set the title for this page.
+      title_prefix             = site.config['tag_title_prefix'] || 'Tag: '
+      self.data['title']       = "#{title_prefix}#{tag}"
+      # Set the meta-description for this page.
+      meta_description_prefix  = site.config['tag_meta_description_prefix'] || 'Tag: '
+      self.data['description'] = "#{meta_description_prefix}#{tag}"
+
+      # Set the correct feed URL.
+      self.data['feed_url'] = "#{tag_dir}/#{name}"
+    end
+
+  end
+
+  # The Site class is a built-in Jekyll class with access to global site config information.
+  class Site
+
+    # Creates an instance of TagIndex for each tag page, renders it, and
+    # writes the output to a file.
+    #
+    #  +tag_dir+ is the String path to the tag folder.
+    #  +tag+     is the tag currently being processed.
+    def write_tag_index(tag_dir, tag)
+      index = TagIndex.new(self, self.source, tag_dir, tag)
+      index.render(self.layouts, site_payload)
+      index.write(self.dest)
+      # Record the fact that this page has been added, otherwise Site::cleanup will remove it.
+      self.pages &lt;&lt; index
+
+      # Create an Atom-feed for each index.
+      if self.config['tag_feeds']
+        feed = TagFeed.new(self, self.source, tag_dir, tag)
+        feed.render(self.layouts, site_payload)
+        feed.write(self.dest)
+        # Record the fact that this page has been added, otherwise Site::cleanup will remove it.
+        self.pages &lt;&lt; feed
+      end
+    end
+
+    # Loops through the list of tag pages and processes each one.
+    def write_tag_indexes
+      if self.layouts.key? 'tag_index'
+        dir = self.config['tag_dir'] || 'tags'
+        self.tags.keys.each do |tag|
+          self.write_tag_index(File.join(dir, tag.to_url), tag)
+        end
+
+      # Throw an exception if the layout couldn't be found.
+      else
+        raise &lt;&lt;-ERR
+
+
+===============================================
+ Error for tag_generator.rb plugin
+-----------------------------------------------
+ No 'tag_index.hmtl' in source/_layouts/
+ Perhaps you haven't installed a theme yet.
+===============================================
+
+ERR
+      end
+    end
+
+  end
+
+
+  # Jekyll hook - the generate method is called by jekyll, and generates all of the tag pages.
+  class GenerateTags &lt; Generator
+    safe true
+    priority :low
+
+    def generate(site)
+      site.write_tag_indexes
+    end
+
+  end
+
+
+  # Adds some extra filters used during the tag creation process.
+  module Filters
+
+    # Outputs a list of tags as comma-separated &lt;a&gt; links. This is used
+    # to output the tag list for each post on a tag page.
+    #
+    #  +tags+ is the list of tags to format.
+    #
+    # Returns string
+    #
+    def tag_links(tags)
+      tags = tags.sort!.map { |c| tag_link c }
+
+      case tags.length
+      when 0
+        ""
+      when 1
+        tags[0].to_s
+      else
+        "#{tags[0...-1].join(', ')}, #{tags[-1]}"
+      end
+    end
+
+    # Outputs a single tag as an &lt;a&gt; link.
+    #
+    #  +tag+ is a tag string to format as an &lt;a&gt; link
+    #
+    # Returns string
+    #
+    def tag_link(tag)
+      dir = @context.registers[:site].config['tag_dir']
+      "&lt;a class='tag' href='http://k.arttechresearch.com/#{dir}/#{tag.to_url}/'&gt;#{tag}&lt;/a&gt;"
+    end
+
+    # Outputs the post.date as formatted html, with hooks for CSS styling.
+    #
+    #  +date+ is the date object to format as HTML.
+    #
+    # Returns string
+    def date_to_html_string(date)
+      result = '&lt;span class="month"&gt;' + date.strftime('%b').upcase + '&lt;/span&gt; '
+      result += date.strftime('&lt;span class="day"&gt;%d&lt;/span&gt; ')
+      result += date.strftime('&lt;span class="year"&gt;%Y&lt;/span&gt; ')
+      result
+    end
+
+  end
+
+end
 </code></pre>
 
-<h3>3. Installing Openstack</h3>
+<h2>2. Layouts: tag_index.html</h2>
 
-<p>Go to <a href="https://github.com/openstack-dev/devstack">Openstack</a>, download the repo and install:</p>
-
-<pre><code class="bash installing openstack">    # create a project folder and download the repo
-    $ cd /
-    $ sudo mkdir openstack
-    $ cd openstack
-    $ git clone https://github.com/openstack-dev/devstack.git
-    $ cd devstack
-    $ git checkout stable/juno
-
-    # config user
-    $ sudo ./tools/create-stack-user.sh
-    $ sudo chown -R stack:stack /openstack
-
-    # install
-    $ ./stack.sh
+<pre><code class="bash">$ cp octopress/source/_layouts/category_index.html octopress/source/_layouts/tag_index.html
 </code></pre>
 
-<p>Trouble Shooting</p>
+<p>Update the <code>category</code> as <code>tag</code>.</p>
 
-<p><strong>(1)</strong> If something wrong, try <code>./unstack.sh</code> and then <code>./clean.sh</code>, restart and then <code>./stack.sh</code> again.</p>
+<h2>3. Config: tag_dir</h2>
 
-<p><strong>(2)</strong> If re-run <code>./stack.sh</code> and the python packages flag some issue, try to delete <code>/opt/stack/xxx</code>, and re-run <code>./stack.sh</code>.</p>
+<pre><code class="yml _config.yml">tag_dir: tags
+</code></pre>
 
-<h3>4. Testing</h3>
+<h2>4. Testing</h2>
 
-<p>Open a browser, enter the dashboard with <code>http://ip_address</code>, login with <code>admin/password</code> (NOTE: password was set at previous).</p>
+<p><code>rake generate</code> and <code>rake preview</code>.</p>
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Setting Up MySQL on Ubuntu]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/05/01/setting-up-mysql-on-ubuntu/"/>
-    <updated>2015-05-01T10:50:00+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/05/01/setting-up-mysql-on-ubuntu</id>
-    <content type="html"><![CDATA[<p>installation</p>
+    <title type="html"><![CDATA[Adding Tag Cloud in Octopress]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/10/06/adding-tag-cloud-in-octopress/"/>
+    <updated>2015-10-06T05:20:09+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/10/06/adding-tag-cloud-in-octopress</id>
+    <content type="html"><![CDATA[<p>Features: tag cloud and category list with counts.</p>
 
-<pre><code class="bash">$ sudo apt-get install mysql-server libmysql-java
+<p>Steps:</p>
+
+<ol>
+<li>update the ruby plugin: <code>plugins/tag_cloud.rb</code></li>
+<li>update the html templates: <code>source/_includes/asides/tag_cloud.html</code>, <code>source/_includes/asides/category_list.html</code></li>
+<li>update the sass files: <code>sass/plugins/_tag_cloud.scss</code>, <code>sass/plugins/_category_list.scss</code></li>
+</ol>
+
+
+<h2>1. Plugin: tag_cloud.rb</h2>
+
+<pre><code class="ruby tag_cloud.rb"># encoding: utf-8
+
+# Tag Cloud for Octopress
+# =======================
+#
+# Description:
+# ------------
+# Easy output tag cloud and category list.
+#
+# Syntax:
+# -------
+#     {\% tag_cloud [counter:true] %\}
+#     {\% category_list [counter:true] %\}
+#
+# Example:
+# --------
+# In some template files, you can add the following markups.
+#
+# ### source/_includes/custom/asides/tag_cloud.html ###
+#
+#     `&lt;section&gt;`
+#       `&lt;h1&gt;Tag Cloud&lt;/h1&gt;`
+#         `&lt;span id="tag-cloud"&gt;{\% tag_cloud %\}&lt;/span&gt;`
+#     `&lt;/section&gt;`
+#
+# ### source/_includes/custom/asides/category_list.html ###
+#
+#     `&lt;section&gt;`
+#       `&lt;h1&gt;Categories&lt;/h1&gt;`
+#         `&lt;ul id="category-list"&gt;{\% category_list counter:true %\}&lt;/ul&gt;`
+#     `&lt;/section&gt;`
+#
+# Notes:
+# ------
+# Be sure to insert above template files into `default_asides` array in `_config.yml`.
+# And also you can define styles for 'tag-cloud' or 'category-list' in a `.scss` file.
+# (ex: `sass/custom/_styles.scss`)
+#
+# Licence:
+# --------
+# Distributed under the [MIT License][MIT].
+#
+# [MIT]: http://www.opensource.org/licenses/mit-license.php
+#
+require 'stringex'
+
+module Jekyll
+
+  class TagCloud &lt; Liquid::Tag
+
+    def initialize(tag_name, markup, tokens)
+      @opts = {}
+      if markup.strip =~ /\s*counter:(\w+)/i
+        @opts['counter'] = ($1 == 'true')
+        markup = markup.strip.sub(/counter:\w+/i,'')
+      end
+      super
+    end
+
+    def render(context)
+      lists = {}
+      max, min = 1, 1
+      config = context.registers[:site].config
+      tag_dir = config['root'] + config['tag_dir'] + '/'
+      tags = context.registers[:site].tags
+      tags.keys.sort_by{ |str| str.downcase }.each do |tag|
+        count = tags[tag].count
+        lists[tag] = count
+        max = count if count &gt; max
+      end
+
+      html = ''
+      lists.each do | tag, counter |
+        url = tag_dir + tag.gsub(/_|\P{Word}/, '-').gsub(/-{2,}/, '-').downcase
+        style = "font-size: #{90 + (110 * Float(counter-1)/(max-1))}%"
+        html &lt;&lt; "&lt;a href='#{url}' style='#{style}'&gt;#{tag}"
+        if @opts['counter']
+          html &lt;&lt; "(#{tags[tag].count})"
+        end
+        html &lt;&lt; "&lt;/a&gt; "
+      end
+      html
+    end
+  end
+
+  class CategoryList &lt; Liquid::Tag
+
+    def initialize(tag_name, markup, tokens)
+      @opts = {}
+      if markup.strip =~ /\s*counter:(\w+)/i
+        @opts['counter'] = ($1 == 'true')
+        markup = markup.strip.sub(/counter:\w+/i,'')
+      end
+      super
+    end
+
+    def render(context)
+      html = ""
+      config = context.registers[:site].config
+      category_dir = config['category_dir']
+      categories = context.registers[:site].categories
+      categories.keys.sort_by{ |str| str.downcase }.each do |category|
+        html &lt;&lt; "&lt;li&gt;&lt;a href='http://k.arttechresearch.com/#{category_dir}/#{category.to_url}/'&gt;#{category}"
+        if @opts['counter']
+          html &lt;&lt; " (#{categories[category].count})"
+        end
+        html &lt;&lt; "&lt;/a&gt;&lt;/li&gt;"
+      end
+      html
+    end
+  end
+
+end
+
+Liquid::Template.register_tag('tag_cloud', Jekyll::TagCloud)
+Liquid::Template.register_tag('category_list', Jekyll::CategoryList)
 </code></pre>
 
-<p>configuration</p>
+<h2>2. HTML: source/_includes/</h2>
 
-<pre><code class="bash">$ sudo nano /etc/mysql/my.cnf
+<p>tag_cloud.html</p>
 
-# comment bind-address
-# bind-address = 127.0.0.1
+<pre><code class="html tag_cloud.html">&lt;section class="tag-cloud"&gt;
+  &lt;h1&gt;Tags&lt;/h1&gt;
+    &lt;ul id="category-list"&gt;{\% tag_cloud counter:true %\}&lt;/ul&gt;
+&lt;/section&gt;
 </code></pre>
 
-<p>configurating database</p>
+<p>category_list.html</p>
 
-<pre><code class="bash">$ sudo service mysql restart
-$ mysql -uroot -p
-
-$ create database analytics DEFAULT CHARACTER SET utf8;
-$ grant all on analytics.* TO 'insight'@'%' IDENTIFIED BY 'analytics_password';
-$ grant all on analytics.* TO 'insight'@'202.120.83.105' IDENTIFIED BY 'analytics_password';
-$ grant all on analytics.* TO 'insight'@'202.120.83.101' IDENTIFIED BY 'analytics_password';
-
-$ GRANT ALL ON *.* TO insight@'localhost'  IDENTIFIED BY 'insight' WITH GRANT OPTION;
-
-$ exit;
+<pre><code class="html category_list.html">&lt;section class="category-list"&gt;
+  &lt;h1&gt;Summary&lt;/h1&gt;
+    &lt;ul id="category-list"&gt;{\% category_list counter:true %\}&lt;/ul&gt;
+&lt;/section&gt;
 </code></pre>
+
+<h2>3. SASS: sass/plugins</h2>
+
+<p>_tag_cloud.scss</p>
+
+<pre><code class="css _tag_cloud.scss">&lt;section class="category-list"&gt;
+  &lt;h1&gt;Summary&lt;/h1&gt;
+    &lt;ul id="category-list"&gt;<li><a href='/categories/art/'>art (1)</a></li><li><a href='/categories/life/'>life (43)</a></li><li><a href='/categories/tech/'>tech (65)</a></li>&lt;/ul&gt;
+&lt;/section&gt;
+kelly-2:octopress kelly$ cat sass/plugins/_tag_cloud.scss
+.tag-cloud {
+    ul {
+        padding: .5em 0;
+    }
+    a {
+    text-decoration: none;
+    }
+}
+</code></pre>
+
+<p>_category_list.scss</p>
+
+<pre><code class="css _category_list.scss">.category-list {
+    a {
+    text-decoration: none;
+    }
+}
+</code></pre>
+
+<h2>4. Testing</h2>
+
+<p>Include the <code>tag_cloud.html</code> and <code>category_list.html</code> in a page, and then run <code>rake generate</code> and <code>rake preview</code>.</p>
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Installing Emacs on Ubuntu]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/04/26/installing-emacs-on-ubuntu/"/>
-    <updated>2015-04-26T23:48:00+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/04/26/installing-emacs-on-ubuntu</id>
-    <content type="html"><![CDATA[<h2>Prequistions</h2>
+    <title type="html"><![CDATA[Adding the Social Icons in Octopress]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/10/06/adding-the-social-icons-in-octopress/"/>
+    <updated>2015-10-06T05:04:17+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/10/06/adding-the-social-icons-in-octopress</id>
+    <content type="html"><![CDATA[<h2>1. Perfections: design the icons</h2>
 
-<pre><code class="bash">$ sudo apt-get install ipython
-$ sudo apt-get install texinfo
-$ sudo apt-get install automake autoconf
-$ sudo apt-get install texlive
-$ sudo apt-get install cvs
-$ sudo apt-get install mercurial
-</code></pre>
+<p>Go to <a href="http://perfecticons.com">Perfections</a>, choose the icons you need, select the styles, and then generate the codes.</p>
 
-<h2>1. Installation</h2>
+<p>Once done, download the <code>fonts.zip</code>.</p>
 
-<pre><code class="bash">$ sudo add-apt-repository ppa:cassou/emacs
-$ sudo apt-get update
+<h2>2. Octopress: integrate the icons</h2>
 
-$ # stable version
-$ sudo apt-get install emacs24 emacs24-el emacs24-common-non-dfsg
+<ul>
+<li>copy the <code>fonts.zip</code> to <code>octopress/source/assets/fonts/</code></li>
+<li>copy the html file to <code>octopress/source/_includes/social.html</code>, and then modify the variables</li>
+<li>add the <code>social.html</code> to a page</li>
+<li>copy the css file to <code>octopress/sass/partials/_socials.scss</code></li>
+<li>update the links in <code>octopress/_config.yml</code></li>
+</ul>
 
-$ # latest version
-$ sudo apt-get install emacs-snapshot-el emacs-snapshot-gtk emacs-snapshot
-</code></pre>
 
-<h2>2. Configuration</h2>
-
-<pre><code class="bash">$ git clone https://github.com/jhamrick/emacs.git
-
-$ cd emacs
-$ sudo /path/to/emacs/bootstrap.sh
-
-$ # open the emacs, it will automatically install the plugins    
-$ emacs
-</code></pre>
-
-<h2>3. Trouble Shooting</h2>
-
-<h3>3.1. error: makeinfo: command not found</h3>
-
-<p>error message</p>
-
-<pre><code class="bash">$ error: makeinfo: command not found
-</code></pre>
-
-<p>solution</p>
-
-<pre><code class="bash">$ sudo apt-get install texinfo
-</code></pre>
-
-<h3>3.2. error: autogen.sh: autoconf: not found</h3>
-
-<p>error message</p>
-
-<pre><code class="bash">error: autogen.sh: autoconf: not found
-</code></pre>
-
-<p>solution</p>
-
-<pre><code class="bash">$ sudo apt-get install automake autoconf
-</code></pre>
-
-<h3>3.3. error: pdftex: command not found</h3>
-
-<p>error message</p>
-
-<pre><code class="bash">error: pdftex: command not found
-</code></pre>
-
-<p>solution</p>
-
-<pre><code class="bash">$ sudo apt-get install texlive
-</code></pre>
-
-<h3>3.4. error: Error (el-get): while installing matlab-mode: The command named ‘cvs’ can not be found with `executable-find’</h3>
-
-<p>error message</p>
-
-<pre><code class="bash">error: Error (el-get): while installing matlab-mode: The command named ‘cvs’ can not be found with `executable-find’
-</code></pre>
-
-<p>solution</p>
-
-<pre><code class="bash">$ sudo apt-get install cvs
-</code></pre>
-
-<h3>3.5. error: Error (el-get): while installing pydoc-info: The command named ‘hg’ can not be found with `executable-find’</h3>
-
-<p>error message</p>
-
-<pre><code class="bash">error: Error (el-get): while installing pydoc-info: The command named ‘hg’ can not be found with `executable-find’
-</code></pre>
-
-<p>solution</p>
-
-<pre><code class="bash">$ sudo apt-get install mercurial
-</code></pre>
+<p>Once done, run <code>rake generate</code> and <code>rake preview</code> to check.</p>
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Automatically Running Shell Scripts on Ubuntu]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/04/25/automatically-running-shell-scripts-on-ubuntu/"/>
-    <updated>2015-04-25T14:17:14+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/04/25/automatically-running-shell-scripts-on-ubuntu</id>
-    <content type="html"><![CDATA[<p>configurating script</p>
+    <title type="html"><![CDATA[Octopress Construct]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/10/06/octopress-construct/"/>
+    <updated>2015-10-06T04:06:04+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/10/06/octopress-construct</id>
+    <content type="html"><![CDATA[<h2>1. Folder Construct</h2>
 
-<pre><code class="bash">$ cd /path/to/folder
-$ nano file_name
-# save and exit
-
-$ sudo chown user:group file_name
-$ sudo chmod u+x file_name
+<pre><code>./
+|---- source/                                   # templates
+|---- sass/                                     # scss
+|---- ./themes/                                 # themes
+|          |---- classic/                       # a theme contains source and sass
+|                   |---- source/
+|                   |---- sass/
+|---- plugins/                                   # ruby plugins
+|
+|---- Gemfile                                    # gemfile
+|---- Rakefile                                   # rakefile
+|---- config.rb
+|---- config.ru
+|---- _config.yml                                # site config file
+|
+|---- public/                                    # the generated pages
+|---- _deploy/                                   # the files for deployment
 </code></pre>
 
-<p>editting shell script</p>
+<h2>2. Static Pages</h2>
 
-<pre><code class="bash">#!/bin/bash
-...
-...
+<h3>2.1. source</h3>
+
+<pre><code>source/
+  |---- _includes/                  # template partials
+  |---- _layouts/                   # page layouts
+  |
+  |---- page/                       # page construct
+  |---- index.html                  # index
+  |
+  |
+  |---- javascripts/
+  |---- stylesheets/
+  |---- assets/                     # fonts and others
+  |---- images/
 </code></pre>
 
-<p>configurating env path</p>
+<h4>2.1.1. templates</h4>
 
-<pre><code class="bash">$ nano ~/.bashrc
+<p><code>index.html</code> and <code>page/index.html</code> are the top layers, they are extended from <code>_layouts</code> which is contatining the page templates.</p>
 
-# custom bin
-# export PATH=$PATH:/path/to/bin
+<p>All the page layouts <code>_layouts</code> are extended from the <code>_includes</code> partials.</p>
 
-$ source ~/.bashrc
+<p>If you would like to start a new page, follow the steps:</p>
+
+<ul>
+<li>type <code>rake new_page['page_name']</code></li>
+<li>go to <code>page_name</code></li>
+<li><code>vim index.html</code></li>
+<li>update the layouts and head_vars</li>
+<li>update the contents, for example, include a partial from <code>_includes</code> or rewrite the content corresponding to the requirements</li>
+</ul>
+
+
+<h4>2.1.2. static files</h4>
+
+<p>Put the images in the <code>images</code>, put the fonts and other files in <code>assets</code>, put the javascripts in <code>javascripts</code>.</p>
+
+<p>NOTE: For the stylesheets, you can update the styles in <code>sass/</code>.</p>
+
+<h3>2.2. sass</h3>
+
+<pre><code>sass/
+  |---- screen.scss
+            |---- custom/
+            |---- _base.scss                               # the global settings
+            |         |---- _utilities.scss                # mixins
+            |         |---- _solarized.scss                # codes
+            |         |---- _theme.scss                    # theme
+            |         |---- _typography.scss               # DOM elements
+            |         |---- _layout.scss                   # layouts
+            |
+            |---- _partials.scss                           # the partial settings
+            |         |---- _header.scss
+            |         |---- _navigation.scss
+            |         |---- _blog.scss
+            |         |---- _sharing.scss                  # sharing
+            |         |---- _syntax.scss                   # codes
+            |         |---- _archives.scss
+            |         |---- _sidebar.scss
+            |         |---- _footer.scss
+            |
+            |---- plugins/                                 # plugin styles
 </code></pre>
+
+<h3>2.3. .themes</h3>
+
+<p>The theme related files are <code>source</code> and <code>sass</code>.</p>
+
+<p>If install a theme, the step is just copy the <code>source</code> and <code>sass</code> to <code>octopress/</code>, and then replace the old files.</p>
+
+<p>If create a theme, vise versa, just copy <code>octopress/source</code> and <code>octopress/sass</code> to <code>.themes/theme_name</code>.</p>
+
+<h4>2.3.1. Installing a theme</h4>
+
+<pre><code class="bash">$ cd octopress/.themes
+$ git clone https://a_new_theme_url
+
+$ cd octopress/
+$ rake install['theme_name']
+$ rake generate
+</code></pre>
+
+<h4>2.3.2. Creating a theme</h4>
+
+<pre><code class="bash">$ cd octopress
+$ mkdir .themes/theme_name
+$ cp -R source .themes/theme_name/source
+$ cp -$ sass .themes/theme_name/sass
+</code></pre>
+
+<h2>3. Plugins</h2>
+
+<p>You can extend various of features by ruby plugins.</p>
+
+<p>If you perfer creating a plugin by yourself, follow the steps:</p>
+
+<ul>
+<li><code>cd plugins</code></li>
+<li><code>vim plugin_name.rb</code></li>
+<li>write the features</li>
+<li>update <code>Gemfile</code> if some packages required</li>
+<li>go to <code>source/_includes/plugins</code>, write the corresponding template</li>
+<li>go to <code>source/</code>, include the plugin in the pages</li>
+<li><code>vim _config.yml</code>, write the config variables if needed</li>
+<li>go to <code>sass/plugins</code>, write the coresponding style`</li>
+<li><code>rake generate</code></li>
+<li><code>rake preview</code></li>
+</ul>
+
+
+<h2>4. Configuration</h2>
+
+<h3>4.1. _config.yml</h3>
+
+<p>Since Octopress is the extension of Jekyll, you can check the Jekyll configuration documents for the detailed config variables.</p>
+
+<h2>5. Commands</h2>
+
+<h3>5.1. Gemfile</h3>
+
+<p>Update the gems in the <code>Gemfile</code>, especially when you update the plugins.</p>
+
+<h3>5.2. Rakefile</h3>
+
+<p>Update the commands in the <code>Rakefile</code>.</p>
+
+<h4>5.2.1. Default commands</h4>
+
+<pre><code class="bash">$ rake generate
+$ rake watch
+$ rake preview
+
+$ rake new_post['post_name']
+$ rake new_page['page_name']
+$ rake isolate
+
+$ rake integrate
+$ rake update_sytle
+$ rake update_source
+
+$ rake deploy
+$ rake gen_deploy
+$ rake rsync
+$ rake set_root_dir
+$ rake setup_github_pages
+</code></pre>
+
+<h2>Reference</h2>
+
+<ul>
+<li><a href="http://octopress.org/docs/">Octopress Docs</a></li>
+</ul>
+
 ]]></content>
   </entry>
   

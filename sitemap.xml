@@ -9,6 +9,26 @@
     <lastmod>2015-10-11T22:46:04+08:00</lastmod>
   </url>
   <url>
+    <loc>http://k.arttechresearch.com/tech/2015/10/06/adding-tag-generator-in-octopress/</loc>
+    <lastmod>2015-10-06T05:42:01+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2015/10/06/adding-tag-cloud-in-octopress/</loc>
+    <lastmod>2015-10-06T05:20:09+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2015/10/06/adding-the-social-icons-in-octopress/</loc>
+    <lastmod>2015-10-06T05:04:17+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2015/10/06/octopress-construct/</loc>
+    <lastmod>2015-10-06T04:06:04+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2015/10/06/installing-octopress/</loc>
+    <lastmod>2015-10-06T03:54:31+08:00</lastmod>
+  </url>
+  <url>
     <loc>http://k.arttechresearch.com/tech/2015/10/03/installing-openstack-devstack/</loc>
     <lastmod>2015-10-03T12:33:38+08:00</lastmod>
   </url>
@@ -438,6 +458,15 @@
     <loc>http://k.arttechresearch.com/devkits/</loc>
   </url>
   <url>
+    <loc>http://k.arttechresearch.com/categories/life/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/categories/tech/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/categories/art/</loc>
+  </url>
+  <url>
     <loc>http://k.arttechresearch.com/tags/poem/</loc>
   </url>
   <url>
@@ -456,16 +485,16 @@
     <loc>http://k.arttechresearch.com/tags/career/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/vim/</loc>
-  </url>
-  <url>
     <loc>http://k.arttechresearch.com/tags/ide/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/python/</loc>
+    <loc>http://k.arttechresearch.com/tags/vim/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/pandas/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/python/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/time-series/</loc>
@@ -474,22 +503,22 @@
     <loc>http://k.arttechresearch.com/tags/emacs/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/ruby/</loc>
+    <loc>http://k.arttechresearch.com/tags/jekyll/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/jekyll/</loc>
+    <loc>http://k.arttechresearch.com/tags/ruby/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/css/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/nlp/</loc>
+    <loc>http://k.arttechresearch.com/tags/classification/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/machine-learning/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/classification/</loc>
+    <loc>http://k.arttechresearch.com/tags/nlp/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/nltk/</loc>
@@ -531,16 +560,13 @@
     <loc>http://k.arttechresearch.com/tags/mysql/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/unicode/</loc>
-  </url>
-  <url>
     <loc>http://k.arttechresearch.com/tags/ascii/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/html/</loc>
+    <loc>http://k.arttechresearch.com/tags/unicode/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/web/</loc>
+    <loc>http://k.arttechresearch.com/tags/html/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/dns/</loc>
@@ -549,7 +575,13 @@
     <loc>http://k.arttechresearch.com/tags/github/</loc>
   </url>
   <url>
+    <loc>http://k.arttechresearch.com/tags/web/</loc>
+  </url>
+  <url>
     <loc>http://k.arttechresearch.com/tags/django/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/devops/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/vagrant/</loc>
@@ -558,28 +590,25 @@
     <loc>http://k.arttechresearch.com/tags/vm/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/devops/</loc>
-  </url>
-  <url>
     <loc>http://k.arttechresearch.com/tags/edx/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/edx-platform/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/edx-analytics/</loc>
+    <loc>http://k.arttechresearch.com/tags/ansible/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/ansible/</loc>
+    <loc>http://k.arttechresearch.com/tags/edx-analytics/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/linux/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/sql/</loc>
+    <loc>http://k.arttechresearch.com/tags/db/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/db/</loc>
+    <loc>http://k.arttechresearch.com/tags/sql/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/nodejs/</loc>
@@ -600,13 +629,13 @@
     <loc>http://k.arttechresearch.com/tags/jenkins/</loc>
   </url>
   <url>
+    <loc>http://k.arttechresearch.com/tags/gunicorn/</loc>
+  </url>
+  <url>
     <loc>http://k.arttechresearch.com/tags/nginx/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/supervisor/</loc>
-  </url>
-  <url>
-    <loc>http://k.arttechresearch.com/tags/gunicorn/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/git/</loc>
@@ -618,27 +647,18 @@
     <loc>http://k.arttechresearch.com/tags/network/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/openstack/</loc>
-  </url>
-  <url>
     <loc>http://k.arttechresearch.com/tags/cloud/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/exhibition/</loc>
-  </url>
-  <url>
-    <loc>http://k.arttechresearch.com/tags/antique/</loc>
+    <loc>http://k.arttechresearch.com/tags/openstack/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/octopress/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/categories/life/</loc>
+    <loc>http://k.arttechresearch.com/tags/antique/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/categories/tech/</loc>
-  </url>
-  <url>
-    <loc>http://k.arttechresearch.com/categories/art/</loc>
+    <loc>http://k.arttechresearch.com/tags/exhibition/</loc>
   </url>
 </urlset>
