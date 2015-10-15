@@ -4,7 +4,7 @@
   <title><![CDATA[Kelly Chan]]></title>
   <link href="http://k.arttechresearch.com/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2015-10-15T12:21:32+08:00</updated>
+  <updated>2015-10-15T12:55:06+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[Kelly Chan]]></name>
@@ -12,6 +12,30 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[The Colors]]></title>
+    <link href="http://k.arttechresearch.com/life/2015/10/15/the-colors/"/>
+    <updated>2015-10-15T12:31:35+08:00</updated>
+    <id>http://k.arttechresearch.com/life/2015/10/15/the-colors</id>
+    <content type="html"><![CDATA[<h2>修色</h2>
+
+<p>准备把默认的背景色白和页面的背景色淡灰对换一下，不想没这么简单。
+一旦修改，同页面的其他的配色必须重来。</p>
+
+<p>不知哪位画家曾记，某年某月某日，他呈递了一幅人像给皇帝，皇帝过目，
+希望小修一个小部位。画家答曰：“若修改，则需XX天。”
+皇帝不解，画家解释说：“修了这一小处，其他XX，XX等部位也需要一并修改。”</p>
+
+<p>事物关联性这么奇妙，稍微改动一下，整体就变化了。而我自己的页面，主要是
+配色改变了，色彩对比度变了，牵动其他地方也需要修改，估计需要把整个主题
+切换，才能呈现我相对合意的界面。大修。</p>
+
+<p>色彩也有其有趣的地方，比如，深色背景＋浅色前景，更能突出内容，这也是现在
+很多大型网站所用的配色方案：浅灰色的背景＋白色的前背景＋深灰色的字体＋主题
+颜色作高亮。扁平化的设计，主题突出，内容清晰，阅读体验好。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Using MathJax With Octopress]]></title>
@@ -3466,96 +3490,6 @@
 <li><a href="http://bower.io">Bower Official Site</a></li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[MySQL]]></title>
-    <link href="http://k.arttechresearch.com/tech/2014/11/13/mysql/"/>
-    <updated>2014-11-13T16:41:10+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2014/11/13/mysql</id>
-    <content type="html"><![CDATA[<h2>1. Installation</h2>
-
-<p>Ubuntu</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install mysql-server
-</span><span class='line'><span class="nv">$ </span>sudo service mysql start/stop/restart
-</span><span class='line'><span class="nv">$ </span>mysql -u root -p
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>2. Commands</h2>
-
-<h3>2.1. database</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>mysql&gt; SHOW DATABASES<span class="p">;</span>
-</span><span class='line'>mysql&gt; CREATE DATABASE database name<span class="p">;</span>
-</span><span class='line'>mysql&gt;  DROP DATABASE database name<span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>2.2. schemas</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>mysql&gt;  USE database_name<span class="p">;</span>
-</span><span class='line'>mysql&gt; SHOW tables<span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>2.3. tables</h3>
-
-<p>create a table</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>mysql&gt; CREATE TABLE potluck <span class="o">(</span>id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-</span><span class='line'>name VARCHAR<span class="o">(</span>20<span class="o">)</span>,
-</span><span class='line'>food VARCHAR<span class="o">(</span>30<span class="o">)</span>,
-</span><span class='line'>confirmed CHAR<span class="o">(</span>1<span class="o">)</span>,
-</span><span class='line'>signup_date DATE<span class="o">)</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>insert a record</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>mysql&gt; INSERT INTO <span class="sb">`</span>potluck<span class="sb">`</span> <span class="o">(</span><span class="sb">`</span>id<span class="sb">`</span>,<span class="sb">`</span>name<span class="sb">`</span>,<span class="sb">`</span>food<span class="sb">`</span>,<span class="sb">`</span>confirmed<span class="sb">`</span>,<span class="sb">`</span>signup_date<span class="sb">`</span><span class="o">)</span> VALUES <span class="o">(</span>NULL, <span class="s2">&quot;John&quot;</span>, <span class="s2">&quot;Casserole&quot;</span>,<span class="s2">&quot;Y&quot;</span>, <span class="s1">&#39;2012-04-11&#39;</span><span class="o">)</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>update a record</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>mysql&gt; UPDATE <span class="sb">`</span>potluck<span class="sb">`</span>
-</span><span class='line'>SET
-</span><span class='line'><span class="sb">`</span>confirmed<span class="sb">`</span> <span class="o">=</span> <span class="s1">&#39;Y&#39;</span>
-</span><span class='line'>WHERE <span class="sb">`</span>potluck<span class="sb">`</span>.<span class="sb">`</span>name<span class="sb">`</span> <span class="o">=</span><span class="s1">&#39;Sandy&#39;</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>delete a column/row</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>mysql&gt; ALTER TABLE potluck ADD email VARCHAR<span class="o">(</span>40<span class="o">)</span><span class="p">;</span>
-</span><span class='line'>mysql&gt; DELETE from <span class="o">[</span>table name<span class="o">]</span> where <span class="o">[</span>column name<span class="o">]=[</span>field text<span class="o">]</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>3. Configurations</h2>
 ]]></content>
   </entry>
   
