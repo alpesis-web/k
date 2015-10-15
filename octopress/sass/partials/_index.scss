@@ -24,7 +24,7 @@
         @include transition(color .5s);
     }
     &:hover a {
-        color: $sidebar-link-color;
+        color: $theme-color;
         &:hover { color: $sidebar-link-color-hover; }
     }
    
