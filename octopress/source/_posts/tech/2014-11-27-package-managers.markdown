@@ -4,7 +4,7 @@ title: "Package Managers"
 date: 2014-11-27 12:52:01 +0800
 comments: true
 categories: [tech]
-tags: [linux, node.js, python, ruby, javascript] 
+tags: [linux, nodejs, python, ruby, javascript] 
 ---
 
 | SW      | Package Manager | Config File     | Version Control |
@@ -31,7 +31,7 @@ $ sudo apt-get install SW
 
 ### 2.3. Configuration
 
-### 2.4. Resources
+### 2.4. Sources
 
 ```bash
 $ vim /etc/apt/sources.list
@@ -67,7 +67,13 @@ $ vim production.txt
 $ vim tests.txt
 ```
 
-### 3.4. Resources
+### 3.4. Sources
+
+```bash
+$ pip install PACKAGE -i http://xxxx
+```
+
+source list
 
 ## 4. Ruby
 
@@ -86,7 +92,7 @@ $ gem uninstall PACKAGE
 
 Gemfile
 
-### 4.4. Resources
+### 4.4. Sources
 
 
 ## 5. Node.js
@@ -98,7 +104,7 @@ Gemfile
 ### 5.3. Configuration
 
 
-### 5.4. Resources
+### 5.4. Sources
 
 
 ## 6. Javascript
@@ -126,7 +132,7 @@ It will generate [bower.json](https://github.com/bower/spec/blob/master/json.md)
 `bower.json`
 
 
-### 6.4. Resources
+### 6.4. Sources
 
 
 ## References

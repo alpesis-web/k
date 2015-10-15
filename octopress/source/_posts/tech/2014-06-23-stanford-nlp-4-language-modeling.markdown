@@ -106,12 +106,12 @@ $$ P(w_i \| w_{i-1}) = c(w_{i-1},w_i) / c(w_{i-1}) $$
     <s> I do not like green eggs and ham </s>  
 ```
 
-- $$ P(I \| <s>) = c(<s>,I) / c(<s>) = 2/3 = .67 $$  
-- $$ P(Sam \| <s>) = 1/3 = .33 $$  
-- $$ P(am \| I) = 2/3 = .67 $$  
-- $$ P(</s> \| Sam) = 1/2 = 0.5 $$  
-- $$ P(Sam \| am) = 1/2 = .5 $$  
-- $$ P(do \| I) = 1/3 = .33 $$  
+- $$ P(I | `<s>`) = c(`<s>`,I) / c(`<s>`) = 2/3 = .67 $$  
+- $$ P(Sam | `<s>`) = 1/3 = .33 $$  
+- $$ P(am | I) = 2/3 = .67 $$  
+- $$ P(</s> | Sam) = 1/2 = 0.5 $$  
+- $$ P(Sam | am) = 1/2 = .5 $$  
+- $$ P(do | I) = 1/3 = .33 $$  
 
 ### 2.3. More examples: Berkeley Restaurant Project sentences
 
