@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tech | Kelly Chan]]></title>
   <link href="http://k.arttechresearch.com/categories/tech/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2015-10-15T12:55:42+08:00</updated>
+  <updated>2015-10-15T22:34:52+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[Kelly Chan]]></name>
@@ -474,7 +474,7 @@ Liquid::Template.register_tag('category_list', Jekyll::CategoryList)
 
 <pre><code class="css _tag_cloud.scss">&lt;section class="category-list"&gt;
   &lt;h1&gt;Summary&lt;/h1&gt;
-    &lt;ul id="category-list"&gt;<li><a href='/categories/art/'>art (1)</a></li><li><a href='/categories/life/'>life (44)</a></li><li><a href='/categories/tech/'>tech (65)</a></li>&lt;/ul&gt;
+    &lt;ul id="category-list"&gt;<li><a href='/categories/art/'>art (1)</a></li><li><a href='/categories/life/'>life (45)</a></li><li><a href='/categories/tech/'>tech (65)</a></li>&lt;/ul&gt;
 &lt;/section&gt;
 kelly-2:octopress kelly$ cat sass/plugins/_tag_cloud.scss
 .tag-cloud {

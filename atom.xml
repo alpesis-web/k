@@ -4,7 +4,7 @@
   <title><![CDATA[Kelly Chan]]></title>
   <link href="http://k.arttechresearch.com/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2015-10-15T12:55:42+08:00</updated>
+  <updated>2015-10-15T22:34:52+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[Kelly Chan]]></name>
@@ -12,6 +12,26 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Logic and Thinking]]></title>
+    <link href="http://k.arttechresearch.com/life/2015/10/15/logic-and-thinking/"/>
+    <updated>2015-10-15T22:14:42+08:00</updated>
+    <id>http://k.arttechresearch.com/life/2015/10/15/logic-and-thinking</id>
+    <content type="html"><![CDATA[<h2>逻辑与思考</h2>
+
+<p>验证错误，只需一个反例。和别人进行讨论的时候，似乎举个反例，也很容易论证一些事物的真伪、</p>
+
+<p>比如，语言考试，是否母语人士必能高分通过？前提假设，该母语人士的日常听说读写能力流畅。
+事实是，语言考试和日常交流还是有区别的。日常交流，可能只需双方明白各自的意思，达到沟通的
+目的；而语言考试，除了语言的听说读写能力外，可能还需要相应的解题技巧、逻辑推理，甚至某些
+方面的专业知识或技能。这样，可以很容易理解，为什么有些人日常外语沟通流畅，却不一定能高分
+通过高考英文题或考研英文卷，后两者，除了听说读写，还需要考查和日常交流不同方面的能力。</p>
+
+<p>因为这样的讨论，引出了学习的模式。快速学习的方法，似乎就是快速找到该领域的规律、法则或模
+式，然后灵活地应用到具体的场景、情景中。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[The Colors]]></title>
@@ -3278,218 +3298,6 @@
     <content type="html"><![CDATA[<h2>1. Installation</h2>
 
 <h2>2.</h2>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Package Managers]]></title>
-    <link href="http://k.arttechresearch.com/tech/2014/11/27/package-managers/"/>
-    <updated>2014-11-27T12:52:01+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2014/11/27/package-managers</id>
-    <content type="html"><![CDATA[<table>
-<thead>
-<tr>
-<th style="text-align:left;"> SW      </th>
-<th style="text-align:left;"> Package Manager </th>
-<th style="text-align:left;"> Config File     </th>
-<th style="text-align:left;"> Version Control </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;"> redhat  </td>
-<td style="text-align:left;"> rpm             </td>
-<td style="text-align:left;">                 </td>
-<td style="text-align:left;">                 </td>
-</tr>
-<tr>
-<td style="text-align:left;"> ubuntu  </td>
-<td style="text-align:left;"> apt             </td>
-<td style="text-align:left;">                 </td>
-<td style="text-align:left;">                 </td>
-</tr>
-<tr>
-<td style="text-align:left;"> python  </td>
-<td style="text-align:left;"> pip             </td>
-<td style="text-align:left;"> requirments.txt </td>
-<td style="text-align:left;"> virtualenv      </td>
-</tr>
-<tr>
-<td style="text-align:left;"> ruby    </td>
-<td style="text-align:left;"> gem             </td>
-<td style="text-align:left;"> Gemfile         </td>
-<td style="text-align:left;"> rvm             </td>
-</tr>
-<tr>
-<td style="text-align:left;"> node.js </td>
-<td style="text-align:left;"> npm             </td>
-<td style="text-align:left;">                 </td>
-<td style="text-align:left;">                 </td>
-</tr>
-<tr>
-<td style="text-align:left;"> js      </td>
-<td style="text-align:left;"> bower           </td>
-<td style="text-align:left;"> bower.json      </td>
-<td style="text-align:left;">                 </td>
-</tr>
-</tbody>
-</table>
-
-
-<h2>1. RedHat</h2>
-
-<h2>2. Ubuntu</h2>
-
-<h3>2.1. Installation</h3>
-
-<h3>2.2. Commands</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get update <span class="o">&amp;&amp;</span> upgrade
-</span><span class='line'><span class="nv">$ </span>sudo apt-get install SW
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>2.3. Configuration</h3>
-
-<h3>2.4. Sources</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>vim /etc/apt/sources.list
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>3. Python</h2>
-
-<h3>3.1. Installation</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo easy_install pip
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>3.2. Commands</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>pip install PACKAGE
-</span><span class='line'><span class="nv">$ </span>pip install -r requirements.txt
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span>pip uninstall PACKAGE
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>3.3. Configuration</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>vim requirements.txt
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span>mkdir requirements
-</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>requirements
-</span><span class='line'><span class="nv">$ </span>vim base.txt
-</span><span class='line'><span class="nv">$ </span>vim dev.txt
-</span><span class='line'><span class="nv">$ </span>vim production.txt
-</span><span class='line'><span class="nv">$ </span>vim tests.txt
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>3.4. Sources</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>pip install PACKAGE -i http://xxxx
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>source list</p>
-
-<h2>4. Ruby</h2>
-
-<h3>4.1. Installation</h3>
-
-<h3>4.2. Commands</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>gem install PACKAGE
-</span><span class='line'><span class="nv">$ </span>gem install -g PACKAGE
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span>gem uninstall PACKAGE
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>4.3. Configuration</h3>
-
-<p>Gemfile</p>
-
-<h3>4.4. Sources</h3>
-
-<h2>5. Node.js</h2>
-
-<h3>5.1 Installation</h3>
-
-<h3>5.2. Commands</h3>
-
-<h3>5.3. Configuration</h3>
-
-<h3>5.4. Sources</h3>
-
-<h2>6. Javascript</h2>
-
-<h3>6.1. Installation</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>npm install -g bower
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>6.2. Commands</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>bower install PACKAGE
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>6.3. Configuration</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>bower init
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>It will generate <a href="https://github.com/bower/spec/blob/master/json.md">bower.json</a>.</p>
-
-<p><code>bower.json</code></p>
-
-<h3>6.4. Sources</h3>
-
-<h2>References</h2>
-
-<p>Linux</p>
-
-<p>Python</p>
-
-<p>Ruby</p>
-
-<p>Node.js</p>
-
-<p>Javascript</p>
-
-<ul>
-<li><a href="http://bower.io">Bower Official Site</a></li>
-</ul>
-
 ]]></content>
   </entry>
   
