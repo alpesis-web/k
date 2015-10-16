@@ -1677,6 +1677,1657 @@ $ vim octopress/_includes/mathjax.html mathjax.html 1
   <header>
 
     
+      <h1 class="entry-title"><a href="/tech/2015/09/30/will-architecture/">Will Architecture</a></h1>
+    
+
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-09-30T15:19:59+08:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>3:19 pm</span></time>
+        
+           | <a href="/tech/2015/09/30/will-architecture/#disqus_thread"
+             data-disqus-identifier="http://k.arttechresearch.com/tech/2015/09/30/will-architecture/">Comments</a>
+        
+      </p>
+    
+
+  </header>
+
+
+
+  <div class="entry-content"><h2>1. Features</h2>
+
+<h2>2. Architect</h2>
+
+<h2>3. File Construct</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>./
+</span><span class='line'> |
+</span><span class='line'> |---- will/                                    # src
+</span><span class='line'> |       |---- mixins/
+</span><span class='line'> |       |---- plugins/                         # extensions
+</span><span class='line'> |       |---- scripts/                         # commands
+</span><span class='line'> |       |---- storage/                         # dbs
+</span><span class='line'> |       |---- templates/                       # html
+</span><span class='line'> |       |---- tests/                           # testing
+</span><span class='line'> |       |
+</span><span class='line'> |       |---- acl.py
+</span><span class='line'> |       |---- decorators.py
+</span><span class='line'> |       |---- listener.py
+</span><span class='line'> |       |---- plugin.py
+</span><span class='line'> |       |---- scheduler.py
+</span><span class='line'> |       |---- utils.py
+</span><span class='line'> |       |
+</span><span class='line'> |       |---- settings.py
+</span><span class='line'> |       |---- main.py
+</span><span class='line'> |
+</span><span class='line'> |---- config.py                                # config file
+</span><span class='line'> |---- run_will.py                              # run will</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+
+    
+      <h1 class="entry-title"><a href="/tech/2015/09/30/hipchat-api/">Hipchat API</a></h1>
+    
+
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-09-30T15:09:22+08:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>3:09 pm</span></time>
+        
+           | <a href="/tech/2015/09/30/hipchat-api/#disqus_thread"
+             data-disqus-identifier="http://k.arttechresearch.com/tech/2015/09/30/hipchat-api/">Comments</a>
+        
+      </p>
+    
+
+  </header>
+
+
+
+  <div class="entry-content"><h2>1. Hipchat API</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ROOM_NOTIFICATION_URL = "https://%(server)s/v2/room/%(room_id)s/notification?auth_token=%(token)s    "
+</span><span class='line'>ROOM_TOPIC_URL = "https://%(server)s/v2/room/%(room_id)s/topic?auth_token=%(token)s"
+</span><span class='line'>PRIVATE_MESSAGE_URL = "https://%(server)s/v2/user/%(user_id)s/message?auth_token=%(token)s"
+</span><span class='line'>SET_TOPIC_URL = "https://%(server)s/v2/room/%(room_id)s/topic?auth_token=%(token)s"
+</span><span class='line'>USER_DETAILS_URL = "https://%(server)s/v2/user/%(user_id)s?auth_token=%(token)s"
+</span><span class='line'>ALL_USERS_URL = "https://%(server)s/v2/user?auth_token=%(token)s&start-index=%(start_index)s"</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>2. Command Line</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>curl -d <span class="s1">&#39;{&quot;color&quot;: &quot;green&quot;, &quot;message&quot;: &quot;message&quot;, &quot;notify&quot;: false, &quot;messae_format&quot;: &quot;text&quot;}&#39;</span> -H <span class="s1">&#39;Content-Type: application/json&#39;</span> https://api.hipchat.com/v2/room/room id/scope_name<span class="o">(</span>message/notification<span class="o">)</span>?auth_token<span class="o">=</span>specific_token
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Reference</h2>
+
+<ul>
+<li><a href="https://www.hipchat.com/docs/apiv2">Hipchat API Docs</a></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+
+    
+      <h1 class="entry-title"><a href="/tech/2015/09/30/will-bot/">Will Bot</a></h1>
+    
+
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-09-30T14:52:04+08:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>2:52 pm</span></time>
+        
+           | <a href="/tech/2015/09/30/will-bot/#disqus_thread"
+             data-disqus-identifier="http://k.arttechresearch.com/tech/2015/09/30/will-bot/">Comments</a>
+        
+      </p>
+    
+
+  </header>
+
+
+
+  <div class="entry-content"><h2>1. Installation</h2>
+
+<h3>1.1. Prequisition</h3>
+
+<ul>
+<li>Ubuntu 14.04</li>
+<li>Redis</li>
+<li>Will</li>
+</ul>
+
+
+<h3>1.2. Ubuntu</h3>
+
+<p>Ubuntu 14.04</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install python-virtualenv redis-server
+</span><span class='line'><span class="nv">$ </span>redis
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>1.3. Octowill</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /path/to/project/
+</span><span class='line'><span class="nv">$ </span>sudo mkdir octowill
+</span><span class='line'><span class="nv">$ </span>sudo chown -R user:group /path/to/octowill/
+</span><span class='line'><span class="nv">$ </span>sudo su user
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>octowill
+</span><span class='line'><span class="nv">$ </span>mkdir venvs
+</span><span class='line'><span class="nv">$ </span>virtualenv venvs/octowill
+</span><span class='line'><span class="nv">$ </span><span class="nb">source </span>venvs/octowill/bin/activate
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>git clone https://github.com/KellyChan/octowill.git
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>octowill
+</span><span class='line'><span class="nv">$ </span>pip install -r requirements.txt
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>2. Configuration</h2>
+
+<h3>2.1. Prequistion</h3>
+
+<ul>
+<li>hipchat account</li>
+<li>octowill</li>
+</ul>
+
+
+<h3>2.2. Hipchat</h3>
+
+<ul>
+<li>signup hipchat</li>
+<li>get API tokens</li>
+</ul>
+
+
+<p>API summary</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>V2 Tokens:
+</span><span class='line'>- Administer Group - Perform group administrative tasks. Note that this scope is restricted from updating the group owner<span class="err">&#39;</span>s profile.
+</span><span class='line'>- Administer Room - Perform room administrative tasks
+</span><span class='line'>- Manage Rooms - Create, update, and remove rooms
+</span><span class='line'>- Send Message - Send private one-on-one messages
+</span><span class='line'>- Send Notification - Send room notifications
+</span><span class='line'>- View Group - View users, rooms, and other group information
+</span><span class='line'>- View Messages - View messages from chat rooms and private chats you have access to
+</span><span class='line'>- View Room - View room information and participants, but not <span class="nb">history</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>2.3. Octowill</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>octowill
+</span><span class='line'><span class="nv">$ </span>cp config.py.sample config.py
+</span><span class='line'><span class="nv">$ </span>vim config.py                   <span class="c"># update USERNAME, PASSWORD, V2_TOKENS</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>3. Testing</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>./start_dev/will.py
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>References</h2>
+
+<ul>
+<li><a href="https://github.com/skoczen/will">will</a></li>
+<li><a href="http://skoczen.github.io/will/">will document</a></li>
+<li><a href="https://www.hipchat.com">hiphat</a></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+
+    
+      <h1 class="entry-title"><a href="/tech/2015/09/16/changing-a-theme-for-nodejs-ghost/">Changing a Theme for NodeJS Ghost</a></h1>
+    
+
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-09-16T23:30:16+08:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>16</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>11:30 pm</span></time>
+        
+           | <a href="/tech/2015/09/16/changing-a-theme-for-nodejs-ghost/#disqus_thread"
+             data-disqus-identifier="http://k.arttechresearch.com/tech/2015/09/16/changing-a-theme-for-nodejs-ghost/">Comments</a>
+        
+      </p>
+    
+
+  </header>
+
+
+
+  <div class="entry-content"><h2>1. Download a theme</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> /path/to/ghost/content/themes
+</span><span class='line'>git clone git@xxxx:a_new_theme.git
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>2. Config a theme</h2>
+
+<p>Go to <a href="http://localhost:2368/admin">http://localhost:2368/admin</a></p>
+
+<ul>
+<li>find generic -> themes -> select</li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+
+    
+      <h1 class="entry-title"><a href="/tech/2015/09/07/generating-static-pages-with-python-butter-for-nodejs-ghost/">Generating Static Pages With Python Butter for NodeJS Ghost</a></h1>
+    
+
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-09-07T22:09:00+08:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>10:09 pm</span></time>
+        
+           | <a href="/tech/2015/09/07/generating-static-pages-with-python-butter-for-nodejs-ghost/#disqus_thread"
+             data-disqus-identifier="http://k.arttechresearch.com/tech/2015/09/07/generating-static-pages-with-python-butter-for-nodejs-ghost/">Comments</a>
+        
+      </p>
+    
+
+  </header>
+
+
+
+  <div class="entry-content"><h2>1. Installing Dependencies</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install libxml2-dev libxslt1-dev
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Without the above dependencies, it will flag error:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>pip instal buster: lxml error: <span class="nb">command</span> <span class="s1">&#39;gcc&#39;</span> failed with <span class="nb">exit </span>status 1
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<h2>2. Installing Butter</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /private/apps/diary/
+</span><span class='line'><span class="nv">$ </span>sudo mkdir venvs
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install python-virtualenv
+</span><span class='line'><span class="nv">$ </span>sudo virtualenv venvs/diary
+</span><span class='line'><span class="nv">$ </span><span class="nb">source </span>venvs/diary/bin/activate
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /private/apps/diary/diary
+</span><span class='line'><span class="nv">$ </span>sudo mkdir static_pages
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>static_pages
+</span><span class='line'><span class="nv">$ </span>sudo mkdir requirements
+</span><span class='line'><span class="nv">$ </span>sudo nano requirements/base.txt    <span class="c"># add buster==0.1.3</span>
+</span><span class='line'><span class="nv">$ </span>sudo pip install -r requirements/base.txt
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /private/apps/diary/diary/static_pages
+</span><span class='line'><span class="nv">$ </span>buster generate --domain<span class="o">=</span>http://localhost:2368
+</span><span class='line'><span class="nv">$ </span>buster preview
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Site: <a href="http://localhost:9000">http://localhost:9000</a></p>
+
+<h2>3. Config Bin</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /atr/apps/atr-blog/atr-blog/buster
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo mkdir bin
+</span><span class='line'><span class="nv">$ </span>sudo vim requirments.sh       <span class="c"># add sudo apt-get install libxml2-dev libxslt1-dev</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>4. Uploading to Github Pages</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>rm -rf static
+</span><span class='line'><span class="nv">$ </span>git clone https://github.com/username/project.git static
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>buster generate --domain<span class="o">=</span>http://localhost:2233
+</span><span class='line'><span class="nv">$ </span>buster preview
+</span><span class='line'><span class="nv">$ </span><span class="c"># open http://localhost:9000</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>buster deploy
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+
+    
+      <h1 class="entry-title"><a href="/tech/2015/09/05/deploying-nodejs-ghost-production-stack/">Deploying NodeJS Ghost Production Stack</a></h1>
+    
+
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-09-05T22:19:58+08:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>10:19 pm</span></time>
+        
+           | <a href="/tech/2015/09/05/deploying-nodejs-ghost-production-stack/#disqus_thread"
+             data-disqus-identifier="http://k.arttechresearch.com/tech/2015/09/05/deploying-nodejs-ghost-production-stack/">Comments</a>
+        
+      </p>
+    
+
+  </header>
+
+
+
+  <div class="entry-content"><h2>Prequisitions</h2>
+
+<ul>
+<li>Ubuntu 12.04/14.04</li>
+<li>MySQL</li>
+<li>Node.js / NPM</li>
+<li>Ghost</li>
+<li>NPM / forever</li>
+<li>Nginx</li>
+<li>Git</li>
+</ul>
+
+
+<h2>1. Ubuntu</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install git
+</span><span class='line'><span class="nv">$ </span>git config --global user.name <span class="s2">&quot;xxx&quot;</span>
+</span><span class='line'><span class="nv">$ </span>git config --global user.email <span class="s2">&quot;xxxx&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<h2>2. MySQL</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install mysql-server mysql-client
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>mysql -uroot
+</span><span class='line'>
+</span><span class='line'>mysql&gt; create database ghost<span class="p">;</span>
+</span><span class='line'>mysql&gt; create database ghost_dev<span class="p">;</span>
+</span><span class='line'>mysql&gt; show schemas<span class="p">;</span>
+</span><span class='line'>mysql&gt; <span class="nb">exit</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>3. Node.js / NPM</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install --yes build-essential
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install curl
+</span><span class='line'><span class="nv">$ </span>curl --silent --location https://deb.nodesource.com/setup_0.12 <span class="p">|</span> sudo bash -
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install --yes nodejs
+</span><span class='line'><span class="nv">$ </span>node -v
+</span><span class='line'><span class="nv">$ </span>npm -v
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>4. Ghost</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo su -
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /
+</span><span class='line'><span class="nv">$ </span>mkdir ghost
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>ghost
+</span><span class='line'><span class="nv">$ </span>mkdir -p var/log
+</span><span class='line'><span class="nv">$ </span>mkdir -p var/run
+</span><span class='line'><span class="nv">$ </span>mkdir bin
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo git clone https://github.com/username/project.git
+</span><span class='line'><span class="nv">$ </span>git remote -v
+</span><span class='line'><span class="nv">$ </span>git branch
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo npm start --development
+</span><span class='line'><span class="nv">$ </span>sudo npm start --production
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>localhost:2368</li>
+<li>localhost:2368/admin</li>
+</ul>
+
+
+<h2>5. Forever</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo npm install -g forever
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo node index.js
+</span><span class='line'><span class="nv">$ </span>sudo forever start index.js
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span><span class="c"># sudo forever stop 0  </span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>6. Nginx</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install nginx
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /ghost
+</span><span class='line'><span class="nv">$ </span>sudo mkdir -p etc/nginx
+</span><span class='line'><span class="nv">$ </span>sudo ln ghost/config/nginx/diary.conf /ghost/etc/nginx/ghost.conf
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo ln /ghost/etc/nginx/ghost.conf /etc/nginx/sites-available/ghost.conf
+</span><span class='line'><span class="nv">$ </span>ls /etc/nginx/sites-available/
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo ln /etc/nginx/sites-available/ghost.conf /etc/nginx/sites-enabled/ghost.conf
+</span><span class='line'><span class="nv">$ </span>ls /etc/nginx/sites-enabled/
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo service nginx restart
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>7. Auto Service Start</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /ghost/ghost/config/bin
+</span><span class='line'><span class="nv">$ </span>sudo cp diary-dev ghost              <span class="c"># update the paths</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo ln ghost /ghost/bin/ghost
+</span><span class='line'><span class="nv">$ </span>sudo ln /ghost/bin/ghost /etc/init.d/ghost
+</span><span class='line'><span class="nv">$ </span>ls /etc/init.d/
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo chmod a+x /etc/init.d/ghost
+</span><span class='line'><span class="nv">$ </span>ls /etc/init.d/ghost
+</span><span class='line'><span class="nv">$ </span>sudo update-rc.d ghost defaults
+</span><span class='line'><span class="nv">$ </span>sudo service ghost start
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>ghost: check the paths</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">NAME</span><span class="o">=</span><span class="s2">&quot;ghost&quot;</span>
+</span><span class='line'><span class="nv">NODE_BIN_DIR</span><span class="o">=</span><span class="s2">&quot;/usr/local/node/bin&quot;</span>
+</span><span class='line'><span class="nv">NODE_PATH</span><span class="o">=</span><span class="s2">&quot;/ghost/ghost/node_modules&quot;</span>
+</span><span class='line'><span class="nv">APPLICATION_PATH</span><span class="o">=</span><span class="s2">&quot;/ghost/ghost/index.js&quot;</span>
+</span><span class='line'><span class="nv">PIDFILE</span><span class="o">=</span><span class="s2">&quot;/ghost/var/run/ghost.pid&quot;</span>
+</span><span class='line'><span class="nv">LOGFILE</span><span class="o">=</span><span class="s2">&quot;/ghost/var/log/ghost.log&quot;</span>
+</span><span class='line'><span class="nv">MIN_UPTIME</span><span class="o">=</span><span class="s2">&quot;5000&quot;</span>
+</span><span class='line'><span class="nv">SPIN_SLEEP_TIME</span><span class="o">=</span><span class="s2">&quot;2000&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>8. Testing</h2>
+
+<ul>
+<li>ip_address:8000</li>
+<li>ip_address:8000/admin</li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+
+    
+      <h1 class="entry-title"><a href="/tech/2015/09/04/installing-nodejs-ghost-devstack/">Installing NodeJS Ghost Devstack</a></h1>
+    
+
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-09-04T20:42:51+08:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>8:42 pm</span></time>
+        
+           | <a href="/tech/2015/09/04/installing-nodejs-ghost-devstack/#disqus_thread"
+             data-disqus-identifier="http://k.arttechresearch.com/tech/2015/09/04/installing-nodejs-ghost-devstack/">Comments</a>
+        
+      </p>
+    
+
+  </header>
+
+
+
+  <div class="entry-content"><h2>Prequistions</h2>
+
+<ul>
+<li>Ubuntu 12.04/14.04</li>
+<li>Vagrant / VirtualBox</li>
+<li>Node.js / NPM</li>
+<li>NPM: forever</li>
+<li>Ghost</li>
+<li>MySQL</li>
+<li>Nginx</li>
+<li>Git</li>
+</ul>
+
+
+<h2>1. Vagrant / VirtualBox</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /path/to/project/
+</span><span class='line'><span class="nv">$ </span>mkdir private
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>private
+</span><span class='line'><span class="nv">$ </span>vagrant init hashicorp/precise64
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>config Vagrantfile</p>
+
+<figure class='code'><figcaption><span>Vagrantfile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">diary_mount_dir</span> <span class="o">=</span> <span class="s1">&#39;diary&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="no">ENV</span><span class="o">[</span><span class="s1">&#39;VAGRANT_MOUNT_BASE&#39;</span><span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">diary_mount_dir</span> <span class="o">=</span> <span class="no">ENV</span><span class="o">[</span><span class="s1">&#39;VAGRANT_MOUNT_BASE&#39;</span><span class="o">]</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">diary_mount_dir</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1"># Create a forwarded port mapping which allows access to a specific port</span>
+</span><span class='line'>  <span class="c1"># within the machine from a port on the host machine. In the example below,</span>
+</span><span class='line'>  <span class="c1"># accessing &quot;localhost:8080&quot; will access port 80 on the guest machine.</span>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">network</span> <span class="s2">&quot;forwarded_port&quot;</span><span class="p">,</span> <span class="ss">guest</span><span class="p">:</span> <span class="mi">8000</span><span class="p">,</span> <span class="ss">host</span><span class="p">:</span> <span class="mi">8000</span>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">network</span> <span class="s2">&quot;forwarded_port&quot;</span><span class="p">,</span> <span class="ss">guest</span><span class="p">:</span> <span class="mi">2346</span><span class="p">,</span> <span class="ss">host</span><span class="p">:</span> <span class="mi">2346</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1"># Create a private network, which allows host-only access to the machine</span>
+</span><span class='line'>  <span class="c1"># using a specific IP.</span>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">network</span> <span class="s2">&quot;private_network&quot;</span><span class="p">,</span> <span class="ss">ip</span><span class="p">:</span> <span class="s2">&quot;192.168.33.10&quot;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1"># Share an additional folder to the guest VM. The first argument is</span>
+</span><span class='line'>  <span class="c1"># the path on the host to the actual folder. The second argument is</span>
+</span><span class='line'>  <span class="c1"># the path on the guest to mount the folder. And the optional third</span>
+</span><span class='line'>  <span class="c1"># argument is a set of non-required options.</span>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">synced_folder</span> <span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="s2">&quot;/vagrant&quot;</span><span class="p">,</span> <span class="ss">disabled</span><span class="p">:</span> <span class="kp">true</span>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">synced_folder</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">diary_mount_dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;/private/apps/diary/diary&quot;</span><span class="p">,</span> <span class="ss">create</span><span class="p">:</span> <span class="kp">true</span><span class="p">,</span> <span class="ss">nfs</span><span class="p">:</span> <span class="kp">true</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>vagrant up</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>vagrant up
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>vagrant ssh
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo nano /etc/apt/sources.list  <span class="c"># change us to cn</span>
+</span><span class='line'><span class="nv">$ </span>sudo apt-get update
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>2. MySQL</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install mysql-server mysql-client
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>mysql -uroot
+</span><span class='line'>
+</span><span class='line'>mysql&gt; CREATE DATABASE ghost<span class="p">;</span>
+</span><span class='line'>mysql&gt; CREATE DATABASE ghost_dev<span class="p">;</span>
+</span><span class='line'>mysql&gt; show schemas<span class="p">;</span>
+</span><span class='line'>mysql&gt; <span class="nb">exit</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>3. Node.js / NPM</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get update
+</span><span class='line'><span class="nv">$ </span>sudo apt-get upgrade
+</span><span class='line'><span class="nv">$ </span>sudo reboot
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install --yes build-essential
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install curl
+</span><span class='line'><span class="nv">$ </span>curl --silent --location https://deb.nodesource.com/setup_0.12 <span class="p">|</span> sudo bash -
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install --yes nodejs
+</span><span class='line'><span class="nv">$ </span>node -v
+</span><span class='line'><span class="nv">$ </span>npm -v
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>4. Ghost</h2>
+
+<h3>4.1. Installation</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /tmp
+</span><span class='line'><span class="nv">$ </span>curl -L https://ghost.org/zip/ghost-latest.zip -o ghost.zip
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install unzip
+</span><span class='line'><span class="nv">$ </span>sudo unzip -uo ghost.zip -d /private/apps/diary/diary/
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /private/apps/diary/diary
+</span><span class='line'><span class="nv">$ </span>npm install --production
+</span><span class='line'><span class="nv">$ </span>npm install --development
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>4.2. Configuration</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /private/apps/diary/diary
+</span><span class='line'><span class="nv">$ </span>sudo nano config.js                 <span class="c"># config mysql db for development and production</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>npm start --development
+</span><span class='line'><span class="nv">$ </span>npm start --production
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>config.js - development</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="c1">//database: {</span>
+</span><span class='line'>    <span class="c1">//    client: &#39;sqlite3&#39;,</span>
+</span><span class='line'>    <span class="c1">//    connection: {</span>
+</span><span class='line'>    <span class="c1">//        filename: path.join(__dirname, &#39;/content/data/ghost-dev.db&#39;)</span>
+</span><span class='line'>    <span class="c1">//    },</span>
+</span><span class='line'>    <span class="c1">//    debug: false</span>
+</span><span class='line'>    <span class="c1">//},</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">database</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">client</span><span class="o">:</span> <span class="s1">&#39;mysql&#39;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">connection</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>                <span class="nx">host</span>     <span class="o">:</span> <span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span>
+</span><span class='line'>                <span class="nx">user</span>     <span class="o">:</span> <span class="s1">&#39;root&#39;</span><span class="p">,</span>
+</span><span class='line'>                <span class="nx">password</span> <span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+</span><span class='line'>                <span class="nx">database</span> <span class="o">:</span> <span class="s1">&#39;ghost_dev&#39;</span><span class="p">,</span>
+</span><span class='line'>                <span class="nx">charset</span>  <span class="o">:</span> <span class="s1">&#39;utf8&#39;</span>
+</span><span class='line'>          <span class="p">},</span>
+</span><span class='line'>          <span class="nx">debug</span><span class="o">:</span> <span class="kc">false</span>
+</span><span class='line'>    <span class="p">},</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>config.js - production</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="c1">//database: {</span>
+</span><span class='line'>    <span class="c1">//    client: &#39;sqlite3&#39;,</span>
+</span><span class='line'>    <span class="c1">//    connection: {</span>
+</span><span class='line'>    <span class="c1">//        filename: path.join(__dirname, &#39;/content/data/ghost-dev.db&#39;)</span>
+</span><span class='line'>    <span class="c1">//    },</span>
+</span><span class='line'>    <span class="c1">//    debug: false</span>
+</span><span class='line'>    <span class="c1">//},</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">database</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">client</span><span class="o">:</span> <span class="s1">&#39;mysql&#39;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">connection</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>                <span class="nx">host</span>     <span class="o">:</span> <span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span>
+</span><span class='line'>                <span class="nx">user</span>     <span class="o">:</span> <span class="s1">&#39;root&#39;</span><span class="p">,</span>
+</span><span class='line'>                <span class="nx">password</span> <span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+</span><span class='line'>                <span class="nx">database</span> <span class="o">:</span> <span class="s1">&#39;ghost&#39;</span><span class="p">,</span>
+</span><span class='line'>                <span class="nx">charset</span>  <span class="o">:</span> <span class="s1">&#39;utf8&#39;</span>
+</span><span class='line'>          <span class="p">},</span>
+</span><span class='line'>          <span class="nx">debug</span><span class="o">:</span> <span class="kc">false</span>
+</span><span class='line'>    <span class="p">},</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>6. Forever</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo npm install -g forever
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>node index.js
+</span><span class='line'><span class="nv">$ </span>forever start index.js
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span><span class="c"># forever stop 0  </span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>7. Nginx</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install nginx
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /private/apps/diary
+</span><span class='line'><span class="nv">$ </span>sudo mkdir nginx
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>nginx
+</span><span class='line'><span class="nv">$ </span>sudo nano diary.conf
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>ghost.conf</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>server <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>  listen 8000<span class="p">;</span>
+</span><span class='line'>  server_name ghost.com<span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  location / <span class="o">{</span>
+</span><span class='line'>    proxy_set_header   X-Real-IP <span class="nv">$remote_addr</span><span class="p">;</span>
+</span><span class='line'>    proxy_set_header   Host      <span class="nv">$http_host</span><span class="p">;</span>
+</span><span class='line'>    proxy_pass         http://127.0.0.1:2368<span class="p">;</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>config nginx</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo ln diary.conf /etc/nginx/sites-available/diary.conf
+</span><span class='line'><span class="nv">$ </span>ls /etc/nginx/sites-available/
+</span><span class='line'><span class="nv">$ </span>sudo ln /etc/nginx/sites-available/diary.conf /etc/nginx/sites-enabled/diary.conf
+</span><span class='line'><span class="nv">$ </span>ls /etc/nginx/sites-enabled/
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo service nginx restart
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>8. Testing</h2>
+
+<ul>
+<li>localhost:8000</li>
+<li>localhost:8000/admin</li>
+</ul>
+
+
+<h2>9. Auto Service Start</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /private/apps/diary
+</span><span class='line'><span class="nv">$ </span>sudo mkdir bin
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>bin
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo nano ghost  <span class="c"># add the config file</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo ln /private/apps/diary/bin/diary /etc/init.d/diary
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /etc/init.d/
+</span><span class='line'><span class="nv">$ </span>ls
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>chmod a+x /etc/init.d/diary
+</span><span class='line'><span class="nv">$ </span>ls
+</span><span class='line'><span class="nv">$ </span>update-rc.d diary defaults
+</span><span class='line'><span class="nv">$ </span>service diary start
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>ghost</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+<span class='line-number'>121</span>
+<span class='line-number'>122</span>
+<span class='line-number'>123</span>
+<span class='line-number'>124</span>
+<span class='line-number'>125</span>
+<span class='line-number'>126</span>
+<span class='line-number'>127</span>
+<span class='line-number'>128</span>
+<span class='line-number'>129</span>
+<span class='line-number'>130</span>
+<span class='line-number'>131</span>
+<span class='line-number'>132</span>
+<span class='line-number'>133</span>
+<span class='line-number'>134</span>
+<span class='line-number'>135</span>
+<span class='line-number'>136</span>
+<span class='line-number'>137</span>
+<span class='line-number'>138</span>
+<span class='line-number'>139</span>
+<span class='line-number'>140</span>
+<span class='line-number'>141</span>
+<span class='line-number'>142</span>
+<span class='line-number'>143</span>
+<span class='line-number'>144</span>
+<span class='line-number'>145</span>
+<span class='line-number'>146</span>
+<span class='line-number'>147</span>
+<span class='line-number'>148</span>
+<span class='line-number'>149</span>
+<span class='line-number'>150</span>
+<span class='line-number'>151</span>
+<span class='line-number'>152</span>
+<span class='line-number'>153</span>
+<span class='line-number'>154</span>
+<span class='line-number'>155</span>
+<span class='line-number'>156</span>
+<span class='line-number'>157</span>
+<span class='line-number'>158</span>
+<span class='line-number'>159</span>
+<span class='line-number'>160</span>
+<span class='line-number'>161</span>
+<span class='line-number'>162</span>
+<span class='line-number'>163</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/bash</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c"># An init.d script for running a Node.js process as a service using Forever as</span>
+</span><span class='line'><span class="c"># the process monitor. For more configuration options associated with Forever,</span>
+</span><span class='line'><span class="c"># see: https://github.com/nodejitsu/forever</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c"># This was written for Debian distributions such as Ubuntu, but should still</span>
+</span><span class='line'><span class="c"># work on RedHat, Fedora, or other RPM-based distributions, since none of the</span>
+</span><span class='line'><span class="c"># built-in service functions are used. So information is provided for both.</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c">### BEGIN INIT INFO</span>
+</span><span class='line'><span class="c"># Provides:             my-application</span>
+</span><span class='line'><span class="c"># Required-Start:       $syslog $remote_fs</span>
+</span><span class='line'><span class="c"># Required-Stop:        $syslog $remote_fs</span>
+</span><span class='line'><span class="c"># Should-Start:         $local_fs</span>
+</span><span class='line'><span class="c"># Should-Stop:          $local_fs</span>
+</span><span class='line'><span class="c"># Default-Start:        2 3 4 5</span>
+</span><span class='line'><span class="c"># Default-Stop:         0 1 6</span>
+</span><span class='line'><span class="c"># Short-Description:    My Application</span>
+</span><span class='line'><span class="c"># Description:          My Application</span>
+</span><span class='line'><span class="c">### END INIT INFO</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c">### BEGIN CHKCONFIG INFO</span>
+</span><span class='line'><span class="c"># chkconfig: 2345 55 25</span>
+</span><span class='line'><span class="c"># description: My Application</span>
+</span><span class='line'><span class="c">### END CHKCONFIG INFO</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c"># Based on:</span>
+</span><span class='line'><span class="c"># https://gist.github.com/3748766</span>
+</span><span class='line'><span class="c"># https://github.com/hectorcorrea/hectorcorrea.com/blob/master/etc/forever-initd-hectorcorrea.sh</span>
+</span><span class='line'><span class="c"># https://www.exratione.com/2011/07/running-a-nodejs-server-as-a-service-using-forever/</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c"># The example environment variables below assume that Node.js is installed by</span>
+</span><span class='line'><span class="c"># building from source with the standard settings.</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c"># It should be easy enough to adapt to the paths to be appropriate to a package</span>
+</span><span class='line'><span class="c"># installation, but note that the packages available in the default repositories</span>
+</span><span class='line'><span class="c"># are far behind the times. Most users will be building from source to get a</span>
+</span><span class='line'><span class="c"># suitably recent Node.js version.</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c"># An application name to display in echo text.</span>
+</span><span class='line'><span class="c"># NAME=&quot;My Application&quot; </span>
+</span><span class='line'><span class="c"># The full path to the directory containing the node and forever binaries.</span>
+</span><span class='line'><span class="c"># NODE_BIN_DIR=&quot;/usr/local/node/bin&quot; </span>
+</span><span class='line'><span class="c"># Set the NODE_PATH to the Node.js main node_modules directory.</span>
+</span><span class='line'><span class="c"># NODE_PATH=&quot;/usr/local/lib/node_modules&quot; </span>
+</span><span class='line'><span class="c"># The application startup Javascript file path.</span>
+</span><span class='line'><span class="c"># APPLICATION_PATH=&quot;/home/user/my-application/start-my-application.js&quot; </span>
+</span><span class='line'><span class="c"># Process ID file path.</span>
+</span><span class='line'><span class="c"># PIDFILE=&quot;/var/run/my-application.pid&quot; </span>
+</span><span class='line'><span class="c"># Log file path.</span>
+</span><span class='line'><span class="c"># LOGFILE=&quot;/var/log/my-application.log&quot; </span>
+</span><span class='line'><span class="c"># Forever settings to prevent the application spinning if it fails on launch.</span>
+</span><span class='line'><span class="c"># MIN_UPTIME=&quot;5000&quot; </span>
+</span><span class='line'><span class="c"># SPIN_SLEEP_TIME=&quot;2000&quot; </span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">NAME</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+</span><span class='line'><span class="nv">NODE_BIN_DIR</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+</span><span class='line'><span class="nv">NODE_PATH</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+</span><span class='line'><span class="nv">APPLICATION_PATH</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+</span><span class='line'><span class="nv">PIDFILE</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+</span><span class='line'><span class="nv">LOGFILE</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+</span><span class='line'><span class="nv">MIN_UPTIME</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+</span><span class='line'><span class="nv">SPIN_SLEEP_TIME</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Add node to the path for situations in which the environment is passed.</span>
+</span><span class='line'><span class="nv">PATH</span><span class="o">=</span><span class="nv">$NODE_BIN_DIR</span>:<span class="nv">$PATH</span>
+</span><span class='line'><span class="c"># Export all environment variables that must be visible for the Node.js</span>
+</span><span class='line'><span class="c"># application process forked by Forever. It will not see any of the other</span>
+</span><span class='line'><span class="c"># variables defined in this script.</span>
+</span><span class='line'><span class="nb">export </span><span class="nv">NODE_PATH</span><span class="o">=</span><span class="nv">$NODE_PATH</span>
+</span><span class='line'>
+</span><span class='line'>start<span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="nb">echo</span> <span class="s2">&quot;Starting $NAME&quot;</span>
+</span><span class='line'>    <span class="c"># We&#39;re calling forever directly without using start-stop-daemon for the</span>
+</span><span class='line'>    <span class="c"># sake of simplicity when it comes to environment, and because this way</span>
+</span><span class='line'>    <span class="c"># the script will work whether it is executed directly or via the service</span>
+</span><span class='line'>    <span class="c"># utility.</span>
+</span><span class='line'>    <span class="c">#</span>
+</span><span class='line'>    <span class="c"># The minUptime and spinSleepTime settings stop Forever from thrashing if</span>
+</span><span class='line'>    <span class="c"># the application fails immediately on launch. This is generally necessary to</span>
+</span><span class='line'>    <span class="c"># avoid loading development servers to the point of failure every time</span>
+</span><span class='line'>    <span class="c"># someone makes an error in application initialization code, or bringing down</span>
+</span><span class='line'>    <span class="c"># production servers the same way if a database or other critical service</span>
+</span><span class='line'>    <span class="c"># suddenly becomes inaccessible.</span>
+</span><span class='line'>    <span class="c">#</span>
+</span><span class='line'>    <span class="c"># The pidfile contains the child process pid, not the forever process pid.</span>
+</span><span class='line'>    <span class="c"># We&#39;re only using it as a marker for whether or not the process is</span>
+</span><span class='line'>    <span class="c"># running.</span>
+</span><span class='line'>    <span class="c">#</span>
+</span><span class='line'>    <span class="c"># Note that redirecting the output to /dev/null (or anywhere) is necessary</span>
+</span><span class='line'>    <span class="c"># to make this script work if provisioning the service via Chef.</span>
+</span><span class='line'>    forever <span class="se">\</span>
+</span><span class='line'>      --pidFile <span class="nv">$PIDFILE</span> <span class="se">\</span>
+</span><span class='line'>      -a <span class="se">\</span>
+</span><span class='line'>      -l <span class="nv">$LOGFILE</span> <span class="se">\</span>
+</span><span class='line'>      --minUptime <span class="nv">$MIN_UPTIME</span> <span class="se">\</span>
+</span><span class='line'>      --spinSleepTime <span class="nv">$SPIN_SLEEP_TIME</span> <span class="se">\</span>
+</span><span class='line'>      start <span class="nv">$APPLICATION_PATH</span> 2&gt;<span class="p">&amp;</span><span class="m">1</span> &gt; /dev/null <span class="p">&amp;</span>
+</span><span class='line'>    <span class="nv">RETVAL</span><span class="o">=</span><span class="nv">$?</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>stop<span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">[</span> -f <span class="nv">$PIDFILE</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span><span class='line'>        <span class="nb">echo</span> <span class="s2">&quot;Shutting down $NAME&quot;</span>
+</span><span class='line'>        <span class="c"># Tell Forever to stop the process.</span>
+</span><span class='line'>        forever stop <span class="nv">$APPLICATION_PATH</span> 2&gt;<span class="p">&amp;</span><span class="m">1</span> &gt; /dev/null
+</span><span class='line'>        <span class="c"># Get rid of the pidfile, since Forever won&#39;t do that.</span>
+</span><span class='line'>        rm -f <span class="nv">$PIDFILE</span>
+</span><span class='line'>        <span class="nv">RETVAL</span><span class="o">=</span><span class="nv">$?</span>
+</span><span class='line'>    <span class="k">else</span>
+</span><span class='line'>        <span class="nb">echo</span> <span class="s2">&quot;$NAME is not running.&quot;</span>
+</span><span class='line'>        <span class="nv">RETVAL</span><span class="o">=</span>0
+</span><span class='line'>    <span class="k">fi</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>restart<span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    stop
+</span><span class='line'>    start
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>status<span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="c"># On Ubuntu this isn&#39;t even necessary. To find out whether the service is</span>
+</span><span class='line'>    <span class="c"># running, use &quot;service my-application status&quot; which bypasses this script</span>
+</span><span class='line'>    <span class="c"># entirely provided you used the service utility to start the process.</span>
+</span><span class='line'>    <span class="c">#</span>
+</span><span class='line'>    <span class="c"># The commented line below is the obvious way of checking whether or not a</span>
+</span><span class='line'>    <span class="c"># process is currently running via Forever, but in recent Forever versions</span>
+</span><span class='line'>    <span class="c"># when the service is started during Chef provisioning a dead pipe is left</span>
+</span><span class='line'>    <span class="c"># behind somewhere and that causes an EPIPE exception to be thrown.</span>
+</span><span class='line'>    <span class="c"># forever list | grep -q &quot;$APPLICATION_PATH&quot; </span>
+</span><span class='line'>    <span class="c">#</span>
+</span><span class='line'>    <span class="c"># So instead we add an extra layer of indirection with this to bypass that</span>
+</span><span class='line'>    <span class="c"># issue.</span>
+</span><span class='line'>    <span class="nb">echo</span> <span class="sb">`</span>forever list<span class="sb">`</span> <span class="p">|</span> grep -q <span class="s2">&quot;$APPLICATION_PATH&quot;</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$?&quot;</span> -eq <span class="s2">&quot;0&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span><span class='line'>        <span class="nb">echo</span> <span class="s2">&quot;$NAME is running.&quot;</span>
+</span><span class='line'>        <span class="nv">RETVAL</span><span class="o">=</span>0
+</span><span class='line'>    <span class="k">else</span>
+</span><span class='line'>        <span class="nb">echo</span> <span class="s2">&quot;$NAME is not running.&quot;</span>
+</span><span class='line'>        <span class="nv">RETVAL</span><span class="o">=</span>3
+</span><span class='line'>    <span class="k">fi</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">case</span> <span class="s2">&quot;$1&quot;</span> in
+</span><span class='line'>    start<span class="o">)</span>
+</span><span class='line'>        start
+</span><span class='line'>        <span class="p">;;</span>
+</span><span class='line'>    stop<span class="o">)</span>
+</span><span class='line'>        stop
+</span><span class='line'>        <span class="p">;;</span>
+</span><span class='line'>    status<span class="o">)</span>
+</span><span class='line'>        status
+</span><span class='line'>        <span class="p">;;</span>
+</span><span class='line'>    restart<span class="o">)</span>
+</span><span class='line'>        restart
+</span><span class='line'>        <span class="p">;;</span>
+</span><span class='line'>    *<span class="o">)</span>
+</span><span class='line'>        <span class="nb">echo</span> <span class="s2">&quot;Usage: {start|stop|status|restart}&quot;</span>
+</span><span class='line'>        <span class="nb">exit </span>1
+</span><span class='line'>        <span class="p">;;</span>
+</span><span class='line'><span class="k">esac</span>
+</span><span class='line'><span class="nb">exit</span> <span class="nv">$RETVAL</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>10. Creating Config File</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /private/apps/diary/diary
+</span><span class='line'><span class="nv">$ </span>sudo mkdir config
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>config
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo mkdir bin
+</span><span class='line'><span class="nv">$ </span>sudo mkdir nginx
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>bin
+</span><span class='line'><span class="nv">$ </span>sudo cp /private/apps/diary/bin/diary diary-dev
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> ..
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>nginx
+</span><span class='line'><span class="nv">$ </span>sudo cp /private/apps/diary/nginx/diary.conf diary.conf
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>11. Git</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git init
+</span><span class='line'><span class="nv">$ </span>git remote add origin xxxx
+</span><span class='line'><span class="nv">$ </span>git add .
+</span><span class='line'><span class="nv">$ </span>git commit -m <span class="s2">&quot;xxx&quot;</span>
+</span><span class='line'><span class="nv">$ </span>git push origin master
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>References</h2>
+
+<ul>
+<li><a href="http://support.ghost.org/installing-ghost-linux/">Installing ghost linux</a></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+
+    
+      <h1 class="entry-title"><a href="/tech/2015/08/30/deploying-redmine-on-ubuntu/">Deploying Redmine on Ubuntu</a></h1>
+    
+
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-08-30T23:46:36+08:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>11:46 pm</span></time>
+        
+           | <a href="/tech/2015/08/30/deploying-redmine-on-ubuntu/#disqus_thread"
+             data-disqus-identifier="http://k.arttechresearch.com/tech/2015/08/30/deploying-redmine-on-ubuntu/">Comments</a>
+        
+      </p>
+    
+
+  </header>
+
+
+
+  <div class="entry-content"><h2>Requirements</h2>
+
+<ul>
+<li>Ubuntu 12.04/14.04</li>
+<li>Redmine</li>
+<li>MySQL</li>
+<li>Apache2</li>
+</ul>
+
+
+<h2>1. MySQL</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo apt-get install mysql-server mysql-client
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>2. Redmine</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install redmine redmine-mysql libapache2-mod-passenger
+</span><span class='line'><span class="nv">$ </span>sudo dpkg-reconfigure redmine
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>3. Apache2</h2>
+
+<p>to link redmine to apache2</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo ln -s /usr/share/redmine/public/ /var/www/redmine
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>edit passenger.conf</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo nano /etc/apache2/mods-available/passenger.conf
+</span><span class='line'>
+</span><span class='line'><span class="c"># add </span>
+</span><span class='line'>
+</span><span class='line'>PassengerDefaultUser www-data
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>edit sites-available//default</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo nano /etc/apache2/sites-available/default
+</span><span class='line'>
+</span><span class='line'><span class="c"># add</span>
+</span><span class='line'>
+</span><span class='line'>&lt;Directory /var/www/redmine&gt;
+</span><span class='line'>RailsBaseURI /redmine
+</span><span class='line'>PassengerResolveSymlinksInDocumentRoot on
+</span><span class='line'>&lt;/Directory&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>restart apache2</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo service apache2 restart
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>4. Testing</h2>
+
+<ul>
+<li>Site: <a href="http://ip_address/redmine">http://ip_address/redmine</a></li>
+<li>Username/Password: admin/admin</li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+
+    
       <h1 class="entry-title"><a href="/tech/2015/05/01/setting-up-mysql-on-ubuntu/">Setting Up MySQL on Ubuntu</a></h1>
     
 
@@ -3826,11 +5477,66 @@ $ vim octopress/_includes/mathjax.html mathjax.html 1
 
 <h3>5.1 Installation</h3>
 
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get update
+</span><span class='line'><span class="nv">$ </span>sudo apt-get upgrade
+</span><span class='line'><span class="nv">$ </span>sudo reboot
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install curl
+</span><span class='line'><span class="nv">$ </span>sudo curl -sL https://deb.nodesource.com/setup <span class="p">|</span> sudo bash -
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install nodejs
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install build-essential
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>node -v
+</span><span class='line'><span class="nv">$ </span>npm -v
+</span></code></pre></td></tr></table></div></figure>
+
+
 <h3>5.2. Commands</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>npm install PACKAGE
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>npm config <span class="nb">set </span>registry http://registry.cnpmjs.org // change <span class="nb">source</span>
+</span><span class='line'><span class="nv">$ </span>npm info express  // package info
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>npm --registry http://registry.cnpmjs.org info express
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>nano ~/.npmrc   // config npm
+</span><span class='line'><span class="nv">$ registry</span> <span class="o">=</span>https://registry.npm.taobao.org   // config <span class="nb">source</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <h3>5.3. Configuration</h3>
 
 <h3>5.4. Sources</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>http://registry.cnpmjs.org
+</span><span class='line'>https://registry.npm.taobao.org
+</span></code></pre></td></tr></table></div></figure>
+
 
 <h2>6. Javascript</h2>
 
@@ -23732,15 +25438,15 @@ Y = ATT<code>ATC</code></p>
       </li>
     
       <li class="post">
-        <a href="/tech/2015/05/01/setting-up-mysql-on-ubuntu/">Setting Up MySQL on Ubuntu</a>
+        <a href="/tech/2015/09/30/will-architecture/">Will Architecture</a>
       </li>
     
       <li class="post">
-        <a href="/tech/2015/04/26/installing-emacs-on-ubuntu/">Installing Emacs on Ubuntu</a>
+        <a href="/tech/2015/09/30/hipchat-api/">Hipchat API</a>
       </li>
     
       <li class="post">
-        <a href="/tech/2015/04/25/automatically-running-shell-scripts-on-ubuntu/">Automatically Running Shell Scripts on Ubuntu</a>
+        <a href="/tech/2015/09/30/will-bot/">Will Bot</a>
       </li>
     
   </ul>
@@ -23782,7 +25488,7 @@ Y = ATT<code>ATC</code></p>
 
 
   <h1>Tags</h1>
-    <ul id="category-list"><a href='/tags/algorithm' style='font-size: 117.5%'>algorithm(7)</a> <a href='/tags/ansible' style='font-size: 94.58333333333333%'>ansible(2)</a> <a href='/tags/antique' style='font-size: 90.0%'>antique(1)</a> <a href='/tags/api' style='font-size: 90.0%'>api(1)</a> <a href='/tags/ascii' style='font-size: 90.0%'>ascii(1)</a> <a href='/tags/beautifulsoup' style='font-size: 90.0%'>beautifulsoup(1)</a> <a href='/tags/career' style='font-size: 94.58333333333333%'>career(2)</a> <a href='/tags/classification' style='font-size: 94.58333333333333%'>classification(2)</a> <a href='/tags/cloud' style='font-size: 90.0%'>cloud(1)</a> <a href='/tags/cloudera' style='font-size: 90.0%'>cloudera(1)</a> <a href='/tags/computer-vision' style='font-size: 90.0%'>computer vision(1)</a> <a href='/tags/crawler' style='font-size: 94.58333333333333%'>crawler(2)</a> <a href='/tags/css' style='font-size: 94.58333333333333%'>css(2)</a> <a href='/tags/data' style='font-size: 90.0%'>data(1)</a> <a href='/tags/db' style='font-size: 90.0%'>db(1)</a> <a href='/tags/devops' style='font-size: 99.16666666666667%'>devops(3)</a> <a href='/tags/django' style='font-size: 94.58333333333333%'>django(2)</a> <a href='/tags/dns' style='font-size: 90.0%'>dns(1)</a> <a href='/tags/docker' style='font-size: 90.0%'>docker(1)</a> <a href='/tags/edx' style='font-size: 99.16666666666667%'>edX(3)</a> <a href='/tags/edx-analytics' style='font-size: 94.58333333333333%'>edX Analytics(2)</a> <a href='/tags/edx-platform' style='font-size: 90.0%'>edX Platform(1)</a> <a href='/tags/emacs' style='font-size: 94.58333333333333%'>emacs(2)</a> <a href='/tags/exhibition' style='font-size: 90.0%'>exhibition(1)</a> <a href='/tags/fiction' style='font-size: 112.91666666666667%'>fiction(6)</a> <a href='/tags/french' style='font-size: 90.0%'>french(1)</a> <a href='/tags/git' style='font-size: 90.0%'>git(1)</a> <a href='/tags/github' style='font-size: 90.0%'>github(1)</a> <a href='/tags/gunicorn' style='font-size: 90.0%'>gunicorn(1)</a> <a href='/tags/hadoop' style='font-size: 90.0%'>hadoop(1)</a> <a href='/tags/html' style='font-size: 94.58333333333333%'>html(2)</a> <a href='/tags/ide' style='font-size: 94.58333333333333%'>ide(2)</a> <a href='/tags/javascript' style='font-size: 99.16666666666667%'>javascript(3)</a> <a href='/tags/jekyll' style='font-size: 90.0%'>jekyll(1)</a> <a href='/tags/jenkins' style='font-size: 90.0%'>jenkins(1)</a> <a href='/tags/leisure' style='font-size: 200.0%'>leisure(25)</a> <a href='/tags/linux' style='font-size: 117.5%'>linux(7)</a> <a href='/tags/machine-learning' style='font-size: 135.83333333333334%'>machine learning(11)</a> <a href='/tags/mathjax' style='font-size: 94.58333333333333%'>mathjax(2)</a> <a href='/tags/mysql' style='font-size: 99.16666666666667%'>mysql(3)</a> <a href='/tags/network' style='font-size: 90.0%'>network(1)</a> <a href='/tags/nginx' style='font-size: 90.0%'>nginx(1)</a> <a href='/tags/nlp' style='font-size: 112.91666666666667%'>nlp(6)</a> <a href='/tags/nltk' style='font-size: 90.0%'>nltk(1)</a> <a href='/tags/nodejs' style='font-size: 90.0%'>nodejs(1)</a> <a href='/tags/octopress' style='font-size: 112.91666666666667%'>octopress(6)</a> <a href='/tags/openstack' style='font-size: 90.0%'>openstack(1)</a> <a href='/tags/pandas' style='font-size: 94.58333333333333%'>pandas(2)</a> <a href='/tags/poem' style='font-size: 103.75%'>poem(4)</a> <a href='/tags/prediction' style='font-size: 90.0%'>prediction(1)</a> <a href='/tags/pycharm' style='font-size: 90.0%'>pycharm(1)</a> <a href='/tags/python' style='font-size: 200.0%'>python(25)</a> <a href='/tags/reading' style='font-size: 117.5%'>reading(7)</a> <a href='/tags/regex' style='font-size: 90.0%'>regex(1)</a> <a href='/tags/ruby' style='font-size: 122.08333333333334%'>ruby(8)</a> <a href='/tags/sql' style='font-size: 90.0%'>sql(1)</a> <a href='/tags/supervisor' style='font-size: 90.0%'>supervisor(1)</a> <a href='/tags/time-series' style='font-size: 90.0%'>time series(1)</a> <a href='/tags/translation' style='font-size: 90.0%'>translation(1)</a> <a href='/tags/ubuntu' style='font-size: 122.08333333333334%'>ubuntu(8)</a> <a href='/tags/unicode' style='font-size: 90.0%'>unicode(1)</a> <a href='/tags/vagrant' style='font-size: 90.0%'>vagrant(1)</a> <a href='/tags/vim' style='font-size: 90.0%'>vim(1)</a> <a href='/tags/vm' style='font-size: 90.0%'>vm(1)</a> <a href='/tags/web' style='font-size: 99.16666666666667%'>web(3)</a> </ul>
+    <ul id="category-list"><a href='/tags/algorithm' style='font-size: 114.44444444444444%'>algorithm(7)</a> <a href='/tags/ansible' style='font-size: 94.07407407407408%'>ansible(2)</a> <a href='/tags/antique' style='font-size: 90.0%'>antique(1)</a> <a href='/tags/apache' style='font-size: 90.0%'>apache(1)</a> <a href='/tags/api' style='font-size: 94.07407407407408%'>api(2)</a> <a href='/tags/ascii' style='font-size: 90.0%'>ascii(1)</a> <a href='/tags/beautifulsoup' style='font-size: 90.0%'>beautifulsoup(1)</a> <a href='/tags/butter' style='font-size: 90.0%'>butter(1)</a> <a href='/tags/career' style='font-size: 94.07407407407408%'>career(2)</a> <a href='/tags/chatbot' style='font-size: 94.07407407407408%'>chatbot(2)</a> <a href='/tags/classification' style='font-size: 94.07407407407408%'>classification(2)</a> <a href='/tags/cloud' style='font-size: 90.0%'>cloud(1)</a> <a href='/tags/cloudera' style='font-size: 90.0%'>cloudera(1)</a> <a href='/tags/computer-vision' style='font-size: 90.0%'>computer vision(1)</a> <a href='/tags/crawler' style='font-size: 94.07407407407408%'>crawler(2)</a> <a href='/tags/css' style='font-size: 94.07407407407408%'>css(2)</a> <a href='/tags/data' style='font-size: 90.0%'>data(1)</a> <a href='/tags/db' style='font-size: 90.0%'>db(1)</a> <a href='/tags/devops' style='font-size: 98.14814814814815%'>devops(3)</a> <a href='/tags/django' style='font-size: 94.07407407407408%'>django(2)</a> <a href='/tags/dns' style='font-size: 90.0%'>dns(1)</a> <a href='/tags/docker' style='font-size: 90.0%'>docker(1)</a> <a href='/tags/edx' style='font-size: 98.14814814814815%'>edX(3)</a> <a href='/tags/edx-analytics' style='font-size: 94.07407407407408%'>edX Analytics(2)</a> <a href='/tags/edx-platform' style='font-size: 90.0%'>edX Platform(1)</a> <a href='/tags/emacs' style='font-size: 94.07407407407408%'>emacs(2)</a> <a href='/tags/exhibition' style='font-size: 90.0%'>exhibition(1)</a> <a href='/tags/fiction' style='font-size: 110.37037037037037%'>fiction(6)</a> <a href='/tags/forever' style='font-size: 94.07407407407408%'>forever(2)</a> <a href='/tags/french' style='font-size: 90.0%'>french(1)</a> <a href='/tags/ghost' style='font-size: 102.22222222222223%'>ghost(4)</a> <a href='/tags/git' style='font-size: 98.14814814814815%'>git(3)</a> <a href='/tags/github' style='font-size: 94.07407407407408%'>github(2)</a> <a href='/tags/gunicorn' style='font-size: 90.0%'>gunicorn(1)</a> <a href='/tags/hadoop' style='font-size: 90.0%'>hadoop(1)</a> <a href='/tags/hipchat' style='font-size: 94.07407407407408%'>hipchat(2)</a> <a href='/tags/html' style='font-size: 94.07407407407408%'>html(2)</a> <a href='/tags/ide' style='font-size: 94.07407407407408%'>ide(2)</a> <a href='/tags/javascript' style='font-size: 98.14814814814815%'>javascript(3)</a> <a href='/tags/jekyll' style='font-size: 90.0%'>jekyll(1)</a> <a href='/tags/jenkins' style='font-size: 90.0%'>jenkins(1)</a> <a href='/tags/leisure' style='font-size: 187.77777777777777%'>leisure(25)</a> <a href='/tags/linux' style='font-size: 118.51851851851852%'>linux(8)</a> <a href='/tags/machine-learning' style='font-size: 130.74074074074073%'>machine learning(11)</a> <a href='/tags/mathjax' style='font-size: 94.07407407407408%'>mathjax(2)</a> <a href='/tags/mysql' style='font-size: 110.37037037037037%'>mysql(6)</a> <a href='/tags/network' style='font-size: 90.0%'>network(1)</a> <a href='/tags/nginx' style='font-size: 98.14814814814815%'>nginx(3)</a> <a href='/tags/nlp' style='font-size: 110.37037037037037%'>nlp(6)</a> <a href='/tags/nltk' style='font-size: 90.0%'>nltk(1)</a> <a href='/tags/nodejs' style='font-size: 106.2962962962963%'>nodejs(5)</a> <a href='/tags/octopress' style='font-size: 110.37037037037037%'>octopress(6)</a> <a href='/tags/openstack' style='font-size: 90.0%'>openstack(1)</a> <a href='/tags/pandas' style='font-size: 94.07407407407408%'>pandas(2)</a> <a href='/tags/poem' style='font-size: 102.22222222222223%'>poem(4)</a> <a href='/tags/prediction' style='font-size: 90.0%'>prediction(1)</a> <a href='/tags/pycharm' style='font-size: 90.0%'>pycharm(1)</a> <a href='/tags/python' style='font-size: 200.0%'>python(28)</a> <a href='/tags/reading' style='font-size: 114.44444444444444%'>reading(7)</a> <a href='/tags/redmine' style='font-size: 90.0%'>redmine(1)</a> <a href='/tags/regex' style='font-size: 90.0%'>regex(1)</a> <a href='/tags/robotics' style='font-size: 94.07407407407408%'>robotics(2)</a> <a href='/tags/ruby' style='font-size: 118.51851851851852%'>ruby(8)</a> <a href='/tags/sql' style='font-size: 90.0%'>sql(1)</a> <a href='/tags/supervisor' style='font-size: 90.0%'>supervisor(1)</a> <a href='/tags/time-series' style='font-size: 90.0%'>time series(1)</a> <a href='/tags/translation' style='font-size: 90.0%'>translation(1)</a> <a href='/tags/ubuntu' style='font-size: 122.5925925925926%'>ubuntu(9)</a> <a href='/tags/unicode' style='font-size: 90.0%'>unicode(1)</a> <a href='/tags/vagrant' style='font-size: 90.0%'>vagrant(1)</a> <a href='/tags/vim' style='font-size: 90.0%'>vim(1)</a> <a href='/tags/vm' style='font-size: 90.0%'>vm(1)</a> <a href='/tags/web' style='font-size: 98.14814814814815%'>web(3)</a> <a href='/tags/will' style='font-size: 94.07407407407408%'>will(2)</a> </ul>
 </section>
 
     
