@@ -1,0 +1,89 @@
+---
+layout: post_tech
+title: "Will Bot"
+date: 2015-09-30 14:52:04 +0800
+comments: true
+categories: [tech]
+tags: [will, hipchat, chatbot, robotics, python]
+---
+
+## 1. Installation
+
+### 1.1. Prequisition
+
+- Ubuntu 14.04
+- Redis
+- Will
+
+### 1.2. Ubuntu
+
+Ubuntu 14.04
+
+```bash
+$ sudo apt-get install python-virtualenv redis-server
+$ redis
+```
+
+### 1.3. Octowill
+
+```bash
+$ cd /path/to/project/
+$ sudo mkdir octowill
+$ sudo chown -R user:group /path/to/octowill/
+$ sudo su user
+
+$ cd octowill
+$ mkdir venvs
+$ virtualenv venvs/octowill
+$ source venvs/octowill/bin/activate
+
+$ git clone https://github.com/KellyChan/octowill.git
+$ cd octowill
+$ pip install -r requirements.txt
+```
+
+## 2. Configuration
+
+### 2.1. Prequistion
+
+- hipchat account
+- octowill
+
+### 2.2. Hipchat
+
+- signup hipchat
+- get API tokens
+
+API summary
+
+```
+V2 Tokens:
+- Administer Group - Perform group administrative tasks. Note that this scope is restricted from updating the group owner's profile.
+- Administer Room - Perform room administrative tasks
+- Manage Rooms - Create, update, and remove rooms
+- Send Message - Send private one-on-one messages
+- Send Notification - Send room notifications
+- View Group - View users, rooms, and other group information
+- View Messages - View messages from chat rooms and private chats you have access to
+- View Room - View room information and participants, but not history
+```
+
+### 2.3. Octowill
+
+```bash
+$ cd octowill
+$ cp config.py.sample config.py
+$ vim config.py                   # update USERNAME, PASSWORD, V2_TOKENS
+```
+
+## 3. Testing
+
+```bash
+$ ./start_dev/will.py
+```
+
+## References
+
+- [will](https://github.com/skoczen/will)
+- [will document](http://skoczen.github.io/will/)
+- [hiphat](https://www.hipchat.com)

@@ -99,13 +99,44 @@ Gemfile
 
 ### 5.1 Installation
 
+```bash
+$ sudo apt-get update
+$ sudo apt-get upgrade
+$ sudo reboot
+
+$ sudo apt-get install curl
+$ sudo curl -sL https://deb.nodesource.com/setup | sudo bash -
+$ sudo apt-get install nodejs
+
+$ sudo apt-get install build-essential
+
+$ node -v
+$ npm -v
+```
+
 ### 5.2. Commands
+
+```bash
+$ npm install PACKAGE
+
+$ npm config set registry http://registry.cnpmjs.org // change source
+$ npm info express  // package info
+
+$ npm --registry http://registry.cnpmjs.org info express
+
+$ nano ~/.npmrc   // config npm
+$ registry =https://registry.npm.taobao.org   // config source
+```
 
 ### 5.3. Configuration
 
 
 ### 5.4. Sources
 
+```
+http://registry.cnpmjs.org
+https://registry.npm.taobao.org
+```
 
 ## 6. Javascript
 
