@@ -4,7 +4,7 @@
   <title><![CDATA[Kelly Chan]]></title>
   <link href="http://k.arttechresearch.com/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2015-10-16T17:04:36+08:00</updated>
+  <updated>2015-10-16T23:23:52+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[Kelly Chan]]></name>
@@ -12,6 +12,634 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Adding TOC Plugin for Octopress]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/10/16/adding-toc-plugin-for-octopress/"/>
+    <updated>2015-10-16T22:31:58+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/10/16/adding-toc-plugin-for-octopress</id>
+    <content type="html"><![CDATA[<h2>1. Plugin: toc_generator.rb</h2>
+
+<h3>1.1. toc_generator.rb</h3>
+
+<p>octopress/plugins/toc_generator.rb</p>
+
+<figure class='code'><figcaption><span>toc_generator.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+<span class='line-number'>121</span>
+<span class='line-number'>122</span>
+<span class='line-number'>123</span>
+<span class='line-number'>124</span>
+<span class='line-number'>125</span>
+<span class='line-number'>126</span>
+<span class='line-number'>127</span>
+<span class='line-number'>128</span>
+<span class='line-number'>129</span>
+<span class='line-number'>130</span>
+<span class='line-number'>131</span>
+<span class='line-number'>132</span>
+<span class='line-number'>133</span>
+<span class='line-number'>134</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;nokogiri&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">module</span> <span class="nn">Jekyll</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">module</span> <span class="nn">TOCGenerator</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="no">TOGGLE_HTML</span> <span class="o">=</span> <span class="s1">&#39;&lt;div id=&quot;toctitle&quot;&gt;&lt;h2&gt;%1&lt;/h2&gt;%2&lt;/div&gt;&#39;</span>
+</span><span class='line'>    <span class="no">TOC_CONTAINER_HTML</span> <span class="o">=</span> <span class="s1">&#39;&lt;div id=&quot;toc-container&quot;&gt;&lt;table class=&quot;toc&quot; id=&quot;toc&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;%1&lt;ul&gt;%2&lt;/ul&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&#39;</span>
+</span><span class='line'>    <span class="no">HIDE_HTML</span> <span class="o">=</span> <span class="s1">&#39;&lt;span class=&quot;toctoggle&quot;&gt;[&lt;a id=&quot;toctogglelink&quot; class=&quot;internal&quot; href=&quot;#&quot;&gt;%1&lt;/a&gt;]&lt;/span&gt;&#39;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">toc_generate</span><span class="p">(</span><span class="n">html</span><span class="p">)</span>
+</span><span class='line'>      <span class="c1"># No Toc can be specified on every single page</span>
+</span><span class='line'>      <span class="c1"># For example the index page has no table of contents</span>
+</span><span class='line'>      <span class="n">no_toc</span> <span class="o">=</span> <span class="vi">@context</span><span class="o">.</span><span class="n">environments</span><span class="o">.</span><span class="n">first</span><span class="o">[</span><span class="s2">&quot;page&quot;</span><span class="o">][</span><span class="s2">&quot;noToc&quot;</span><span class="o">]</span> <span class="o">||</span> <span class="kp">false</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="k">return</span> <span class="n">html</span> <span class="k">if</span> <span class="n">no_toc</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="n">config</span> <span class="o">=</span> <span class="vi">@context</span><span class="o">.</span><span class="n">registers</span><span class="o">[</span><span class="ss">:site</span><span class="o">].</span><span class="n">config</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="c1"># Minimum number of items needed to show TOC, default 0 (0 means no minimum)</span>
+</span><span class='line'>      <span class="n">min_items_to_show_toc</span> <span class="o">=</span> <span class="n">config</span><span class="o">[</span><span class="s2">&quot;minItemsToShowToc&quot;</span><span class="o">]</span> <span class="o">||</span> <span class="mi">0</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="n">anchor_prefix</span> <span class="o">=</span> <span class="n">config</span><span class="o">[</span><span class="s2">&quot;anchorPrefix&quot;</span><span class="o">]</span> <span class="o">||</span> <span class="s1">&#39;tocAnchor-&#39;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="c1"># better for traditional page seo, commonlly use h1 as title</span>
+</span><span class='line'>      <span class="n">toc_top_tag</span> <span class="o">=</span> <span class="n">config</span><span class="o">[</span><span class="s2">&quot;tocTopTag&quot;</span><span class="o">]</span> <span class="o">||</span> <span class="s1">&#39;h1&#39;</span>
+</span><span class='line'>      <span class="n">toc_top_tag</span> <span class="o">=</span> <span class="n">toc_top_tag</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/h/</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to_i</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="n">toc_top_tag</span> <span class="o">=</span> <span class="mi">5</span> <span class="k">if</span> <span class="n">toc_top_tag</span> <span class="o">&gt;</span> <span class="mi">5</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="n">toc_sec_tag</span> <span class="o">=</span> <span class="n">toc_top_tag</span> <span class="o">+</span> <span class="mi">1</span>
+</span><span class='line'>      <span class="n">toc_top_tag</span> <span class="o">=</span> <span class="s2">&quot;h</span><span class="si">#{</span><span class="n">toc_top_tag</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>      <span class="n">toc_sec_tag</span> <span class="o">=</span> <span class="s2">&quot;h</span><span class="si">#{</span><span class="n">toc_sec_tag</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>      <span class="c1"># Text labels</span>
+</span><span class='line'>      <span class="n">contents_label</span>     <span class="o">=</span> <span class="n">config</span><span class="o">[</span><span class="s2">&quot;contentsLabel&quot;</span><span class="o">]</span> <span class="o">||</span> <span class="s1">&#39;Contents&#39;</span>
+</span><span class='line'>      <span class="n">hide_label</span>         <span class="o">=</span> <span class="n">config</span><span class="o">[</span><span class="s2">&quot;hideLabel&quot;</span><span class="o">]</span> <span class="o">||</span> <span class="s1">&#39;hide&#39;</span>
+</span><span class='line'>      <span class="c1"># show_label       = config[&quot;showLabel&quot;] || &#39;show&#39; # unused</span>
+</span><span class='line'>      <span class="n">show_toggle_button</span> <span class="o">=</span> <span class="n">config</span><span class="o">[</span><span class="s2">&quot;showToggleButton&quot;</span><span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="n">toc_html</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</span><span class='line'>      <span class="n">toc_level</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>      <span class="n">toc_section</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>      <span class="n">item_number</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>      <span class="n">level_html</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="n">doc</span> <span class="o">=</span> <span class="no">Nokogiri</span><span class="o">::</span><span class="no">HTML</span><span class="p">(</span><span class="n">html</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="c1"># Find H1 tag and all its H2 siblings until next H1</span>
+</span><span class='line'>      <span class="n">doc</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="n">toc_top_tag</span><span class="p">)</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">tag</span><span class="o">|</span>
+</span><span class='line'>        <span class="c1"># TODO This XPATH expression can greatly improved</span>
+</span><span class='line'>        <span class="n">ct</span>    <span class="o">=</span> <span class="n">tag</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;count(following-sibling::</span><span class="si">#{</span><span class="n">toc_top_tag</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">sects</span> <span class="o">=</span> <span class="n">tag</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;following-sibling::</span><span class="si">#{</span><span class="n">toc_sec_tag</span><span class="si">}</span><span class="s2">[count(following-sibling::</span><span class="si">#{</span><span class="n">toc_top_tag</span><span class="si">}</span><span class="s2">)=</span><span class="si">#{</span><span class="n">ct</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">level_html</span>    <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+</span><span class='line'>        <span class="n">inner_section</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">sects</span><span class="o">.</span><span class="n">map</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">sect</span><span class="o">|</span>
+</span><span class='line'>          <span class="n">inner_section</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>          <span class="n">anchor_id</span> <span class="o">=</span> <span class="o">[</span>
+</span><span class='line'>                        <span class="n">anchor_prefix</span><span class="p">,</span> <span class="n">toc_level</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">toc_section</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span>
+</span><span class='line'>                        <span class="n">inner_section</span>
+</span><span class='line'>                      <span class="o">].</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:to_s</span><span class="p">)</span><span class="o">.</span><span class="n">join</span> <span class="s1">&#39;&#39;</span>
+</span><span class='line'>
+</span><span class='line'>          <span class="n">sect</span><span class="o">[</span><span class="s1">&#39;id&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">anchor_id</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>
+</span><span class='line'>          <span class="n">level_html</span> <span class="o">+=</span> <span class="n">create_level_html</span><span class="p">(</span><span class="n">anchor_id</span><span class="p">,</span>
+</span><span class='line'>                                          <span class="n">toc_level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+</span><span class='line'>                                          <span class="n">toc_section</span> <span class="o">+</span> <span class="n">inner_section</span><span class="p">,</span>
+</span><span class='line'>                                          <span class="n">item_number</span><span class="o">.</span><span class="n">to_s</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="n">inner_section</span><span class="o">.</span><span class="n">to_s</span><span class="p">,</span>
+</span><span class='line'>                                          <span class="n">sect</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+</span><span class='line'>                                          <span class="s1">&#39;&#39;</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">level_html</span> <span class="o">=</span> <span class="s1">&#39;&lt;ul&gt;&#39;</span> <span class="o">+</span> <span class="n">level_html</span> <span class="o">+</span> <span class="s1">&#39;&lt;/ul&gt;&#39;</span> <span class="k">if</span> <span class="n">level_html</span><span class="o">.</span><span class="n">length</span> <span class="o">&gt;</span> <span class="mi">0</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">anchor_id</span> <span class="o">=</span> <span class="n">anchor_prefix</span> <span class="o">+</span> <span class="n">toc_level</span><span class="o">.</span><span class="n">to_s</span> <span class="o">+</span> <span class="s1">&#39;-&#39;</span> <span class="o">+</span> <span class="n">toc_section</span><span class="o">.</span><span class="n">to_s</span><span class="p">;</span>
+</span><span class='line'>        <span class="n">tag</span><span class="o">[</span><span class="s1">&#39;id&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">anchor_id</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">toc_html</span> <span class="o">+=</span> <span class="n">create_level_html</span><span class="p">(</span><span class="n">anchor_id</span><span class="p">,</span>
+</span><span class='line'>                                      <span class="n">toc_level</span><span class="p">,</span>
+</span><span class='line'>                                      <span class="n">toc_section</span><span class="p">,</span>
+</span><span class='line'>                                      <span class="n">item_number</span><span class="p">,</span>
+</span><span class='line'>                                      <span class="n">tag</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+</span><span class='line'>                                      <span class="n">level_html</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">toc_section</span> <span class="o">+=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">inner_section</span><span class="p">;</span>
+</span><span class='line'>        <span class="n">item_number</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="c1"># for convenience item_number starts from 1</span>
+</span><span class='line'>      <span class="c1"># so we decrement it to obtain the index count</span>
+</span><span class='line'>      <span class="n">toc_index_count</span> <span class="o">=</span> <span class="n">item_number</span> <span class="o">-</span> <span class="mi">1</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="k">return</span> <span class="n">html</span> <span class="k">unless</span> <span class="n">toc_html</span><span class="o">.</span><span class="n">length</span> <span class="o">&gt;</span> <span class="mi">0</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="n">hide_html</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+</span><span class='line'>      <span class="n">hide_html</span> <span class="o">=</span> <span class="no">HIDE_HTML</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="s1">&#39;%1&#39;</span><span class="p">,</span> <span class="n">hide_label</span><span class="p">)</span> <span class="k">if</span> <span class="p">(</span><span class="n">show_toggle_button</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="k">if</span> <span class="n">min_items_to_show_toc</span> <span class="o">&lt;=</span> <span class="n">toc_index_count</span>
+</span><span class='line'>        <span class="n">replaced_toggle_html</span> <span class="o">=</span> <span class="no">TOGGLE_HTML</span>
+</span><span class='line'>        <span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="s1">&#39;%1&#39;</span><span class="p">,</span> <span class="n">contents_label</span><span class="p">)</span>
+</span><span class='line'>        <span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="s1">&#39;%2&#39;</span><span class="p">,</span> <span class="n">hide_html</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">toc_table</span> <span class="o">=</span> <span class="no">TOC_CONTAINER_HTML</span>
+</span><span class='line'>        <span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="s1">&#39;%1&#39;</span><span class="p">,</span> <span class="n">replaced_toggle_html</span><span class="p">)</span>
+</span><span class='line'>        <span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="s1">&#39;%2&#39;</span><span class="p">,</span> <span class="n">toc_html</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">doc</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">before</span><span class="p">(</span><span class="n">toc_table</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="n">doc</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">to_xhtml</span><span class="p">(</span><span class="ss">indent</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="ss">indent_text</span><span class="p">:</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kp">private</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">create_level_html</span><span class="p">(</span><span class="n">anchor_id</span><span class="p">,</span> <span class="n">toc_level</span><span class="p">,</span> <span class="n">toc_section</span><span class="p">,</span> <span class="n">tocNumber</span><span class="p">,</span> <span class="n">tocText</span><span class="p">,</span> <span class="n">tocInner</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">link</span> <span class="o">=</span> <span class="s1">&#39;&lt;a href=&quot;#%1&quot;&gt;&lt;span class=&quot;tocnumber&quot;&gt;%2&lt;/span&gt; &lt;span class=&quot;toctext&quot;&gt;%3&lt;/span&gt;&lt;/a&gt;%4&#39;</span>
+</span><span class='line'>      <span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="s1">&#39;%1&#39;</span><span class="p">,</span> <span class="n">anchor_id</span><span class="o">.</span><span class="n">to_s</span><span class="p">)</span>
+</span><span class='line'>      <span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="s1">&#39;%2&#39;</span><span class="p">,</span> <span class="n">tocNumber</span><span class="o">.</span><span class="n">to_s</span><span class="p">)</span>
+</span><span class='line'>      <span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="s1">&#39;%3&#39;</span><span class="p">,</span> <span class="n">tocText</span><span class="p">)</span>
+</span><span class='line'>      <span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="s1">&#39;%4&#39;</span><span class="p">,</span> <span class="n">tocInner</span> <span class="p">?</span> <span class="n">tocInner</span> <span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
+</span><span class='line'>      <span class="s1">&#39;&lt;li class=&quot;toc_level-%1 toc_section-%2&quot;&gt;%3&lt;/li&gt;&#39;</span>
+</span><span class='line'>      <span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="s1">&#39;%1&#39;</span><span class="p">,</span> <span class="n">toc_level</span><span class="o">.</span><span class="n">to_s</span><span class="p">)</span>
+</span><span class='line'>      <span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="s1">&#39;%2&#39;</span><span class="p">,</span> <span class="n">toc_section</span><span class="o">.</span><span class="n">to_s</span><span class="p">)</span>
+</span><span class='line'>      <span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="s1">&#39;%3&#39;</span><span class="p">,</span> <span class="n">link</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">Liquid</span><span class="o">::</span><span class="no">Template</span><span class="o">.</span><span class="n">register_filter</span><span class="p">(</span><span class="no">Jekyll</span><span class="o">::</span><span class="no">TOCGenerator</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>1.2. Gemfile</h3>
+
+<figure class='code'><figcaption><span>toc_generator.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gem</span> <span class="s1">&#39;nokogiri&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>1.3. _config.yml</h3>
+
+<figure class='code'><figcaption><span>_config.yml</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="c1">#---------------------------#</span>
+</span><span class='line'><span class="c1">#      TOC Settings         #</span>
+</span><span class='line'><span class="c1">#---------------------------#</span>
+</span><span class='line'>
+</span><span class='line'><span class="l-Scalar-Plain">minItemsToShowToc</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">0</span>
+</span><span class='line'><span class="l-Scalar-Plain">tocTopTag</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">h1</span>
+</span><span class='line'><span class="l-Scalar-Plain">anchorPrefix</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">tocAnchor-</span>
+</span><span class='line'><span class="l-Scalar-Plain">showToggleButton</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">false</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Variable definitions</p>
+
+<table>
+<tr>
+<th>Parameter name</th>
+<th>Description</th>
+<th>Default value</th>
+</tr>
+
+<tr>
+<td>minItemsToShowToc</td>
+<td>Minimum number of items to show the TOC<br/>Suppose you want to generated the TOC only if there are at least 3 H1</td>
+<td>0 (no limit)</td>
+</tr>
+
+<tr>
+<td>tocTopTag</td>
+<td>The top level tag given nokogiri to find<br/>Suppose you want to generated the TOC start form h1 to h5</td>
+<td>h1</td>
+</tr>
+<tr>
+<td>anchorPrefix</td>
+<td>The prefix used to generate the anchor name</td>
+<td>tocAnchor-</td>
+</tr>
+
+<tr>
+<td>showToggleButton</td>
+<td>The TOC has a button used to collapse/expand the list, this requires a little of Javascript
+<br/>This package contains a jQuery plugin to handle the click</td>
+<td>false</td>
+</tr>
+</table>
+
+
+<h2>2. HTML: source/_includes/article.html</h2>
+
+<p>source/_includes/article.html</p>
+
+<figure class='code'><figcaption><span>article.html</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;div&gt;</span>
+</span><span class='line'>    {\{ content | toc_generate }\}
+</span><span class='line'><span class="nt">&lt;/div&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>3. SASS: _toc_generator.scss</h2>
+
+<p>sass/plugins/_toc_generator.scss</p>
+
+<figure class='code'><figcaption><span>_toc_generator.scss</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="nf">#toc</span><span class="o">,</span> <span class="nc">.toc</span><span class="o">,</span> <span class="nc">.mw-warning</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">background-color</span><span class="o">:</span> <span class="m">#F9F9F9</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">border</span><span class="o">:</span> <span class="m">1px</span> <span class="k">solid</span> <span class="m">#AAAAAA</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">font-size</span><span class="o">:</span> <span class="m">95%</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">padding</span><span class="o">:</span> <span class="m">5px</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="nf">#toc</span> <span class="nt">h2</span><span class="o">,</span> <span class="nc">.toc</span> <span class="nt">h2</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">border</span><span class="o">:</span> <span class="k">medium</span> <span class="k">none</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">display</span><span class="o">:</span> <span class="k">inline</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">font-size</span><span class="o">:</span> <span class="m">100%</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">font-weight</span><span class="o">:</span> <span class="k">bold</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">padding</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="nf">#toc</span> <span class="nf">#toctitle</span><span class="o">,</span> <span class="nc">.toc</span> <span class="nf">#toctitle</span><span class="o">,</span> <span class="nf">#toc</span> <span class="nc">.toctitle</span><span class="o">,</span> <span class="nc">.toc</span> <span class="nc">.toctitle</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">text-align</span><span class="o">:</span> <span class="k">center</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">margin</span><span class="o">:</span><span class="m">0</span> <span class="m">8px</span> <span class="m">4px</span> <span class="m">14px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">padding-top</span><span class="o">:</span><span class="m">8px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">line-height</span><span class="o">:</span> <span class="m">1</span><span class="o">.</span><span class="m">5</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">overflow</span><span class="o">:</span><span class="k">hidden</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="nf">#toc</span> <span class="nt">ul</span><span class="o">,</span> <span class="nc">.toc</span> <span class="nt">ul</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">list-style-image</span><span class="o">:</span> <span class="k">none</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">list-style-type</span><span class="o">:</span> <span class="k">none</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">margin</span><span class="o">:</span><span class="m">0</span> <span class="m">8px</span> <span class="m">7px</span> <span class="m">14px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">padding-left</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">text-align</span><span class="o">:</span> <span class="k">left</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="nf">#toc</span> <span class="nt">ul</span> <span class="nt">ul</span><span class="o">,</span> <span class="nc">.toc</span> <span class="nt">ul</span> <span class="nt">ul</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">margin</span><span class="o">:</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">2em</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="nf">#toc</span> <span class="nc">.toctoggle</span><span class="o">,</span> <span class="nc">.toc</span> <span class="nc">.toctoggle</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">font-size</span><span class="o">:</span> <span class="m">94%</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">#toc</span> <span class="nt">ul</span> <span class="nt">li</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">list-style-type</span><span class="o">:</span> <span class="k">none</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">padding-left</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">#toc-container</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">margin-bottom</span><span class="o">:</span> <span class="m">10px</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>4. Javascript: jquery.tocLight.js</h2>
+
+<figure class='code'><figcaption><span>jquery.tocLight.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="cm">/*</span>
+</span><span class='line'><span class="cm"> * jQuery Table of Content Generator Support for Jekyll v1.0</span>
+</span><span class='line'><span class="cm"> *</span>
+</span><span class='line'><span class="cm"> * https://github.com/dafi/jekyll-tocmd-generator</span>
+</span><span class='line'><span class="cm"> * Examples and documentation at: https://github.com/dafi/jekyll-tocmd-generator</span>
+</span><span class='line'><span class="cm"> *</span>
+</span><span class='line'><span class="cm"> * Requires: jQuery v1.7+</span>
+</span><span class='line'><span class="cm"> *</span>
+</span><span class='line'><span class="cm"> * Copyright (c) 2013 Davide Ficano</span>
+</span><span class='line'><span class="cm"> *</span>
+</span><span class='line'><span class="cm"> * Dual licensed under the MIT and GPL licenses:</span>
+</span><span class='line'><span class="cm"> *   http://www.opensource.org/licenses/mit-license.php</span>
+</span><span class='line'><span class="cm"> *   http://www.gnu.org/licenses/gpl.html</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">$</span><span class="p">.</span><span class="nx">toc</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class='line'>    <span class="nx">$</span><span class="p">.</span><span class="nx">toc</span><span class="p">.</span><span class="nx">clickHideButton</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">settings</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">config</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">saveShowStatus</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+</span><span class='line'>            <span class="nx">hideText</span><span class="o">:</span> <span class="s1">&#39;hide&#39;</span><span class="p">,</span>
+</span><span class='line'>            <span class="nx">showText</span><span class="o">:</span> <span class="s1">&#39;show&#39;</span><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nx">settings</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">$</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">config</span><span class="p">,</span> <span class="nx">settings</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#toctogglelink&#39;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>            <span class="kd">var</span> <span class="nx">ul</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#toc ul&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="k">if</span> <span class="p">(</span><span class="nx">ul</span><span class="p">.</span><span class="nx">is</span><span class="p">(</span><span class="s1">&#39;:visible&#39;</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>                <span class="nx">ul</span><span class="p">.</span><span class="nx">hide</span><span class="p">();</span>
+</span><span class='line'>                <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">text</span><span class="p">(</span><span class="nx">config</span><span class="p">.</span><span class="nx">showText</span><span class="p">);</span>
+</span><span class='line'>                <span class="k">if</span> <span class="p">(</span><span class="nx">config</span><span class="p">.</span><span class="nx">saveShowStatus</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                    <span class="nx">$</span><span class="p">.</span><span class="nx">cookie</span><span class="p">(</span><span class="s1">&#39;toc-hide&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">expires</span><span class="o">:</span> <span class="mi">365</span><span class="p">,</span> <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/&#39;</span> <span class="p">});</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>                <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#toc&#39;</span><span class="p">).</span><span class="nx">addClass</span><span class="p">(</span><span class="s1">&#39;tochidden&#39;</span><span class="p">);</span>
+</span><span class='line'>            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>                <span class="nx">ul</span><span class="p">.</span><span class="nx">show</span><span class="p">();</span>
+</span><span class='line'>                <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">text</span><span class="p">(</span><span class="nx">config</span><span class="p">.</span><span class="nx">hideText</span><span class="p">);</span>
+</span><span class='line'>                <span class="k">if</span> <span class="p">(</span><span class="nx">config</span><span class="p">.</span><span class="nx">saveShowStatus</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                    <span class="nx">$</span><span class="p">.</span><span class="nx">removeCookie</span><span class="p">(</span><span class="s1">&#39;toc-hide&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">path</span><span class="o">:</span> <span class="s1">&#39;/&#39;</span> <span class="p">});</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>                <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#toc&#39;</span><span class="p">).</span><span class="nx">removeClass</span><span class="p">(</span><span class="s1">&#39;tochidden&#39;</span><span class="p">);</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>            <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nx">config</span><span class="p">.</span><span class="nx">saveShowStatus</span> <span class="o">&amp;&amp;</span> <span class="nx">$</span><span class="p">.</span><span class="nx">cookie</span><span class="p">(</span><span class="s1">&#39;toc-hide&#39;</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>            <span class="kd">var</span> <span class="nx">ul</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#toc ul&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="nx">ul</span><span class="p">.</span><span class="nx">hide</span><span class="p">();</span>
+</span><span class='line'>            <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#toctogglelink&#39;</span><span class="p">).</span><span class="nx">text</span><span class="p">(</span><span class="nx">config</span><span class="p">.</span><span class="nx">showText</span><span class="p">);</span>
+</span><span class='line'>            <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#toc&#39;</span><span class="p">).</span><span class="nx">addClass</span><span class="p">(</span><span class="s1">&#39;tochidden&#39;</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">})(</span><span class="nx">jQuery</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>update the html template</p>
+
+<figure class='code'><figcaption><span>article.html</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="cp">&lt;!DOCTYPE html&gt;</span>
+</span><span class='line'><span class="nt">&lt;html&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;head&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;title&gt;</span>{\{ page.title }\}<span class="nt">&lt;/title&gt;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;js/jquery.tocLight.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>        <span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">$</span><span class="p">.</span><span class="nx">toc</span><span class="p">.</span><span class="nx">clickHideButton</span><span class="p">();</span>
+</span><span class='line'>        <span class="p">});</span>
+</span><span class='line'>  <span class="nt">&lt;/script&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nt">&lt;/head&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;body</span> <span class="na">id=</span><span class="s">&quot;small&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>        {\{ content | toc_generate }\}
+</span><span class='line'>  <span class="nt">&lt;/body&gt;</span>
+</span><span class='line'><span class="nt">&lt;/html&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>4. Testing</h2>
+
+<p><code>rake generate</code> and <code>rake preview</code></p>
+
+<h2>Reference</h2>
+
+<ul>
+<li><a href="https://github.com/dafi/jekyll-toc-generator">jekyll-toc-generator</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Logic and Thinking]]></title>
@@ -3081,152 +3709,6 @@
 </span><span class='line'><span class="nv">$ </span>GRANT ALL ON *.* TO insight@<span class="s1">&#39;localhost&#39;</span>  IDENTIFIED BY <span class="s1">&#39;insight&#39;</span> WITH GRANT OPTION<span class="p">;</span>
 </span><span class='line'>
 </span><span class='line'><span class="nv">$ </span><span class="nb">exit</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Installing Emacs on Ubuntu]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/04/26/installing-emacs-on-ubuntu/"/>
-    <updated>2015-04-26T23:48:00+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/04/26/installing-emacs-on-ubuntu</id>
-    <content type="html"><![CDATA[<h2>Prequistions</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install ipython
-</span><span class='line'><span class="nv">$ </span>sudo apt-get install texinfo
-</span><span class='line'><span class="nv">$ </span>sudo apt-get install automake autoconf
-</span><span class='line'><span class="nv">$ </span>sudo apt-get install texlive
-</span><span class='line'><span class="nv">$ </span>sudo apt-get install cvs
-</span><span class='line'><span class="nv">$ </span>sudo apt-get install mercurial
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>1. Installation</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo add-apt-repository ppa:cassou/emacs
-</span><span class='line'><span class="nv">$ </span>sudo apt-get update
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span><span class="c"># stable version</span>
-</span><span class='line'><span class="nv">$ </span>sudo apt-get install emacs24 emacs24-el emacs24-common-non-dfsg
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span><span class="c"># latest version</span>
-</span><span class='line'><span class="nv">$ </span>sudo apt-get install emacs-snapshot-el emacs-snapshot-gtk emacs-snapshot
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>2. Configuration</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git clone https://github.com/jhamrick/emacs.git
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>emacs
-</span><span class='line'><span class="nv">$ </span>sudo /path/to/emacs/bootstrap.sh
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span><span class="c"># open the emacs, it will automatically install the plugins    </span>
-</span><span class='line'><span class="nv">$ </span>emacs
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>3. Trouble Shooting</h2>
-
-<h3>3.1. error: makeinfo: command not found</h3>
-
-<p>error message</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>error: makeinfo: <span class="nb">command </span>not found
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>solution</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install texinfo
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>3.2. error: autogen.sh: autoconf: not found</h3>
-
-<p>error message</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>error: autogen.sh: autoconf: not found
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>solution</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install automake autoconf
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>3.3. error: pdftex: command not found</h3>
-
-<p>error message</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>error: pdftex: <span class="nb">command </span>not found
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>solution</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install texlive
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>3.4. error: Error (el-get): while installing matlab-mode: The command named ‘cvs’ can not be found with `executable-find’</h3>
-
-<p>error message</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>error: Error <span class="o">(</span>el-get<span class="o">)</span>: <span class="k">while</span> installing matlab-mode: The <span class="nb">command </span>named ‘cvs’ can not be found with <span class="sb">`</span>executable-find’
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>solution</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install cvs
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>3.5. error: Error (el-get): while installing pydoc-info: The command named ‘hg’ can not be found with `executable-find’</h3>
-
-<p>error message</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>error: Error <span class="o">(</span>el-get<span class="o">)</span>: <span class="k">while</span> installing pydoc-info: The <span class="nb">command </span>named ‘hg’ can not be found with <span class="sb">`</span>executable-find’
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>solution</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install mercurial
 </span></code></pre></td></tr></table></div></figure>
 
 ]]></content>
