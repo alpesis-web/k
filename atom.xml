@@ -4,7 +4,7 @@
   <title><![CDATA[Kelly Chan]]></title>
   <link href="http://k.arttechresearch.com/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2015-10-16T23:23:52+08:00</updated>
+  <updated>2015-10-17T13:22:46+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[Kelly Chan]]></name>
@@ -12,6 +12,284 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Generating TOC With Javascript for Octopress]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/10/17/generating-toc-with-javascript-for-octopress/"/>
+    <updated>2015-10-17T12:37:04+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/10/17/generating-toc-with-javascript-for-octopress</id>
+    <content type="html"><![CDATA[<p>Features:</p>
+
+<ul>
+<li>genearting a table of contents in a article</li>
+<li>user can set toc if true/false</li>
+</ul>
+
+
+<p>Devkits:</p>
+
+<ul>
+<li>javascript</li>
+<li>html</li>
+<li>sass</li>
+</ul>
+
+
+<h2>1. HTML</h2>
+
+<h3>1.1. toc_generator.html</h3>
+
+<p>octopress/source/_includes/toc_generator.html</p>
+
+<figure class='code'><figcaption><span>toc_generator.html</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'>{\% if index %\}
+</span><span class='line'>  {\% comment %\}
+</span><span class='line'>    No table of contents on the index page.
+</span><span class='line'>  {\% endcomment %\}
+</span><span class='line'>
+</span><span class='line'>{\% elsif page.toc == true %\}
+</span><span class='line'>  <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nx">jQuery</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// Put a TOC right before the entry content.</span>
+</span><span class='line'>    <span class="nx">generateTOC</span><span class="p">(</span><span class="s1">&#39;.entry-content&#39;</span><span class="p">,</span> <span class="s1">&#39;Table of Contents&#39;</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'>  <span class="nt">&lt;/script&gt;</span>
+</span><span class='line'>{\% endif %\}
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>1.2. article.html</h3>
+
+<p>Include <code>toc_generator.html</code> at the end of <code>article.html</code></p>
+
+<figure class='code'><figcaption><span>article.html</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'>...
+</span><span class='line'>
+</span><span class='line'>{\% include toc_generator.html %\}
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>2. Javascript</h2>
+
+<h3>2.1. update the libraries</h3>
+
+<p>octopress/source/_includes/head.html</p>
+
+<figure class='code'><figcaption><span>head.html</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.min.js&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;{\{ root_url }\}/javascripts/jquery.tableofcontents.min.js&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;{\{ root_url }\}/javascripts/toc_generator.js&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>2.2. jquery.tableofcontents.min.js</h3>
+
+<p>Go to <a href="http://fuelyourcoding.com/scripts/toc/">TOC jQuery Plugin</a>,
+download the library, and copy <code>jquery.tableofcontents.min.js</code> to <code>octopress/source/javascript/</code>.</p>
+
+<h3>2.3. toc_generator.js</h3>
+
+<p>octopress/source/javascript/toc_generator.js</p>
+
+<figure class='code'><figcaption><span>toc_generator.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">generateTOC</span><span class="p">(</span><span class="nx">insertBefore</span><span class="p">,</span> <span class="nx">heading</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">container</span> <span class="o">=</span> <span class="nx">jQuery</span><span class="p">(</span><span class="s2">&quot;&lt;div id=&#39;tocBlock&#39;&gt;&lt;/div&gt;&quot;</span><span class="p">);</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">div</span> <span class="o">=</span> <span class="nx">jQuery</span><span class="p">(</span><span class="s2">&quot;&lt;ul id=&#39;toc&#39;&gt;&lt;/ul&gt;&quot;</span><span class="p">);</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">content</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">insertBefore</span><span class="p">).</span><span class="nx">first</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="nx">heading</span> <span class="o">!=</span> <span class="kc">undefined</span> <span class="o">&amp;&amp;</span> <span class="nx">heading</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">container</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;&lt;span class=&quot;tocHeading&quot;&gt;&#39;</span> <span class="o">+</span> <span class="nx">heading</span> <span class="o">+</span> <span class="s1">&#39;&lt;/span&gt;&#39;</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">div</span><span class="p">.</span><span class="nx">tableOfContents</span><span class="p">(</span><span class="nx">content</span><span class="p">);</span>
+</span><span class='line'>  <span class="nx">container</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="nx">div</span><span class="p">);</span>
+</span><span class='line'>  <span class="nx">container</span><span class="p">.</span><span class="nx">insertBefore</span><span class="p">(</span><span class="nx">insertBefore</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>3. SASS</h2>
+
+<h3>3.1. _utilities.scss</h3>
+
+<p>octopress/sass/base/_utilities.scss</p>
+
+<figure class='code'><figcaption><span>_utilities.scss</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="k">@mixin</span> <span class="nt">rounded-border</span><span class="o">($</span><span class="nt">radius</span><span class="o">:</span> <span class="nt">10px</span><span class="o">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nt">border-radius</span><span class="o">:</span> <span class="o">$</span><span class="nt">radius</span><span class="o">;</span>
+</span><span class='line'>    <span class="nt">-moz-border-radius</span><span class="o">:</span> <span class="o">$</span><span class="nt">radius</span><span class="o">;</span>
+</span><span class='line'>   <span class="nt">padding</span><span class="o">:</span> <span class="o">$</span><span class="nt">radius</span><span class="o">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">@mixin</span> <span class="nt">centered</span><span class="o">($</span><span class="nt">width</span><span class="o">:</span> <span class="nt">auto</span><span class="o">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nt">width</span><span class="o">:</span> <span class="o">$</span><span class="nt">width</span> <span class="o">!</span><span class="nt">important</span><span class="o">;</span>
+</span><span class='line'>    <span class="nt">margin-left</span><span class="o">:</span> <span class="nt">auto</span> <span class="o">!</span><span class="nt">important</span><span class="o">;</span>
+</span><span class='line'>    <span class="nt">margin-right</span><span class="o">:</span> <span class="nt">auto</span> <span class="o">!</span><span class="nt">important</span><span class="o">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">@mixin</span> <span class="nt">drop-shadow-right-bottom</span><span class="o">($</span><span class="nt">width</span><span class="o">:</span> <span class="nt">5px</span><span class="o">,</span> <span class="o">$</span><span class="nt">color</span><span class="o">:</span> <span class="nf">#999</span><span class="o">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nt">box-shadow</span><span class="o">:</span> <span class="o">$</span><span class="nt">width</span> <span class="o">$</span><span class="nt">width</span> <span class="o">$</span><span class="nt">width</span> <span class="o">$</span><span class="nt">color</span><span class="o">;</span>
+</span><span class='line'>    <span class="nt">-moz-box-shadow</span><span class="o">:</span> <span class="o">$</span><span class="nt">width</span> <span class="o">$</span><span class="nt">width</span> <span class="o">$</span><span class="nt">width</span> <span class="o">$</span><span class="nt">color</span><span class="o">;</span>
+</span><span class='line'>    <span class="nt">-webkit-box-shadow</span><span class="o">:</span> <span class="o">$</span><span class="nt">width</span> <span class="o">$</span><span class="nt">width</span> <span class="o">$</span><span class="nt">width</span> <span class="o">$</span><span class="nt">color</span><span class="o">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>3.2. _toc_generator.scss</h3>
+
+<p>ocotpress/sass/partials/_toc_generator.scss</p>
+
+<figure class='code'><figcaption><span>_toc_generator.scss</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="nt">bg</span><span class="o">:</span> <span class="nf">#e8e8e8</span><span class="o">;</span>
+</span><span class='line'><span class="o">$</span><span class="nt">toc-incr</span><span class="o">:</span> <span class="nt">5px</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">div</span><span class="nf">#tocBlock</span> <span class="p">{</span>
+</span><span class='line'>    <span class="o">@</span><span class="n">include</span> <span class="n">drop</span><span class="o">-</span><span class="n">shadow</span><span class="o">-</span><span class="k">right</span><span class="o">-</span><span class="k">bottom</span><span class="p">(</span><span class="m">5px</span><span class="o">,</span> <span class="m">#999</span><span class="p">);</span>
+</span><span class='line'>    <span class="o">@</span><span class="n">include</span> <span class="n">rounded</span><span class="o">-</span><span class="k">border</span><span class="p">(</span><span class="m">10px</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">float</span><span class="o">:</span> <span class="k">right</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">font-size</span><span class="o">:</span> <span class="m">10pt</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">width</span><span class="o">:</span> <span class="m">300px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">padding-left</span><span class="o">:</span> <span class="m">20px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">padding-right</span><span class="o">:</span> <span class="m">10px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">padding-top</span><span class="o">:</span> <span class="m">10px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">padding-bottom</span><span class="o">:</span> <span class="m">0px</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">background</span><span class="o">:</span> <span class="err">$</span><span class="n">toc</span><span class="o">-</span><span class="n">bg</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">border</span><span class="o">:</span> <span class="k">solid</span> <span class="m">1px</span> <span class="m">#ccc</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">margin</span><span class="o">:</span> <span class="m">0</span> <span class="m">0</span> <span class="m">10px</span> <span class="m">15px</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="o">.</span><span class="n">tocHeading</span> <span class="err">{</span>
+</span><span class='line'>  <span class="k">font-weight</span><span class="o">:</span> <span class="k">bold</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">font-size</span><span class="o">:</span> <span class="m">125%</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nt">ul</span> <span class="p">{</span> <span class="k">list-style</span><span class="o">:</span> <span class="k">none</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nf">#toc</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">background</span><span class="o">:</span> <span class="err">$</span><span class="n">toc</span><span class="o">-</span><span class="n">bg</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">ul</span> <span class="err">{</span>
+</span><span class='line'>      <span class="n">li</span> <span class="err">{</span>
+</span><span class='line'>      <span class="k">margin-left</span><span class="o">:</span> <span class="err">$</span><span class="n">toc</span><span class="o">-</span><span class="n">incr</span> <span class="cp">!important</span><span class="p">;</span>
+</span><span class='line'>      <span class="k">padding</span><span class="o">:</span> <span class="m">0</span> <span class="cp">!important</span><span class="p">;</span>
+</span><span class='line'>      <span class="k">list-style</span><span class="o">:</span> <span class="k">disc</span><span class="p">;</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="err">}</span>
+</span><span class='line'>    <span class="err">}</span>
+</span><span class='line'><span class="err">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>3.3. _partials.scss</h3>
+
+<p>octopress/sass/_particials.scss</p>
+
+<figure class='code'><figcaption><span>_particials.scss</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="k">@import</span> <span class="s2">&quot;partials/toc_generator&quot;</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>4. Rakefile</h2>
+
+<p><code>octopress/Rakefile</code>: update the head variable for <code>new_post_tech</code>, <code>new_post_art</code> and <code>new_post_life</code>.</p>
+
+<figure class='code'><figcaption><span>Rakefile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">post</span><span class="o">.</span><span class="n">puts</span> <span class="s2">&quot;toc: false&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>5. Testing</h2>
+
+<p><code>rake new_post_tech['post_name']</code>, check the header if <code>toc: false</code> exists.</p>
+
+<p>If <code>toc: true</code>, the table of contents will be generated, if <code>toc:false</code>, no table of contents.</p>
+
+<h2>Reference</h2>
+
+<ul>
+<li><a href="http://brizzled.clapper.org/blog/2012/02/04/generating-a-table-of-contents-in-octopress/">Generating a table of contents in Octopress</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Adding TOC Plugin for Octopress]]></title>
@@ -3656,60 +3934,6 @@
 <li>Site: <a href="http://ip_address/redmine">http://ip_address/redmine</a></li>
 <li>Username/Password: admin/admin</li>
 </ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Setting Up MySQL on Ubuntu]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/05/01/setting-up-mysql-on-ubuntu/"/>
-    <updated>2015-05-01T10:50:00+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/05/01/setting-up-mysql-on-ubuntu</id>
-    <content type="html"><![CDATA[<p>installation</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install mysql-server libmysql-java
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>configuration</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo nano /etc/mysql/my.cnf
-</span><span class='line'>
-</span><span class='line'><span class="c"># comment bind-address</span>
-</span><span class='line'><span class="c"># bind-address = 127.0.0.1</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>configurating database</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo service mysql restart
-</span><span class='line'><span class="nv">$ </span>mysql -uroot -p
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span>create database analytics DEFAULT CHARACTER SET utf8<span class="p">;</span>
-</span><span class='line'><span class="nv">$ </span>grant all on analytics.* TO <span class="s1">&#39;insight&#39;</span>@<span class="s1">&#39;%&#39;</span> IDENTIFIED BY <span class="s1">&#39;analytics_password&#39;</span><span class="p">;</span>
-</span><span class='line'><span class="nv">$ </span>grant all on analytics.* TO <span class="s1">&#39;insight&#39;</span>@<span class="s1">&#39;202.120.83.105&#39;</span> IDENTIFIED BY <span class="s1">&#39;analytics_password&#39;</span><span class="p">;</span>
-</span><span class='line'><span class="nv">$ </span>grant all on analytics.* TO <span class="s1">&#39;insight&#39;</span>@<span class="s1">&#39;202.120.83.101&#39;</span> IDENTIFIED BY <span class="s1">&#39;analytics_password&#39;</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span>GRANT ALL ON *.* TO insight@<span class="s1">&#39;localhost&#39;</span>  IDENTIFIED BY <span class="s1">&#39;insight&#39;</span> WITH GRANT OPTION<span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span><span class="nb">exit</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
 
 ]]></content>
   </entry>

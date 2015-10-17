@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tech | Kelly Chan]]></title>
   <link href="http://k.arttechresearch.com/categories/tech/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2015-10-16T23:23:52+08:00</updated>
+  <updated>2015-10-17T13:22:46+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[Kelly Chan]]></name>
@@ -12,6 +12,208 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Generating TOC With Javascript for Octopress]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/10/17/generating-toc-with-javascript-for-octopress/"/>
+    <updated>2015-10-17T12:37:04+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/10/17/generating-toc-with-javascript-for-octopress</id>
+    <content type="html"><![CDATA[<p>Features:</p>
+
+<ul>
+<li>genearting a table of contents in a article</li>
+<li>user can set toc if true/false</li>
+</ul>
+
+
+<p>Devkits:</p>
+
+<ul>
+<li>javascript</li>
+<li>html</li>
+<li>sass</li>
+</ul>
+
+
+<h2>1. HTML</h2>
+
+<h3>1.1. toc_generator.html</h3>
+
+<p>octopress/source/_includes/toc_generator.html</p>
+
+<pre><code class="html toc_generator.html">    {\% if index %\}
+      {\% comment %\}
+        No table of contents on the index page.
+      {\% endcomment %\}
+
+    {\% elsif page.toc == true %\}
+      &lt;script type="text/javascript"&gt;
+      jQuery(document).ready(function() {
+        // Put a TOC right before the entry content.
+        generateTOC('.entry-content', 'Table of Contents');
+      });
+      &lt;/script&gt;
+    {\% endif %\}
+</code></pre>
+
+<h3>1.2. article.html</h3>
+
+<p>Include <code>toc_generator.html</code> at the end of <code>article.html</code></p>
+
+<pre><code class="html article.html">...
+
+{\% include toc_generator.html %\}
+</code></pre>
+
+<h2>2. Javascript</h2>
+
+<h3>2.1. update the libraries</h3>
+
+<p>octopress/source/_includes/head.html</p>
+
+<p>```javascript head.html</p>
+
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.min.js"></script>
+
+
+<script src="{\{ root_url }\}/javascripts/jquery.tableofcontents.min.js" type="text/javascript"></script>
+
+
+<script src="{\{ root_url }\}/javascripts/toc_generator.js" type="text/javascript"></script>
+
+
+<pre><code>
+### 2.2. jquery.tableofcontents.min.js
+
+Go to [TOC jQuery Plugin](http://fuelyourcoding.com/scripts/toc/), 
+download the library, and copy `jquery.tableofcontents.min.js` to `octopress/source/javascript/`.
+
+
+### 2.3. toc_generator.js
+
+octopress/source/javascript/toc_generator.js
+</code></pre>
+
+<pre><code>function generateTOC(insertBefore, heading) {
+  var container = jQuery("&lt;div id='tocBlock'&gt;&lt;/div&gt;");
+  var div = jQuery("&lt;ul id='toc'&gt;&lt;/ul&gt;");
+  var content = $(insertBefore).first();
+
+  if (heading != undefined &amp;&amp; heading != null) {
+    container.append('&lt;span class="tocHeading"&gt;' + heading + '&lt;/span&gt;');
+  }
+
+  div.tableOfContents(content);
+  container.append(div);
+  container.insertBefore(insertBefore);
+}
+</code></pre>
+
+<pre><code>
+## 3. SASS
+
+### 3.1. _utilities.scss
+
+octopress/sass/base/_utilities.scss
+</code></pre>
+
+<pre><code>@mixin rounded-border($radius: 10px) {
+    border-radius: $radius;
+    -moz-border-radius: $radius;
+   padding: $radius;
+}
+
+@mixin centered($width: auto) {
+    width: $width !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+@mixin drop-shadow-right-bottom($width: 5px, $color: #999) {
+    box-shadow: $width $width $width $color;
+    -moz-box-shadow: $width $width $width $color;
+    -webkit-box-shadow: $width $width $width $color;
+}
+</code></pre>
+
+<pre><code>
+### 3.2. _toc_generator.scss
+
+ocotpress/sass/partials/_toc_generator.scss
+</code></pre>
+
+<pre><code>bg: #e8e8e8;
+$toc-incr: 5px;
+
+div#tocBlock {
+    @include drop-shadow-right-bottom(5px, #999);
+    @include rounded-border(10px);
+    float: right;
+    font-size: 10pt;
+    width: 300px;
+    padding-left: 20px;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 0px;
+
+    background: $toc-bg;
+    border: solid 1px #ccc;
+    margin: 0 0 10px 15px;
+
+    .tocHeading {
+    font-weight: bold;
+    font-size: 125%;
+    }
+
+    ul { list-style: none; }
+
+    #toc {
+    background: $toc-bg;
+    ul {
+        li {
+        margin-left: $toc-incr !important;
+        padding: 0 !important;
+        list-style: disc;
+        }
+    }
+    }
+}
+</code></pre>
+
+<pre><code>
+### 3.3. _partials.scss
+
+octopress/sass/_particials.scss
+</code></pre>
+
+<pre><code>@import "partials/toc_generator";
+</code></pre>
+
+<pre><code>
+## 4. Rakefile
+
+`octopress/Rakefile`: update the head variable for `new_post_tech`, `new_post_art` and `new_post_life`.
+</code></pre>
+
+<pre><code>post.puts "toc: false"
+</code></pre>
+
+<p>```</p>
+
+<h2>5. Testing</h2>
+
+<p><code>rake new_post_tech['post_name']</code>, check the header if <code>toc: false</code> exists.</p>
+
+<p>If <code>toc: true</code>, the table of contents will be generated, if <code>toc:false</code>, no table of contents.</p>
+
+<h2>Reference</h2>
+
+<ul>
+<li><a href="http://brizzled.clapper.org/blog/2012/02/04/generating-a-table-of-contents-in-octopress/">Generating a table of contents in Octopress</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Adding TOC Plugin for Octopress]]></title>
@@ -829,7 +1031,7 @@ Liquid::Template.register_tag('category_list', Jekyll::CategoryList)
 
 <pre><code class="css _tag_cloud.scss">&lt;section class="category-list"&gt;
   &lt;h1&gt;Summary&lt;/h1&gt;
-    &lt;ul id="category-list"&gt;<li><a href='/categories/art/'>art (1)</a></li><li><a href='/categories/life/'>life (45)</a></li><li><a href='/categories/tech/'>tech (74)</a></li>&lt;/ul&gt;
+    &lt;ul id="category-list"&gt;<li><a href='/categories/art/'>art (1)</a></li><li><a href='/categories/life/'>life (45)</a></li><li><a href='/categories/tech/'>tech (75)</a></li>&lt;/ul&gt;
 &lt;/section&gt;
 kelly-2:octopress kelly$ cat sass/plugins/_tag_cloud.scss
 .tag-cloud {
@@ -854,32 +1056,6 @@ kelly-2:octopress kelly$ cat sass/plugins/_tag_cloud.scss
 <h2>4. Testing</h2>
 
 <p>Include the <code>tag_cloud.html</code> and <code>category_list.html</code> in a page, and then run <code>rake generate</code> and <code>rake preview</code>.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Adding the Social Icons in Octopress]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/10/06/adding-the-social-icons-in-octopress/"/>
-    <updated>2015-10-06T05:04:17+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/10/06/adding-the-social-icons-in-octopress</id>
-    <content type="html"><![CDATA[<h2>1. Perfections: design the icons</h2>
-
-<p>Go to <a href="http://perfecticons.com">Perfections</a>, choose the icons you need, select the styles, and then generate the codes.</p>
-
-<p>Once done, download the <code>fonts.zip</code>.</p>
-
-<h2>2. Octopress: integrate the icons</h2>
-
-<ul>
-<li>copy the <code>fonts.zip</code> to <code>octopress/source/assets/fonts/</code></li>
-<li>copy the html file to <code>octopress/source/_includes/social.html</code>, and then modify the variables</li>
-<li>add the <code>social.html</code> to a page</li>
-<li>copy the css file to <code>octopress/sass/partials/_socials.scss</code></li>
-<li>update the links in <code>octopress/_config.yml</code></li>
-</ul>
-
-
-<p>Once done, run <code>rake generate</code> and <code>rake preview</code> to check.</p>
 ]]></content>
   </entry>
   

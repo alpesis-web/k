@@ -9,25 +9,10 @@
   <meta name="author" content="Kelly Chan">
 
   
-  <meta name="description" content="1. Plugin: toc_generator.rb 1.1. toc_generator.rb octopress/plugins/toc_generator.rb toc_generator.rb1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19 &hellip;">
+  <meta name="description" content="Features: genearting a table of contents in a article
+user can set toc if true/false Devkits: javascript
+html
+sass 1. HTML 1.1. toc_generator.html &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -44,6 +29,10 @@
   <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
+
+  <script src="/javascripts/jquery.tableofcontents.min.js" type="text/javascript"></script>
+  <script src="/javascripts/toc_generator.js" type="text/javascript"></script>
+
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
@@ -148,6 +137,317 @@
       <div class="blog-index">
 
   
+  
+  
+    <article>
+      
+  <header>
+
+    
+      <h1 class="entry-title"><a href="/tech/2015/10/17/generating-toc-with-javascript-for-octopress/">Generating TOC With Javascript for Octopress</a></h1>
+    
+
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-10-17T12:37:04+08:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>17</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:37 pm</span></time>
+        
+           | <a href="/tech/2015/10/17/generating-toc-with-javascript-for-octopress/#disqus_thread"
+             data-disqus-identifier="http://k.arttechresearch.com/tech/2015/10/17/generating-toc-with-javascript-for-octopress/">Comments</a>
+        
+      </p>
+    
+
+  </header>
+
+
+
+  <div class="entry-content"><p>Features:</p>
+
+<ul>
+<li>genearting a table of contents in a article</li>
+<li>user can set toc if true/false</li>
+</ul>
+
+
+<p>Devkits:</p>
+
+<ul>
+<li>javascript</li>
+<li>html</li>
+<li>sass</li>
+</ul>
+
+
+<h2>1. HTML</h2>
+
+<h3>1.1. toc_generator.html</h3>
+
+<p>octopress/source/_includes/toc_generator.html</p>
+
+<figure class='code'><figcaption><span>toc_generator.html</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'>{\% if index %\}
+</span><span class='line'>  {\% comment %\}
+</span><span class='line'>    No table of contents on the index page.
+</span><span class='line'>  {\% endcomment %\}
+</span><span class='line'>
+</span><span class='line'>{\% elsif page.toc == true %\}
+</span><span class='line'>  <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nx">jQuery</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// Put a TOC right before the entry content.</span>
+</span><span class='line'>    <span class="nx">generateTOC</span><span class="p">(</span><span class="s1">&#39;.entry-content&#39;</span><span class="p">,</span> <span class="s1">&#39;Table of Contents&#39;</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'>  <span class="nt">&lt;/script&gt;</span>
+</span><span class='line'>{\% endif %\}
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>1.2. article.html</h3>
+
+<p>Include <code>toc_generator.html</code> at the end of <code>article.html</code></p>
+
+<figure class='code'><figcaption><span>article.html</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'>...
+</span><span class='line'>
+</span><span class='line'>{\% include toc_generator.html %\}
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>2. Javascript</h2>
+
+<h3>2.1. update the libraries</h3>
+
+<p>octopress/source/_includes/head.html</p>
+
+<figure class='code'><figcaption><span>head.html</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.min.js&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;{\{ root_url }\}/javascripts/jquery.tableofcontents.min.js&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;{\{ root_url }\}/javascripts/toc_generator.js&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>2.2. jquery.tableofcontents.min.js</h3>
+
+<p>Go to <a href="http://fuelyourcoding.com/scripts/toc/">TOC jQuery Plugin</a>,
+download the library, and copy <code>jquery.tableofcontents.min.js</code> to <code>octopress/source/javascript/</code>.</p>
+
+<h3>2.3. toc_generator.js</h3>
+
+<p>octopress/source/javascript/toc_generator.js</p>
+
+<figure class='code'><figcaption><span>toc_generator.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">generateTOC</span><span class="p">(</span><span class="nx">insertBefore</span><span class="p">,</span> <span class="nx">heading</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">container</span> <span class="o">=</span> <span class="nx">jQuery</span><span class="p">(</span><span class="s2">&quot;&lt;div id=&#39;tocBlock&#39;&gt;&lt;/div&gt;&quot;</span><span class="p">);</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">div</span> <span class="o">=</span> <span class="nx">jQuery</span><span class="p">(</span><span class="s2">&quot;&lt;ul id=&#39;toc&#39;&gt;&lt;/ul&gt;&quot;</span><span class="p">);</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">content</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">insertBefore</span><span class="p">).</span><span class="nx">first</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="nx">heading</span> <span class="o">!=</span> <span class="kc">undefined</span> <span class="o">&amp;&amp;</span> <span class="nx">heading</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">container</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;&lt;span class=&quot;tocHeading&quot;&gt;&#39;</span> <span class="o">+</span> <span class="nx">heading</span> <span class="o">+</span> <span class="s1">&#39;&lt;/span&gt;&#39;</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">div</span><span class="p">.</span><span class="nx">tableOfContents</span><span class="p">(</span><span class="nx">content</span><span class="p">);</span>
+</span><span class='line'>  <span class="nx">container</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="nx">div</span><span class="p">);</span>
+</span><span class='line'>  <span class="nx">container</span><span class="p">.</span><span class="nx">insertBefore</span><span class="p">(</span><span class="nx">insertBefore</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>3. SASS</h2>
+
+<h3>3.1. _utilities.scss</h3>
+
+<p>octopress/sass/base/_utilities.scss</p>
+
+<figure class='code'><figcaption><span>_utilities.scss</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="k">@mixin</span> <span class="nt">rounded-border</span><span class="o">($</span><span class="nt">radius</span><span class="o">:</span> <span class="nt">10px</span><span class="o">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nt">border-radius</span><span class="o">:</span> <span class="o">$</span><span class="nt">radius</span><span class="o">;</span>
+</span><span class='line'>    <span class="nt">-moz-border-radius</span><span class="o">:</span> <span class="o">$</span><span class="nt">radius</span><span class="o">;</span>
+</span><span class='line'>   <span class="nt">padding</span><span class="o">:</span> <span class="o">$</span><span class="nt">radius</span><span class="o">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">@mixin</span> <span class="nt">centered</span><span class="o">($</span><span class="nt">width</span><span class="o">:</span> <span class="nt">auto</span><span class="o">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nt">width</span><span class="o">:</span> <span class="o">$</span><span class="nt">width</span> <span class="o">!</span><span class="nt">important</span><span class="o">;</span>
+</span><span class='line'>    <span class="nt">margin-left</span><span class="o">:</span> <span class="nt">auto</span> <span class="o">!</span><span class="nt">important</span><span class="o">;</span>
+</span><span class='line'>    <span class="nt">margin-right</span><span class="o">:</span> <span class="nt">auto</span> <span class="o">!</span><span class="nt">important</span><span class="o">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">@mixin</span> <span class="nt">drop-shadow-right-bottom</span><span class="o">($</span><span class="nt">width</span><span class="o">:</span> <span class="nt">5px</span><span class="o">,</span> <span class="o">$</span><span class="nt">color</span><span class="o">:</span> <span class="nf">#999</span><span class="o">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nt">box-shadow</span><span class="o">:</span> <span class="o">$</span><span class="nt">width</span> <span class="o">$</span><span class="nt">width</span> <span class="o">$</span><span class="nt">width</span> <span class="o">$</span><span class="nt">color</span><span class="o">;</span>
+</span><span class='line'>    <span class="nt">-moz-box-shadow</span><span class="o">:</span> <span class="o">$</span><span class="nt">width</span> <span class="o">$</span><span class="nt">width</span> <span class="o">$</span><span class="nt">width</span> <span class="o">$</span><span class="nt">color</span><span class="o">;</span>
+</span><span class='line'>    <span class="nt">-webkit-box-shadow</span><span class="o">:</span> <span class="o">$</span><span class="nt">width</span> <span class="o">$</span><span class="nt">width</span> <span class="o">$</span><span class="nt">width</span> <span class="o">$</span><span class="nt">color</span><span class="o">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>3.2. _toc_generator.scss</h3>
+
+<p>ocotpress/sass/partials/_toc_generator.scss</p>
+
+<figure class='code'><figcaption><span>_toc_generator.scss</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="nt">bg</span><span class="o">:</span> <span class="nf">#e8e8e8</span><span class="o">;</span>
+</span><span class='line'><span class="o">$</span><span class="nt">toc-incr</span><span class="o">:</span> <span class="nt">5px</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">div</span><span class="nf">#tocBlock</span> <span class="p">{</span>
+</span><span class='line'>    <span class="o">@</span><span class="n">include</span> <span class="n">drop</span><span class="o">-</span><span class="n">shadow</span><span class="o">-</span><span class="k">right</span><span class="o">-</span><span class="k">bottom</span><span class="p">(</span><span class="m">5px</span><span class="o">,</span> <span class="m">#999</span><span class="p">);</span>
+</span><span class='line'>    <span class="o">@</span><span class="n">include</span> <span class="n">rounded</span><span class="o">-</span><span class="k">border</span><span class="p">(</span><span class="m">10px</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">float</span><span class="o">:</span> <span class="k">right</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">font-size</span><span class="o">:</span> <span class="m">10pt</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">width</span><span class="o">:</span> <span class="m">300px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">padding-left</span><span class="o">:</span> <span class="m">20px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">padding-right</span><span class="o">:</span> <span class="m">10px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">padding-top</span><span class="o">:</span> <span class="m">10px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">padding-bottom</span><span class="o">:</span> <span class="m">0px</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">background</span><span class="o">:</span> <span class="err">$</span><span class="n">toc</span><span class="o">-</span><span class="n">bg</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">border</span><span class="o">:</span> <span class="k">solid</span> <span class="m">1px</span> <span class="m">#ccc</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">margin</span><span class="o">:</span> <span class="m">0</span> <span class="m">0</span> <span class="m">10px</span> <span class="m">15px</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="o">.</span><span class="n">tocHeading</span> <span class="err">{</span>
+</span><span class='line'>  <span class="k">font-weight</span><span class="o">:</span> <span class="k">bold</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">font-size</span><span class="o">:</span> <span class="m">125%</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nt">ul</span> <span class="p">{</span> <span class="k">list-style</span><span class="o">:</span> <span class="k">none</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nf">#toc</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">background</span><span class="o">:</span> <span class="err">$</span><span class="n">toc</span><span class="o">-</span><span class="n">bg</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">ul</span> <span class="err">{</span>
+</span><span class='line'>      <span class="n">li</span> <span class="err">{</span>
+</span><span class='line'>      <span class="k">margin-left</span><span class="o">:</span> <span class="err">$</span><span class="n">toc</span><span class="o">-</span><span class="n">incr</span> <span class="cp">!important</span><span class="p">;</span>
+</span><span class='line'>      <span class="k">padding</span><span class="o">:</span> <span class="m">0</span> <span class="cp">!important</span><span class="p">;</span>
+</span><span class='line'>      <span class="k">list-style</span><span class="o">:</span> <span class="k">disc</span><span class="p">;</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="err">}</span>
+</span><span class='line'>    <span class="err">}</span>
+</span><span class='line'><span class="err">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>3.3. _partials.scss</h3>
+
+<p>octopress/sass/_particials.scss</p>
+
+<figure class='code'><figcaption><span>_particials.scss</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="k">@import</span> <span class="s2">&quot;partials/toc_generator&quot;</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>4. Rakefile</h2>
+
+<p><code>octopress/Rakefile</code>: update the head variable for <code>new_post_tech</code>, <code>new_post_art</code> and <code>new_post_life</code>.</p>
+
+<figure class='code'><figcaption><span>Rakefile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">post</span><span class="o">.</span><span class="n">puts</span> <span class="s2">&quot;toc: false&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>5. Testing</h2>
+
+<p><code>rake new_post_tech['post_name']</code>, check the header if <code>toc: false</code> exists.</p>
+
+<p>If <code>toc: true</code>, the table of contents will be generated, if <code>toc:false</code>, no table of contents.</p>
+
+<h2>Reference</h2>
+
+<ul>
+<li><a href="http://brizzled.clapper.org/blog/2012/02/04/generating-a-table-of-contents-in-octopress/">Generating a table of contents in Octopress</a></li>
+</ul>
+
+</div>
+  
+  
+
+
+
+  
+
+
+
+
+    </article>
   
   
     <article>
@@ -802,6 +1102,12 @@
   
 
 
+
+  
+
+
+
+
     </article>
   
   
@@ -916,6 +1222,12 @@
 </div>
   
   
+
+
+
+  
+
+
 
 
     </article>
@@ -1384,6 +1696,12 @@
   
 
 
+
+  
+
+
+
+
     </article>
   
   
@@ -1746,6 +2064,12 @@
   
 
 
+
+  
+
+
+
+
     </article>
   
   
@@ -1797,6 +2121,12 @@
 </div>
   
   
+
+
+
+  
+
+
 
 
     </article>
@@ -2090,6 +2420,12 @@
   
 
 
+
+  
+
+
+
+
     </article>
   
   
@@ -2187,6 +2523,12 @@
 </div>
   
   
+
+
+
+  
+
+
 
 
     </article>
@@ -2314,6 +2656,12 @@
   
 
 
+
+  
+
+
+
+
     </article>
   
   
@@ -2402,6 +2750,12 @@
   
 
 
+
+  
+
+
+
+
     </article>
   
   
@@ -2464,6 +2818,12 @@
 </div>
   
   
+
+
+
+  
+
+
 
 
     </article>
@@ -2621,6 +2981,12 @@
   
 
 
+
+  
+
+
+
+
     </article>
   
   
@@ -2671,6 +3037,12 @@
 </div>
   
   
+
+
+
+  
+
+
 
 
     </article>
@@ -2796,6 +3168,12 @@
 </div>
   
   
+
+
+
+  
+
+
 
 
     </article>
@@ -3037,6 +3415,12 @@
 </div>
   
   
+
+
+
+  
+
+
 
 
     </article>
@@ -3845,6 +4229,12 @@
   
 
 
+
+  
+
+
+
+
     </article>
   
   
@@ -3965,6 +4355,12 @@
   
 
 
+
+  
+
+
+
+
     </article>
   
   
@@ -4044,6 +4440,12 @@
 </div>
   
   
+
+
+
+  
+
+
 
 
     </article>
@@ -4219,6 +4621,12 @@
   
 
 
+
+  
+
+
+
+
     </article>
   
   
@@ -4296,6 +4704,12 @@
 </div>
   
   
+
+
+
+  
+
+
 
 
     </article>
@@ -4395,6 +4809,12 @@
   
 
 
+
+  
+
+
+
+
     </article>
   
   
@@ -4461,6 +4881,12 @@
 </div>
   
   
+
+
+
+  
+
+
 
 
     </article>
@@ -4840,6 +5266,12 @@
   
 
 
+
+  
+
+
+
+
     </article>
   
   
@@ -5159,6 +5591,12 @@
   
 
 
+
+  
+
+
+
+
     </article>
   
   
@@ -5348,6 +5786,12 @@
 </div>
   
   
+
+
+
+  
+
+
 
 
     </article>
@@ -5901,6 +6345,12 @@
   
 
 
+
+  
+
+
+
+
     </article>
   
   
@@ -5937,6 +6387,12 @@
 </div>
   
   
+
+
+
+  
+
+
 
 
     </article>
@@ -6233,6 +6689,12 @@
   
 
 
+
+  
+
+
+
+
     </article>
   
   
@@ -6348,6 +6810,12 @@
 </div>
   
   
+
+
+
+  
+
+
 
 
     </article>
@@ -6541,6 +7009,12 @@
 </div>
   
   
+
+
+
+  
+
+
 
 
     </article>
@@ -7248,6 +7722,12 @@
   
 
 
+
+  
+
+
+
+
     </article>
   
   
@@ -7374,6 +7854,12 @@
 </div>
   
   
+
+
+
+  
+
+
 
 
     </article>
@@ -7511,6 +7997,12 @@
 </div>
   
   
+
+
+
+  
+
+
 
 
     </article>
@@ -7673,6 +8165,12 @@
 </div>
   
   
+
+
+
+  
+
+
 
 
     </article>
@@ -8284,6 +8782,12 @@
   
 
 
+
+  
+
+
+
+
     </article>
   
   
@@ -8419,6 +8923,12 @@
 </div>
   
   
+
+
+
+  
+
+
 
 
     </article>
@@ -9236,6 +9746,12 @@ process well if writing the data by a small batch.</li>
   
 
 
+
+  
+
+
+
+
     </article>
   
   
@@ -9343,6 +9859,12 @@ process well if writing the data by a small batch.</li>
 </div>
   
   
+
+
+
+  
+
+
 
 
     </article>
@@ -9560,6 +10082,12 @@ process well if writing the data by a small batch.</li>
   
 
 
+
+  
+
+
+
+
     </article>
   
   
@@ -9680,6 +10208,12 @@ lowercases a-z.</p>
   
 
 
+
+  
+
+
+
+
     </article>
   
   
@@ -9734,6 +10268,12 @@ lowercases a-z.</p>
 </div>
   
   
+
+
+
+  
+
+
 
 
     </article>
@@ -9854,6 +10394,12 @@ lowercases a-z.</p>
   
 
 
+
+  
+
+
+
+
     </article>
   
   
@@ -9930,6 +10476,12 @@ Project 2: username.github.io/project2
 </div>
   
   
+
+
+
+  
+
+
 
 
     </article>
@@ -10672,6 +11224,12 @@ Project 2: username.github.io/project2
   
 
 
+
+  
+
+
+
+
     </article>
   
   
@@ -11356,6 +11914,12 @@ FFF0-FFFF Specials
   
 
 
+
+  
+
+
+
+
     </article>
   
   
@@ -11653,6 +12217,12 @@ FFF0-FFFF Specials
   
 
 
+
+  
+
+
+
+
     </article>
   
   
@@ -11785,6 +12355,12 @@ of the tail is 1-p, how can you get the same probability of this coin?</p>
 </div>
   
   
+
+
+
+  
+
+
 
 
     </article>
@@ -11956,6 +12532,12 @@ lement.</li>
 </div>
   
   
+
+
+
+  
+
+
 
 
     </article>
@@ -12334,6 +12916,12 @@ lement.</li>
   
 
 
+
+  
+
+
+
+
     </article>
   
   
@@ -12440,6 +13028,12 @@ lement.</li>
 </div>
   
   
+
+
+
+  
+
+
 
 
     </article>
@@ -12795,6 +13389,12 @@ lement.</li>
   
 
 
+
+  
+
+
+
+
     </article>
   
   
@@ -13087,6 +13687,12 @@ lement.</li>
 </div>
   
   
+
+
+
+  
+
+
 
 
     </article>
@@ -13507,6 +14113,12 @@ lement.</li>
   
 
 
+
+  
+
+
+
+
     </article>
   
   
@@ -13807,6 +14419,12 @@ lement.</li>
   
 
 
+
+  
+
+
+
+
     </article>
   
   
@@ -13929,6 +14547,12 @@ lement.</li>
 </div>
   
   
+
+
+
+  
+
+
 
 
     </article>
@@ -14341,6 +14965,12 @@ $$</p>
 </div>
   
   
+
+
+
+  
+
+
 
 
     </article>
@@ -16341,6 +16971,12 @@ $$</p>
   
 
 
+
+  
+
+
+
+
     </article>
   
   
@@ -18057,6 +18693,12 @@ Y = ATT<code>ATC</code></p>
   
 
 
+
+  
+
+
+
+
     </article>
   
   
@@ -18977,6 +19619,12 @@ Y = ATT<code>ATC</code></p>
   
 
 
+
+  
+
+
+
+
     </article>
   
   
@@ -19277,6 +19925,12 @@ Y = ATT<code>ATC</code></p>
   
 
 
+
+  
+
+
+
+
     </article>
   
   
@@ -19553,6 +20207,12 @@ Y = ATT<code>ATC</code></p>
   
 
 
+
+  
+
+
+
+
     </article>
   
   
@@ -19727,6 +20387,12 @@ Y = ATT<code>ATC</code></p>
   
 
 
+
+  
+
+
+
+
     </article>
   
   
@@ -19898,6 +20564,12 @@ Y = ATT<code>ATC</code></p>
 </div>
   
   
+
+
+
+  
+
+
 
 
     </article>
@@ -20139,6 +20811,12 @@ Y = ATT<code>ATC</code></p>
 </div>
   
   
+
+
+
+  
+
+
 
 
     </article>
@@ -20766,6 +21444,12 @@ Y = ATT<code>ATC</code></p>
   
 
 
+
+  
+
+
+
+
     </article>
   
   
@@ -21170,6 +21854,12 @@ Y = ATT<code>ATC</code></p>
   
 
 
+
+  
+
+
+
+
     </article>
   
   
@@ -21367,6 +22057,12 @@ Y = ATT<code>ATC</code></p>
 </div>
   
   
+
+
+
+  
+
+
 
 
     </article>
@@ -21783,6 +22479,12 @@ Y = ATT<code>ATC</code></p>
   
 
 
+
+  
+
+
+
+
     </article>
   
   
@@ -22123,6 +22825,12 @@ Y = ATT<code>ATC</code></p>
 </div>
   
   
+
+
+
+  
+
+
 
 
     </article>
@@ -24204,6 +24912,12 @@ Y = ATT<code>ATC</code></p>
   
 
 
+
+  
+
+
+
+
     </article>
   
   
@@ -24589,6 +25303,12 @@ Y = ATT<code>ATC</code></p>
 </div>
   
   
+
+
+
+  
+
+
 
 
     </article>
@@ -25210,6 +25930,12 @@ Y = ATT<code>ATC</code></p>
   
 
 
+
+  
+
+
+
+
     </article>
   
   
@@ -25680,6 +26406,12 @@ Y = ATT<code>ATC</code></p>
   
 
 
+
+  
+
+
+
+
     </article>
   
   
@@ -25912,6 +26644,12 @@ Y = ATT<code>ATC</code></p>
   
 
 
+
+  
+
+
+
+
     </article>
   
   
@@ -26030,6 +26768,12 @@ Y = ATT<code>ATC</code></p>
   
 
 
+
+  
+
+
+
+
     </article>
   
 
@@ -26053,6 +26797,10 @@ Y = ATT<code>ATC</code></p>
         <section>
   <h1>Tech</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/tech/2015/10/17/generating-toc-with-javascript-for-octopress/">Generating TOC With Javascript for Octopress</a>
+      </li>
     
       <li class="post">
         <a href="/tech/2015/10/16/adding-toc-plugin-for-octopress/">Adding TOC Plugin for Octopress</a>
@@ -26088,10 +26836,6 @@ Y = ATT<code>ATC</code></p>
     
       <li class="post">
         <a href="/tech/2015/09/30/will-architecture/">Will Architecture</a>
-      </li>
-    
-      <li class="post">
-        <a href="/tech/2015/09/30/hipchat-api/">Hipchat API</a>
       </li>
     
   </ul>
@@ -26150,7 +26894,7 @@ Y = ATT<code>ATC</code></p>
 
 
   <h1>Tags</h1>
-    <ul id="category-list"><a href='/tags/algorithm' style='font-size: 114.44444444444444%'>algorithm(7)</a> <a href='/tags/ansible' style='font-size: 94.07407407407408%'>ansible(2)</a> <a href='/tags/antique' style='font-size: 90.0%'>antique(1)</a> <a href='/tags/apache' style='font-size: 90.0%'>apache(1)</a> <a href='/tags/api' style='font-size: 94.07407407407408%'>api(2)</a> <a href='/tags/ascii' style='font-size: 90.0%'>ascii(1)</a> <a href='/tags/beautifulsoup' style='font-size: 90.0%'>beautifulsoup(1)</a> <a href='/tags/butter' style='font-size: 90.0%'>butter(1)</a> <a href='/tags/career' style='font-size: 94.07407407407408%'>career(2)</a> <a href='/tags/chatbot' style='font-size: 94.07407407407408%'>chatbot(2)</a> <a href='/tags/classification' style='font-size: 94.07407407407408%'>classification(2)</a> <a href='/tags/cloud' style='font-size: 90.0%'>cloud(1)</a> <a href='/tags/cloudera' style='font-size: 90.0%'>cloudera(1)</a> <a href='/tags/computer-vision' style='font-size: 90.0%'>computer vision(1)</a> <a href='/tags/crawler' style='font-size: 94.07407407407408%'>crawler(2)</a> <a href='/tags/css' style='font-size: 94.07407407407408%'>css(2)</a> <a href='/tags/data' style='font-size: 90.0%'>data(1)</a> <a href='/tags/db' style='font-size: 90.0%'>db(1)</a> <a href='/tags/devops' style='font-size: 98.14814814814815%'>devops(3)</a> <a href='/tags/django' style='font-size: 94.07407407407408%'>django(2)</a> <a href='/tags/dns' style='font-size: 90.0%'>dns(1)</a> <a href='/tags/docker' style='font-size: 90.0%'>docker(1)</a> <a href='/tags/edx' style='font-size: 98.14814814814815%'>edX(3)</a> <a href='/tags/edx-analytics' style='font-size: 94.07407407407408%'>edX Analytics(2)</a> <a href='/tags/edx-platform' style='font-size: 90.0%'>edX Platform(1)</a> <a href='/tags/emacs' style='font-size: 94.07407407407408%'>emacs(2)</a> <a href='/tags/exhibition' style='font-size: 90.0%'>exhibition(1)</a> <a href='/tags/fiction' style='font-size: 110.37037037037037%'>fiction(6)</a> <a href='/tags/forever' style='font-size: 94.07407407407408%'>forever(2)</a> <a href='/tags/french' style='font-size: 90.0%'>french(1)</a> <a href='/tags/ghost' style='font-size: 102.22222222222223%'>ghost(4)</a> <a href='/tags/git' style='font-size: 98.14814814814815%'>git(3)</a> <a href='/tags/github' style='font-size: 94.07407407407408%'>github(2)</a> <a href='/tags/gunicorn' style='font-size: 90.0%'>gunicorn(1)</a> <a href='/tags/hadoop' style='font-size: 90.0%'>hadoop(1)</a> <a href='/tags/hipchat' style='font-size: 94.07407407407408%'>hipchat(2)</a> <a href='/tags/html' style='font-size: 94.07407407407408%'>html(2)</a> <a href='/tags/ide' style='font-size: 94.07407407407408%'>ide(2)</a> <a href='/tags/javascript' style='font-size: 98.14814814814815%'>javascript(3)</a> <a href='/tags/jekyll' style='font-size: 94.07407407407408%'>jekyll(2)</a> <a href='/tags/jenkins' style='font-size: 90.0%'>jenkins(1)</a> <a href='/tags/leisure' style='font-size: 187.77777777777777%'>leisure(25)</a> <a href='/tags/linux' style='font-size: 118.51851851851852%'>linux(8)</a> <a href='/tags/machine-learning' style='font-size: 130.74074074074073%'>machine learning(11)</a> <a href='/tags/mathjax' style='font-size: 94.07407407407408%'>mathjax(2)</a> <a href='/tags/mysql' style='font-size: 110.37037037037037%'>mysql(6)</a> <a href='/tags/network' style='font-size: 90.0%'>network(1)</a> <a href='/tags/nginx' style='font-size: 98.14814814814815%'>nginx(3)</a> <a href='/tags/nlp' style='font-size: 110.37037037037037%'>nlp(6)</a> <a href='/tags/nltk' style='font-size: 90.0%'>nltk(1)</a> <a href='/tags/nodejs' style='font-size: 106.2962962962963%'>nodejs(5)</a> <a href='/tags/octopress' style='font-size: 114.44444444444444%'>octopress(7)</a> <a href='/tags/openstack' style='font-size: 90.0%'>openstack(1)</a> <a href='/tags/pandas' style='font-size: 94.07407407407408%'>pandas(2)</a> <a href='/tags/poem' style='font-size: 102.22222222222223%'>poem(4)</a> <a href='/tags/prediction' style='font-size: 90.0%'>prediction(1)</a> <a href='/tags/pycharm' style='font-size: 90.0%'>pycharm(1)</a> <a href='/tags/python' style='font-size: 200.0%'>python(28)</a> <a href='/tags/reading' style='font-size: 114.44444444444444%'>reading(7)</a> <a href='/tags/redmine' style='font-size: 90.0%'>redmine(1)</a> <a href='/tags/regex' style='font-size: 90.0%'>regex(1)</a> <a href='/tags/robotics' style='font-size: 94.07407407407408%'>robotics(2)</a> <a href='/tags/ruby' style='font-size: 122.5925925925926%'>ruby(9)</a> <a href='/tags/sql' style='font-size: 90.0%'>sql(1)</a> <a href='/tags/supervisor' style='font-size: 90.0%'>supervisor(1)</a> <a href='/tags/time-series' style='font-size: 90.0%'>time series(1)</a> <a href='/tags/translation' style='font-size: 90.0%'>translation(1)</a> <a href='/tags/ubuntu' style='font-size: 122.5925925925926%'>ubuntu(9)</a> <a href='/tags/unicode' style='font-size: 90.0%'>unicode(1)</a> <a href='/tags/vagrant' style='font-size: 90.0%'>vagrant(1)</a> <a href='/tags/vim' style='font-size: 90.0%'>vim(1)</a> <a href='/tags/vm' style='font-size: 90.0%'>vm(1)</a> <a href='/tags/web' style='font-size: 102.22222222222223%'>web(4)</a> <a href='/tags/will' style='font-size: 94.07407407407408%'>will(2)</a> </ul>
+    <ul id="category-list"><a href='/tags/algorithm' style='font-size: 114.44444444444444%'>algorithm(7)</a> <a href='/tags/ansible' style='font-size: 94.07407407407408%'>ansible(2)</a> <a href='/tags/antique' style='font-size: 90.0%'>antique(1)</a> <a href='/tags/apache' style='font-size: 90.0%'>apache(1)</a> <a href='/tags/api' style='font-size: 94.07407407407408%'>api(2)</a> <a href='/tags/ascii' style='font-size: 90.0%'>ascii(1)</a> <a href='/tags/beautifulsoup' style='font-size: 90.0%'>beautifulsoup(1)</a> <a href='/tags/butter' style='font-size: 90.0%'>butter(1)</a> <a href='/tags/career' style='font-size: 94.07407407407408%'>career(2)</a> <a href='/tags/chatbot' style='font-size: 94.07407407407408%'>chatbot(2)</a> <a href='/tags/classification' style='font-size: 94.07407407407408%'>classification(2)</a> <a href='/tags/cloud' style='font-size: 90.0%'>cloud(1)</a> <a href='/tags/cloudera' style='font-size: 90.0%'>cloudera(1)</a> <a href='/tags/computer-vision' style='font-size: 90.0%'>computer vision(1)</a> <a href='/tags/crawler' style='font-size: 94.07407407407408%'>crawler(2)</a> <a href='/tags/css' style='font-size: 94.07407407407408%'>css(2)</a> <a href='/tags/data' style='font-size: 90.0%'>data(1)</a> <a href='/tags/db' style='font-size: 90.0%'>db(1)</a> <a href='/tags/devops' style='font-size: 98.14814814814815%'>devops(3)</a> <a href='/tags/django' style='font-size: 94.07407407407408%'>django(2)</a> <a href='/tags/dns' style='font-size: 90.0%'>dns(1)</a> <a href='/tags/docker' style='font-size: 90.0%'>docker(1)</a> <a href='/tags/edx' style='font-size: 98.14814814814815%'>edX(3)</a> <a href='/tags/edx-analytics' style='font-size: 94.07407407407408%'>edX Analytics(2)</a> <a href='/tags/edx-platform' style='font-size: 90.0%'>edX Platform(1)</a> <a href='/tags/emacs' style='font-size: 94.07407407407408%'>emacs(2)</a> <a href='/tags/exhibition' style='font-size: 90.0%'>exhibition(1)</a> <a href='/tags/fiction' style='font-size: 110.37037037037037%'>fiction(6)</a> <a href='/tags/forever' style='font-size: 94.07407407407408%'>forever(2)</a> <a href='/tags/french' style='font-size: 90.0%'>french(1)</a> <a href='/tags/ghost' style='font-size: 102.22222222222223%'>ghost(4)</a> <a href='/tags/git' style='font-size: 98.14814814814815%'>git(3)</a> <a href='/tags/github' style='font-size: 94.07407407407408%'>github(2)</a> <a href='/tags/gunicorn' style='font-size: 90.0%'>gunicorn(1)</a> <a href='/tags/hadoop' style='font-size: 90.0%'>hadoop(1)</a> <a href='/tags/hipchat' style='font-size: 94.07407407407408%'>hipchat(2)</a> <a href='/tags/html' style='font-size: 94.07407407407408%'>html(2)</a> <a href='/tags/ide' style='font-size: 94.07407407407408%'>ide(2)</a> <a href='/tags/javascript' style='font-size: 102.22222222222223%'>javascript(4)</a> <a href='/tags/jekyll' style='font-size: 94.07407407407408%'>jekyll(2)</a> <a href='/tags/jenkins' style='font-size: 90.0%'>jenkins(1)</a> <a href='/tags/leisure' style='font-size: 187.77777777777777%'>leisure(25)</a> <a href='/tags/linux' style='font-size: 118.51851851851852%'>linux(8)</a> <a href='/tags/machine-learning' style='font-size: 130.74074074074073%'>machine learning(11)</a> <a href='/tags/mathjax' style='font-size: 94.07407407407408%'>mathjax(2)</a> <a href='/tags/mysql' style='font-size: 110.37037037037037%'>mysql(6)</a> <a href='/tags/network' style='font-size: 90.0%'>network(1)</a> <a href='/tags/nginx' style='font-size: 98.14814814814815%'>nginx(3)</a> <a href='/tags/nlp' style='font-size: 110.37037037037037%'>nlp(6)</a> <a href='/tags/nltk' style='font-size: 90.0%'>nltk(1)</a> <a href='/tags/nodejs' style='font-size: 106.2962962962963%'>nodejs(5)</a> <a href='/tags/octopress' style='font-size: 118.51851851851852%'>octopress(8)</a> <a href='/tags/openstack' style='font-size: 90.0%'>openstack(1)</a> <a href='/tags/pandas' style='font-size: 94.07407407407408%'>pandas(2)</a> <a href='/tags/poem' style='font-size: 102.22222222222223%'>poem(4)</a> <a href='/tags/prediction' style='font-size: 90.0%'>prediction(1)</a> <a href='/tags/pycharm' style='font-size: 90.0%'>pycharm(1)</a> <a href='/tags/python' style='font-size: 200.0%'>python(28)</a> <a href='/tags/reading' style='font-size: 114.44444444444444%'>reading(7)</a> <a href='/tags/redmine' style='font-size: 90.0%'>redmine(1)</a> <a href='/tags/regex' style='font-size: 90.0%'>regex(1)</a> <a href='/tags/robotics' style='font-size: 94.07407407407408%'>robotics(2)</a> <a href='/tags/ruby' style='font-size: 126.66666666666666%'>ruby(10)</a> <a href='/tags/sql' style='font-size: 90.0%'>sql(1)</a> <a href='/tags/supervisor' style='font-size: 90.0%'>supervisor(1)</a> <a href='/tags/time-series' style='font-size: 90.0%'>time series(1)</a> <a href='/tags/translation' style='font-size: 90.0%'>translation(1)</a> <a href='/tags/ubuntu' style='font-size: 122.5925925925926%'>ubuntu(9)</a> <a href='/tags/unicode' style='font-size: 90.0%'>unicode(1)</a> <a href='/tags/vagrant' style='font-size: 90.0%'>vagrant(1)</a> <a href='/tags/vim' style='font-size: 90.0%'>vim(1)</a> <a href='/tags/vm' style='font-size: 90.0%'>vm(1)</a> <a href='/tags/web' style='font-size: 106.2962962962963%'>web(5)</a> <a href='/tags/will' style='font-size: 94.07407407407408%'>will(2)</a> </ul>
 </section>
 
     

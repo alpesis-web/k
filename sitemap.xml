@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://k.arttechresearch.com/tech/2015/10/17/generating-toc-with-javascript-for-octopress/</loc>
+    <lastmod>2015-10-17T12:37:04+08:00</lastmod>
+  </url>
+  <url>
     <loc>http://k.arttechresearch.com/tech/2015/10/16/adding-toc-plugin-for-octopress/</loc>
     <lastmod>2015-10-16T22:31:58+08:00</lastmod>
   </url>
