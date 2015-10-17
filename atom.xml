@@ -4,7 +4,7 @@
   <title><![CDATA[Kelly Chan]]></title>
   <link href="http://k.arttechresearch.com/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2015-10-17T14:32:48+08:00</updated>
+  <updated>2015-10-18T07:25:44+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[Kelly Chan]]></name>
@@ -12,6 +12,41 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Oil Paintings From Shanghai University]]></title>
+    <link href="http://k.arttechresearch.com/art/2015/10/18/oil-paintings-from-shanghai-university/"/>
+    <updated>2015-10-18T06:53:47+08:00</updated>
+    <id>http://k.arttechresearch.com/art/2015/10/18/oil-paintings-from-shanghai-university</id>
+    <content type="html"><![CDATA[<h2>1. 卫城</h2>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/originals/a5/69/33/a569335b66a08b569611fd577023359e.jpg" /></p>
+
+<p>此名字非原名，是看画的第一联想。从前景的深色调到后景的光，第一眼看到的是类似卫城的古老建筑
+和白色发光的男孩子。前景大面积的粗犷的背景烘托，到细化的男孩脸部和发光的城市，男孩到城市，
+以羽化作过渡，耐看是因为技法和遐想。</p>
+
+<h2>2. 人物</h2>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/16/5a/b5/165ab5f7f2991523d03072eae861cad0.jpg" /></p>
+
+<p>简炼的背景，人物的衣饰也是寥寥数笔，很容易把注意力放在了发光的帽子，是光影。</p>
+
+<h2>3. 静物</h2>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/d4/dd/06/d4dd06dfdfcc195b71da106baa82a86b.jpg" /></p>
+
+<p>重点是鱼，大面积的深色背景下，白色盘子里的鱼很显眼，依然是简炼粗犷的笔触，还有光影的捕捉，
+加上氛围的烘托。</p>
+
+<h2>4. 火车</h2>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/d6/f0/30/d6f0306c6ac5db5965919dfff15de442.jpg" /></p>
+
+<p>就像是为了纪念一辆老式的火车，精致，有如工业绘制图，车前部分的真充和车身保留的线稿，
+这样故意而为之的做法，更增添了工业绘图的印象和画面精致的感觉。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Generating TOC With Javascript for Octopress]]></title>
@@ -3840,99 +3875,6 @@ download the library, and copy <code>jquery.tableofcontents.min.js</code> to <co
 
 <ul>
 <li><a href="http://support.ghost.org/installing-ghost-linux/">Installing ghost linux</a></li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Deploying Redmine on Ubuntu]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/08/30/deploying-redmine-on-ubuntu/"/>
-    <updated>2015-08-30T23:46:36+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/08/30/deploying-redmine-on-ubuntu</id>
-    <content type="html"><![CDATA[<h2>Requirements</h2>
-
-<ul>
-<li>Ubuntu 12.04/14.04</li>
-<li>Redmine</li>
-<li>MySQL</li>
-<li>Apache2</li>
-</ul>
-
-
-<h2>1. MySQL</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo apt-get install mysql-server mysql-client
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>2. Redmine</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install redmine redmine-mysql libapache2-mod-passenger
-</span><span class='line'><span class="nv">$ </span>sudo dpkg-reconfigure redmine
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>3. Apache2</h2>
-
-<p>to link redmine to apache2</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo ln -s /usr/share/redmine/public/ /var/www/redmine
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>edit passenger.conf</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo nano /etc/apache2/mods-available/passenger.conf
-</span><span class='line'>
-</span><span class='line'><span class="c"># add </span>
-</span><span class='line'>
-</span><span class='line'>PassengerDefaultUser www-data
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>edit sites-available//default</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo nano /etc/apache2/sites-available/default
-</span><span class='line'>
-</span><span class='line'><span class="c"># add</span>
-</span><span class='line'>
-</span><span class='line'>&lt;Directory /var/www/redmine&gt;
-</span><span class='line'>RailsBaseURI /redmine
-</span><span class='line'>PassengerResolveSymlinksInDocumentRoot on
-</span><span class='line'>&lt;/Directory&gt;
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>restart apache2</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo service apache2 restart
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>4. Testing</h2>
-
-<ul>
-<li>Site: <a href="http://ip_address/redmine">http://ip_address/redmine</a></li>
-<li>Username/Password: admin/admin</li>
 </ul>
 
 ]]></content>
