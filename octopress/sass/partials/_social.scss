@@ -98,6 +98,12 @@
 .soc-pinterest:before {
     content:'d';
 }
+.soc-slideshare {
+    background-color: $social-bg-color;
+}
+.soc-slideshare:before {
+    content:'8';
+}
 .soc-email1 {
     background-color: $social-bg-color;
 }
@@ -112,6 +118,9 @@
     background-color: $theme-color;
 }
 .soc-pinterest:hover {
+    background-color: $theme-color;
+}
+.soc-slideshare:hover {
     background-color: $theme-color;
 }
 .soc-email1:hover {
