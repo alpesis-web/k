@@ -29,19 +29,19 @@ Devkits:
 octopress/source/_includes/toc_generator.html
 
 ```html toc_generator.html
-{% if index %}
-  {% comment %}
-  No table of contents on the index page.
-  {% endcomment %}
+	{\% if index %\}
+	  {\% comment %\}
+	    No table of contents on the index page.
+	  {\% endcomment %\}
 
-{% elsif page.toc == true %}
-  <script type="text/javascript">
-  jQuery(document).ready(function() {
-    // Put a TOC right before the entry content.
-    generateTOC('.entry-content', 'Table of Contents');
-  });
-  </script>
-{% endif %}
+	{\% elsif page.toc == true %\}
+	  <script type="text/javascript">
+	  jQuery(document).ready(function() {
+	    // Put a TOC right before the entry content.
+	    generateTOC('.entry-content', 'Table of Contents');
+	  });
+	  </script>
+	{\% endif %\}
 ```
 
 ### 1.2. article.html
