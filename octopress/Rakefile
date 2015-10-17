@@ -144,7 +144,8 @@ task :new_post_tech, :title do |t, args|
     post.puts "date: #{Time.now.strftime('%Y-%m-%d %H:%M:%S %z')}"
     post.puts "comments: true"
     post.puts "categories: [tech]"
-    post.puts "tags: "
+    post.puts "tags: []"
+    post.puts "toc: false"
     post.puts "---"
   end
 end
@@ -171,7 +172,8 @@ task :new_post_art, :title do |t, args|
     post.puts "date: #{Time.now.strftime('%Y-%m-%d %H:%M:%S %z')}"
     post.puts "comments: true"
     post.puts "categories: [art]"
-    post.puts "tags: "
+    post.puts "tags: []"
+    post.puts "toc: false"
     post.puts "---"
   end
 end
@@ -198,7 +200,8 @@ task :new_post_life, :title do |t, args|
     post.puts "date: #{Time.now.strftime('%Y-%m-%d %H:%M:%S %z')}"
     post.puts "comments: true"
     post.puts "categories: [life]"
-    post.puts "tags: "
+    post.puts "tags: []"
+    post.puts "toc: false"
     post.puts "---"
   end
 end

@@ -36,7 +36,9 @@ article {
   .entry-title { color: $theme-color }
   .entry-content & h2:first-child, header + h2 { padding-top: 0; }
   .entry-content {
-    li { margin-left: 1.5em; }
+    li {
+        margin-left: 1.5em; 
+    }
     table, th, td {
       width: auto;
       padding: 6px 6px;
