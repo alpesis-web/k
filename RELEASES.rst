@@ -7,6 +7,23 @@ Release Notes
 v3 - Oct 4 2015
 ------------------------
 
+v3.0.3 - 20151017
+
+- added table of contents
+- added slideshare in the social icons
+
+
+v3.0.2 - 20151013
+
+- added mathjax
+
+V3.0.1 - 20151006
+
+- added social icons
+- added plugin tag cloud
+- added plugin tag generator
+
+
 v3.0.0 - 20151004
 
 - rebuilt the blog with octopress
