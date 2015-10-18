@@ -9,8 +9,9 @@
   <meta name="author" content="Kelly Chan">
 
   
-  <meta name="description" content="1. Installation 2.
-">
+  <meta name="description" content="Docker Nov 29th, 2014 7:35 pm | Comments Requirements: Ubuntu 14.04 / Linux Scripts
+Docker / Dockerfile
+Docker Hub If familar with Vagrant/ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -164,12 +165,502 @@
 
 
 
-  <div class="entry-content"><h2>1. Installation</h2>
+  <div class="entry-content"><p>Requirements:</p>
 
-<h2>2.</h2>
+<ul>
+<li>Ubuntu 14.04 / Linux Scripts</li>
+<li>Docker / Dockerfile</li>
+<li>Docker Hub</li>
+</ul>
+
+
+<p>If familar with Vagrant/VirtualBox and Git, you can take some comparisons:</p>
+
+<ul>
+<li>Docker / VirtualBox</li>
+<li>Docker Commands / Vagrant Commands</li>
+<li>Dockerfile / Vagrantfile</li>
+<li>Docker Hub / Github</li>
+</ul>
+
+
+<h2>1. Installation</h2>
+
+<h3>1.1. Ubuntu 14.04</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get update
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install linux-image-generic-lts-trusty
+</span><span class='line'><span class="nv">$ </span>sudo reboot
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo apt-get update
+</span><span class='line'><span class="nv">$ </span>sudo apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+</span><span class='line'><span class="nv">$ </span>sudo nano /etc/apt/sources.list.d/docker.list     <span class="c"># docker.list</span>
+</span><span class='line'><span class="nv">$ </span>sudo apt-get update
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install docker-engine
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>docker.list</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># Ubuntu Precise</span>
+</span><span class='line'>deb https://apt.dockerproject.org/repo ubuntu-precise main
+</span><span class='line'><span class="c"># Ubuntu Trusty</span>
+</span><span class='line'>deb https://apt.dockerproject.org/repo ubuntu-trusty main
+</span><span class='line'><span class="c"># Ubuntu Vivid</span>
+</span><span class='line'>deb https://apt.dockerproject.org/repo ubuntu-vivid main
+</span><span class='line'><span class="c"># Ubuntu Wily</span>
+</span><span class='line'>deb https://apt.dockerproject.org/repo ubuntu-wily main
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Testing</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo docker info
+</span><span class='line'><span class="nv">$ </span>sudo docker <span class="nb">help</span>
+</span><span class='line'><span class="nv">$ </span>sudo docker run hello-world
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>2. Commands</h2>
+
+<h3>2.1. operations</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>docker info
+</span><span class='line'><span class="nv">$ </span>docker version
+</span><span class='line'><span class="nv">$ </span>docker <span class="nb">help</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>docker events
+</span><span class='line'><span class="nv">$ </span>docker inspect
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>docker login
+</span><span class='line'><span class="nv">$ </span>docker <span class="nb">logout</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>commands summary</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>vagrant@vagrant-ubuntu-trusty-64:~<span class="nv">$ </span>sudo docker <span class="nb">help</span>
+</span><span class='line'>Usage: docker <span class="o">[</span>OPTIONS<span class="o">]</span> COMMAND <span class="o">[</span>arg...<span class="o">]</span>
+</span><span class='line'>       docker daemon <span class="o">[</span> --help <span class="p">|</span> ... <span class="o">]</span>
+</span><span class='line'>       docker <span class="o">[</span> --help <span class="p">|</span> -v <span class="p">|</span> --version <span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'>A self-sufficient runtime <span class="k">for</span> containers.
+</span><span class='line'>
+</span><span class='line'>Options:
+</span><span class='line'>
+</span><span class='line'>  --config<span class="o">=</span>~/.docker                 Location of client config files
+</span><span class='line'>  -D, --debug<span class="o">=</span><span class="nb">false                  </span>Enable debug mode
+</span><span class='line'>  --disable-legacy-registry<span class="o">=</span><span class="nb">false    </span>Do not contact legacy registries
+</span><span class='line'>  -H, --host<span class="o">=[]</span>                      Daemon socket<span class="o">(</span>s<span class="o">)</span> to connect to
+</span><span class='line'>  -h, --help<span class="o">=</span><span class="nb">false                   </span>Print usage
+</span><span class='line'>  -l, --log-level<span class="o">=</span>info               Set the logging level
+</span><span class='line'>  --tls<span class="o">=</span><span class="nb">false                        </span>Use TLS<span class="p">;</span> implied by --tlsverify
+</span><span class='line'>  --tlscacert<span class="o">=</span>~/.docker/ca.pem       Trust certs signed only by this CA
+</span><span class='line'>  --tlscert<span class="o">=</span>~/.docker/cert.pem       Path to TLS certificate file
+</span><span class='line'>  --tlskey<span class="o">=</span>~/.docker/key.pem         Path to TLS key file
+</span><span class='line'>  --tlsverify<span class="o">=</span><span class="nb">false                  </span>Use TLS and verify the remote
+</span><span class='line'>  -v, --version<span class="o">=</span><span class="nb">false                </span>Print version information and quit
+</span><span class='line'>
+</span><span class='line'>Commands:
+</span><span class='line'>    attach    Attach to a running container
+</span><span class='line'>    build     Build an image from a Dockerfile
+</span><span class='line'>    commit    Create a new image from a container<span class="s1">&#39;s changes</span>
+</span><span class='line'><span class="s1">    cp        Copy files/folders from a container to a HOSTDIR or to STDOUT</span>
+</span><span class='line'><span class="s1">    create    Create a new container</span>
+</span><span class='line'><span class="s1">    diff      Inspect changes on a container&#39;</span>s filesystem
+</span><span class='line'>    events    Get real <span class="nb">time </span>events from the server
+</span><span class='line'>    <span class="nb">exec      </span>Run a <span class="nb">command </span>in a running container
+</span><span class='line'>    <span class="nb">export    </span>Export a container<span class="s1">&#39;s filesystem as a tar archive</span>
+</span><span class='line'><span class="s1">    history   Show the history of an image</span>
+</span><span class='line'><span class="s1">    images    List images</span>
+</span><span class='line'><span class="s1">    import    Import the contents from a tarball to create a filesystem image</span>
+</span><span class='line'><span class="s1">    info      Display system-wide information</span>
+</span><span class='line'><span class="s1">    inspect   Return low-level information on a container or image</span>
+</span><span class='line'><span class="s1">    kill      Kill a running container</span>
+</span><span class='line'><span class="s1">    load      Load an image from a tar archive or STDIN</span>
+</span><span class='line'><span class="s1">    login     Register or log in to a Docker registry</span>
+</span><span class='line'><span class="s1">    logout    Log out from a Docker registry</span>
+</span><span class='line'><span class="s1">    logs      Fetch the logs of a container</span>
+</span><span class='line'><span class="s1">    pause     Pause all processes within a container</span>
+</span><span class='line'><span class="s1">    port      List port mappings or a specific mapping for the CONTAINER</span>
+</span><span class='line'><span class="s1">    ps        List containers</span>
+</span><span class='line'><span class="s1">    pull      Pull an image or a repository from a registry</span>
+</span><span class='line'><span class="s1">    push      Push an image or a repository to a registry</span>
+</span><span class='line'><span class="s1">    rename    Rename a container</span>
+</span><span class='line'><span class="s1">    restart   Restart a running container</span>
+</span><span class='line'><span class="s1">    rm        Remove one or more containers</span>
+</span><span class='line'><span class="s1">    rmi       Remove one or more images</span>
+</span><span class='line'><span class="s1">    run       Run a command in a new container</span>
+</span><span class='line'><span class="s1">    save      Save an image(s) to a tar archive</span>
+</span><span class='line'><span class="s1">    search    Search the Docker Hub for images</span>
+</span><span class='line'><span class="s1">    start     Start one or more stopped containers</span>
+</span><span class='line'><span class="s1">    stats     Display a live stream of container(s) resource usage statistics</span>
+</span><span class='line'><span class="s1">    stop      Stop a running container</span>
+</span><span class='line'><span class="s1">    tag       Tag an image into a repository</span>
+</span><span class='line'><span class="s1">    top       Display the running processes of a container</span>
+</span><span class='line'><span class="s1">    unpause   Unpause all processes within a container</span>
+</span><span class='line'><span class="s1">    version   Show the Docker version information</span>
+</span><span class='line'><span class="s1">    wait      Block until a container stops, then print its exit code</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">Run &#39;</span>docker COMMAND --help<span class="err">&#39;</span> <span class="k">for</span> more information on a command.
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>2.2. images</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>docker images
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>docker search IMAGE_NAME
+</span><span class='line'><span class="nv">$ </span>docker pull IMAGE_NAME
+</span><span class='line'><span class="nv">$ </span>docker push
+</span><span class='line'><span class="nv">$ </span>docker commit
+</span><span class='line'><span class="nv">$ </span>docker <span class="nb">history </span>IMAGE_NAME
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>docker run -it ubuntu bash
+</span><span class='line'><span class="nv">$ </span>docker run IMAGE_NAME /bin/echo Hello World!
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>docker build
+</span><span class='line'><span class="nv">$ </span>docker import
+</span><span class='line'><span class="nv">$ </span>docker load
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>docker rmi
+</span><span class='line'><span class="nv">$ </span>docker save
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>docker tag
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>2.3. containers</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>docker ps
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>docker create
+</span><span class='line'><span class="nv">$ </span>docker rename
+</span><span class='line'><span class="nv">$ </span>docker rm
+</span><span class='line'><span class="nv">$ </span>docker <span class="nb">export</span>
+</span><span class='line'><span class="nv">$ </span>docker run
+</span><span class='line'><span class="nv">$ </span>docker <span class="nb">exec</span>
+</span><span class='line'><span class="nv">$ </span>docker <span class="nb">kill</span>
+</span><span class='line'><span class="nv">$ </span>docker start
+</span><span class='line'><span class="nv">$ </span>docker restart
+</span><span class='line'><span class="nv">$ </span>docker stop
+</span><span class='line'><span class="nv">$ </span>docker pause
+</span><span class='line'><span class="nv">$ </span>docker unpause
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>docker attach
+</span><span class='line'><span class="nv">$ </span>docker cp
+</span><span class='line'><span class="nv">$ </span>docker diff
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>docker logs
+</span><span class='line'><span class="nv">$ </span>docker port
+</span><span class='line'><span class="nv">$ </span>docker stats
+</span><span class='line'><span class="nv">$ </span>docker top
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>docker <span class="nb">wait</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>3. Dockerfile</h2>
+
+<p>commands</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>FROM &lt;image&gt;
+</span><span class='line'>RUN &lt;commands&gt;
+</span><span class='line'>CMD
+</span><span class='line'>EXPOSE &lt;port&gt;
+</span><span class='line'>ENV &lt;key&gt; &lt;value&gt;
+</span><span class='line'>ADD or COPY
+</span><span class='line'>ENTRYPOINT
+</span><span class='line'>VOLUME <span class="o">[</span><span class="s2">&quot;/dir_1&quot;</span>, <span class="s2">&quot;/dir_2&quot;</span> ..<span class="o">]</span>
+</span><span class='line'>USER &lt;uid&gt;
+</span><span class='line'>WORKDIR /path
+</span><span class='line'>ONBUILD
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Dockerfile example</p>
+
+<figure class='code'><figcaption><span>Dockerfile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">############################################################</span>
+</span><span class='line'><span class="c"># Dockerfile to build MongoDB container images</span>
+</span><span class='line'><span class="c"># Based on Ubuntu</span>
+</span><span class='line'><span class="c">############################################################</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Set the base image to Ubuntu</span>
+</span><span class='line'>FROM ubuntu
+</span><span class='line'>
+</span><span class='line'><span class="c"># File Author / Maintainer</span>
+</span><span class='line'>MAINTAINER Example McAuthor
+</span><span class='line'>
+</span><span class='line'><span class="c"># Update the repository sources list</span>
+</span><span class='line'>RUN apt-get update
+</span><span class='line'>
+</span><span class='line'><span class="c">################## BEGIN INSTALLATION ######################</span>
+</span><span class='line'><span class="c"># Install MongoDB Following the Instructions at MongoDB Docs</span>
+</span><span class='line'><span class="c"># Ref: http://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Add the package verification key</span>
+</span><span class='line'>RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
+</span><span class='line'>
+</span><span class='line'><span class="c"># Add MongoDB to the repository sources list</span>
+</span><span class='line'>RUN <span class="nb">echo</span> <span class="s1">&#39;deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen&#39;</span> <span class="p">|</span> tee /etc/apt/sources.list.d/mongodb.list
+</span><span class='line'>
+</span><span class='line'><span class="c"># Update the repository sources list once more</span>
+</span><span class='line'>RUN apt-get update
+</span><span class='line'>
+</span><span class='line'><span class="c"># Install MongoDB package (.deb)</span>
+</span><span class='line'>RUN apt-get install -y mongodb-10gen
+</span><span class='line'>
+</span><span class='line'><span class="c"># Create the default data directory</span>
+</span><span class='line'>RUN mkdir -p /data/db
+</span><span class='line'>
+</span><span class='line'><span class="c">##################### INSTALLATION END #####################</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Expose the default port</span>
+</span><span class='line'>EXPOSE 27017
+</span><span class='line'>
+</span><span class='line'><span class="c"># Default port to execute the entrypoint (MongoDB)</span>
+</span><span class='line'>CMD <span class="o">[</span><span class="s2">&quot;--port 27017&quot;</span><span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Set default container command</span>
+</span><span class='line'>ENTRYPOINT usr/bin/mongod
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>build a container with Dockerfile</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># Build an image using the Dockerfile at current location</span>
+</span><span class='line'><span class="c"># Example: sudo docker build -t [image_name] .</span>
+</span><span class='line'><span class="nv">$ </span>sudo docker build -t my_mongodb .
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo docker images
+</span><span class='line'><span class="nv">$ </span>sudo docker ps -l
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>4. Docker Hub</h2>
+
+<ul>
+<li>Signup <a href="https://hub.docker.com">Docker Hub</a></li>
+<li>Get the username and password</li>
+<li>create a new repo</li>
+<li>push the image</li>
+</ul>
+
+
+<h2>References</h2>
+
+<ul>
+<li><a href="https://docs.docker.com/installation/ubuntulinux/">Docker Installation Ubuntu</a></li>
+<li><a href="https://www.digitalocean.com/community/tutorials/docker-explained-using-dockerfiles-to-automate-building-of-images">Docker explained using dockerfiles to automate building of images</a></li>
+</ul>
+
 </div>
 
 
+
+  <script type="text/javascript">
+  jQuery(document).ready(function() {
+    // Put a TOC right before the entry content.
+    generateTOC('.entry-content', 'Table of Contents');
+  });
+  </script>
 
 
 
@@ -249,6 +740,14 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/tech/2015/10/18/setup-the-devstack-for-edx-alton/">Setup the Devstack for edX Alton</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/10/18/docker-key-concepts/">Docker Key Concepts</a>
+      </li>
+    
+      <li class="post">
         <a href="/tech/2015/10/17/generating-toc-with-javascript-for-octopress/">Generating TOC With Javascript for Octopress</a>
       </li>
     
@@ -278,14 +777,6 @@
     
       <li class="post">
         <a href="/tech/2015/10/06/installing-octopress/">Installing Octopress</a>
-      </li>
-    
-      <li class="post">
-        <a href="/tech/2015/10/03/installing-openstack-devstack/">Installing Openstack Devstack</a>
-      </li>
-    
-      <li class="post">
-        <a href="/tech/2015/09/30/will-architecture/">Will Architecture</a>
       </li>
     
   </ul>
@@ -344,7 +835,7 @@
 
 
   <h1>Tags</h1>
-    <ul id="category-list"><a href='/tags/algorithm' style='font-size: 114.44444444444444%'>algorithm(7)</a> <a href='/tags/ansible' style='font-size: 94.07407407407408%'>ansible(2)</a> <a href='/tags/antique' style='font-size: 90.0%'>antique(1)</a> <a href='/tags/apache' style='font-size: 90.0%'>apache(1)</a> <a href='/tags/api' style='font-size: 94.07407407407408%'>api(2)</a> <a href='/tags/ascii' style='font-size: 90.0%'>ascii(1)</a> <a href='/tags/beautifulsoup' style='font-size: 90.0%'>beautifulsoup(1)</a> <a href='/tags/butter' style='font-size: 90.0%'>butter(1)</a> <a href='/tags/career' style='font-size: 94.07407407407408%'>career(2)</a> <a href='/tags/chatbot' style='font-size: 94.07407407407408%'>chatbot(2)</a> <a href='/tags/classification' style='font-size: 94.07407407407408%'>classification(2)</a> <a href='/tags/cloud' style='font-size: 90.0%'>cloud(1)</a> <a href='/tags/cloudera' style='font-size: 90.0%'>cloudera(1)</a> <a href='/tags/computer-vision' style='font-size: 90.0%'>computer vision(1)</a> <a href='/tags/crawler' style='font-size: 94.07407407407408%'>crawler(2)</a> <a href='/tags/css' style='font-size: 94.07407407407408%'>css(2)</a> <a href='/tags/data' style='font-size: 90.0%'>data(1)</a> <a href='/tags/db' style='font-size: 90.0%'>db(1)</a> <a href='/tags/devops' style='font-size: 98.14814814814815%'>devops(3)</a> <a href='/tags/django' style='font-size: 94.07407407407408%'>django(2)</a> <a href='/tags/dns' style='font-size: 90.0%'>dns(1)</a> <a href='/tags/docker' style='font-size: 90.0%'>docker(1)</a> <a href='/tags/edx' style='font-size: 98.14814814814815%'>edX(3)</a> <a href='/tags/edx-analytics' style='font-size: 94.07407407407408%'>edX Analytics(2)</a> <a href='/tags/edx-platform' style='font-size: 90.0%'>edX Platform(1)</a> <a href='/tags/emacs' style='font-size: 94.07407407407408%'>emacs(2)</a> <a href='/tags/exhibition' style='font-size: 94.07407407407408%'>exhibition(2)</a> <a href='/tags/fiction' style='font-size: 110.37037037037037%'>fiction(6)</a> <a href='/tags/forever' style='font-size: 94.07407407407408%'>forever(2)</a> <a href='/tags/french' style='font-size: 90.0%'>french(1)</a> <a href='/tags/ghost' style='font-size: 102.22222222222223%'>ghost(4)</a> <a href='/tags/git' style='font-size: 98.14814814814815%'>git(3)</a> <a href='/tags/github' style='font-size: 94.07407407407408%'>github(2)</a> <a href='/tags/gunicorn' style='font-size: 90.0%'>gunicorn(1)</a> <a href='/tags/hadoop' style='font-size: 90.0%'>hadoop(1)</a> <a href='/tags/hipchat' style='font-size: 94.07407407407408%'>hipchat(2)</a> <a href='/tags/html' style='font-size: 94.07407407407408%'>html(2)</a> <a href='/tags/ide' style='font-size: 94.07407407407408%'>ide(2)</a> <a href='/tags/javascript' style='font-size: 102.22222222222223%'>javascript(4)</a> <a href='/tags/jekyll' style='font-size: 94.07407407407408%'>jekyll(2)</a> <a href='/tags/jenkins' style='font-size: 90.0%'>jenkins(1)</a> <a href='/tags/leisure' style='font-size: 187.77777777777777%'>leisure(25)</a> <a href='/tags/linux' style='font-size: 118.51851851851852%'>linux(8)</a> <a href='/tags/machine-learning' style='font-size: 130.74074074074073%'>machine learning(11)</a> <a href='/tags/mathjax' style='font-size: 94.07407407407408%'>mathjax(2)</a> <a href='/tags/mysql' style='font-size: 110.37037037037037%'>mysql(6)</a> <a href='/tags/network' style='font-size: 90.0%'>network(1)</a> <a href='/tags/nginx' style='font-size: 98.14814814814815%'>nginx(3)</a> <a href='/tags/nlp' style='font-size: 110.37037037037037%'>nlp(6)</a> <a href='/tags/nltk' style='font-size: 90.0%'>nltk(1)</a> <a href='/tags/nodejs' style='font-size: 106.2962962962963%'>nodejs(5)</a> <a href='/tags/octopress' style='font-size: 118.51851851851852%'>octopress(8)</a> <a href='/tags/oil-painting' style='font-size: 90.0%'>oil painting(1)</a> <a href='/tags/openstack' style='font-size: 90.0%'>openstack(1)</a> <a href='/tags/painting' style='font-size: 90.0%'>painting(1)</a> <a href='/tags/pandas' style='font-size: 94.07407407407408%'>pandas(2)</a> <a href='/tags/poem' style='font-size: 102.22222222222223%'>poem(4)</a> <a href='/tags/prediction' style='font-size: 90.0%'>prediction(1)</a> <a href='/tags/pycharm' style='font-size: 90.0%'>pycharm(1)</a> <a href='/tags/python' style='font-size: 200.0%'>python(28)</a> <a href='/tags/reading' style='font-size: 114.44444444444444%'>reading(7)</a> <a href='/tags/redmine' style='font-size: 90.0%'>redmine(1)</a> <a href='/tags/regex' style='font-size: 90.0%'>regex(1)</a> <a href='/tags/robotics' style='font-size: 94.07407407407408%'>robotics(2)</a> <a href='/tags/ruby' style='font-size: 126.66666666666666%'>ruby(10)</a> <a href='/tags/sql' style='font-size: 90.0%'>sql(1)</a> <a href='/tags/supervisor' style='font-size: 90.0%'>supervisor(1)</a> <a href='/tags/time-series' style='font-size: 90.0%'>time series(1)</a> <a href='/tags/translation' style='font-size: 90.0%'>translation(1)</a> <a href='/tags/ubuntu' style='font-size: 122.5925925925926%'>ubuntu(9)</a> <a href='/tags/unicode' style='font-size: 90.0%'>unicode(1)</a> <a href='/tags/vagrant' style='font-size: 90.0%'>vagrant(1)</a> <a href='/tags/vim' style='font-size: 90.0%'>vim(1)</a> <a href='/tags/vm' style='font-size: 90.0%'>vm(1)</a> <a href='/tags/web' style='font-size: 106.2962962962963%'>web(5)</a> <a href='/tags/will' style='font-size: 94.07407407407408%'>will(2)</a> </ul>
+    <ul id="category-list"><a href='/tags/algorithm' style='font-size: 114.44444444444444%'>algorithm(7)</a> <a href='/tags/ansible' style='font-size: 94.07407407407408%'>ansible(2)</a> <a href='/tags/antique' style='font-size: 90.0%'>antique(1)</a> <a href='/tags/apache' style='font-size: 90.0%'>apache(1)</a> <a href='/tags/api' style='font-size: 94.07407407407408%'>api(2)</a> <a href='/tags/ascii' style='font-size: 90.0%'>ascii(1)</a> <a href='/tags/beautifulsoup' style='font-size: 90.0%'>beautifulsoup(1)</a> <a href='/tags/butter' style='font-size: 90.0%'>butter(1)</a> <a href='/tags/career' style='font-size: 94.07407407407408%'>career(2)</a> <a href='/tags/chatbot' style='font-size: 98.14814814814815%'>chatbot(3)</a> <a href='/tags/classification' style='font-size: 94.07407407407408%'>classification(2)</a> <a href='/tags/cloud' style='font-size: 90.0%'>cloud(1)</a> <a href='/tags/cloudera' style='font-size: 90.0%'>cloudera(1)</a> <a href='/tags/computer-vision' style='font-size: 90.0%'>computer vision(1)</a> <a href='/tags/crawler' style='font-size: 94.07407407407408%'>crawler(2)</a> <a href='/tags/css' style='font-size: 94.07407407407408%'>css(2)</a> <a href='/tags/data' style='font-size: 90.0%'>data(1)</a> <a href='/tags/db' style='font-size: 94.07407407407408%'>db(2)</a> <a href='/tags/devops' style='font-size: 102.22222222222223%'>devops(4)</a> <a href='/tags/django' style='font-size: 94.07407407407408%'>django(2)</a> <a href='/tags/dns' style='font-size: 90.0%'>dns(1)</a> <a href='/tags/docker' style='font-size: 98.14814814814815%'>docker(3)</a> <a href='/tags/edx' style='font-size: 102.22222222222223%'>edX(4)</a> <a href='/tags/edx-ai' style='font-size: 90.0%'>edX AI(1)</a> <a href='/tags/edx-analytics' style='font-size: 94.07407407407408%'>edX Analytics(2)</a> <a href='/tags/edx-platform' style='font-size: 90.0%'>edX Platform(1)</a> <a href='/tags/emacs' style='font-size: 94.07407407407408%'>emacs(2)</a> <a href='/tags/exhibition' style='font-size: 94.07407407407408%'>exhibition(2)</a> <a href='/tags/fiction' style='font-size: 110.37037037037037%'>fiction(6)</a> <a href='/tags/forever' style='font-size: 94.07407407407408%'>forever(2)</a> <a href='/tags/french' style='font-size: 90.0%'>french(1)</a> <a href='/tags/ghost' style='font-size: 102.22222222222223%'>ghost(4)</a> <a href='/tags/git' style='font-size: 98.14814814814815%'>git(3)</a> <a href='/tags/github' style='font-size: 94.07407407407408%'>github(2)</a> <a href='/tags/gunicorn' style='font-size: 90.0%'>gunicorn(1)</a> <a href='/tags/hadoop' style='font-size: 90.0%'>hadoop(1)</a> <a href='/tags/hipchat' style='font-size: 98.14814814814815%'>hipchat(3)</a> <a href='/tags/html' style='font-size: 94.07407407407408%'>html(2)</a> <a href='/tags/ide' style='font-size: 94.07407407407408%'>ide(2)</a> <a href='/tags/javascript' style='font-size: 102.22222222222223%'>javascript(4)</a> <a href='/tags/jekyll' style='font-size: 94.07407407407408%'>jekyll(2)</a> <a href='/tags/jenkins' style='font-size: 90.0%'>jenkins(1)</a> <a href='/tags/leisure' style='font-size: 187.77777777777777%'>leisure(25)</a> <a href='/tags/linux' style='font-size: 118.51851851851852%'>linux(8)</a> <a href='/tags/machine-learning' style='font-size: 130.74074074074073%'>machine learning(11)</a> <a href='/tags/mathjax' style='font-size: 94.07407407407408%'>mathjax(2)</a> <a href='/tags/mysql' style='font-size: 110.37037037037037%'>mysql(6)</a> <a href='/tags/network' style='font-size: 90.0%'>network(1)</a> <a href='/tags/nginx' style='font-size: 98.14814814814815%'>nginx(3)</a> <a href='/tags/nlp' style='font-size: 110.37037037037037%'>nlp(6)</a> <a href='/tags/nltk' style='font-size: 90.0%'>nltk(1)</a> <a href='/tags/nodejs' style='font-size: 106.2962962962963%'>nodejs(5)</a> <a href='/tags/octopress' style='font-size: 118.51851851851852%'>octopress(8)</a> <a href='/tags/oil-painting' style='font-size: 90.0%'>oil painting(1)</a> <a href='/tags/openstack' style='font-size: 90.0%'>openstack(1)</a> <a href='/tags/painting' style='font-size: 90.0%'>painting(1)</a> <a href='/tags/pandas' style='font-size: 94.07407407407408%'>pandas(2)</a> <a href='/tags/poem' style='font-size: 102.22222222222223%'>poem(4)</a> <a href='/tags/prediction' style='font-size: 90.0%'>prediction(1)</a> <a href='/tags/pycharm' style='font-size: 90.0%'>pycharm(1)</a> <a href='/tags/python' style='font-size: 200.0%'>python(28)</a> <a href='/tags/reading' style='font-size: 114.44444444444444%'>reading(7)</a> <a href='/tags/redis' style='font-size: 90.0%'>redis(1)</a> <a href='/tags/redmine' style='font-size: 90.0%'>redmine(1)</a> <a href='/tags/regex' style='font-size: 90.0%'>regex(1)</a> <a href='/tags/robotics' style='font-size: 98.14814814814815%'>robotics(3)</a> <a href='/tags/ruby' style='font-size: 126.66666666666666%'>ruby(10)</a> <a href='/tags/sql' style='font-size: 90.0%'>sql(1)</a> <a href='/tags/supervisor' style='font-size: 90.0%'>supervisor(1)</a> <a href='/tags/time-series' style='font-size: 90.0%'>time series(1)</a> <a href='/tags/translation' style='font-size: 90.0%'>translation(1)</a> <a href='/tags/ubuntu' style='font-size: 122.5925925925926%'>ubuntu(9)</a> <a href='/tags/unicode' style='font-size: 90.0%'>unicode(1)</a> <a href='/tags/vagrant' style='font-size: 90.0%'>vagrant(1)</a> <a href='/tags/vim' style='font-size: 90.0%'>vim(1)</a> <a href='/tags/vm' style='font-size: 94.07407407407408%'>vm(2)</a> <a href='/tags/web' style='font-size: 106.2962962962963%'>web(5)</a> <a href='/tags/will' style='font-size: 98.14814814814815%'>will(3)</a> </ul>
 </section>
 
   

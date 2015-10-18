@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tech | Kelly Chan]]></title>
   <link href="http://k.arttechresearch.com/categories/tech/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2015-10-18T07:25:44+08:00</updated>
+  <updated>2015-10-18T16:51:15+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[Kelly Chan]]></name>
@@ -12,6 +12,118 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Setup the Devstack for edX Alton]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/10/18/setup-the-devstack-for-edx-alton/"/>
+    <updated>2015-10-18T16:24:54+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/10/18/setup-the-devstack-for-edx-alton</id>
+    <content type="html"><![CDATA[<h2>Prequisitions</h2>
+
+<ul>
+<li>Ubuntu 14.04</li>
+<li>Docker</li>
+<li>Git</li>
+</ul>
+
+
+<h2>1. Installation</h2>
+
+<pre><code class="bash">$ cd /path/to/project
+$ git clone https://github.com/edx/alton.git
+$ cd althon
+$ sudo docker build -t alton .
+</code></pre>
+
+<p>Once done, check the image with <code>docker images</code></p>
+
+<pre><code class="bash">vagrant@vagrant-ubuntu-trusty-64:/tmp/alton$ sudo docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
+alton               latest              367fc778d527        29 seconds ago      1.084 GB
+python              2.7.7               a87a2288ce78        15 months ago       1.043 GB
+</code></pre>
+
+<h2>References</h2>
+
+<ul>
+<li><a href="https://github.com/edx/alton">alton</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Docker Key Concepts]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/10/18/docker-key-concepts/"/>
+    <updated>2015-10-18T14:43:07+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/10/18/docker-key-concepts</id>
+    <content type="html"><![CDATA[<h2>1. Docker Host and Docker Client</h2>
+
+<h3>1.1. Linux</h3>
+
+<p><img src="https://docs.docker.com/installation/images/linux_docker_host.svg" /></p>
+
+<p>In a Docker installation on Linux, your physical machine is both the localhost and the Docker host.</p>
+
+<ul>
+<li>networking, (localhost) your computer, (docker host) the computer which the containers run</li>
+<li>(localhost) runs docker client, docker daemon, any containers</li>
+<li>(port) docker containers using standard <code>localhost</code> addressing such as <code>localhost:8000</code> or <code>0.0.0.0:8376</code></li>
+</ul>
+
+
+<h3>1.2. OS X</h3>
+
+<p><img src="https://docs.docker.com/installation/images/mac_docker_host.svg" /></p>
+
+<p>In an OS X installation, the docker daemon is running inside a Linux VM called i<code>default</code>.
+The <code>default</code> is a lightweight Linux VM made specifically to run the Docker daemon on Mac OS X.
+The VM runs completely from RAM, is a small ~24MB download, and boots in approximately 5s.</p>
+
+<p>In OS X, the Docker host address is the address of the Linux VM.</p>
+
+<ul>
+<li>OS X &lt;=> VM &lt;=> containers</li>
+<li>When you start the VM with docker-machine it is assigned an IP address.</li>
+<li>When you start a container, the ports on a container map to ports on the VM.</li>
+</ul>
+
+
+<h2>Docker vs Vagrant/VirtualBox + Git</h2>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;"> Docker     </th>
+<th style="text-align:left;"> Vagrant         </th>
+<th style="text-align:left;"> VirtualBox  </th>
+<th style="text-align:left;"> Git   </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> Dockerfile </td>
+<td style="text-align:left;"> Vagrantfile     </td>
+<td style="text-align:left;">             </td>
+<td style="text-align:left;">       </td>
+</tr>
+<tr>
+<td style="text-align:left;"> image      </td>
+<td style="text-align:left;"> box             </td>
+<td style="text-align:left;">             </td>
+<td style="text-align:left;">       </td>
+</tr>
+<tr>
+<td style="text-align:left;"> container  </td>
+<td style="text-align:left;">                 </td>
+<td style="text-align:left;">             </td>
+<td style="text-align:left;">       </td>
+</tr>
+</tbody>
+</table>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Generating TOC With Javascript for Octopress]]></title>
@@ -632,430 +744,6 @@ showToggleButton: false
 
 <pre><code class="html">{\% include mathjax.html %\}
 </code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Adding Tag Generator in Octopress]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/10/06/adding-tag-generator-in-octopress/"/>
-    <updated>2015-10-06T05:42:01+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/10/06/adding-tag-generator-in-octopress</id>
-    <content type="html"><![CDATA[<p>Feature: add the links for the tags.</p>
-
-<p>Steps:</p>
-
-<ol>
-<li>update the ruby plugin: <code>octopress/plugins/tag_generator.rb</code></li>
-<li>update the html in source: <code>octopress/source/_layouts/tag_index.html</code></li>
-<li>update the <code>tag_dir</code> in _config.yml: <code>octopress/_config.yml</code></li>
-</ol>
-
-
-<h2>1. Plugin: tag_generator.rb</h2>
-
-<pre><code class="ruby tag_generator.rb"># encoding: utf-8
-#
-# Jekyll tag page generator.
-#
-# Based on Jekyll tag category generator:
-#
-#     http://recursive-design.com/projects/jekyll-plugins/
-#
-#     Version: 0.1.4 (201101061053)
-#
-#     Copyright (c) 2010 Dave Perrett, http://recursive-design.com/
-#     Licensed under the MIT license (http://www.opensource.org/licenses/mit-license.php)
-#
-# A generator that creates tag pages for jekyll sites.
-#
-# Included filters :
-# - tag_links:      Outputs the list of tags as comma-separated &lt;a&gt; links.
-# - date_to_html_string: Outputs the post.date as formatted html, with hooks for CSS styling.
-#
-# Available _config.yml settings :
-# - tag_dir:          The subfolder to build tag pages in (default is 'tags').
-# - tag_title_prefix: The string used before the tag name in the page title (default is
-#                          'Tag: ').
-
-require 'stringex'
-
-module Jekyll
-
-  # The TagIndex class creates a single tag page for the specified tag.
-  class TagIndex &lt; Page
-
-    # Initializes a new TagIndex.
-    #
-    #  +base+         is the String path to the &lt;source&gt;.
-    #  +tag_dir+ is the String path between &lt;source&gt; and the tag folder.
-    #  +tag+     is the tag currently being processed.
-    def initialize(site, base, tag_dir, tag)
-      @site = site
-      @base = base
-      @dir  = tag_dir
-      @name = 'index.html'
-      self.process(@name)
-      # Read the YAML data from the layout page.
-      self.read_yaml(File.join(base, '_layouts'), 'tag_index.html')
-      self.data['tag']    = tag
-      # Set the title for this page.
-      title_prefix             = site.config['tag_title_prefix'] || 'Tag: '
-      self.data['title']       = "#{title_prefix}#{tag}"
-      # Set the meta-description for this page.
-      meta_description_prefix  = site.config['tag_meta_description_prefix'] || 'Tag: '
-      self.data['description'] = "#{meta_description_prefix}#{tag}"
-    end
-
-  end
-
-  # The TagFeed class creates an Atom feed for the specified tag.
-  class TagFeed &lt; Page
-
-    # Initializes a new TagFeed.
-    #
-    #  +base+         is the String path to the &lt;source&gt;.
-    #  +tag_dir+ is the String path between &lt;source&gt; and the tag folder.
-    #  +tag+     is the tag currently being processed.
-    def initialize(site, base, tag_dir, tag)
-      @site = site
-      @base = base
-      @dir  = tag_dir
-      @name = 'atom.xml'
-      self.process(@name)
-      # Read the YAML data from the layout page.
-      self.read_yaml(File.join(base, '_includes/custom'), 'tag_feed.xml')
-      self.data['tag']    = tag
-      # Set the title for this page.
-      title_prefix             = site.config['tag_title_prefix'] || 'Tag: '
-      self.data['title']       = "#{title_prefix}#{tag}"
-      # Set the meta-description for this page.
-      meta_description_prefix  = site.config['tag_meta_description_prefix'] || 'Tag: '
-      self.data['description'] = "#{meta_description_prefix}#{tag}"
-
-      # Set the correct feed URL.
-      self.data['feed_url'] = "#{tag_dir}/#{name}"
-    end
-
-  end
-
-  # The Site class is a built-in Jekyll class with access to global site config information.
-  class Site
-
-    # Creates an instance of TagIndex for each tag page, renders it, and
-    # writes the output to a file.
-    #
-    #  +tag_dir+ is the String path to the tag folder.
-    #  +tag+     is the tag currently being processed.
-    def write_tag_index(tag_dir, tag)
-      index = TagIndex.new(self, self.source, tag_dir, tag)
-      index.render(self.layouts, site_payload)
-      index.write(self.dest)
-      # Record the fact that this page has been added, otherwise Site::cleanup will remove it.
-      self.pages &lt;&lt; index
-
-      # Create an Atom-feed for each index.
-      if self.config['tag_feeds']
-        feed = TagFeed.new(self, self.source, tag_dir, tag)
-        feed.render(self.layouts, site_payload)
-        feed.write(self.dest)
-        # Record the fact that this page has been added, otherwise Site::cleanup will remove it.
-        self.pages &lt;&lt; feed
-      end
-    end
-
-    # Loops through the list of tag pages and processes each one.
-    def write_tag_indexes
-      if self.layouts.key? 'tag_index'
-        dir = self.config['tag_dir'] || 'tags'
-        self.tags.keys.each do |tag|
-          self.write_tag_index(File.join(dir, tag.to_url), tag)
-        end
-
-      # Throw an exception if the layout couldn't be found.
-      else
-        raise &lt;&lt;-ERR
-
-
-===============================================
- Error for tag_generator.rb plugin
------------------------------------------------
- No 'tag_index.hmtl' in source/_layouts/
- Perhaps you haven't installed a theme yet.
-===============================================
-
-ERR
-      end
-    end
-
-  end
-
-
-  # Jekyll hook - the generate method is called by jekyll, and generates all of the tag pages.
-  class GenerateTags &lt; Generator
-    safe true
-    priority :low
-
-    def generate(site)
-      site.write_tag_indexes
-    end
-
-  end
-
-
-  # Adds some extra filters used during the tag creation process.
-  module Filters
-
-    # Outputs a list of tags as comma-separated &lt;a&gt; links. This is used
-    # to output the tag list for each post on a tag page.
-    #
-    #  +tags+ is the list of tags to format.
-    #
-    # Returns string
-    #
-    def tag_links(tags)
-      tags = tags.sort!.map { |c| tag_link c }
-
-      case tags.length
-      when 0
-        ""
-      when 1
-        tags[0].to_s
-      else
-        "#{tags[0...-1].join(', ')}, #{tags[-1]}"
-      end
-    end
-
-    # Outputs a single tag as an &lt;a&gt; link.
-    #
-    #  +tag+ is a tag string to format as an &lt;a&gt; link
-    #
-    # Returns string
-    #
-    def tag_link(tag)
-      dir = @context.registers[:site].config['tag_dir']
-      "&lt;a class='tag' href='http://k.arttechresearch.com/#{dir}/#{tag.to_url}/'&gt;#{tag}&lt;/a&gt;"
-    end
-
-    # Outputs the post.date as formatted html, with hooks for CSS styling.
-    #
-    #  +date+ is the date object to format as HTML.
-    #
-    # Returns string
-    def date_to_html_string(date)
-      result = '&lt;span class="month"&gt;' + date.strftime('%b').upcase + '&lt;/span&gt; '
-      result += date.strftime('&lt;span class="day"&gt;%d&lt;/span&gt; ')
-      result += date.strftime('&lt;span class="year"&gt;%Y&lt;/span&gt; ')
-      result
-    end
-
-  end
-
-end
-</code></pre>
-
-<h2>2. Layouts: tag_index.html</h2>
-
-<pre><code class="bash">$ cp octopress/source/_layouts/category_index.html octopress/source/_layouts/tag_index.html
-</code></pre>
-
-<p>Update the <code>category</code> as <code>tag</code>.</p>
-
-<h2>3. Config: tag_dir</h2>
-
-<pre><code class="yml _config.yml">tag_dir: tags
-</code></pre>
-
-<h2>4. Testing</h2>
-
-<p><code>rake generate</code> and <code>rake preview</code>.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Adding Tag Cloud in Octopress]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/10/06/adding-tag-cloud-in-octopress/"/>
-    <updated>2015-10-06T05:20:09+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/10/06/adding-tag-cloud-in-octopress</id>
-    <content type="html"><![CDATA[<p>Features: tag cloud and category list with counts.</p>
-
-<p>Steps:</p>
-
-<ol>
-<li>update the ruby plugin: <code>plugins/tag_cloud.rb</code></li>
-<li>update the html templates: <code>source/_includes/asides/tag_cloud.html</code>, <code>source/_includes/asides/category_list.html</code></li>
-<li>update the sass files: <code>sass/plugins/_tag_cloud.scss</code>, <code>sass/plugins/_category_list.scss</code></li>
-</ol>
-
-
-<h2>1. Plugin: tag_cloud.rb</h2>
-
-<pre><code class="ruby tag_cloud.rb"># encoding: utf-8
-
-# Tag Cloud for Octopress
-# =======================
-#
-# Description:
-# ------------
-# Easy output tag cloud and category list.
-#
-# Syntax:
-# -------
-#     {\% tag_cloud [counter:true] %\}
-#     {\% category_list [counter:true] %\}
-#
-# Example:
-# --------
-# In some template files, you can add the following markups.
-#
-# ### source/_includes/custom/asides/tag_cloud.html ###
-#
-#     `&lt;section&gt;`
-#       `&lt;h1&gt;Tag Cloud&lt;/h1&gt;`
-#         `&lt;span id="tag-cloud"&gt;{\% tag_cloud %\}&lt;/span&gt;`
-#     `&lt;/section&gt;`
-#
-# ### source/_includes/custom/asides/category_list.html ###
-#
-#     `&lt;section&gt;`
-#       `&lt;h1&gt;Categories&lt;/h1&gt;`
-#         `&lt;ul id="category-list"&gt;{\% category_list counter:true %\}&lt;/ul&gt;`
-#     `&lt;/section&gt;`
-#
-# Notes:
-# ------
-# Be sure to insert above template files into `default_asides` array in `_config.yml`.
-# And also you can define styles for 'tag-cloud' or 'category-list' in a `.scss` file.
-# (ex: `sass/custom/_styles.scss`)
-#
-# Licence:
-# --------
-# Distributed under the [MIT License][MIT].
-#
-# [MIT]: http://www.opensource.org/licenses/mit-license.php
-#
-require 'stringex'
-
-module Jekyll
-
-  class TagCloud &lt; Liquid::Tag
-
-    def initialize(tag_name, markup, tokens)
-      @opts = {}
-      if markup.strip =~ /\s*counter:(\w+)/i
-        @opts['counter'] = ($1 == 'true')
-        markup = markup.strip.sub(/counter:\w+/i,'')
-      end
-      super
-    end
-
-    def render(context)
-      lists = {}
-      max, min = 1, 1
-      config = context.registers[:site].config
-      tag_dir = config['root'] + config['tag_dir'] + '/'
-      tags = context.registers[:site].tags
-      tags.keys.sort_by{ |str| str.downcase }.each do |tag|
-        count = tags[tag].count
-        lists[tag] = count
-        max = count if count &gt; max
-      end
-
-      html = ''
-      lists.each do | tag, counter |
-        url = tag_dir + tag.gsub(/_|\P{Word}/, '-').gsub(/-{2,}/, '-').downcase
-        style = "font-size: #{90 + (110 * Float(counter-1)/(max-1))}%"
-        html &lt;&lt; "&lt;a href='#{url}' style='#{style}'&gt;#{tag}"
-        if @opts['counter']
-          html &lt;&lt; "(#{tags[tag].count})"
-        end
-        html &lt;&lt; "&lt;/a&gt; "
-      end
-      html
-    end
-  end
-
-  class CategoryList &lt; Liquid::Tag
-
-    def initialize(tag_name, markup, tokens)
-      @opts = {}
-      if markup.strip =~ /\s*counter:(\w+)/i
-        @opts['counter'] = ($1 == 'true')
-        markup = markup.strip.sub(/counter:\w+/i,'')
-      end
-      super
-    end
-
-    def render(context)
-      html = ""
-      config = context.registers[:site].config
-      category_dir = config['category_dir']
-      categories = context.registers[:site].categories
-      categories.keys.sort_by{ |str| str.downcase }.each do |category|
-        html &lt;&lt; "&lt;li&gt;&lt;a href='http://k.arttechresearch.com/#{category_dir}/#{category.to_url}/'&gt;#{category}"
-        if @opts['counter']
-          html &lt;&lt; " (#{categories[category].count})"
-        end
-        html &lt;&lt; "&lt;/a&gt;&lt;/li&gt;"
-      end
-      html
-    end
-  end
-
-end
-
-Liquid::Template.register_tag('tag_cloud', Jekyll::TagCloud)
-Liquid::Template.register_tag('category_list', Jekyll::CategoryList)
-</code></pre>
-
-<h2>2. HTML: source/_includes/</h2>
-
-<p>tag_cloud.html</p>
-
-<pre><code class="html tag_cloud.html">&lt;section class="tag-cloud"&gt;
-  &lt;h1&gt;Tags&lt;/h1&gt;
-    &lt;ul id="category-list"&gt;{\% tag_cloud counter:true %\}&lt;/ul&gt;
-&lt;/section&gt;
-</code></pre>
-
-<p>category_list.html</p>
-
-<pre><code class="html category_list.html">&lt;section class="category-list"&gt;
-  &lt;h1&gt;Summary&lt;/h1&gt;
-    &lt;ul id="category-list"&gt;{\% category_list counter:true %\}&lt;/ul&gt;
-&lt;/section&gt;
-</code></pre>
-
-<h2>3. SASS: sass/plugins</h2>
-
-<p>_tag_cloud.scss</p>
-
-<pre><code class="css _tag_cloud.scss">&lt;section class="category-list"&gt;
-  &lt;h1&gt;Summary&lt;/h1&gt;
-    &lt;ul id="category-list"&gt;<li><a href='/categories/art/'>art (2)</a></li><li><a href='/categories/life/'>life (45)</a></li><li><a href='/categories/tech/'>tech (75)</a></li>&lt;/ul&gt;
-&lt;/section&gt;
-kelly-2:octopress kelly$ cat sass/plugins/_tag_cloud.scss
-.tag-cloud {
-    ul {
-        padding: .5em 0;
-    }
-    a {
-    text-decoration: none;
-    }
-}
-</code></pre>
-
-<p>_category_list.scss</p>
-
-<pre><code class="css _category_list.scss">.category-list {
-    a {
-    text-decoration: none;
-    }
-}
-</code></pre>
-
-<h2>4. Testing</h2>
-
-<p>Include the <code>tag_cloud.html</code> and <code>category_list.html</code> in a page, and then run <code>rake generate</code> and <code>rake preview</code>.</p>
 ]]></content>
   </entry>
   

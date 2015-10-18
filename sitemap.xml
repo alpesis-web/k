@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://k.arttechresearch.com/tech/2015/10/18/setup-the-devstack-for-edx-alton/</loc>
+    <lastmod>2015-10-18T16:24:54+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2015/10/18/docker-key-concepts/</loc>
+    <lastmod>2015-10-18T14:43:07+08:00</lastmod>
+  </url>
+  <url>
     <loc>http://k.arttechresearch.com/art/2015/10/18/oil-paintings-from-shanghai-university/</loc>
     <lastmod>2015-10-18T06:53:47+08:00</lastmod>
   </url>
@@ -63,6 +71,10 @@
   <url>
     <loc>http://k.arttechresearch.com/tech/2015/09/30/will-bot/</loc>
     <lastmod>2015-09-30T14:52:04+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2015/09/28/redis/</loc>
+    <lastmod>2015-09-28T11:46:09+08:00</lastmod>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tech/2015/09/16/changing-a-theme-for-nodejs-ghost/</loc>
@@ -714,6 +726,9 @@
     <loc>http://k.arttechresearch.com/tags/butter/</loc>
   </url>
   <url>
+    <loc>http://k.arttechresearch.com/tags/redis/</loc>
+  </url>
+  <url>
     <loc>http://k.arttechresearch.com/tags/chatbot/</loc>
   </url>
   <url>
@@ -745,5 +760,44 @@
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/painting/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/edx-ai/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/posts/2/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/posts/3/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/posts/4/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/posts/5/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/posts/6/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/posts/7/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/posts/8/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/posts/9/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/posts/10/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/posts/11/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/posts/12/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/posts/13/</loc>
   </url>
 </urlset>
