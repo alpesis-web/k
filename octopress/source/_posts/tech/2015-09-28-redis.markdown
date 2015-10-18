@@ -1,0 +1,514 @@
+---
+layout: post_tech
+title: "Redis"
+date: 2015-09-28 11:46:09 +0800
+comments: true
+categories: [tech]
+tags: [db, redis]
+toc: true
+---
+
+
+
+## 1. Installation
+
+### 1.1. redis-server
+
+Ubuntu 14.04
+
+```bash
+$ sudo apt-get install redis-server
+$ redis-server                                          # start redis
+$ redis-cli                                             # check if work
+```
+
+### 1.2. desktop manager
+
+Go to [redisdesktop](http://redisdesktop.com/download), select a version, and then install.
+
+Or install by commands.
+
+OS X
+
+```bash
+# Install Homebrew cask
+$ brew install caskroom/cask/brew-cask 
+
+# Install Redis Desktop Manager aka RDM
+$ brew cask install rdm 
+```
+
+
+## 2. Operations
+
+### 2.1. Environment
+
+start redis
+
+```bash
+$ redis-server
+
+17251:C 18 Oct 11:58:32.508 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+17251:M 18 Oct 11:58:32.509 * Increased maximum number of open files to 10032 (it was originally set to 2560).
+                _._
+           _.-``__ ''-._
+      _.-``    `.  `_.  ''-._           Redis 3.0.4 (00000000/0) 64 bit
+  .-`` .-```.  ```\/    _.,_ ''-._
+ (    '      ,       .-`  | `,    )     Running in standalone mode
+ |`-._`-...-` __...-.``-._|'` _.-'|     Port: 6379
+ |    `-._   `._    /     _.-'    |     PID: 17251
+  `-._    `-._  `-./  _.-'    _.-'
+ |`-._`-._    `-.__.-'    _.-'_.-'|
+ |    `-._`-._        _.-'_.-'    |           http://redis.io
+  `-._    `-._`-.__.-'_.-'    _.-'
+ |`-._`-._    `-.__.-'    _.-'_.-'|
+ |    `-._`-._        _.-'_.-'    |
+  `-._    `-._`-.__.-'_.-'    _.-'
+      `-._    `-.__.-'    _.-'
+          `-._        _.-'
+              `-.__.-'
+
+17251:M 18 Oct 11:58:32.510 # Server started, Redis version 3.0.4
+17251:M 18 Oct 11:58:32.510 * The server is now ready to accept connections on port 6379
+```
+
+check if work
+
+```bash 
+$ redis-cli
+127.0.0.1:6379>
+
+$ redis-cli -h host -p port -a password
+$ redis-cli -h 127.0.0.1 -p 6379 -a "mypass"
+
+```
+
+final check
+
+```bash
+127.0.0.1:6379> ping
+PONG
+```
+
+### 2.2. Configuration
+
+config get: `CONFIG GET CONFIG_SETTINGS_NAME`
+
+```bash
+127.0.0.1:6379> CONFIG GET CONFIG_SETTING_NAME
+
+127.0.0.1:6379> CONFIG GET loglevel
+1) "loglevel"
+2) "notice"
+
+127.0.0.1:6379> CONFIG GET *
+```
+
+config set: `CONFIG SET CONFIG_SETTING_NAME NEW_CONFIG_VALUE`
+
+```bash
+127.0.0.1:6379> CONFIG SET CONFIG_SETTING_NAME NEW_CONFIG_VALUE
+
+127.0.0.1:6379> CONFIG SET loglevel "notice"
+OK
+127.0.0.1:6379> CONFIG GET loglevel
+1) "loglevel"
+2) "notice"
+```
+
+## 3. Commands
+
+### 3.1. Keys
+
+Syntax
+
+```bash
+127.0.0.1:6379> COMMAND KEY_NAME <VALUE>
+
+127.0.0.1:6379> SET test redis
+127.0.0.1:6379> DEL test
+```
+
+Commands
+
+```bash
+127.0.0.1:6379> DEL Key
+127.0.0.1:6379> DUMP Key
+127.0.0.1:6379> EXISTS Key
+127.0.0.1:6379> EXPIRE Key
+127.0.0.1:6379> EXPIREAT key timestamp
+127.0.0.1:6379> PEXPIRE key milliseconds
+127.0.0.1:6379> PEXPIREAT key milliseconds-timestamp
+127.0.0.1:6379> KEYS pattern
+127.0.0.1:6379> MOVE key db
+127.0.0.1:6379> PERSIST key
+127.0.0.1:6379> PTTL key
+127.0.0.1:6379> TTL key
+127.0.0.1:6379> RANDOMKEY
+127.0.0.1:6379> RENAME key newkey
+127.0.0.1:6379> RENAMENX key newkey
+127.0.0.1:6379> TYPE key
+```
+
+### 3.2. Datatypes
+
+- strings
+- hashes
+- lists
+- sets
+- sorted sets
+
+#### 3.2.1. strings
+
+syntax
+
+```bash 
+127.0.0.1:6379> SET name "test"
+OK
+127.0.0.1:6379> GET name
+"test"
+```
+
+commands
+
+```bash
+127.0.0.1:6379> SET key value
+127.0.0.1:6379> GET key
+127.0.0.1:6379> GETRANGE key start end
+127.0.0.1:6379> GETSET key value
+127.0.0.1:6379> GETBIT key offset
+127.0.0.1:6379> MGET key1 [key2..]
+127.0.0.1:6379> SETBIT key offset value
+127.0.0.1:6379> SETEX key seconds value
+127.0.0.1:6379> SETNX key value
+127.0.0.1:6379> SETRANGE key offset value
+127.0.0.1:6379> STRLEN key
+127.0.0.1:6379> MSET key value [key value ...]
+127.0.0.1:6379> MSETNX key value [key value ...]
+127.0.0.1:6379> PSETEX key milliseconds value
+127.0.0.1:6379> INCR key
+127.0.0.1:6379> INCRBY key increment
+127.0.0.1:6379> INCRBYFLOAT key increment
+127.0.0.1:6379> DECR key
+127.0.0.1:6379> DECRBY key decrement
+127.0.0.1:6379> APPEND key value
+```
+
+#### 3.2.2. hashes
+
+syntax
+
+```bash
+127.0.0.1:6379> HMSET user:1 username test password test
+OK
+127.0.0.1:6379> HGETALL user:1
+1) "username"
+2) "test"
+3) "password"
+4) "test"
+```
+
+commands
+
+```bash
+127.0.0.1:6379> HDEL key field2 [field2] 
+127.0.0.1:6379> HEXISTS key field
+127.0.0.1:6379> HGET key field
+127.0.0.1:6379> HGETALL key
+127.0.0.1:6379> HINCRBY key field increment
+127.0.0.1:6379> HINCRBYFLOAT key field increment
+127.0.0.1:6379> HKEYS key
+127.0.0.1:6379> HLEN key
+127.0.0.1:6379> HMGET key field1 [field2]
+127.0.0.1:6379> HMSET key field1 value1 [field2 value2 ]
+127.0.0.1:6379> HSET key field value
+127.0.0.1:6379> HSETNX key field value
+127.0.0.1:6379> HVALS key
+127.0.0.1:6379> HSCAN key cursor [MATCH pattern] [COUNT count]
+```
+
+#### 3.2.3. lists
+
+syntax
+
+```bash
+127.0.0.1:6379> LPUSH test "rabbitmq"
+(integer) 1
+127.0.0.1:6379> LPUSH test rabbitmq
+(integer) 2
+127.0.0.1:6379> LRANGE test 0 10
+1) "rabbitmq"
+2) "rabbitmq"
+```
+
+commands
+
+```bash
+127.0.0.1:6379> BLPOP key1 [key2 ] timeout
+127.0.0.1:6379> BRPOP key1 [key2 ] timeout
+127.0.0.1:6379> BRPOPLPUSH source destination timeout
+127.0.0.1:6379> LINDEX key index
+127.0.0.1:6379> LINSERT key BEFORE|AFTER pivot value
+127.0.0.1:6379> LLEN key
+127.0.0.1:6379> LPOP key
+127.0.0.1:6379> LPUSH key value1 [value2]
+127.0.0.1:6379> LPUSHX key value
+127.0.0.1:6379> LRANGE key start stop
+127.0.0.1:6379> LREM key count value
+127.0.0.1:6379> LSET key index value
+127.0.0.1:6379> LTRIM key start stop
+127.0.0.1:6379> RPOP key
+127.0.0.1:6379> RPOPLPUSH source destination
+127.0.0.1:6379> RPUSH key value1 [value2]
+127.0.0.1:6379> RPUSHX key value
+```
+
+#### 3.2.4. sets
+
+syntax
+
+```bash
+127.0.0.1:6379> SADD testlist redis
+(integer) 1
+127.0.0.1:6379> SMEMBERS testlist
+1) "redis"
+```
+
+commands
+
+```bash
+127.0.0.1:6379> SADD key member1 [member2]
+127.0.0.1:6379> SCARD key
+127.0.0.1:6379> SDIFF key1 [key2]
+127.0.0.1:6379> SDIFFSTORE destination key1 [key2]
+127.0.0.1:6379> SINTER key1 [key2]
+127.0.0.1:6379> SINTERSTORE destination key1 [key2]
+127.0.0.1:6379> SISMEMBER key member
+127.0.0.1:6379> SMEMBERS key
+127.0.0.1:6379> SMOVE source destination member
+127.0.0.1:6379> SPOP key
+127.0.0.1:6379> SRANDMEMBER key [count]
+127.0.0.1:6379> SREM key member1 [member2]
+127.0.0.1:6379> SUNION key1 [key2]
+127.0.0.1:6379> SUNIONSTORE destination key1 [key2]
+127.0.0.1:6379> SSCAN key cursor [MATCH pattern] [COUNT count]
+```
+
+#### 3.2.5. sorted sets
+
+syntax
+
+```bash
+127.0.0.1:6379> ZADD testsortedset 0 hello
+(integer) 1
+127.0.0.1:6379> ZADD testsortedset 0 world
+(integer) 1
+127.0.0.1:6379> ZRANGEBYSCORE tesetsortedset 0 1000
+(empty list or set)
+```
+
+commands
+
+```bash
+127.0.0.1:6379> ZADD key score1 member1 [score2 member2]
+127.0.0.1:6379> ZCARD key
+127.0.0.1:6379> ZCOUNT key min max
+127.0.0.1:6379> ZINCRBY key increment member
+127.0.0.1:6379> ZINTERSTORE destination numkeys key [key ...]
+127.0.0.1:6379> ZLEXCOUNT key min max
+127.0.0.1:6379> ZRANGE key start stop [WITHSCORES]
+127.0.0.1:6379> ZRANGEBYLEX key min max [LIMIT offset count]
+127.0.0.1:6379> ZRANGEBYSCORE key min max [WITHSCORES] [LIMIT]
+127.0.0.1:6379> ZRANK key member
+127.0.0.1:6379> ZREM key member [member ...]
+127.0.0.1:6379> ZREMRANGEBYLEX key min max
+127.0.0.1:6379> ZREMRANGEBYRANK key start stop
+127.0.0.1:6379> ZREMRANGEBYSCORE key min max
+127.0.0.1:6379> ZREVRANGE key start stop [WITHSCORES]
+127.0.0.1:6379> ZREVRANGEBYSCORE key max min [WITHSCORES]
+127.0.0.1:6379> ZREVRANK key member
+127.0.0.1:6379> ZSCORE key member
+127.0.0.1:6379> ZUNIONSTORE destination numkeys key [key ...]
+127.0.0.1:6379> ZSCAN key cursor [MATCH pattern] [COUNT count]
+```
+
+### 3.3. HyperLogLog
+
+syntax
+
+```bash
+127.0.0.1:6379> PFADD tutorials "redis"
+1) (integer) 1
+
+127.0.0.1:6379> PFADD tutorials "mongodb"
+1) (integer) 1
+
+127.0.0.1:6379> PFADD tutorials "mysql"
+1) (integer) 1
+
+127.0.0.1:6379> PFCOUNT tutorials
+(integer) 3
+```
+
+commands
+
+```bash
+127.0.0.1:6379> PFADD key element [element ...]
+127.0.0.1:6379> PFCOUNT key [key ...]
+127.0.0.1:6379> PFMERGE destkey sourcekey [sourcekey ...]
+```
+
+### 3.4. Pub/Sub
+
+syntax
+
+```bash
+127.0.0.1:6379> SUBSCRIBE redisChat
+Reading messages... (press Ctrl-C to quit)
+1) "subscribe"
+2) "redisChat"
+3) (integer) 1
+
+127.0.0.1:6379> PUBLISH redisChat "Redis is a great caching technique"
+(integer) 1
+
+127.0.0.1:6379> PUBLISH redisChat "Learn redis by tutorials point"
+(integer) 1
+1) "message"
+2) "redisChat"
+3) "Redis is a great caching technique"
+1) "message"
+2) "redisChat"
+3) "Learn redis by tutorials point"
+```
+
+commands
+
+```bash
+127.0.0.1:6379> PSUBSCRIBE pattern [pattern ...]
+127.0.0.1:6379> PUBSUB subcommand [argument [argument ...]]
+127.0.0.1:6379> PUBLISH channel message
+127.0.0.1:6379> PUNSUBSCRIBE [pattern [pattern ...]]
+127.0.0.1:6379> SUBSCRIBE channel [channel ...]
+127.0.0.1:6379> UNSUBSCRIBE [channel [channel ...]]
+```
+
+
+### 3.5. Transactions
+
+syntax
+
+```bash
+127.0.0.1:6379> MULTI
+OK
+127.0.0.1:6379> EXEC
+```
+
+commands
+
+```bash
+127.0.0.1:6379> DISCARD 
+127.0.0.1:6379> EXEC
+127.0.0.1:6379> MULTI
+127.0.0.1:6379> UNWATCH
+127.0.0.1:6379> WATCH key [key ...]
+```
+
+### 3.6. Scripting
+
+syntax
+
+```bash
+127.0.0.1:6379> EVAL script numkeys key [key ...] arg [arg ...]
+
+127.0.0.1:6379> EVAL "return {KEYS[1],KEYS[2],ARGV[1],ARGV[2]}" 2 key1 key2 first second
+
+1) "key1"
+2) "key2"
+3) "first"
+4) "second"
+```
+
+commands
+
+```bash
+127.0.0.1:6379> EVAL script numkeys key [key ...] arg [arg ...]
+127.0.0.1:6379> EVALSHA sha1 numkeys key [key ...] arg [arg ...]
+127.0.0.1:6379> SCRIPT EXISTS script [script ...]
+127.0.0.1:6379> SCRIPT FLUSH
+127.0.0.1:6379> SCRIPT KILL
+127.0.0.1:6379> SCRIPT LOAD script
+```
+
+### 3.7. Connection
+
+syntax
+
+```bash
+127.0.0.1:6379> AUTH "password"
+OK
+127.0.0.1:6379> PING
+PONG
+```
+
+commands
+
+```bash
+127.0.0.1:6379> AUTH password
+127.0.0.1:6379> ECHO message
+127.0.0.1:6379> PING
+127.0.0.1:6379> QUIT
+127.0.0.1:6379> SELECT index
+```
+
+### 3.8. Server
+
+syntax
+
+```bash
+127.0.0.1:6379> INFO
+```
+
+commands
+
+```bash
+127.0.0.1:6379> BGREWRITEAOF
+127.0.0.1:6379> BGSAVE
+127.0.0.1:6379> CLIENT KILL [ip:port] [ID client-id]
+127.0.0.1:6379> CLIENT LIST
+127.0.0.1:6379> CLIENT GETNAME
+127.0.0.1:6379> CLIENT PAUSE timeout
+127.0.0.1:6379> CLIENT SETNAME connection-name
+127.0.0.1:6379> CLUSTER SLOTS
+127.0.0.1:6379> COMMAND
+127.0.0.1:6379> COMMAND COUNT
+127.0.0.1:6379> COMMAND GETKEYS
+127.0.0.1:6379> BGSAVE
+127.0.0.1:6379> COMMAND INFO command-name [command-name ...]
+127.0.0.1:6379> CONFIG GET parameter
+127.0.0.1:6379> CONFIG REWRITE
+127.0.0.1:6379> CONFIG SET parameter value
+127.0.0.1:6379> CONFIG RESETSTAT
+127.0.0.1:6379> DBSIZE
+127.0.0.1:6379> DEBUG OBJECT key
+127.0.0.1:6379> DEBUG SEGFAULT
+127.0.0.1:6379> FLUSHALL
+127.0.0.1:6379> FLUSHDB
+127.0.0.1:6379> INFO [section]
+127.0.0.1:6379> LASTSAVE
+127.0.0.1:6379> MONITOR
+127.0.0.1:6379> ROLE
+127.0.0.1:6379> SAVE
+127.0.0.1:6379> SHUTDOWN [NOSAVE] [SAVE]
+127.0.0.1:6379> SLAVEOF host port
+127.0.0.1:6379> SLOWLOG subcommand [argument]
+127.0.0.1:6379> SYNC
+127.0.0.1:6379> TIME
+```
+
+## References
+
+- [Redis Official Site](redis.io)
+- [Redis Tutorial](http://www.tutorialspoint.com/redis/)
+- [Try Redis](http://try.redis.io)
+- [Redis Destop Manager](https://github.com/uglide/RedisDesktopManager/wiki/Install-and-Run)

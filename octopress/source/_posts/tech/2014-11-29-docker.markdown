@@ -5,8 +5,288 @@ date: 2014-11-29 19:35:45 +0800
 comments: true
 categories: [tech]
 tags: [docker, devops]
+toc: true
 ---
+
+Requirements:
+
+- Ubuntu 14.04 / Linux Scripts
+- Docker / Dockerfile
+- Docker Hub
+
+If familar with Vagrant/VirtualBox and Git, you can take some comparisons: 
+
+- Docker / VirtualBox
+- Docker Commands / Vagrant Commands
+- Dockerfile / Vagrantfile
+- Docker Hub / Github
 
 ## 1. Installation
 
-## 2. 
+### 1.1. Ubuntu 14.04
+
+```bash
+$ sudo apt-get update
+$ sudo apt-get install linux-image-generic-lts-trusty
+$ sudo reboot
+
+$ sudo apt-get update
+$ sudo apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+$ sudo nano /etc/apt/sources.list.d/docker.list     # docker.list
+$ sudo apt-get update
+$ sudo apt-get install docker-engine
+```
+
+docker.list
+
+```bash
+# Ubuntu Precise
+deb https://apt.dockerproject.org/repo ubuntu-precise main
+# Ubuntu Trusty
+deb https://apt.dockerproject.org/repo ubuntu-trusty main
+# Ubuntu Vivid
+deb https://apt.dockerproject.org/repo ubuntu-vivid main
+# Ubuntu Wily
+deb https://apt.dockerproject.org/repo ubuntu-wily main
+```
+
+
+### Testing
+
+```bash
+$ sudo docker info
+$ sudo docker help
+$ sudo docker run hello-world
+```
+
+## 2. Commands
+
+### 2.1. operations
+
+```bash
+$ docker info
+$ docker version
+$ docker help
+
+$ docker events
+$ docker inspect
+
+$ docker login
+$ docker logout
+```
+
+
+commands summary
+
+```bash
+vagrant@vagrant-ubuntu-trusty-64:~$ sudo docker help
+Usage: docker [OPTIONS] COMMAND [arg...]
+       docker daemon [ --help | ... ]
+       docker [ --help | -v | --version ]
+
+A self-sufficient runtime for containers.
+
+Options:
+
+  --config=~/.docker                 Location of client config files
+  -D, --debug=false                  Enable debug mode
+  --disable-legacy-registry=false    Do not contact legacy registries
+  -H, --host=[]                      Daemon socket(s) to connect to
+  -h, --help=false                   Print usage
+  -l, --log-level=info               Set the logging level
+  --tls=false                        Use TLS; implied by --tlsverify
+  --tlscacert=~/.docker/ca.pem       Trust certs signed only by this CA
+  --tlscert=~/.docker/cert.pem       Path to TLS certificate file
+  --tlskey=~/.docker/key.pem         Path to TLS key file
+  --tlsverify=false                  Use TLS and verify the remote
+  -v, --version=false                Print version information and quit
+
+Commands:
+    attach    Attach to a running container
+    build     Build an image from a Dockerfile
+    commit    Create a new image from a container's changes
+    cp        Copy files/folders from a container to a HOSTDIR or to STDOUT
+    create    Create a new container
+    diff      Inspect changes on a container's filesystem
+    events    Get real time events from the server
+    exec      Run a command in a running container
+    export    Export a container's filesystem as a tar archive
+    history   Show the history of an image
+    images    List images
+    import    Import the contents from a tarball to create a filesystem image
+    info      Display system-wide information
+    inspect   Return low-level information on a container or image
+    kill      Kill a running container
+    load      Load an image from a tar archive or STDIN
+    login     Register or log in to a Docker registry
+    logout    Log out from a Docker registry
+    logs      Fetch the logs of a container
+    pause     Pause all processes within a container
+    port      List port mappings or a specific mapping for the CONTAINER
+    ps        List containers
+    pull      Pull an image or a repository from a registry
+    push      Push an image or a repository to a registry
+    rename    Rename a container
+    restart   Restart a running container
+    rm        Remove one or more containers
+    rmi       Remove one or more images
+    run       Run a command in a new container
+    save      Save an image(s) to a tar archive
+    search    Search the Docker Hub for images
+    start     Start one or more stopped containers
+    stats     Display a live stream of container(s) resource usage statistics
+    stop      Stop a running container
+    tag       Tag an image into a repository
+    top       Display the running processes of a container
+    unpause   Unpause all processes within a container
+    version   Show the Docker version information
+    wait      Block until a container stops, then print its exit code
+
+Run 'docker COMMAND --help' for more information on a command.
+```
+
+### 2.2. images
+
+```bash
+$ docker images
+
+$ docker search IMAGE_NAME
+$ docker pull IMAGE_NAME
+$ docker push
+$ docker commit
+$ docker history IMAGE_NAME
+
+$ docker run -it ubuntu bash
+$ docker run IMAGE_NAME /bin/echo Hello World!
+
+$ docker build
+$ docker import
+$ docker load
+
+$ docker rmi
+$ docker save
+
+$ docker tag
+```
+
+
+### 2.3. containers
+
+```bash
+$ docker ps
+
+$ docker create
+$ docker rename
+$ docker rm
+$ docker export
+$ docker run
+$ docker exec
+$ docker kill
+$ docker start
+$ docker restart
+$ docker stop
+$ docker pause
+$ docker unpause
+
+$ docker attach
+$ docker cp
+$ docker diff
+
+$ docker logs
+$ docker port
+$ docker stats
+$ docker top
+
+$ docker wait
+```
+
+
+
+## 3. Dockerfile
+
+commands
+
+```bash
+FROM <image>
+RUN <commands>
+CMD
+EXPOSE <port>
+ENV <key> <value>
+ADD or COPY
+ENTRYPOINT
+VOLUME ["/dir_1", "/dir_2" ..]
+USER <uid>
+WORKDIR /path
+ONBUILD
+```
+
+Dockerfile example
+
+```bash Dockerfile
+############################################################
+# Dockerfile to build MongoDB container images
+# Based on Ubuntu
+############################################################
+
+# Set the base image to Ubuntu
+FROM ubuntu
+
+# File Author / Maintainer
+MAINTAINER Example McAuthor
+
+# Update the repository sources list
+RUN apt-get update
+
+################## BEGIN INSTALLATION ######################
+# Install MongoDB Following the Instructions at MongoDB Docs
+# Ref: http://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/
+
+# Add the package verification key
+RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
+
+# Add MongoDB to the repository sources list
+RUN echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | tee /etc/apt/sources.list.d/mongodb.list
+
+# Update the repository sources list once more
+RUN apt-get update
+
+# Install MongoDB package (.deb)
+RUN apt-get install -y mongodb-10gen
+
+# Create the default data directory
+RUN mkdir -p /data/db
+
+##################### INSTALLATION END #####################
+
+# Expose the default port
+EXPOSE 27017
+
+# Default port to execute the entrypoint (MongoDB)
+CMD ["--port 27017"]
+
+# Set default container command
+ENTRYPOINT usr/bin/mongod
+```
+
+build a container with Dockerfile
+
+```bash
+# Build an image using the Dockerfile at current location
+# Example: sudo docker build -t [image_name] .
+$ sudo docker build -t my_mongodb .    
+
+$ sudo docker images
+$ sudo docker ps -l
+```
+
+## 4. Docker Hub
+
+- Signup [Docker Hub](https://hub.docker.com)
+- Get the username and password
+- create a new repo
+- push the image
+
+## References
+
+- [Docker Installation Ubuntu](https://docs.docker.com/installation/ubuntulinux/)
+- [Docker explained using dockerfiles to automate building of images](https://www.digitalocean.com/community/tutorials/docker-explained-using-dockerfiles-to-automate-building-of-images)

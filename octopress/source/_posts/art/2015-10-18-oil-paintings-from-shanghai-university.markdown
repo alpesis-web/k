@@ -8,6 +8,8 @@ tags: [exhibition, painting, oil painting]
 toc: false
 ---
 
+上海大学美术学院油画系作品展
+
 ## 1. 卫城 
 
 <img src="https://s-media-cache-ak0.pinimg.com/originals/a5/69/33/a569335b66a08b569611fd577023359e.jpg" />
