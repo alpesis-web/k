@@ -129,6 +129,54 @@
     <lastmod>2014-12-15T11:46:00+08:00</lastmod>
   </url>
   <url>
+    <loc>http://k.arttechresearch.com/tech/2014/12/09/cloudera-hadoop-example/</loc>
+    <lastmod>2014-12-09T20:21:37+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/12/09/installing-cloudera-hadoop-cluster-with-vagrant-virtualbox-and-cloudera-manager/</loc>
+    <lastmod>2014-12-09T10:09:22+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/12/08/installing-hue-on-a-single-node/</loc>
+    <lastmod>2014-12-08T09:48:12+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/12/07/installing-sqoop-on-a-single-node/</loc>
+    <lastmod>2014-12-07T17:33:32+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/12/07/installing-hbase-on-a-single-node/</loc>
+    <lastmod>2014-12-07T14:29:58+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/12/06/installing-zookeeper-on-a-single-node/</loc>
+    <lastmod>2014-12-06T10:09:02+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/12/05/hadoop-mapreduce-example/</loc>
+    <lastmod>2014-12-05T14:55:17+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/12/05/installing-hive-on-a-single-node/</loc>
+    <lastmod>2014-12-05T10:55:40+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/12/05/installing-hadoop-on-a-single-node/</loc>
+    <lastmod>2014-12-05T02:40:54+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/12/04/apache-hadoop-cluster-installation-guide/</loc>
+    <lastmod>2014-12-04T22:22:00+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/12/04/installing-cloudera-hadoop-with-quickstart-vm/</loc>
+    <lastmod>2014-12-04T21:44:15+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2014/12/03/mapreduce-and-hadoop/</loc>
+    <lastmod>2014-12-03T12:53:01+08:00</lastmod>
+  </url>
+  <url>
     <loc>http://k.arttechresearch.com/tech/2014/12/03/installing-cloudera-hadoop-on-ubuntu/</loc>
     <lastmod>2014-12-03T11:10:00+08:00</lastmod>
   </url>
@@ -684,10 +732,37 @@
     <loc>http://k.arttechresearch.com/tags/cloudera/</loc>
   </url>
   <url>
+    <loc>http://k.arttechresearch.com/tags/cluster/</loc>
+  </url>
+  <url>
     <loc>http://k.arttechresearch.com/tags/hadoop/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/ubuntu/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/mapreduce/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/virtualbox/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/hbase/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/hive/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/sqoop/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/zookeeper/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/java/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/hue/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/jenkins/</loc>
@@ -799,5 +874,8 @@
   </url>
   <url>
     <loc>http://k.arttechresearch.com/posts/13/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/posts/14/</loc>
   </url>
 </urlset>
