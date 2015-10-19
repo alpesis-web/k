@@ -55,6 +55,15 @@ $ ansible-playbook ...
 
 ## 3. Ansible Commands
 
+```bash
+$ ansible xxx
+$ ansible-playbook xxx
+```
+
+- `-i`: inventory
+- `-m`:
+- `-l`: limit
+
 ### 3.1. ansible
 
 ```bash
@@ -105,6 +114,47 @@ folder construct
 |-- templates/
 ```
 
+example
+
+```
+roles
+  |
+  |_some_role
+       |
+       |_files
+       |   |
+       |   |_file1
+       |   |_...
+       |
+       |_templates
+       |   |
+       |   |_template1.j2
+       |   |_...
+       |
+       |_tasks
+       |   |
+       |   |_main.yml
+       |   |_some_other_file.yml
+       |   |_ ...
+       |
+       |_handlers
+       |    |
+       |    |_main.yml
+       |    |_some_other_file.yml
+       |    |_ ...
+       |
+       |_vars
+       |    |
+       |    |_main.yml
+       |    |_some_other_file.yml
+       |    |_ ...
+       |
+       |_meta
+            |
+            |_main.yml
+            |_some_other_file.yml
+            |_ ...
+```
 
 #### 4.2.1. variables
 

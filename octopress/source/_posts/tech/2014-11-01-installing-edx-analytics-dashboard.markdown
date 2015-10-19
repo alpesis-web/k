@@ -13,6 +13,7 @@ tags: [edX, edX Analytics, ansible]
 
 - Python 2.7.x (not tested with Python 3.x)
 - gettext
+- node.js > 0.10.x
 - npm
 - JDK 7+
 
@@ -40,6 +41,12 @@ install by commands
 ```bash
 $ make develop
 ```
+
+Here there are 3 steps:
+
+- node.js: `npm install package`
+- bower: `bower install`
+- python: `python install -r requirements/xxx.txt`
 
 ### 4. Testing
 
@@ -76,6 +83,8 @@ $ cd edx-analytics-dashboard
 $ make migrate
 $ ./manage.py runserver 0.0.0.0:9000
 ```
+
+site: http://localhost:9000/test/auto_auth/
 
 ## References
 
