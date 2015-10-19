@@ -4,7 +4,7 @@ title:  "Installing Cloudera Hadoop on Ubuntu"
 date:   2014-12-03 11:10:00 +0800
 comments: true
 categories: [tech]
-tags: [cloudera, hadoop, linux, ubuntu]
+tags: [cloudera, hadoop, linux, ubuntu, cluster]
 ---
 
 NOTE: All hosts should be finished all the steps listed below.
