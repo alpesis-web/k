@@ -5,6 +5,7 @@ $img-border: inline-image('dotted-border.png') !default;
 //$theme-color: #527a00 !default;  // green
 //$theme-color: #731740 !default;  // purple
 $theme-color: #706F70 !default;    // dark grey
+$theme-color-highlight: #731740 !default;  // purple
 
 // Main Link Colors
 $link-color: lighten($theme-color, 3) !default; 
@@ -33,8 +34,7 @@ $type-border: #ddd !default;
 $nav-bg: #fff !default;               // white
 $nav-bg-front: image-url('noise.png') !default;
 $nav-bg-back: linear-gradient(lighten($nav-bg, 8), $nav-bg, darken($nav-bg, 11)) !default;
-// $nav-color: #fff !default;            // white
-$nav-color: $theme-color !default;
+$nav-color: #222 !default;            // white
 $nav-color-hover: darken($nav-bg, 68) !default;
 $nav-placeholder: darken($nav-bg, 68) !default;
 //$nav-placeholder: desaturate(darken($nav-bg, 10), 15) !default;
