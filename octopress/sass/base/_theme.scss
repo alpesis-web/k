@@ -35,8 +35,9 @@ $nav-bg: #fff !default;               // white
 $nav-bg-front: image-url('noise.png') !default;
 $nav-bg-back: linear-gradient(lighten($nav-bg, 8), $nav-bg, darken($nav-bg, 11)) !default;
 $nav-color: #222 !default;            // white
-$nav-color-hover: darken($nav-bg, 68) !default;
-$nav-placeholder: darken($nav-bg, 68) !default;
+//$nav-color-hover: darken($nav-bg, 68) !default;
+$nav-color-hover: $theme-color-highlight;
+$nav-placeholder: $theme-color-highlight;
 //$nav-placeholder: desaturate(darken($nav-bg, 10), 15) !default;
 $nav-border: darken($nav-bg, 10) !default;
 $nav-border-top: lighten($nav-bg, 15) !default;
