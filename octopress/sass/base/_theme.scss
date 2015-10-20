@@ -2,7 +2,9 @@ $noise-bg: image-url('noise.png') top left !default;
 $img-border: inline-image('dotted-border.png') !default;
 
 // theme
-$theme-color: #527a00 !default;  // green
+//$theme-color: #527a00 !default;  // green
+//$theme-color: #731740 !default;  // purple
+$theme-color: #706F70 !default;    // dark grey
 
 // Main Link Colors
 $link-color: lighten($theme-color, 3) !default; 
@@ -12,7 +14,8 @@ $link-color-active: adjust-color($link-color-hover, $lightness: -15) !default;
 
 
 // Main Section Colors
-$main-bg: #f8f8f8 !default;
+//$main-bg: #f8f8f8 !default;     // light grey
+$main-bg: #fff !default;          // white
 $page-bg: #fff !default;
 $article-border: #eeeeee !default;
 
@@ -22,14 +25,16 @@ $title-color: #222 !default;
 $subtitle-color: #aaa !default;
 
 $text-color: #222 !default;            // black
-$text-color-light: #aaa !default;      // gray
+$text-color-light: #aaa !default;      // grey
 $type-border: #ddd !default;
 
 /* Navigation */
-$nav-bg: $theme-color !default;  
+// $nav-bg: $theme-color !default;    // theme-color 
+$nav-bg: #fff !default;               // white
 $nav-bg-front: image-url('noise.png') !default;
 $nav-bg-back: linear-gradient(lighten($nav-bg, 8), $nav-bg, darken($nav-bg, 11)) !default;
-$nav-color: #fff !default;            // white
+// $nav-color: #fff !default;            // white
+$nav-color: $theme-color !default;
 $nav-color-hover: darken($nav-bg, 68) !default;
 $nav-placeholder: darken($nav-bg, 68) !default;
 //$nav-placeholder: desaturate(darken($nav-bg, 10), 15) !default;
@@ -40,7 +45,8 @@ $nav-border-left: darken($nav-bg, 11) !default;
 $nav-border-right: lighten($nav-bg, 7) !default;
 
 /* Sidebar colors */
-$sidebar-bg: #f2f2f2 !default;
+//$sidebar-bg: #f2f2f2 !default;
+$sidebar-bg: #fff !default;
 $sidebar-link-color: $text-color !default;
 $sidebar-link-color-hover: $link-color-hover !default;
 $sidebar-link-color-active: $link-color-active !default;
@@ -51,7 +57,8 @@ $sidebar-link-color-subdued: lighten($sidebar-color, 20) !default;
 $sidebar-link-color-subdued-hover: $sidebar-link-color-hover !default;
 
 $footer-color: #888 !default;
-$footer-bg: #ccc !default;
+//$footer-bg: #ccc !default;    // dark grey
+$footer-bg: #fff !default;      // white
 $footer-bg-front: image-url('noise.png') !default;
 $footer-bg-back: linear-gradient(lighten($footer-bg, 8), $footer-bg, darken($footer-bg, 11)) !default;
 $footer-color: darken($footer-bg, 38) !default;
