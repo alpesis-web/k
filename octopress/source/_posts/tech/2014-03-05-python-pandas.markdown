@@ -57,6 +57,13 @@ dataframe.T
 # sorting by header/names and values
 dataframe.sort_index(axis=1, ascending=False)
 dataframe.sort(columns='columnName')
+
+# for pandas==0.17.0
+data.sort_values(by=['Name', 'Date'])
+# sorted by dates and keep the first date records
+first_dates = data.sort_values(by=['Date']).drop_duplicates(subset='Name', keep='first')
+# sorted by dates and keep the last date records
+last_dates = data.sort_values(by=['Date']).drop_duplicates(subset='Name', keep='last')
 ```
 
 ### 3. selection
@@ -94,6 +101,9 @@ df[df.A > 0]
 
 # filter data by all columns
 df[df > 0]                   # if value <= 0, it will return NaN
+
+# multi filters
+data[(data['Date']=="2015-11-20") & (data['Change'] != "UNKNOWN")]
 ```
 
 
