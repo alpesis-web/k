@@ -4,7 +4,7 @@
   <title><![CDATA[Kelly Chan]]></title>
   <link href="http://k.arttechresearch.com/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2015-10-21T00:42:18+08:00</updated>
+  <updated>2015-10-21T11:03:07+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[Kelly Chan]]></name>
@@ -12,6 +12,201 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Ubuntu OpenStack Cloud Design]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/10/21/ubuntu-openstack-cloud-design/"/>
+    <updated>2015-10-21T09:10:58+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/10/21/ubuntu-openstack-cloud-design</id>
+    <content type="html"><![CDATA[<p><strong>NOTE: This is the study note from Ubuntu official white paper.</strong></p>
+
+<p>The OpenStack components are installed as Virtual Machines in a vSphere Cluster. This approach provides the following benefits:</p>
+
+<ul>
+<li>High availability via vSphere HA</li>
+<li>Better use of the hardware</li>
+<li>Flexibility to scale up and scale out easily as required</li>
+<li>Flexibility to adjust the specifications of each component ( RAM, Disk, vCPU, etc. )</li>
+<li>Faster deployment times</li>
+</ul>
+
+
+<h2>1. OpenStack Design</h2>
+
+<p>Logical Ubuntu Openstack Cloud Design</p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/1a/8e/c1/1a8ec1a4f112dfb5f06e5680a5743831.jpg" /></p>
+
+<p>Logical Ubuntu Cloud on vSphere Design</p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/ef/a0/c8/efa0c8bb3cde24a3ecc9c5a489d0d5e4.jpg" /></p>
+
+<p>design notes:</p>
+
+<ul>
+<li>A floating network (not shown) is optional</li>
+<li>Each vSphere cluster is associated with a nova-compute. One cannot map
+multiple clusters to the same nova-compute, otherwise the clusters would
+get merged to look like a single hypervisor thereby removing the option
+of having clusters in different OpenStack availability zones</li>
+<li>This setup allows for one nova service and one nova.conf for both clusters
+and each is represented as a separate nova-compute hypervisor instance to
+the OpenStack Nova scheduler</li>
+<li>As of this writing, using one nova.conf for both clusters is not recommended
+since there is no established method to define clusters into individual OpenStack
+availability zones.</li>
+<li>OpenStack component HA is achieved via Juju and Metal-as-a-Service (MAAS)</li>
+<li>OpenStack services shown in the Management Cluster can be distributed
+to other clusters depending on resource availability (not shown)</li>
+</ul>
+
+
+<p>VMWARE ESXI HYPERVISORS</p>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;"> VM Attribute         </th>
+<th style="text-align:left;"> Specification          </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> Number of CPUs       </td>
+<td style="text-align:left;"> 2                      </td>
+</tr>
+<tr>
+<td style="text-align:left;"> Memory               </td>
+<td style="text-align:left;"> 4 GB                   </td>
+</tr>
+<tr>
+<td style="text-align:left;"> Number of vNIC ports </td>
+<td style="text-align:left;"> 1 (Management network) </td>
+</tr>
+<tr>
+<td style="text-align:left;"> Disk 1               </td>
+<td style="text-align:left;"> 20 GB                  </td>
+</tr>
+<tr>
+<td style="text-align:left;"> Disk 2               </td>
+<td style="text-align:left;"> 20 GB                  </td>
+</tr>
+</tbody>
+</table>
+
+
+<h2>2. Network</h2>
+
+<p>Virtual networks exist to attach the VMs vNICs to the right physical networks.</p>
+
+<p>These are the vSphere networks for the environment:</p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/f4/e9/67/f4e967f6dfc72b397aabb47107900626.jpg" /></p>
+
+<p>In this design, OpenStack Havana is implemented with nova-network.</p>
+
+<p>OpenStack Neutron plus VMware NSX would be a recommended next step, but was not selected in this design.</p>
+
+<h3>2.1. DHCP and DNS DHCP</h3>
+
+<p>MAAS dynamically manages DHCP and DNS for all the OpenStack nodes using the Management Network.</p>
+
+<p>The MAAS node will also provide the Ubuntu Precise 12.04 LTS base images to the VMs in the Ubuntu Cloud via PXE boot through the same network.</p>
+
+<h3>2.2. Management network isolation</h3>
+
+<p>This design consists of one main network called the Management Network. Depending on your network configuration, you can connect a cloud portal or clients to this network to access the OpenStack APIs from other networks via routing.</p>
+
+<p>For security reasons this network should be isolated and only accessible from trusted services like a portal or a management client machine.</p>
+
+<p>Because this design is entirely on top of VMware vSphere running nova-network,
+OpenStack security groups are not available. As of this writing, OpenStack
+compute security group functionality is only achievable on vSphere when
+used in combination with VMware NSX SDN solution.</p>
+
+<h2>3. Storage</h2>
+
+<p>Each availability zone should have a Tier 2 SAN with sufficient resources for the planned workload available to be distributed via vSphere datastores to each vSphere cluster.</p>
+
+<p>Notes:</p>
+
+<ul>
+<li>The vSphere datastores used for the instances should not be used for any other purpose</li>
+<li>Disconnect any other datastore from the ESXi hosts not to be used for the
+instances: <a href="http://docs.openstack.org/havana/config-reference/content/vmware.html">http://docs.openstack.org/havana/config-reference/content/vmware.html</a></li>
+</ul>
+
+
+<h3>3.1. OpenStack instances storage</h3>
+
+<p>The OpenStack Instances are stored in a dedicated vSphere datastore.</p>
+
+<h3>3.2. Block storage with Cinder using the VMWare driver</h3>
+
+<p>OpenStack Cinder is handled using the VMware driver released with OpenStack Havana.</p>
+
+<p>Note: The current Cinder Juju Charm needs manual configuration after deployment to set up the VMware driver.</p>
+
+<h3>3.3. Object storage with Ceph rados gateway</h3>
+
+<p>A minimal configuration of Object Storage is needed to deploy OpenStack instances via Juju. For that purpose Ceph RADOS Gateway will be deployed with a default configuration in 3 VMs.</p>
+
+<p>Ceph RADOS Gateway will frontend the stored images and OpenStack Glance will point to it.</p>
+
+<p>VM Specifications</p>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;"> VM Attribute         </th>
+<th style="text-align:left;"> Specification          </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> Number of CPUs       </td>
+<td style="text-align:left;"> 2                      </td>
+</tr>
+<tr>
+<td style="text-align:left;"> Memory               </td>
+<td style="text-align:left;"> 4 GB                   </td>
+</tr>
+<tr>
+<td style="text-align:left;"> Number of vNIC ports </td>
+<td style="text-align:left;"> 1 (Management network) </td>
+</tr>
+<tr>
+<td style="text-align:left;"> Disk 1               </td>
+<td style="text-align:left;"> 20 GB                  </td>
+</tr>
+<tr>
+<td style="text-align:left;"> Disk 2               </td>
+<td style="text-align:left;"> 20 GB                  </td>
+</tr>
+</tbody>
+</table>
+
+
+<h3>3.4. VM image storage</h3>
+
+<p>The storage of the VM templates (images) is handled by the OpenStack Glance. Glance provides multi-tenant image storage services for an OpenStack deployment.</p>
+
+<p>In this design, to maximise availability of the images, Object Storage with Ceph RADOS Gateway will be used.</p>
+
+<h2>Conclusion</h2>
+
+<p>This OpenStack reference architecture provides a common abstraction and orchestration layer
+via OpenStack open APIs and Dashboard to control compute workloads while limiting changes
+to pre-existing VMware infrastructure.</p>
+
+<p>This approach allows organizations to extend the ROI of their infrastructure investment
+while developing and enhancing employees’ skills around a next generation platform in
+OpenStack. The cost saving extends further as teams understand the OpenStack paradigm
+enough to determine which workloads/ applications should remain legacy and which ones
+be upgraded to cloud centric fault tolerant designs early in the infrastructure
+migration process.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[OpenStack Architecture]]></title>
@@ -3392,134 +3587,6 @@ download the library, and copy <code>jquery.tableofcontents.min.js</code> to <co
 
 <ul>
 <li><a href="https://www.hipchat.com/docs/apiv2">Hipchat API Docs</a></li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Will Bot]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/09/30/will-bot/"/>
-    <updated>2015-09-30T14:52:04+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/09/30/will-bot</id>
-    <content type="html"><![CDATA[<h2>1. Installation</h2>
-
-<h3>1.1. Prequisition</h3>
-
-<ul>
-<li>Ubuntu 14.04</li>
-<li>Redis</li>
-<li>Will</li>
-</ul>
-
-
-<h3>1.2. Ubuntu</h3>
-
-<p>Ubuntu 14.04</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install python-virtualenv redis-server
-</span><span class='line'><span class="nv">$ </span>redis
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>1.3. Octowill</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /path/to/project/
-</span><span class='line'><span class="nv">$ </span>sudo mkdir octowill
-</span><span class='line'><span class="nv">$ </span>sudo chown -R user:group /path/to/octowill/
-</span><span class='line'><span class="nv">$ </span>sudo su user
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>octowill
-</span><span class='line'><span class="nv">$ </span>mkdir venvs
-</span><span class='line'><span class="nv">$ </span>virtualenv venvs/octowill
-</span><span class='line'><span class="nv">$ </span><span class="nb">source </span>venvs/octowill/bin/activate
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span>git clone https://github.com/KellyChan/octowill.git
-</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>octowill
-</span><span class='line'><span class="nv">$ </span>pip install -r requirements.txt
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>2. Configuration</h2>
-
-<h3>2.1. Prequistion</h3>
-
-<ul>
-<li>hipchat account</li>
-<li>octowill</li>
-</ul>
-
-
-<h3>2.2. Hipchat</h3>
-
-<ul>
-<li>signup hipchat</li>
-<li>get API tokens</li>
-</ul>
-
-
-<p>API summary</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>V2 Tokens:
-</span><span class='line'>- Administer Group - Perform group administrative tasks. Note that this scope is restricted from updating the group owner<span class="err">&#39;</span>s profile.
-</span><span class='line'>- Administer Room - Perform room administrative tasks
-</span><span class='line'>- Manage Rooms - Create, update, and remove rooms
-</span><span class='line'>- Send Message - Send private one-on-one messages
-</span><span class='line'>- Send Notification - Send room notifications
-</span><span class='line'>- View Group - View users, rooms, and other group information
-</span><span class='line'>- View Messages - View messages from chat rooms and private chats you have access to
-</span><span class='line'>- View Room - View room information and participants, but not <span class="nb">history</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>2.3. Octowill</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>octowill
-</span><span class='line'><span class="nv">$ </span>cp config.py.sample config.py
-</span><span class='line'><span class="nv">$ </span>vim config.py                   <span class="c"># update USERNAME, PASSWORD, V2_TOKENS</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>3. Testing</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>./start_dev/will.py
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>References</h2>
-
-<ul>
-<li><a href="https://github.com/skoczen/will">will</a></li>
-<li><a href="http://skoczen.github.io/will/">will document</a></li>
-<li><a href="https://www.hipchat.com">hiphat</a></li>
 </ul>
 
 ]]></content>
