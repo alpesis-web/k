@@ -4,7 +4,7 @@
   <title><![CDATA[Kelly Chan]]></title>
   <link href="http://k.arttechresearch.com/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2015-10-21T11:03:07+08:00</updated>
+  <updated>2015-10-21T21:16:43+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[Kelly Chan]]></name>
@@ -12,6 +12,68 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Converting Markdown to PDF With NodeJS]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/10/21/converting-markdown-to-pdf-with-nodejs/"/>
+    <updated>2015-10-21T19:57:50+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/10/21/converting-markdown-to-pdf-with-nodejs</id>
+    <content type="html"><![CDATA[<h2>Requirements</h2>
+
+<ul>
+<li>OS: OS X</li>
+<li>Language: Node.js/npm</li>
+<li>Dependency: markdown-pdf</li>
+</ul>
+
+
+<h2>Example</h2>
+
+<p>install dependency</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>npm install markdown-pdf
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>convert markdown to pdf</p>
+
+<figure class='code'><figcaption><span>md2pdf.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">md_file</span> <span class="o">=</span> <span class="s2">&quot;./file_name.md&quot;</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">output_file</span> <span class="o">=</span> <span class="s2">&quot;./outputs/file_name.pdf&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">markdownpdf</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&quot;markdown-pdf&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&quot;fs&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">fs</span><span class="p">.</span><span class="nx">createReadStream</span><span class="p">(</span><span class="nx">md_file</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">markdownpdf</span><span class="p">())</span>
+</span><span class='line'>  <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">fs</span><span class="p">.</span><span class="nx">createWriteStream</span><span class="p">(</span><span class="nx">output_file</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>testing</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>node md2pdf.js
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Reference</h2>
+
+<ul>
+<li><a href="https://www.npmjs.com/package/markdown-pdf">markdown-pdf</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Ubuntu OpenStack Cloud Design]]></title>
@@ -3551,43 +3613,6 @@ download the library, and copy <code>jquery.tableofcontents.min.js</code> to <co
 </span><span class='line'> |---- run_will.py                              # run will</span></code></pre></td></tr></table></div></figure>
 
 
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Hipchat API]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/09/30/hipchat-api/"/>
-    <updated>2015-09-30T15:09:22+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/09/30/hipchat-api</id>
-    <content type="html"><![CDATA[<h2>1. Hipchat API</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>ROOM_NOTIFICATION_URL = "https://%(server)s/v2/room/%(room_id)s/notification?auth_token=%(token)s    "
-</span><span class='line'>ROOM_TOPIC_URL = "https://%(server)s/v2/room/%(room_id)s/topic?auth_token=%(token)s"
-</span><span class='line'>PRIVATE_MESSAGE_URL = "https://%(server)s/v2/user/%(user_id)s/message?auth_token=%(token)s"
-</span><span class='line'>SET_TOPIC_URL = "https://%(server)s/v2/room/%(room_id)s/topic?auth_token=%(token)s"
-</span><span class='line'>USER_DETAILS_URL = "https://%(server)s/v2/user/%(user_id)s?auth_token=%(token)s"
-</span><span class='line'>ALL_USERS_URL = "https://%(server)s/v2/user?auth_token=%(token)s&start-index=%(start_index)s"</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>2. Command Line</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>curl -d <span class="s1">&#39;{&quot;color&quot;: &quot;green&quot;, &quot;message&quot;: &quot;message&quot;, &quot;notify&quot;: false, &quot;messae_format&quot;: &quot;text&quot;}&#39;</span> -H <span class="s1">&#39;Content-Type: application/json&#39;</span> https://api.hipchat.com/v2/room/room id/scope_name<span class="o">(</span>message/notification<span class="o">)</span>?auth_token<span class="o">=</span>specific_token
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Reference</h2>
-
-<ul>
-<li><a href="https://www.hipchat.com/docs/apiv2">Hipchat API Docs</a></li>
-</ul>
 
 ]]></content>
   </entry>
