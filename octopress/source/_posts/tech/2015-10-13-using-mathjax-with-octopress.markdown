@@ -45,10 +45,12 @@ mathjax.html
 </script>
 ```
 
+NOTE: The better way is to download the MathJax.js to the local server as well as the `extensions` for the MathJax.
+
 ## 2. Including MathJax in head.html
 
 ```bash
-$ vim octopress/_includes/head.html
+$ vim octopress/_includes/footer.html
 ```
 
 head.html
