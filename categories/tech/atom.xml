@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tech | Kelly Chan]]></title>
   <link href="http://k.arttechresearch.com/categories/tech/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2015-10-21T21:16:43+08:00</updated>
+  <updated>2015-10-23T16:26:56+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[Kelly Chan]]></name>
@@ -56,705 +56,6 @@ fs.createReadStream(md_file)
 
 <ul>
 <li><a href="https://www.npmjs.com/package/markdown-pdf">markdown-pdf</a></li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Ubuntu OpenStack Cloud Design]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/10/21/ubuntu-openstack-cloud-design/"/>
-    <updated>2015-10-21T09:10:58+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/10/21/ubuntu-openstack-cloud-design</id>
-    <content type="html"><![CDATA[<p><strong>NOTE: This is the study note from Ubuntu official white paper.</strong></p>
-
-<p>The OpenStack components are installed as Virtual Machines in a vSphere Cluster. This approach provides the following benefits:</p>
-
-<ul>
-<li>High availability via vSphere HA</li>
-<li>Better use of the hardware</li>
-<li>Flexibility to scale up and scale out easily as required</li>
-<li>Flexibility to adjust the specifications of each component ( RAM, Disk, vCPU, etc. )</li>
-<li>Faster deployment times</li>
-</ul>
-
-
-<h2>1. OpenStack Design</h2>
-
-<p>Logical Ubuntu Openstack Cloud Design</p>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/1a/8e/c1/1a8ec1a4f112dfb5f06e5680a5743831.jpg" /></p>
-
-<p>Logical Ubuntu Cloud on vSphere Design</p>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/ef/a0/c8/efa0c8bb3cde24a3ecc9c5a489d0d5e4.jpg" /></p>
-
-<p>design notes:</p>
-
-<ul>
-<li>A floating network (not shown) is optional</li>
-<li>Each vSphere cluster is associated with a nova-compute. One cannot map
-multiple clusters to the same nova-compute, otherwise the clusters would
-get merged to look like a single hypervisor thereby removing the option
-of having clusters in different OpenStack availability zones</li>
-<li>This setup allows for one nova service and one nova.conf for both clusters
-and each is represented as a separate nova-compute hypervisor instance to
-the OpenStack Nova scheduler</li>
-<li>As of this writing, using one nova.conf for both clusters is not recommended
-since there is no established method to define clusters into individual OpenStack
-availability zones.</li>
-<li>OpenStack component HA is achieved via Juju and Metal-as-a-Service (MAAS)</li>
-<li>OpenStack services shown in the Management Cluster can be distributed
-to other clusters depending on resource availability (not shown)</li>
-</ul>
-
-
-<p>VMWARE ESXI HYPERVISORS</p>
-
-<table>
-<thead>
-<tr>
-<th style="text-align:left;"> VM Attribute         </th>
-<th style="text-align:left;"> Specification          </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;"> Number of CPUs       </td>
-<td style="text-align:left;"> 2                      </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Memory               </td>
-<td style="text-align:left;"> 4 GB                   </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Number of vNIC ports </td>
-<td style="text-align:left;"> 1 (Management network) </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Disk 1               </td>
-<td style="text-align:left;"> 20 GB                  </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Disk 2               </td>
-<td style="text-align:left;"> 20 GB                  </td>
-</tr>
-</tbody>
-</table>
-
-
-<h2>2. Network</h2>
-
-<p>Virtual networks exist to attach the VMs vNICs to the right physical networks.</p>
-
-<p>These are the vSphere networks for the environment:</p>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/f4/e9/67/f4e967f6dfc72b397aabb47107900626.jpg" /></p>
-
-<p>In this design, OpenStack Havana is implemented with nova-network.</p>
-
-<p>OpenStack Neutron plus VMware NSX would be a recommended next step, but was not selected in this design.</p>
-
-<h3>2.1. DHCP and DNS DHCP</h3>
-
-<p>MAAS dynamically manages DHCP and DNS for all the OpenStack nodes using the Management Network.</p>
-
-<p>The MAAS node will also provide the Ubuntu Precise 12.04 LTS base images to the VMs in the Ubuntu Cloud via PXE boot through the same network.</p>
-
-<h3>2.2. Management network isolation</h3>
-
-<p>This design consists of one main network called the Management Network. Depending on your network configuration, you can connect a cloud portal or clients to this network to access the OpenStack APIs from other networks via routing.</p>
-
-<p>For security reasons this network should be isolated and only accessible from trusted services like a portal or a management client machine.</p>
-
-<p>Because this design is entirely on top of VMware vSphere running nova-network,
-OpenStack security groups are not available. As of this writing, OpenStack
-compute security group functionality is only achievable on vSphere when
-used in combination with VMware NSX SDN solution.</p>
-
-<h2>3. Storage</h2>
-
-<p>Each availability zone should have a Tier 2 SAN with sufficient resources for the planned workload available to be distributed via vSphere datastores to each vSphere cluster.</p>
-
-<p>Notes:</p>
-
-<ul>
-<li>The vSphere datastores used for the instances should not be used for any other purpose</li>
-<li>Disconnect any other datastore from the ESXi hosts not to be used for the
-instances: <a href="http://docs.openstack.org/havana/config-reference/content/vmware.html">http://docs.openstack.org/havana/config-reference/content/vmware.html</a></li>
-</ul>
-
-
-<h3>3.1. OpenStack instances storage</h3>
-
-<p>The OpenStack Instances are stored in a dedicated vSphere datastore.</p>
-
-<h3>3.2. Block storage with Cinder using the VMWare driver</h3>
-
-<p>OpenStack Cinder is handled using the VMware driver released with OpenStack Havana.</p>
-
-<p>Note: The current Cinder Juju Charm needs manual configuration after deployment to set up the VMware driver.</p>
-
-<h3>3.3. Object storage with Ceph rados gateway</h3>
-
-<p>A minimal configuration of Object Storage is needed to deploy OpenStack instances via Juju. For that purpose Ceph RADOS Gateway will be deployed with a default configuration in 3 VMs.</p>
-
-<p>Ceph RADOS Gateway will frontend the stored images and OpenStack Glance will point to it.</p>
-
-<p>VM Specifications</p>
-
-<table>
-<thead>
-<tr>
-<th style="text-align:left;"> VM Attribute         </th>
-<th style="text-align:left;"> Specification          </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;"> Number of CPUs       </td>
-<td style="text-align:left;"> 2                      </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Memory               </td>
-<td style="text-align:left;"> 4 GB                   </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Number of vNIC ports </td>
-<td style="text-align:left;"> 1 (Management network) </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Disk 1               </td>
-<td style="text-align:left;"> 20 GB                  </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Disk 2               </td>
-<td style="text-align:left;"> 20 GB                  </td>
-</tr>
-</tbody>
-</table>
-
-
-<h3>3.4. VM image storage</h3>
-
-<p>The storage of the VM templates (images) is handled by the OpenStack Glance. Glance provides multi-tenant image storage services for an OpenStack deployment.</p>
-
-<p>In this design, to maximise availability of the images, Object Storage with Ceph RADOS Gateway will be used.</p>
-
-<h2>Conclusion</h2>
-
-<p>This OpenStack reference architecture provides a common abstraction and orchestration layer
-via OpenStack open APIs and Dashboard to control compute workloads while limiting changes
-to pre-existing VMware infrastructure.</p>
-
-<p>This approach allows organizations to extend the ROI of their infrastructure investment
-while developing and enhancing employees’ skills around a next generation platform in
-OpenStack. The cost saving extends further as teams understand the OpenStack paradigm
-enough to determine which workloads/ applications should remain legacy and which ones
-be upgraded to cloud centric fault tolerant designs early in the infrastructure
-migration process.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[OpenStack Architecture]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/10/20/openstack-architecture/"/>
-    <updated>2015-10-20T21:16:40+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/10/20/openstack-architecture</id>
-    <content type="html"><![CDATA[<p><strong>NOTE: Here is the study note quoted from OpenStack official site.</strong></p>
-
-<p>OpenStack is an open source cloud computing platform for all types of clouds, which
-aims to be simple to implement, massively scalable, and feature rich.</p>
-
-<p>It provides an Infrastructure-as-a-Service (IaaS) solution through a set of interrelated
-services. Each service offers an application programming interface (API) that facilitates
-this integration.</p>
-
-<h2>1. Architecture</h2>
-
-<h3>1.1. Conceptual architecture</h3>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/75/71/1a/75711ac48a6bdac83020ae2677064023.jpg" /></p>
-
-<h3>1.2. Logical architecture</h3>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/originals/19/ad/48/19ad483814fe6454cfc2f57e08c808b5.png" /></p>
-
-<h2>2. Services</h2>
-
-<table>
-<thead>
-<tr>
-<th style="text-align:left;"> Service                 </th>
-<th style="text-align:left;"> Project    </th>
-<th style="text-align:left;"> Description                                            </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;"> Dashboard               </td>
-<td style="text-align:left;"> Horizon    </td>
-<td style="text-align:left;"> provides a web-based portal to interact services       </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Compute                 </td>
-<td style="text-align:left;"> Nova       </td>
-<td style="text-align:left;"> manages the lifecycle of compute instances             </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Networking              </td>
-<td style="text-align:left;"> Neutron    </td>
-<td style="text-align:left;"> enables Network-Connectivity-as-a-Service              </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Object Storage          </td>
-<td style="text-align:left;"> Swift      </td>
-<td style="text-align:left;"> stores and retrieves arbitrary unstructured data obj   </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Block Storage           </td>
-<td style="text-align:left;"> Cinder     </td>
-<td style="text-align:left;"> provides persistent block storage to running instances </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Identity service        </td>
-<td style="text-align:left;"> Keystone   </td>
-<td style="text-align:left;"> provides an authentication and authorization service   </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Image service           </td>
-<td style="text-align:left;"> Glance     </td>
-<td style="text-align:left;"> stores and retrieves virtual machine disk images       </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Telemetry               </td>
-<td style="text-align:left;"> Ceilometer </td>
-<td style="text-align:left;"> billing, benchmarking, scalability, and statistics     </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Orchestration           </td>
-<td style="text-align:left;"> Heat       </td>
-<td style="text-align:left;"> orchestrates multiple composite cloud applications     </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Database service        </td>
-<td style="text-align:left;"> Trove      </td>
-<td style="text-align:left;"> provides scalable and reliable Database-as-a-Service   </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Data processing service </td>
-<td style="text-align:left;"> Sahara     </td>
-<td style="text-align:left;"> Provides capabilities to provision and scale Hadoop    </td>
-</tr>
-</tbody>
-</table>
-
-
-<h2>3. Example: OpenStack Networking</h2>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/73/fe/d4/73fed4f20f920203c5100863008ab115.jpg" /></p>
-
-<ul>
-<li>Networking</li>
-<li>Node Types</li>
-<li>Components</li>
-</ul>
-
-
-<h3>3.1. Networking</h3>
-
-<p>Basic Node Deployment</p>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/b1/87/f5/b187f5d5009b91f613884506200a8993.jpg" /></p>
-
-<p>Performance Node Deployment</p>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/74/e9/9d/74e99d30f3ce216c4ff78c424d26ee1c.jpg" /></p>
-
-<h3>3.2. Node Types</h3>
-
-<ul>
-<li>Controller</li>
-<li>Compute</li>
-<li>Storage</li>
-<li>Network</li>
-<li>Utility</li>
-</ul>
-
-
-<h4>3.2.1. Controller</h4>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/ff/67/54/ff67549b6d23bc0f4fde39249ae4aaac.jpg" /></p>
-
-<h5>3.2.1.1. Definitions</h5>
-
-<p>Controller nodes are responsible for running the management software services needed for the OpenStack environment to function. These nodes:</p>
-
-<ul>
-<li>Provide the front door that people access as well as the API services that all other components in the environment talk to.</li>
-<li>Run a number of services in a highly available fashion, utilizing Pacemaker and HAProxy to provide a virtual IP and load-balancing functions so all controller nodes are being used.</li>
-<li>Supply highly available &ldquo;infrastructure&rdquo; services, such as MySQL and Qpid, that underpin all the services.</li>
-<li>Provide what is known as &ldquo;persistent storage&rdquo; through services run on the host as well. This persistent storage is backed onto the storage nodes for reliability.</li>
-</ul>
-
-
-<h5>3.2.1.2. Hareware</h5>
-
-<ul>
-<li>Model: Dell R620</li>
-<li>CPU: 2x Intel® Xeon® CPU E5-2620 0 @ 2.00 GHz</li>
-<li>Memory: 32 GB</li>
-<li>Disk: two 300 GB 10000 RPM SAS Disks</li>
-<li>Network: two 10G network ports</li>
-</ul>
-
-
-<h4>3.2.2. Compute</h4>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/8e/bd/9f/8ebd9f6888777c9d145fdf321f42bacc.jpg" /></p>
-
-<h5>3.2.2.1. Definitions</h5>
-
-<p>Compute nodes run the virtual machine instances in OpenStack. They:</p>
-
-<ul>
-<li>Run the bare minimum of services needed to facilitate these instances.</li>
-<li>Use local storage on the node for the virtual machines so that no VM migration or instance recovery at node failure is possible.</li>
-</ul>
-
-
-<h5>3.2.2.2. Hareware</h5>
-
-<ul>
-<li>Model: Dell R620</li>
-<li>CPU: 2x Intel® Xeon® CPU E5-2650 0 @ 2.00 GHz</li>
-<li>Memory: 128 GB</li>
-<li>Disk: two 600 GB 10000 RPM SAS Disks</li>
-<li>Network: four 10G network ports (For future proofing expansion)</li>
-</ul>
-
-
-<h4>3.2.3. Storage</h4>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/80/0e/9b/800e9b943e1867b81bf34858a3de4437.jpg" /></p>
-
-<h5>3.2.3.1. Definitions</h5>
-
-<p>Storage nodes store all the data required for the environment, including disk images in the Image service library, and the persistent storage volumes created by the Block Storage service. Storage nodes use GlusterFS technology to keep the data highly available and scalable.</p>
-
-<h5>3.2.3.2. Hareware</h5>
-
-<ul>
-<li>Model: Dell R720xd</li>
-<li>CPU: 2x Intel® Xeon® CPU E5-2620 0 @ 2.00 GHz</li>
-<li>Memory: 64 GB</li>
-<li>Disk: two 500 GB 7200 RPM SAS Disks and twenty-four 600 GB 10000 RPM SAS Disks</li>
-<li>Raid Controller: PERC H710P Integrated RAID Controller, 1 GB NV Cache</li>
-<li>Network: two 10G network ports</li>
-</ul>
-
-
-<h4>3.2.4. Network</h4>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/35/58/4d/35584d87ab5f1ca74a9ea32dc32d82ea.jpg" /></p>
-
-<h5>3.2.4.1. Definitions</h5>
-
-<p>Network nodes are responsible for doing all the virtual networking needed for people to create public or private networks and uplink their virtual machines into external networks. Network nodes:</p>
-
-<ul>
-<li>Form the only ingress and egress point for instances running on top of OpenStack.</li>
-<li>Run all of the environment&rsquo;s networking services, with the exception of the networking API service (which runs on the controller node).</li>
-</ul>
-
-
-<h5>3.2.4.2. Hareware</h5>
-
-<ul>
-<li>Model: Dell R620</li>
-<li>CPU: 1x Intel® Xeon® CPU E5-2620 0 @ 2.00 GHz</li>
-<li>Memory: 32 GB</li>
-<li>Disk: two 300 GB 10000 RPM SAS Disks</li>
-<li>Network: five 10G network ports</li>
-</ul>
-
-
-<h4>3.2.5. Utility</h4>
-
-<h5>3.2.5.1. Definitions</h5>
-
-<p>Utility nodes are used by internal administration staff only to provide a number of basic system administration functions needed to get the environment up and running and to maintain the hardware, OS, and software on which it runs.</p>
-
-<p>These nodes run services such as provisioning, configuration management, monitoring, or GlusterFS management software. They are not required to scale, although these machines are usually backed up.</p>
-
-<h5>3.2.5.2. Hareware</h5>
-
-<ul>
-<li>Model: Dell R620</li>
-<li>CPU: 2x Intel® Xeon® CPU E5-2620 0 @ 2.00 GHz</li>
-<li>Memory: 32 GB</li>
-<li>Disk: two 500 GB 7200 RPM SAS Disks</li>
-<li>Network: two 10G network ports</li>
-</ul>
-
-
-<h3>3.3. Components</h3>
-
-<table>
-<thead>
-<tr>
-<th style="text-align:left;"> Component                    </th>
-<th style="text-align:left;"> Detail                              </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;"> OpenStack release            </td>
-<td style="text-align:left;"> Havana                              </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Host operating system        </td>
-<td style="text-align:left;"> Red Hat Enterprise Linux 6.5        </td>
-</tr>
-<tr>
-<td style="text-align:left;"> OpenStack package repository </td>
-<td style="text-align:left;"> Red Hat Distributed OpenStack (RDO) </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Hypervisor                   </td>
-<td style="text-align:left;"> KVM                                 </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Database                     </td>
-<td style="text-align:left;"> MySQL                               </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Message queue                </td>
-<td style="text-align:left;"> Qpid                                </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Networking service           </td>
-<td style="text-align:left;"> OpenStack Networking                </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Tenant Network Separation    </td>
-<td style="text-align:left;"> VLAN                                </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Image service back end       </td>
-<td style="text-align:left;"> GlusterFS                           </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Identity driver              </td>
-<td style="text-align:left;"> SQL                                 </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Block Storage back end       </td>
-<td style="text-align:left;"> GlusterFS                           </td>
-</tr>
-</tbody>
-</table>
-
-
-<h4>3.3.1. Third Party Component Configuration</h4>
-
-<table>
-<th>Component</th>
-<th>Tuning</th>
-<th>Availability</th>
-<th>Scalability</th>
-
-<tr>
-<td>MySQL</td>
-<td>binlog-format = row</td>
-<td>
-Master/master replication. However, both nodes are not used at the same time. 
-Replication keeps all nodes as close to being up to date as possible (although 
-the asynchronous nature of the replication means a fully consistent state is not 
-possible). Connections to the database only happen through a Pacemaker virtual IP, 
-ensuring that most problems that occur with master-master replication can be avoided.
-</td>
-<td>
-Not heavily considered. Once load on the MySQL server increases enough that 
-scalability needs to be considered, multiple masters or a master/slave setup can be used.
-</td>
-</tr>
-
-<tr>
-<td>Qpid</td>
-<td>max-connections=1000 worker-threads=20 connection-backlog=10, sasl security enabled with SASL-BASIC authentication</td>
-<td>
-Qpid is added as a resource to the Pacemaker software that runs on Controller nodes where Qpid is situated. This ensures only one Qpid instance is running at one time, and the node with the Pacemaker virtual IP will always be the node running Qpid.
-</td>
-<td>
-Not heavily considered. However, Qpid can be changed to run on all controller nodes for scalability and availability purposes, and removed from Pacemaker.
-</td>
-</tr>
-
-<tr>
-<td>HAProxy</td>
-<td>maxconn 3000</td>
-<td>
-HAProxy is a software layer-7 load balancer used to front door all clustered OpenStack API components and do SSL termination. HAProxy can be added as a resource to the Pacemaker software that runs on the Controller nodes where HAProxy is situated. This ensures that only one HAProxy instance is running at one time, and the node with the Pacemaker virtual IP will always be the node running HAProxy.
-</td>
-<td>
-Not considered. HAProxy has small enough performance overheads that a single instance should scale enough for this level of workload. If extra scalability is needed, keepalived or other Layer-4 load balancing can be introduced to be placed in front of multiple copies of HAProxy.
-</td>
-</tr>
-
-<tr>
-<td>Memcached</td>
-<td>MAXCONN="8192" CACHESIZE="30457"</td>
-<td>
-Memcached is a fast in-memory key-value cache software that is used by OpenStack components for caching data and increasing performance. Memcached runs on all controller nodes, ensuring that should one go down, another instance of Memcached is available.
-</td>
-<td>
-Not considered. A single instance of Memcached should be able to scale to the desired workloads. If scalability is desired, HAProxy can be placed in front of Memcached (in raw tcp mode) to utilize multiple Memcached instances for scalability. However, this might cause cache consistency issues.
-</td>
-</tr>
-
-<tr>
-<td>Pacemaker</td>
-<td>
-Configured to use corosync and cman as a cluster communication stack/quorum manager, and as a two-node cluster.
-</td>
-<td>
-Pacemaker is the clustering software used to ensure the availability of services running on the controller and network nodes:
-
-- Because Pacemaker is cluster software, the software itself handles its own availability, leveraging corosync and cman underneath.
-- If you use the GlusterFS native client, no virtual IP is needed, since the client knows all about nodes after initial connection and automatically routes around failures on the client side.
-- If you use the NFS or SMB adaptor, you will need a virtual IP on which to mount the GlusterFS volumes.
-</td>
-<td>
-If more nodes need to be made cluster aware, Pacemaker can scale to 64 nodes.
-</td>
-</tr>
-
-<tr>
-<td>GlusterFS</td>
-<td>
-glusterfs performance profile "virt" enabled on all volumes. Volumes are setup in two-node replication.
-</td>
-<td>
-Glusterfs is a clustered file system that is run on the storage nodes to provide persistent scalable data storage in the environment. Because all connections to gluster use the gluster native mount points, the gluster instances themselves provide availability and failover functionality.
-</td>
-<td>
-The scalability of GlusterFS storage can be achieved by adding in more storage volumes.
-</td>
-</tr>
-
-</table>
-
-
-<h4>3.3.2. OpenStack Component Configuration</h4>
-
-<table>
-<tr>
-<th>Component</th>
-<th>Node Type</th>
-<th>Tuning</th>
-<th>Availability</th>
-<th>Scalability</th>
-</tr>
-
-
-<tr>
-<td>Dashboard (horizon)</td>
-<td>Controller</td>
-<td>
-Configured to use Memcached as a session store, neutron support is enabled, can_set_mount_point = False
-</td>
-<td>
-The dashboard is run on all controller nodes, ensuring at least one instance will be available in case of node failure. It also sits behind HAProxy, which detects when the software fails and routes requests around the failing instance.
-</td>
-<td>
-The dashboard is run on all controller nodes, so scalability can be achieved with additional controller nodes. HAProxy allows scalability for the dashboard as more nodes are added.
-</td>
-</tr>
-
-<tr>
-<td>Identity (keystone)</td>
-<td>Controller</td>
-<td>
-Configured to use Memcached for caching and PKI for tokens.
-</td>
-<td>
-Identity is run on all controller nodes, ensuring at least one instance will be available in case of node failure. Identity also sits behind HAProxy, which detects when the software fails and routes requests around the failing instance.
-</td>
-<td>
-Identity is run on all controller nodes, so scalability can be achieved with additional controller nodes. HAProxy allows scalability for Identity as more nodes are added.
-</td>
-</tr>
-
-<tr>
-<td>Image service (glance)</td>
-<td>Controller</td>
-<td>
-/var/lib/glance/images is a GlusterFS native mount to a Gluster volume off the storage layer.</td>
-<td>
-The Image service is run on all controller nodes, ensuring at least one instance will be available in case of node failure. It also sits behind HAProxy, which detects when the software fails and routes requests around the failing instance.
-</td>
-<td>
-The Image service is run on all controller nodes, so scalability can be achieved with additional controller nodes. HAProxy allows scalability for the Image service as more nodes are added.
-</td>
-</tr>
-
-<tr>
-<td>Compute (nova)</td>
-<td>Controller, Compute</td>
-<td>
-Configured to use Qpid, qpid_heartbeat = 10, configured to use Memcached for caching, configured to use libvirt, configured to use neutron.
-
-Configured nova-consoleauth to use Memcached for session management (so that it can have multiple copies and run in a load balancer).
-</td>
-<td>
-The nova API, scheduler, objectstore, cert, consoleauth, conductor, and vncproxy services are run on all controller nodes, ensuring at least one instance will be available in case of node failure. Compute is also behind HAProxy, which detects when the software fails and routes requests around the failing instance.
-
-Nova-compute and nova-conductor services, which run on the compute nodes, are only needed to run services on that node, so availability of those services is coupled tightly to the nodes that are available. As long as a compute node is up, it will have the needed services running on top of it.
-</td>
-<td>
-The nova API, scheduler, objectstore, cert, consoleauth, conductor, and vncproxy services are run on all controller nodes, so scalability can be achieved with additional controller nodes. HAProxy allows scalability for Compute as more nodes are added. The scalability of services running on the compute nodes (compute, conductor) is achieved linearly by adding in more compute nodes.
-</td>
-</tr>
-
-<tr>
-<td>Block Storage (cinder)</td>
-<td>Controller</td>
-<td>
-Configured to use Qpid, qpid_heartbeat = 10, configured to use a Gluster volume from the storage layer as the back end for Block Storage, using the Gluster native client.
-</td>
-<td>
-Block Storage API, scheduler, and volume services are run on all controller nodes, ensuring at least one instance will be available in case of node failure. Block Storage also sits behind HAProxy, which detects if the software fails and routes requests around the failing instance.
-</td>
-<td>
-Block Storage API, scheduler and volume services are run on all controller nodes, so scalability can be achieved with additional controller nodes. HAProxy allows scalability for Block Storage as more nodes are added.
-</td>
-</tr>
-
-<tr>
-<td>OpenStack Networking (neutron)</td>
-<td>Controller, Compute, Network</td>
-<td>
-Configured to use QPID, qpid_heartbeat = 10, kernel namespace support enabled, tenant_network_type = vlan, allow_overlapping_ips = true, tenant_network_type = vlan, bridge_uplinks = br-ex:em2, bridge_mappings = physnet1:br-ex
-</td>
-<td>
-The OpenStack Networking service is run on all controller nodes, ensuring at least one instance will be available in case of node failure. It also sits behind HAProxy, which detects if the software fails and routes requests around the failing instance.
-
-OpenStack Networking's ovs-agent, l3-agent, dhcp-agent, and metadata-agent services run on the network nodes, as lsb resources inside of Pacemaker. This means that in the case of network node failure, services are kept running on another node. Finally, the ovs-agent service is also run on all compute nodes, and in case of compute node failure, the other nodes will continue to function using the copy of the service running on them.
-</td>
-<td>
-The OpenStack Networking server service is run on all controller nodes, so scalability can be achieved with additional controller nodes. HAProxy allows scalability for OpenStack Networking as more nodes are added. Scalability of services running on the network nodes is not currently supported by OpenStack Networking, so they are not be considered. One copy of the services should be sufficient to handle the workload. Scalability of the ovs-agent running on compute nodes is achieved by adding in more compute nodes as necessary.
-</td>
-</tr>
-
-</table>
-
-
-<h2>Reference</h2>
-
-<ul>
-<li><a href="http://docs.openstack.org/openstack-ops/content/architecture.html">OpenStack Ops Architecture</a></li>
-<li><a href="http://docs.openstack.org/admin-guide-cloud/common/conventions.html">OpenStack Admin Guide Cloud</a></li>
 </ul>
 
 ]]></content>
@@ -927,6 +228,281 @@ python              2.7.7               a87a2288ce78        15 months ago       
 
 <ul>
 <li><a href="https://github.com/edx/alton">alton</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Docker Key Concepts]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/10/18/docker-key-concepts/"/>
+    <updated>2015-10-18T14:43:07+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/10/18/docker-key-concepts</id>
+    <content type="html"><![CDATA[<h2>1. Docker Host and Docker Client</h2>
+
+<h3>1.1. Linux</h3>
+
+<p><img src="https://docs.docker.com/installation/images/linux_docker_host.svg" /></p>
+
+<p>In a Docker installation on Linux, your physical machine is both the localhost and the Docker host.</p>
+
+<ul>
+<li>networking, (localhost) your computer, (docker host) the computer which the containers run</li>
+<li>(localhost) runs docker client, docker daemon, any containers</li>
+<li>(port) docker containers using standard <code>localhost</code> addressing such as <code>localhost:8000</code> or <code>0.0.0.0:8376</code></li>
+</ul>
+
+
+<h3>1.2. OS X</h3>
+
+<p><img src="https://docs.docker.com/installation/images/mac_docker_host.svg" /></p>
+
+<p>In an OS X installation, the docker daemon is running inside a Linux VM called i<code>default</code>.
+The <code>default</code> is a lightweight Linux VM made specifically to run the Docker daemon on Mac OS X.
+The VM runs completely from RAM, is a small ~24MB download, and boots in approximately 5s.</p>
+
+<p>In OS X, the Docker host address is the address of the Linux VM.</p>
+
+<ul>
+<li>OS X &lt;=> VM &lt;=> containers</li>
+<li>When you start the VM with docker-machine it is assigned an IP address.</li>
+<li>When you start a container, the ports on a container map to ports on the VM.</li>
+</ul>
+
+
+<h2>Docker vs Vagrant/VirtualBox + Git</h2>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;"> Docker     </th>
+<th style="text-align:left;"> Vagrant         </th>
+<th style="text-align:left;"> VirtualBox  </th>
+<th style="text-align:left;"> Git   </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> Dockerfile </td>
+<td style="text-align:left;"> Vagrantfile     </td>
+<td style="text-align:left;">             </td>
+<td style="text-align:left;">       </td>
+</tr>
+<tr>
+<td style="text-align:left;"> image      </td>
+<td style="text-align:left;"> box             </td>
+<td style="text-align:left;">             </td>
+<td style="text-align:left;">       </td>
+</tr>
+<tr>
+<td style="text-align:left;"> container  </td>
+<td style="text-align:left;">                 </td>
+<td style="text-align:left;">             </td>
+<td style="text-align:left;">       </td>
+</tr>
+</tbody>
+</table>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Generating TOC With Javascript for Octopress]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/10/17/generating-toc-with-javascript-for-octopress/"/>
+    <updated>2015-10-17T12:37:04+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/10/17/generating-toc-with-javascript-for-octopress</id>
+    <content type="html"><![CDATA[<p>Features:</p>
+
+<ul>
+<li>genearting a table of contents in a article</li>
+<li>user can set toc if true/false</li>
+</ul>
+
+
+<p>Devkits:</p>
+
+<ul>
+<li>javascript</li>
+<li>html</li>
+<li>sass</li>
+</ul>
+
+
+<h2>1. HTML</h2>
+
+<h3>1.1. toc_generator.html</h3>
+
+<p>octopress/source/_includes/toc_generator.html</p>
+
+<pre><code class="html toc_generator.html">    {\% if index %\}
+      {\% comment %\}
+        No table of contents on the index page.
+      {\% endcomment %\}
+
+    {\% elsif page.toc == true %\}
+      &lt;script type="text/javascript"&gt;
+      jQuery(document).ready(function() {
+        // Put a TOC right before the entry content.
+        generateTOC('.entry-content', 'Table of Contents');
+      });
+      &lt;/script&gt;
+    {\% endif %\}
+</code></pre>
+
+<h3>1.2. article.html</h3>
+
+<p>Include <code>toc_generator.html</code> at the end of <code>article.html</code></p>
+
+<pre><code class="html article.html">...
+
+{\% include toc_generator.html %\}
+</code></pre>
+
+<h2>2. Javascript</h2>
+
+<h3>2.1. update the libraries</h3>
+
+<p>octopress/source/_includes/head.html</p>
+
+<p>```javascript head.html</p>
+
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.min.js"></script>
+
+
+<script src="{\{ root_url }\}/javascripts/jquery.tableofcontents.min.js" type="text/javascript"></script>
+
+
+<script src="{\{ root_url }\}/javascripts/toc_generator.js" type="text/javascript"></script>
+
+
+<pre><code>
+### 2.2. jquery.tableofcontents.min.js
+
+Go to [TOC jQuery Plugin](http://fuelyourcoding.com/scripts/toc/), 
+download the library, and copy `jquery.tableofcontents.min.js` to `octopress/source/javascript/`.
+
+
+### 2.3. toc_generator.js
+
+octopress/source/javascript/toc_generator.js
+</code></pre>
+
+<pre><code>function generateTOC(insertBefore, heading) {
+  var container = jQuery("&lt;div id='tocBlock'&gt;&lt;/div&gt;");
+  var div = jQuery("&lt;ul id='toc'&gt;&lt;/ul&gt;");
+  var content = $(insertBefore).first();
+
+  if (heading != undefined &amp;&amp; heading != null) {
+    container.append('&lt;span class="tocHeading"&gt;' + heading + '&lt;/span&gt;');
+  }
+
+  div.tableOfContents(content);
+  container.append(div);
+  container.insertBefore(insertBefore);
+}
+</code></pre>
+
+<pre><code>
+## 3. SASS
+
+### 3.1. _utilities.scss
+
+octopress/sass/base/_utilities.scss
+</code></pre>
+
+<pre><code>@mixin rounded-border($radius: 10px) {
+    border-radius: $radius;
+    -moz-border-radius: $radius;
+   padding: $radius;
+}
+
+@mixin centered($width: auto) {
+    width: $width !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+@mixin drop-shadow-right-bottom($width: 5px, $color: #999) {
+    box-shadow: $width $width $width $color;
+    -moz-box-shadow: $width $width $width $color;
+    -webkit-box-shadow: $width $width $width $color;
+}
+</code></pre>
+
+<pre><code>
+### 3.2. _toc_generator.scss
+
+ocotpress/sass/partials/_toc_generator.scss
+</code></pre>
+
+<pre><code>bg: #e8e8e8;
+$toc-incr: 5px;
+
+div#tocBlock {
+    @include drop-shadow-right-bottom(5px, #999);
+    @include rounded-border(10px);
+    float: right;
+    font-size: 10pt;
+    width: 300px;
+    padding-left: 20px;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 0px;
+
+    background: $toc-bg;
+    border: solid 1px #ccc;
+    margin: 0 0 10px 15px;
+
+    .tocHeading {
+    font-weight: bold;
+    font-size: 125%;
+    }
+
+    ul { list-style: none; }
+
+    #toc {
+    background: $toc-bg;
+    ul {
+        li {
+        margin-left: $toc-incr !important;
+        padding: 0 !important;
+        list-style: disc;
+        }
+    }
+    }
+}
+</code></pre>
+
+<pre><code>
+### 3.3. _partials.scss
+
+octopress/sass/_particials.scss
+</code></pre>
+
+<pre><code>@import "partials/toc_generator";
+</code></pre>
+
+<pre><code>
+## 4. Rakefile
+
+`octopress/Rakefile`: update the head variable for `new_post_tech`, `new_post_art` and `new_post_life`.
+</code></pre>
+
+<pre><code>post.puts "toc: false"
+</code></pre>
+
+<p>```</p>
+
+<h2>5. Testing</h2>
+
+<p><code>rake new_post_tech['post_name']</code>, check the header if <code>toc: false</code> exists.</p>
+
+<p>If <code>toc: true</code>, the table of contents will be generated, if <code>toc:false</code>, no table of contents.</p>
+
+<h2>Reference</h2>
+
+<ul>
+<li><a href="http://brizzled.clapper.org/blog/2012/02/04/generating-a-table-of-contents-in-octopress/">Generating a table of contents in Octopress</a></li>
 </ul>
 
 ]]></content>

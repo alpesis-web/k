@@ -5,14 +5,6 @@
     <lastmod>2015-10-21T19:57:50+08:00</lastmod>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tech/2015/10/21/ubuntu-openstack-cloud-design/</loc>
-    <lastmod>2015-10-21T09:10:58+08:00</lastmod>
-  </url>
-  <url>
-    <loc>http://k.arttechresearch.com/tech/2015/10/20/openstack-architecture/</loc>
-    <lastmod>2015-10-20T21:16:40+08:00</lastmod>
-  </url>
-  <url>
     <loc>http://k.arttechresearch.com/tech/2015/10/19/summary-on-edx-devkits/</loc>
     <lastmod>2015-10-19T14:13:04+08:00</lastmod>
   </url>
@@ -47,10 +39,6 @@
   <url>
     <loc>http://k.arttechresearch.com/tech/2015/10/13/using-mathjax-with-octopress/</loc>
     <lastmod>2015-10-13T10:26:29+08:00</lastmod>
-  </url>
-  <url>
-    <loc>http://k.arttechresearch.com/art/2015/10/11/inside-a-french-chateau-by-kraemer-gallery/</loc>
-    <lastmod>2015-10-11T22:46:04+08:00</lastmod>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tech/2015/10/06/adding-tag-generator-in-octopress/</loc>
@@ -937,9 +925,6 @@
     <loc>http://k.arttechresearch.com/tags/octopress/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/antique/</loc>
-  </url>
-  <url>
     <loc>http://k.arttechresearch.com/tags/exhibition/</loc>
   </url>
   <url>
@@ -950,12 +935,6 @@
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/edx-ai/</loc>
-  </url>
-  <url>
-    <loc>http://k.arttechresearch.com/tags/vmware/</loc>
-  </url>
-  <url>
-    <loc>http://k.arttechresearch.com/tags/vsphere/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/markdown/</loc>

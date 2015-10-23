@@ -4,7 +4,7 @@
   <title><![CDATA[Kelly Chan]]></title>
   <link href="http://k.arttechresearch.com/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2015-10-21T21:16:43+08:00</updated>
+  <updated>2015-10-23T16:26:56+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[Kelly Chan]]></name>
@@ -70,705 +70,6 @@
 
 <ul>
 <li><a href="https://www.npmjs.com/package/markdown-pdf">markdown-pdf</a></li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Ubuntu OpenStack Cloud Design]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/10/21/ubuntu-openstack-cloud-design/"/>
-    <updated>2015-10-21T09:10:58+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/10/21/ubuntu-openstack-cloud-design</id>
-    <content type="html"><![CDATA[<p><strong>NOTE: This is the study note from Ubuntu official white paper.</strong></p>
-
-<p>The OpenStack components are installed as Virtual Machines in a vSphere Cluster. This approach provides the following benefits:</p>
-
-<ul>
-<li>High availability via vSphere HA</li>
-<li>Better use of the hardware</li>
-<li>Flexibility to scale up and scale out easily as required</li>
-<li>Flexibility to adjust the specifications of each component ( RAM, Disk, vCPU, etc. )</li>
-<li>Faster deployment times</li>
-</ul>
-
-
-<h2>1. OpenStack Design</h2>
-
-<p>Logical Ubuntu Openstack Cloud Design</p>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/1a/8e/c1/1a8ec1a4f112dfb5f06e5680a5743831.jpg" /></p>
-
-<p>Logical Ubuntu Cloud on vSphere Design</p>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/ef/a0/c8/efa0c8bb3cde24a3ecc9c5a489d0d5e4.jpg" /></p>
-
-<p>design notes:</p>
-
-<ul>
-<li>A floating network (not shown) is optional</li>
-<li>Each vSphere cluster is associated with a nova-compute. One cannot map
-multiple clusters to the same nova-compute, otherwise the clusters would
-get merged to look like a single hypervisor thereby removing the option
-of having clusters in different OpenStack availability zones</li>
-<li>This setup allows for one nova service and one nova.conf for both clusters
-and each is represented as a separate nova-compute hypervisor instance to
-the OpenStack Nova scheduler</li>
-<li>As of this writing, using one nova.conf for both clusters is not recommended
-since there is no established method to define clusters into individual OpenStack
-availability zones.</li>
-<li>OpenStack component HA is achieved via Juju and Metal-as-a-Service (MAAS)</li>
-<li>OpenStack services shown in the Management Cluster can be distributed
-to other clusters depending on resource availability (not shown)</li>
-</ul>
-
-
-<p>VMWARE ESXI HYPERVISORS</p>
-
-<table>
-<thead>
-<tr>
-<th style="text-align:left;"> VM Attribute         </th>
-<th style="text-align:left;"> Specification          </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;"> Number of CPUs       </td>
-<td style="text-align:left;"> 2                      </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Memory               </td>
-<td style="text-align:left;"> 4 GB                   </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Number of vNIC ports </td>
-<td style="text-align:left;"> 1 (Management network) </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Disk 1               </td>
-<td style="text-align:left;"> 20 GB                  </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Disk 2               </td>
-<td style="text-align:left;"> 20 GB                  </td>
-</tr>
-</tbody>
-</table>
-
-
-<h2>2. Network</h2>
-
-<p>Virtual networks exist to attach the VMs vNICs to the right physical networks.</p>
-
-<p>These are the vSphere networks for the environment:</p>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/f4/e9/67/f4e967f6dfc72b397aabb47107900626.jpg" /></p>
-
-<p>In this design, OpenStack Havana is implemented with nova-network.</p>
-
-<p>OpenStack Neutron plus VMware NSX would be a recommended next step, but was not selected in this design.</p>
-
-<h3>2.1. DHCP and DNS DHCP</h3>
-
-<p>MAAS dynamically manages DHCP and DNS for all the OpenStack nodes using the Management Network.</p>
-
-<p>The MAAS node will also provide the Ubuntu Precise 12.04 LTS base images to the VMs in the Ubuntu Cloud via PXE boot through the same network.</p>
-
-<h3>2.2. Management network isolation</h3>
-
-<p>This design consists of one main network called the Management Network. Depending on your network configuration, you can connect a cloud portal or clients to this network to access the OpenStack APIs from other networks via routing.</p>
-
-<p>For security reasons this network should be isolated and only accessible from trusted services like a portal or a management client machine.</p>
-
-<p>Because this design is entirely on top of VMware vSphere running nova-network,
-OpenStack security groups are not available. As of this writing, OpenStack
-compute security group functionality is only achievable on vSphere when
-used in combination with VMware NSX SDN solution.</p>
-
-<h2>3. Storage</h2>
-
-<p>Each availability zone should have a Tier 2 SAN with sufficient resources for the planned workload available to be distributed via vSphere datastores to each vSphere cluster.</p>
-
-<p>Notes:</p>
-
-<ul>
-<li>The vSphere datastores used for the instances should not be used for any other purpose</li>
-<li>Disconnect any other datastore from the ESXi hosts not to be used for the
-instances: <a href="http://docs.openstack.org/havana/config-reference/content/vmware.html">http://docs.openstack.org/havana/config-reference/content/vmware.html</a></li>
-</ul>
-
-
-<h3>3.1. OpenStack instances storage</h3>
-
-<p>The OpenStack Instances are stored in a dedicated vSphere datastore.</p>
-
-<h3>3.2. Block storage with Cinder using the VMWare driver</h3>
-
-<p>OpenStack Cinder is handled using the VMware driver released with OpenStack Havana.</p>
-
-<p>Note: The current Cinder Juju Charm needs manual configuration after deployment to set up the VMware driver.</p>
-
-<h3>3.3. Object storage with Ceph rados gateway</h3>
-
-<p>A minimal configuration of Object Storage is needed to deploy OpenStack instances via Juju. For that purpose Ceph RADOS Gateway will be deployed with a default configuration in 3 VMs.</p>
-
-<p>Ceph RADOS Gateway will frontend the stored images and OpenStack Glance will point to it.</p>
-
-<p>VM Specifications</p>
-
-<table>
-<thead>
-<tr>
-<th style="text-align:left;"> VM Attribute         </th>
-<th style="text-align:left;"> Specification          </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;"> Number of CPUs       </td>
-<td style="text-align:left;"> 2                      </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Memory               </td>
-<td style="text-align:left;"> 4 GB                   </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Number of vNIC ports </td>
-<td style="text-align:left;"> 1 (Management network) </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Disk 1               </td>
-<td style="text-align:left;"> 20 GB                  </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Disk 2               </td>
-<td style="text-align:left;"> 20 GB                  </td>
-</tr>
-</tbody>
-</table>
-
-
-<h3>3.4. VM image storage</h3>
-
-<p>The storage of the VM templates (images) is handled by the OpenStack Glance. Glance provides multi-tenant image storage services for an OpenStack deployment.</p>
-
-<p>In this design, to maximise availability of the images, Object Storage with Ceph RADOS Gateway will be used.</p>
-
-<h2>Conclusion</h2>
-
-<p>This OpenStack reference architecture provides a common abstraction and orchestration layer
-via OpenStack open APIs and Dashboard to control compute workloads while limiting changes
-to pre-existing VMware infrastructure.</p>
-
-<p>This approach allows organizations to extend the ROI of their infrastructure investment
-while developing and enhancing employees’ skills around a next generation platform in
-OpenStack. The cost saving extends further as teams understand the OpenStack paradigm
-enough to determine which workloads/ applications should remain legacy and which ones
-be upgraded to cloud centric fault tolerant designs early in the infrastructure
-migration process.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[OpenStack Architecture]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/10/20/openstack-architecture/"/>
-    <updated>2015-10-20T21:16:40+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/10/20/openstack-architecture</id>
-    <content type="html"><![CDATA[<p><strong>NOTE: Here is the study note quoted from OpenStack official site.</strong></p>
-
-<p>OpenStack is an open source cloud computing platform for all types of clouds, which
-aims to be simple to implement, massively scalable, and feature rich.</p>
-
-<p>It provides an Infrastructure-as-a-Service (IaaS) solution through a set of interrelated
-services. Each service offers an application programming interface (API) that facilitates
-this integration.</p>
-
-<h2>1. Architecture</h2>
-
-<h3>1.1. Conceptual architecture</h3>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/75/71/1a/75711ac48a6bdac83020ae2677064023.jpg" /></p>
-
-<h3>1.2. Logical architecture</h3>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/originals/19/ad/48/19ad483814fe6454cfc2f57e08c808b5.png" /></p>
-
-<h2>2. Services</h2>
-
-<table>
-<thead>
-<tr>
-<th style="text-align:left;"> Service                 </th>
-<th style="text-align:left;"> Project    </th>
-<th style="text-align:left;"> Description                                            </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;"> Dashboard               </td>
-<td style="text-align:left;"> Horizon    </td>
-<td style="text-align:left;"> provides a web-based portal to interact services       </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Compute                 </td>
-<td style="text-align:left;"> Nova       </td>
-<td style="text-align:left;"> manages the lifecycle of compute instances             </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Networking              </td>
-<td style="text-align:left;"> Neutron    </td>
-<td style="text-align:left;"> enables Network-Connectivity-as-a-Service              </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Object Storage          </td>
-<td style="text-align:left;"> Swift      </td>
-<td style="text-align:left;"> stores and retrieves arbitrary unstructured data obj   </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Block Storage           </td>
-<td style="text-align:left;"> Cinder     </td>
-<td style="text-align:left;"> provides persistent block storage to running instances </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Identity service        </td>
-<td style="text-align:left;"> Keystone   </td>
-<td style="text-align:left;"> provides an authentication and authorization service   </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Image service           </td>
-<td style="text-align:left;"> Glance     </td>
-<td style="text-align:left;"> stores and retrieves virtual machine disk images       </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Telemetry               </td>
-<td style="text-align:left;"> Ceilometer </td>
-<td style="text-align:left;"> billing, benchmarking, scalability, and statistics     </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Orchestration           </td>
-<td style="text-align:left;"> Heat       </td>
-<td style="text-align:left;"> orchestrates multiple composite cloud applications     </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Database service        </td>
-<td style="text-align:left;"> Trove      </td>
-<td style="text-align:left;"> provides scalable and reliable Database-as-a-Service   </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Data processing service </td>
-<td style="text-align:left;"> Sahara     </td>
-<td style="text-align:left;"> Provides capabilities to provision and scale Hadoop    </td>
-</tr>
-</tbody>
-</table>
-
-
-<h2>3. Example: OpenStack Networking</h2>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/73/fe/d4/73fed4f20f920203c5100863008ab115.jpg" /></p>
-
-<ul>
-<li>Networking</li>
-<li>Node Types</li>
-<li>Components</li>
-</ul>
-
-
-<h3>3.1. Networking</h3>
-
-<p>Basic Node Deployment</p>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/b1/87/f5/b187f5d5009b91f613884506200a8993.jpg" /></p>
-
-<p>Performance Node Deployment</p>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/74/e9/9d/74e99d30f3ce216c4ff78c424d26ee1c.jpg" /></p>
-
-<h3>3.2. Node Types</h3>
-
-<ul>
-<li>Controller</li>
-<li>Compute</li>
-<li>Storage</li>
-<li>Network</li>
-<li>Utility</li>
-</ul>
-
-
-<h4>3.2.1. Controller</h4>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/ff/67/54/ff67549b6d23bc0f4fde39249ae4aaac.jpg" /></p>
-
-<h5>3.2.1.1. Definitions</h5>
-
-<p>Controller nodes are responsible for running the management software services needed for the OpenStack environment to function. These nodes:</p>
-
-<ul>
-<li>Provide the front door that people access as well as the API services that all other components in the environment talk to.</li>
-<li>Run a number of services in a highly available fashion, utilizing Pacemaker and HAProxy to provide a virtual IP and load-balancing functions so all controller nodes are being used.</li>
-<li>Supply highly available &ldquo;infrastructure&rdquo; services, such as MySQL and Qpid, that underpin all the services.</li>
-<li>Provide what is known as &ldquo;persistent storage&rdquo; through services run on the host as well. This persistent storage is backed onto the storage nodes for reliability.</li>
-</ul>
-
-
-<h5>3.2.1.2. Hareware</h5>
-
-<ul>
-<li>Model: Dell R620</li>
-<li>CPU: 2x Intel® Xeon® CPU E5-2620 0 @ 2.00 GHz</li>
-<li>Memory: 32 GB</li>
-<li>Disk: two 300 GB 10000 RPM SAS Disks</li>
-<li>Network: two 10G network ports</li>
-</ul>
-
-
-<h4>3.2.2. Compute</h4>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/8e/bd/9f/8ebd9f6888777c9d145fdf321f42bacc.jpg" /></p>
-
-<h5>3.2.2.1. Definitions</h5>
-
-<p>Compute nodes run the virtual machine instances in OpenStack. They:</p>
-
-<ul>
-<li>Run the bare minimum of services needed to facilitate these instances.</li>
-<li>Use local storage on the node for the virtual machines so that no VM migration or instance recovery at node failure is possible.</li>
-</ul>
-
-
-<h5>3.2.2.2. Hareware</h5>
-
-<ul>
-<li>Model: Dell R620</li>
-<li>CPU: 2x Intel® Xeon® CPU E5-2650 0 @ 2.00 GHz</li>
-<li>Memory: 128 GB</li>
-<li>Disk: two 600 GB 10000 RPM SAS Disks</li>
-<li>Network: four 10G network ports (For future proofing expansion)</li>
-</ul>
-
-
-<h4>3.2.3. Storage</h4>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/80/0e/9b/800e9b943e1867b81bf34858a3de4437.jpg" /></p>
-
-<h5>3.2.3.1. Definitions</h5>
-
-<p>Storage nodes store all the data required for the environment, including disk images in the Image service library, and the persistent storage volumes created by the Block Storage service. Storage nodes use GlusterFS technology to keep the data highly available and scalable.</p>
-
-<h5>3.2.3.2. Hareware</h5>
-
-<ul>
-<li>Model: Dell R720xd</li>
-<li>CPU: 2x Intel® Xeon® CPU E5-2620 0 @ 2.00 GHz</li>
-<li>Memory: 64 GB</li>
-<li>Disk: two 500 GB 7200 RPM SAS Disks and twenty-four 600 GB 10000 RPM SAS Disks</li>
-<li>Raid Controller: PERC H710P Integrated RAID Controller, 1 GB NV Cache</li>
-<li>Network: two 10G network ports</li>
-</ul>
-
-
-<h4>3.2.4. Network</h4>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/35/58/4d/35584d87ab5f1ca74a9ea32dc32d82ea.jpg" /></p>
-
-<h5>3.2.4.1. Definitions</h5>
-
-<p>Network nodes are responsible for doing all the virtual networking needed for people to create public or private networks and uplink their virtual machines into external networks. Network nodes:</p>
-
-<ul>
-<li>Form the only ingress and egress point for instances running on top of OpenStack.</li>
-<li>Run all of the environment&rsquo;s networking services, with the exception of the networking API service (which runs on the controller node).</li>
-</ul>
-
-
-<h5>3.2.4.2. Hareware</h5>
-
-<ul>
-<li>Model: Dell R620</li>
-<li>CPU: 1x Intel® Xeon® CPU E5-2620 0 @ 2.00 GHz</li>
-<li>Memory: 32 GB</li>
-<li>Disk: two 300 GB 10000 RPM SAS Disks</li>
-<li>Network: five 10G network ports</li>
-</ul>
-
-
-<h4>3.2.5. Utility</h4>
-
-<h5>3.2.5.1. Definitions</h5>
-
-<p>Utility nodes are used by internal administration staff only to provide a number of basic system administration functions needed to get the environment up and running and to maintain the hardware, OS, and software on which it runs.</p>
-
-<p>These nodes run services such as provisioning, configuration management, monitoring, or GlusterFS management software. They are not required to scale, although these machines are usually backed up.</p>
-
-<h5>3.2.5.2. Hareware</h5>
-
-<ul>
-<li>Model: Dell R620</li>
-<li>CPU: 2x Intel® Xeon® CPU E5-2620 0 @ 2.00 GHz</li>
-<li>Memory: 32 GB</li>
-<li>Disk: two 500 GB 7200 RPM SAS Disks</li>
-<li>Network: two 10G network ports</li>
-</ul>
-
-
-<h3>3.3. Components</h3>
-
-<table>
-<thead>
-<tr>
-<th style="text-align:left;"> Component                    </th>
-<th style="text-align:left;"> Detail                              </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;"> OpenStack release            </td>
-<td style="text-align:left;"> Havana                              </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Host operating system        </td>
-<td style="text-align:left;"> Red Hat Enterprise Linux 6.5        </td>
-</tr>
-<tr>
-<td style="text-align:left;"> OpenStack package repository </td>
-<td style="text-align:left;"> Red Hat Distributed OpenStack (RDO) </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Hypervisor                   </td>
-<td style="text-align:left;"> KVM                                 </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Database                     </td>
-<td style="text-align:left;"> MySQL                               </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Message queue                </td>
-<td style="text-align:left;"> Qpid                                </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Networking service           </td>
-<td style="text-align:left;"> OpenStack Networking                </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Tenant Network Separation    </td>
-<td style="text-align:left;"> VLAN                                </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Image service back end       </td>
-<td style="text-align:left;"> GlusterFS                           </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Identity driver              </td>
-<td style="text-align:left;"> SQL                                 </td>
-</tr>
-<tr>
-<td style="text-align:left;"> Block Storage back end       </td>
-<td style="text-align:left;"> GlusterFS                           </td>
-</tr>
-</tbody>
-</table>
-
-
-<h4>3.3.1. Third Party Component Configuration</h4>
-
-<table>
-<th>Component</th>
-<th>Tuning</th>
-<th>Availability</th>
-<th>Scalability</th>
-
-<tr>
-<td>MySQL</td>
-<td>binlog-format = row</td>
-<td>
-Master/master replication. However, both nodes are not used at the same time. 
-Replication keeps all nodes as close to being up to date as possible (although 
-the asynchronous nature of the replication means a fully consistent state is not 
-possible). Connections to the database only happen through a Pacemaker virtual IP, 
-ensuring that most problems that occur with master-master replication can be avoided.
-</td>
-<td>
-Not heavily considered. Once load on the MySQL server increases enough that 
-scalability needs to be considered, multiple masters or a master/slave setup can be used.
-</td>
-</tr>
-
-<tr>
-<td>Qpid</td>
-<td>max-connections=1000 worker-threads=20 connection-backlog=10, sasl security enabled with SASL-BASIC authentication</td>
-<td>
-Qpid is added as a resource to the Pacemaker software that runs on Controller nodes where Qpid is situated. This ensures only one Qpid instance is running at one time, and the node with the Pacemaker virtual IP will always be the node running Qpid.
-</td>
-<td>
-Not heavily considered. However, Qpid can be changed to run on all controller nodes for scalability and availability purposes, and removed from Pacemaker.
-</td>
-</tr>
-
-<tr>
-<td>HAProxy</td>
-<td>maxconn 3000</td>
-<td>
-HAProxy is a software layer-7 load balancer used to front door all clustered OpenStack API components and do SSL termination. HAProxy can be added as a resource to the Pacemaker software that runs on the Controller nodes where HAProxy is situated. This ensures that only one HAProxy instance is running at one time, and the node with the Pacemaker virtual IP will always be the node running HAProxy.
-</td>
-<td>
-Not considered. HAProxy has small enough performance overheads that a single instance should scale enough for this level of workload. If extra scalability is needed, keepalived or other Layer-4 load balancing can be introduced to be placed in front of multiple copies of HAProxy.
-</td>
-</tr>
-
-<tr>
-<td>Memcached</td>
-<td>MAXCONN="8192" CACHESIZE="30457"</td>
-<td>
-Memcached is a fast in-memory key-value cache software that is used by OpenStack components for caching data and increasing performance. Memcached runs on all controller nodes, ensuring that should one go down, another instance of Memcached is available.
-</td>
-<td>
-Not considered. A single instance of Memcached should be able to scale to the desired workloads. If scalability is desired, HAProxy can be placed in front of Memcached (in raw tcp mode) to utilize multiple Memcached instances for scalability. However, this might cause cache consistency issues.
-</td>
-</tr>
-
-<tr>
-<td>Pacemaker</td>
-<td>
-Configured to use corosync and cman as a cluster communication stack/quorum manager, and as a two-node cluster.
-</td>
-<td>
-Pacemaker is the clustering software used to ensure the availability of services running on the controller and network nodes:
-
-- Because Pacemaker is cluster software, the software itself handles its own availability, leveraging corosync and cman underneath.
-- If you use the GlusterFS native client, no virtual IP is needed, since the client knows all about nodes after initial connection and automatically routes around failures on the client side.
-- If you use the NFS or SMB adaptor, you will need a virtual IP on which to mount the GlusterFS volumes.
-</td>
-<td>
-If more nodes need to be made cluster aware, Pacemaker can scale to 64 nodes.
-</td>
-</tr>
-
-<tr>
-<td>GlusterFS</td>
-<td>
-glusterfs performance profile "virt" enabled on all volumes. Volumes are setup in two-node replication.
-</td>
-<td>
-Glusterfs is a clustered file system that is run on the storage nodes to provide persistent scalable data storage in the environment. Because all connections to gluster use the gluster native mount points, the gluster instances themselves provide availability and failover functionality.
-</td>
-<td>
-The scalability of GlusterFS storage can be achieved by adding in more storage volumes.
-</td>
-</tr>
-
-</table>
-
-
-<h4>3.3.2. OpenStack Component Configuration</h4>
-
-<table>
-<tr>
-<th>Component</th>
-<th>Node Type</th>
-<th>Tuning</th>
-<th>Availability</th>
-<th>Scalability</th>
-</tr>
-
-
-<tr>
-<td>Dashboard (horizon)</td>
-<td>Controller</td>
-<td>
-Configured to use Memcached as a session store, neutron support is enabled, can_set_mount_point = False
-</td>
-<td>
-The dashboard is run on all controller nodes, ensuring at least one instance will be available in case of node failure. It also sits behind HAProxy, which detects when the software fails and routes requests around the failing instance.
-</td>
-<td>
-The dashboard is run on all controller nodes, so scalability can be achieved with additional controller nodes. HAProxy allows scalability for the dashboard as more nodes are added.
-</td>
-</tr>
-
-<tr>
-<td>Identity (keystone)</td>
-<td>Controller</td>
-<td>
-Configured to use Memcached for caching and PKI for tokens.
-</td>
-<td>
-Identity is run on all controller nodes, ensuring at least one instance will be available in case of node failure. Identity also sits behind HAProxy, which detects when the software fails and routes requests around the failing instance.
-</td>
-<td>
-Identity is run on all controller nodes, so scalability can be achieved with additional controller nodes. HAProxy allows scalability for Identity as more nodes are added.
-</td>
-</tr>
-
-<tr>
-<td>Image service (glance)</td>
-<td>Controller</td>
-<td>
-/var/lib/glance/images is a GlusterFS native mount to a Gluster volume off the storage layer.</td>
-<td>
-The Image service is run on all controller nodes, ensuring at least one instance will be available in case of node failure. It also sits behind HAProxy, which detects when the software fails and routes requests around the failing instance.
-</td>
-<td>
-The Image service is run on all controller nodes, so scalability can be achieved with additional controller nodes. HAProxy allows scalability for the Image service as more nodes are added.
-</td>
-</tr>
-
-<tr>
-<td>Compute (nova)</td>
-<td>Controller, Compute</td>
-<td>
-Configured to use Qpid, qpid_heartbeat = 10, configured to use Memcached for caching, configured to use libvirt, configured to use neutron.
-
-Configured nova-consoleauth to use Memcached for session management (so that it can have multiple copies and run in a load balancer).
-</td>
-<td>
-The nova API, scheduler, objectstore, cert, consoleauth, conductor, and vncproxy services are run on all controller nodes, ensuring at least one instance will be available in case of node failure. Compute is also behind HAProxy, which detects when the software fails and routes requests around the failing instance.
-
-Nova-compute and nova-conductor services, which run on the compute nodes, are only needed to run services on that node, so availability of those services is coupled tightly to the nodes that are available. As long as a compute node is up, it will have the needed services running on top of it.
-</td>
-<td>
-The nova API, scheduler, objectstore, cert, consoleauth, conductor, and vncproxy services are run on all controller nodes, so scalability can be achieved with additional controller nodes. HAProxy allows scalability for Compute as more nodes are added. The scalability of services running on the compute nodes (compute, conductor) is achieved linearly by adding in more compute nodes.
-</td>
-</tr>
-
-<tr>
-<td>Block Storage (cinder)</td>
-<td>Controller</td>
-<td>
-Configured to use Qpid, qpid_heartbeat = 10, configured to use a Gluster volume from the storage layer as the back end for Block Storage, using the Gluster native client.
-</td>
-<td>
-Block Storage API, scheduler, and volume services are run on all controller nodes, ensuring at least one instance will be available in case of node failure. Block Storage also sits behind HAProxy, which detects if the software fails and routes requests around the failing instance.
-</td>
-<td>
-Block Storage API, scheduler and volume services are run on all controller nodes, so scalability can be achieved with additional controller nodes. HAProxy allows scalability for Block Storage as more nodes are added.
-</td>
-</tr>
-
-<tr>
-<td>OpenStack Networking (neutron)</td>
-<td>Controller, Compute, Network</td>
-<td>
-Configured to use QPID, qpid_heartbeat = 10, kernel namespace support enabled, tenant_network_type = vlan, allow_overlapping_ips = true, tenant_network_type = vlan, bridge_uplinks = br-ex:em2, bridge_mappings = physnet1:br-ex
-</td>
-<td>
-The OpenStack Networking service is run on all controller nodes, ensuring at least one instance will be available in case of node failure. It also sits behind HAProxy, which detects if the software fails and routes requests around the failing instance.
-
-OpenStack Networking's ovs-agent, l3-agent, dhcp-agent, and metadata-agent services run on the network nodes, as lsb resources inside of Pacemaker. This means that in the case of network node failure, services are kept running on another node. Finally, the ovs-agent service is also run on all compute nodes, and in case of compute node failure, the other nodes will continue to function using the copy of the service running on them.
-</td>
-<td>
-The OpenStack Networking server service is run on all controller nodes, so scalability can be achieved with additional controller nodes. HAProxy allows scalability for OpenStack Networking as more nodes are added. Scalability of services running on the network nodes is not currently supported by OpenStack Networking, so they are not be considered. One copy of the services should be sufficient to handle the workload. Scalability of the ovs-agent running on compute nodes is achieved by adding in more compute nodes as necessary.
-</td>
-</tr>
-
-</table>
-
-
-<h2>Reference</h2>
-
-<ul>
-<li><a href="http://docs.openstack.org/openstack-ops/content/architecture.html">OpenStack Ops Architecture</a></li>
-<li><a href="http://docs.openstack.org/admin-guide-cloud/common/conventions.html">OpenStack Admin Guide Cloud</a></li>
 </ul>
 
 ]]></content>
@@ -2106,223 +1407,6 @@ download the library, and copy <code>jquery.tableofcontents.min.js</code> to <co
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Inside a French Chateau by Kraemer Gallery]]></title>
-    <link href="http://k.arttechresearch.com/art/2015/10/11/inside-a-french-chateau-by-kraemer-gallery/"/>
-    <updated>2015-10-11T22:46:04+08:00</updated>
-    <id>http://k.arttechresearch.com/art/2015/10/11/inside-a-french-chateau-by-kraemer-gallery</id>
-    <content type="html"><![CDATA[<p>NOTE: copied from the Brochure.</p>
-
-<h2>1. Royal Chinese Room</h2>
-
-<h3>1.1. A very exceptional and rare table in bamboo</h3>
-
-<p>Circa 1780, with a Vernis Martin lacquer top ornate gilt-bronze.</p>
-
-<p>Imported by Marchand Mercier Daguerre and attribute to artist Martin Carlin.</p>
-
-<p>&ldquo;This piece comes from the Trianon&rdquo;</p>
-
-<p>Comparable examples in:</p>
-
-<ul>
-<li>Her Majesty Queen Elizabeth II&rsquo;s Collection (England)</li>
-<li>Royal Swedish collection (Sweden)</li>
-<li>Similar Iaquer at the Louvre Museum in Paris (France)</li>
-</ul>
-
-
-<h3>1.2. A rare Louis XV Lacquer Chest of Drawers</h3>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/f3/0b/8f/f30b8fbda113f73480efe39dd0b2a675.jpg" /></p>
-
-<p>Circa 1745, stamped by B.V.R.B (Bernard II Van Risen Burgh, Master in 1733) in collaboration with Desforges (Master in 1739).</p>
-
-<p>Using lacquers screen panels supplied by Marchand Mercier Darnault.</p>
-
-<p>The scenes represent Chinese Culture and traditions.</p>
-
-<h3>1.3. A rare transitional secretary in Camomile Lacquer and Vernis Martin</h3>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/ae/b1/37/aeb137c0dfae49f72a0c7dd45b4b4188.jpg" /></p>
-
-<p>Circa 1770, stamped by Francois Reizell (Master in 1764).</p>
-
-<p>Provenance: a branch of the French Royal Family.</p>
-
-<h3>1.4. A louis XIV pair of caches pots</h3>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/c0/3d/8f/c03d8f23a4e3b1461e2ad1affc430c60.jpg" /></p>
-
-<p>Circa 1700. Similar pieces with same dragon bronzes are at the Getty Museum in Los Angeles.</p>
-
-<p>The pair has been exhibited at the ArtScience Museum in Singapore.</p>
-
-<h3>1.5. A Louis XVI Biscuit clock</h3>
-
-<p>Circa 1785. Featuring Orpheus and goats ornated with elaborate chased and giltbronze mounts by Remond. The dial and movement signed Gavelle l'aine a Paris.</p>
-
-<h3>1.6. A regence corner cupboard</h3>
-
-<p>Circa 1725. A rare Regence corner cupboard by Charles Cressent (Master in 1719).</p>
-
-<p>Equivalences are in the Rothschild Collection.</p>
-
-<h2>2. Royal French Salon</h2>
-
-<h2>2.1. A portrait of King Louis XIV</h2>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/474x/e7/35/3c/e7353c947a630f779c1f401abe04eb5e.jpg" /></p>
-
-<p>Circa 1700. The quality of the face expression, the hair, and the cravat are perfect. A similar piece is at the Bordeaux Museum of Decorative Arts and at the chateau of Courances (the Ganay family).</p>
-
-<h2>2.2. A portrait of King Louis XV in Royal Savonnerie Tapestry</h2>
-
-<p>Circa 1755, made at the Royal Manufacture of the Goblins.</p>
-
-<p>The same piece is at the Louvre Museum in Paris.</p>
-
-<h2>2.3. A royal Louis XV savonnerie carpet</h2>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/8c/ac/7c/8cac7cb4d0456b63a8ba2c5f936fb30d.jpg" /></p>
-
-<p>Circa 1755, made at the Royal Manufacture of the Goblins for one of the King&rsquo;s property.</p>
-
-<p>Decorated with Sun King flowers, the French Royalty symbol.</p>
-
-<p>Similar examples at Versailles Castle and in many International Museum.</p>
-
-<h2>2.4. A regence black and gold writting desk</h2>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/49/b4/39/49b439e23280d4068c24ddd4602a92c0.jpg" /></p>
-
-<p>Circa 1730, stampmed F.L. for Francois Lieutaud.</p>
-
-<p>A comparable desk made by the same artist for the Dauphin (the King&rsquo;s son) is displayed at Versailles Castle.</p>
-
-<p>This piece has been exhibited at the ArtScience Museum in Singapore.</p>
-
-<h2>2.5. Four Royal Louis XVI chairs from Versailles castle</h2>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/f4/2b/e0/f42be07b61fefede0ac5ae6e95a14ff8.jpg" /></p>
-
-<p>Circa 1780, stamped by J.B Sene (Master in 1769).</p>
-
-<p>Marked many times with crowned W.</p>
-
-<p>Provenance: Chateau de Versailles.</p>
-
-<p>Probably ordered for a Royal family member.</p>
-
-<h2>2.6. A beautiful Louis XV chest of drawers</h2>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/fa/6d/4e/fa6d4e9f483268172fb59a396f2f489b.jpg" /></p>
-
-<p>Circa 1745, stamped by G.Feilt (master in 1736), a beautiful flowered marquetry motifs ornate with chased and gilt-bronzes.</p>
-
-<p>Similar examples in many International Museums.</p>
-
-<h2>3. Royal Lifestyle Pavilions</h2>
-
-<h3>3.1. Library Room</h3>
-
-<h4>3.1.1. Dictionary book of translation &ldquo;Linguae Sinarum Mandarinicae Hieroglythicae Grammatica Duplex&rdquo;</h4>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/474x/d7/1a/46/d71a4673f148e25f080639515957963a.jpg" /></p>
-
-<p>Exceptionally rare first comparative grammar between Chinese and Latin.</p>
-
-<p>Published in Paris in 1742.</p>
-
-<p>FOURMONT, Etienne. Linguae Sinarum Mandarinicae hieroglyphicae grammatica duplex, latine, &amp; curn characteribus Sinensium, Item Sinicorum Regiae Biliothecae librorum catalogus &hellip; Paris.</p>
-
-<p>Made during 40 years with 80,000 Chinese characters realized by the French Royal printing. The necessary investment for this very important realisation was about 17,000 gold coins. Only 250 copies were printed.</p>
-
-<p>Beautiful working copy, probably owned later during the XIXth century by Benjamin Brucyre, the first French author who attempted a translation of the Bible into Chinese (1863).</p>
-
-<h4>3.1.2. A beautiful Louis XIV Boulle Marquetry bookcase</h4>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/62/6b/34/626b34132ca2a46e74d860ff5da3ed1c.jpg" /></p>
-
-<p>Circa 1680, designed influenced by Culture Minister Berain, the beginning of furniture to be considered as a Major Art.</p>
-
-<p>Provenance: a private mansion in Paris.</p>
-
-<h3>3.2. Dining Room</h3>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/85/df/72/85df727cfd4cb9db3315c17505dda0af.jpg" /></p>
-
-<h4>3.2.1. A Louis XVI Bronze clock featuring bacchus</h4>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/89/9d/00/899d009ffe025dd241fc0cd02638d5ad.jpg" /></p>
-
-<p>Circa 1780, made by Osmond and movement signed by Lechopie a Paris.</p>
-
-<p>Comparable example: at the Munich Residenz Museum in Germany.</p>
-
-<p>This piece has been exhibited at the ArtScience Museum in Singapore.</p>
-
-<h4>3.2.2. An extraordinary and rare Louis XV giltbronze 8 arms surtout de table</h4>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/474x/0a/56/22/0a5622f0a8264c713155fc0e6d7a85b9.jpg" /></p>
-
-<p>Circa 1740, probably made by Caffien.</p>
-
-<p>Provenance: a member of the Royal family.</p>
-
-<p>This piece has been exhibited at the ArtScience Museum in Singapore.</p>
-
-<h3>3.3. Music and Entertainment Room</h3>
-
-<h4>3.3.1. A Louis XVI gilt-wood console table</h4>
-
-<p>Circa 1780, with a beautiful quality of carving, the medusa face is the inspiration for Versace Logo.</p>
-
-<p>Comparable examples in:</p>
-
-<ul>
-<li>Made for the King at the Chateau de Fontainebleau</li>
-<li>At the Louvre Museum in Paris</li>
-<li>In a private collection</li>
-</ul>
-
-
-<h4>3.3.2. A Louis XV jewel box</h4>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/6a/42/52/6a4252756ec8f35d65a604b46db2acce.jpg" /></p>
-
-<p>Circa 1745, stamped by B.V.R.B (for Bernard II Van Risen Burgh, Master in 1733) in Kingwood and Rosewood.</p>
-
-<p>Ink inscriptions written by Marchand Mercier Poirier.</p>
-
-<p>This piece has been exhibited at the Grand Palais in Paris and similar piece is at the Boston Museum of Fine Art in America.</p>
-
-<h2>Others</h2>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/84/cb/41/84cb41aba14d092e52171ecfa6ab37cb.jpg" /></p>
-
-<p>A pair of neoclassical Louis XVI giltwood stands on display at the Liang Yi Museum (Photo courtesy of the Kraemer Gallery)</p>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/99/95/60/999560b50b6a35d1ab14dfcda8a96b92.jpg" /></p>
-
-<p>An exceptional Louis XIV Boulle marquetry casket by André-Charles Boulle, circa 1700 (Photo courtesy of Kraemer Gallery)</p>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/69/d6/33/69d63319ecd558fd746d9bcffabf6182.jpg" /></p>
-
-<p>A Louis XV-Louis XVI transitional fire screen in gilded wood with a Gobelin tapestry panel framed within a large Chinese standing screen in zitan wood on show at the Great Minds Think Alike exhibition (Photo courtesy of the Liang Yi Museum)</p>
-
-<h2>Kraemer</h2>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/ae/8c/e9/ae8ce963c48bf3f96408febdb7fadfcc.jpg" /></p>
-
-<p><a href="http://www.kraemer.fr/">Kraemer</a> is the oldest family owned gallery based in Paris, established in 1875, specializing in museum quality 18th century furniture and objets d'art. Since its beginning, the Kraemer Gallery includes among its clientele the greatest international museums, collectors and interior designers-decorators. Among the may salons of their mansion house at 43 rue Monceau in Paris, they present several rooms with a very contemporary decor where also displayed are Louis XIV, Louis XV and Louis XVI furniture and objets d'art.</p>
-
-<p>Their prestigious collectors included through the times: the Rothschilds, the Camondos and Comte Boni de Castellanes, then Hery Ford Jr, Christian Dior, J.Paul Getty, the Agnelli family, Jackie Kennedy and Karl Lagerifeld.</p>
-
-<p>The prestige of the Kraemer name continues to rest on the personal discretion of the family and their exacting professional standards of authenticity, beauty, rarity and charm. For more than a century, Kraemer &amp; Cie has been the source of significant example of French 18th century decorative arts that are now in the permanent collections of major museums in Qurope and the United States.</p>
-]]></content>
-  </entry>
-  
-  <entry>
     <title type="html"><![CDATA[Adding Tag Generator in Octopress]]></title>
     <link href="http://k.arttechresearch.com/tech/2015/10/06/adding-tag-generator-in-octopress/"/>
     <updated>2015-10-06T05:42:01+08:00</updated>
@@ -3613,6 +2697,972 @@ download the library, and copy <code>jquery.tableofcontents.min.js</code> to <co
 </span><span class='line'> |---- run_will.py                              # run will</span></code></pre></td></tr></table></div></figure>
 
 
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Hipchat API]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/09/30/hipchat-api/"/>
+    <updated>2015-09-30T15:09:22+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/09/30/hipchat-api</id>
+    <content type="html"><![CDATA[<h2>1. Hipchat API</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ROOM_NOTIFICATION_URL = "https://%(server)s/v2/room/%(room_id)s/notification?auth_token=%(token)s    "
+</span><span class='line'>ROOM_TOPIC_URL = "https://%(server)s/v2/room/%(room_id)s/topic?auth_token=%(token)s"
+</span><span class='line'>PRIVATE_MESSAGE_URL = "https://%(server)s/v2/user/%(user_id)s/message?auth_token=%(token)s"
+</span><span class='line'>SET_TOPIC_URL = "https://%(server)s/v2/room/%(room_id)s/topic?auth_token=%(token)s"
+</span><span class='line'>USER_DETAILS_URL = "https://%(server)s/v2/user/%(user_id)s?auth_token=%(token)s"
+</span><span class='line'>ALL_USERS_URL = "https://%(server)s/v2/user?auth_token=%(token)s&start-index=%(start_index)s"</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>2. Command Line</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>curl -d <span class="s1">&#39;{&quot;color&quot;: &quot;green&quot;, &quot;message&quot;: &quot;message&quot;, &quot;notify&quot;: false, &quot;messae_format&quot;: &quot;text&quot;}&#39;</span> -H <span class="s1">&#39;Content-Type: application/json&#39;</span> https://api.hipchat.com/v2/room/room id/scope_name<span class="o">(</span>message/notification<span class="o">)</span>?auth_token<span class="o">=</span>specific_token
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Reference</h2>
+
+<ul>
+<li><a href="https://www.hipchat.com/docs/apiv2">Hipchat API Docs</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Will Bot]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/09/30/will-bot/"/>
+    <updated>2015-09-30T14:52:04+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/09/30/will-bot</id>
+    <content type="html"><![CDATA[<h2>1. Installation</h2>
+
+<h3>1.1. Prequisition</h3>
+
+<ul>
+<li>Ubuntu 14.04</li>
+<li>Redis</li>
+<li>Will</li>
+</ul>
+
+
+<h3>1.2. Ubuntu</h3>
+
+<p>Ubuntu 14.04</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install python-virtualenv redis-server
+</span><span class='line'><span class="nv">$ </span>redis
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>1.3. Octowill</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /path/to/project/
+</span><span class='line'><span class="nv">$ </span>sudo mkdir octowill
+</span><span class='line'><span class="nv">$ </span>sudo chown -R user:group /path/to/octowill/
+</span><span class='line'><span class="nv">$ </span>sudo su user
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>octowill
+</span><span class='line'><span class="nv">$ </span>mkdir venvs
+</span><span class='line'><span class="nv">$ </span>virtualenv venvs/octowill
+</span><span class='line'><span class="nv">$ </span><span class="nb">source </span>venvs/octowill/bin/activate
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>git clone https://github.com/KellyChan/octowill.git
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>octowill
+</span><span class='line'><span class="nv">$ </span>pip install -r requirements.txt
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>2. Configuration</h2>
+
+<h3>2.1. Prequistion</h3>
+
+<ul>
+<li>hipchat account</li>
+<li>octowill</li>
+</ul>
+
+
+<h3>2.2. Hipchat</h3>
+
+<ul>
+<li>signup hipchat</li>
+<li>get API tokens</li>
+</ul>
+
+
+<p>API summary</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>V2 Tokens:
+</span><span class='line'>- Administer Group - Perform group administrative tasks. Note that this scope is restricted from updating the group owner<span class="err">&#39;</span>s profile.
+</span><span class='line'>- Administer Room - Perform room administrative tasks
+</span><span class='line'>- Manage Rooms - Create, update, and remove rooms
+</span><span class='line'>- Send Message - Send private one-on-one messages
+</span><span class='line'>- Send Notification - Send room notifications
+</span><span class='line'>- View Group - View users, rooms, and other group information
+</span><span class='line'>- View Messages - View messages from chat rooms and private chats you have access to
+</span><span class='line'>- View Room - View room information and participants, but not <span class="nb">history</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>2.3. Octowill</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>octowill
+</span><span class='line'><span class="nv">$ </span>cp config.py.sample config.py
+</span><span class='line'><span class="nv">$ </span>vim config.py                   <span class="c"># update USERNAME, PASSWORD, V2_TOKENS</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>3. Testing</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>./start_dev/will.py
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>References</h2>
+
+<ul>
+<li><a href="https://github.com/skoczen/will">will</a></li>
+<li><a href="http://skoczen.github.io/will/">will document</a></li>
+<li><a href="https://www.hipchat.com">hiphat</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Redis]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/09/28/redis/"/>
+    <updated>2015-09-28T11:46:09+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/09/28/redis</id>
+    <content type="html"><![CDATA[<h2>1. Installation</h2>
+
+<h3>1.1. redis-server</h3>
+
+<p>Ubuntu 14.04</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install redis-server
+</span><span class='line'><span class="nv">$ </span>redis-server                                          <span class="c"># start redis</span>
+</span><span class='line'><span class="nv">$ </span>redis-cli                                             <span class="c"># check if work</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>1.2. desktop manager</h3>
+
+<p>Go to <a href="http://redisdesktop.com/download">redisdesktop</a>, select a version, and then install.</p>
+
+<p>Or install by commands.</p>
+
+<p>OS X</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># Install Homebrew cask</span>
+</span><span class='line'><span class="nv">$ </span>brew install caskroom/cask/brew-cask
+</span><span class='line'>
+</span><span class='line'><span class="c"># Install Redis Desktop Manager aka RDM</span>
+</span><span class='line'><span class="nv">$ </span>brew cask install rdm
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>2. Operations</h2>
+
+<h3>2.1. Environment</h3>
+
+<p>start redis</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>redis-server
+</span><span class='line'>
+</span><span class='line'>17251:C <span class="m">18</span> Oct 11:58:32.508 <span class="c"># Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf</span>
+</span><span class='line'>17251:M <span class="m">18</span> Oct 11:58:32.509 * Increased maximum number of open files to <span class="m">10032</span> <span class="o">(</span>it was originally <span class="nb">set </span>to 2560<span class="o">)</span>.
+</span><span class='line'>                _._
+</span><span class='line'>           _.-<span class="sb">``</span>__ <span class="s1">&#39;&#39;</span>-._
+</span><span class='line'>      _.-<span class="sb">``</span>    <span class="sb">`</span>.  <span class="sb">`</span>_.  <span class="s1">&#39;&#39;</span>-._           Redis 3.0.4 <span class="o">(</span>00000000/0<span class="o">)</span> <span class="m">64</span> bit
+</span><span class='line'>  .-<span class="sb">``</span> .-<span class="sb">```</span>.  <span class="sb">```</span><span class="se">\/</span>    _.,_ <span class="s1">&#39;&#39;</span>-._
+</span><span class='line'> <span class="o">(</span>    <span class="s1">&#39;      ,       .-`  | `,    )     Running in standalone mode</span>
+</span><span class='line'><span class="s1"> |`-._`-...-` __...-.``-._|&#39;</span><span class="sb">`</span> _.-<span class="s1">&#39;|     Port: 6379</span>
+</span><span class='line'><span class="s1"> |    `-._   `._    /     _.-&#39;</span>    <span class="p">|</span>     PID: 17251
+</span><span class='line'>  <span class="sb">`</span>-._    <span class="sb">`</span>-._  <span class="sb">`</span>-./  _.-<span class="s1">&#39;    _.-&#39;</span>
+</span><span class='line'> <span class="p">|</span><span class="sb">`</span>-._<span class="sb">`</span>-._    <span class="sb">`</span>-.__.-<span class="s1">&#39;    _.-&#39;</span>_.-<span class="s1">&#39;|</span>
+</span><span class='line'><span class="s1"> |    `-._`-._        _.-&#39;</span>_.-<span class="s1">&#39;    |           http://redis.io</span>
+</span><span class='line'><span class="s1">  `-._    `-._`-.__.-&#39;</span>_.-<span class="s1">&#39;    _.-&#39;</span>
+</span><span class='line'> <span class="p">|</span><span class="sb">`</span>-._<span class="sb">`</span>-._    <span class="sb">`</span>-.__.-<span class="s1">&#39;    _.-&#39;</span>_.-<span class="s1">&#39;|</span>
+</span><span class='line'><span class="s1"> |    `-._`-._        _.-&#39;</span>_.-<span class="s1">&#39;    |</span>
+</span><span class='line'><span class="s1">  `-._    `-._`-.__.-&#39;</span>_.-<span class="s1">&#39;    _.-&#39;</span>
+</span><span class='line'>      <span class="sb">`</span>-._    <span class="sb">`</span>-.__.-<span class="s1">&#39;    _.-&#39;</span>
+</span><span class='line'>          <span class="sb">`</span>-._        _.-<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">              `-.__.-&#39;</span>
+</span><span class='line'>
+</span><span class='line'>17251:M <span class="m">18</span> Oct 11:58:32.510 <span class="c"># Server started, Redis version 3.0.4</span>
+</span><span class='line'>17251:M <span class="m">18</span> Oct 11:58:32.510 * The server is now ready to accept connections on port 6379
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>check if work</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>redis-cli
+</span><span class='line'>127.0.0.1:6379&gt;
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>redis-cli -h host -p port -a password
+</span><span class='line'><span class="nv">$ </span>redis-cli -h 127.0.0.1 -p <span class="m">6379</span> -a <span class="s2">&quot;mypass&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>final check</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>127.0.0.1:6379&gt; ping
+</span><span class='line'>PONG
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>2.2. Configuration</h3>
+
+<p>config get: <code>CONFIG GET CONFIG_SETTINGS_NAME</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>127.0.0.1:6379&gt; CONFIG GET CONFIG_SETTING_NAME
+</span><span class='line'>
+</span><span class='line'>127.0.0.1:6379&gt; CONFIG GET loglevel
+</span><span class='line'>1<span class="o">)</span> <span class="s2">&quot;loglevel&quot;</span>
+</span><span class='line'>2<span class="o">)</span> <span class="s2">&quot;notice&quot;</span>
+</span><span class='line'>
+</span><span class='line'>127.0.0.1:6379&gt; CONFIG GET *
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>config set: <code>CONFIG SET CONFIG_SETTING_NAME NEW_CONFIG_VALUE</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>127.0.0.1:6379&gt; CONFIG SET CONFIG_SETTING_NAME NEW_CONFIG_VALUE
+</span><span class='line'>
+</span><span class='line'>127.0.0.1:6379&gt; CONFIG SET loglevel <span class="s2">&quot;notice&quot;</span>
+</span><span class='line'>OK
+</span><span class='line'>127.0.0.1:6379&gt; CONFIG GET loglevel
+</span><span class='line'>1<span class="o">)</span> <span class="s2">&quot;loglevel&quot;</span>
+</span><span class='line'>2<span class="o">)</span> <span class="s2">&quot;notice&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>3. Commands</h2>
+
+<h3>3.1. Keys</h3>
+
+<p>Syntax</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>127.0.0.1:6379&gt; COMMAND KEY_NAME &lt;VALUE&gt;
+</span><span class='line'>
+</span><span class='line'>127.0.0.1:6379&gt; SET <span class="nb">test </span>redis
+</span><span class='line'>127.0.0.1:6379&gt; DEL <span class="nb">test</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Commands</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>127.0.0.1:6379&gt; DEL Key
+</span><span class='line'>127.0.0.1:6379&gt; DUMP Key
+</span><span class='line'>127.0.0.1:6379&gt; EXISTS Key
+</span><span class='line'>127.0.0.1:6379&gt; EXPIRE Key
+</span><span class='line'>127.0.0.1:6379&gt; EXPIREAT key timestamp
+</span><span class='line'>127.0.0.1:6379&gt; PEXPIRE key milliseconds
+</span><span class='line'>127.0.0.1:6379&gt; PEXPIREAT key milliseconds-timestamp
+</span><span class='line'>127.0.0.1:6379&gt; KEYS pattern
+</span><span class='line'>127.0.0.1:6379&gt; MOVE key db
+</span><span class='line'>127.0.0.1:6379&gt; PERSIST key
+</span><span class='line'>127.0.0.1:6379&gt; PTTL key
+</span><span class='line'>127.0.0.1:6379&gt; TTL key
+</span><span class='line'>127.0.0.1:6379&gt; RANDOMKEY
+</span><span class='line'>127.0.0.1:6379&gt; RENAME key newkey
+</span><span class='line'>127.0.0.1:6379&gt; RENAMENX key newkey
+</span><span class='line'>127.0.0.1:6379&gt; TYPE key
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>3.2. Datatypes</h3>
+
+<ul>
+<li>strings</li>
+<li>hashes</li>
+<li>lists</li>
+<li>sets</li>
+<li>sorted sets</li>
+</ul>
+
+
+<h4>3.2.1. strings</h4>
+
+<p>syntax</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>127.0.0.1:6379&gt; SET name <span class="s2">&quot;test&quot;</span>
+</span><span class='line'>OK
+</span><span class='line'>127.0.0.1:6379&gt; GET name
+</span><span class='line'><span class="s2">&quot;test&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>commands</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>127.0.0.1:6379&gt; SET key value
+</span><span class='line'>127.0.0.1:6379&gt; GET key
+</span><span class='line'>127.0.0.1:6379&gt; GETRANGE key start end
+</span><span class='line'>127.0.0.1:6379&gt; GETSET key value
+</span><span class='line'>127.0.0.1:6379&gt; GETBIT key offset
+</span><span class='line'>127.0.0.1:6379&gt; MGET key1 <span class="o">[</span>key2..<span class="o">]</span>
+</span><span class='line'>127.0.0.1:6379&gt; SETBIT key offset value
+</span><span class='line'>127.0.0.1:6379&gt; SETEX key seconds value
+</span><span class='line'>127.0.0.1:6379&gt; SETNX key value
+</span><span class='line'>127.0.0.1:6379&gt; SETRANGE key offset value
+</span><span class='line'>127.0.0.1:6379&gt; STRLEN key
+</span><span class='line'>127.0.0.1:6379&gt; MSET key value <span class="o">[</span>key value ...<span class="o">]</span>
+</span><span class='line'>127.0.0.1:6379&gt; MSETNX key value <span class="o">[</span>key value ...<span class="o">]</span>
+</span><span class='line'>127.0.0.1:6379&gt; PSETEX key milliseconds value
+</span><span class='line'>127.0.0.1:6379&gt; INCR key
+</span><span class='line'>127.0.0.1:6379&gt; INCRBY key increment
+</span><span class='line'>127.0.0.1:6379&gt; INCRBYFLOAT key increment
+</span><span class='line'>127.0.0.1:6379&gt; DECR key
+</span><span class='line'>127.0.0.1:6379&gt; DECRBY key decrement
+</span><span class='line'>127.0.0.1:6379&gt; APPEND key value
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>3.2.2. hashes</h4>
+
+<p>syntax</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>127.0.0.1:6379&gt; HMSET user:1 username <span class="nb">test </span>password <span class="nb">test</span>
+</span><span class='line'>OK
+</span><span class='line'>127.0.0.1:6379&gt; HGETALL user:1
+</span><span class='line'>1<span class="o">)</span> <span class="s2">&quot;username&quot;</span>
+</span><span class='line'>2<span class="o">)</span> <span class="s2">&quot;test&quot;</span>
+</span><span class='line'>3<span class="o">)</span> <span class="s2">&quot;password&quot;</span>
+</span><span class='line'>4<span class="o">)</span> <span class="s2">&quot;test&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>commands</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>127.0.0.1:6379&gt; HDEL key field2 <span class="o">[</span>field2<span class="o">]</span>
+</span><span class='line'>127.0.0.1:6379&gt; HEXISTS key field
+</span><span class='line'>127.0.0.1:6379&gt; HGET key field
+</span><span class='line'>127.0.0.1:6379&gt; HGETALL key
+</span><span class='line'>127.0.0.1:6379&gt; HINCRBY key field increment
+</span><span class='line'>127.0.0.1:6379&gt; HINCRBYFLOAT key field increment
+</span><span class='line'>127.0.0.1:6379&gt; HKEYS key
+</span><span class='line'>127.0.0.1:6379&gt; HLEN key
+</span><span class='line'>127.0.0.1:6379&gt; HMGET key field1 <span class="o">[</span>field2<span class="o">]</span>
+</span><span class='line'>127.0.0.1:6379&gt; HMSET key field1 value1 <span class="o">[</span>field2 value2 <span class="o">]</span>
+</span><span class='line'>127.0.0.1:6379&gt; HSET key field value
+</span><span class='line'>127.0.0.1:6379&gt; HSETNX key field value
+</span><span class='line'>127.0.0.1:6379&gt; HVALS key
+</span><span class='line'>127.0.0.1:6379&gt; HSCAN key cursor <span class="o">[</span>MATCH pattern<span class="o">]</span> <span class="o">[</span>COUNT count<span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>3.2.3. lists</h4>
+
+<p>syntax</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>127.0.0.1:6379&gt; LPUSH <span class="nb">test</span> <span class="s2">&quot;rabbitmq&quot;</span>
+</span><span class='line'><span class="o">(</span>integer<span class="o">)</span> 1
+</span><span class='line'>127.0.0.1:6379&gt; LPUSH <span class="nb">test </span>rabbitmq
+</span><span class='line'><span class="o">(</span>integer<span class="o">)</span> 2
+</span><span class='line'>127.0.0.1:6379&gt; LRANGE <span class="nb">test </span><span class="m">0</span> 10
+</span><span class='line'>1<span class="o">)</span> <span class="s2">&quot;rabbitmq&quot;</span>
+</span><span class='line'>2<span class="o">)</span> <span class="s2">&quot;rabbitmq&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>commands</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>127.0.0.1:6379&gt; BLPOP key1 <span class="o">[</span>key2 <span class="o">]</span> timeout
+</span><span class='line'>127.0.0.1:6379&gt; BRPOP key1 <span class="o">[</span>key2 <span class="o">]</span> timeout
+</span><span class='line'>127.0.0.1:6379&gt; BRPOPLPUSH <span class="nb">source </span>destination timeout
+</span><span class='line'>127.0.0.1:6379&gt; LINDEX key index
+</span><span class='line'>127.0.0.1:6379&gt; LINSERT key BEFORE<span class="p">|</span>AFTER pivot value
+</span><span class='line'>127.0.0.1:6379&gt; LLEN key
+</span><span class='line'>127.0.0.1:6379&gt; LPOP key
+</span><span class='line'>127.0.0.1:6379&gt; LPUSH key value1 <span class="o">[</span>value2<span class="o">]</span>
+</span><span class='line'>127.0.0.1:6379&gt; LPUSHX key value
+</span><span class='line'>127.0.0.1:6379&gt; LRANGE key start stop
+</span><span class='line'>127.0.0.1:6379&gt; LREM key count value
+</span><span class='line'>127.0.0.1:6379&gt; LSET key index value
+</span><span class='line'>127.0.0.1:6379&gt; LTRIM key start stop
+</span><span class='line'>127.0.0.1:6379&gt; RPOP key
+</span><span class='line'>127.0.0.1:6379&gt; RPOPLPUSH <span class="nb">source </span>destination
+</span><span class='line'>127.0.0.1:6379&gt; RPUSH key value1 <span class="o">[</span>value2<span class="o">]</span>
+</span><span class='line'>127.0.0.1:6379&gt; RPUSHX key value
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>3.2.4. sets</h4>
+
+<p>syntax</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>127.0.0.1:6379&gt; SADD testlist redis
+</span><span class='line'><span class="o">(</span>integer<span class="o">)</span> 1
+</span><span class='line'>127.0.0.1:6379&gt; SMEMBERS testlist
+</span><span class='line'>1<span class="o">)</span> <span class="s2">&quot;redis&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>commands</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>127.0.0.1:6379&gt; SADD key member1 <span class="o">[</span>member2<span class="o">]</span>
+</span><span class='line'>127.0.0.1:6379&gt; SCARD key
+</span><span class='line'>127.0.0.1:6379&gt; SDIFF key1 <span class="o">[</span>key2<span class="o">]</span>
+</span><span class='line'>127.0.0.1:6379&gt; SDIFFSTORE destination key1 <span class="o">[</span>key2<span class="o">]</span>
+</span><span class='line'>127.0.0.1:6379&gt; SINTER key1 <span class="o">[</span>key2<span class="o">]</span>
+</span><span class='line'>127.0.0.1:6379&gt; SINTERSTORE destination key1 <span class="o">[</span>key2<span class="o">]</span>
+</span><span class='line'>127.0.0.1:6379&gt; SISMEMBER key member
+</span><span class='line'>127.0.0.1:6379&gt; SMEMBERS key
+</span><span class='line'>127.0.0.1:6379&gt; SMOVE <span class="nb">source </span>destination member
+</span><span class='line'>127.0.0.1:6379&gt; SPOP key
+</span><span class='line'>127.0.0.1:6379&gt; SRANDMEMBER key <span class="o">[</span>count<span class="o">]</span>
+</span><span class='line'>127.0.0.1:6379&gt; SREM key member1 <span class="o">[</span>member2<span class="o">]</span>
+</span><span class='line'>127.0.0.1:6379&gt; SUNION key1 <span class="o">[</span>key2<span class="o">]</span>
+</span><span class='line'>127.0.0.1:6379&gt; SUNIONSTORE destination key1 <span class="o">[</span>key2<span class="o">]</span>
+</span><span class='line'>127.0.0.1:6379&gt; SSCAN key cursor <span class="o">[</span>MATCH pattern<span class="o">]</span> <span class="o">[</span>COUNT count<span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>3.2.5. sorted sets</h4>
+
+<p>syntax</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>127.0.0.1:6379&gt; ZADD testsortedset <span class="m">0</span> hello
+</span><span class='line'><span class="o">(</span>integer<span class="o">)</span> 1
+</span><span class='line'>127.0.0.1:6379&gt; ZADD testsortedset <span class="m">0</span> world
+</span><span class='line'><span class="o">(</span>integer<span class="o">)</span> 1
+</span><span class='line'>127.0.0.1:6379&gt; ZRANGEBYSCORE tesetsortedset <span class="m">0</span> 1000
+</span><span class='line'><span class="o">(</span>empty list or <span class="nb">set</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>commands</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>127.0.0.1:6379&gt; ZADD key score1 member1 <span class="o">[</span>score2 member2<span class="o">]</span>
+</span><span class='line'>127.0.0.1:6379&gt; ZCARD key
+</span><span class='line'>127.0.0.1:6379&gt; ZCOUNT key min max
+</span><span class='line'>127.0.0.1:6379&gt; ZINCRBY key increment member
+</span><span class='line'>127.0.0.1:6379&gt; ZINTERSTORE destination numkeys key <span class="o">[</span>key ...<span class="o">]</span>
+</span><span class='line'>127.0.0.1:6379&gt; ZLEXCOUNT key min max
+</span><span class='line'>127.0.0.1:6379&gt; ZRANGE key start stop <span class="o">[</span>WITHSCORES<span class="o">]</span>
+</span><span class='line'>127.0.0.1:6379&gt; ZRANGEBYLEX key min max <span class="o">[</span>LIMIT offset count<span class="o">]</span>
+</span><span class='line'>127.0.0.1:6379&gt; ZRANGEBYSCORE key min max <span class="o">[</span>WITHSCORES<span class="o">]</span> <span class="o">[</span>LIMIT<span class="o">]</span>
+</span><span class='line'>127.0.0.1:6379&gt; ZRANK key member
+</span><span class='line'>127.0.0.1:6379&gt; ZREM key member <span class="o">[</span>member ...<span class="o">]</span>
+</span><span class='line'>127.0.0.1:6379&gt; ZREMRANGEBYLEX key min max
+</span><span class='line'>127.0.0.1:6379&gt; ZREMRANGEBYRANK key start stop
+</span><span class='line'>127.0.0.1:6379&gt; ZREMRANGEBYSCORE key min max
+</span><span class='line'>127.0.0.1:6379&gt; ZREVRANGE key start stop <span class="o">[</span>WITHSCORES<span class="o">]</span>
+</span><span class='line'>127.0.0.1:6379&gt; ZREVRANGEBYSCORE key max min <span class="o">[</span>WITHSCORES<span class="o">]</span>
+</span><span class='line'>127.0.0.1:6379&gt; ZREVRANK key member
+</span><span class='line'>127.0.0.1:6379&gt; ZSCORE key member
+</span><span class='line'>127.0.0.1:6379&gt; ZUNIONSTORE destination numkeys key <span class="o">[</span>key ...<span class="o">]</span>
+</span><span class='line'>127.0.0.1:6379&gt; ZSCAN key cursor <span class="o">[</span>MATCH pattern<span class="o">]</span> <span class="o">[</span>COUNT count<span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>3.3. HyperLogLog</h3>
+
+<p>syntax</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>127.0.0.1:6379&gt; PFADD tutorials <span class="s2">&quot;redis&quot;</span>
+</span><span class='line'>1<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> 1
+</span><span class='line'>
+</span><span class='line'>127.0.0.1:6379&gt; PFADD tutorials <span class="s2">&quot;mongodb&quot;</span>
+</span><span class='line'>1<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> 1
+</span><span class='line'>
+</span><span class='line'>127.0.0.1:6379&gt; PFADD tutorials <span class="s2">&quot;mysql&quot;</span>
+</span><span class='line'>1<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> 1
+</span><span class='line'>
+</span><span class='line'>127.0.0.1:6379&gt; PFCOUNT tutorials
+</span><span class='line'><span class="o">(</span>integer<span class="o">)</span> 3
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>commands</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>127.0.0.1:6379&gt; PFADD key element <span class="o">[</span>element ...<span class="o">]</span>
+</span><span class='line'>127.0.0.1:6379&gt; PFCOUNT key <span class="o">[</span>key ...<span class="o">]</span>
+</span><span class='line'>127.0.0.1:6379&gt; PFMERGE destkey sourcekey <span class="o">[</span>sourcekey ...<span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>3.4. Pub/Sub</h3>
+
+<p>syntax</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>127.0.0.1:6379&gt; SUBSCRIBE redisChat
+</span><span class='line'>Reading messages... <span class="o">(</span>press Ctrl-C to quit<span class="o">)</span>
+</span><span class='line'>1<span class="o">)</span> <span class="s2">&quot;subscribe&quot;</span>
+</span><span class='line'>2<span class="o">)</span> <span class="s2">&quot;redisChat&quot;</span>
+</span><span class='line'>3<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> 1
+</span><span class='line'>
+</span><span class='line'>127.0.0.1:6379&gt; PUBLISH redisChat <span class="s2">&quot;Redis is a great caching technique&quot;</span>
+</span><span class='line'><span class="o">(</span>integer<span class="o">)</span> 1
+</span><span class='line'>
+</span><span class='line'>127.0.0.1:6379&gt; PUBLISH redisChat <span class="s2">&quot;Learn redis by tutorials point&quot;</span>
+</span><span class='line'><span class="o">(</span>integer<span class="o">)</span> 1
+</span><span class='line'>1<span class="o">)</span> <span class="s2">&quot;message&quot;</span>
+</span><span class='line'>2<span class="o">)</span> <span class="s2">&quot;redisChat&quot;</span>
+</span><span class='line'>3<span class="o">)</span> <span class="s2">&quot;Redis is a great caching technique&quot;</span>
+</span><span class='line'>1<span class="o">)</span> <span class="s2">&quot;message&quot;</span>
+</span><span class='line'>2<span class="o">)</span> <span class="s2">&quot;redisChat&quot;</span>
+</span><span class='line'>3<span class="o">)</span> <span class="s2">&quot;Learn redis by tutorials point&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>commands</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>127.0.0.1:6379&gt; PSUBSCRIBE pattern <span class="o">[</span>pattern ...<span class="o">]</span>
+</span><span class='line'>127.0.0.1:6379&gt; PUBSUB subcommand <span class="o">[</span>argument <span class="o">[</span>argument ...<span class="o">]]</span>
+</span><span class='line'>127.0.0.1:6379&gt; PUBLISH channel message
+</span><span class='line'>127.0.0.1:6379&gt; PUNSUBSCRIBE <span class="o">[</span>pattern <span class="o">[</span>pattern ...<span class="o">]]</span>
+</span><span class='line'>127.0.0.1:6379&gt; SUBSCRIBE channel <span class="o">[</span>channel ...<span class="o">]</span>
+</span><span class='line'>127.0.0.1:6379&gt; UNSUBSCRIBE <span class="o">[</span>channel <span class="o">[</span>channel ...<span class="o">]]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>3.5. Transactions</h3>
+
+<p>syntax</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>127.0.0.1:6379&gt; MULTI
+</span><span class='line'>OK
+</span><span class='line'>127.0.0.1:6379&gt; EXEC
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>commands</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>127.0.0.1:6379&gt; DISCARD
+</span><span class='line'>127.0.0.1:6379&gt; EXEC
+</span><span class='line'>127.0.0.1:6379&gt; MULTI
+</span><span class='line'>127.0.0.1:6379&gt; UNWATCH
+</span><span class='line'>127.0.0.1:6379&gt; WATCH key <span class="o">[</span>key ...<span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>3.6. Scripting</h3>
+
+<p>syntax</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>127.0.0.1:6379&gt; EVAL script numkeys key <span class="o">[</span>key ...<span class="o">]</span> arg <span class="o">[</span>arg ...<span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'>127.0.0.1:6379&gt; EVAL <span class="s2">&quot;return {KEYS[1],KEYS[2],ARGV[1],ARGV[2]}&quot;</span> <span class="m">2</span> key1 key2 first second
+</span><span class='line'>
+</span><span class='line'>1<span class="o">)</span> <span class="s2">&quot;key1&quot;</span>
+</span><span class='line'>2<span class="o">)</span> <span class="s2">&quot;key2&quot;</span>
+</span><span class='line'>3<span class="o">)</span> <span class="s2">&quot;first&quot;</span>
+</span><span class='line'>4<span class="o">)</span> <span class="s2">&quot;second&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>commands</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>127.0.0.1:6379&gt; EVAL script numkeys key <span class="o">[</span>key ...<span class="o">]</span> arg <span class="o">[</span>arg ...<span class="o">]</span>
+</span><span class='line'>127.0.0.1:6379&gt; EVALSHA sha1 numkeys key <span class="o">[</span>key ...<span class="o">]</span> arg <span class="o">[</span>arg ...<span class="o">]</span>
+</span><span class='line'>127.0.0.1:6379&gt; SCRIPT EXISTS script <span class="o">[</span>script ...<span class="o">]</span>
+</span><span class='line'>127.0.0.1:6379&gt; SCRIPT FLUSH
+</span><span class='line'>127.0.0.1:6379&gt; SCRIPT KILL
+</span><span class='line'>127.0.0.1:6379&gt; SCRIPT LOAD script
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>3.7. Connection</h3>
+
+<p>syntax</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>127.0.0.1:6379&gt; AUTH <span class="s2">&quot;password&quot;</span>
+</span><span class='line'>OK
+</span><span class='line'>127.0.0.1:6379&gt; PING
+</span><span class='line'>PONG
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>commands</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>127.0.0.1:6379&gt; AUTH password
+</span><span class='line'>127.0.0.1:6379&gt; ECHO message
+</span><span class='line'>127.0.0.1:6379&gt; PING
+</span><span class='line'>127.0.0.1:6379&gt; QUIT
+</span><span class='line'>127.0.0.1:6379&gt; SELECT index
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>3.8. Server</h3>
+
+<p>syntax</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>127.0.0.1:6379&gt; INFO
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>commands</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>127.0.0.1:6379&gt; BGREWRITEAOF
+</span><span class='line'>127.0.0.1:6379&gt; BGSAVE
+</span><span class='line'>127.0.0.1:6379&gt; CLIENT KILL <span class="o">[</span>ip:port<span class="o">]</span> <span class="o">[</span>ID client-id<span class="o">]</span>
+</span><span class='line'>127.0.0.1:6379&gt; CLIENT LIST
+</span><span class='line'>127.0.0.1:6379&gt; CLIENT GETNAME
+</span><span class='line'>127.0.0.1:6379&gt; CLIENT PAUSE timeout
+</span><span class='line'>127.0.0.1:6379&gt; CLIENT SETNAME connection-name
+</span><span class='line'>127.0.0.1:6379&gt; CLUSTER SLOTS
+</span><span class='line'>127.0.0.1:6379&gt; COMMAND
+</span><span class='line'>127.0.0.1:6379&gt; COMMAND COUNT
+</span><span class='line'>127.0.0.1:6379&gt; COMMAND GETKEYS
+</span><span class='line'>127.0.0.1:6379&gt; BGSAVE
+</span><span class='line'>127.0.0.1:6379&gt; COMMAND INFO <span class="nb">command</span>-name <span class="o">[</span><span class="nb">command</span>-name ...<span class="o">]</span>
+</span><span class='line'>127.0.0.1:6379&gt; CONFIG GET parameter
+</span><span class='line'>127.0.0.1:6379&gt; CONFIG REWRITE
+</span><span class='line'>127.0.0.1:6379&gt; CONFIG SET parameter value
+</span><span class='line'>127.0.0.1:6379&gt; CONFIG RESETSTAT
+</span><span class='line'>127.0.0.1:6379&gt; DBSIZE
+</span><span class='line'>127.0.0.1:6379&gt; DEBUG OBJECT key
+</span><span class='line'>127.0.0.1:6379&gt; DEBUG SEGFAULT
+</span><span class='line'>127.0.0.1:6379&gt; FLUSHALL
+</span><span class='line'>127.0.0.1:6379&gt; FLUSHDB
+</span><span class='line'>127.0.0.1:6379&gt; INFO <span class="o">[</span>section<span class="o">]</span>
+</span><span class='line'>127.0.0.1:6379&gt; LASTSAVE
+</span><span class='line'>127.0.0.1:6379&gt; MONITOR
+</span><span class='line'>127.0.0.1:6379&gt; ROLE
+</span><span class='line'>127.0.0.1:6379&gt; SAVE
+</span><span class='line'>127.0.0.1:6379&gt; SHUTDOWN <span class="o">[</span>NOSAVE<span class="o">]</span> <span class="o">[</span>SAVE<span class="o">]</span>
+</span><span class='line'>127.0.0.1:6379&gt; SLAVEOF host port
+</span><span class='line'>127.0.0.1:6379&gt; SLOWLOG subcommand <span class="o">[</span>argument<span class="o">]</span>
+</span><span class='line'>127.0.0.1:6379&gt; SYNC
+</span><span class='line'>127.0.0.1:6379&gt; TIME
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>References</h2>
+
+<ul>
+<li><a href="redis.io">Redis Official Site</a></li>
+<li><a href="http://www.tutorialspoint.com/redis/">Redis Tutorial</a></li>
+<li><a href="http://try.redis.io">Try Redis</a></li>
+<li><a href="https://github.com/uglide/RedisDesktopManager/wiki/Install-and-Run">Redis Destop Manager</a></li>
+</ul>
 
 ]]></content>
   </entry>
