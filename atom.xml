@@ -4,7 +4,7 @@
   <title><![CDATA[Kelly Chan]]></title>
   <link href="http://k.arttechresearch.com/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2015-10-24T02:22:51+08:00</updated>
+  <updated>2015-10-24T16:07:15+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[Kelly Chan]]></name>
@@ -1270,26 +1270,6 @@ download the library, and copy <code>jquery.tableofcontents.min.js</code> to <co
 <li><a href="https://github.com/dafi/jekyll-toc-generator">jekyll-toc-generator</a></li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Logic and Thinking]]></title>
-    <link href="http://k.arttechresearch.com/life/2015/10/15/logic-and-thinking/"/>
-    <updated>2015-10-15T22:14:42+08:00</updated>
-    <id>http://k.arttechresearch.com/life/2015/10/15/logic-and-thinking</id>
-    <content type="html"><![CDATA[<h2>逻辑与思考</h2>
-
-<p>验证错误，只需一个反例。和别人进行讨论的时候，似乎举个反例，也很容易论证一些事物的真伪。</p>
-
-<p>比如，语言考试，是否母语人士必能高分通过？前提假设，该母语人士的日常听说读写能力流畅。
-事实是，语言考试和日常交流还是有区别的。日常交流，可能只需双方明白各自的意思，达到沟通的
-目的；而语言考试，除了语言的听说读写能力外，可能还需要相应的解题技巧、逻辑推理，甚至某些
-方面的专业知识或技能。这样，可以很容易理解，为什么有些人日常外语沟通流畅，却不一定能高分
-通过高考英文题或考研英文卷，后两者，除了听说读写，还需要考查和日常交流不同方面的能力。</p>
-
-<p>因为这样的讨论，引出了学习的模式。快速学习的方法，似乎就是快速找到该领域的规律、法则或模
-式，然后灵活地应用到具体的场景、情景中。</p>
 ]]></content>
   </entry>
   
@@ -3664,6 +3644,31 @@ download the library, and copy <code>jquery.tableofcontents.min.js</code> to <co
 <li><a href="http://www.tutorialspoint.com/redis/">Redis Tutorial</a></li>
 <li><a href="http://try.redis.io">Try Redis</a></li>
 <li><a href="https://github.com/uglide/RedisDesktopManager/wiki/Install-and-Run">Redis Destop Manager</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Changing a Theme for NodeJS Ghost]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/09/16/changing-a-theme-for-nodejs-ghost/"/>
+    <updated>2015-09-16T23:30:16+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/09/16/changing-a-theme-for-nodejs-ghost</id>
+    <content type="html"><![CDATA[<h2>1. Download a theme</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> /path/to/ghost/content/themes
+</span><span class='line'>git clone git@xxxx:a_new_theme.git
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>2. Config a theme</h2>
+
+<p>Go to <a href="http://localhost:2368/admin">http://localhost:2368/admin</a></p>
+
+<ul>
+<li>find generic -> themes -> select</li>
 </ul>
 
 ]]></content>
