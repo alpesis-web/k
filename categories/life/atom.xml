@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Life | Kelly Chan]]></title>
+  <title><![CDATA[Category: Life | K]]></title>
   <link href="http://k.arttechresearch.com/categories/life/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2015-10-24T17:56:44+08:00</updated>
+  <updated>2015-10-24T18:10:22+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
-    <name><![CDATA[Kelly Chan]]></name>
+    <name><![CDATA[K]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
