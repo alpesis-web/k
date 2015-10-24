@@ -1,0 +1,11 @@
+---
+layout: post_art
+title: "Sakura"
+date: 2015-03-31 12:46:58 +0800
+comments: true
+categories: [art]
+tags: [photos]
+toc: false
+---
+
+<img src="https://s-media-cache-ak0.pinimg.com/736x/40/0b/be/400bbee121f025abb26ec85299e450e5.jpg" />

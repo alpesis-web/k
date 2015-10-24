@@ -10,7 +10,7 @@ toc: false
 
 上海大学美术学院油画系作品展
 
-## 1. 卫城 
+## 展品1. 卫城 
 
 <img src="https://s-media-cache-ak0.pinimg.com/originals/a5/69/33/a569335b66a08b569611fd577023359e.jpg" />
 
@@ -19,14 +19,14 @@ toc: false
 以羽化作过渡，耐看是因为技法和遐想。
 
 
-## 2. 人物
+## 展品2. 人物
 
 <img src="https://s-media-cache-ak0.pinimg.com/736x/16/5a/b5/165ab5f7f2991523d03072eae861cad0.jpg" />
 
 简炼的背景，人物的衣饰也是寥寥数笔，很容易把注意力放在了发光的帽子，是光影。
 
 
-## 3. 静物
+## 展品3. 静物
 
 <img src="https://s-media-cache-ak0.pinimg.com/736x/d4/dd/06/d4dd06dfdfcc195b71da106baa82a86b.jpg" />
 
@@ -34,7 +34,7 @@ toc: false
 加上氛围的烘托。
 
 
-## 4. 火车
+## 展品4. 火车
 
 <img src="https://s-media-cache-ak0.pinimg.com/736x/d6/f0/30/d6f0306c6ac5db5965919dfff15de442.jpg" />
 

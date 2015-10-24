@@ -1,0 +1,11 @@
+---
+layout: post_art
+title: "Autumn"
+date: 2014-11-20 12:58:55 +0800
+comments: true
+categories: [art]
+tags: [photos]
+toc: false
+---
+
+<img src="https://s-media-cache-ak0.pinimg.com/736x/07/50/e1/0750e1f4c1afb554e255f60ed1343251.jpg" />
