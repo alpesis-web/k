@@ -14,6 +14,8 @@ toc: true
 
 <img src="https://docs.docker.com/installation/images/linux_docker_host.svg" />
 
+(image source: [Docker Official Site](https://docs.docker.com/installation/mac/))
+
 In a Docker installation on Linux, your physical machine is both the localhost and the Docker host. 
 
 - networking, (localhost) your computer, (docker host) the computer which the containers run
@@ -24,6 +26,8 @@ In a Docker installation on Linux, your physical machine is both the localhost a
 ### 1.2. OS X
 
 <img src="https://docs.docker.com/installation/images/mac_docker_host.svg" />
+
+(image source: [Docker Official Site](https://docs.docker.com/installation/mac/))
 
 In an OS X installation, the docker daemon is running inside a Linux VM called i`default`. 
 The `default` is a lightweight Linux VM made specifically to run the Docker daemon on Mac OS X. 
