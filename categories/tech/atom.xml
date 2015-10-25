@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tech | K]]></title>
   <link href="http://k.arttechresearch.com/categories/tech/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2015-10-25T00:27:35+08:00</updated>
+  <updated>2015-10-25T20:43:24+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[K]]></name>
@@ -244,6 +244,8 @@ python              2.7.7               a87a2288ce78        15 months ago       
 
 <p><img src="https://docs.docker.com/installation/images/linux_docker_host.svg" /></p>
 
+<p>(image source: <a href="https://docs.docker.com/installation/mac/">Docker Official Site</a>)</p>
+
 <p>In a Docker installation on Linux, your physical machine is both the localhost and the Docker host.</p>
 
 <ul>
@@ -256,6 +258,8 @@ python              2.7.7               a87a2288ce78        15 months ago       
 <h3>1.2. OS X</h3>
 
 <p><img src="https://docs.docker.com/installation/images/mac_docker_host.svg" /></p>
+
+<p>(image source: <a href="https://docs.docker.com/installation/mac/">Docker Official Site</a>)</p>
 
 <p>In an OS X installation, the docker daemon is running inside a Linux VM called i<code>default</code>.
 The <code>default</code> is a lightweight Linux VM made specifically to run the Docker daemon on Mac OS X.
