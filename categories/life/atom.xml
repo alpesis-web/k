@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Life | K]]></title>
   <link href="http://k.arttechresearch.com/categories/life/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2015-10-25T20:43:24+08:00</updated>
+  <updated>2015-10-26T23:36:04+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[K]]></name>
@@ -12,6 +12,88 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Business Models]]></title>
+    <link href="http://k.arttechresearch.com/life/2015/10/26/business-models/"/>
+    <updated>2015-10-26T22:38:09+08:00</updated>
+    <id>http://k.arttechresearch.com/life/2015/10/26/business-models</id>
+    <content type="html"><![CDATA[<h2>商业模式</h2>
+
+<p>2008那年坐地铁，经常会碰到免费派报纸还送一些小礼品（水或纸巾等）的情况，当时还好奇，报纸
+从何盈利，然后知道了广告在支持着报社、杂志社的日常运营。相比小时候每天订阅的报纸，当时
+的商业模式，也许也是时代和行业的一种革新。</p>
+
+<p>再到后来，接触到互联网的商业模式，更是五花八门了。恰好有人提起，随手记记自己知道的
+免费的商业模式。</p>
+
+<h3>1. 广告</h3>
+
+<p>2008年前，这可能是大多数互联网企业的盈利方式之一，尤其是网络刚普及的时候，大量网站如雨后
+春笋，早起的鸟儿，只要保持网站的一定流量，广告收益足以维持网站运营。那时也有很多站长自立
+门户。</p>
+
+<p>典型企业：谷歌广告</p>
+
+<h3>2. 佣金</h3>
+
+<p>媒介平台常用的一种方式，平台类似集市，只是提供一个载体，平台用户分成两类，平台在交易金中
+抽取提成。提成一般是交易的百分之几。用户可以是买家和卖家，雇佣者和被雇佣者，教师和学生等。</p>
+
+<p>典型企业：eBay、Freelancer。</p>
+
+<h3>3. 阶梯式</h3>
+
+<p>有些以用户作分类，有些以功能作分类。如果是以用户作分类，比如个人用户和企业用户，普通会员和
+高级会员等；如果是以功能作分类，基础功能免费，高级功能（附加增值功能）付费。</p>
+
+<p>典型企业：LinkedIn</p>
+
+<h3>4. 捐赠</h3>
+
+<p>接受个人或机构的捐款。</p>
+
+<p>典型企业：维基百科</p>
+
+<h3>5. 初创企业</h3>
+
+<p>初创企业为了培养早期用户，也会提供免费的产品和服务，尤其是这两年，移动端的叫车软件和外卖软件
+早期一般会给用户补贴，鼓励用户使用新产品，以培养早期的一批用户。移动端的互联网金融，也有类似的
+现象。</p>
+
+<p>典型企业：滴滴打车、淘点点</p>
+
+<h3>6. 增值服务</h3>
+
+<p>给主流用户提供免费的产品，然后挖掘用户价值，给特定的企业提供相应的产品和服务。比如在线教育平台，
+除了提供免费课程外，认证证书付费外，还为企业提供人才（猎头角色）。也有一些数据公司，给用户提供一
+种产品，然后给特定企业提供数据服务。</p>
+
+<p>典型企业：Coursera</p>
+
+<h3>7. 咨询服务</h3>
+
+<p>一些开源的软件，软件是免费的，但咨询和方案是付费的。</p>
+
+<p>典型企业：Linux、Ｒ、Hadoop</p>
+
+<h3>8. 线下业务</h3>
+
+<p>有些站点，线上平台只是交流的接口，线下业务才是盈利的核心。这种情况，似乎传统行业转互联网企业
+的情况比较多。比如一些在线二手车交易平台，公司内部会有专人收购这类车，再转手卖出；比如一些电商
+平台，线上只是订单，线下产品配送，售卖产品才是核心。</p>
+
+<p>典型企业：亚马逊在线商店</p>
+
+<h3>总结</h3>
+
+<p>企业的盈利模式，免费只是表象，背后一定有其他业务在支撑着运营。而在互联网企业中，企业的盈利模式
+很可能是多样的，是几种方式的结合。</p>
+
+<p>回到传统行业或传统的商业模式：提供一种或多种付费产品和（或）付费服务，互联网企业的“免费”的盈利
+方式，几乎都是一种或几种其他业务，支撑着一个大容量的免费的用户平台。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Blogging]]></title>
@@ -135,35 +217,6 @@ Bird》，发现两者有着共同的特点：</p>
 <p>因为玩法简单，用户可以在闲暇的时候玩；因为策略不简单，激起了用户挑战的心理，再加上晒成绩或有排行榜，更增添了游戏传播的可能性。</p>
 
 <p>而作为开发者，把传统游戏修改为符合时代特征的语言和卡通形象，也是开发的一种思路吧。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Composing Song Ci With Chinese Herbs]]></title>
-    <link href="http://k.arttechresearch.com/life/2014/07/09/composing-song-ci-with-chinese-herbs/"/>
-    <updated>2014-07-09T21:00:00+08:00</updated>
-    <id>http://k.arttechresearch.com/life/2014/07/09/composing-song-ci-with-chinese-herbs</id>
-    <content type="html"><![CDATA[<h2>药名联句</h2>
-
-<p>看着别人用中药名联句(<a href="http://www.douban.com/note/368114269/">相思续断半夏风</a>)，也试了一试：</p>
-
-<p>寒水石，<br/>
-忍冬待半夏。<br/>
-千里红花炼沉香，<br/>
-一枝玉竹筑仙茅。<br/>
-天冬何时了。</p>
-
-<p>药名：寒水石，忍冬，半夏，红花，沉香，玉竹，仙茅，天冬</p>
-
-<h2>Composing Song Ci with Chinese Herbs</h2>
-
-<p>Someone composed <a href="http://www.douban.com/note/368114269/">Song Ci with the names of Chinese Herbs</a>, then I had a try, just for fun:</p>
-
-<p>With the white stone standing besides the iced water,<br/>
-It is waiting for the mid-summer in this winter.<br/>
-Using thousands of the red flowers to make a bottle of perfume,<br/>
-A pretty bamboo to build a maison in the paradise.<br/>
-When will be the end of this winter?</p>
 ]]></content>
   </entry>
   
