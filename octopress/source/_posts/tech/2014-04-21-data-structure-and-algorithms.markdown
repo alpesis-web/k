@@ -5,7 +5,10 @@ date: 2014-04-21 09:24:12 +0800
 comments: true
 categories: [tech]
 tags: [algorithm, python]
+toc: true
 ---
+
+## Summary
 
 | algorithms            | data structure | advance              |
 |:----------------------|:---------------|:---------------------|
