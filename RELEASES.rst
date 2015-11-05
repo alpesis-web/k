@@ -8,7 +8,7 @@ TODOs:
 - buffer of the posts
 - the pages of devkits
 - the pages of projects
- 
+- the floatting header (always)
 
 ------------------------
 v3 - Oct 4 2015
