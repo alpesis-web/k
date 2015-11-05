@@ -2,6 +2,13 @@
 Release Notes
 #############################
 
+TODOs:
+
+- search engine
+- buffer of the posts
+- the pages of devkits
+- the pages of projects
+ 
 
 ------------------------
 v3 - Oct 4 2015
