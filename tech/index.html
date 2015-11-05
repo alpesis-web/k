@@ -9,10 +9,8 @@
   <meta name="author" content="K">
 
   
-  <meta name="description" content="Requirements OS: OS X
-Language: Node.js/npm
-Dependency: markdown-pdf Example install dependency 1
-$ npm install markdown-pdf convert markdown to pdf &hellip;">
+  <meta name="description" content="The colortheme files of iTerm is *.itermcolors, everyone can create or update a colortheme and
+then import it to iTerm. Alternatively, you can &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -122,6 +120,368 @@ $ npm install markdown-pdf convert markdown to pdf &hellip;">
       <div class="blog-index">
 
   
+  
+  
+    <article>
+      
+  <header>
+
+    
+      <h1 class="entry-title"><a href="/tech/2015/11/05/configurating-colortheme-for-iterm/">Configurating Colortheme for iTerm</a></h1>
+    
+
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-11-05T23:08:34+08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>11:08 pm</span></time>
+        
+           | <a href="/tech/2015/11/05/configurating-colortheme-for-iterm/#disqus_thread"
+             data-disqus-identifier="http://k.arttechresearch.com/tech/2015/11/05/configurating-colortheme-for-iterm/">Comments</a>
+        
+      </p>
+    
+
+  </header>
+
+
+
+  <div class="entry-content"><p>The colortheme files of iTerm is <code>*.itermcolors</code>, everyone can create or update a colortheme and
+then import it to iTerm. Alternatively, you can download the colorthemes which are shared in
+public and then update them in iTerm.</p>
+
+<p>If Vim is set as the editor, it would be better to keep the colortheme as the same as iTerm.</p>
+
+<h2>1. Colorthemes</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git clone git://github.com/altercation/solarized.git
+</span><span class='line'><span class="nv">$ </span>git clone https://github.com/mbadolato/iTerm2-Color-Schemes.git
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>2. iTerm</h2>
+
+<ul>
+<li>iTerm -> Preferences -> Profiles -> Colors -> Load Presets -> import</li>
+</ul>
+
+
+<p>import the colorthemes</p>
+
+<ul>
+<li>if solarized: iterm2-colors-soloarized</li>
+<li>if iTerm2-Color-Schemes: <code>*.itermcolors</code></li>
+</ul>
+
+
+<h2>3. .bash_profile</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>brew install coreutils
+</span><span class='line'><span class="nv">$ </span>vim ~/.bash_profile             <span class="c"># add export clicolor</span>
+</span><span class='line'><span class="nv">$ </span><span class="nb">source</span> ~/.bash_profile
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>.bash_profile</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">export </span><span class="nv">CLICOLOR</span><span class="o">=</span>1
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Preview</p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/d7/ba/d3/d7bad3e5432d03d2330b88f49dc4b488.jpg" /></p>
+
+<h2>4. vim</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># copy the colorscheme</span>
+</span><span class='line'><span class="nv">$ </span>mkdir ~/.vim/colors
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> ~/.vim/colors
+</span><span class='line'><span class="nv">$ </span>cp /path/to/solarized/vim-colors-solarized/colors/solarized.vim ./
+</span><span class='line'>
+</span><span class='line'><span class="c"># update the .vimrc</span>
+</span><span class='line'><span class="nv">$ </span>vim ~/.vimrc
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>.vimrc</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>syntax <span class="nb">enable</span>
+</span><span class='line'><span class="nb">set </span><span class="nv">background</span><span class="o">=</span>dark
+</span><span class='line'>colorscheme solarized
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Preview</p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/31/f1/93/31f19309e06e9affcd25b81f0b8ddc06.jpg" /></p>
+</div>
+  
+  
+
+
+
+  
+
+
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+
+    
+      <h1 class="entry-title"><a href="/tech/2015/11/05/python-challenge-l0-l2/">Python Challenge L0-L2</a></h1>
+    
+
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-11-05T16:07:22+08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>4:07 pm</span></time>
+        
+           | <a href="/tech/2015/11/05/python-challenge-l0-l2/#disqus_thread"
+             data-disqus-identifier="http://k.arttechresearch.com/tech/2015/11/05/python-challenge-l0-l2/">Comments</a>
+        
+      </p>
+    
+
+  </header>
+
+
+
+  <div class="entry-content"><p><a href="http://www.pythonchallenge.com">Python Challenge</a></p>
+
+<h2>L0</h2>
+
+<p><a href="http://www.pythonchallenge.com/pc/def/0.html">L0</a></p>
+
+<p>Hint: try to change the URL address.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="mi">2</span><span class="o">**</span><span class="mi">38</span>
+</span><span class='line'><span class="mi">274877906944</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Update the url.</p>
+
+<h2>L1. Map</h2>
+
+<p><a href="http://www.pythonchallenge.com/pc/def/map.html">L1</a></p>
+
+<p>everybody thinks twice before solving this.</p>
+
+<p>solution</p>
+
+<figure class='code'><figcaption><span>map.py</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">from</span> <span class="nn">string</span> <span class="kn">import</span> <span class="n">maketrans</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">alphabet</span> <span class="o">=</span> <span class="s">&quot;abcdefghijklmnopqrstuvwxyz&quot;</span>
+</span><span class='line'><span class="n">alphabet_decode</span> <span class="o">=</span> <span class="s">&quot;cdefghijklmnopqrstuvwxyzab&quot;</span>
+</span><span class='line'><span class="n">map_table</span> <span class="o">=</span> <span class="n">maketrans</span><span class="p">(</span><span class="n">alphabet</span><span class="p">,</span> <span class="n">alphabet_decode</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">strings</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+</span><span class='line'><span class="s">    g fmnc wms bgblr rpylqjyrc gr zw fylb. rfyrq ufyr amknsrcpq ypc dmp. bmgle gr gl zw fylb gq glcddgagclr ylb rfyr&#39;q ufw rfgq rcvr gq qm jmle. sqgle qrpgle.kyicrpylq() gq pcamkkclbcb. lmu ynnjw ml rfc spj.</span>
+</span><span class='line'><span class="s">    &quot;&quot;&quot;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">url</span> <span class="o">=</span> <span class="s">&quot;map&quot;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">print</span> <span class="n">strings</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">map_table</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">print</span> <span class="n">url</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">map_table</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>result</p>
+
+<figure class='code'><figcaption><span>map outputs</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">i</span> <span class="n">hope</span> <span class="n">you</span> <span class="n">didnt</span> <span class="n">translate</span> <span class="n">it</span> <span class="n">by</span> <span class="n">hand</span><span class="o">.</span> <span class="n">thats</span> <span class="n">what</span> <span class="n">computers</span> <span class="n">are</span> <span class="k">for</span><span class="o">.</span> <span class="n">doing</span> <span class="n">it</span> <span class="ow">in</span> <span class="n">by</span> <span class="n">hand</span> <span class="ow">is</span> <span class="n">inefficient</span> <span class="ow">and</span> <span class="n">that</span><span class="s">&#39;s why this text is so long. using string.maketrans() is recommended. now apply on the url.</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">ocr</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then update the url with <code>ocr</code>.</p>
+
+<h2>L2. OCR</h2>
+
+<p><a href="http://www.pythonchallenge.com/pc/def/ocr.html">L2</a></p>
+
+<p>recognize the characters. maybe they are in the book,
+but MAYBE they are in the page source.</p>
+
+<figure class='code'><figcaption><span>ocr.py</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c"># dictionary: http://www.math.sjsu.edu/~foster/dictionary.txt</span>
+</span><span class='line'><span class="c"># download the dictionary for mapping the words</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">print_sorted_keys</span><span class="p">(</span><span class="n">dictionary</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">print</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">dictionary</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">dictionary</span><span class="p">:</span> <span class="n">dictionary</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">print_sorted_values</span><span class="p">(</span><span class="n">dictionary</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">print</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">dictionary</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">dictionary</span><span class="p">:</span> <span class="n">dictionary</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">generate_word_dict</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">word_counts</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">text</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+</span><span class='line'>            <span class="k">if</span> <span class="n">char</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">word_counts</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+</span><span class='line'>                <span class="n">word_counts</span><span class="p">[</span><span class="n">char</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>            <span class="k">else</span><span class="p">:</span>
+</span><span class='line'>                <span class="n">word_counts</span><span class="p">[</span><span class="n">char</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span class='line'>    <span class="n">text</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">word_counts</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">mapping</span><span class="p">(</span><span class="n">letters</span><span class="p">,</span> <span class="n">dictbook</span><span class="p">):</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">words</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">dictbook</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">dictbook</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">dictbook</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
+</span><span class='line'>        <span class="c"># if set(line.strip()) == set(letters):</span>
+</span><span class='line'>        <span class="c">#     words.append(line.strip())</span>
+</span><span class='line'>        <span class="n">words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="k">if</span> <span class="nb">set</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="o">==</span> <span class="nb">set</span><span class="p">(</span><span class="n">letters</span><span class="p">)</span> <span class="k">else</span> <span class="n">words</span>
+</span><span class='line'>    <span class="n">dictbook</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">words</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">file_path</span> <span class="o">=</span> <span class="s">&#39;./data/2_ocr.txt&#39;</span>
+</span><span class='line'>    <span class="n">dictbook</span> <span class="o">=</span> <span class="s">&quot;./data/dictionary.txt&quot;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c"># find the letters</span>
+</span><span class='line'>    <span class="n">word_counts</span> <span class="o">=</span> <span class="n">generate_word_dict</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">print_sorted_keys</span><span class="p">(</span><span class="n">word_counts</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">print_sorted_values</span><span class="p">(</span><span class="n">word_counts</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c"># look for a word from a dictionary</span>
+</span><span class='line'>    <span class="n">letters</span> <span class="o">=</span> <span class="s">&quot;aeilquty&quot;</span>
+</span><span class='line'>    <span class="n">words</span> <span class="o">=</span> <span class="n">mapping</span><span class="p">(</span><span class="n">letters</span><span class="p">,</span> <span class="n">dictbook</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">print</span> <span class="n">words</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>result</p>
+
+<figure class='code'><figcaption><span>ocr outputs</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="p">[(</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;e&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;i&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;l&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;q&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;u&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;t&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;y&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">,</span> <span class="mi">1220</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;^&#39;</span><span class="p">,</span> <span class="mi">6030</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;*&#39;</span><span class="p">,</span> <span class="mi">6034</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;&amp;&#39;</span><span class="p">,</span> <span class="mi">6043</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;$&#39;</span><span class="p">,</span> <span class="mi">6046</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;{&#39;</span><span class="p">,</span> <span class="mi">6046</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;+&#39;</span><span class="p">,</span> <span class="mi">6066</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;!&#39;</span><span class="p">,</span> <span class="mi">6079</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;%&#39;</span><span class="p">,</span> <span class="mi">6104</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;}&#39;</span><span class="p">,</span> <span class="mi">6105</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;[&#39;</span><span class="p">,</span> <span class="mi">6108</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;_&#39;</span><span class="p">,</span> <span class="mi">6112</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;#&#39;</span><span class="p">,</span> <span class="mi">6115</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;]&#39;</span><span class="p">,</span> <span class="mi">6152</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;(&#39;</span><span class="p">,</span> <span class="mi">6154</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;@&#39;</span><span class="p">,</span> <span class="mi">6157</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;)&#39;</span><span class="p">,</span> <span class="mi">6186</span><span class="p">)]</span>
+</span><span class='line'><span class="p">[</span><span class="s">&#39;equality&#39;</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+
+  
+
+
+
+
+    </article>
   
   
     <article>
@@ -34249,6 +34609,14 @@ Y = ATT<code>ATC</code></p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/tech/2015/11/05/configurating-colortheme-for-iterm/">Configurating Colortheme for iTerm</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/11/05/python-challenge-l0-l2/">Python Challenge L0-L2</a>
+      </li>
+    
+      <li class="post">
         <a href="/tech/2015/10/21/converting-markdown-to-pdf-with-nodejs/">Converting Markdown to PDF With NodeJS</a>
       </li>
     
@@ -34280,14 +34648,6 @@ Y = ATT<code>ATC</code></p>
         <a href="/tech/2015/10/06/adding-tag-generator-in-octopress/">Adding Tag Generator in Octopress</a>
       </li>
     
-      <li class="post">
-        <a href="/tech/2015/10/06/adding-tag-cloud-in-octopress/">Adding Tag Cloud in Octopress</a>
-      </li>
-    
-      <li class="post">
-        <a href="/tech/2015/10/06/adding-the-social-icons-in-octopress/">Adding the Social Icons in Octopress</a>
-      </li>
-    
   </ul>
 </section>
 <section class="category-list">
@@ -34313,7 +34673,7 @@ Y = ATT<code>ATC</code></p>
 
 
   <h1>Tags</h1>
-    <ul id="category-list"><a href='/tags/algorithm' style='font-size: 112.75862068965517%'>algorithm(7)</a> <a href='/tags/ansible' style='font-size: 93.79310344827586%'>ansible(2)</a> <a href='/tags/apache' style='font-size: 93.79310344827586%'>apache(2)</a> <a href='/tags/api' style='font-size: 93.79310344827586%'>api(2)</a> <a href='/tags/ascii' style='font-size: 90.0%'>ascii(1)</a> <a href='/tags/beautifulsoup' style='font-size: 90.0%'>beautifulsoup(1)</a> <a href='/tags/butter' style='font-size: 90.0%'>butter(1)</a> <a href='/tags/career' style='font-size: 93.79310344827586%'>career(2)</a> <a href='/tags/cg' style='font-size: 90.0%'>cg(1)</a> <a href='/tags/chatbot' style='font-size: 97.58620689655173%'>chatbot(3)</a> <a href='/tags/classification' style='font-size: 93.79310344827586%'>classification(2)</a> <a href='/tags/cloud' style='font-size: 90.0%'>cloud(1)</a> <a href='/tags/cloudera' style='font-size: 112.75862068965517%'>cloudera(7)</a> <a href='/tags/cloudera-manager' style='font-size: 97.58620689655173%'>cloudera manager(3)</a> <a href='/tags/cluster' style='font-size: 162.0689655172414%'>cluster(20)</a> <a href='/tags/computer-vision' style='font-size: 90.0%'>computer vision(1)</a> <a href='/tags/crawler' style='font-size: 93.79310344827586%'>crawler(2)</a> <a href='/tags/css' style='font-size: 93.79310344827586%'>css(2)</a> <a href='/tags/data' style='font-size: 90.0%'>data(1)</a> <a href='/tags/db' style='font-size: 97.58620689655173%'>db(3)</a> <a href='/tags/devops' style='font-size: 101.37931034482759%'>devops(4)</a> <a href='/tags/django' style='font-size: 93.79310344827586%'>django(2)</a> <a href='/tags/dns' style='font-size: 90.0%'>dns(1)</a> <a href='/tags/docker' style='font-size: 97.58620689655173%'>docker(3)</a> <a href='/tags/edx' style='font-size: 135.51724137931035%'>edX(13)</a> <a href='/tags/edx-ai' style='font-size: 90.0%'>edX AI(1)</a> <a href='/tags/edx-analytics' style='font-size: 116.55172413793103%'>edX Analytics(8)</a> <a href='/tags/edx-platform' style='font-size: 97.58620689655173%'>edX Platform(3)</a> <a href='/tags/emacs' style='font-size: 93.79310344827586%'>emacs(2)</a> <a href='/tags/exhibition' style='font-size: 93.79310344827586%'>exhibition(2)</a> <a href='/tags/fiction' style='font-size: 108.9655172413793%'>fiction(6)</a> <a href='/tags/forever' style='font-size: 93.79310344827586%'>forever(2)</a> <a href='/tags/french' style='font-size: 90.0%'>french(1)</a> <a href='/tags/ghost' style='font-size: 101.37931034482759%'>ghost(4)</a> <a href='/tags/git' style='font-size: 105.17241379310344%'>git(5)</a> <a href='/tags/github' style='font-size: 93.79310344827586%'>github(2)</a> <a href='/tags/gitosis' style='font-size: 90.0%'>gitosis(1)</a> <a href='/tags/gitweb' style='font-size: 90.0%'>gitweb(1)</a> <a href='/tags/gunicorn' style='font-size: 90.0%'>gunicorn(1)</a> <a href='/tags/hadoop' style='font-size: 143.10344827586206%'>hadoop(15)</a> <a href='/tags/hbase' style='font-size: 105.17241379310344%'>hbase(5)</a> <a href='/tags/hdfs' style='font-size: 93.79310344827586%'>hdfs(2)</a> <a href='/tags/hipchat' style='font-size: 97.58620689655173%'>hipchat(3)</a> <a href='/tags/hive' style='font-size: 97.58620689655173%'>hive(3)</a> <a href='/tags/html' style='font-size: 93.79310344827586%'>html(2)</a> <a href='/tags/hue' style='font-size: 93.79310344827586%'>hue(2)</a> <a href='/tags/ide' style='font-size: 93.79310344827586%'>ide(2)</a> <a href='/tags/java' style='font-size: 93.79310344827586%'>java(2)</a> <a href='/tags/javascript' style='font-size: 101.37931034482759%'>javascript(4)</a> <a href='/tags/jekyll' style='font-size: 93.79310344827586%'>jekyll(2)</a> <a href='/tags/jenkins' style='font-size: 90.0%'>jenkins(1)</a> <a href='/tags/leisure' style='font-size: 150.68965517241378%'>leisure(17)</a> <a href='/tags/linux' style='font-size: 116.55172413793103%'>linux(8)</a> <a href='/tags/machine-learning' style='font-size: 127.93103448275862%'>machine learning(11)</a> <a href='/tags/mapreduce' style='font-size: 93.79310344827586%'>mapreduce(2)</a> <a href='/tags/markdown' style='font-size: 90.0%'>markdown(1)</a> <a href='/tags/mathjax' style='font-size: 93.79310344827586%'>mathjax(2)</a> <a href='/tags/mongo' style='font-size: 90.0%'>mongo(1)</a> <a href='/tags/mongovue' style='font-size: 90.0%'>mongovue(1)</a> <a href='/tags/mysql' style='font-size: 116.55172413793103%'>mysql(8)</a> <a href='/tags/mysql-workbench' style='font-size: 93.79310344827586%'>mysql workbench(2)</a> <a href='/tags/network' style='font-size: 90.0%'>network(1)</a> <a href='/tags/nginx' style='font-size: 97.58620689655173%'>nginx(3)</a> <a href='/tags/nlp' style='font-size: 108.9655172413793%'>nlp(6)</a> <a href='/tags/nltk' style='font-size: 90.0%'>nltk(1)</a> <a href='/tags/nodejs' style='font-size: 108.9655172413793%'>nodejs(6)</a> <a href='/tags/octopress' style='font-size: 116.55172413793103%'>octopress(8)</a> <a href='/tags/oil-painting' style='font-size: 90.0%'>oil painting(1)</a> <a href='/tags/openstack' style='font-size: 90.0%'>openstack(1)</a> <a href='/tags/painting' style='font-size: 90.0%'>painting(1)</a> <a href='/tags/pandas' style='font-size: 93.79310344827586%'>pandas(2)</a> <a href='/tags/photos' style='font-size: 131.72413793103448%'>photos(12)</a> <a href='/tags/poem' style='font-size: 101.37931034482759%'>poem(4)</a> <a href='/tags/prediction' style='font-size: 90.0%'>prediction(1)</a> <a href='/tags/pycharm' style='font-size: 90.0%'>pycharm(1)</a> <a href='/tags/python' style='font-size: 200.0%'>python(30)</a> <a href='/tags/reading' style='font-size: 90.0%'>reading(1)</a> <a href='/tags/redis' style='font-size: 90.0%'>redis(1)</a> <a href='/tags/redmine' style='font-size: 90.0%'>redmine(1)</a> <a href='/tags/regex' style='font-size: 90.0%'>regex(1)</a> <a href='/tags/robotics' style='font-size: 97.58620689655173%'>robotics(3)</a> <a href='/tags/ruby' style='font-size: 124.13793103448276%'>ruby(10)</a> <a href='/tags/sql' style='font-size: 90.0%'>sql(1)</a> <a href='/tags/sqoop' style='font-size: 97.58620689655173%'>sqoop(3)</a> <a href='/tags/supervisor' style='font-size: 90.0%'>supervisor(1)</a> <a href='/tags/time-series' style='font-size: 90.0%'>time series(1)</a> <a href='/tags/translation' style='font-size: 90.0%'>translation(1)</a> <a href='/tags/ubuntu' style='font-size: 120.34482758620689%'>ubuntu(9)</a> <a href='/tags/unicode' style='font-size: 90.0%'>unicode(1)</a> <a href='/tags/vagrant' style='font-size: 97.58620689655173%'>vagrant(3)</a> <a href='/tags/vim' style='font-size: 90.0%'>vim(1)</a> <a href='/tags/virtualbox' style='font-size: 97.58620689655173%'>virtualbox(3)</a> <a href='/tags/vm' style='font-size: 93.79310344827586%'>vm(2)</a> <a href='/tags/web' style='font-size: 105.17241379310344%'>web(5)</a> <a href='/tags/will' style='font-size: 97.58620689655173%'>will(3)</a> <a href='/tags/yarn' style='font-size: 90.0%'>yarn(1)</a> <a href='/tags/zookeeper' style='font-size: 105.17241379310344%'>zookeeper(5)</a> </ul>
+    <ul id="category-list"><a href='/tags/algorithm' style='font-size: 112.0%'>algorithm(7)</a> <a href='/tags/ansible' style='font-size: 93.66666666666667%'>ansible(2)</a> <a href='/tags/apache' style='font-size: 93.66666666666667%'>apache(2)</a> <a href='/tags/api' style='font-size: 93.66666666666667%'>api(2)</a> <a href='/tags/ascii' style='font-size: 90.0%'>ascii(1)</a> <a href='/tags/beautifulsoup' style='font-size: 90.0%'>beautifulsoup(1)</a> <a href='/tags/butter' style='font-size: 90.0%'>butter(1)</a> <a href='/tags/career' style='font-size: 93.66666666666667%'>career(2)</a> <a href='/tags/cg' style='font-size: 90.0%'>cg(1)</a> <a href='/tags/chatbot' style='font-size: 97.33333333333333%'>chatbot(3)</a> <a href='/tags/classification' style='font-size: 93.66666666666667%'>classification(2)</a> <a href='/tags/cloud' style='font-size: 90.0%'>cloud(1)</a> <a href='/tags/cloudera' style='font-size: 112.0%'>cloudera(7)</a> <a href='/tags/cloudera-manager' style='font-size: 97.33333333333333%'>cloudera manager(3)</a> <a href='/tags/cluster' style='font-size: 159.66666666666669%'>cluster(20)</a> <a href='/tags/computer-vision' style='font-size: 90.0%'>computer vision(1)</a> <a href='/tags/crawler' style='font-size: 93.66666666666667%'>crawler(2)</a> <a href='/tags/css' style='font-size: 93.66666666666667%'>css(2)</a> <a href='/tags/data' style='font-size: 90.0%'>data(1)</a> <a href='/tags/db' style='font-size: 97.33333333333333%'>db(3)</a> <a href='/tags/devops' style='font-size: 101.0%'>devops(4)</a> <a href='/tags/django' style='font-size: 93.66666666666667%'>django(2)</a> <a href='/tags/dns' style='font-size: 90.0%'>dns(1)</a> <a href='/tags/docker' style='font-size: 97.33333333333333%'>docker(3)</a> <a href='/tags/edx' style='font-size: 134.0%'>edX(13)</a> <a href='/tags/edx-ai' style='font-size: 90.0%'>edX AI(1)</a> <a href='/tags/edx-analytics' style='font-size: 115.66666666666667%'>edX Analytics(8)</a> <a href='/tags/edx-platform' style='font-size: 97.33333333333333%'>edX Platform(3)</a> <a href='/tags/emacs' style='font-size: 93.66666666666667%'>emacs(2)</a> <a href='/tags/exhibition' style='font-size: 93.66666666666667%'>exhibition(2)</a> <a href='/tags/fiction' style='font-size: 108.33333333333333%'>fiction(6)</a> <a href='/tags/forever' style='font-size: 93.66666666666667%'>forever(2)</a> <a href='/tags/french' style='font-size: 90.0%'>french(1)</a> <a href='/tags/ghost' style='font-size: 101.0%'>ghost(4)</a> <a href='/tags/git' style='font-size: 104.66666666666667%'>git(5)</a> <a href='/tags/github' style='font-size: 93.66666666666667%'>github(2)</a> <a href='/tags/gitosis' style='font-size: 90.0%'>gitosis(1)</a> <a href='/tags/gitweb' style='font-size: 90.0%'>gitweb(1)</a> <a href='/tags/gunicorn' style='font-size: 90.0%'>gunicorn(1)</a> <a href='/tags/hadoop' style='font-size: 141.33333333333334%'>hadoop(15)</a> <a href='/tags/hbase' style='font-size: 104.66666666666667%'>hbase(5)</a> <a href='/tags/hdfs' style='font-size: 93.66666666666667%'>hdfs(2)</a> <a href='/tags/hipchat' style='font-size: 97.33333333333333%'>hipchat(3)</a> <a href='/tags/hive' style='font-size: 97.33333333333333%'>hive(3)</a> <a href='/tags/html' style='font-size: 93.66666666666667%'>html(2)</a> <a href='/tags/hue' style='font-size: 93.66666666666667%'>hue(2)</a> <a href='/tags/ide' style='font-size: 97.33333333333333%'>ide(3)</a> <a href='/tags/iterm' style='font-size: 90.0%'>iterm(1)</a> <a href='/tags/java' style='font-size: 93.66666666666667%'>java(2)</a> <a href='/tags/javascript' style='font-size: 101.0%'>javascript(4)</a> <a href='/tags/jekyll' style='font-size: 93.66666666666667%'>jekyll(2)</a> <a href='/tags/jenkins' style='font-size: 90.0%'>jenkins(1)</a> <a href='/tags/leisure' style='font-size: 148.66666666666666%'>leisure(17)</a> <a href='/tags/linux' style='font-size: 115.66666666666667%'>linux(8)</a> <a href='/tags/machine-learning' style='font-size: 126.66666666666666%'>machine learning(11)</a> <a href='/tags/mapreduce' style='font-size: 93.66666666666667%'>mapreduce(2)</a> <a href='/tags/markdown' style='font-size: 90.0%'>markdown(1)</a> <a href='/tags/mathjax' style='font-size: 93.66666666666667%'>mathjax(2)</a> <a href='/tags/mongo' style='font-size: 90.0%'>mongo(1)</a> <a href='/tags/mongovue' style='font-size: 90.0%'>mongovue(1)</a> <a href='/tags/mysql' style='font-size: 115.66666666666667%'>mysql(8)</a> <a href='/tags/mysql-workbench' style='font-size: 93.66666666666667%'>mysql workbench(2)</a> <a href='/tags/network' style='font-size: 90.0%'>network(1)</a> <a href='/tags/nginx' style='font-size: 97.33333333333333%'>nginx(3)</a> <a href='/tags/nlp' style='font-size: 108.33333333333333%'>nlp(6)</a> <a href='/tags/nltk' style='font-size: 90.0%'>nltk(1)</a> <a href='/tags/nodejs' style='font-size: 108.33333333333333%'>nodejs(6)</a> <a href='/tags/octopress' style='font-size: 115.66666666666667%'>octopress(8)</a> <a href='/tags/oil-painting' style='font-size: 90.0%'>oil painting(1)</a> <a href='/tags/openstack' style='font-size: 90.0%'>openstack(1)</a> <a href='/tags/painting' style='font-size: 90.0%'>painting(1)</a> <a href='/tags/pandas' style='font-size: 93.66666666666667%'>pandas(2)</a> <a href='/tags/photos' style='font-size: 130.33333333333334%'>photos(12)</a> <a href='/tags/poem' style='font-size: 101.0%'>poem(4)</a> <a href='/tags/prediction' style='font-size: 90.0%'>prediction(1)</a> <a href='/tags/pycharm' style='font-size: 90.0%'>pycharm(1)</a> <a href='/tags/python' style='font-size: 200.0%'>python(31)</a> <a href='/tags/python-challenge' style='font-size: 90.0%'>Python Challenge(1)</a> <a href='/tags/reading' style='font-size: 90.0%'>reading(1)</a> <a href='/tags/redis' style='font-size: 90.0%'>redis(1)</a> <a href='/tags/redmine' style='font-size: 90.0%'>redmine(1)</a> <a href='/tags/regex' style='font-size: 90.0%'>regex(1)</a> <a href='/tags/robotics' style='font-size: 97.33333333333333%'>robotics(3)</a> <a href='/tags/ruby' style='font-size: 123.0%'>ruby(10)</a> <a href='/tags/sql' style='font-size: 90.0%'>sql(1)</a> <a href='/tags/sqoop' style='font-size: 97.33333333333333%'>sqoop(3)</a> <a href='/tags/supervisor' style='font-size: 90.0%'>supervisor(1)</a> <a href='/tags/time-series' style='font-size: 90.0%'>time series(1)</a> <a href='/tags/translation' style='font-size: 90.0%'>translation(1)</a> <a href='/tags/ubuntu' style='font-size: 119.33333333333333%'>ubuntu(9)</a> <a href='/tags/unicode' style='font-size: 90.0%'>unicode(1)</a> <a href='/tags/vagrant' style='font-size: 97.33333333333333%'>vagrant(3)</a> <a href='/tags/vim' style='font-size: 93.66666666666667%'>vim(2)</a> <a href='/tags/virtualbox' style='font-size: 97.33333333333333%'>virtualbox(3)</a> <a href='/tags/vm' style='font-size: 93.66666666666667%'>vm(2)</a> <a href='/tags/web' style='font-size: 104.66666666666667%'>web(5)</a> <a href='/tags/will' style='font-size: 97.33333333333333%'>will(3)</a> <a href='/tags/yarn' style='font-size: 90.0%'>yarn(1)</a> <a href='/tags/zookeeper' style='font-size: 104.66666666666667%'>zookeeper(5)</a> </ul>
 </section>
 
     

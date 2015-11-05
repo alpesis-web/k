@@ -4,7 +4,7 @@
   <title><![CDATA[K]]></title>
   <link href="http://k.arttechresearch.com/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2015-10-26T23:36:04+08:00</updated>
+  <updated>2015-11-06T02:48:41+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[K]]></name>
@@ -12,6 +12,302 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Configurating Colortheme for iTerm]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/11/05/configurating-colortheme-for-iterm/"/>
+    <updated>2015-11-05T23:08:34+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/11/05/configurating-colortheme-for-iterm</id>
+    <content type="html"><![CDATA[<p>The colortheme files of iTerm is <code>*.itermcolors</code>, everyone can create or update a colortheme and
+then import it to iTerm. Alternatively, you can download the colorthemes which are shared in
+public and then update them in iTerm.</p>
+
+<p>If Vim is set as the editor, it would be better to keep the colortheme as the same as iTerm.</p>
+
+<h2>1. Colorthemes</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git clone git://github.com/altercation/solarized.git
+</span><span class='line'><span class="nv">$ </span>git clone https://github.com/mbadolato/iTerm2-Color-Schemes.git
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>2. iTerm</h2>
+
+<ul>
+<li>iTerm -> Preferences -> Profiles -> Colors -> Load Presets -> import</li>
+</ul>
+
+
+<p>import the colorthemes</p>
+
+<ul>
+<li>if solarized: iterm2-colors-soloarized</li>
+<li>if iTerm2-Color-Schemes: <code>*.itermcolors</code></li>
+</ul>
+
+
+<h2>3. .bash_profile</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>brew install coreutils
+</span><span class='line'><span class="nv">$ </span>vim ~/.bash_profile             <span class="c"># add export clicolor</span>
+</span><span class='line'><span class="nv">$ </span><span class="nb">source</span> ~/.bash_profile
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>.bash_profile</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">export </span><span class="nv">CLICOLOR</span><span class="o">=</span>1
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Preview</p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/d7/ba/d3/d7bad3e5432d03d2330b88f49dc4b488.jpg" /></p>
+
+<h2>4. vim</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># copy the colorscheme</span>
+</span><span class='line'><span class="nv">$ </span>mkdir ~/.vim/colors
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> ~/.vim/colors
+</span><span class='line'><span class="nv">$ </span>cp /path/to/solarized/vim-colors-solarized/colors/solarized.vim ./
+</span><span class='line'>
+</span><span class='line'><span class="c"># update the .vimrc</span>
+</span><span class='line'><span class="nv">$ </span>vim ~/.vimrc
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>.vimrc</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>syntax <span class="nb">enable</span>
+</span><span class='line'><span class="nb">set </span><span class="nv">background</span><span class="o">=</span>dark
+</span><span class='line'>colorscheme solarized
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Preview</p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/31/f1/93/31f19309e06e9affcd25b81f0b8ddc06.jpg" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Python Challenge L0-L2]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/11/05/python-challenge-l0-l2/"/>
+    <updated>2015-11-05T16:07:22+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/11/05/python-challenge-l0-l2</id>
+    <content type="html"><![CDATA[<p><a href="http://www.pythonchallenge.com">Python Challenge</a></p>
+
+<h2>L0</h2>
+
+<p><a href="http://www.pythonchallenge.com/pc/def/0.html">L0</a></p>
+
+<p>Hint: try to change the URL address.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="mi">2</span><span class="o">**</span><span class="mi">38</span>
+</span><span class='line'><span class="mi">274877906944</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Update the url.</p>
+
+<h2>L1. Map</h2>
+
+<p><a href="http://www.pythonchallenge.com/pc/def/map.html">L1</a></p>
+
+<p>everybody thinks twice before solving this.</p>
+
+<p>solution</p>
+
+<figure class='code'><figcaption><span>map.py</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">from</span> <span class="nn">string</span> <span class="kn">import</span> <span class="n">maketrans</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">alphabet</span> <span class="o">=</span> <span class="s">&quot;abcdefghijklmnopqrstuvwxyz&quot;</span>
+</span><span class='line'><span class="n">alphabet_decode</span> <span class="o">=</span> <span class="s">&quot;cdefghijklmnopqrstuvwxyzab&quot;</span>
+</span><span class='line'><span class="n">map_table</span> <span class="o">=</span> <span class="n">maketrans</span><span class="p">(</span><span class="n">alphabet</span><span class="p">,</span> <span class="n">alphabet_decode</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">strings</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+</span><span class='line'><span class="s">    g fmnc wms bgblr rpylqjyrc gr zw fylb. rfyrq ufyr amknsrcpq ypc dmp. bmgle gr gl zw fylb gq glcddgagclr ylb rfyr&#39;q ufw rfgq rcvr gq qm jmle. sqgle qrpgle.kyicrpylq() gq pcamkkclbcb. lmu ynnjw ml rfc spj.</span>
+</span><span class='line'><span class="s">    &quot;&quot;&quot;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">url</span> <span class="o">=</span> <span class="s">&quot;map&quot;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">print</span> <span class="n">strings</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">map_table</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">print</span> <span class="n">url</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">map_table</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>result</p>
+
+<figure class='code'><figcaption><span>map outputs</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">i</span> <span class="n">hope</span> <span class="n">you</span> <span class="n">didnt</span> <span class="n">translate</span> <span class="n">it</span> <span class="n">by</span> <span class="n">hand</span><span class="o">.</span> <span class="n">thats</span> <span class="n">what</span> <span class="n">computers</span> <span class="n">are</span> <span class="k">for</span><span class="o">.</span> <span class="n">doing</span> <span class="n">it</span> <span class="ow">in</span> <span class="n">by</span> <span class="n">hand</span> <span class="ow">is</span> <span class="n">inefficient</span> <span class="ow">and</span> <span class="n">that</span><span class="s">&#39;s why this text is so long. using string.maketrans() is recommended. now apply on the url.</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">ocr</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then update the url with <code>ocr</code>.</p>
+
+<h2>L2. OCR</h2>
+
+<p><a href="http://www.pythonchallenge.com/pc/def/ocr.html">L2</a></p>
+
+<p>recognize the characters. maybe they are in the book,
+but MAYBE they are in the page source.</p>
+
+<figure class='code'><figcaption><span>ocr.py</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c"># dictionary: http://www.math.sjsu.edu/~foster/dictionary.txt</span>
+</span><span class='line'><span class="c"># download the dictionary for mapping the words</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">print_sorted_keys</span><span class="p">(</span><span class="n">dictionary</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">print</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">dictionary</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">dictionary</span><span class="p">:</span> <span class="n">dictionary</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">print_sorted_values</span><span class="p">(</span><span class="n">dictionary</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">print</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">dictionary</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">dictionary</span><span class="p">:</span> <span class="n">dictionary</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">generate_word_dict</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">word_counts</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">text</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+</span><span class='line'>            <span class="k">if</span> <span class="n">char</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">word_counts</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+</span><span class='line'>                <span class="n">word_counts</span><span class="p">[</span><span class="n">char</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>            <span class="k">else</span><span class="p">:</span>
+</span><span class='line'>                <span class="n">word_counts</span><span class="p">[</span><span class="n">char</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span class='line'>    <span class="n">text</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">word_counts</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">mapping</span><span class="p">(</span><span class="n">letters</span><span class="p">,</span> <span class="n">dictbook</span><span class="p">):</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">words</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">dictbook</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">dictbook</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">dictbook</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
+</span><span class='line'>        <span class="c"># if set(line.strip()) == set(letters):</span>
+</span><span class='line'>        <span class="c">#     words.append(line.strip())</span>
+</span><span class='line'>        <span class="n">words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="k">if</span> <span class="nb">set</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="o">==</span> <span class="nb">set</span><span class="p">(</span><span class="n">letters</span><span class="p">)</span> <span class="k">else</span> <span class="n">words</span>
+</span><span class='line'>    <span class="n">dictbook</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">words</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">file_path</span> <span class="o">=</span> <span class="s">&#39;./data/2_ocr.txt&#39;</span>
+</span><span class='line'>    <span class="n">dictbook</span> <span class="o">=</span> <span class="s">&quot;./data/dictionary.txt&quot;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c"># find the letters</span>
+</span><span class='line'>    <span class="n">word_counts</span> <span class="o">=</span> <span class="n">generate_word_dict</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">print_sorted_keys</span><span class="p">(</span><span class="n">word_counts</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">print_sorted_values</span><span class="p">(</span><span class="n">word_counts</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c"># look for a word from a dictionary</span>
+</span><span class='line'>    <span class="n">letters</span> <span class="o">=</span> <span class="s">&quot;aeilquty&quot;</span>
+</span><span class='line'>    <span class="n">words</span> <span class="o">=</span> <span class="n">mapping</span><span class="p">(</span><span class="n">letters</span><span class="p">,</span> <span class="n">dictbook</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">print</span> <span class="n">words</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>result</p>
+
+<figure class='code'><figcaption><span>ocr outputs</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="p">[(</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;e&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;i&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;l&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;q&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;u&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;t&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;y&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">,</span> <span class="mi">1220</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;^&#39;</span><span class="p">,</span> <span class="mi">6030</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;*&#39;</span><span class="p">,</span> <span class="mi">6034</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;&amp;&#39;</span><span class="p">,</span> <span class="mi">6043</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;$&#39;</span><span class="p">,</span> <span class="mi">6046</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;{&#39;</span><span class="p">,</span> <span class="mi">6046</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;+&#39;</span><span class="p">,</span> <span class="mi">6066</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;!&#39;</span><span class="p">,</span> <span class="mi">6079</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;%&#39;</span><span class="p">,</span> <span class="mi">6104</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;}&#39;</span><span class="p">,</span> <span class="mi">6105</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;[&#39;</span><span class="p">,</span> <span class="mi">6108</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;_&#39;</span><span class="p">,</span> <span class="mi">6112</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;#&#39;</span><span class="p">,</span> <span class="mi">6115</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;]&#39;</span><span class="p">,</span> <span class="mi">6152</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;(&#39;</span><span class="p">,</span> <span class="mi">6154</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;@&#39;</span><span class="p">,</span> <span class="mi">6157</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;)&#39;</span><span class="p">,</span> <span class="mi">6186</span><span class="p">)]</span>
+</span><span class='line'><span class="p">[</span><span class="s">&#39;equality&#39;</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Business Models]]></title>
@@ -24,8 +320,7 @@
 从何盈利，然后知道了广告在支持着报社、杂志社的日常运营。相比小时候每天订阅的报纸，当时
 的商业模式，也许也是时代和行业的一种革新。</p>
 
-<p>再到后来，接触到互联网的商业模式，更是五花八门了。恰好有人提起，随手记记自己知道的
-免费的商业模式。</p>
+<p>再到后来，接触到互联网的商业模式，更是五花八门了。恰好有人提起，随手记记自己知道的免费的商业模式。</p>
 
 <h3>1. 广告</h3>
 
@@ -91,7 +386,8 @@
 很可能是多样的，是几种方式的结合。</p>
 
 <p>回到传统行业或传统的商业模式：提供一种或多种付费产品和（或）付费服务，互联网企业的“免费”的盈利
-方式，几乎都是一种或几种其他业务，支撑着一个大容量的免费的用户平台。</p>
+方式，几乎都是一种或几种其他业务，支撑着一个大容量的免费的用户平台。从这点看，还是很遵守八二法
+则的。</p>
 ]]></content>
   </entry>
   
@@ -2660,165 +2956,6 @@ download the library, and copy <code>jquery.tableofcontents.min.js</code> to <co
 <li><a href="http://octopress.org/docs/setup/">Octopress</a></li>
 <li><a href="https://github.com/imathis/octopress">Octopress Source Code</a></li>
 </ol>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Installing Openstack Devstack]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/10/03/installing-openstack-devstack/"/>
-    <updated>2015-10-03T12:33:38+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/10/03/installing-openstack-devstack</id>
-    <content type="html"><![CDATA[<h3>Prequisition</h3>
-
-<p>Softwares:</p>
-
-<p>&ndash; (VM) <a href="https://www.virtualbox.org/wiki/Downloads">VirtualBox 5.0</a><br/>
-&ndash; (OS) <a href="http://www.ubuntu.com/download/server">Ubuntu Server 14.04.3</a><br/>
-&ndash; (SW) <a href="https://github.com/openstack-dev/devstack">Openstack</a></p>
-
-<p>Steps:</p>
-
-<p>&ndash; Installing VirtualBox<br/>
-&ndash; Installing Ubuntu 14.04.03<br/>
-&ndash; Installing Openstack<br/>
-&ndash; Testing</p>
-
-<h3>1. Installing VirtualBox</h3>
-
-<p>Go to <a href="https://www.virtualbox.org/wiki/Downloads">VirtualBox</a>, download and install on the local machine.</p>
-
-<h3>2. Installing Ubuntu</h3>
-
-<p>Go to <a href="http://www.ubuntu.com/download/server">Ubuntu</a> page, download the ubuntu server 14.04.03 (NOTE: Preferring 14.04.03) iso image.</p>
-
-<p>Once done, open VirtualBox, create a vm for Ubuntu server. The vm settings are:<br/>
-&ndash; memory: 2GB<br/>
-&ndash; storage: 100GB<br/>
-&ndash; <strong>network: briaged adapter (IMPORTANT), promiscuous mode with ALLOW ALL</strong></p>
-
-<p>Then, attach Ubuntu server iso file to the drive, double click the vm, the system will be jumped to the installation guide.</p>
-
-<p>When installing Ubuntu, the installation mode should be:<br/>
-&ndash; <strong>multi-server with MAAS (IMPORTANT)</strong></p>
-
-<p>Once done, restart and config the system:</p>
-
-<figure class='code'><figcaption><span>config system</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get update <span class="o">&amp;&amp;</span> upgrade
-</span><span class='line'><span class="nv">$ </span>sudo apt-get install git
-</span><span class='line'><span class="nv">$ </span>git config --global user.name <span class="s2">&quot;username&quot;</span>
-</span><span class='line'><span class="nv">$ </span>git config --global user.email <span class="s2">&quot;user@example.com&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>3. Installing Openstack</h3>
-
-<p>Go to <a href="https://github.com/openstack-dev/devstack">Openstack</a>, download the repo and install:</p>
-
-<figure class='code'><figcaption><span>installing openstack</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># create a project folder and download the repo</span>
-</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /
-</span><span class='line'><span class="nv">$ </span>sudo mkdir openstack
-</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>openstack
-</span><span class='line'><span class="nv">$ </span>git clone https://github.com/openstack-dev/devstack.git
-</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>devstack
-</span><span class='line'><span class="nv">$ </span>git checkout stable/juno
-</span><span class='line'>
-</span><span class='line'><span class="c"># config user</span>
-</span><span class='line'><span class="nv">$ </span>sudo ./tools/create-stack-user.sh
-</span><span class='line'><span class="nv">$ </span>sudo chown -R stack:stack /openstack
-</span><span class='line'>
-</span><span class='line'><span class="c"># install</span>
-</span><span class='line'><span class="nv">$ </span>./stack.sh
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Trouble Shooting</p>
-
-<p><strong>(1)</strong> If something wrong, try <code>./unstack.sh</code> and then <code>./clean.sh</code>, restart and then <code>./stack.sh</code> again.</p>
-
-<p><strong>(2)</strong> If re-run <code>./stack.sh</code> and the python packages flag some issue, try to delete <code>/opt/stack/xxx</code>, and re-run <code>./stack.sh</code>.</p>
-
-<h3>4. Testing</h3>
-
-<p>Open a browser, enter the dashboard with <code>http://ip_address</code>, login with <code>admin/password</code> (NOTE: password was set at previous).</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Will Architecture]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/09/30/will-architecture/"/>
-    <updated>2015-09-30T15:19:59+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/09/30/will-architecture</id>
-    <content type="html"><![CDATA[<h2>1. Features</h2>
-
-<h2>2. Architect</h2>
-
-<h2>3. File Construct</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>./
-</span><span class='line'> |
-</span><span class='line'> |---- will/                                    # src
-</span><span class='line'> |       |---- mixins/
-</span><span class='line'> |       |---- plugins/                         # extensions
-</span><span class='line'> |       |---- scripts/                         # commands
-</span><span class='line'> |       |---- storage/                         # dbs
-</span><span class='line'> |       |---- templates/                       # html
-</span><span class='line'> |       |---- tests/                           # testing
-</span><span class='line'> |       |
-</span><span class='line'> |       |---- acl.py
-</span><span class='line'> |       |---- decorators.py
-</span><span class='line'> |       |---- listener.py
-</span><span class='line'> |       |---- plugin.py
-</span><span class='line'> |       |---- scheduler.py
-</span><span class='line'> |       |---- utils.py
-</span><span class='line'> |       |
-</span><span class='line'> |       |---- settings.py
-</span><span class='line'> |       |---- main.py
-</span><span class='line'> |
-</span><span class='line'> |---- config.py                                # config file
-</span><span class='line'> |---- run_will.py                              # run will</span></code></pre></td></tr></table></div></figure>
-
-
 
 ]]></content>
   </entry>
