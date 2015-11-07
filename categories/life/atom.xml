@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Life | K]]></title>
   <link href="http://k.arttechresearch.com/categories/life/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2015-11-06T02:48:41+08:00</updated>
+  <updated>2015-11-08T04:18:06+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[K]]></name>
@@ -12,6 +12,31 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Reading]]></title>
+    <link href="http://k.arttechresearch.com/life/2015/11/08/reading/"/>
+    <updated>2015-11-08T02:48:04+08:00</updated>
+    <id>http://k.arttechresearch.com/life/2015/11/08/reading</id>
+    <content type="html"><![CDATA[<h2>夜读</h2>
+
+<p>读杨绛先生的《我们仨》，在深夜，绝迹于微信之后，重拾夜读，一如去年夜读法语那般，似乎，已是很
+久远的事情，但，这份阅读的宁静，又让时光延长了，一个短暂的夜，变成了杨绛先生一家的一生，如时光
+穿梭机。</p>
+
+<p>我是喜欢杨绛先生的，从读到她最希望得到的法宝是隐身衣，再读到《我们仨》，不过是加深了对杨先生的
+喜爱。杨先生的淡然处世，平安度她过了运动时期。杨先生叙事的文字平实，又很容易想起三毛；杨先生
+和钱钟书先生的感情，再联想到三毛和荷西。不过杨先生和三毛是不同的，杨先生更安宁，三毛是不羁的，
+但两人的文字都真实。</p>
+
+<p>顺着杨先生梦境般的描述，走过了奈何桥，再回到旧时光，回忆的点点滴滴，陪伴着老人剩余的生命，这
+样的回忆，应该也是甜蜜的，只是，对一位92岁高龄的老人，或许意味着更多，我很想了解一位已然104岁
+的老人现时的生活。到底是有多淡然的态度，才能波澜不惊地面对生活的起伏动荡；但，无论多淡然的人，
+在面对生离死别、生老病死这样的自然规律和现象时，还是会无助的。</p>
+
+<p>但愿这样的夜读继续。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Business Models]]></title>
@@ -179,44 +204,6 @@ which is about the Chinese cuisine.</strong></p>
 （4）日本</p>
 
 <p>胡闹一下。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[What Makes a Successful Casual Game]]></title>
-    <link href="http://k.arttechresearch.com/life/2014/08/04/what-makes-a-successful-casual-game/"/>
-    <updated>2014-08-04T12:56:02+08:00</updated>
-    <id>http://k.arttechresearch.com/life/2014/08/04/what-makes-a-successful-casual-game</id>
-    <content type="html"><![CDATA[<p>Recently, I played both casual games: one is Circle the Cat which is the
-simplified version of Chinese Go, another is Fluppy Bird which is like a game
-we played in the childhold.</p>
-
-<p>I found they have some common factors:</p>
-
-<p>&ndash; It is easy to play, users just need to tap tap tap.<br/>
-&ndash; It is difficult to pass, it needs some strategies if the users want to pass the games.<br/>
-&ndash; Both are modified from the traditional games.</p>
-
-<p>Because it is easy to play, users can play it at the leisure time; because it
-is not easy to pass, it pushes the users to think about the strategies, and
-then shared the scores with their friends, that makes the game popular.</p>
-
-<p>In the contrast, as a developer, learns the strategies from the traditional games, designs the
-cartoon images which please the users, and uses the users' languages, perhaps it
-is one of the strategies when develop a casual game.</p>
-
-<h2>休闲游戏</h2>
-
-<p>近来玩了两款游戏，一个是在微信非常流行的《围住神经猫》，另一个是《Fluppy
-Bird》，发现两者有着共同的特点：</p>
-
-<p>&ndash; 玩法简单，神经猫只需点点点，小鸟也是。<br/>
-&ndash; 策略不简单，神经猫带着围棋的解法，小鸟需要时间习得平衡（时间、方向、重力）。<br/>
-&ndash; 两者都是传统游戏的改良，带上了可爱的界面，可亲民。神经猫改自围棋，披上了神经猫的网络用语；小鸟像小时候玩的小球不能碰着旁边的铁圈，也像小时候玩的飞机，披上了可爱的小鸟造型，也让人联想起愤怒的小鸟这款游戏。</p>
-
-<p>因为玩法简单，用户可以在闲暇的时候玩；因为策略不简单，激起了用户挑战的心理，再加上晒成绩或有排行榜，更增添了游戏传播的可能性。</p>
-
-<p>而作为开发者，把传统游戏修改为符合时代特征的语言和卡通形象，也是开发的一种思路吧。</p>
 ]]></content>
   </entry>
   

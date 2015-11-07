@@ -4,7 +4,7 @@
   <title><![CDATA[K]]></title>
   <link href="http://k.arttechresearch.com/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2015-11-06T02:48:41+08:00</updated>
+  <updated>2015-11-08T04:18:06+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[K]]></name>
@@ -12,6 +12,118 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Reading]]></title>
+    <link href="http://k.arttechresearch.com/life/2015/11/08/reading/"/>
+    <updated>2015-11-08T02:48:04+08:00</updated>
+    <id>http://k.arttechresearch.com/life/2015/11/08/reading</id>
+    <content type="html"><![CDATA[<h2>夜读</h2>
+
+<p>读杨绛先生的《我们仨》，在深夜，绝迹于微信之后，重拾夜读，一如去年夜读法语那般，似乎，已是很
+久远的事情，但，这份阅读的宁静，又让时光延长了，一个短暂的夜，变成了杨绛先生一家的一生，如时光
+穿梭机。</p>
+
+<p>我是喜欢杨绛先生的，从读到她最希望得到的法宝是隐身衣，再读到《我们仨》，不过是加深了对杨先生的
+喜爱。杨先生的淡然处世，平安度她过了运动时期。杨先生叙事的文字平实，又很容易想起三毛；杨先生
+和钱钟书先生的感情，再联想到三毛和荷西。不过杨先生和三毛是不同的，杨先生更安宁，三毛是不羁的，
+但两人的文字都真实。</p>
+
+<p>顺着杨先生梦境般的描述，走过了奈何桥，再回到旧时光，回忆的点点滴滴，陪伴着老人剩余的生命，这
+样的回忆，应该也是甜蜜的，只是，对一位92岁高龄的老人，或许意味着更多，我很想了解一位已然104岁
+的老人现时的生活。到底是有多淡然的态度，才能波澜不惊地面对生活的起伏动荡；但，无论多淡然的人，
+在面对生离死别、生老病死这样的自然规律和现象时，还是会无助的。</p>
+
+<p>但愿这样的夜读继续。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Python Challenge L3]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/11/07/python-challenge-l3/"/>
+    <updated>2015-11-07T20:35:25+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/11/07/python-challenge-l3</id>
+    <content type="html"><![CDATA[<p><a href="">Python Challenge</a></p>
+
+<h2>L3. Equality</h2>
+
+<p><a href="http://www.pythonchallenge.com/pc/def/equality.html">L3</a></p>
+
+<p>One small letter, surrounded by EXACTLY three big bodyguards on each of its
+sides.</p>
+
+<figure class='code'><figcaption><span>equality.py</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">re</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">search_equality</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+</span><span class='line'>    <span class="sd">&quot;&quot;&quot; Return the letter if that matches the pattern, else return None</span>
+</span><span class='line'><span class="sd">    &quot;&quot;&quot;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c"># pattern: [1 lower](3 uppers)[1 lower](3 uppers)[1 lower], e.g.: aBBDiLDMx</span>
+</span><span class='line'>    <span class="n">pattern</span> <span class="o">=</span> <span class="s">&quot;[a-z][A-Z][A-Z][A-Z][a-z][A-Z][A-Z][A-Z][a-z]&quot;</span>
+</span><span class='line'>    <span class="n">equality</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">equality</span><span class="p">:</span>
+</span><span class='line'>        <span class="c"># just return the lowercase on the position 5 (index[4])</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">equality</span><span class="o">.</span><span class="n">group</span><span class="p">()[</span><span class="mi">4</span><span class="p">]</span>
+</span><span class='line'>    <span class="k">else</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">return</span> <span class="bp">None</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">text_path</span> <span class="o">=</span> <span class="s">&quot;./data/3_equality.txt&quot;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">equalities</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class='line'>    <span class="n">text</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">text_path</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
+</span><span class='line'>        <span class="c"># search the letters those matching the patterns</span>
+</span><span class='line'>        <span class="n">equality</span> <span class="o">=</span> <span class="n">search_equality</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+</span><span class='line'>        <span class="c"># just append the valid letters, None exclusive</span>
+</span><span class='line'>        <span class="n">equalities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">equality</span><span class="p">)</span> <span class="k">if</span> <span class="n">equality</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">equalities</span>
+</span><span class='line'>    <span class="n">text</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">print</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">letter</span> <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">equalities</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>output</p>
+
+<figure class='code'><figcaption><span>equality ouptut</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">linkedlist</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Update the url with <code>linkedlist</code>, then jump to a new page with <code>linkedlist.php</code>,
+update the url with <code>linkedlist.php</code>, then jump to L4.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Configurating Colortheme for iTerm]]></title>
@@ -306,6 +418,8 @@ but MAYBE they are in the page source.</p>
 </span><span class='line'><span class="p">[</span><span class="s">&#39;equality&#39;</span><span class="p">]</span>
 </span></code></pre></td></tr></table></div></figure>
 
+
+<p>Update the url with <code>equality</code>.</p>
 ]]></content>
   </entry>
   
@@ -2621,342 +2735,6 @@ download the library, and copy <code>jquery.tableofcontents.min.js</code> to <co
 
 
 <p>Once done, run <code>rake generate</code> and <code>rake preview</code> to check.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Octopress Construct]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/10/06/octopress-construct/"/>
-    <updated>2015-10-06T04:06:04+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/10/06/octopress-construct</id>
-    <content type="html"><![CDATA[<h2>1. Folder Construct</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>./
-</span><span class='line'>|---- source/                                   # templates
-</span><span class='line'>|---- sass/                                     # scss
-</span><span class='line'>|---- ./themes/                                 # themes
-</span><span class='line'>|          |---- classic/                       # a theme contains source and sass
-</span><span class='line'>|                   |---- source/
-</span><span class='line'>|                   |---- sass/
-</span><span class='line'>|---- plugins/                                   # ruby plugins
-</span><span class='line'>|
-</span><span class='line'>|---- Gemfile                                    # gemfile
-</span><span class='line'>|---- Rakefile                                   # rakefile
-</span><span class='line'>|---- config.rb
-</span><span class='line'>|---- config.ru
-</span><span class='line'>|---- _config.yml                                # site config file
-</span><span class='line'>|
-</span><span class='line'>|---- public/                                    # the generated pages
-</span><span class='line'>|---- _deploy/                                   # the files for deployment</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>2. Static Pages</h2>
-
-<h3>2.1. source</h3>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>source/
-</span><span class='line'>  |---- _includes/                  # template partials
-</span><span class='line'>  |---- _layouts/                   # page layouts
-</span><span class='line'>  |
-</span><span class='line'>  |---- page/                       # page construct
-</span><span class='line'>  |---- index.html                  # index
-</span><span class='line'>  |
-</span><span class='line'>  |
-</span><span class='line'>  |---- javascripts/
-</span><span class='line'>  |---- stylesheets/
-</span><span class='line'>  |---- assets/                     # fonts and others
-</span><span class='line'>  |---- images/</span></code></pre></td></tr></table></div></figure>
-
-
-<h4>2.1.1. templates</h4>
-
-<p><code>index.html</code> and <code>page/index.html</code> are the top layers, they are extended from <code>_layouts</code> which is contatining the page templates.</p>
-
-<p>All the page layouts <code>_layouts</code> are extended from the <code>_includes</code> partials.</p>
-
-<p>If you would like to start a new page, follow the steps:</p>
-
-<ul>
-<li>type <code>rake new_page['page_name']</code></li>
-<li>go to <code>page_name</code></li>
-<li><code>vim index.html</code></li>
-<li>update the layouts and head_vars</li>
-<li>update the contents, for example, include a partial from <code>_includes</code> or rewrite the content corresponding to the requirements</li>
-</ul>
-
-
-<h4>2.1.2. static files</h4>
-
-<p>Put the images in the <code>images</code>, put the fonts and other files in <code>assets</code>, put the javascripts in <code>javascripts</code>.</p>
-
-<p>NOTE: For the stylesheets, you can update the styles in <code>sass/</code>.</p>
-
-<h3>2.2. sass</h3>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>sass/
-</span><span class='line'>  |---- screen.scss
-</span><span class='line'>            |---- custom/
-</span><span class='line'>            |---- _base.scss                               # the global settings
-</span><span class='line'>            |         |---- _utilities.scss                # mixins
-</span><span class='line'>            |         |---- _solarized.scss                # codes
-</span><span class='line'>            |         |---- _theme.scss                    # theme
-</span><span class='line'>            |         |---- _typography.scss               # DOM elements
-</span><span class='line'>            |         |---- _layout.scss                   # layouts
-</span><span class='line'>            |
-</span><span class='line'>            |---- _partials.scss                           # the partial settings
-</span><span class='line'>            |         |---- _header.scss
-</span><span class='line'>            |         |---- _navigation.scss
-</span><span class='line'>            |         |---- _blog.scss
-</span><span class='line'>            |         |---- _sharing.scss                  # sharing
-</span><span class='line'>            |         |---- _syntax.scss                   # codes
-</span><span class='line'>            |         |---- _archives.scss
-</span><span class='line'>            |         |---- _sidebar.scss
-</span><span class='line'>            |         |---- _footer.scss
-</span><span class='line'>            |
-</span><span class='line'>            |---- plugins/                                 # plugin styles</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>2.3. .themes</h3>
-
-<p>The theme related files are <code>source</code> and <code>sass</code>.</p>
-
-<p>If install a theme, the step is just copy the <code>source</code> and <code>sass</code> to <code>octopress/</code>, and then replace the old files.</p>
-
-<p>If create a theme, vise versa, just copy <code>octopress/source</code> and <code>octopress/sass</code> to <code>.themes/theme_name</code>.</p>
-
-<h4>2.3.1. Installing a theme</h4>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>octopress/.themes
-</span><span class='line'><span class="nv">$ </span>git clone https://a_new_theme_url
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>octopress/
-</span><span class='line'><span class="nv">$ </span>rake install<span class="o">[</span><span class="s1">&#39;theme_name&#39;</span><span class="o">]</span>
-</span><span class='line'><span class="nv">$ </span>rake generate
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h4>2.3.2. Creating a theme</h4>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>octopress
-</span><span class='line'><span class="nv">$ </span>mkdir .themes/theme_name
-</span><span class='line'><span class="nv">$ </span>cp -R <span class="nb">source</span> .themes/theme_name/source
-</span><span class='line'><span class="nv">$ </span>cp -<span class="nv">$ </span>sass .themes/theme_name/sass
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>3. Plugins</h2>
-
-<p>You can extend various of features by ruby plugins.</p>
-
-<p>If you perfer creating a plugin by yourself, follow the steps:</p>
-
-<ul>
-<li><code>cd plugins</code></li>
-<li><code>vim plugin_name.rb</code></li>
-<li>write the features</li>
-<li>update <code>Gemfile</code> if some packages required</li>
-<li>go to <code>source/_includes/plugins</code>, write the corresponding template</li>
-<li>go to <code>source/</code>, include the plugin in the pages</li>
-<li><code>vim _config.yml</code>, write the config variables if needed</li>
-<li>go to <code>sass/plugins</code>, write the coresponding style`</li>
-<li><code>rake generate</code></li>
-<li><code>rake preview</code></li>
-</ul>
-
-
-<h2>4. Configuration</h2>
-
-<h3>4.1. _config.yml</h3>
-
-<p>Since Octopress is the extension of Jekyll, you can check the Jekyll configuration documents for the detailed config variables.</p>
-
-<h2>5. Commands</h2>
-
-<h3>5.1. Gemfile</h3>
-
-<p>Update the gems in the <code>Gemfile</code>, especially when you update the plugins.</p>
-
-<h3>5.2. Rakefile</h3>
-
-<p>Update the commands in the <code>Rakefile</code>.</p>
-
-<h4>5.2.1. Default commands</h4>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>rake generate
-</span><span class='line'><span class="nv">$ </span>rake watch
-</span><span class='line'><span class="nv">$ </span>rake preview
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span>rake new_post<span class="o">[</span><span class="s1">&#39;post_name&#39;</span><span class="o">]</span>
-</span><span class='line'><span class="nv">$ </span>rake new_page<span class="o">[</span><span class="s1">&#39;page_name&#39;</span><span class="o">]</span>
-</span><span class='line'><span class="nv">$ </span>rake isolate
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span>rake integrate
-</span><span class='line'><span class="nv">$ </span>rake update_sytle
-</span><span class='line'><span class="nv">$ </span>rake update_source
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span>rake deploy
-</span><span class='line'><span class="nv">$ </span>rake gen_deploy
-</span><span class='line'><span class="nv">$ </span>rake rsync
-</span><span class='line'><span class="nv">$ </span>rake set_root_dir
-</span><span class='line'><span class="nv">$ </span>rake setup_github_pages
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Reference</h2>
-
-<ul>
-<li><a href="http://octopress.org/docs/">Octopress Docs</a></li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Installing Octopress]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/10/06/installing-octopress/"/>
-    <updated>2015-10-06T03:54:31+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/10/06/installing-octopress</id>
-    <content type="html"><![CDATA[<h2>1. Prequisitions</h2>
-
-<ul>
-<li>Ubuntu 14.04</li>
-<li>Node.js</li>
-<li>RVM</li>
-<li>Ruby 2.1.1</li>
-<li>Gem</li>
-<li>Bundler</li>
-<li>Rake</li>
-</ul>
-
-
-<p>Node.js</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install nodejs
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>RVM and Ruby</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
-</span><span class='line'><span class="nv">$ </span><span class="se">\c</span>url -sSL https://get.rvm.io <span class="p">|</span> bash -s stable
-</span><span class='line'><span class="nv">$ </span>rvm install 2.1.1
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>2. Octopress</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git clone git://github.com/imathis/octopress.git octopress
-</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>octopress
-</span><span class='line'><span class="nv">$ </span>gem install bundler
-</span><span class='line'><span class="nv">$ </span>bundle install
-</span><span class='line'><span class="nv">$ </span>rake install
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>3. Testing</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>rake generate
-</span><span class='line'><span class="nv">$ </span>rake preview
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>link: <a href="http://localhost:4000">http://localhost:4000</a></p>
-
-<h2>References</h2>
-
-<ol>
-<li><a href="http://octopress.org/docs/setup/">Octopress</a></li>
-<li><a href="https://github.com/imathis/octopress">Octopress Source Code</a></li>
-</ol>
-
 ]]></content>
   </entry>
   

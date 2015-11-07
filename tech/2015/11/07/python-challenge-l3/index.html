@@ -1,0 +1,451 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Python Challenge L3 - K</title>
+  <meta name="author" content="K">
+
+  
+  <meta name="description" content="Python Challenge L3. Equality L3 One small letter, surrounded by EXACTLY three big bodyguards on each of its
+sides. equality.py1
+2
+3
+4
+5
+6
+7
+8
+9
+10 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://k.arttechresearch.com/tech/2015/11/07/python-challenge-l3/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="K" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/libs/jquery-1.9.1.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+
+  <script src="/javascripts/libs/jquery.tableofcontents.min.js" type="text/javascript"></script>
+  <script src="/javascripts/toc_generator.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  <!-- MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+</head>
+
+<body   >
+  <header role="banner"><ul class="soc">
+
+  
+    <li><a class="soc-github" href="https://github.com/KellyChan"></a></li>
+  
+
+  
+    <li><a class="soc-twitter" href="https://twitter.com/kwailamchan"></a></li>
+  
+
+  
+    <li><a class="soc-pinterest" href="https://www.pinterest.com/wailamchan/"></a></li>
+  
+
+  
+    <li><a class="soc-slideshare" href="http://www.slideshare.net/wailamchan"></a></li>
+  
+
+  
+    <li><a class="soc-email1 soc-icon-last" href="mailto:support@arttechresearch.com"></a></li>
+  
+</ul>
+
+<hgroup>
+  <h1><a href="/">K</a></h1>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="k.arttechresearch.com">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/tech">Tech</a></li>
+  <li><a href="/art">Art</a></li>
+  <li><a href="/life">Life</a></li>
+  <li><a href="/archives">Archives</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <li><a href="/devkits">Devkits</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+
+    
+      <h1 class="entry-title">Python Challenge L3</h1>
+    
+
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-11-07T20:35:25+08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>8:35 pm</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://k.arttechresearch.com">Comments</a>
+        
+      </p>
+    
+
+  </header>
+
+
+
+  <div class="entry-content"><p><a href="">Python Challenge</a></p>
+
+<h2>L3. Equality</h2>
+
+<p><a href="http://www.pythonchallenge.com/pc/def/equality.html">L3</a></p>
+
+<p>One small letter, surrounded by EXACTLY three big bodyguards on each of its
+sides.</p>
+
+<figure class='code'><figcaption><span>equality.py</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">re</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">search_equality</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+</span><span class='line'>    <span class="sd">&quot;&quot;&quot; Return the letter if that matches the pattern, else return None</span>
+</span><span class='line'><span class="sd">    &quot;&quot;&quot;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c"># pattern: [1 lower](3 uppers)[1 lower](3 uppers)[1 lower], e.g.: aBBDiLDMx</span>
+</span><span class='line'>    <span class="n">pattern</span> <span class="o">=</span> <span class="s">&quot;[a-z][A-Z][A-Z][A-Z][a-z][A-Z][A-Z][A-Z][a-z]&quot;</span>
+</span><span class='line'>    <span class="n">equality</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">equality</span><span class="p">:</span>
+</span><span class='line'>        <span class="c"># just return the lowercase on the position 5 (index[4])</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">equality</span><span class="o">.</span><span class="n">group</span><span class="p">()[</span><span class="mi">4</span><span class="p">]</span>
+</span><span class='line'>    <span class="k">else</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">return</span> <span class="bp">None</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">text_path</span> <span class="o">=</span> <span class="s">&quot;./data/3_equality.txt&quot;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">equalities</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class='line'>    <span class="n">text</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">text_path</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
+</span><span class='line'>        <span class="c"># search the letters those matching the patterns</span>
+</span><span class='line'>        <span class="n">equality</span> <span class="o">=</span> <span class="n">search_equality</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+</span><span class='line'>        <span class="c"># just append the valid letters, None exclusive</span>
+</span><span class='line'>        <span class="n">equalities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">equality</span><span class="p">)</span> <span class="k">if</span> <span class="n">equality</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">equalities</span>
+</span><span class='line'>    <span class="n">text</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">print</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">letter</span> <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">equalities</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>output</p>
+
+<figure class='code'><figcaption><span>equality ouptut</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">linkedlist</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Update the url with <code>linkedlist</code>, then jump to a new page with <code>linkedlist.php</code>,
+update the url with <code>linkedlist.php</code>, then jump to L4.</p>
+</div>
+
+
+
+
+
+
+  <footer>
+
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">K</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-11-07T20:35:25+08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>8:35 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/tech/'>tech</a>
+  
+</span>
+
+
+      
+
+<span class="categories">
+  
+    <a class='tag' href='/tags/python-challenge/'>Python Challenge</a>, <a class='tag' href='/tags/python/'>python</a>
+  
+</span>
+
+
+    </p>
+
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://k.arttechresearch.com/tech/2015/11/07/python-challenge-l3/" data-via="kwailamchan" data-counturl="http://k.arttechresearch.com/tech/2015/11/07/python-challenge-l3/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/tech/2015/11/05/configurating-colortheme-for-iterm/" title="Previous Post: Configurating Colortheme for iTerm">&laquo; Configurating Colortheme for iTerm</a>
+      
+      
+        <a class="basic-alignment right" href="/life/2015/11/08/reading/" title="Next Post: Reading">Reading &raquo;</a>
+      
+    </p>
+
+  </footer>
+
+</article>
+
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Tech</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/tech/2015/11/07/python-challenge-l3/">Python Challenge L3</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/11/05/configurating-colortheme-for-iterm/">Configurating Colortheme for iTerm</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/11/05/python-challenge-l0-l2/">Python Challenge L0-L2</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/10/21/converting-markdown-to-pdf-with-nodejs/">Converting Markdown to PDF With NodeJS</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/10/19/summary-on-edx-devkits/">Summary on edX Devkits</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/10/18/setup-the-devstack-for-edx-alton/">Setup the Devstack for edX Alton</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/10/18/docker-key-concepts/">Docker Key Concepts</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/10/17/generating-toc-with-javascript-for-octopress/">Generating TOC With Javascript for Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/10/16/adding-toc-plugin-for-octopress/">Adding TOC Plugin for Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/10/13/using-mathjax-with-octopress/">Using MathJax With Octopress</a>
+      </li>
+    
+  </ul>
+</section>
+<section class="category-list">
+    <h1>Projects</h1>
+    <ul id="category-list">
+        <li>
+            <span><a href="/tags/edx">edX</a></span> / 
+            <span><a href="/tags/will">Will</a></span>
+        </li>
+    </ul>
+
+    <h1>Programming</h1>
+    <ul id="category-list">
+        <li>
+            <span><a href="/tags/python">Python</a></span> /
+            <span><a href="/tags/ruby">Ruby</a></span> /
+            <span><a href="/tags/nodejs">Node.js</a></span>
+        </li>
+    </ul>
+
+</section>
+<section class="tag-cloud">
+
+
+  <h1>Tags</h1>
+    <ul id="category-list"><a href='/tags/algorithm' style='font-size: 111.29032258064515%'>algorithm(7)</a> <a href='/tags/ansible' style='font-size: 93.54838709677419%'>ansible(2)</a> <a href='/tags/apache' style='font-size: 93.54838709677419%'>apache(2)</a> <a href='/tags/api' style='font-size: 93.54838709677419%'>api(2)</a> <a href='/tags/ascii' style='font-size: 90.0%'>ascii(1)</a> <a href='/tags/beautifulsoup' style='font-size: 90.0%'>beautifulsoup(1)</a> <a href='/tags/butter' style='font-size: 90.0%'>butter(1)</a> <a href='/tags/career' style='font-size: 93.54838709677419%'>career(2)</a> <a href='/tags/cg' style='font-size: 90.0%'>cg(1)</a> <a href='/tags/chatbot' style='font-size: 97.09677419354838%'>chatbot(3)</a> <a href='/tags/classification' style='font-size: 93.54838709677419%'>classification(2)</a> <a href='/tags/cloud' style='font-size: 90.0%'>cloud(1)</a> <a href='/tags/cloudera' style='font-size: 111.29032258064515%'>cloudera(7)</a> <a href='/tags/cloudera-manager' style='font-size: 97.09677419354838%'>cloudera manager(3)</a> <a href='/tags/cluster' style='font-size: 157.4193548387097%'>cluster(20)</a> <a href='/tags/computer-vision' style='font-size: 90.0%'>computer vision(1)</a> <a href='/tags/crawler' style='font-size: 93.54838709677419%'>crawler(2)</a> <a href='/tags/css' style='font-size: 93.54838709677419%'>css(2)</a> <a href='/tags/data' style='font-size: 90.0%'>data(1)</a> <a href='/tags/db' style='font-size: 97.09677419354838%'>db(3)</a> <a href='/tags/devops' style='font-size: 100.64516129032258%'>devops(4)</a> <a href='/tags/django' style='font-size: 93.54838709677419%'>django(2)</a> <a href='/tags/dns' style='font-size: 90.0%'>dns(1)</a> <a href='/tags/docker' style='font-size: 97.09677419354838%'>docker(3)</a> <a href='/tags/edx' style='font-size: 132.5806451612903%'>edX(13)</a> <a href='/tags/edx-ai' style='font-size: 90.0%'>edX AI(1)</a> <a href='/tags/edx-analytics' style='font-size: 114.83870967741936%'>edX Analytics(8)</a> <a href='/tags/edx-platform' style='font-size: 97.09677419354838%'>edX Platform(3)</a> <a href='/tags/emacs' style='font-size: 93.54838709677419%'>emacs(2)</a> <a href='/tags/exhibition' style='font-size: 93.54838709677419%'>exhibition(2)</a> <a href='/tags/fiction' style='font-size: 107.74193548387098%'>fiction(6)</a> <a href='/tags/forever' style='font-size: 93.54838709677419%'>forever(2)</a> <a href='/tags/french' style='font-size: 90.0%'>french(1)</a> <a href='/tags/ghost' style='font-size: 100.64516129032258%'>ghost(4)</a> <a href='/tags/git' style='font-size: 104.19354838709677%'>git(5)</a> <a href='/tags/github' style='font-size: 93.54838709677419%'>github(2)</a> <a href='/tags/gitosis' style='font-size: 90.0%'>gitosis(1)</a> <a href='/tags/gitweb' style='font-size: 90.0%'>gitweb(1)</a> <a href='/tags/gunicorn' style='font-size: 90.0%'>gunicorn(1)</a> <a href='/tags/hadoop' style='font-size: 139.67741935483872%'>hadoop(15)</a> <a href='/tags/hbase' style='font-size: 104.19354838709677%'>hbase(5)</a> <a href='/tags/hdfs' style='font-size: 93.54838709677419%'>hdfs(2)</a> <a href='/tags/hipchat' style='font-size: 97.09677419354838%'>hipchat(3)</a> <a href='/tags/hive' style='font-size: 97.09677419354838%'>hive(3)</a> <a href='/tags/html' style='font-size: 93.54838709677419%'>html(2)</a> <a href='/tags/hue' style='font-size: 93.54838709677419%'>hue(2)</a> <a href='/tags/ide' style='font-size: 97.09677419354838%'>ide(3)</a> <a href='/tags/iterm' style='font-size: 90.0%'>iterm(1)</a> <a href='/tags/java' style='font-size: 93.54838709677419%'>java(2)</a> <a href='/tags/javascript' style='font-size: 100.64516129032258%'>javascript(4)</a> <a href='/tags/jekyll' style='font-size: 93.54838709677419%'>jekyll(2)</a> <a href='/tags/jenkins' style='font-size: 90.0%'>jenkins(1)</a> <a href='/tags/leisure' style='font-size: 153.8709677419355%'>leisure(19)</a> <a href='/tags/linux' style='font-size: 114.83870967741936%'>linux(8)</a> <a href='/tags/machine-learning' style='font-size: 125.48387096774194%'>machine learning(11)</a> <a href='/tags/mapreduce' style='font-size: 93.54838709677419%'>mapreduce(2)</a> <a href='/tags/markdown' style='font-size: 90.0%'>markdown(1)</a> <a href='/tags/mathjax' style='font-size: 93.54838709677419%'>mathjax(2)</a> <a href='/tags/mongo' style='font-size: 90.0%'>mongo(1)</a> <a href='/tags/mongovue' style='font-size: 90.0%'>mongovue(1)</a> <a href='/tags/mysql' style='font-size: 114.83870967741936%'>mysql(8)</a> <a href='/tags/mysql-workbench' style='font-size: 93.54838709677419%'>mysql workbench(2)</a> <a href='/tags/network' style='font-size: 90.0%'>network(1)</a> <a href='/tags/nginx' style='font-size: 97.09677419354838%'>nginx(3)</a> <a href='/tags/nlp' style='font-size: 107.74193548387098%'>nlp(6)</a> <a href='/tags/nltk' style='font-size: 90.0%'>nltk(1)</a> <a href='/tags/nodejs' style='font-size: 107.74193548387098%'>nodejs(6)</a> <a href='/tags/octopress' style='font-size: 114.83870967741936%'>octopress(8)</a> <a href='/tags/oil-painting' style='font-size: 90.0%'>oil painting(1)</a> <a href='/tags/openstack' style='font-size: 90.0%'>openstack(1)</a> <a href='/tags/painting' style='font-size: 90.0%'>painting(1)</a> <a href='/tags/pandas' style='font-size: 93.54838709677419%'>pandas(2)</a> <a href='/tags/photos' style='font-size: 129.03225806451613%'>photos(12)</a> <a href='/tags/poem' style='font-size: 100.64516129032258%'>poem(4)</a> <a href='/tags/prediction' style='font-size: 90.0%'>prediction(1)</a> <a href='/tags/pycharm' style='font-size: 90.0%'>pycharm(1)</a> <a href='/tags/python' style='font-size: 200.0%'>python(32)</a> <a href='/tags/python-challenge' style='font-size: 93.54838709677419%'>Python Challenge(2)</a> <a href='/tags/redis' style='font-size: 90.0%'>redis(1)</a> <a href='/tags/redmine' style='font-size: 90.0%'>redmine(1)</a> <a href='/tags/regex' style='font-size: 90.0%'>regex(1)</a> <a href='/tags/robotics' style='font-size: 97.09677419354838%'>robotics(3)</a> <a href='/tags/ruby' style='font-size: 121.93548387096774%'>ruby(10)</a> <a href='/tags/sql' style='font-size: 90.0%'>sql(1)</a> <a href='/tags/sqoop' style='font-size: 97.09677419354838%'>sqoop(3)</a> <a href='/tags/supervisor' style='font-size: 90.0%'>supervisor(1)</a> <a href='/tags/time-series' style='font-size: 90.0%'>time series(1)</a> <a href='/tags/translation' style='font-size: 90.0%'>translation(1)</a> <a href='/tags/ubuntu' style='font-size: 118.38709677419355%'>ubuntu(9)</a> <a href='/tags/unicode' style='font-size: 90.0%'>unicode(1)</a> <a href='/tags/vagrant' style='font-size: 97.09677419354838%'>vagrant(3)</a> <a href='/tags/vim' style='font-size: 93.54838709677419%'>vim(2)</a> <a href='/tags/virtualbox' style='font-size: 97.09677419354838%'>virtualbox(3)</a> <a href='/tags/vm' style='font-size: 93.54838709677419%'>vm(2)</a> <a href='/tags/web' style='font-size: 104.19354838709677%'>web(5)</a> <a href='/tags/will' style='font-size: 97.09677419354838%'>will(3)</a> <a href='/tags/yarn' style='font-size: 90.0%'>yarn(1)</a> <a href='/tags/zookeeper' style='font-size: 104.19354838709677%'>zookeeper(5)</a> </ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2006-2015 - K
+</p>
+
+
+
+<script type="text/javascript">
+
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-53625944-7', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'kwailamc';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://k.arttechresearch.com/tech/2015/11/07/python-challenge-l3/';
+        var disqus_url = 'http://k.arttechresearch.com/tech/2015/11/07/python-challenge-l3/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
