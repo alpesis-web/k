@@ -9,6 +9,7 @@ TODOs:
 - the pages of devkits
 - the pages of projects
 - the floatting header (always)
+- favourites
 
 ------------------------
 v3 - Oct 4 2015
