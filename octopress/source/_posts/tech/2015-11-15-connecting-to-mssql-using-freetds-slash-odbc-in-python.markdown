@@ -43,6 +43,12 @@ Configuring `/etc/freetds/freetds.conf`
     tds version = 7.0
 ```
 
+Testing
+
+```bash
+$ tsql -H host_name -p 3688 -U user_name
+```
+
 ### example: pyodbc
 
 ```python
