@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tech | K]]></title>
   <link href="http://k.arttechresearch.com/categories/tech/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2015-11-08T04:18:06+08:00</updated>
+  <updated>2015-11-17T23:54:21+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[K]]></name>
@@ -12,6 +12,199 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Connecting to MSSQL Using FreeTDS / ODBC in Python]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/11/15/connecting-to-mssql-using-freetds-slash-odbc-in-python/"/>
+    <updated>2015-11-15T21:23:21+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/11/15/connecting-to-mssql-using-freetds-slash-odbc-in-python</id>
+    <content type="html"><![CDATA[<h2>Prequisitions</h2>
+
+<ul>
+<li>OS: Debian 7.8</li>
+<li>Dependencies: freetds-dev, freetd-bin, unixodbc-dev, tdsodbc</li>
+<li>Python packages: pyodbc, sqlalchemy</li>
+</ul>
+
+
+<h2>Steps</h2>
+
+<p>Installing the dependencies</p>
+
+<pre><code class="bash">$ sudo apt-get install freetds-dev freetds-bin unixodbc-dev tdsodbc
+$ pip install pyodbc sqlalchemy
+</code></pre>
+
+<p>Configuring <code>/etc/odbcinst.ini</code></p>
+
+<pre><code class="bash /etc/odbcinst.ini">[FreeTDS]
+Description     = TDS driver (Sybase/MS SQL)
+Driver          = /usr/lib/x86_64-linux-gnu/odbc/libtdsodbc.so
+Setup           = /usr/lib/x86_64-linux-gnu/odbc/libtdsS.so
+CPTimeout       =
+CPReuse         =
+UsageCount      = 1
+</code></pre>
+
+<p>Configuring <code>/etc/freetds/freetds.conf</code></p>
+
+<pre><code class="bash /etc/freetds/freetds.conf">[global]
+    port = 1433
+    tds version = 7.0
+</code></pre>
+
+<p>Testing</p>
+
+<pre><code class="bash">$ tsql -H host_name -p 3688 -U user_name
+</code></pre>
+
+<h3>example: pyodbc</h3>
+
+<pre><code class="python">import pyodbc
+
+
+def connect_db(HOST, DATABASE, UID, PWD, TDS_Version):
+
+    connection = pyodbc.connect('DRIVER=FreeTDS; \
+                             SERVER=HOST; \
+                             PORT=1433; \
+                             DATABASE=DATABASE; \
+                             UID=UID; \
+                             PWD=PWD; \
+                             TDS_Version=8.0;')
+
+    cursor = connection.cursor()
+    return cursor
+
+def query_data(cursor, query):
+
+    for row in cursor.execute(query):
+        print row
+
+if __name__ = '__main__':
+
+    HOST = ''                         # server
+    DATABASE = ''                     # database_name
+    UID = ''                          # user_name
+    PWD = ''                          # password
+    TDS_Version = ''                  # TDS_Version
+
+    cursor = connect_db(HOST, DATABASE, UID, PWD, TDS_Version)
+    query_data(cursor, 'select 6 * 7 as [Result];')
+</code></pre>
+
+<h3>example: sqlalchemy</h3>
+
+<pre><code class="python">
+import urllib
+from sqlalchemy import create_engine
+
+def connect_db(HOST, DATABASE, UID, PWD, TDS_Version):
+
+    db_settings = 'DRIVER=FreeTDS; \
+                   SERVER=%s; \
+                   PORT=1433; \
+                   DATABASE=%s; \
+                   UID=%s; \
+                   PWD=%s; \
+                   TDS_Version=%s'.format(HOST, DATABASE, UID, PWD, TDS_Version)
+    engine = create_engine('mssql+pyodbc:///?odbc_connect' + urllib.quote_plus(db_settings))
+
+    return engine
+
+def query_db(engine, query):
+
+    for row in engine.excute(query):
+        print row
+
+if __name__ = '__main__':
+
+    HOST = ''                         # server
+    DATABASE = ''                     # database_name
+    UID = ''                          # user_name
+    PWD = ''                          # password
+    TDS_Version = ''                  # TDS_Version
+
+    engine = connect_db(HOST, DATABASE, UID, PWD, TDS_Version)
+    query_data(engine, 'select 6 * 7 as [Result];')
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Generating a Self-Signed SSL Certificate]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/11/09/generating-a-self-signed-ssl-certificate/"/>
+    <updated>2015-11-09T22:59:53+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/11/09/generating-a-self-signed-ssl-certificate</id>
+    <content type="html"><![CDATA[<h2>Prequistion</h2>
+
+<p>openssl</p>
+
+<pre><code class="bash">$ which openssl
+
+# OS X
+$ brew install openssl
+
+# Ubuntu
+$ sudo apt-get install openssl
+</code></pre>
+
+<h2>1. Private key and certificate signing request</h2>
+
+<pre><code class="bash">$ openssl genrsa -des3 -passout pass:x -out server.pass.key 2048
+$ openssl rsa -passin pass:x -in server.pass.key -out server.key
+$ rm server.pass.key
+$ openssl req -new -key server.key -out server.csr
+</code></pre>
+
+<h2>2. SSL Certificate</h2>
+
+<pre><code class="bash">$ openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Python Challenge L4]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/11/08/python-challenge-l4/"/>
+    <updated>2015-11-08T21:30:05+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/11/08/python-challenge-l4</id>
+    <content type="html"><![CDATA[<p><a href="">Python Challenge</a></p>
+
+<h2>L4. Linkedlist</h2>
+
+<p><a href="http://www.pythonchallenge.com/pc/def/linkedlist.php">L4</a></p>
+
+<p>urllib may help. DON&rsquo;T TRY ALL NOTHINGS, since it will never end. 400 times is more than enough.</p>
+
+<pre><code class="python linkedlist.py">import urllib
+
+def get_param(param_value):
+    """Return the nothing_value from the specific url
+    """
+
+    param = urllib.urlencode({'nothing': param_value})
+    url = "http://www.pythonchallenge.com/pc/def/linkedlist.php?%s" % param
+    content = urllib.urlopen(url).read()
+    # split the content by " " and return the last word
+    value = content.split(" ")[-1]
+
+    return value
+
+
+if __name__ == '__main__':
+
+    init_value = "12345"
+    param = get_param(init_value)
+    while param &gt; 0:
+        print param
+        param = get_param(param)
+</code></pre>
+
+<p>The figures are repeating, but once <code>peak.html</code> occurs, update the url with
+<code>peak.html</code>, then jump to L5.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Python Challenge L3]]></title>
@@ -137,312 +330,6 @@ colorscheme solarized
 <p>Preview</p>
 
 <p><img src="https://s-media-cache-ak0.pinimg.com/736x/31/f1/93/31f19309e06e9affcd25b81f0b8ddc06.jpg" /></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Python Challenge L0-L2]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/11/05/python-challenge-l0-l2/"/>
-    <updated>2015-11-05T16:07:22+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/11/05/python-challenge-l0-l2</id>
-    <content type="html"><![CDATA[<p><a href="http://www.pythonchallenge.com">Python Challenge</a></p>
-
-<h2>L0</h2>
-
-<p><a href="http://www.pythonchallenge.com/pc/def/0.html">L0</a></p>
-
-<p>Hint: try to change the URL address.</p>
-
-<pre><code class="python">&gt;&gt;&gt; 2**38
-274877906944
-</code></pre>
-
-<p>Update the url.</p>
-
-<h2>L1. Map</h2>
-
-<p><a href="http://www.pythonchallenge.com/pc/def/map.html">L1</a></p>
-
-<p>everybody thinks twice before solving this.</p>
-
-<p>solution</p>
-
-<pre><code class="python map.py">from string import maketrans
-
-alphabet = "abcdefghijklmnopqrstuvwxyz"
-alphabet_decode = "cdefghijklmnopqrstuvwxyzab"
-map_table = maketrans(alphabet, alphabet_decode)
-
-
-if __name__ == '__main__':
-
-    strings = """
-    g fmnc wms bgblr rpylqjyrc gr zw fylb. rfyrq ufyr amknsrcpq ypc dmp. bmgle gr gl zw fylb gq glcddgagclr ylb rfyr'q ufw rfgq rcvr gq qm jmle. sqgle qrpgle.kyicrpylq() gq pcamkkclbcb. lmu ynnjw ml rfc spj.
-    """
-
-    url = "map"
-
-    print strings.translate(map_table)
-    print url.translate(map_table)
-</code></pre>
-
-<p>result</p>
-
-<pre><code class="python map outputs">    i hope you didnt translate it by hand. thats what computers are for. doing it in by hand is inefficient and that's why this text is so long. using string.maketrans() is recommended. now apply on the url.
-
-ocr
-</code></pre>
-
-<p>Then update the url with <code>ocr</code>.</p>
-
-<h2>L2. OCR</h2>
-
-<p><a href="http://www.pythonchallenge.com/pc/def/ocr.html">L2</a></p>
-
-<p>recognize the characters. maybe they are in the book,
-but MAYBE they are in the page source.</p>
-
-<pre><code class="python ocr.py"># dictionary: http://www.math.sjsu.edu/~foster/dictionary.txt
-# download the dictionary for mapping the words
-
-def print_sorted_keys(dictionary):
-    print sorted(dictionary.items(), key=lambda dictionary: dictionary[0])
-
-def print_sorted_values(dictionary):
-    print sorted(dictionary.items(), key=lambda dictionary: dictionary[1])
-
-def generate_word_dict(file_path):
-
-    word_counts = {}
-
-    text = open(file_path, 'r')
-    for line in text.readlines():
-        for char in line:
-            if char not in word_counts.keys():
-                word_counts[char] = 1
-            else:
-                word_counts[char] += 1
-    text.close()
-
-    return word_counts
-
-def mapping(letters, dictbook):
-
-    words = []
-
-    dictbook = open(dictbook, 'r')
-    for line in dictbook.readlines():
-        # if set(line.strip()) == set(letters):
-        #     words.append(line.strip())
-        words.append(line.strip()) if set(line.strip()) == set(letters) else words
-    dictbook.close()
-
-    return words
-
-if __name__ == '__main__':
-
-    file_path = './data/2_ocr.txt'
-    dictbook = "./data/dictionary.txt"
-
-    # find the letters
-    word_counts = generate_word_dict(file_path)
-    print_sorted_keys(word_counts)
-    print_sorted_values(word_counts)
-
-    # look for a word from a dictionary
-    letters = "aeilquty"
-    words = mapping(letters, dictbook)
-    print words
-</code></pre>
-
-<p>result</p>
-
-<pre><code class="python ocr outputs">[('a', 1), ('e', 1), ('i', 1), ('l', 1), ('q', 1), ('u', 1), ('t', 1), ('y', 1), ('\n', 1220), ('^', 6030), ('*', 6034), ('&amp;', 6043), ('$', 6046), ('{', 6046), ('+', 6066), ('!', 6079), ('%', 6104), ('}', 6105), ('[', 6108), ('_', 6112), ('#', 6115), (']', 6152), ('(', 6154), ('@', 6157), (')', 6186)]
-['equality']
-</code></pre>
-
-<p>Update the url with <code>equality</code>.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Converting Markdown to PDF With NodeJS]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/10/21/converting-markdown-to-pdf-with-nodejs/"/>
-    <updated>2015-10-21T19:57:50+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/10/21/converting-markdown-to-pdf-with-nodejs</id>
-    <content type="html"><![CDATA[<h2>Requirements</h2>
-
-<ul>
-<li>OS: OS X</li>
-<li>Language: Node.js/npm</li>
-<li>Dependency: markdown-pdf</li>
-</ul>
-
-
-<h2>Example</h2>
-
-<p>install dependency</p>
-
-<pre><code class="bash">$ npm install markdown-pdf
-</code></pre>
-
-<p>convert markdown to pdf</p>
-
-<pre><code class="javascript md2pdf.js">var md_file = "./file_name.md"
-var output_file = "./outputs/file_name.pdf"
-
-var markdownpdf = require("markdown-pdf")
-var fs = require("fs")
-
-fs.createReadStream(md_file)
-  .pipe(markdownpdf())
-  .pipe(fs.createWriteStream(output_file))
-</code></pre>
-
-<p>testing</p>
-
-<pre><code class="bash">$ node md2pdf.js
-</code></pre>
-
-<h2>Reference</h2>
-
-<ul>
-<li><a href="https://www.npmjs.com/package/markdown-pdf">markdown-pdf</a></li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Summary on edX Devkits]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/10/19/summary-on-edx-devkits/"/>
-    <updated>2015-10-19T14:13:04+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/10/19/summary-on-edx-devkits</id>
-    <content type="html"><![CDATA[<ul>
-<li>edX Platform</li>
-<li>edX Analytics</li>
-<li>edX Certificates</li>
-<li>edX eCommerce</li>
-<li>edX Mobiles</li>
-<li>edX Ansible</li>
-<li>Devkits</li>
-</ul>
-
-
-<h2>1. edX Platform</h2>
-
-<p>sub-projects</p>
-
-<ul>
-<li>edx-platform</li>
-<li>forum / cs_comments_service</li>
-<li>hipchat</li>
-<li>ora</li>
-<li>xblock</li>
-</ul>
-
-
-<p>toolkits</p>
-
-<ul>
-<li>backend: Python/Django, Ruby</li>
-<li>frontend: Node.js</li>
-</ul>
-
-
-<p>techniques</p>
-
-<ul>
-<li>OAuth2.0</li>
-<li>RESTful API</li>
-<li>ElasticSearch</li>
-</ul>
-
-
-<h2>2. edX Analytics</h2>
-
-<p>sub-projects</p>
-
-<ul>
-<li>edx-analytics-pipeline</li>
-<li>edx-analytics-data-api</li>
-<li>edx-analytics-data-api-client</li>
-<li>edx-analytics-dashboard</li>
-</ul>
-
-
-<p>toolkits:</p>
-
-<ul>
-<li>backend: Python/Django</li>
-<li>frontend: Node.js</li>
-</ul>
-
-
-<p>techniques</p>
-
-<ul>
-<li>Hadoop</li>
-<li>HDFS</li>
-<li>MapReduce / Yarn</li>
-<li>Hive</li>
-<li>Sqoop</li>
-<li>Python/Luigi</li>
-</ul>
-
-
-<h2>3. edX Certificates</h2>
-
-<p>sub-projects</p>
-
-<ul>
-<li>edx-certs</li>
-<li>xqueue</li>
-<li>xqwatcher</li>
-<li>xqwatcher-client</li>
-</ul>
-
-
-<p>toolkits</p>
-
-<ul>
-<li>backend: Python/Django</li>
-<li>frontend: Node.js</li>
-</ul>
-
-
-<p>techniques</p>
-
-<ul>
-<li>RabbitMQ</li>
-</ul>
-
-
-<h2>4. edX eCommerce</h2>
-
-<h2>5. edX Mobiles</h2>
-
-<ul>
-<li>ios</li>
-<li>android</li>
-</ul>
-
-
-<h2>6. edX Ansible</h2>
-
-<ul>
-<li>ansible</li>
-<li>openstack / aws</li>
-</ul>
-
-
-<h2>Devkits</h2>
-
-<ul>
-<li>IDE: PyCharm</li>
-<li>DBs: MySQL, MongoDB</li>
-</ul>
-
 ]]></content>
   </entry>
   
