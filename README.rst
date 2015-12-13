@@ -48,7 +48,7 @@ Run
 ::
 
     $ rake generate
-    $ jekyll serve
-
+    $ rake preview                # or jekyll serve
+    $ rake deploy
 
 http://0.0.0.0:4000
