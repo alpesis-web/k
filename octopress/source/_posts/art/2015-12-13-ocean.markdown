@@ -1,0 +1,11 @@
+---
+layout: post_art
+title: "Ocean"
+date: 2015-12-13 20:20:28 +0800
+comments: true
+categories: [art]
+tags: [photos]
+toc: false
+---
+
+<img src="https://s-media-cache-ak0.pinimg.com/474x/13/94/39/1394397d9d74973bbd95f1942364af90.jpg" />
