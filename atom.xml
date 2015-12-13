@@ -4,7 +4,7 @@
   <title><![CDATA[K]]></title>
   <link href="http://k.arttechresearch.com/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2015-11-17T23:57:39+08:00</updated>
+  <updated>2015-12-13T23:23:07+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[K]]></name>
@@ -12,6 +12,144 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Machine Learning From Facebook Tech Talk]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/12/13/machine-learning-from-facebook-tech-talk/"/>
+    <updated>2015-12-13T22:39:48+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/12/13/machine-learning-from-facebook-tech-talk</id>
+    <content type="html"><![CDATA[<p>There were three topics about machine learning on Facebook Tech Talk 2015 (Shanghai).</p>
+
+<ul>
+<li>Ads Click</li>
+<li>Friend Recommendation</li>
+<li>Content Feeds</li>
+</ul>
+
+
+<p>Login Facebook, and go to the user dashboard, content feeds are in the middle, friend
+recommendataion is located at the right sidebar (top right), ads click is located at
+the right sidebar (behind the friend recommendation)</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>|------------------------------------------------------------------|
+</span><span class='line'>|             |                                  |                 |
+</span><span class='line'>|             |                                  |                 |
+</span><span class='line'>|             | content feeds                    | friends         |
+</span><span class='line'>|             |                                  | ads             |
+</span><span class='line'>|             |                                  |                 |
+</span><span class='line'>|------------------------------------------------------------------|</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>1. Ads Click</h2>
+
+<p>NOTE:</p>
+
+<p>If you play a song on piano, some phrases might be easy to play, some might be hard, then
+ you have to practice the hard parts again and again, memorizing the techniques by hands.</p>
+
+<p>For machine learning, somelike as the same. One algorith might be fitted for some data,
+some might be not, for improving the accurency, you&rsquo;d better apply other algorithms which
+are fit these kinds of the dataset to the incorrect outputs, retrain the data again and
+again.</p>
+
+<h3>Overview</h3>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/9f/87/62/9f87621c1ed63452776097be842713de.jpg" /></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/5f/64/13/5f641372540309676f956a4771034e24.jpg" /></p>
+
+<h3>Layer 1</h3>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/d2/73/ad/d273adf93b99c3b0813584976a77f8ce.jpg" /></p>
+
+<h3>Layer 2</h3>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/8d/5d/4f/8d5d4fa8dc863fa4d226c36b91a07bc7.jpg" /></p>
+
+<h3>Model</h3>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/67/4e/26/674e268a17b893d14ac2a2a3d8b507c6.jpg" /></p>
+
+<h3>Outputs</h3>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/f4/b8/7c/f4b87c2a0afda71f33786bfc06bb186b.jpg" /></p>
+
+<p>When a user views the ads once, he/she might not click these ads, but he/she might click
+the ads a few minutes later, then we&rsquo;d better show the ads to the user by time ranges (
+such as 15 minutes later, 1 hour laster etc), that&rsquo;s why we use the queue.</p>
+
+<h3>Evaluation</h3>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/1e/64/a2/1e64a2626be15098c6d7aa13643cc05b.jpg" /></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/3c/ba/02/3cba02e1a2b4d9548c974d86980f94dc.jpg" /></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/fb/5e/6d/fb5e6d541ea0e57a4f303b1ade61ce5c.jpg" /></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/99/69/35/996935ee6fa3a20152453c9c0d20a755.jpg" /></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/0e/68/60/0e6860c4634db9ff38097662332d00c7.jpg" /></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/1b/e7/5b/1be75bf3f92ab17af4a73b0398b2f7a1.jpg" /></p>
+
+<h2>2. Friend Recommendation</h2>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/9e/ec/14/9eec1418e533540b4ec5d64a14f1a137.jpg" /></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/fc/75/b7/fc75b7ce4dd488307eae141995f21db4.jpg" /></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/c0/3b/be/c03bbe0c49f67684b094ddbf5244c02b.jpg" /></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/c4/ee/a9/c4eea9ff648979eb05650e0288458c61.jpg" /></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/69/9e/11/699e1119bc29df039a907fcb3e58a00f.jpg" /></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/cc/fc/ce/ccfcce6747a28857f567caa0dd8d1bf5.jpg" /></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/26/f6/45/26f6453e61da588965960e78c9260fd1.jpg" /></p>
+
+<h2>3. Content Feeds</h2>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/76/67/70/7667706db9c43f7cbe5f672b75daee03.jpg" /></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/0d/83/b9/0d83b9c9cd86bcfde10ff208efcadb79.jpg" /></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/38/dc/72/38dc72e03b726c3025d3dfcb37725d9f.jpg" /></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/4f/22/e9/4f22e9f3d21b05c84d634e3a7dd113d9.jpg" /></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/0b/38/82/0b3882c2b3c956bb8ccf8ff343e2d88a.jpg" /></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/04/38/4e/04384edef1d3726b9b2ea4debd3a3012.jpg" /></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/c0/f9/e5/c0f9e5c432913bbfd310e7f4c9ea6a87.jpg" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[The Land]]></title>
+    <link href="http://k.arttechresearch.com/art/2015/12/13/the-land/"/>
+    <updated>2015-12-13T22:30:29+08:00</updated>
+    <id>http://k.arttechresearch.com/art/2015/12/13/the-land</id>
+    <content type="html"><![CDATA[<p><img src="https://s-media-cache-ak0.pinimg.com/736x/cc/f6/3d/ccf63d47a567fd1a4f8cc1d8164041e6.jpg" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Ocean]]></title>
+    <link href="http://k.arttechresearch.com/art/2015/12/13/ocean/"/>
+    <updated>2015-12-13T20:20:28+08:00</updated>
+    <id>http://k.arttechresearch.com/art/2015/12/13/ocean</id>
+    <content type="html"><![CDATA[<p><img src="https://s-media-cache-ak0.pinimg.com/474x/13/94/39/1394397d9d74973bbd95f1942364af90.jpg" /></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Connecting to MSSQL Using FreeTDS / ODBC in Python]]></title>
@@ -2122,130 +2260,6 @@ download the library, and copy <code>jquery.tableofcontents.min.js</code> to <co
 <li><a href="https://github.com/dafi/jekyll-toc-generator">jekyll-toc-generator</a></li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[The Colors]]></title>
-    <link href="http://k.arttechresearch.com/life/2015/10/15/the-colors/"/>
-    <updated>2015-10-15T12:31:35+08:00</updated>
-    <id>http://k.arttechresearch.com/life/2015/10/15/the-colors</id>
-    <content type="html"><![CDATA[<h2>修色</h2>
-
-<p>准备把默认的背景色白和页面的背景色淡灰对换一下，不想没这么简单。
-一旦修改，同页面的其他的配色必须重来。</p>
-
-<p>不知哪位画家曾记，某年某月某日，他呈递了一幅人像给皇帝，皇帝过目，
-希望小修一个小部位。画家答曰：“若修改，则需XX天。”
-皇帝不解，画家解释说：“修了这一小处，其他XX，XX等部位也需要一并修改。”</p>
-
-<p>事物关联性这么奇妙，稍微改动一下，整体就变化了。而我自己的页面，主要是
-配色改变了，色彩对比度变了，牵动其他地方也需要修改，估计需要把整个主题
-切换，才能呈现我相对合意的界面。大修。</p>
-
-<p>色彩也有其有趣的地方，比如，深色背景＋浅色前景，更能突出内容，这也是现在
-很多大型网站所用的配色方案：浅灰色的背景＋白色的前背景＋深灰色的字体＋主题
-颜色作高亮。扁平化的设计，主题突出，内容清晰，阅读体验好。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Using MathJax With Octopress]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/10/13/using-mathjax-with-octopress/"/>
-    <updated>2015-10-13T10:26:29+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/10/13/using-mathjax-with-octopress</id>
-    <content type="html"><![CDATA[<h2>1. Adding MathJax</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>vim octopress/_includes/mathjax.html
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>mathjax.html</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="c">&lt;!-- MathJax --&gt;</span>
-</span><span class='line'><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/x-mathjax-config&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>  <span class="nx">MathJax</span><span class="p">.</span><span class="nx">Hub</span><span class="p">.</span><span class="nx">Config</span><span class="p">({</span>
-</span><span class='line'>    <span class="nx">tex2jax</span><span class="o">:</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">inlineMath</span><span class="o">:</span> <span class="p">[</span> <span class="p">[</span><span class="s1">&#39;$&#39;</span><span class="p">,</span><span class="s1">&#39;$&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;\\(&quot;</span><span class="p">,</span><span class="s2">&quot;\\)&quot;</span><span class="p">]</span> <span class="p">],</span>
-</span><span class='line'>      <span class="nx">processEscapes</span><span class="o">:</span> <span class="kc">true</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>  <span class="p">});</span>
-</span><span class='line'><span class="nt">&lt;/script&gt;</span>
-</span><span class='line'><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/x-mathjax-config&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>    <span class="nx">MathJax</span><span class="p">.</span><span class="nx">Hub</span><span class="p">.</span><span class="nx">Config</span><span class="p">({</span>
-</span><span class='line'>      <span class="nx">tex2jax</span><span class="o">:</span> <span class="p">{</span>
-</span><span class='line'>        <span class="nx">skipTags</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;script&#39;</span><span class="p">,</span> <span class="s1">&#39;noscript&#39;</span><span class="p">,</span> <span class="s1">&#39;style&#39;</span><span class="p">,</span> <span class="s1">&#39;textarea&#39;</span><span class="p">,</span> <span class="s1">&#39;pre&#39;</span><span class="p">,</span> <span class="s1">&#39;code&#39;</span><span class="p">]</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>    <span class="p">});</span>
-</span><span class='line'><span class="nt">&lt;/script&gt;</span>
-</span><span class='line'><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/x-mathjax-config&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>    <span class="nx">MathJax</span><span class="p">.</span><span class="nx">Hub</span><span class="p">.</span><span class="nx">Queue</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>        <span class="kd">var</span> <span class="nx">all</span> <span class="o">=</span> <span class="nx">MathJax</span><span class="p">.</span><span class="nx">Hub</span><span class="p">.</span><span class="nx">getAllJax</span><span class="p">(),</span> <span class="nx">i</span><span class="p">;</span>
-</span><span class='line'>        <span class="k">for</span><span class="p">(</span><span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">all</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="nx">all</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">SourceElement</span><span class="p">().</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">className</span> <span class="o">+=</span> <span class="s1">&#39; has-jax&#39;</span><span class="p">;</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">});</span>
-</span><span class='line'><span class="nt">&lt;/script&gt;</span>
-</span><span class='line'><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span>
-</span><span class='line'>   <span class="na">src=</span><span class="s">&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'><span class="nt">&lt;/script&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>NOTE: The better way is to download the MathJax.js to the local server as well as the <code>extensions</code> for the MathJax.</p>
-
-<h2>2. Including MathJax in head.html</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>vim octopress/_includes/footer.html
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>head.html</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'>{\% include mathjax.html %\}
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[The Old Camera at the Camera Mesuem]]></title>
-    <link href="http://k.arttechresearch.com/art/2015/10/07/the-old-camera-at-the-camera-mesuem/"/>
-    <updated>2015-10-07T21:46:23+08:00</updated>
-    <id>http://k.arttechresearch.com/art/2015/10/07/the-old-camera-at-the-camera-mesuem</id>
-    <content type="html"><![CDATA[<p><img src="https://s-media-cache-ak0.pinimg.com/736x/09/21/10/092110522b2510703bbbe2712c1d51df.jpg" /></p>
 ]]></content>
   </entry>
   
