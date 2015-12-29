@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tech | K]]></title>
   <link href="http://k.arttechresearch.com/categories/tech/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2015-12-27T23:25:55+08:00</updated>
+  <updated>2015-12-29T16:39:54+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[K]]></name>
@@ -12,6 +12,406 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Installing Logstack ElasticSearch Kibana on Ubuntu]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/12/29/installing-logstack-elasticsearch-kibana-on-ubuntu/"/>
+    <updated>2015-12-29T14:52:55+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/12/29/installing-logstack-elasticsearch-kibana-on-ubuntu</id>
+    <content type="html"><![CDATA[<h2>Installation Steps</h2>
+
+<ul>
+<li>Step 1. java</li>
+<li>Step 2. elasticsearch</li>
+<li>Step 3. kibana/nginx</li>
+<li>Step 4. logstack</li>
+<li>Step 5. filebeat</li>
+</ul>
+
+
+<h2>Process</h2>
+
+<ul>
+<li>filebeat: ship logs</li>
+<li>logstack: process and index logs</li>
+<li>elasticsearch: store logs</li>
+<li>kibana: search and visualize logs</li>
+<li>nginx: reverse proxy</li>
+</ul>
+
+
+<pre><code>App Server - filebeat -|
+                       |-&gt; logstack -&gt; elasticsearch -&gt; kibana -&gt; nginx
+DB Server  - filebeat -|
+</code></pre>
+
+<h2>Prequisitions</h2>
+
+<ul>
+<li>Ubuntu 14.04</li>
+<li>Java 8</li>
+<li>Logstack</li>
+<li>ElasticSearch</li>
+<li>Kibana</li>
+<li>Filebeat</li>
+</ul>
+
+
+<h2>Java 8</h2>
+
+<pre><code class="bash">$ sudo add-apt-repository -y ppa:webupd8team/java
+$ sudo apt-get update
+$ sudo apt-get -y install oracle-java8-installer
+</code></pre>
+
+<h2>ElasticSearch</h2>
+
+<pre><code class="bash">$ wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+$ echo "deb http://packages.elastic.co/elasticsearch/2.x/debian stable main" | sudo tee -a /etc/apt/sources.list.d/elasticsearch-2.x.list
+$ sudo apt-get update
+$ sudo apt-get -y install elasticsearch
+
+$ sudo vim /etc/elasticsearch/elasticsearch.yml
+# network.host: 192.168.0.1
+network.host: localhost
+
+
+$ sudo service elasticsearch restart
+$ sudo update-rc.d elasticsearch defaults 95 10
+</code></pre>
+
+<h2>Kibana</h2>
+
+<pre><code class="bash">$ sudo groupadd -g 1999 kibana
+$ sudo useradd -u 1999 -g 1999 kibana
+
+$ cd /tmp
+$ wget https://download.elastic.co/kibana/kibana/kibana-4.3.0-linux-x64.tar.gz
+$ tar xvf kibana-*.tar.gz
+$ cd kibana-4.3.0-linux-x64
+$ vim config/kibana.yml      # update some configurations
+
+
+$ sudo mkdir -p /opt/kibana
+$ sudo cp -R kibana-4.3.0-linux-x64/* /opt/kibana/
+$ ls /opt/kibana/
+$ sudo chown -R kibana: /opt/kibana
+
+$ cd /etc/init.d &amp;&amp; sudo curl -o kibana https://gist.githubusercontent.com/thisismitch/8b15ac909aed214ad04a/raw/fc5025c3fc499ad8262aff34ba7fde8c87ead7c0/kibana-4.x-init
+$ cd /etc/default &amp;&amp; sudo curl -o kibana https://gist.githubusercontent.com/thisismitch/8b15ac909aed214ad04a/raw/fc5025c3fc499ad8262aff34ba7fde8c87ead7c0/kibana-4.x-default 
+
+$ sudo chmod +x /etc/init.d/kibana
+$ sudo update-rc.d kibana defaults 96 9
+$ sudo service kibana start
+</code></pre>
+
+<p>test: <a href="http://localhost:5601">http://localhost:5601</a></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/cf/05/2c/cf052c0e3e1b3781238082cb844e33e1.jpg" /></p>
+
+<h3>Nginx</h3>
+
+<pre><code class="bash">$ sudo apt-get install nginx apache2-utils
+$ sudo htpasswd -c /etc/nginx/htpasswd.users kibanaadmin
+
+$ sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/kibana # update config
+$ sudo ln /etc/nginx/sites-available/kibana /etc/nginx/sites-enabled/kibana
+$ sudo service nginx restart
+</code></pre>
+
+<p>/etc/nginx/sites-available/kibana</p>
+
+<pre><code class="bash">server {
+    listen 80;
+
+    server_name example.com;
+
+    auth_basic "Restricted Access";
+    auth_basic_user_file /etc/nginx/htpasswd.users;
+
+    location / {
+        proxy_pass http://localhost:5601;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;        
+    }
+}
+</code></pre>
+
+<h2>Logstack</h2>
+
+<h3>Install Logstack</h3>
+
+<pre><code class="bash">$ echo 'deb http://packages.elasticsearch.org/logstash/2.1/debian stable main' | sudo tee /etc/apt/sources.list.d/logstash.list
+$ sudo apt-get update
+$ sudo apt-get install logstash
+</code></pre>
+
+<h3>SSL Certificate</h3>
+
+<pre><code class="bash">$ sudo mkdir -p /etc/pki/tls/certs
+$ sudo mkdir /etc/pki/tls/private
+$ cd /etc/pki/tls; sudo openssl req -subj '/CN=logstash_server_fqdn/' -x509 -days 3650 -batch -nodes -newkey rsa:2048 -keyout private/logstash-forwarder.key -out certs/logstash-forwarder.crt
+</code></pre>
+
+<h3>Config Logstack</h3>
+
+<ul>
+<li>/etc/logstash/conf.d/02-filebeat-input.conf</li>
+<li>/etc/logstash/conf.d/10-syslog.conf</li>
+<li>/etc/logstash/conf.d/30-elasticsearch-output.conf</li>
+</ul>
+
+
+<pre><code class="bash">$ sudo vi /etc/logstash/conf.d/02-filebeat-input.conf
+</code></pre>
+
+<p>02-filebeat-input.conf</p>
+
+<pre><code class="bash">input {
+  beats {
+    port =&gt; 5044
+    type =&gt; "logs"
+    ssl =&gt; true
+    ssl_certificate =&gt; "/etc/pki/tls/certs/logstash-forwarder.crt"
+    ssl_key =&gt; "/etc/pki/tls/private/logstash-forwarder.key"
+  }
+}
+</code></pre>
+
+<pre><code class="bash">$ sudo vi /etc/logstash/conf.d/10-syslog.conf
+</code></pre>
+
+<p>10-syslog.conf</p>
+
+<pre><code class="bash">filter {
+  if [type] == "syslog" {
+    grok {
+      match =&gt; { "message" =&gt; "%{SYSLOGTIMESTAMP:syslog_timestamp} %{SYSLOGHOST:syslog_hostname} %{DATA:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{GREEDYDATA:syslog_message}" }
+      add_field =&gt; [ "received_at", "%{@timestamp}" ]
+      add_field =&gt; [ "received_from", "%{host}" ]
+    }
+    syslog_pri { }
+    date {
+      match =&gt; [ "syslog_timestamp", "MMM  d HH:mm:ss", "MMM dd HH:mm:ss" ]
+    }
+  }
+}
+</code></pre>
+
+<pre><code class="bash">$ sudo vi /etc/logstash/conf.d/30-elasticsearch-output.conf
+</code></pre>
+
+<p>30-elasticsearch-output.conf</p>
+
+<pre><code class="bash">output {
+  elasticsearch { hosts =&gt; ["localhost:9200"] }
+  stdout { codec =&gt; rubydebug }
+}
+</code></pre>
+
+<p>test</p>
+
+<pre><code class="bash">$ sudo service logstash configtest
+$ sudo service logstash restart
+$ sudo update-rc.d logstash defaults 96 9
+</code></pre>
+
+<h2>Filebeat (Client)</h2>
+
+<h3>SSL Certificate</h3>
+
+<pre><code class="bash">$ scp /etc/pki/tls/certs/logstash-forwarder.crt user@client_server_private_address:/tmp
+</code></pre>
+
+<h3>Install Filebeat</h3>
+
+<pre><code class="bash">$ echo "deb https://packages.elastic.co/beats/apt stable main" |  sudo tee -a /etc/apt/sources.list.d/beats.list
+$ wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+$ sudo apt-get update
+$ sudo apt-get install filebeat
+
+$ sudo mkdir -p /etc/pki/tls/certs
+$ sudo cp /tmp/logstash-forwarder.crt /etc/pki/tls/certs/
+</code></pre>
+
+<h3>Config Filebeat</h3>
+
+<pre><code class="bash">$ sudo vi /etc/filebeat/filebeat.yml
+</code></pre>
+
+<p>/etc/filebeat/filebeat.yml</p>
+
+<pre><code class="bash">...
+      paths:
+         - /var/log/auth.log
+         - /var/log/syslog
+#        - /var/log/*.log
+...
+
+...
+      document_type: syslog
+...
+
+...
+output:
+
+  ### Elasticsearch as output
+  elasticsearch:
+    enabled: false
+...
+
+  ### Logstash as output
+  logstash:
+    # The Logstash hosts
+    hosts: ["ELK_server_private_IP:5044"]
+
+...
+    tls:
+      # List of root certificates for HTTPS server verifications
+      certificate_authorities: ["/etc/pki/tls/certs/logstash-forwarder.crt"]
+</code></pre>
+
+<p>test</p>
+
+<pre><code class="bash">$ sudo service filebeat restart
+$ sudo update-rc.d filebeat defaults 95 10
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Setting Up OpenNao With VirtualBox]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/12/28/setting-up-opennao-with-virtualbox/"/>
+    <updated>2015-12-28T22:44:11+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/12/28/setting-up-opennao-with-virtualbox</id>
+    <content type="html"><![CDATA[<h2>1. Downloading OpenNao</h2>
+
+<p>Download OpenNao <a href="https://community.aldebaran.com/en/dl/ZmllbGRfY29sbGVjdGlvbl9pdGVtLTU1NC1maWVsZF9zb2Z0X2RsX2V4dGVybmFsX2xpbmstMC1mYTc0ZTQ%3D?width=500&amp;height=auto">OVA file</a>.</p>
+
+<h2>2. Setting up VirtualBox</h2>
+
+<p>Start VirtualBox: File -> Import Appliance -> Import *.ova file</p>
+
+<p>Start VM, login with username/password: nao/nao</p>
+
+<h2>References</h2>
+
+<ul>
+<li><a href="https://community.aldebaran.com/en/resources/software/language/en-gb">Aldebaran Dev Toolkits</a></li>
+<li><a href="http://doc.aldebaran.com/1-14/dev/tools/vm-setup.html">Setting up the OpenNAO virtual machine</a></li>
+<li><a href="http://doc.aldebaran.com/1-14/dev/tools/opennao.html#opennao-user-account">OpenNAO - NAO OS</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Getting Started With Cassandra]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/12/28/getting-started-with-cassandra/"/>
+    <updated>2015-12-28T18:26:26+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/12/28/getting-started-with-cassandra</id>
+    <content type="html"><![CDATA[<h2>1. Installation</h2>
+
+<ul>
+<li>Ubuntu 14.04</li>
+<li>Java 8</li>
+<li>Apache Cassandra</li>
+</ul>
+
+
+<p>Java</p>
+
+<pre><code class="bash">$ sudo add-apt-repository ppa:webupd8team/java
+$ sudo apt-get update
+$ sudo apt-get install oracle-java8-installer
+$ java -version
+$ sudo apt-get install oracle-java8-set-default
+</code></pre>
+
+<p>Cassandra</p>
+
+<pre><code class="bash">$ sudo vim /etc/apt/source.list.d/cassandra.list
+
+# add source list
+deb http://www.apache.org/dist/cassandra/debian 21x main
+deb-src http://www.apache.org/dist/cassandra/debian 21x main
+
+# add public key
+$ gpg --keyserver pgp.mit.edu --recv-keys F758CE318D77295D
+$ gpg --export --armor F758CE318D77295D | sudo apt-key add -
+
+$ sudo apt-get update
+$ sudo apt-get install cassandra
+</code></pre>
+
+<h2>2. Configuration</h2>
+
+<p>config paths:</p>
+
+<ul>
+<li>data directories: /var/lib/cassandra</li>
+<li>log directory: /var/log/cassandra</li>
+<li>runtime files: /var/run/cassandra</li>
+<li>environment settings: /usr/share/cassandra</li>
+<li>JAR files: /usr/share/cassandra/lib</li>
+<li>binary files: /usr/bin</li>
+<li>/usr/sbin</li>
+<li>configuration files: /etc/cassandra</li>
+<li>service startup script: /etc/init.d</li>
+<li>cassandra user limits: /etc/security/limits.d</li>
+<li>/etc/default</li>
+</ul>
+
+
+<h2>3. Testing</h2>
+
+<p>running cassandra</p>
+
+<pre><code class="bash">$ sudo cassandra
+$ sudo cassandra -f
+
+$ cassandra-cli
+</code></pre>
+
+<p>running cql</p>
+
+<pre><code class="bash">$ sudo cqlsh
+$ sudo cqlsh 127.0.0.1 9042
+Connected to Test Cluster at 127.0.0.1:9042.
+[cqlsh 5.0.1 | Cassandra 2.1.12 | CQL spec 3.2.1 | Native protocol v3]
+Use HELP for help.
+
+cqlsh&gt; CREATE KEYSPACE test WITH REPLICATION = { 'class': 'SimpleStrategy', 'replication_factor': 1 }; 
+
+cqlsh&gt; USE test;
+cqlsh:test&gt; CREATE TABLE users (
+        ... user_id int PRIMARY KEY,
+        ... fname text,
+        ... lname text
+        ... );
+cqlsh:test&gt; INSERT INTO users (user_id, fname, lname) VALUES (1722, 'joe', 'lambert');
+cqlsh:test&gt; INSERT INTO users (user_id, fname, lname) VALUES (1832, 'alice', 'parker');
+
+cqlsh:test&gt; SELECT * FROM users;
+cqlsh:test&gt; CREATE INDEX ON users (lname);
+cqlsh:test&gt; SELECT * FROM users WHERE lname = 'smith';
+</code></pre>
+
+<h2>Trouble Shooting</h2>
+
+<h3>CQL Connection refused</h3>
+
+<p>error message</p>
+
+<pre><code class="bash">Connection error: ('Unable to connect to any servers', {'127.0.0.1': error(111, "Tried connecting to [('127.0.0.1', 9042)]. Last error: Connection refused")})
+</code></pre>
+
+<p>solution: update Java Version (Up to Java 8)</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Machine Learning From Facebook Tech Talk]]></title>
@@ -241,136 +641,6 @@ if __name__ = '__main__':
     engine = connect_db(HOST, DATABASE, UID, PWD, TDS_Version)
     query_data(engine, 'select 6 * 7 as [Result];')
 </code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Generating a Self-Signed SSL Certificate]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/11/09/generating-a-self-signed-ssl-certificate/"/>
-    <updated>2015-11-09T22:59:53+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/11/09/generating-a-self-signed-ssl-certificate</id>
-    <content type="html"><![CDATA[<h2>Prequistion</h2>
-
-<p>openssl</p>
-
-<pre><code class="bash">$ which openssl
-
-# OS X
-$ brew install openssl
-
-# Ubuntu
-$ sudo apt-get install openssl
-</code></pre>
-
-<h2>1. Private key and certificate signing request</h2>
-
-<pre><code class="bash">$ openssl genrsa -des3 -passout pass:x -out server.pass.key 2048
-$ openssl rsa -passin pass:x -in server.pass.key -out server.key
-$ rm server.pass.key
-$ openssl req -new -key server.key -out server.csr
-</code></pre>
-
-<h2>2. SSL Certificate</h2>
-
-<pre><code class="bash">$ openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
-</code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Python Challenge L4]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/11/08/python-challenge-l4/"/>
-    <updated>2015-11-08T21:30:05+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/11/08/python-challenge-l4</id>
-    <content type="html"><![CDATA[<p><a href="">Python Challenge</a></p>
-
-<h2>L4. Linkedlist</h2>
-
-<p><a href="http://www.pythonchallenge.com/pc/def/linkedlist.php">L4</a></p>
-
-<p>urllib may help. DON&rsquo;T TRY ALL NOTHINGS, since it will never end. 400 times is more than enough.</p>
-
-<pre><code class="python linkedlist.py">import urllib
-
-def get_param(param_value):
-    """Return the nothing_value from the specific url
-    """
-
-    param = urllib.urlencode({'nothing': param_value})
-    url = "http://www.pythonchallenge.com/pc/def/linkedlist.php?%s" % param
-    content = urllib.urlopen(url).read()
-    # split the content by " " and return the last word
-    value = content.split(" ")[-1]
-
-    return value
-
-
-if __name__ == '__main__':
-
-    init_value = "12345"
-    param = get_param(init_value)
-    while param &gt; 0:
-        print param
-        param = get_param(param)
-</code></pre>
-
-<p>The figures are repeating, but once <code>peak.html</code> occurs, update the url with
-<code>peak.html</code>, then jump to L5.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Python Challenge L3]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/11/07/python-challenge-l3/"/>
-    <updated>2015-11-07T20:35:25+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/11/07/python-challenge-l3</id>
-    <content type="html"><![CDATA[<p><a href="">Python Challenge</a></p>
-
-<h2>L3. Equality</h2>
-
-<p><a href="http://www.pythonchallenge.com/pc/def/equality.html">L3</a></p>
-
-<p>One small letter, surrounded by EXACTLY three big bodyguards on each of its
-sides.</p>
-
-<pre><code class="python equality.py">import re
-
-def search_equality(text):
-    """ Return the letter if that matches the pattern, else return None
-    """
-
-    # pattern: [1 lower](3 uppers)[1 lower](3 uppers)[1 lower], e.g.: aBBDiLDMx
-    pattern = "[a-z][A-Z][A-Z][A-Z][a-z][A-Z][A-Z][A-Z][a-z]"
-    equality = re.search(pattern, text)
-    if equality:
-        # just return the lowercase on the position 5 (index[4])
-        return equality.group()[4]
-    else:
-        return None
-
-if __name__ == '__main__':
-
-    text_path = "./data/3_equality.txt"
-
-    equalities = []
-    text = open(text_path, 'r')
-    for line in text.readlines():
-        # search the letters those matching the patterns
-        equality = search_equality(line.strip())
-        # just append the valid letters, None exclusive
-        equalities.append(equality) if equality is not None else equalities
-    text.close()
-
-    print ''.join(letter for letter in equalities)
-</code></pre>
-
-<p>output</p>
-
-<pre><code class="python equality ouptut">linkedlist
-</code></pre>
-
-<p>Update the url with <code>linkedlist</code>, then jump to a new page with <code>linkedlist.php</code>,
-update the url with <code>linkedlist.php</code>, then jump to L4.</p>
 ]]></content>
   </entry>
   

@@ -9,9 +9,12 @@
   <meta name="author" content="K">
 
   
-  <meta name="description" content="There were three topics about machine learning on Facebook Tech Talk 2015 (Shanghai). Ads Click
-Friend Recommendation
-Content Feeds Login Facebook, &hellip;">
+  <meta name="description" content="Installation Steps Step 1. java
+Step 2. elasticsearch
+Step 3. kibana/nginx
+Step 4. logstack
+Step 5. filebeat Process filebeat: ship logs
+logstack: &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -121,6 +124,714 @@ Content Feeds Login Facebook, &hellip;">
       <div class="blog-index">
 
   
+  
+  
+    <article>
+      
+  <header>
+
+    
+      <h1 class="entry-title"><a href="/tech/2015/12/29/installing-logstack-elasticsearch-kibana-on-ubuntu/">Installing Logstack ElasticSearch Kibana on Ubuntu</a></h1>
+    
+
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-12-29T14:52:55+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>29</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>2:52 pm</span></time>
+        
+           | <a href="/tech/2015/12/29/installing-logstack-elasticsearch-kibana-on-ubuntu/#disqus_thread"
+             data-disqus-identifier="http://k.arttechresearch.com/tech/2015/12/29/installing-logstack-elasticsearch-kibana-on-ubuntu/">Comments</a>
+        
+      </p>
+    
+
+  </header>
+
+
+
+  <div class="entry-content"><h2>Installation Steps</h2>
+
+<ul>
+<li>Step 1. java</li>
+<li>Step 2. elasticsearch</li>
+<li>Step 3. kibana/nginx</li>
+<li>Step 4. logstack</li>
+<li>Step 5. filebeat</li>
+</ul>
+
+
+<h2>Process</h2>
+
+<ul>
+<li>filebeat: ship logs</li>
+<li>logstack: process and index logs</li>
+<li>elasticsearch: store logs</li>
+<li>kibana: search and visualize logs</li>
+<li>nginx: reverse proxy</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>App Server - filebeat -|
+</span><span class='line'>                       |-&gt; logstack -&gt; elasticsearch -&gt; kibana -&gt; nginx
+</span><span class='line'>DB Server  - filebeat -|</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Prequisitions</h2>
+
+<ul>
+<li>Ubuntu 14.04</li>
+<li>Java 8</li>
+<li>Logstack</li>
+<li>ElasticSearch</li>
+<li>Kibana</li>
+<li>Filebeat</li>
+</ul>
+
+
+<h2>Java 8</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo add-apt-repository -y ppa:webupd8team/java
+</span><span class='line'><span class="nv">$ </span>sudo apt-get update
+</span><span class='line'><span class="nv">$ </span>sudo apt-get -y install oracle-java8-installer
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>ElasticSearch</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch <span class="p">|</span> sudo apt-key add -
+</span><span class='line'><span class="nv">$ </span><span class="nb">echo</span> <span class="s2">&quot;deb http://packages.elastic.co/elasticsearch/2.x/debian stable main&quot;</span> <span class="p">|</span> sudo tee -a /etc/apt/sources.list.d/elasticsearch-2.x.list
+</span><span class='line'><span class="nv">$ </span>sudo apt-get update
+</span><span class='line'><span class="nv">$ </span>sudo apt-get -y install elasticsearch
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo vim /etc/elasticsearch/elasticsearch.yml
+</span><span class='line'><span class="c"># network.host: 192.168.0.1</span>
+</span><span class='line'>network.host: localhost
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo service elasticsearch restart
+</span><span class='line'><span class="nv">$ </span>sudo update-rc.d elasticsearch defaults <span class="m">95</span> 10
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Kibana</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo groupadd -g <span class="m">1999</span> kibana
+</span><span class='line'><span class="nv">$ </span>sudo useradd -u <span class="m">1999</span> -g <span class="m">1999</span> kibana
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /tmp
+</span><span class='line'><span class="nv">$ </span>wget https://download.elastic.co/kibana/kibana/kibana-4.3.0-linux-x64.tar.gz
+</span><span class='line'><span class="nv">$ </span>tar xvf kibana-*.tar.gz
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>kibana-4.3.0-linux-x64
+</span><span class='line'><span class="nv">$ </span>vim config/kibana.yml      <span class="c"># update some configurations</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo mkdir -p /opt/kibana
+</span><span class='line'><span class="nv">$ </span>sudo cp -R kibana-4.3.0-linux-x64/* /opt/kibana/
+</span><span class='line'><span class="nv">$ </span>ls /opt/kibana/
+</span><span class='line'><span class="nv">$ </span>sudo chown -R kibana: /opt/kibana
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /etc/init.d <span class="o">&amp;&amp;</span> sudo curl -o kibana https://gist.githubusercontent.com/thisismitch/8b15ac909aed214ad04a/raw/fc5025c3fc499ad8262aff34ba7fde8c87ead7c0/kibana-4.x-init
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /etc/default <span class="o">&amp;&amp;</span> sudo curl -o kibana https://gist.githubusercontent.com/thisismitch/8b15ac909aed214ad04a/raw/fc5025c3fc499ad8262aff34ba7fde8c87ead7c0/kibana-4.x-default
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo chmod +x /etc/init.d/kibana
+</span><span class='line'><span class="nv">$ </span>sudo update-rc.d kibana defaults <span class="m">96</span> 9
+</span><span class='line'><span class="nv">$ </span>sudo service kibana start
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>test: <a href="http://localhost:5601">http://localhost:5601</a></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/cf/05/2c/cf052c0e3e1b3781238082cb844e33e1.jpg" /></p>
+
+<h3>Nginx</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install nginx apache2-utils
+</span><span class='line'><span class="nv">$ </span>sudo htpasswd -c /etc/nginx/htpasswd.users kibanaadmin
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/kibana <span class="c"># update config</span>
+</span><span class='line'><span class="nv">$ </span>sudo ln /etc/nginx/sites-available/kibana /etc/nginx/sites-enabled/kibana
+</span><span class='line'><span class="nv">$ </span>sudo service nginx restart
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>/etc/nginx/sites-available/kibana</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>server <span class="o">{</span>
+</span><span class='line'>    listen 80<span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    server_name example.com<span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    auth_basic <span class="s2">&quot;Restricted Access&quot;</span><span class="p">;</span>
+</span><span class='line'>    auth_basic_user_file /etc/nginx/htpasswd.users<span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    location / <span class="o">{</span>
+</span><span class='line'>        proxy_pass http://localhost:5601<span class="p">;</span>
+</span><span class='line'>        proxy_http_version 1.1<span class="p">;</span>
+</span><span class='line'>        proxy_set_header Upgrade <span class="nv">$http_upgrade</span><span class="p">;</span>
+</span><span class='line'>        proxy_set_header Connection <span class="s1">&#39;upgrade&#39;</span><span class="p">;</span>
+</span><span class='line'>        proxy_set_header Host <span class="nv">$host</span><span class="p">;</span>
+</span><span class='line'>        proxy_cache_bypass <span class="nv">$http_upgrade</span><span class="p">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Logstack</h2>
+
+<h3>Install Logstack</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">echo</span> <span class="s1">&#39;deb http://packages.elasticsearch.org/logstash/2.1/debian stable main&#39;</span> <span class="p">|</span> sudo tee /etc/apt/sources.list.d/logstash.list
+</span><span class='line'><span class="nv">$ </span>sudo apt-get update
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install logstash
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>SSL Certificate</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo mkdir -p /etc/pki/tls/certs
+</span><span class='line'><span class="nv">$ </span>sudo mkdir /etc/pki/tls/private
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /etc/pki/tls<span class="p">;</span> sudo openssl req -subj <span class="s1">&#39;/CN=logstash_server_fqdn/&#39;</span> -x509 -days <span class="m">3650</span> -batch -nodes -newkey rsa:2048 -keyout private/logstash-forwarder.key -out certs/logstash-forwarder.crt
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Config Logstack</h3>
+
+<ul>
+<li>/etc/logstash/conf.d/02-filebeat-input.conf</li>
+<li>/etc/logstash/conf.d/10-syslog.conf</li>
+<li>/etc/logstash/conf.d/30-elasticsearch-output.conf</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo vi /etc/logstash/conf.d/02-filebeat-input.conf
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>02-filebeat-input.conf</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>input <span class="o">{</span>
+</span><span class='line'>  beats <span class="o">{</span>
+</span><span class='line'>    <span class="nv">port</span> <span class="o">=</span>&gt; 5044
+</span><span class='line'>    <span class="nb">type</span> <span class="o">=</span>&gt; <span class="s2">&quot;logs&quot;</span>
+</span><span class='line'>    <span class="nv">ssl</span> <span class="o">=</span>&gt; <span class="nb">true</span>
+</span><span class='line'><span class="nb">    </span><span class="nv">ssl_certificate</span> <span class="o">=</span>&gt; <span class="s2">&quot;/etc/pki/tls/certs/logstash-forwarder.crt&quot;</span>
+</span><span class='line'>    <span class="nv">ssl_key</span> <span class="o">=</span>&gt; <span class="s2">&quot;/etc/pki/tls/private/logstash-forwarder.key&quot;</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo vi /etc/logstash/conf.d/10-syslog.conf
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>10-syslog.conf</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>filter <span class="o">{</span>
+</span><span class='line'>  <span class="k">if</span> <span class="o">[</span><span class="nb">type</span><span class="o">]</span> <span class="o">==</span> <span class="s2">&quot;syslog&quot;</span> <span class="o">{</span>
+</span><span class='line'>    grok <span class="o">{</span>
+</span><span class='line'>      <span class="nv">match</span> <span class="o">=</span>&gt; <span class="o">{</span> <span class="s2">&quot;message&quot;</span> <span class="o">=</span>&gt; <span class="s2">&quot;%{SYSLOGTIMESTAMP:syslog_timestamp} %{SYSLOGHOST:syslog_hostname} %{DATA:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{GREEDYDATA:syslog_message}&quot;</span> <span class="o">}</span>
+</span><span class='line'>      <span class="nv">add_field</span> <span class="o">=</span>&gt; <span class="o">[</span> <span class="s2">&quot;received_at&quot;</span>, <span class="s2">&quot;%{@timestamp}&quot;</span> <span class="o">]</span>
+</span><span class='line'>      <span class="nv">add_field</span> <span class="o">=</span>&gt; <span class="o">[</span> <span class="s2">&quot;received_from&quot;</span>, <span class="s2">&quot;%{host}&quot;</span> <span class="o">]</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    syslog_pri <span class="o">{</span> <span class="o">}</span>
+</span><span class='line'>    date <span class="o">{</span>
+</span><span class='line'>      <span class="nv">match</span> <span class="o">=</span>&gt; <span class="o">[</span> <span class="s2">&quot;syslog_timestamp&quot;</span>, <span class="s2">&quot;MMM  d HH:mm:ss&quot;</span>, <span class="s2">&quot;MMM dd HH:mm:ss&quot;</span> <span class="o">]</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo vi /etc/logstash/conf.d/30-elasticsearch-output.conf
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>30-elasticsearch-output.conf</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>output <span class="o">{</span>
+</span><span class='line'>  elasticsearch <span class="o">{</span> <span class="nv">hosts</span> <span class="o">=</span>&gt; <span class="o">[</span><span class="s2">&quot;localhost:9200&quot;</span><span class="o">]</span> <span class="o">}</span>
+</span><span class='line'>  stdout <span class="o">{</span> <span class="nv">codec</span> <span class="o">=</span>&gt; rubydebug <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>test</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo service logstash configtest
+</span><span class='line'><span class="nv">$ </span>sudo service logstash restart
+</span><span class='line'><span class="nv">$ </span>sudo update-rc.d logstash defaults <span class="m">96</span> 9
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Filebeat (Client)</h2>
+
+<h3>SSL Certificate</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>scp /etc/pki/tls/certs/logstash-forwarder.crt user@client_server_private_address:/tmp
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Install Filebeat</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">echo</span> <span class="s2">&quot;deb https://packages.elastic.co/beats/apt stable main&quot;</span> <span class="p">|</span>  sudo tee -a /etc/apt/sources.list.d/beats.list
+</span><span class='line'><span class="nv">$ </span>wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch <span class="p">|</span> sudo apt-key add -
+</span><span class='line'><span class="nv">$ </span>sudo apt-get update
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install filebeat
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo mkdir -p /etc/pki/tls/certs
+</span><span class='line'><span class="nv">$ </span>sudo cp /tmp/logstash-forwarder.crt /etc/pki/tls/certs/
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Config Filebeat</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo vi /etc/filebeat/filebeat.yml
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>/etc/filebeat/filebeat.yml</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>...
+</span><span class='line'>      paths:
+</span><span class='line'>         - /var/log/auth.log
+</span><span class='line'>         - /var/log/syslog
+</span><span class='line'><span class="c">#        - /var/log/*.log</span>
+</span><span class='line'>...
+</span><span class='line'>
+</span><span class='line'>...
+</span><span class='line'>      document_type: syslog
+</span><span class='line'>...
+</span><span class='line'>
+</span><span class='line'>...
+</span><span class='line'>output:
+</span><span class='line'>
+</span><span class='line'>  <span class="c">### Elasticsearch as output</span>
+</span><span class='line'>  elasticsearch:
+</span><span class='line'>    enabled: <span class="nb">false</span>
+</span><span class='line'>...
+</span><span class='line'>
+</span><span class='line'>  <span class="c">### Logstash as output</span>
+</span><span class='line'>  logstash:
+</span><span class='line'>    <span class="c"># The Logstash hosts</span>
+</span><span class='line'>    hosts: <span class="o">[</span><span class="s2">&quot;ELK_server_private_IP:5044&quot;</span><span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'>...
+</span><span class='line'>    tls:
+</span><span class='line'>      <span class="c"># List of root certificates for HTTPS server verifications</span>
+</span><span class='line'>      certificate_authorities: <span class="o">[</span><span class="s2">&quot;/etc/pki/tls/certs/logstash-forwarder.crt&quot;</span><span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>test</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo service filebeat restart
+</span><span class='line'><span class="nv">$ </span>sudo update-rc.d filebeat defaults <span class="m">95</span> 10
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+
+  
+
+
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+
+    
+      <h1 class="entry-title"><a href="/tech/2015/12/28/setting-up-opennao-with-virtualbox/">Setting Up OpenNao With VirtualBox</a></h1>
+    
+
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-12-28T22:44:11+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>10:44 pm</span></time>
+        
+           | <a href="/tech/2015/12/28/setting-up-opennao-with-virtualbox/#disqus_thread"
+             data-disqus-identifier="http://k.arttechresearch.com/tech/2015/12/28/setting-up-opennao-with-virtualbox/">Comments</a>
+        
+      </p>
+    
+
+  </header>
+
+
+
+  <div class="entry-content"><h2>1. Downloading OpenNao</h2>
+
+<p>Download OpenNao <a href="https://community.aldebaran.com/en/dl/ZmllbGRfY29sbGVjdGlvbl9pdGVtLTU1NC1maWVsZF9zb2Z0X2RsX2V4dGVybmFsX2xpbmstMC1mYTc0ZTQ%3D?width=500&amp;height=auto">OVA file</a>.</p>
+
+<h2>2. Setting up VirtualBox</h2>
+
+<p>Start VirtualBox: File -> Import Appliance -> Import *.ova file</p>
+
+<p>Start VM, login with username/password: nao/nao</p>
+
+<h2>References</h2>
+
+<ul>
+<li><a href="https://community.aldebaran.com/en/resources/software/language/en-gb">Aldebaran Dev Toolkits</a></li>
+<li><a href="http://doc.aldebaran.com/1-14/dev/tools/vm-setup.html">Setting up the OpenNAO virtual machine</a></li>
+<li><a href="http://doc.aldebaran.com/1-14/dev/tools/opennao.html#opennao-user-account">OpenNAO - NAO OS</a></li>
+</ul>
+
+</div>
+  
+  
+
+
+
+  
+
+
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+
+    
+      <h1 class="entry-title"><a href="/tech/2015/12/28/getting-started-with-cassandra/">Getting Started With Cassandra</a></h1>
+    
+
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-12-28T18:26:26+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>6:26 pm</span></time>
+        
+           | <a href="/tech/2015/12/28/getting-started-with-cassandra/#disqus_thread"
+             data-disqus-identifier="http://k.arttechresearch.com/tech/2015/12/28/getting-started-with-cassandra/">Comments</a>
+        
+      </p>
+    
+
+  </header>
+
+
+
+  <div class="entry-content"><h2>1. Installation</h2>
+
+<ul>
+<li>Ubuntu 14.04</li>
+<li>Java 8</li>
+<li>Apache Cassandra</li>
+</ul>
+
+
+<p>Java</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo add-apt-repository ppa:webupd8team/java
+</span><span class='line'><span class="nv">$ </span>sudo apt-get update
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install oracle-java8-installer
+</span><span class='line'><span class="nv">$ </span>java -version
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install oracle-java8-set-default
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Cassandra</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo vim /etc/apt/source.list.d/cassandra.list
+</span><span class='line'>
+</span><span class='line'><span class="c"># add source list</span>
+</span><span class='line'>deb http://www.apache.org/dist/cassandra/debian 21x main
+</span><span class='line'>deb-src http://www.apache.org/dist/cassandra/debian 21x main
+</span><span class='line'>
+</span><span class='line'><span class="c"># add public key</span>
+</span><span class='line'><span class="nv">$ </span>gpg --keyserver pgp.mit.edu --recv-keys F758CE318D77295D
+</span><span class='line'><span class="nv">$ </span>gpg --export --armor F758CE318D77295D <span class="p">|</span> sudo apt-key add -
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo apt-get update
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install cassandra
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>2. Configuration</h2>
+
+<p>config paths:</p>
+
+<ul>
+<li>data directories: /var/lib/cassandra</li>
+<li>log directory: /var/log/cassandra</li>
+<li>runtime files: /var/run/cassandra</li>
+<li>environment settings: /usr/share/cassandra</li>
+<li>JAR files: /usr/share/cassandra/lib</li>
+<li>binary files: /usr/bin</li>
+<li>/usr/sbin</li>
+<li>configuration files: /etc/cassandra</li>
+<li>service startup script: /etc/init.d</li>
+<li>cassandra user limits: /etc/security/limits.d</li>
+<li>/etc/default</li>
+</ul>
+
+
+<h2>3. Testing</h2>
+
+<p>running cassandra</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo cassandra
+</span><span class='line'><span class="nv">$ </span>sudo cassandra -f
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>cassandra-cli
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>running cql</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo cqlsh
+</span><span class='line'><span class="nv">$ </span>sudo cqlsh 127.0.0.1 9042
+</span><span class='line'>Connected to Test Cluster at 127.0.0.1:9042.
+</span><span class='line'><span class="o">[</span>cqlsh 5.0.1 <span class="p">|</span> Cassandra 2.1.12 <span class="p">|</span> CQL spec 3.2.1 <span class="p">|</span> Native protocol v3<span class="o">]</span>
+</span><span class='line'>Use HELP <span class="k">for</span> help.
+</span><span class='line'>
+</span><span class='line'>cqlsh&gt; CREATE KEYSPACE <span class="nb">test </span>WITH <span class="nv">REPLICATION</span> <span class="o">=</span> <span class="o">{</span> <span class="s1">&#39;class&#39;</span>: <span class="s1">&#39;SimpleStrategy&#39;</span>, <span class="s1">&#39;replication_factor&#39;</span>: <span class="m">1</span> <span class="o">}</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>cqlsh&gt; USE <span class="nb">test</span><span class="p">;</span>
+</span><span class='line'>cqlsh:test&gt; CREATE TABLE users <span class="o">(</span>
+</span><span class='line'>        ... user_id int PRIMARY KEY,
+</span><span class='line'>        ... fname text,
+</span><span class='line'>        ... lname text
+</span><span class='line'>        ... <span class="o">)</span><span class="p">;</span>
+</span><span class='line'>cqlsh:test&gt; INSERT INTO users <span class="o">(</span>user_id, fname, lname<span class="o">)</span> VALUES <span class="o">(</span>1722, <span class="s1">&#39;joe&#39;</span>, <span class="s1">&#39;lambert&#39;</span><span class="o">)</span><span class="p">;</span>
+</span><span class='line'>cqlsh:test&gt; INSERT INTO users <span class="o">(</span>user_id, fname, lname<span class="o">)</span> VALUES <span class="o">(</span>1832, <span class="s1">&#39;alice&#39;</span>, <span class="s1">&#39;parker&#39;</span><span class="o">)</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>cqlsh:test&gt; SELECT * FROM users<span class="p">;</span>
+</span><span class='line'>cqlsh:test&gt; CREATE INDEX ON users <span class="o">(</span>lname<span class="o">)</span><span class="p">;</span>
+</span><span class='line'>cqlsh:test&gt; SELECT * FROM users WHERE <span class="nv">lname</span> <span class="o">=</span> <span class="s1">&#39;smith&#39;</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Trouble Shooting</h2>
+
+<h3>CQL Connection refused</h3>
+
+<p>error message</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Connection error: <span class="o">(</span><span class="s1">&#39;Unable to connect to any servers&#39;</span>, <span class="o">{</span><span class="s1">&#39;127.0.0.1&#39;</span>: error<span class="o">(</span>111, <span class="s2">&quot;Tried connecting to [(&#39;127.0.0.1&#39;, 9042)]. Last error: Connection refused&quot;</span><span class="o">)})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>solution: update Java Version (Up to Java 8)</p>
+</div>
+  
+  
+
+
+
+  
+
+
+
+
+    </article>
   
   
     <article>
@@ -35295,6 +36006,18 @@ Y = ATT<code>ATC</code></p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/tech/2015/12/29/installing-logstack-elasticsearch-kibana-on-ubuntu/">Installing Logstack ElasticSearch Kibana on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/12/28/setting-up-opennao-with-virtualbox/">Setting Up OpenNao With VirtualBox</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/12/28/getting-started-with-cassandra/">Getting Started With Cassandra</a>
+      </li>
+    
+      <li class="post">
         <a href="/tech/2015/12/13/machine-learning-from-facebook-tech-talk/">Machine Learning From Facebook Tech Talk</a>
       </li>
     
@@ -35322,18 +36045,6 @@ Y = ATT<code>ATC</code></p>
         <a href="/tech/2015/11/05/python-challenge-l0-l2/">Python Challenge L0-L2</a>
       </li>
     
-      <li class="post">
-        <a href="/tech/2015/10/21/converting-markdown-to-pdf-with-nodejs/">Converting Markdown to PDF With NodeJS</a>
-      </li>
-    
-      <li class="post">
-        <a href="/tech/2015/10/19/summary-on-edx-devkits/">Summary on edX Devkits</a>
-      </li>
-    
-      <li class="post">
-        <a href="/tech/2015/10/18/setup-the-devstack-for-edx-alton/">Setup the Devstack for edX Alton</a>
-      </li>
-    
   </ul>
 </section>
 <section class="category-list">
@@ -35359,7 +36070,7 @@ Y = ATT<code>ATC</code></p>
 
 
   <h1>Tags</h1>
-    <ul id="category-list"><a href='/tags/algorithm' style='font-size: 110.0%'>algorithm(7)</a> <a href='/tags/ansible' style='font-size: 93.33333333333333%'>ansible(2)</a> <a href='/tags/apache' style='font-size: 93.33333333333333%'>apache(2)</a> <a href='/tags/api' style='font-size: 93.33333333333333%'>api(2)</a> <a href='/tags/ascii' style='font-size: 90.0%'>ascii(1)</a> <a href='/tags/beautifulsoup' style='font-size: 90.0%'>beautifulsoup(1)</a> <a href='/tags/butter' style='font-size: 90.0%'>butter(1)</a> <a href='/tags/career' style='font-size: 96.66666666666667%'>career(3)</a> <a href='/tags/cg' style='font-size: 90.0%'>cg(1)</a> <a href='/tags/chatbot' style='font-size: 96.66666666666667%'>chatbot(3)</a> <a href='/tags/classification' style='font-size: 93.33333333333333%'>classification(2)</a> <a href='/tags/cloud' style='font-size: 90.0%'>cloud(1)</a> <a href='/tags/cloudera' style='font-size: 110.0%'>cloudera(7)</a> <a href='/tags/cloudera-manager' style='font-size: 96.66666666666667%'>cloudera manager(3)</a> <a href='/tags/cluster' style='font-size: 153.33333333333334%'>cluster(20)</a> <a href='/tags/computer-vision' style='font-size: 90.0%'>computer vision(1)</a> <a href='/tags/crawler' style='font-size: 93.33333333333333%'>crawler(2)</a> <a href='/tags/css' style='font-size: 93.33333333333333%'>css(2)</a> <a href='/tags/data' style='font-size: 90.0%'>data(1)</a> <a href='/tags/db' style='font-size: 100.0%'>db(4)</a> <a href='/tags/debian' style='font-size: 90.0%'>debian(1)</a> <a href='/tags/devops' style='font-size: 100.0%'>devops(4)</a> <a href='/tags/django' style='font-size: 93.33333333333333%'>django(2)</a> <a href='/tags/dns' style='font-size: 90.0%'>dns(1)</a> <a href='/tags/docker' style='font-size: 96.66666666666667%'>docker(3)</a> <a href='/tags/edx' style='font-size: 130.0%'>edX(13)</a> <a href='/tags/edx-ai' style='font-size: 90.0%'>edX AI(1)</a> <a href='/tags/edx-analytics' style='font-size: 113.33333333333333%'>edX Analytics(8)</a> <a href='/tags/edx-platform' style='font-size: 96.66666666666667%'>edX Platform(3)</a> <a href='/tags/emacs' style='font-size: 93.33333333333333%'>emacs(2)</a> <a href='/tags/exhibition' style='font-size: 93.33333333333333%'>exhibition(2)</a> <a href='/tags/fiction' style='font-size: 110.0%'>fiction(7)</a> <a href='/tags/forever' style='font-size: 93.33333333333333%'>forever(2)</a> <a href='/tags/freetds' style='font-size: 90.0%'>freetds(1)</a> <a href='/tags/french' style='font-size: 90.0%'>french(1)</a> <a href='/tags/ghost' style='font-size: 100.0%'>ghost(4)</a> <a href='/tags/git' style='font-size: 103.33333333333333%'>git(5)</a> <a href='/tags/github' style='font-size: 93.33333333333333%'>github(2)</a> <a href='/tags/gitosis' style='font-size: 90.0%'>gitosis(1)</a> <a href='/tags/gitweb' style='font-size: 90.0%'>gitweb(1)</a> <a href='/tags/gunicorn' style='font-size: 90.0%'>gunicorn(1)</a> <a href='/tags/hadoop' style='font-size: 136.66666666666666%'>hadoop(15)</a> <a href='/tags/hbase' style='font-size: 103.33333333333333%'>hbase(5)</a> <a href='/tags/hdfs' style='font-size: 93.33333333333333%'>hdfs(2)</a> <a href='/tags/hipchat' style='font-size: 96.66666666666667%'>hipchat(3)</a> <a href='/tags/hive' style='font-size: 96.66666666666667%'>hive(3)</a> <a href='/tags/html' style='font-size: 93.33333333333333%'>html(2)</a> <a href='/tags/hue' style='font-size: 93.33333333333333%'>hue(2)</a> <a href='/tags/ide' style='font-size: 96.66666666666667%'>ide(3)</a> <a href='/tags/iterm' style='font-size: 90.0%'>iterm(1)</a> <a href='/tags/java' style='font-size: 93.33333333333333%'>java(2)</a> <a href='/tags/javascript' style='font-size: 100.0%'>javascript(4)</a> <a href='/tags/jekyll' style='font-size: 93.33333333333333%'>jekyll(2)</a> <a href='/tags/jenkins' style='font-size: 90.0%'>jenkins(1)</a> <a href='/tags/leisure' style='font-size: 150.0%'>leisure(19)</a> <a href='/tags/linux' style='font-size: 116.66666666666667%'>linux(9)</a> <a href='/tags/machine-learning' style='font-size: 126.66666666666666%'>machine learning(12)</a> <a href='/tags/mapreduce' style='font-size: 93.33333333333333%'>mapreduce(2)</a> <a href='/tags/markdown' style='font-size: 90.0%'>markdown(1)</a> <a href='/tags/mathjax' style='font-size: 93.33333333333333%'>mathjax(2)</a> <a href='/tags/mongo' style='font-size: 90.0%'>mongo(1)</a> <a href='/tags/mongovue' style='font-size: 90.0%'>mongovue(1)</a> <a href='/tags/mssql' style='font-size: 90.0%'>mssql(1)</a> <a href='/tags/mysql' style='font-size: 113.33333333333333%'>mysql(8)</a> <a href='/tags/mysql-workbench' style='font-size: 93.33333333333333%'>mysql workbench(2)</a> <a href='/tags/network' style='font-size: 90.0%'>network(1)</a> <a href='/tags/nginx' style='font-size: 96.66666666666667%'>nginx(3)</a> <a href='/tags/nlp' style='font-size: 106.66666666666667%'>nlp(6)</a> <a href='/tags/nltk' style='font-size: 90.0%'>nltk(1)</a> <a href='/tags/nodejs' style='font-size: 106.66666666666667%'>nodejs(6)</a> <a href='/tags/octopress' style='font-size: 113.33333333333333%'>octopress(8)</a> <a href='/tags/odbc' style='font-size: 90.0%'>odbc(1)</a> <a href='/tags/oil-painting' style='font-size: 90.0%'>oil painting(1)</a> <a href='/tags/openstack' style='font-size: 90.0%'>openstack(1)</a> <a href='/tags/painting' style='font-size: 90.0%'>painting(1)</a> <a href='/tags/pandas' style='font-size: 93.33333333333333%'>pandas(2)</a> <a href='/tags/photos' style='font-size: 130.0%'>photos(13)</a> <a href='/tags/poem' style='font-size: 100.0%'>poem(4)</a> <a href='/tags/prediction' style='font-size: 90.0%'>prediction(1)</a> <a href='/tags/pycharm' style='font-size: 90.0%'>pycharm(1)</a> <a href='/tags/python' style='font-size: 200.0%'>python(34)</a> <a href='/tags/python-challenge' style='font-size: 96.66666666666667%'>Python Challenge(3)</a> <a href='/tags/redis' style='font-size: 90.0%'>redis(1)</a> <a href='/tags/redmine' style='font-size: 90.0%'>redmine(1)</a> <a href='/tags/regex' style='font-size: 90.0%'>regex(1)</a> <a href='/tags/robotics' style='font-size: 96.66666666666667%'>robotics(3)</a> <a href='/tags/ruby' style='font-size: 120.0%'>ruby(10)</a> <a href='/tags/sql' style='font-size: 90.0%'>sql(1)</a> <a href='/tags/sqoop' style='font-size: 96.66666666666667%'>sqoop(3)</a> <a href='/tags/ssl' style='font-size: 90.0%'>ssl(1)</a> <a href='/tags/supervisor' style='font-size: 90.0%'>supervisor(1)</a> <a href='/tags/tech-talks' style='font-size: 90.0%'>tech talks(1)</a> <a href='/tags/time-series' style='font-size: 90.0%'>time series(1)</a> <a href='/tags/translation' style='font-size: 90.0%'>translation(1)</a> <a href='/tags/ubuntu' style='font-size: 116.66666666666667%'>ubuntu(9)</a> <a href='/tags/unicode' style='font-size: 90.0%'>unicode(1)</a> <a href='/tags/vagrant' style='font-size: 96.66666666666667%'>vagrant(3)</a> <a href='/tags/vim' style='font-size: 93.33333333333333%'>vim(2)</a> <a href='/tags/virtualbox' style='font-size: 96.66666666666667%'>virtualbox(3)</a> <a href='/tags/vm' style='font-size: 93.33333333333333%'>vm(2)</a> <a href='/tags/web' style='font-size: 106.66666666666667%'>web(6)</a> <a href='/tags/will' style='font-size: 96.66666666666667%'>will(3)</a> <a href='/tags/yarn' style='font-size: 90.0%'>yarn(1)</a> <a href='/tags/zookeeper' style='font-size: 103.33333333333333%'>zookeeper(5)</a> </ul>
+    <ul id="category-list"><a href='/tags/algorithm' style='font-size: 110.0%'>algorithm(7)</a> <a href='/tags/ansible' style='font-size: 93.33333333333333%'>ansible(2)</a> <a href='/tags/apache' style='font-size: 93.33333333333333%'>apache(2)</a> <a href='/tags/api' style='font-size: 93.33333333333333%'>api(2)</a> <a href='/tags/ascii' style='font-size: 90.0%'>ascii(1)</a> <a href='/tags/beautifulsoup' style='font-size: 90.0%'>beautifulsoup(1)</a> <a href='/tags/butter' style='font-size: 90.0%'>butter(1)</a> <a href='/tags/career' style='font-size: 96.66666666666667%'>career(3)</a> <a href='/tags/cassandra' style='font-size: 90.0%'>cassandra(1)</a> <a href='/tags/cg' style='font-size: 90.0%'>cg(1)</a> <a href='/tags/chatbot' style='font-size: 96.66666666666667%'>chatbot(3)</a> <a href='/tags/classification' style='font-size: 93.33333333333333%'>classification(2)</a> <a href='/tags/cloud' style='font-size: 90.0%'>cloud(1)</a> <a href='/tags/cloudera' style='font-size: 110.0%'>cloudera(7)</a> <a href='/tags/cloudera-manager' style='font-size: 96.66666666666667%'>cloudera manager(3)</a> <a href='/tags/cluster' style='font-size: 153.33333333333334%'>cluster(20)</a> <a href='/tags/computer-vision' style='font-size: 90.0%'>computer vision(1)</a> <a href='/tags/crawler' style='font-size: 93.33333333333333%'>crawler(2)</a> <a href='/tags/css' style='font-size: 93.33333333333333%'>css(2)</a> <a href='/tags/data' style='font-size: 90.0%'>data(1)</a> <a href='/tags/db' style='font-size: 103.33333333333333%'>db(5)</a> <a href='/tags/debian' style='font-size: 90.0%'>debian(1)</a> <a href='/tags/devops' style='font-size: 100.0%'>devops(4)</a> <a href='/tags/django' style='font-size: 93.33333333333333%'>django(2)</a> <a href='/tags/dns' style='font-size: 90.0%'>dns(1)</a> <a href='/tags/docker' style='font-size: 96.66666666666667%'>docker(3)</a> <a href='/tags/edx' style='font-size: 130.0%'>edX(13)</a> <a href='/tags/edx-ai' style='font-size: 90.0%'>edX AI(1)</a> <a href='/tags/edx-analytics' style='font-size: 113.33333333333333%'>edX Analytics(8)</a> <a href='/tags/edx-platform' style='font-size: 96.66666666666667%'>edX Platform(3)</a> <a href='/tags/elasticsearch' style='font-size: 90.0%'>elasticsearch(1)</a> <a href='/tags/emacs' style='font-size: 93.33333333333333%'>emacs(2)</a> <a href='/tags/exhibition' style='font-size: 93.33333333333333%'>exhibition(2)</a> <a href='/tags/fiction' style='font-size: 110.0%'>fiction(7)</a> <a href='/tags/filebeat' style='font-size: 90.0%'>filebeat(1)</a> <a href='/tags/forever' style='font-size: 93.33333333333333%'>forever(2)</a> <a href='/tags/freetds' style='font-size: 90.0%'>freetds(1)</a> <a href='/tags/french' style='font-size: 90.0%'>french(1)</a> <a href='/tags/ghost' style='font-size: 100.0%'>ghost(4)</a> <a href='/tags/git' style='font-size: 103.33333333333333%'>git(5)</a> <a href='/tags/github' style='font-size: 93.33333333333333%'>github(2)</a> <a href='/tags/gitosis' style='font-size: 90.0%'>gitosis(1)</a> <a href='/tags/gitweb' style='font-size: 90.0%'>gitweb(1)</a> <a href='/tags/gunicorn' style='font-size: 90.0%'>gunicorn(1)</a> <a href='/tags/hadoop' style='font-size: 136.66666666666666%'>hadoop(15)</a> <a href='/tags/hbase' style='font-size: 103.33333333333333%'>hbase(5)</a> <a href='/tags/hdfs' style='font-size: 93.33333333333333%'>hdfs(2)</a> <a href='/tags/hipchat' style='font-size: 96.66666666666667%'>hipchat(3)</a> <a href='/tags/hive' style='font-size: 96.66666666666667%'>hive(3)</a> <a href='/tags/html' style='font-size: 93.33333333333333%'>html(2)</a> <a href='/tags/hue' style='font-size: 93.33333333333333%'>hue(2)</a> <a href='/tags/ide' style='font-size: 96.66666666666667%'>ide(3)</a> <a href='/tags/iterm' style='font-size: 90.0%'>iterm(1)</a> <a href='/tags/java' style='font-size: 93.33333333333333%'>java(2)</a> <a href='/tags/javascript' style='font-size: 100.0%'>javascript(4)</a> <a href='/tags/jekyll' style='font-size: 93.33333333333333%'>jekyll(2)</a> <a href='/tags/jenkins' style='font-size: 90.0%'>jenkins(1)</a> <a href='/tags/kibana' style='font-size: 90.0%'>kibana(1)</a> <a href='/tags/leisure' style='font-size: 150.0%'>leisure(19)</a> <a href='/tags/linux' style='font-size: 116.66666666666667%'>linux(9)</a> <a href='/tags/logstack' style='font-size: 90.0%'>logstack(1)</a> <a href='/tags/machine-learning' style='font-size: 126.66666666666666%'>machine learning(12)</a> <a href='/tags/mapreduce' style='font-size: 93.33333333333333%'>mapreduce(2)</a> <a href='/tags/markdown' style='font-size: 90.0%'>markdown(1)</a> <a href='/tags/mathjax' style='font-size: 93.33333333333333%'>mathjax(2)</a> <a href='/tags/mongo' style='font-size: 90.0%'>mongo(1)</a> <a href='/tags/mongovue' style='font-size: 90.0%'>mongovue(1)</a> <a href='/tags/mssql' style='font-size: 90.0%'>mssql(1)</a> <a href='/tags/mysql' style='font-size: 113.33333333333333%'>mysql(8)</a> <a href='/tags/mysql-workbench' style='font-size: 93.33333333333333%'>mysql workbench(2)</a> <a href='/tags/nao' style='font-size: 90.0%'>nao(1)</a> <a href='/tags/network' style='font-size: 90.0%'>network(1)</a> <a href='/tags/nginx' style='font-size: 100.0%'>nginx(4)</a> <a href='/tags/nlp' style='font-size: 106.66666666666667%'>nlp(6)</a> <a href='/tags/nltk' style='font-size: 90.0%'>nltk(1)</a> <a href='/tags/nodejs' style='font-size: 106.66666666666667%'>nodejs(6)</a> <a href='/tags/octopress' style='font-size: 113.33333333333333%'>octopress(8)</a> <a href='/tags/odbc' style='font-size: 90.0%'>odbc(1)</a> <a href='/tags/oil-painting' style='font-size: 90.0%'>oil painting(1)</a> <a href='/tags/openssl' style='font-size: 90.0%'>openssl(1)</a> <a href='/tags/openstack' style='font-size: 90.0%'>openstack(1)</a> <a href='/tags/painting' style='font-size: 90.0%'>painting(1)</a> <a href='/tags/pandas' style='font-size: 93.33333333333333%'>pandas(2)</a> <a href='/tags/photos' style='font-size: 130.0%'>photos(13)</a> <a href='/tags/poem' style='font-size: 100.0%'>poem(4)</a> <a href='/tags/prediction' style='font-size: 90.0%'>prediction(1)</a> <a href='/tags/pycharm' style='font-size: 90.0%'>pycharm(1)</a> <a href='/tags/python' style='font-size: 200.0%'>python(34)</a> <a href='/tags/python-challenge' style='font-size: 96.66666666666667%'>Python Challenge(3)</a> <a href='/tags/redis' style='font-size: 90.0%'>redis(1)</a> <a href='/tags/redmine' style='font-size: 90.0%'>redmine(1)</a> <a href='/tags/regex' style='font-size: 90.0%'>regex(1)</a> <a href='/tags/robotics' style='font-size: 100.0%'>robotics(4)</a> <a href='/tags/ruby' style='font-size: 120.0%'>ruby(10)</a> <a href='/tags/sql' style='font-size: 90.0%'>sql(1)</a> <a href='/tags/sqoop' style='font-size: 96.66666666666667%'>sqoop(3)</a> <a href='/tags/ssl' style='font-size: 90.0%'>ssl(1)</a> <a href='/tags/supervisor' style='font-size: 90.0%'>supervisor(1)</a> <a href='/tags/tech-talks' style='font-size: 90.0%'>tech talks(1)</a> <a href='/tags/time-series' style='font-size: 90.0%'>time series(1)</a> <a href='/tags/translation' style='font-size: 90.0%'>translation(1)</a> <a href='/tags/ubuntu' style='font-size: 116.66666666666667%'>ubuntu(9)</a> <a href='/tags/unicode' style='font-size: 90.0%'>unicode(1)</a> <a href='/tags/vagrant' style='font-size: 96.66666666666667%'>vagrant(3)</a> <a href='/tags/vim' style='font-size: 93.33333333333333%'>vim(2)</a> <a href='/tags/virtualbox' style='font-size: 96.66666666666667%'>virtualbox(3)</a> <a href='/tags/vm' style='font-size: 93.33333333333333%'>vm(2)</a> <a href='/tags/web' style='font-size: 106.66666666666667%'>web(6)</a> <a href='/tags/will' style='font-size: 96.66666666666667%'>will(3)</a> <a href='/tags/yarn' style='font-size: 90.0%'>yarn(1)</a> <a href='/tags/zookeeper' style='font-size: 103.33333333333333%'>zookeeper(5)</a> </ul>
 </section>
 
     

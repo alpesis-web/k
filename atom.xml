@@ -4,7 +4,7 @@
   <title><![CDATA[K]]></title>
   <link href="http://k.arttechresearch.com/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2015-12-27T23:25:55+08:00</updated>
+  <updated>2015-12-29T16:39:54+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[K]]></name>
@@ -12,6 +12,615 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Installing Logstack ElasticSearch Kibana on Ubuntu]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/12/29/installing-logstack-elasticsearch-kibana-on-ubuntu/"/>
+    <updated>2015-12-29T14:52:55+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/12/29/installing-logstack-elasticsearch-kibana-on-ubuntu</id>
+    <content type="html"><![CDATA[<h2>Installation Steps</h2>
+
+<ul>
+<li>Step 1. java</li>
+<li>Step 2. elasticsearch</li>
+<li>Step 3. kibana/nginx</li>
+<li>Step 4. logstack</li>
+<li>Step 5. filebeat</li>
+</ul>
+
+
+<h2>Process</h2>
+
+<ul>
+<li>filebeat: ship logs</li>
+<li>logstack: process and index logs</li>
+<li>elasticsearch: store logs</li>
+<li>kibana: search and visualize logs</li>
+<li>nginx: reverse proxy</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>App Server - filebeat -|
+</span><span class='line'>                       |-&gt; logstack -&gt; elasticsearch -&gt; kibana -&gt; nginx
+</span><span class='line'>DB Server  - filebeat -|</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Prequisitions</h2>
+
+<ul>
+<li>Ubuntu 14.04</li>
+<li>Java 8</li>
+<li>Logstack</li>
+<li>ElasticSearch</li>
+<li>Kibana</li>
+<li>Filebeat</li>
+</ul>
+
+
+<h2>Java 8</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo add-apt-repository -y ppa:webupd8team/java
+</span><span class='line'><span class="nv">$ </span>sudo apt-get update
+</span><span class='line'><span class="nv">$ </span>sudo apt-get -y install oracle-java8-installer
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>ElasticSearch</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch <span class="p">|</span> sudo apt-key add -
+</span><span class='line'><span class="nv">$ </span><span class="nb">echo</span> <span class="s2">&quot;deb http://packages.elastic.co/elasticsearch/2.x/debian stable main&quot;</span> <span class="p">|</span> sudo tee -a /etc/apt/sources.list.d/elasticsearch-2.x.list
+</span><span class='line'><span class="nv">$ </span>sudo apt-get update
+</span><span class='line'><span class="nv">$ </span>sudo apt-get -y install elasticsearch
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo vim /etc/elasticsearch/elasticsearch.yml
+</span><span class='line'><span class="c"># network.host: 192.168.0.1</span>
+</span><span class='line'>network.host: localhost
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo service elasticsearch restart
+</span><span class='line'><span class="nv">$ </span>sudo update-rc.d elasticsearch defaults <span class="m">95</span> 10
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Kibana</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo groupadd -g <span class="m">1999</span> kibana
+</span><span class='line'><span class="nv">$ </span>sudo useradd -u <span class="m">1999</span> -g <span class="m">1999</span> kibana
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /tmp
+</span><span class='line'><span class="nv">$ </span>wget https://download.elastic.co/kibana/kibana/kibana-4.3.0-linux-x64.tar.gz
+</span><span class='line'><span class="nv">$ </span>tar xvf kibana-*.tar.gz
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>kibana-4.3.0-linux-x64
+</span><span class='line'><span class="nv">$ </span>vim config/kibana.yml      <span class="c"># update some configurations</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo mkdir -p /opt/kibana
+</span><span class='line'><span class="nv">$ </span>sudo cp -R kibana-4.3.0-linux-x64/* /opt/kibana/
+</span><span class='line'><span class="nv">$ </span>ls /opt/kibana/
+</span><span class='line'><span class="nv">$ </span>sudo chown -R kibana: /opt/kibana
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /etc/init.d <span class="o">&amp;&amp;</span> sudo curl -o kibana https://gist.githubusercontent.com/thisismitch/8b15ac909aed214ad04a/raw/fc5025c3fc499ad8262aff34ba7fde8c87ead7c0/kibana-4.x-init
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /etc/default <span class="o">&amp;&amp;</span> sudo curl -o kibana https://gist.githubusercontent.com/thisismitch/8b15ac909aed214ad04a/raw/fc5025c3fc499ad8262aff34ba7fde8c87ead7c0/kibana-4.x-default
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo chmod +x /etc/init.d/kibana
+</span><span class='line'><span class="nv">$ </span>sudo update-rc.d kibana defaults <span class="m">96</span> 9
+</span><span class='line'><span class="nv">$ </span>sudo service kibana start
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>test: <a href="http://localhost:5601">http://localhost:5601</a></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/cf/05/2c/cf052c0e3e1b3781238082cb844e33e1.jpg" /></p>
+
+<h3>Nginx</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install nginx apache2-utils
+</span><span class='line'><span class="nv">$ </span>sudo htpasswd -c /etc/nginx/htpasswd.users kibanaadmin
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/kibana <span class="c"># update config</span>
+</span><span class='line'><span class="nv">$ </span>sudo ln /etc/nginx/sites-available/kibana /etc/nginx/sites-enabled/kibana
+</span><span class='line'><span class="nv">$ </span>sudo service nginx restart
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>/etc/nginx/sites-available/kibana</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>server <span class="o">{</span>
+</span><span class='line'>    listen 80<span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    server_name example.com<span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    auth_basic <span class="s2">&quot;Restricted Access&quot;</span><span class="p">;</span>
+</span><span class='line'>    auth_basic_user_file /etc/nginx/htpasswd.users<span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    location / <span class="o">{</span>
+</span><span class='line'>        proxy_pass http://localhost:5601<span class="p">;</span>
+</span><span class='line'>        proxy_http_version 1.1<span class="p">;</span>
+</span><span class='line'>        proxy_set_header Upgrade <span class="nv">$http_upgrade</span><span class="p">;</span>
+</span><span class='line'>        proxy_set_header Connection <span class="s1">&#39;upgrade&#39;</span><span class="p">;</span>
+</span><span class='line'>        proxy_set_header Host <span class="nv">$host</span><span class="p">;</span>
+</span><span class='line'>        proxy_cache_bypass <span class="nv">$http_upgrade</span><span class="p">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Logstack</h2>
+
+<h3>Install Logstack</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">echo</span> <span class="s1">&#39;deb http://packages.elasticsearch.org/logstash/2.1/debian stable main&#39;</span> <span class="p">|</span> sudo tee /etc/apt/sources.list.d/logstash.list
+</span><span class='line'><span class="nv">$ </span>sudo apt-get update
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install logstash
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>SSL Certificate</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo mkdir -p /etc/pki/tls/certs
+</span><span class='line'><span class="nv">$ </span>sudo mkdir /etc/pki/tls/private
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /etc/pki/tls<span class="p">;</span> sudo openssl req -subj <span class="s1">&#39;/CN=logstash_server_fqdn/&#39;</span> -x509 -days <span class="m">3650</span> -batch -nodes -newkey rsa:2048 -keyout private/logstash-forwarder.key -out certs/logstash-forwarder.crt
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Config Logstack</h3>
+
+<ul>
+<li>/etc/logstash/conf.d/02-filebeat-input.conf</li>
+<li>/etc/logstash/conf.d/10-syslog.conf</li>
+<li>/etc/logstash/conf.d/30-elasticsearch-output.conf</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo vi /etc/logstash/conf.d/02-filebeat-input.conf
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>02-filebeat-input.conf</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>input <span class="o">{</span>
+</span><span class='line'>  beats <span class="o">{</span>
+</span><span class='line'>    <span class="nv">port</span> <span class="o">=</span>&gt; 5044
+</span><span class='line'>    <span class="nb">type</span> <span class="o">=</span>&gt; <span class="s2">&quot;logs&quot;</span>
+</span><span class='line'>    <span class="nv">ssl</span> <span class="o">=</span>&gt; <span class="nb">true</span>
+</span><span class='line'><span class="nb">    </span><span class="nv">ssl_certificate</span> <span class="o">=</span>&gt; <span class="s2">&quot;/etc/pki/tls/certs/logstash-forwarder.crt&quot;</span>
+</span><span class='line'>    <span class="nv">ssl_key</span> <span class="o">=</span>&gt; <span class="s2">&quot;/etc/pki/tls/private/logstash-forwarder.key&quot;</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo vi /etc/logstash/conf.d/10-syslog.conf
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>10-syslog.conf</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>filter <span class="o">{</span>
+</span><span class='line'>  <span class="k">if</span> <span class="o">[</span><span class="nb">type</span><span class="o">]</span> <span class="o">==</span> <span class="s2">&quot;syslog&quot;</span> <span class="o">{</span>
+</span><span class='line'>    grok <span class="o">{</span>
+</span><span class='line'>      <span class="nv">match</span> <span class="o">=</span>&gt; <span class="o">{</span> <span class="s2">&quot;message&quot;</span> <span class="o">=</span>&gt; <span class="s2">&quot;%{SYSLOGTIMESTAMP:syslog_timestamp} %{SYSLOGHOST:syslog_hostname} %{DATA:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{GREEDYDATA:syslog_message}&quot;</span> <span class="o">}</span>
+</span><span class='line'>      <span class="nv">add_field</span> <span class="o">=</span>&gt; <span class="o">[</span> <span class="s2">&quot;received_at&quot;</span>, <span class="s2">&quot;%{@timestamp}&quot;</span> <span class="o">]</span>
+</span><span class='line'>      <span class="nv">add_field</span> <span class="o">=</span>&gt; <span class="o">[</span> <span class="s2">&quot;received_from&quot;</span>, <span class="s2">&quot;%{host}&quot;</span> <span class="o">]</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    syslog_pri <span class="o">{</span> <span class="o">}</span>
+</span><span class='line'>    date <span class="o">{</span>
+</span><span class='line'>      <span class="nv">match</span> <span class="o">=</span>&gt; <span class="o">[</span> <span class="s2">&quot;syslog_timestamp&quot;</span>, <span class="s2">&quot;MMM  d HH:mm:ss&quot;</span>, <span class="s2">&quot;MMM dd HH:mm:ss&quot;</span> <span class="o">]</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo vi /etc/logstash/conf.d/30-elasticsearch-output.conf
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>30-elasticsearch-output.conf</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>output <span class="o">{</span>
+</span><span class='line'>  elasticsearch <span class="o">{</span> <span class="nv">hosts</span> <span class="o">=</span>&gt; <span class="o">[</span><span class="s2">&quot;localhost:9200&quot;</span><span class="o">]</span> <span class="o">}</span>
+</span><span class='line'>  stdout <span class="o">{</span> <span class="nv">codec</span> <span class="o">=</span>&gt; rubydebug <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>test</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo service logstash configtest
+</span><span class='line'><span class="nv">$ </span>sudo service logstash restart
+</span><span class='line'><span class="nv">$ </span>sudo update-rc.d logstash defaults <span class="m">96</span> 9
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Filebeat (Client)</h2>
+
+<h3>SSL Certificate</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>scp /etc/pki/tls/certs/logstash-forwarder.crt user@client_server_private_address:/tmp
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Install Filebeat</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">echo</span> <span class="s2">&quot;deb https://packages.elastic.co/beats/apt stable main&quot;</span> <span class="p">|</span>  sudo tee -a /etc/apt/sources.list.d/beats.list
+</span><span class='line'><span class="nv">$ </span>wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch <span class="p">|</span> sudo apt-key add -
+</span><span class='line'><span class="nv">$ </span>sudo apt-get update
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install filebeat
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo mkdir -p /etc/pki/tls/certs
+</span><span class='line'><span class="nv">$ </span>sudo cp /tmp/logstash-forwarder.crt /etc/pki/tls/certs/
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Config Filebeat</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo vi /etc/filebeat/filebeat.yml
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>/etc/filebeat/filebeat.yml</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>...
+</span><span class='line'>      paths:
+</span><span class='line'>         - /var/log/auth.log
+</span><span class='line'>         - /var/log/syslog
+</span><span class='line'><span class="c">#        - /var/log/*.log</span>
+</span><span class='line'>...
+</span><span class='line'>
+</span><span class='line'>...
+</span><span class='line'>      document_type: syslog
+</span><span class='line'>...
+</span><span class='line'>
+</span><span class='line'>...
+</span><span class='line'>output:
+</span><span class='line'>
+</span><span class='line'>  <span class="c">### Elasticsearch as output</span>
+</span><span class='line'>  elasticsearch:
+</span><span class='line'>    enabled: <span class="nb">false</span>
+</span><span class='line'>...
+</span><span class='line'>
+</span><span class='line'>  <span class="c">### Logstash as output</span>
+</span><span class='line'>  logstash:
+</span><span class='line'>    <span class="c"># The Logstash hosts</span>
+</span><span class='line'>    hosts: <span class="o">[</span><span class="s2">&quot;ELK_server_private_IP:5044&quot;</span><span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'>...
+</span><span class='line'>    tls:
+</span><span class='line'>      <span class="c"># List of root certificates for HTTPS server verifications</span>
+</span><span class='line'>      certificate_authorities: <span class="o">[</span><span class="s2">&quot;/etc/pki/tls/certs/logstash-forwarder.crt&quot;</span><span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>test</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo service filebeat restart
+</span><span class='line'><span class="nv">$ </span>sudo update-rc.d filebeat defaults <span class="m">95</span> 10
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Setting Up OpenNao With VirtualBox]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/12/28/setting-up-opennao-with-virtualbox/"/>
+    <updated>2015-12-28T22:44:11+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/12/28/setting-up-opennao-with-virtualbox</id>
+    <content type="html"><![CDATA[<h2>1. Downloading OpenNao</h2>
+
+<p>Download OpenNao <a href="https://community.aldebaran.com/en/dl/ZmllbGRfY29sbGVjdGlvbl9pdGVtLTU1NC1maWVsZF9zb2Z0X2RsX2V4dGVybmFsX2xpbmstMC1mYTc0ZTQ%3D?width=500&amp;height=auto">OVA file</a>.</p>
+
+<h2>2. Setting up VirtualBox</h2>
+
+<p>Start VirtualBox: File -> Import Appliance -> Import *.ova file</p>
+
+<p>Start VM, login with username/password: nao/nao</p>
+
+<h2>References</h2>
+
+<ul>
+<li><a href="https://community.aldebaran.com/en/resources/software/language/en-gb">Aldebaran Dev Toolkits</a></li>
+<li><a href="http://doc.aldebaran.com/1-14/dev/tools/vm-setup.html">Setting up the OpenNAO virtual machine</a></li>
+<li><a href="http://doc.aldebaran.com/1-14/dev/tools/opennao.html#opennao-user-account">OpenNAO - NAO OS</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Getting Started With Cassandra]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/12/28/getting-started-with-cassandra/"/>
+    <updated>2015-12-28T18:26:26+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/12/28/getting-started-with-cassandra</id>
+    <content type="html"><![CDATA[<h2>1. Installation</h2>
+
+<ul>
+<li>Ubuntu 14.04</li>
+<li>Java 8</li>
+<li>Apache Cassandra</li>
+</ul>
+
+
+<p>Java</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo add-apt-repository ppa:webupd8team/java
+</span><span class='line'><span class="nv">$ </span>sudo apt-get update
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install oracle-java8-installer
+</span><span class='line'><span class="nv">$ </span>java -version
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install oracle-java8-set-default
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Cassandra</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo vim /etc/apt/source.list.d/cassandra.list
+</span><span class='line'>
+</span><span class='line'><span class="c"># add source list</span>
+</span><span class='line'>deb http://www.apache.org/dist/cassandra/debian 21x main
+</span><span class='line'>deb-src http://www.apache.org/dist/cassandra/debian 21x main
+</span><span class='line'>
+</span><span class='line'><span class="c"># add public key</span>
+</span><span class='line'><span class="nv">$ </span>gpg --keyserver pgp.mit.edu --recv-keys F758CE318D77295D
+</span><span class='line'><span class="nv">$ </span>gpg --export --armor F758CE318D77295D <span class="p">|</span> sudo apt-key add -
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo apt-get update
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install cassandra
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>2. Configuration</h2>
+
+<p>config paths:</p>
+
+<ul>
+<li>data directories: /var/lib/cassandra</li>
+<li>log directory: /var/log/cassandra</li>
+<li>runtime files: /var/run/cassandra</li>
+<li>environment settings: /usr/share/cassandra</li>
+<li>JAR files: /usr/share/cassandra/lib</li>
+<li>binary files: /usr/bin</li>
+<li>/usr/sbin</li>
+<li>configuration files: /etc/cassandra</li>
+<li>service startup script: /etc/init.d</li>
+<li>cassandra user limits: /etc/security/limits.d</li>
+<li>/etc/default</li>
+</ul>
+
+
+<h2>3. Testing</h2>
+
+<p>running cassandra</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo cassandra
+</span><span class='line'><span class="nv">$ </span>sudo cassandra -f
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>cassandra-cli
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>running cql</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo cqlsh
+</span><span class='line'><span class="nv">$ </span>sudo cqlsh 127.0.0.1 9042
+</span><span class='line'>Connected to Test Cluster at 127.0.0.1:9042.
+</span><span class='line'><span class="o">[</span>cqlsh 5.0.1 <span class="p">|</span> Cassandra 2.1.12 <span class="p">|</span> CQL spec 3.2.1 <span class="p">|</span> Native protocol v3<span class="o">]</span>
+</span><span class='line'>Use HELP <span class="k">for</span> help.
+</span><span class='line'>
+</span><span class='line'>cqlsh&gt; CREATE KEYSPACE <span class="nb">test </span>WITH <span class="nv">REPLICATION</span> <span class="o">=</span> <span class="o">{</span> <span class="s1">&#39;class&#39;</span>: <span class="s1">&#39;SimpleStrategy&#39;</span>, <span class="s1">&#39;replication_factor&#39;</span>: <span class="m">1</span> <span class="o">}</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>cqlsh&gt; USE <span class="nb">test</span><span class="p">;</span>
+</span><span class='line'>cqlsh:test&gt; CREATE TABLE users <span class="o">(</span>
+</span><span class='line'>        ... user_id int PRIMARY KEY,
+</span><span class='line'>        ... fname text,
+</span><span class='line'>        ... lname text
+</span><span class='line'>        ... <span class="o">)</span><span class="p">;</span>
+</span><span class='line'>cqlsh:test&gt; INSERT INTO users <span class="o">(</span>user_id, fname, lname<span class="o">)</span> VALUES <span class="o">(</span>1722, <span class="s1">&#39;joe&#39;</span>, <span class="s1">&#39;lambert&#39;</span><span class="o">)</span><span class="p">;</span>
+</span><span class='line'>cqlsh:test&gt; INSERT INTO users <span class="o">(</span>user_id, fname, lname<span class="o">)</span> VALUES <span class="o">(</span>1832, <span class="s1">&#39;alice&#39;</span>, <span class="s1">&#39;parker&#39;</span><span class="o">)</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>cqlsh:test&gt; SELECT * FROM users<span class="p">;</span>
+</span><span class='line'>cqlsh:test&gt; CREATE INDEX ON users <span class="o">(</span>lname<span class="o">)</span><span class="p">;</span>
+</span><span class='line'>cqlsh:test&gt; SELECT * FROM users WHERE <span class="nv">lname</span> <span class="o">=</span> <span class="s1">&#39;smith&#39;</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Trouble Shooting</h2>
+
+<h3>CQL Connection refused</h3>
+
+<p>error message</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Connection error: <span class="o">(</span><span class="s1">&#39;Unable to connect to any servers&#39;</span>, <span class="o">{</span><span class="s1">&#39;127.0.0.1&#39;</span>: error<span class="o">(</span>111, <span class="s2">&quot;Tried connecting to [(&#39;127.0.0.1&#39;, 9042)]. Last error: Connection refused&quot;</span><span class="o">)})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>solution: update Java Version (Up to Java 8)</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Startups and International Companies]]></title>
@@ -1323,398 +1932,6 @@ but MAYBE they are in the page source.</p>
 
 <ul>
 <li><a href="https://github.com/edx/alton">alton</a></li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Docker Key Concepts]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/10/18/docker-key-concepts/"/>
-    <updated>2015-10-18T14:43:07+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/10/18/docker-key-concepts</id>
-    <content type="html"><![CDATA[<h2>1. Docker Host and Docker Client</h2>
-
-<h3>1.1. Linux</h3>
-
-<p><img src="https://docs.docker.com/installation/images/linux_docker_host.svg" /></p>
-
-<p>(image source: <a href="https://docs.docker.com/installation/mac/">Docker Official Site</a>)</p>
-
-<p>In a Docker installation on Linux, your physical machine is both the localhost and the Docker host.</p>
-
-<ul>
-<li>networking, (localhost) your computer, (docker host) the computer which the containers run</li>
-<li>(localhost) runs docker client, docker daemon, any containers</li>
-<li>(port) docker containers using standard <code>localhost</code> addressing such as <code>localhost:8000</code> or <code>0.0.0.0:8376</code></li>
-</ul>
-
-
-<h3>1.2. OS X</h3>
-
-<p><img src="https://docs.docker.com/installation/images/mac_docker_host.svg" /></p>
-
-<p>(image source: <a href="https://docs.docker.com/installation/mac/">Docker Official Site</a>)</p>
-
-<p>In an OS X installation, the docker daemon is running inside a Linux VM called i<code>default</code>.
-The <code>default</code> is a lightweight Linux VM made specifically to run the Docker daemon on Mac OS X.
-The VM runs completely from RAM, is a small ~24MB download, and boots in approximately 5s.</p>
-
-<p>In OS X, the Docker host address is the address of the Linux VM.</p>
-
-<ul>
-<li>OS X &lt;=> VM &lt;=> containers</li>
-<li>When you start the VM with docker-machine it is assigned an IP address.</li>
-<li>When you start a container, the ports on a container map to ports on the VM.</li>
-</ul>
-
-
-<h2>Docker vs Vagrant/VirtualBox + Git</h2>
-
-<table>
-<thead>
-<tr>
-<th style="text-align:left;"> Docker     </th>
-<th style="text-align:left;"> Vagrant         </th>
-<th style="text-align:left;"> VirtualBox  </th>
-<th style="text-align:left;"> Git   </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;"> Dockerfile </td>
-<td style="text-align:left;"> Vagrantfile     </td>
-<td style="text-align:left;">             </td>
-<td style="text-align:left;">       </td>
-</tr>
-<tr>
-<td style="text-align:left;"> image      </td>
-<td style="text-align:left;"> box             </td>
-<td style="text-align:left;">             </td>
-<td style="text-align:left;">       </td>
-</tr>
-<tr>
-<td style="text-align:left;"> container  </td>
-<td style="text-align:left;">                 </td>
-<td style="text-align:left;">             </td>
-<td style="text-align:left;">       </td>
-</tr>
-</tbody>
-</table>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Oil Paintings From Shanghai University]]></title>
-    <link href="http://k.arttechresearch.com/art/2015/10/18/oil-paintings-from-shanghai-university/"/>
-    <updated>2015-10-18T06:53:47+08:00</updated>
-    <id>http://k.arttechresearch.com/art/2015/10/18/oil-paintings-from-shanghai-university</id>
-    <content type="html"><![CDATA[<p>上海大学美术学院油画系作品展</p>
-
-<h2>展品1. 卫城</h2>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/originals/a5/69/33/a569335b66a08b569611fd577023359e.jpg" /></p>
-
-<p>此名字非原名，是看画的第一联想。从前景的深色调到后景的光，第一眼看到的是类似卫城的古老建筑
-和白色发光的男孩子（其实是女孩）。前景大面积的粗犷的背景烘托，到细化的男孩脸部和发光的城市，男孩到城市，
-以羽化作过渡，耐看是因为技法和遐想。</p>
-
-<h2>展品2. 人物</h2>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/16/5a/b5/165ab5f7f2991523d03072eae861cad0.jpg" /></p>
-
-<p>简炼的背景，人物的衣饰也是寥寥数笔，很容易把注意力放在了发光的帽子，是光影。</p>
-
-<h2>展品3. 静物</h2>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/d4/dd/06/d4dd06dfdfcc195b71da106baa82a86b.jpg" /></p>
-
-<p>重点是鱼，大面积的深色背景下，白色盘子里的鱼很显眼，依然是简炼粗犷的笔触，还有光影的捕捉，
-加上氛围的烘托。</p>
-
-<h2>展品4. 火车</h2>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/d6/f0/30/d6f0306c6ac5db5965919dfff15de442.jpg" /></p>
-
-<p>就像是为了纪念一辆老式的火车，精致，有如工业绘制图，车前部分的真充和车身保留的线稿，
-这样故意而为之的做法，更增添了工业绘图的印象和画面精致的感觉。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Generating TOC With Javascript for Octopress]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/10/17/generating-toc-with-javascript-for-octopress/"/>
-    <updated>2015-10-17T12:37:04+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/10/17/generating-toc-with-javascript-for-octopress</id>
-    <content type="html"><![CDATA[<p>Features:</p>
-
-<ul>
-<li>genearting a table of contents in a article</li>
-<li>user can set toc if true/false</li>
-</ul>
-
-
-<p>Devkits:</p>
-
-<ul>
-<li>javascript</li>
-<li>html</li>
-<li>sass</li>
-</ul>
-
-
-<h2>1. HTML</h2>
-
-<h3>1.1. toc_generator.html</h3>
-
-<p>octopress/source/_includes/toc_generator.html</p>
-
-<figure class='code'><figcaption><span>toc_generator.html</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'>{\% if index %\}
-</span><span class='line'>  {\% comment %\}
-</span><span class='line'>    No table of contents on the index page.
-</span><span class='line'>  {\% endcomment %\}
-</span><span class='line'>
-</span><span class='line'>{\% elsif page.toc == true %\}
-</span><span class='line'>  <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>  <span class="nx">jQuery</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="c1">// Put a TOC right before the entry content.</span>
-</span><span class='line'>    <span class="nx">generateTOC</span><span class="p">(</span><span class="s1">&#39;.entry-content&#39;</span><span class="p">,</span> <span class="s1">&#39;Table of Contents&#39;</span><span class="p">);</span>
-</span><span class='line'>  <span class="p">});</span>
-</span><span class='line'>  <span class="nt">&lt;/script&gt;</span>
-</span><span class='line'>{\% endif %\}
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>1.2. article.html</h3>
-
-<p>Include <code>toc_generator.html</code> at the end of <code>article.html</code></p>
-
-<figure class='code'><figcaption><span>article.html</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'>...
-</span><span class='line'>
-</span><span class='line'>{\% include toc_generator.html %\}
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>2. Javascript</h2>
-
-<h3>2.1. update the libraries</h3>
-
-<p>octopress/source/_includes/head.html</p>
-
-<figure class='code'><figcaption><span>head.html</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.9.1.min.js&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;{\{ root_url }\}/javascripts/jquery.tableofcontents.min.js&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;{\{ root_url }\}/javascripts/toc_generator.js&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>2.2. jquery.tableofcontents.min.js</h3>
-
-<p>Go to <a href="http://fuelyourcoding.com/scripts/toc/">TOC jQuery Plugin</a>,
-download the library, and copy <code>jquery.tableofcontents.min.js</code> to <code>octopress/source/javascript/</code>.</p>
-
-<h3>2.3. toc_generator.js</h3>
-
-<p>octopress/source/javascript/toc_generator.js</p>
-
-<figure class='code'><figcaption><span>toc_generator.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">generateTOC</span><span class="p">(</span><span class="nx">insertBefore</span><span class="p">,</span> <span class="nx">heading</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">container</span> <span class="o">=</span> <span class="nx">jQuery</span><span class="p">(</span><span class="s2">&quot;&lt;div id=&#39;tocBlock&#39;&gt;&lt;/div&gt;&quot;</span><span class="p">);</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">div</span> <span class="o">=</span> <span class="nx">jQuery</span><span class="p">(</span><span class="s2">&quot;&lt;ul id=&#39;toc&#39;&gt;&lt;/ul&gt;&quot;</span><span class="p">);</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">content</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">insertBefore</span><span class="p">).</span><span class="nx">first</span><span class="p">();</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="nx">heading</span> <span class="o">!=</span> <span class="kc">undefined</span> <span class="o">&amp;&amp;</span> <span class="nx">heading</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nx">container</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;&lt;span class=&quot;tocHeading&quot;&gt;&#39;</span> <span class="o">+</span> <span class="nx">heading</span> <span class="o">+</span> <span class="s1">&#39;&lt;/span&gt;&#39;</span><span class="p">);</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nx">div</span><span class="p">.</span><span class="nx">tableOfContents</span><span class="p">(</span><span class="nx">content</span><span class="p">);</span>
-</span><span class='line'>  <span class="nx">container</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="nx">div</span><span class="p">);</span>
-</span><span class='line'>  <span class="nx">container</span><span class="p">.</span><span class="nx">insertBefore</span><span class="p">(</span><span class="nx">insertBefore</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>3. SASS</h2>
-
-<h3>3.1. _utilities.scss</h3>
-
-<p>octopress/sass/base/_utilities.scss</p>
-
-<figure class='code'><figcaption><span>_utilities.scss</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="k">@mixin</span> <span class="nt">rounded-border</span><span class="o">($</span><span class="nt">radius</span><span class="o">:</span> <span class="nt">10px</span><span class="o">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nt">border-radius</span><span class="o">:</span> <span class="o">$</span><span class="nt">radius</span><span class="o">;</span>
-</span><span class='line'>    <span class="nt">-moz-border-radius</span><span class="o">:</span> <span class="o">$</span><span class="nt">radius</span><span class="o">;</span>
-</span><span class='line'>   <span class="nt">padding</span><span class="o">:</span> <span class="o">$</span><span class="nt">radius</span><span class="o">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">@mixin</span> <span class="nt">centered</span><span class="o">($</span><span class="nt">width</span><span class="o">:</span> <span class="nt">auto</span><span class="o">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nt">width</span><span class="o">:</span> <span class="o">$</span><span class="nt">width</span> <span class="o">!</span><span class="nt">important</span><span class="o">;</span>
-</span><span class='line'>    <span class="nt">margin-left</span><span class="o">:</span> <span class="nt">auto</span> <span class="o">!</span><span class="nt">important</span><span class="o">;</span>
-</span><span class='line'>    <span class="nt">margin-right</span><span class="o">:</span> <span class="nt">auto</span> <span class="o">!</span><span class="nt">important</span><span class="o">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">@mixin</span> <span class="nt">drop-shadow-right-bottom</span><span class="o">($</span><span class="nt">width</span><span class="o">:</span> <span class="nt">5px</span><span class="o">,</span> <span class="o">$</span><span class="nt">color</span><span class="o">:</span> <span class="nf">#999</span><span class="o">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nt">box-shadow</span><span class="o">:</span> <span class="o">$</span><span class="nt">width</span> <span class="o">$</span><span class="nt">width</span> <span class="o">$</span><span class="nt">width</span> <span class="o">$</span><span class="nt">color</span><span class="o">;</span>
-</span><span class='line'>    <span class="nt">-moz-box-shadow</span><span class="o">:</span> <span class="o">$</span><span class="nt">width</span> <span class="o">$</span><span class="nt">width</span> <span class="o">$</span><span class="nt">width</span> <span class="o">$</span><span class="nt">color</span><span class="o">;</span>
-</span><span class='line'>    <span class="nt">-webkit-box-shadow</span><span class="o">:</span> <span class="o">$</span><span class="nt">width</span> <span class="o">$</span><span class="nt">width</span> <span class="o">$</span><span class="nt">width</span> <span class="o">$</span><span class="nt">color</span><span class="o">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>3.2. _toc_generator.scss</h3>
-
-<p>ocotpress/sass/partials/_toc_generator.scss</p>
-
-<figure class='code'><figcaption><span>_toc_generator.scss</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="nt">bg</span><span class="o">:</span> <span class="nf">#e8e8e8</span><span class="o">;</span>
-</span><span class='line'><span class="o">$</span><span class="nt">toc-incr</span><span class="o">:</span> <span class="nt">5px</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">div</span><span class="nf">#tocBlock</span> <span class="p">{</span>
-</span><span class='line'>    <span class="o">@</span><span class="n">include</span> <span class="n">drop</span><span class="o">-</span><span class="n">shadow</span><span class="o">-</span><span class="k">right</span><span class="o">-</span><span class="k">bottom</span><span class="p">(</span><span class="m">5px</span><span class="o">,</span> <span class="m">#999</span><span class="p">);</span>
-</span><span class='line'>    <span class="o">@</span><span class="n">include</span> <span class="n">rounded</span><span class="o">-</span><span class="k">border</span><span class="p">(</span><span class="m">10px</span><span class="p">);</span>
-</span><span class='line'>    <span class="k">float</span><span class="o">:</span> <span class="k">right</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">font-size</span><span class="o">:</span> <span class="m">10pt</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">width</span><span class="o">:</span> <span class="m">300px</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">padding-left</span><span class="o">:</span> <span class="m">20px</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">padding-right</span><span class="o">:</span> <span class="m">10px</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">padding-top</span><span class="o">:</span> <span class="m">10px</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">padding-bottom</span><span class="o">:</span> <span class="m">0px</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">background</span><span class="o">:</span> <span class="err">$</span><span class="n">toc</span><span class="o">-</span><span class="n">bg</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">border</span><span class="o">:</span> <span class="k">solid</span> <span class="m">1px</span> <span class="m">#ccc</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">margin</span><span class="o">:</span> <span class="m">0</span> <span class="m">0</span> <span class="m">10px</span> <span class="m">15px</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="o">.</span><span class="n">tocHeading</span> <span class="err">{</span>
-</span><span class='line'>  <span class="k">font-weight</span><span class="o">:</span> <span class="k">bold</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">font-size</span><span class="o">:</span> <span class="m">125%</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nt">ul</span> <span class="p">{</span> <span class="k">list-style</span><span class="o">:</span> <span class="k">none</span><span class="p">;</span> <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nf">#toc</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">background</span><span class="o">:</span> <span class="err">$</span><span class="n">toc</span><span class="o">-</span><span class="n">bg</span><span class="p">;</span>
-</span><span class='line'>  <span class="n">ul</span> <span class="err">{</span>
-</span><span class='line'>      <span class="n">li</span> <span class="err">{</span>
-</span><span class='line'>      <span class="k">margin-left</span><span class="o">:</span> <span class="err">$</span><span class="n">toc</span><span class="o">-</span><span class="n">incr</span> <span class="cp">!important</span><span class="p">;</span>
-</span><span class='line'>      <span class="k">padding</span><span class="o">:</span> <span class="m">0</span> <span class="cp">!important</span><span class="p">;</span>
-</span><span class='line'>      <span class="k">list-style</span><span class="o">:</span> <span class="k">disc</span><span class="p">;</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>  <span class="err">}</span>
-</span><span class='line'>    <span class="err">}</span>
-</span><span class='line'><span class="err">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>3.3. _partials.scss</h3>
-
-<p>octopress/sass/_particials.scss</p>
-
-<figure class='code'><figcaption><span>_particials.scss</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="k">@import</span> <span class="s2">&quot;partials/toc_generator&quot;</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>4. Rakefile</h2>
-
-<p><code>octopress/Rakefile</code>: update the head variable for <code>new_post_tech</code>, <code>new_post_art</code> and <code>new_post_life</code>.</p>
-
-<figure class='code'><figcaption><span>Rakefile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">post</span><span class="o">.</span><span class="n">puts</span> <span class="s2">&quot;toc: false&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>5. Testing</h2>
-
-<p><code>rake new_post_tech['post_name']</code>, check the header if <code>toc: false</code> exists.</p>
-
-<p>If <code>toc: true</code>, the table of contents will be generated, if <code>toc:false</code>, no table of contents.</p>
-
-<h2>Reference</h2>
-
-<ul>
-<li><a href="http://brizzled.clapper.org/blog/2012/02/04/generating-a-table-of-contents-in-octopress/">Generating a table of contents in Octopress</a></li>
 </ul>
 
 ]]></content>

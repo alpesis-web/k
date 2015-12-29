@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://k.arttechresearch.com/tech/2015/12/29/installing-logstack-elasticsearch-kibana-on-ubuntu/</loc>
+    <lastmod>2015-12-29T14:52:55+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2015/12/28/setting-up-opennao-with-virtualbox/</loc>
+    <lastmod>2015-12-28T22:44:11+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2015/12/28/getting-started-with-cassandra/</loc>
+    <lastmod>2015-12-28T18:26:26+08:00</lastmod>
+  </url>
+  <url>
     <loc>http://k.arttechresearch.com/life/2015/12/27/startups-and-international-companies/</loc>
     <lastmod>2015-12-27T21:25:06+08:00</lastmod>
   </url>
@@ -1009,6 +1021,27 @@
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/tech-talks/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/cassandra/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/nao/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/elasticsearch/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/filebeat/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/kibana/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/logstack/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/openssl/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/posts/2/</loc>
