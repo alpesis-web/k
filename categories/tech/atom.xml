@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tech | K]]></title>
   <link href="http://k.arttechresearch.com/categories/tech/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2015-12-30T13:44:25+08:00</updated>
+  <updated>2015-12-30T23:02:30+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[K]]></name>
@@ -12,6 +12,134 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Web APIs]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/12/30/web-apis/"/>
+    <updated>2015-12-30T16:21:13+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/12/30/web-apis</id>
+    <content type="html"><![CDATA[<h2>Definition</h2>
+
+<p>Web API is a set of Hypertext Transfer Protocol (HTTP) request mesages along with the structure of reponse messages (XML or JSON format).</p>
+
+<p>Types:</p>
+
+<ul>
+<li>Simple Object Access Protocol (SOAP)</li>
+<li>REpresentational State Transfer (REST)</li>
+</ul>
+
+
+<h2>SOAP</h2>
+
+<p>SOAP is a protocol specification for exchanging structured inforamtion of web service (XML based) by Hypertext Transfer Protocol (HTTP) or Simple Mail Transfer Protocol (SMTP).</p>
+
+<h2>REST</h2>
+
+<h3>Definition</h3>
+
+<p>REST was definied by Roy Thomas Fieldiing in his 2000 PhD dissertation <a href="http://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm">&ldquo;Architectural Styles and the Design of Network-based Software Architectures&rdquo;</a>.</p>
+
+<p>Referring to Wikipedia, <a href="https://en.wikipedia.org/wiki/Representational_state_transfer">REST</a> communicates over Hypertext Transfer Protocal (HTTP) with the same HTTP verbs (GET, POST, PUT, DELETE, etc.) that web browsers user to retrieve web pages and to send data to remote servers.</p>
+
+<p>REST architectural style</p>
+
+<ul>
+<li>Performance</li>
+<li>Scalability</li>
+<li>Simplicity of interfaces</li>
+<li>Modifiability of components to meet changing needs (even while the application is running)</li>
+<li>Visibility of communication between components by service agents</li>
+<li>Portability of components by moving program code with the data</li>
+<li>Reliability is the resistance to failure at the system level in the presence of failures within components, connectors, or data</li>
+</ul>
+
+
+<h3>RESTful APIs</h3>
+
+<p>elements</p>
+
+<ul>
+<li>URI</li>
+<li>JSON data</li>
+<li>HTTP methods: GET, POST, PUT, DELETE, etc</li>
+</ul>
+
+
+<p>design rules</p>
+
+<ul>
+<li>client-server: there should be a sepration between the server that offers a service, and the client that consumes it.</li>
+<li>stateless: each requests from a client must contain all the inforamtion required by the server to carry out the request.</li>
+<li>cacheable: the server must indicate to the client if requests can be cached or not.</li>
+<li>layered system: communication between a client and a server should be standarized in such a way that allows intermediaries to respond to requests instead of the end server, without the client having to do anything different.</li>
+<li>code on demand: servers can provide executable code or scripts for clients to execute in their context.</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Framework vs Library]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/12/30/framework-vs-library/"/>
+    <updated>2015-12-30T15:11:22+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/12/30/framework-vs-library</id>
+    <content type="html"><![CDATA[<p><img src="https://s-media-cache-ak0.pinimg.com/474x/fe/4e/3b/fe4e3b8680d390b80d9bf64976af1b0a.jpg" /></p>
+
+<p>image source: <a href="http://tom.lokhorst.eu/2010/09/why-libraries-are-better-than-frameworks">http://tom.lokhorst.eu/2010/09/why-libraries-are-better-than-frameworks</a></p>
+
+<h2>Framework</h2>
+
+<p>Referring to the Wikipedia, <a href="https://en.wikipedia.org/wiki/Software_framework">framework</a> is</p>
+
+<ul>
+<li>an abstraction of providing generic functionality which can be rewritten by users</li>
+<li>a universal, resuable software environment that provides particular functionality</li>
+<li>including support programs, compilers, code libraries, tool sets and APIs, etc</li>
+</ul>
+
+
+<p>4 Features</p>
+
+<ul>
+<li>inversion of control</li>
+<li>default behavior</li>
+<li>extensibility</li>
+<li>non-modifiable framwork code</li>
+</ul>
+
+
+<h2>Library</h2>
+
+<p>Referring to the Wikipedia, <a href="https://en.wikipedia.org/wiki/Library_(computing)">library</a> is</p>
+
+<ul>
+<li>a collection of non-volatile resources used by computer programs</li>
+<li>a collection of implementation of behavior, written in terms of a language with well-defined interface by which the behavir is invoked</li>
+<li>including configration data, documentation, help data, message templates, pre-written code and
+sub routines, classes, values or type specifications</li>
+</ul>
+
+
+<p>Types</p>
+
+<ul>
+<li>static libraries</li>
+<li>shared libraries
+
+<ul>
+<li>memory sharing</li>
+<li>dynamic linking</li>
+<li>optimizations</li>
+<li>dynamic loading</li>
+</ul>
+</li>
+<li>remote libraries</li>
+<li>code generation libraries</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Installing Logstack ElasticSearch Kibana on Ubuntu]]></title>
@@ -429,237 +557,6 @@ cqlsh:test&gt; SELECT * FROM users WHERE lname = 'smith';
 </code></pre>
 
 <p>solution: update Java Version (Up to Java 8)</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Machine Learning From Facebook Tech Talk]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/12/13/machine-learning-from-facebook-tech-talk/"/>
-    <updated>2015-12-13T22:39:48+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/12/13/machine-learning-from-facebook-tech-talk</id>
-    <content type="html"><![CDATA[<p>There were three topics about machine learning on Facebook Tech Talk 2015 (Shanghai).</p>
-
-<ul>
-<li>Ads Click</li>
-<li>Friend Recommendation</li>
-<li>Content Feeds</li>
-</ul>
-
-
-<p>Login Facebook, and go to the user dashboard, content feeds are in the middle, friend
-recommendataion is located at the right sidebar (top right), ads click is located at
-the right sidebar (behind the friend recommendation)</p>
-
-<pre><code>    |------------------------------------------------------------------|
-    |             |                                  |                 |
-    |             |                                  |                 |
-    |             | content feeds                    | friends         |
-    |             |                                  | ads             |
-    |             |                                  |                 |
-    |------------------------------------------------------------------|
-</code></pre>
-
-<h2>1. Ads Click</h2>
-
-<p>NOTE:</p>
-
-<p>If you play a song on piano, some phrases might be easy to play, some might be hard, then
- you have to practice the hard parts again and again, memorizing the techniques by hands.</p>
-
-<p>For machine learning, somelike as the same. One algorith might be fitted for some data,
-some might be not, for improving the accurency, you&rsquo;d better apply other algorithms which
-are fit these kinds of the dataset to the incorrect outputs, retrain the data again and
-again.</p>
-
-<h3>Overview</h3>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/9f/87/62/9f87621c1ed63452776097be842713de.jpg" /></p>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/474x/5f/64/13/5f641372540309676f956a4771034e24.jpg" /></p>
-
-<h3>Layer 1</h3>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/474x/d2/73/ad/d273adf93b99c3b0813584976a77f8ce.jpg" /></p>
-
-<h3>Layer 2</h3>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/8d/5d/4f/8d5d4fa8dc863fa4d226c36b91a07bc7.jpg" /></p>
-
-<h3>Model</h3>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/474x/67/4e/26/674e268a17b893d14ac2a2a3d8b507c6.jpg" /></p>
-
-<h3>Outputs</h3>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/474x/f4/b8/7c/f4b87c2a0afda71f33786bfc06bb186b.jpg" /></p>
-
-<p>When a user views the ads once, he/she might not click these ads, but he/she might click
-the ads a few minutes later, then we&rsquo;d better show the ads to the user by time ranges (
-such as 15 minutes later, 1 hour laster etc), that&rsquo;s why we use the queue.</p>
-
-<h3>Evaluation</h3>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/474x/1e/64/a2/1e64a2626be15098c6d7aa13643cc05b.jpg" /></p>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/474x/3c/ba/02/3cba02e1a2b4d9548c974d86980f94dc.jpg" /></p>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/474x/fb/5e/6d/fb5e6d541ea0e57a4f303b1ade61ce5c.jpg" /></p>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/474x/99/69/35/996935ee6fa3a20152453c9c0d20a755.jpg" /></p>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/474x/0e/68/60/0e6860c4634db9ff38097662332d00c7.jpg" /></p>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/474x/1b/e7/5b/1be75bf3f92ab17af4a73b0398b2f7a1.jpg" /></p>
-
-<h2>2. Friend Recommendation</h2>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/474x/9e/ec/14/9eec1418e533540b4ec5d64a14f1a137.jpg" /></p>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/474x/fc/75/b7/fc75b7ce4dd488307eae141995f21db4.jpg" /></p>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/474x/c0/3b/be/c03bbe0c49f67684b094ddbf5244c02b.jpg" /></p>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/c4/ee/a9/c4eea9ff648979eb05650e0288458c61.jpg" /></p>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/474x/69/9e/11/699e1119bc29df039a907fcb3e58a00f.jpg" /></p>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/474x/cc/fc/ce/ccfcce6747a28857f567caa0dd8d1bf5.jpg" /></p>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/474x/26/f6/45/26f6453e61da588965960e78c9260fd1.jpg" /></p>
-
-<h2>3. Content Feeds</h2>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/474x/76/67/70/7667706db9c43f7cbe5f672b75daee03.jpg" /></p>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/474x/0d/83/b9/0d83b9c9cd86bcfde10ff208efcadb79.jpg" /></p>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/474x/38/dc/72/38dc72e03b726c3025d3dfcb37725d9f.jpg" /></p>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/474x/4f/22/e9/4f22e9f3d21b05c84d634e3a7dd113d9.jpg" /></p>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/474x/0b/38/82/0b3882c2b3c956bb8ccf8ff343e2d88a.jpg" /></p>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/474x/04/38/4e/04384edef1d3726b9b2ea4debd3a3012.jpg" /></p>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/474x/c0/f9/e5/c0f9e5c432913bbfd310e7f4c9ea6a87.jpg" /></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Connecting to MSSQL Using FreeTDS / ODBC in Python]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/11/15/connecting-to-mssql-using-freetds-slash-odbc-in-python/"/>
-    <updated>2015-11-15T21:23:21+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/11/15/connecting-to-mssql-using-freetds-slash-odbc-in-python</id>
-    <content type="html"><![CDATA[<h2>Prequisitions</h2>
-
-<ul>
-<li>OS: Debian 7.8</li>
-<li>Dependencies: freetds-dev, freetd-bin, unixodbc-dev, tdsodbc</li>
-<li>Python packages: pyodbc, sqlalchemy</li>
-</ul>
-
-
-<h2>Steps</h2>
-
-<p>Installing the dependencies</p>
-
-<pre><code class="bash">$ sudo apt-get install freetds-dev freetds-bin unixodbc-dev tdsodbc
-$ pip install pyodbc sqlalchemy
-</code></pre>
-
-<p>Configuring <code>/etc/odbcinst.ini</code></p>
-
-<pre><code class="bash /etc/odbcinst.ini">[FreeTDS]
-Description     = TDS driver (Sybase/MS SQL)
-Driver          = /usr/lib/x86_64-linux-gnu/odbc/libtdsodbc.so
-Setup           = /usr/lib/x86_64-linux-gnu/odbc/libtdsS.so
-CPTimeout       =
-CPReuse         =
-UsageCount      = 1
-</code></pre>
-
-<p>Configuring <code>/etc/freetds/freetds.conf</code></p>
-
-<pre><code class="bash /etc/freetds/freetds.conf">[global]
-    port = 1433
-    tds version = 7.0
-</code></pre>
-
-<p>Testing</p>
-
-<pre><code class="bash">$ tsql -H host_name -p 3688 -U user_name
-</code></pre>
-
-<h3>example: pyodbc</h3>
-
-<pre><code class="python">import pyodbc
-
-
-def connect_db(HOST, DATABASE, UID, PWD, TDS_Version):
-
-    connection = pyodbc.connect('DRIVER=FreeTDS; \
-                             SERVER=HOST; \
-                             PORT=1433; \
-                             DATABASE=DATABASE; \
-                             UID=UID; \
-                             PWD=PWD; \
-                             TDS_Version=8.0;')
-
-    cursor = connection.cursor()
-    return cursor
-
-def query_data(cursor, query):
-
-    for row in cursor.execute(query):
-        print row
-
-if __name__ = '__main__':
-
-    HOST = ''                         # server
-    DATABASE = ''                     # database_name
-    UID = ''                          # user_name
-    PWD = ''                          # password
-    TDS_Version = ''                  # TDS_Version
-
-    cursor = connect_db(HOST, DATABASE, UID, PWD, TDS_Version)
-    query_data(cursor, 'select 6 * 7 as [Result];')
-</code></pre>
-
-<h3>example: sqlalchemy</h3>
-
-<pre><code class="python">
-import urllib
-from sqlalchemy import create_engine
-
-def connect_db(HOST, DATABASE, UID, PWD, TDS_Version):
-
-    db_settings = 'DRIVER=FreeTDS; \
-                   SERVER=%s; \
-                   PORT=1433; \
-                   DATABASE=%s; \
-                   UID=%s; \
-                   PWD=%s; \
-                   TDS_Version=%s'.format(HOST, DATABASE, UID, PWD, TDS_Version)
-    engine = create_engine('mssql+pyodbc:///?odbc_connect' + urllib.quote_plus(db_settings))
-
-    return engine
-
-def query_db(engine, query):
-
-    for row in engine.excute(query):
-        print row
-
-if __name__ = '__main__':
-
-    HOST = ''                         # server
-    DATABASE = ''                     # database_name
-    UID = ''                          # user_name
-    PWD = ''                          # password
-    TDS_Version = ''                  # TDS_Version
-
-    engine = connect_db(HOST, DATABASE, UID, PWD, TDS_Version)
-    query_data(engine, 'select 6 * 7 as [Result];')
-</code></pre>
 ]]></content>
   </entry>
   

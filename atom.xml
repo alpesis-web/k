@@ -4,7 +4,7 @@
   <title><![CDATA[K]]></title>
   <link href="http://k.arttechresearch.com/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2015-12-30T13:44:25+08:00</updated>
+  <updated>2015-12-30T23:02:30+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[K]]></name>
@@ -12,6 +12,134 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Web APIs]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/12/30/web-apis/"/>
+    <updated>2015-12-30T16:21:13+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/12/30/web-apis</id>
+    <content type="html"><![CDATA[<h2>Definition</h2>
+
+<p>Web API is a set of Hypertext Transfer Protocol (HTTP) request mesages along with the structure of reponse messages (XML or JSON format).</p>
+
+<p>Types:</p>
+
+<ul>
+<li>Simple Object Access Protocol (SOAP)</li>
+<li>REpresentational State Transfer (REST)</li>
+</ul>
+
+
+<h2>SOAP</h2>
+
+<p>SOAP is a protocol specification for exchanging structured inforamtion of web service (XML based) by Hypertext Transfer Protocol (HTTP) or Simple Mail Transfer Protocol (SMTP).</p>
+
+<h2>REST</h2>
+
+<h3>Definition</h3>
+
+<p>REST was definied by Roy Thomas Fieldiing in his 2000 PhD dissertation <a href="http://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm">&ldquo;Architectural Styles and the Design of Network-based Software Architectures&rdquo;</a>.</p>
+
+<p>Referring to Wikipedia, <a href="https://en.wikipedia.org/wiki/Representational_state_transfer">REST</a> communicates over Hypertext Transfer Protocal (HTTP) with the same HTTP verbs (GET, POST, PUT, DELETE, etc.) that web browsers user to retrieve web pages and to send data to remote servers.</p>
+
+<p>REST architectural style</p>
+
+<ul>
+<li>Performance</li>
+<li>Scalability</li>
+<li>Simplicity of interfaces</li>
+<li>Modifiability of components to meet changing needs (even while the application is running)</li>
+<li>Visibility of communication between components by service agents</li>
+<li>Portability of components by moving program code with the data</li>
+<li>Reliability is the resistance to failure at the system level in the presence of failures within components, connectors, or data</li>
+</ul>
+
+
+<h3>RESTful APIs</h3>
+
+<p>elements</p>
+
+<ul>
+<li>URI</li>
+<li>JSON data</li>
+<li>HTTP methods: GET, POST, PUT, DELETE, etc</li>
+</ul>
+
+
+<p>design rules</p>
+
+<ul>
+<li>client-server: there should be a sepration between the server that offers a service, and the client that consumes it.</li>
+<li>stateless: each requests from a client must contain all the inforamtion required by the server to carry out the request.</li>
+<li>cacheable: the server must indicate to the client if requests can be cached or not.</li>
+<li>layered system: communication between a client and a server should be standarized in such a way that allows intermediaries to respond to requests instead of the end server, without the client having to do anything different.</li>
+<li>code on demand: servers can provide executable code or scripts for clients to execute in their context.</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Framework vs Library]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/12/30/framework-vs-library/"/>
+    <updated>2015-12-30T15:11:22+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/12/30/framework-vs-library</id>
+    <content type="html"><![CDATA[<p><img src="https://s-media-cache-ak0.pinimg.com/474x/fe/4e/3b/fe4e3b8680d390b80d9bf64976af1b0a.jpg" /></p>
+
+<p>image source: <a href="http://tom.lokhorst.eu/2010/09/why-libraries-are-better-than-frameworks">http://tom.lokhorst.eu/2010/09/why-libraries-are-better-than-frameworks</a></p>
+
+<h2>Framework</h2>
+
+<p>Referring to the Wikipedia, <a href="https://en.wikipedia.org/wiki/Software_framework">framework</a> is</p>
+
+<ul>
+<li>an abstraction of providing generic functionality which can be rewritten by users</li>
+<li>a universal, resuable software environment that provides particular functionality</li>
+<li>including support programs, compilers, code libraries, tool sets and APIs, etc</li>
+</ul>
+
+
+<p>4 Features</p>
+
+<ul>
+<li>inversion of control</li>
+<li>default behavior</li>
+<li>extensibility</li>
+<li>non-modifiable framwork code</li>
+</ul>
+
+
+<h2>Library</h2>
+
+<p>Referring to the Wikipedia, <a href="https://en.wikipedia.org/wiki/Library_(computing)">library</a> is</p>
+
+<ul>
+<li>a collection of non-volatile resources used by computer programs</li>
+<li>a collection of implementation of behavior, written in terms of a language with well-defined interface by which the behavir is invoked</li>
+<li>including configration data, documentation, help data, message templates, pre-written code and
+sub routines, classes, values or type specifications</li>
+</ul>
+
+
+<p>Types</p>
+
+<ul>
+<li>static libraries</li>
+<li>shared libraries
+
+<ul>
+<li>memory sharing</li>
+<li>dynamic linking</li>
+<li>optimizations</li>
+<li>dynamic loading</li>
+</ul>
+</li>
+<li>remote libraries</li>
+<li>code generation libraries</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Installing Logstack ElasticSearch Kibana on Ubuntu]]></title>
@@ -1771,188 +1899,6 @@ but MAYBE they are in the page source.</p>
 
 <ul>
 <li><a href="https://www.npmjs.com/package/markdown-pdf">markdown-pdf</a></li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Summary on edX Devkits]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/10/19/summary-on-edx-devkits/"/>
-    <updated>2015-10-19T14:13:04+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/10/19/summary-on-edx-devkits</id>
-    <content type="html"><![CDATA[<ul>
-<li>edX Platform</li>
-<li>edX Analytics</li>
-<li>edX Certificates</li>
-<li>edX eCommerce</li>
-<li>edX Mobiles</li>
-<li>edX Ansible</li>
-<li>Devkits</li>
-</ul>
-
-
-<h2>1. edX Platform</h2>
-
-<p>sub-projects</p>
-
-<ul>
-<li>edx-platform</li>
-<li>forum / cs_comments_service</li>
-<li>hipchat</li>
-<li>ora</li>
-<li>xblock</li>
-</ul>
-
-
-<p>toolkits</p>
-
-<ul>
-<li>backend: Python/Django, Ruby</li>
-<li>frontend: Node.js</li>
-</ul>
-
-
-<p>techniques</p>
-
-<ul>
-<li>OAuth2.0</li>
-<li>RESTful API</li>
-<li>ElasticSearch</li>
-</ul>
-
-
-<h2>2. edX Analytics</h2>
-
-<p>sub-projects</p>
-
-<ul>
-<li>edx-analytics-pipeline</li>
-<li>edx-analytics-data-api</li>
-<li>edx-analytics-data-api-client</li>
-<li>edx-analytics-dashboard</li>
-</ul>
-
-
-<p>toolkits:</p>
-
-<ul>
-<li>backend: Python/Django</li>
-<li>frontend: Node.js</li>
-</ul>
-
-
-<p>techniques</p>
-
-<ul>
-<li>Hadoop</li>
-<li>HDFS</li>
-<li>MapReduce / Yarn</li>
-<li>Hive</li>
-<li>Sqoop</li>
-<li>Python/Luigi</li>
-</ul>
-
-
-<h2>3. edX Certificates</h2>
-
-<p>sub-projects</p>
-
-<ul>
-<li>edx-certs</li>
-<li>xqueue</li>
-<li>xqwatcher</li>
-<li>xqwatcher-client</li>
-</ul>
-
-
-<p>toolkits</p>
-
-<ul>
-<li>backend: Python/Django</li>
-<li>frontend: Node.js</li>
-</ul>
-
-
-<p>techniques</p>
-
-<ul>
-<li>RabbitMQ</li>
-</ul>
-
-
-<h2>4. edX eCommerce</h2>
-
-<h2>5. edX Mobiles</h2>
-
-<ul>
-<li>ios</li>
-<li>android</li>
-</ul>
-
-
-<h2>6. edX Ansible</h2>
-
-<ul>
-<li>ansible</li>
-<li>openstack / aws</li>
-</ul>
-
-
-<h2>Devkits</h2>
-
-<ul>
-<li>IDE: PyCharm</li>
-<li>DBs: MySQL, MongoDB</li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Setup the Devstack for edX Alton]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/10/18/setup-the-devstack-for-edx-alton/"/>
-    <updated>2015-10-18T16:24:54+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/10/18/setup-the-devstack-for-edx-alton</id>
-    <content type="html"><![CDATA[<h2>Prequisitions</h2>
-
-<ul>
-<li>Ubuntu 14.04</li>
-<li>Docker</li>
-<li>Git</li>
-</ul>
-
-
-<h2>1. Installation</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /path/to/project
-</span><span class='line'><span class="nv">$ </span>git clone https://github.com/edx/alton.git
-</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>althon
-</span><span class='line'><span class="nv">$ </span>sudo docker build -t alton .
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Once done, check the image with <code>docker images</code></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>vagrant@vagrant-ubuntu-trusty-64:/tmp/alton<span class="nv">$ </span>sudo docker images
-</span><span class='line'>REPOSITORY          TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
-</span><span class='line'>alton               latest              367fc778d527        <span class="m">29</span> seconds ago      1.084 GB
-</span><span class='line'>python              2.7.7               a87a2288ce78        <span class="m">15</span> months ago       1.043 GB
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>References</h2>
-
-<ul>
-<li><a href="https://github.com/edx/alton">alton</a></li>
 </ul>
 
 ]]></content>
