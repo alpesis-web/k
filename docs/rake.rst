@@ -68,3 +68,16 @@ Deploy
     $ rake deploy
 
     $ echo "domain_name" >> source/CNAME
+
+if confict, just remove the folder ``_deploy``, and ``git pull origin gh-pages`` again.
+
+::
+
+    $ rm -rf _deploy
+    $ mkdir _deploy
+    $ git init
+    $ git remote add origin https://xxxx
+    $ git remote -v
+    $ git pull origin gh-pages
+    $ cd ..
+    $ rake deploy
