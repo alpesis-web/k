@@ -4,7 +4,7 @@ title: "Installing Logstack ElasticSearch Kibana on Ubuntu"
 date: 2015-12-29 14:52:55 +0800
 comments: true
 categories: [tech]
-tags: [logstack, elasticsearch, kibana, nginx, openssl, filebeat]
+tags: [logstack, elasticsearch, kibana, nginx, ssl, filebeat]
 toc: true
 ---
 
@@ -18,11 +18,15 @@ toc: true
 
 ## Process
 
+Applications:
+
 - filebeat: ship logs
 - logstack: process and index logs
 - elasticsearch: store logs
 - kibana: search and visualize logs
 - nginx: reverse proxy
+
+Process:
 
 ```
 App Server - filebeat -|
@@ -50,6 +54,8 @@ $ sudo apt-get -y install oracle-java8-installer
 
 ## ElasticSearch
 
+### Install ElasticSearch
+
 ```bash
 $ wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
 $ echo "deb http://packages.elastic.co/elasticsearch/2.x/debian stable main" | sudo tee -a /etc/apt/sources.list.d/elasticsearch-2.x.list
@@ -58,12 +64,27 @@ $ sudo apt-get -y install elasticsearch
 
 $ sudo vim /etc/elasticsearch/elasticsearch.yml
 # network.host: 192.168.0.1
-network.host: localhost
-
+# network.host: localhost
+network.host: 0.0.0.0
 
 $ sudo service elasticsearch restart
 $ sudo update-rc.d elasticsearch defaults 95 10
 ```
+
+Website: http://localhost:9200
+
+<img src="https://s-media-cache-ak0.pinimg.com/736x/b0/81/cc/b081cc477c42be5c5d48f55fed6c6a09.jpg" />
+
+### Install ElasticSearch-Head
+
+```bash
+$ sudo /usr/share/elasticsearch/bin/plugin install mobz/elasticsearch-head
+```
+
+Website: http://localhost:9200/_plugin/head/
+
+<img src="https://s-media-cache-ak0.pinimg.com/736x/24/94/7c/24947c5722c70134ef4bd199fe7ca114.jpg" />
+
 
 ## Kibana
 
