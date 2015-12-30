@@ -4,7 +4,7 @@
   <title><![CDATA[K]]></title>
   <link href="http://k.arttechresearch.com/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2015-12-29T17:21:27+08:00</updated>
+  <updated>2015-12-30T13:44:25+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[K]]></name>
@@ -31,6 +31,8 @@
 
 <h2>Process</h2>
 
+<p>Applications:</p>
+
 <ul>
 <li>filebeat: ship logs</li>
 <li>logstack: process and index logs</li>
@@ -39,6 +41,8 @@
 <li>nginx: reverse proxy</li>
 </ul>
 
+
+<p>Process:</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -73,6 +77,8 @@
 
 <h2>ElasticSearch</h2>
 
+<h3>Install ElasticSearch</h3>
+
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
@@ -92,13 +98,28 @@
 </span><span class='line'>
 </span><span class='line'><span class="nv">$ </span>sudo vim /etc/elasticsearch/elasticsearch.yml
 </span><span class='line'><span class="c"># network.host: 192.168.0.1</span>
-</span><span class='line'>network.host: localhost
-</span><span class='line'>
+</span><span class='line'><span class="c"># network.host: localhost</span>
+</span><span class='line'>network.host: 0.0.0.0
 </span><span class='line'>
 </span><span class='line'><span class="nv">$ </span>sudo service elasticsearch restart
 </span><span class='line'><span class="nv">$ </span>sudo update-rc.d elasticsearch defaults <span class="m">95</span> 10
 </span></code></pre></td></tr></table></div></figure>
 
+
+<p>Website: <a href="http://localhost:9200">http://localhost:9200</a></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/b0/81/cc/b081cc477c42be5c5d48f55fed6c6a09.jpg" /></p>
+
+<h3>Install ElasticSearch-Head</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo /usr/share/elasticsearch/bin/plugin install mobz/elasticsearch-head
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Website: <a href="http://localhost:9200/_plugin/head/">http://localhost:9200/_plugin/head/</a></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/24/94/7c/24947c5722c70134ef4bd199fe7ca114.jpg" /></p>
 
 <h2>Kibana</h2>
 
