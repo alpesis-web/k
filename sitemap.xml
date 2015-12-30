@@ -710,6 +710,15 @@
     <loc>http://k.arttechresearch.com/devkits/</loc>
   </url>
   <url>
+    <loc>http://k.arttechresearch.com/categories/life/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/categories/tech/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/categories/art/</loc>
+  </url>
+  <url>
     <loc>http://k.arttechresearch.com/tags/poem/</loc>
   </url>
   <url>
@@ -725,16 +734,16 @@
     <loc>http://k.arttechresearch.com/tags/career/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/vim/</loc>
-  </url>
-  <url>
     <loc>http://k.arttechresearch.com/tags/ide/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/python/</loc>
+    <loc>http://k.arttechresearch.com/tags/vim/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/pandas/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/python/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/time-series/</loc>
@@ -743,22 +752,22 @@
     <loc>http://k.arttechresearch.com/tags/emacs/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/ruby/</loc>
+    <loc>http://k.arttechresearch.com/tags/jekyll/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/jekyll/</loc>
+    <loc>http://k.arttechresearch.com/tags/ruby/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/css/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/nlp/</loc>
+    <loc>http://k.arttechresearch.com/tags/classification/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/machine-learning/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/classification/</loc>
+    <loc>http://k.arttechresearch.com/tags/nlp/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/nltk/</loc>
@@ -800,16 +809,13 @@
     <loc>http://k.arttechresearch.com/tags/mysql/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/unicode/</loc>
-  </url>
-  <url>
     <loc>http://k.arttechresearch.com/tags/ascii/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/html/</loc>
+    <loc>http://k.arttechresearch.com/tags/unicode/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/web/</loc>
+    <loc>http://k.arttechresearch.com/tags/html/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/dns/</loc>
@@ -818,7 +824,13 @@
     <loc>http://k.arttechresearch.com/tags/github/</loc>
   </url>
   <url>
+    <loc>http://k.arttechresearch.com/tags/web/</loc>
+  </url>
+  <url>
     <loc>http://k.arttechresearch.com/tags/django/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/devops/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/vagrant/</loc>
@@ -827,28 +839,25 @@
     <loc>http://k.arttechresearch.com/tags/vm/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/devops/</loc>
-  </url>
-  <url>
     <loc>http://k.arttechresearch.com/tags/edx/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/edx-platform/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/edx-analytics/</loc>
+    <loc>http://k.arttechresearch.com/tags/ansible/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/ansible/</loc>
+    <loc>http://k.arttechresearch.com/tags/edx-analytics/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/linux/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/mysql-workbench/</loc>
+    <loc>http://k.arttechresearch.com/tags/db/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/db/</loc>
+    <loc>http://k.arttechresearch.com/tags/mysql-workbench/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/sql/</loc>
@@ -872,13 +881,13 @@
     <loc>http://k.arttechresearch.com/tags/cloudera/</loc>
   </url>
   <url>
+    <loc>http://k.arttechresearch.com/tags/cluster/</loc>
+  </url>
+  <url>
     <loc>http://k.arttechresearch.com/tags/hadoop/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/ubuntu/</loc>
-  </url>
-  <url>
-    <loc>http://k.arttechresearch.com/tags/cluster/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/mapreduce/</loc>
@@ -887,13 +896,13 @@
     <loc>http://k.arttechresearch.com/tags/virtualbox/</loc>
   </url>
   <url>
+    <loc>http://k.arttechresearch.com/tags/hbase/</loc>
+  </url>
+  <url>
     <loc>http://k.arttechresearch.com/tags/hive/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/sqoop/</loc>
-  </url>
-  <url>
-    <loc>http://k.arttechresearch.com/tags/hbase/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/zookeeper/</loc>
@@ -917,25 +926,25 @@
     <loc>http://k.arttechresearch.com/tags/jenkins/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/git/</loc>
+    <loc>http://k.arttechresearch.com/tags/apache/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/gitweb/</loc>
+    <loc>http://k.arttechresearch.com/tags/git/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/gitosis/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/apache/</loc>
+    <loc>http://k.arttechresearch.com/tags/gitweb/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/gunicorn/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/nginx/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/supervisor/</loc>
-  </url>
-  <url>
-    <loc>http://k.arttechresearch.com/tags/gunicorn/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/pycharm/</loc>
@@ -947,10 +956,10 @@
     <loc>http://k.arttechresearch.com/tags/redmine/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/ghost/</loc>
+    <loc>http://k.arttechresearch.com/tags/forever/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/forever/</loc>
+    <loc>http://k.arttechresearch.com/tags/ghost/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/butter/</loc>
@@ -962,31 +971,31 @@
     <loc>http://k.arttechresearch.com/tags/redis/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/will/</loc>
+    <loc>http://k.arttechresearch.com/tags/chatbot/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/hipchat/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/chatbot/</loc>
-  </url>
-  <url>
     <loc>http://k.arttechresearch.com/tags/robotics/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/openstack/</loc>
+    <loc>http://k.arttechresearch.com/tags/will/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/cloud/</loc>
   </url>
   <url>
+    <loc>http://k.arttechresearch.com/tags/openstack/</loc>
+  </url>
+  <url>
     <loc>http://k.arttechresearch.com/tags/octopress/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/painting/</loc>
+    <loc>http://k.arttechresearch.com/tags/oil-painting/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/oil-painting/</loc>
+    <loc>http://k.arttechresearch.com/tags/painting/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/edx-ai/</loc>
@@ -1010,10 +1019,10 @@
     <loc>http://k.arttechresearch.com/tags/debian/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/mssql/</loc>
+    <loc>http://k.arttechresearch.com/tags/freetds/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/freetds/</loc>
+    <loc>http://k.arttechresearch.com/tags/mssql/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/odbc/</loc>
@@ -1028,19 +1037,16 @@
     <loc>http://k.arttechresearch.com/tags/nao/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/logstack/</loc>
-  </url>
-  <url>
     <loc>http://k.arttechresearch.com/tags/elasticsearch/</loc>
-  </url>
-  <url>
-    <loc>http://k.arttechresearch.com/tags/kibana/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/filebeat/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/programming/</loc>
+    <loc>http://k.arttechresearch.com/tags/kibana/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/logstack/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/framework/</loc>
@@ -1049,21 +1055,12 @@
     <loc>http://k.arttechresearch.com/tags/library/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/tags/api/</loc>
-  </url>
-  <url>
-    <loc>http://k.arttechresearch.com/tags/soap/</loc>
+    <loc>http://k.arttechresearch.com/tags/programming/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/rest/</loc>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/categories/life/</loc>
-  </url>
-  <url>
-    <loc>http://k.arttechresearch.com/categories/tech/</loc>
-  </url>
-  <url>
-    <loc>http://k.arttechresearch.com/categories/art/</loc>
+    <loc>http://k.arttechresearch.com/tags/soap/</loc>
   </url>
 </urlset>
