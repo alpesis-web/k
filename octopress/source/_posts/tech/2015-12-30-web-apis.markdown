@@ -1,0 +1,61 @@
+---
+layout: post_tech
+title: "Web APIs"
+date: 2015-12-30 16:21:13 +0800
+comments: true
+categories: [tech]
+tags: [programming, web, api, soap, rest]
+toc: true
+---
+
+## Definition
+
+Web API is a set of Hypertext Transfer Protocol (HTTP) request mesages along with the structure of reponse messages (XML or JSON format).
+
+Types:
+
+- Simple Object Access Protocol (SOAP)
+- REpresentational State Transfer (REST)
+
+
+## SOAP
+
+SOAP is a protocol specification for exchanging structured inforamtion of web service (XML based) by Hypertext Transfer Protocol (HTTP) or Simple Mail Transfer Protocol (SMTP).
+
+## REST
+
+
+### Definition
+
+REST was definied by Roy Thomas Fieldiing in his 2000 PhD dissertation ["Architectural Styles and the Design of Network-based Software Architectures"].
+
+Referring to Wikipedia, [REST] communicates over Hypertext Transfer Protocal (HTTP) with the same HTTP verbs (GET, POST, PUT, DELETE, etc.) that web browsers user to retrieve web pages and to send data to remote servers.
+
+  ["Architectural Styles and the Design of Network-based Software Architectures"]: http://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm
+  [REST]: https://en.wikipedia.org/wiki/Representational_state_transfer
+
+REST architectural style
+
+- Performance
+- Scalability
+- Simplicity of interfaces
+- Modifiability of components to meet changing needs (even while the application is running)
+- Visibility of communication between components by service agents
+- Portability of components by moving program code with the data
+- Reliability is the resistance to failure at the system level in the presence of failures within components, connectors, or data
+
+### RESTful APIs
+
+elements
+
+- URI
+- JSON data
+- HTTP methods: GET, POST, PUT, DELETE, etc
+
+design rules
+
+- client-server: there should be a sepration between the server that offers a service, and the client that consumes it.
+- stateless: each requests from a client must contain all the inforamtion required by the server to carry out the request.
+- cacheable: the server must indicate to the client if requests can be cached or not.
+- layered system: communication between a client and a server should be standarized in such a way that allows intermediaries to respond to requests instead of the end server, without the client having to do anything different.
+- code on demand: servers can provide executable code or scripts for clients to execute in their context. 
