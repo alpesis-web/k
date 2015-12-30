@@ -6,13 +6,68 @@ sidebar: false
 footer: true
 ---
 
-## OS
+## DevOps
 
-- [Ubuntu](http://www.ubuntu.com/download/server)
+### OS
 
-## VM
+[Ubuntu](http://www.ubuntu.com/download/server)
 
-- [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
+### VM
+
+[VirtualBox](https://www.virtualbox.org/wiki/Downloads) 
+[Docker]() 
+[Vagrant]() 
+
+### Cloud
+
+[OpenStack]() 
+[Heroku](https://www.heroku.com/home) 
+
+[Cloudera]() 
+
+## Programming
+
+### Python
+
+
+[Django]() 
+[Tornado]() 
+
+
+[SQLAlchemy](http://www.sqlalchemy.org) 
+
+
+[Celery](http://www.celeryproject.org) 
+
+
+[lettuce]() 
+[tox](https://tox.readthedocs.org/en/latest/index.html) 
+
+
+[PEP8]() 
+[Pylint]() 
+
+### Ruby
+
+### Javascript
+
+[Node]() 
+
+[Angular]() 
+[Backbone]() 
+
+[phantom](http://phantomjs.org) 
+[grunt](http://gruntjs.com/getting-started) 
+
+### Java
+
+### Go
+
+### Scala
+
+### Erlang
+
+[erlang](http://www.erlang.org) 
 
 ## Web 
 
