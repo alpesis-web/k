@@ -1,0 +1,2329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[K]]></title>
+  <link href="http://k.arttechresearch.com/atom.xml" rel="self"/>
+  <link href="http://k.arttechresearch.com/"/>
+  <updated>2016-01-02T00:29:37+08:00</updated>
+  <id>http://k.arttechresearch.com/</id>
+  <author>
+    <name><![CDATA[K]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Python Sphinx]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/12/31/python-sphinx/"/>
+    <updated>2015-12-31T01:25:59+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/12/31/python-sphinx</id>
+    <content type="html"><![CDATA[<p>Sphinx is a Python documentation generator. To write the project documentation with
+Sphinx, here are the steps:</p>
+
+<ol>
+<li>Installing Sphinx and setting up a project</li>
+<li>Configuring Sphinx</li>
+<li>Customizing the theme</li>
+<li>Writing the docs</li>
+</ol>
+
+
+<h2>Sphinx Setup</h2>
+
+<p>Sphinx and plugins</p>
+
+<ul>
+<li>sphinx</li>
+<li>sphinx-autobuild: live html preview</li>
+</ul>
+
+
+<h3>Installation</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>pip install sphinx
+</span><span class='line'><span class="nv">$ </span>pip install sphinx-autobuild
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Quick Start</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sphinx-quickstart
+</span><span class='line'>
+</span><span class='line'><span class="c"># sphinx-autobuild &lt;DOCS_PATH&gt; &lt;DOCS_PATH/BUILD/HTML&gt;</span>
+</span><span class='line'><span class="nv">$ </span>sphinx-autobuild docs docs/_build/html
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>other commands</p>
+
+<figure class='code'><figcaption><span>make.bat</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="k">if</span> <span class="s2">&quot;%1&quot;</span> <span class="o">==</span> <span class="s2">&quot;help&quot;</span> <span class="o">(</span>
+</span><span class='line'>        :help
+</span><span class='line'>        echo.Please use <span class="sb">`</span>make ^&lt;target^&gt;<span class="sb">`</span> where ^&lt;target^&gt; is one of
+</span><span class='line'>        echo.  html       to make standalone HTML files
+</span><span class='line'>        echo.  dirhtml    to make HTML files named index.html in directories
+</span><span class='line'>        echo.  singlehtml to make a single large HTML file
+</span><span class='line'>        echo.  pickle     to make pickle files
+</span><span class='line'>        echo.  json       to make JSON files
+</span><span class='line'>        echo.  htmlhelp   to make HTML files and a HTML <span class="nb">help </span>project
+</span><span class='line'>        echo.  qthelp     to make HTML files and a qthelp project
+</span><span class='line'>        echo.  devhelp    to make HTML files and a Devhelp project
+</span><span class='line'>        echo.  epub       to make an epub
+</span><span class='line'>        echo.  latex      to make LaTeX files, you can <span class="nb">set </span><span class="nv">PAPER</span><span class="o">=</span>a4 or <span class="nv">PAPER</span><span class="o">=</span>letter
+</span><span class='line'>        echo.  text       to make text files
+</span><span class='line'>        echo.  man        to make manual pages
+</span><span class='line'>        echo.  texinfo    to make Texinfo files
+</span><span class='line'>        echo.  gettext    to make PO message catalogs
+</span><span class='line'>        echo.  changes    to make an overview over all changed/added/deprecated items
+</span><span class='line'>        echo.  xml        to make Docutils-native XML files
+</span><span class='line'>        echo.  pseudoxml  to make pseudoxml-XML files <span class="k">for</span> display purposes
+</span><span class='line'>        echo.  linkcheck  to check all external links <span class="k">for</span> integrity
+</span><span class='line'>        echo.  doctest    to run all doctests embedded in the documentation <span class="k">if</span> enabled
+</span><span class='line'>        echo.  coverage   to run coverage check of the documentation <span class="k">if</span> enabled
+</span><span class='line'>        goto end
+</span><span class='line'><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Sphinx Settings</h2>
+
+<figure class='code'><figcaption><span>conf.py</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c"># -- General configuration ------------------------------------------------</span>
+</span><span class='line'><span class="c"># -- Options for HTML output ----------------------------------------------</span>
+</span><span class='line'><span class="c"># -- Options for LaTeX output ---------------------------------------------</span>
+</span><span class='line'><span class="c"># -- Options for manual page output ---------------------------------------</span>
+</span><span class='line'><span class="c"># -- Options for Texinfo output -------------------------------------------</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Sphinx Theming</h2>
+
+<p>There are two options to create a theme:</p>
+
+<ul>
+<li>one is to change a default theme,</li>
+<li>another is to create a new one by yourself.</li>
+</ul>
+
+
+<h3>Default Themes</h3>
+
+<p>All html configurations are stored in <code>conf.py</code>. Official docs is <a href="http://sphinx-doc.org/theming.html">here</a>.</p>
+
+<figure class='code'><figcaption><span>conf.py</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c"># -- Options for HTML output ----------------------------------------------</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># The theme to use for HTML and HTML Help pages.  See the documentation for</span>
+</span><span class='line'><span class="c"># a list of builtin themes.</span>
+</span><span class='line'><span class="c"># default themes: alabaster, sphinx_rtd_theme, classic, sphinxdoc,</span>
+</span><span class='line'><span class="c">#     scrolls, agogo, traditional, nature, haiku, pyramid, bizstyle</span>
+</span><span class='line'><span class="n">html_theme</span> <span class="o">=</span> <span class="s">&#39;nature&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Theme options are theme-specific and customize the look and feel of a theme</span>
+</span><span class='line'><span class="c"># further.  For a list of options available for each theme, see the</span>
+</span><span class='line'><span class="c"># documentation.</span>
+</span><span class='line'><span class="c"># html_theme_options = {</span>
+</span><span class='line'><span class="c">#     &quot;rightsidebar&quot;: &quot;true&quot;,</span>
+</span><span class='line'><span class="c">#     &quot;relbarbgcolor&quot;: &quot;black&quot;</span>
+</span><span class='line'><span class="c"># }</span>
+</span><span class='line'><span class="n">html_theme_options</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Add any paths that contain custom themes here, relative to this directory.</span>
+</span><span class='line'><span class="c"># html_theme_path = [&quot;.&quot;]</span>
+</span><span class='line'><span class="n">html_theme_path</span> <span class="o">=</span> <span class="p">[]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Custom Themes</h3>
+
+<h2>RST</h2>
+
+<h3>Makeup Constructs</h3>
+
+<p>Official docs is <a href="http://sphinx-doc.org/markup/index.html">here</a>.</p>
+
+<h4>toctree</h4>
+
+<figure class='code'><figcaption><span>toctree</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">..</span> <span class="n">toctree</span><span class="p">::</span>
+</span><span class='line'>   <span class="p">:</span><span class="n">maxdepth</span><span class="p">:</span> <span class="mi">2</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">..</span> <span class="n">toctree</span><span class="p">::</span>
+</span><span class='line'>   <span class="p">:</span><span class="n">numbered</span><span class="p">:</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">..</span> <span class="n">toctree</span><span class="p">::</span>
+</span><span class='line'>   <span class="p">:</span><span class="n">caption</span><span class="p">:</span> <span class="n">Table</span> <span class="n">of</span> <span class="n">Contents</span>
+</span><span class='line'>   <span class="p">:</span><span class="n">name</span><span class="p">:</span> <span class="n">mastertoc</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">..</span> <span class="n">toctree</span><span class="p">::</span>
+</span><span class='line'>   <span class="p">:</span><span class="n">titlesonly</span><span class="p">:</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">..</span> <span class="n">toctree</span><span class="p">::</span>
+</span><span class='line'>   <span class="p">:</span><span class="n">glob</span><span class="p">:</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">..</span> <span class="n">toctree</span><span class="p">::</span>
+</span><span class='line'>   <span class="p">:</span><span class="n">hidden</span><span class="p">:</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">..</span> <span class="n">toctree</span><span class="p">::</span>
+</span><span class='line'>   <span class="p">:</span><span class="n">includehidden</span><span class="p">:</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>paragraph-level makeup</h4>
+
+<figure class='code'><figcaption><span>paragraph-level</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">..</span> <span class="n">note</span><span class="p">::</span>
+</span><span class='line'><span class="o">..</span> <span class="n">warning</span><span class="p">::</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">..</span> <span class="n">versionadded</span><span class="p">::</span> <span class="mf">2.5</span>
+</span><span class='line'><span class="o">..</span> <span class="n">versionchanged</span><span class="p">::</span> <span class="n">version</span>
+</span><span class='line'><span class="o">..</span> <span class="n">deprecated</span><span class="p">::</span> <span class="mf">3.1</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">..</span> <span class="n">seealso</span><span class="p">::</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">..</span> <span class="n">rubric</span><span class="p">::</span> <span class="n">title</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">..</span> <span class="n">centered</span><span class="p">::</span> <span class="n">LICENSE</span> <span class="n">AGREEMENT</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">..</span> <span class="n">hlist</span><span class="p">::</span>
+</span><span class='line'>   <span class="p">:</span><span class="n">columns</span><span class="p">:</span> <span class="mi">3</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="o">*</span> <span class="n">A</span> <span class="nb">list</span> <span class="n">of</span>
+</span><span class='line'>   <span class="o">*</span> <span class="n">short</span> <span class="n">items</span>
+</span><span class='line'>   <span class="o">*</span> <span class="n">that</span> <span class="n">should</span> <span class="n">be</span>
+</span><span class='line'>   <span class="o">*</span> <span class="n">displayed</span>
+</span><span class='line'>   <span class="o">*</span> <span class="n">horizontally</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">..</span> <span class="n">glossary</span><span class="p">::</span>
+</span><span class='line'><span class="o">..</span> <span class="n">productionlist</span><span class="p">::</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>codes</h4>
+
+<p>Official docs is <a href="http://sphinx-doc.org/markup/code.html">here</a>.</p>
+
+<figure class='code'><figcaption><span>codes</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">..</span> <span class="n">highlight</span><span class="p">::</span> <span class="n">c</span>
+</span><span class='line'><span class="o">..</span> <span class="n">code</span><span class="o">-</span><span class="n">block</span><span class="p">::</span> <span class="n">ruby</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">..</span> <span class="n">highlight</span><span class="p">::</span> <span class="n">python</span>
+</span><span class='line'>   <span class="p">:</span><span class="n">linenothreshold</span><span class="p">:</span> <span class="mi">5</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">..</span> <span class="n">code</span><span class="o">-</span><span class="n">block</span><span class="p">::</span> <span class="n">ruby</span>
+</span><span class='line'>   <span class="p">:</span><span class="n">linenos</span><span class="p">:</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">..</span> <span class="n">code</span><span class="o">-</span><span class="n">block</span><span class="p">::</span> <span class="n">python</span>
+</span><span class='line'>   <span class="p">:</span><span class="n">emphasize</span><span class="o">-</span><span class="n">lines</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span><span class="mi">5</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">..</span> <span class="n">literalinclude</span><span class="p">::</span> <span class="n">example</span><span class="o">.</span><span class="n">py</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">..</span> <span class="n">literalinclude</span><span class="p">::</span> <span class="n">example</span><span class="o">.</span><span class="n">rb</span>
+</span><span class='line'>   <span class="p">:</span><span class="n">language</span><span class="p">:</span> <span class="n">ruby</span>
+</span><span class='line'>   <span class="p">:</span><span class="n">emphasize</span><span class="o">-</span><span class="n">lines</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span><span class="mi">15</span><span class="o">-</span><span class="mi">18</span>
+</span><span class='line'>   <span class="p">:</span><span class="n">linenos</span><span class="p">:</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">..</span> <span class="n">literalinclude</span><span class="p">::</span> <span class="n">example</span><span class="o">.</span><span class="n">py</span>
+</span><span class='line'>   <span class="p">:</span><span class="n">encoding</span><span class="p">:</span> <span class="n">latin</span><span class="o">-</span><span class="mi">1</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">..</span> <span class="n">literalinclude</span><span class="p">::</span> <span class="n">example</span><span class="o">.</span><span class="n">py</span>
+</span><span class='line'>   <span class="p">:</span><span class="n">pyobject</span><span class="p">:</span> <span class="n">Timer</span><span class="o">.</span><span class="n">start</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">..</span> <span class="n">literalinclude</span><span class="p">::</span> <span class="n">example</span><span class="o">.</span><span class="n">py</span>
+</span><span class='line'>   <span class="p">:</span><span class="n">lines</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="o">-</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">..</span> <span class="n">literalinclude</span><span class="p">::</span> <span class="n">example</span><span class="o">.</span><span class="n">py</span>
+</span><span class='line'>   <span class="p">:</span><span class="n">diff</span><span class="p">:</span> <span class="n">example</span><span class="o">.</span><span class="n">py</span><span class="o">.</span><span class="n">orig</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">..</span> <span class="n">code</span><span class="o">-</span><span class="n">block</span><span class="p">::</span> <span class="n">python</span>
+</span><span class='line'>   <span class="p">:</span><span class="n">caption</span><span class="p">:</span> <span class="n">this</span><span class="o">.</span><span class="n">py</span>
+</span><span class='line'>   <span class="p">:</span><span class="n">name</span><span class="p">:</span> <span class="n">this</span><span class="o">-</span><span class="n">py</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">..</span> <span class="n">literalinclude</span><span class="p">::</span> <span class="n">example</span><span class="o">.</span><span class="n">rb</span>
+</span><span class='line'>   <span class="p">:</span><span class="n">language</span><span class="p">:</span> <span class="n">ruby</span>
+</span><span class='line'>   <span class="p">:</span><span class="n">dedent</span><span class="p">:</span> <span class="mi">4</span>
+</span><span class='line'>   <span class="p">:</span><span class="n">lines</span><span class="p">:</span> <span class="mi">10</span><span class="o">-</span><span class="mi">15</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>inline makeup</h4>
+
+<p>Official docs is <a href="http://sphinx-doc.org/markup/inline.html">here</a>.</p>
+
+<figure class='code'><figcaption><span>inline</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="p">:</span><span class="nb">any</span><span class="p">:</span>
+</span><span class='line'><span class="p">:</span><span class="n">ref</span><span class="p">:</span>
+</span><span class='line'><span class="p">:</span><span class="n">doc</span><span class="p">:</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">:</span><span class="n">download</span><span class="p">:</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">:</span><span class="n">numref</span><span class="p">:</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">:</span><span class="n">envvar</span><span class="p">:</span>
+</span><span class='line'><span class="p">:</span><span class="n">token</span><span class="p">:</span>
+</span><span class='line'><span class="p">:</span><span class="n">keyword</span><span class="p">:</span>
+</span><span class='line'><span class="p">:</span><span class="n">option</span><span class="p">:</span>
+</span><span class='line'><span class="p">:</span><span class="n">term</span><span class="p">:</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">:</span><span class="n">abbr</span><span class="p">:</span>
+</span><span class='line'><span class="p">:</span><span class="n">command</span><span class="p">:</span>
+</span><span class='line'><span class="p">:</span><span class="n">dfn</span><span class="p">:</span>
+</span><span class='line'><span class="p">:</span><span class="nb">file</span><span class="p">:</span>
+</span><span class='line'><span class="p">:</span><span class="n">guilabel</span><span class="p">:</span>
+</span><span class='line'><span class="p">:</span><span class="n">kbd</span><span class="p">:</span>
+</span><span class='line'><span class="p">:</span><span class="n">mailheader</span><span class="p">:</span>
+</span><span class='line'><span class="p">:</span><span class="n">makevar</span><span class="p">:</span>
+</span><span class='line'><span class="p">:</span><span class="n">manpage</span><span class="p">:</span>
+</span><span class='line'><span class="p">:</span><span class="n">menuselection</span><span class="p">:</span>
+</span><span class='line'><span class="p">:</span><span class="n">mimetype</span><span class="p">:</span>
+</span><span class='line'><span class="p">:</span><span class="n">newsgroup</span><span class="p">:</span>
+</span><span class='line'><span class="p">:</span><span class="n">program</span><span class="p">:</span>
+</span><span class='line'><span class="p">:</span><span class="n">regexp</span><span class="p">:</span>
+</span><span class='line'><span class="p">:</span><span class="n">samp</span><span class="p">:</span>
+</span><span class='line'><span class="p">:</span><span class="n">pep</span><span class="p">:</span>
+</span><span class='line'><span class="p">:</span><span class="n">rfc</span><span class="p">:</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">|</span><span class="n">release</span><span class="o">|</span>
+</span><span class='line'><span class="o">|</span><span class="n">version</span><span class="o">|</span>
+</span><span class='line'><span class="o">|</span><span class="n">today</span><span class="o">|</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>others</h4>
+
+<figure class='code'><figcaption><span>otheres</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="p">:</span><span class="n">fieldname</span><span class="p">:</span> <span class="n">Field</span> <span class="n">content</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">..</span> <span class="n">sectionauthor</span><span class="p">::</span> <span class="n">name</span> <span class="o">&lt;</span><span class="n">email</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">..</span> <span class="n">sectionauthor</span><span class="p">::</span> <span class="n">Guido</span> <span class="n">van</span> <span class="n">Rossum</span> <span class="o">&lt;</span><span class="n">guido</span><span class="nd">@python.org</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">..</span> <span class="n">codeauthor</span><span class="p">::</span> <span class="n">name</span> <span class="o">&lt;</span><span class="n">email</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">..</span> <span class="n">index</span><span class="p">::</span> <span class="o">&lt;</span><span class="n">entries</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">..</span> <span class="n">index</span><span class="p">::</span>
+</span><span class='line'>   <span class="n">single</span><span class="p">:</span> <span class="n">execution</span><span class="p">;</span> <span class="n">context</span>
+</span><span class='line'>   <span class="n">module</span><span class="p">:</span> <span class="n">__main__</span>
+</span><span class='line'>   <span class="n">module</span><span class="p">:</span> <span class="n">sys</span>
+</span><span class='line'>   <span class="n">triple</span><span class="p">:</span> <span class="n">module</span><span class="p">;</span> <span class="n">search</span><span class="p">;</span> <span class="n">path</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">..</span> <span class="n">index</span><span class="p">::</span> <span class="n">Python</span>
+</span><span class='line'><span class="o">..</span> <span class="n">index</span><span class="p">::</span> <span class="err">!</span> <span class="n">Python</span>
+</span><span class='line'><span class="o">..</span> <span class="n">index</span><span class="p">::</span> <span class="n">BNF</span><span class="p">,</span> <span class="n">grammar</span><span class="p">,</span> <span class="n">syntax</span><span class="p">,</span> <span class="n">notation</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">..</span> <span class="n">only</span><span class="p">::</span> <span class="o">&lt;</span><span class="n">expression</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">..</span> <span class="n">only</span><span class="p">::</span> <span class="n">html</span> <span class="ow">and</span> <span class="n">draft</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">..</span> <span class="n">tabularcolumns</span><span class="p">::</span> <span class="n">column</span> <span class="n">spec</span>
+</span><span class='line'><span class="o">|</span><span class="n">l</span><span class="o">|</span><span class="n">l</span><span class="o">|</span><span class="n">l</span><span class="o">|</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Primer</h3>
+
+<p>Official docs is <a href="http://sphinx-doc.org/rest.html">here</a>.</p>
+
+<h2>References</h2>
+
+<ul>
+<li><a href="http://sphinx-doc.org/contents.html">Official Docs</a></li>
+<li><a href="https://pythonhosted.org/sphinxcontrib-httpdomain/">sphinxcontrib-httpdomain</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Knowledge Refactoring]]></title>
+    <link href="http://k.arttechresearch.com/life/2015/12/31/knowledge-refactoring/"/>
+    <updated>2015-12-31T00:24:26+08:00</updated>
+    <id>http://k.arttechresearch.com/life/2015/12/31/knowledge-refactoring</id>
+    <content type="html"><![CDATA[<h2>知识的重构</h2>
+
+<p>1</p>
+
+<p>从模糊到清晰，再从清晰到模糊，如何结构化自己的知识体系？</p>
+
+<p>知识总在更新迭代，每一次的更新，都可能推翻过去的认知，重建起新的结构，就如代码的重构。
+我尝试过去结构化自己的知识技能树，但，整体而言，需要大量的笔记为依托。微博适合记录一闪
+而过的灵感，因为轻松，短小，可以自由地天马行空；博客，适合做稍微长篇的记录，重构一小块
+的知识树；再整体的体系，是书籍，要写成一本书籍，还是需要大量的笔记为依托，再重新编排这
+些笔记，使之结构化。记录，总是好的开始，也是灵感的重现，为日后作参考提供了有效的线索。</p>
+
+<p>所以，我喜欢记笔记，包括在写代码的时候，边开发边记录的开发步骤，也为今后的步骤重现，提
+供了极大的方便。</p>
+
+<p>文字是清理思绪的有效方法。回顾过去，依然觉得在曾经的博客岁月里，文思泉涌，思维活跃；另
+外，文字可以帮助清晰表达自己的观点；而在编写文字的时候，脑子的思路会变得越来越清晰，并
+且，可能会出现新的想法，或发现新的结构。</p>
+
+<p>总结：</p>
+
+<p>－ 微博：记录一闪而过的灵感<br/>
+－ 博客：梳理小模块的知识<br/>
+－ 书籍：整理知识树</p>
+
+<p>2</p>
+
+<p>如何系统地获取知识树？</p>
+
+<p>如果是专业知识和概念，若初始没有太多的了解，维基百科是很好的开始，然后顺着维基百科的
+总结，做笔记，顺藤摸瓜，再对应的参考文章链接，再阅读，再找对应的参考链接，可以尽快地
+找到该领域的知识结构。</p>
+
+<p>另外一个途径，是谷歌的论文搜索，可以了解前人已经做了什么。</p>
+
+<p>若需系统化地了解专业知识，书籍是非常好的选择。</p>
+
+<p>若是代码，起了一个新想法，先在Github或谷歌搜索一下项目，看看前人是否已经做了相应的工
+作，如果碰到好的实现，就不必再重复造轮子；如果实现尚可，可以改进代码；如果碰不到或没
+有好的实现，再自己重新起一个新项目。</p>
+
+<p>3</p>
+
+<p>知识是如何迭代的？</p>
+
+<p>随着认知的深入，知识树会更新，重构原有的知识树，重新结构化；然后再深入了解更多的内容，
+再结构化，经过几轮的迭代更新，会出现比较完整的知识树。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Web APIs]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/12/30/web-apis/"/>
+    <updated>2015-12-30T16:21:13+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/12/30/web-apis</id>
+    <content type="html"><![CDATA[<h2>Definition</h2>
+
+<p>Web API is a set of Hypertext Transfer Protocol (HTTP) request mesages along with the structure of reponse messages (XML or JSON format).</p>
+
+<p>Types:</p>
+
+<ul>
+<li>Simple Object Access Protocol (SOAP)</li>
+<li>REpresentational State Transfer (REST)</li>
+</ul>
+
+
+<h2>SOAP</h2>
+
+<p>SOAP is a protocol specification for exchanging structured inforamtion of web service (XML based) by Hypertext Transfer Protocol (HTTP) or Simple Mail Transfer Protocol (SMTP).</p>
+
+<h2>REST</h2>
+
+<h3>Definition</h3>
+
+<p>REST was definied by Roy Thomas Fieldiing in his 2000 PhD dissertation <a href="http://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm">&ldquo;Architectural Styles and the Design of Network-based Software Architectures&rdquo;</a>.</p>
+
+<p>Referring to Wikipedia, <a href="https://en.wikipedia.org/wiki/Representational_state_transfer">REST</a> communicates over Hypertext Transfer Protocal (HTTP) with the same HTTP verbs (GET, POST, PUT, DELETE, etc.) that web browsers user to retrieve web pages and to send data to remote servers.</p>
+
+<p>REST architectural style</p>
+
+<ul>
+<li>Performance</li>
+<li>Scalability</li>
+<li>Simplicity of interfaces</li>
+<li>Modifiability of components to meet changing needs (even while the application is running)</li>
+<li>Visibility of communication between components by service agents</li>
+<li>Portability of components by moving program code with the data</li>
+<li>Reliability is the resistance to failure at the system level in the presence of failures within components, connectors, or data</li>
+</ul>
+
+
+<h3>RESTful APIs</h3>
+
+<p>elements</p>
+
+<ul>
+<li>URI</li>
+<li>JSON data</li>
+<li>HTTP methods: GET, POST, PUT, DELETE, etc</li>
+</ul>
+
+
+<p>design rules</p>
+
+<ul>
+<li>client-server: there should be a sepration between the server that offers a service, and the client that consumes it.</li>
+<li>stateless: each requests from a client must contain all the inforamtion required by the server to carry out the request.</li>
+<li>cacheable: the server must indicate to the client if requests can be cached or not.</li>
+<li>layered system: communication between a client and a server should be standarized in such a way that allows intermediaries to respond to requests instead of the end server, without the client having to do anything different.</li>
+<li>code on demand: servers can provide executable code or scripts for clients to execute in their context.</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Framework vs Library]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/12/30/framework-vs-library/"/>
+    <updated>2015-12-30T15:11:22+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/12/30/framework-vs-library</id>
+    <content type="html"><![CDATA[<p><img src="https://s-media-cache-ak0.pinimg.com/474x/fe/4e/3b/fe4e3b8680d390b80d9bf64976af1b0a.jpg" /></p>
+
+<p>image source: <a href="http://tom.lokhorst.eu/2010/09/why-libraries-are-better-than-frameworks">http://tom.lokhorst.eu/2010/09/why-libraries-are-better-than-frameworks</a></p>
+
+<h2>Framework</h2>
+
+<p>Referring to the Wikipedia, <a href="https://en.wikipedia.org/wiki/Software_framework">framework</a> is</p>
+
+<ul>
+<li>an abstraction of providing generic functionality which can be rewritten by users</li>
+<li>a universal, resuable software environment that provides particular functionality</li>
+<li>including support programs, compilers, code libraries, tool sets and APIs, etc</li>
+</ul>
+
+
+<p>4 Features</p>
+
+<ul>
+<li>inversion of control</li>
+<li>default behavior</li>
+<li>extensibility</li>
+<li>non-modifiable framwork code</li>
+</ul>
+
+
+<h2>Library</h2>
+
+<p>Referring to the Wikipedia, <a href="https://en.wikipedia.org/wiki/Library_(computing)">library</a> is</p>
+
+<ul>
+<li>a collection of non-volatile resources used by computer programs</li>
+<li>a collection of implementation of behavior, written in terms of a language with well-defined interface by which the behavir is invoked</li>
+<li>including configration data, documentation, help data, message templates, pre-written code and
+sub routines, classes, values or type specifications</li>
+</ul>
+
+
+<p>Types</p>
+
+<ul>
+<li>static libraries</li>
+<li>shared libraries
+
+<ul>
+<li>memory sharing</li>
+<li>dynamic linking</li>
+<li>optimizations</li>
+<li>dynamic loading</li>
+</ul>
+</li>
+<li>remote libraries</li>
+<li>code generation libraries</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Installing Logstack ElasticSearch Kibana on Ubuntu]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/12/29/installing-logstack-elasticsearch-kibana-on-ubuntu/"/>
+    <updated>2015-12-29T14:52:55+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/12/29/installing-logstack-elasticsearch-kibana-on-ubuntu</id>
+    <content type="html"><![CDATA[<h2>Installation Steps</h2>
+
+<ul>
+<li>Step 1. java</li>
+<li>Step 2. elasticsearch</li>
+<li>Step 3. kibana/nginx</li>
+<li>Step 4. logstack</li>
+<li>Step 5. filebeat</li>
+</ul>
+
+
+<h2>Process</h2>
+
+<p>Applications:</p>
+
+<ul>
+<li>filebeat: ship logs</li>
+<li>logstack: process and index logs</li>
+<li>elasticsearch: store logs</li>
+<li>kibana: search and visualize logs</li>
+<li>nginx: reverse proxy</li>
+</ul>
+
+
+<p>Process:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>App Server - filebeat -|
+</span><span class='line'>                       |-&gt; logstack -&gt; elasticsearch -&gt; kibana -&gt; nginx
+</span><span class='line'>DB Server  - filebeat -|</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Prequisitions</h2>
+
+<ul>
+<li>Ubuntu 14.04</li>
+<li>Java 8</li>
+<li>Logstack</li>
+<li>ElasticSearch</li>
+<li>Kibana</li>
+<li>Filebeat</li>
+</ul>
+
+
+<h2>Java 8</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo add-apt-repository -y ppa:webupd8team/java
+</span><span class='line'><span class="nv">$ </span>sudo apt-get update
+</span><span class='line'><span class="nv">$ </span>sudo apt-get -y install oracle-java8-installer
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>ElasticSearch</h2>
+
+<h3>Install ElasticSearch</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch <span class="p">|</span> sudo apt-key add -
+</span><span class='line'><span class="nv">$ </span><span class="nb">echo</span> <span class="s2">&quot;deb http://packages.elastic.co/elasticsearch/2.x/debian stable main&quot;</span> <span class="p">|</span> sudo tee -a /etc/apt/sources.list.d/elasticsearch-2.x.list
+</span><span class='line'><span class="nv">$ </span>sudo apt-get update
+</span><span class='line'><span class="nv">$ </span>sudo apt-get -y install elasticsearch
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo vim /etc/elasticsearch/elasticsearch.yml
+</span><span class='line'><span class="c"># network.host: 192.168.0.1</span>
+</span><span class='line'><span class="c"># network.host: localhost</span>
+</span><span class='line'>network.host: 0.0.0.0
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo service elasticsearch restart
+</span><span class='line'><span class="nv">$ </span>sudo update-rc.d elasticsearch defaults <span class="m">95</span> 10
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Website: <a href="http://localhost:9200">http://localhost:9200</a></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/b0/81/cc/b081cc477c42be5c5d48f55fed6c6a09.jpg" /></p>
+
+<h3>Install ElasticSearch-Head</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo /usr/share/elasticsearch/bin/plugin install mobz/elasticsearch-head
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Website: <a href="http://localhost:9200/_plugin/head/">http://localhost:9200/_plugin/head/</a></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/24/94/7c/24947c5722c70134ef4bd199fe7ca114.jpg" /></p>
+
+<h2>Kibana</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo groupadd -g <span class="m">1999</span> kibana
+</span><span class='line'><span class="nv">$ </span>sudo useradd -u <span class="m">1999</span> -g <span class="m">1999</span> kibana
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /tmp
+</span><span class='line'><span class="nv">$ </span>wget https://download.elastic.co/kibana/kibana/kibana-4.3.0-linux-x64.tar.gz
+</span><span class='line'><span class="nv">$ </span>tar xvf kibana-*.tar.gz
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>kibana-4.3.0-linux-x64
+</span><span class='line'><span class="nv">$ </span>vim config/kibana.yml      <span class="c"># update some configurations</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo mkdir -p /opt/kibana
+</span><span class='line'><span class="nv">$ </span>sudo cp -R kibana-4.3.0-linux-x64/* /opt/kibana/
+</span><span class='line'><span class="nv">$ </span>ls /opt/kibana/
+</span><span class='line'><span class="nv">$ </span>sudo chown -R kibana: /opt/kibana
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /etc/init.d <span class="o">&amp;&amp;</span> sudo curl -o kibana https://gist.githubusercontent.com/thisismitch/8b15ac909aed214ad04a/raw/fc5025c3fc499ad8262aff34ba7fde8c87ead7c0/kibana-4.x-init
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /etc/default <span class="o">&amp;&amp;</span> sudo curl -o kibana https://gist.githubusercontent.com/thisismitch/8b15ac909aed214ad04a/raw/fc5025c3fc499ad8262aff34ba7fde8c87ead7c0/kibana-4.x-default
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo chmod +x /etc/init.d/kibana
+</span><span class='line'><span class="nv">$ </span>sudo update-rc.d kibana defaults <span class="m">96</span> 9
+</span><span class='line'><span class="nv">$ </span>sudo service kibana start
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>test: <a href="http://localhost:5601">http://localhost:5601</a></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/cf/05/2c/cf052c0e3e1b3781238082cb844e33e1.jpg" /></p>
+
+<h3>Nginx</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install nginx apache2-utils
+</span><span class='line'><span class="nv">$ </span>sudo htpasswd -c /etc/nginx/htpasswd.users kibanaadmin
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/kibana <span class="c"># update config</span>
+</span><span class='line'><span class="nv">$ </span>sudo ln /etc/nginx/sites-available/kibana /etc/nginx/sites-enabled/kibana
+</span><span class='line'><span class="nv">$ </span>sudo service nginx restart
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>/etc/nginx/sites-available/kibana</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>server <span class="o">{</span>
+</span><span class='line'>    listen 80<span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    server_name example.com<span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    auth_basic <span class="s2">&quot;Restricted Access&quot;</span><span class="p">;</span>
+</span><span class='line'>    auth_basic_user_file /etc/nginx/htpasswd.users<span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    location / <span class="o">{</span>
+</span><span class='line'>        proxy_pass http://localhost:5601<span class="p">;</span>
+</span><span class='line'>        proxy_http_version 1.1<span class="p">;</span>
+</span><span class='line'>        proxy_set_header Upgrade <span class="nv">$http_upgrade</span><span class="p">;</span>
+</span><span class='line'>        proxy_set_header Connection <span class="s1">&#39;upgrade&#39;</span><span class="p">;</span>
+</span><span class='line'>        proxy_set_header Host <span class="nv">$host</span><span class="p">;</span>
+</span><span class='line'>        proxy_cache_bypass <span class="nv">$http_upgrade</span><span class="p">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Logstack</h2>
+
+<h3>Install Logstack</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">echo</span> <span class="s1">&#39;deb http://packages.elasticsearch.org/logstash/2.1/debian stable main&#39;</span> <span class="p">|</span> sudo tee /etc/apt/sources.list.d/logstash.list
+</span><span class='line'><span class="nv">$ </span>sudo apt-get update
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install logstash
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>SSL Certificate</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo mkdir -p /etc/pki/tls/certs
+</span><span class='line'><span class="nv">$ </span>sudo mkdir /etc/pki/tls/private
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /etc/pki/tls<span class="p">;</span> sudo openssl req -subj <span class="s1">&#39;/CN=logstash_server_fqdn/&#39;</span> -x509 -days <span class="m">3650</span> -batch -nodes -newkey rsa:2048 -keyout private/logstash-forwarder.key -out certs/logstash-forwarder.crt
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Config Logstack</h3>
+
+<ul>
+<li>/etc/logstash/conf.d/02-filebeat-input.conf</li>
+<li>/etc/logstash/conf.d/10-syslog.conf</li>
+<li>/etc/logstash/conf.d/30-elasticsearch-output.conf</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo vi /etc/logstash/conf.d/02-filebeat-input.conf
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>02-filebeat-input.conf</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>input <span class="o">{</span>
+</span><span class='line'>  beats <span class="o">{</span>
+</span><span class='line'>    <span class="nv">port</span> <span class="o">=</span>&gt; 5044
+</span><span class='line'>    <span class="nb">type</span> <span class="o">=</span>&gt; <span class="s2">&quot;logs&quot;</span>
+</span><span class='line'>    <span class="nv">ssl</span> <span class="o">=</span>&gt; <span class="nb">true</span>
+</span><span class='line'><span class="nb">    </span><span class="nv">ssl_certificate</span> <span class="o">=</span>&gt; <span class="s2">&quot;/etc/pki/tls/certs/logstash-forwarder.crt&quot;</span>
+</span><span class='line'>    <span class="nv">ssl_key</span> <span class="o">=</span>&gt; <span class="s2">&quot;/etc/pki/tls/private/logstash-forwarder.key&quot;</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo vi /etc/logstash/conf.d/10-syslog.conf
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>10-syslog.conf</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>filter <span class="o">{</span>
+</span><span class='line'>  <span class="k">if</span> <span class="o">[</span><span class="nb">type</span><span class="o">]</span> <span class="o">==</span> <span class="s2">&quot;syslog&quot;</span> <span class="o">{</span>
+</span><span class='line'>    grok <span class="o">{</span>
+</span><span class='line'>      <span class="nv">match</span> <span class="o">=</span>&gt; <span class="o">{</span> <span class="s2">&quot;message&quot;</span> <span class="o">=</span>&gt; <span class="s2">&quot;%{SYSLOGTIMESTAMP:syslog_timestamp} %{SYSLOGHOST:syslog_hostname} %{DATA:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{GREEDYDATA:syslog_message}&quot;</span> <span class="o">}</span>
+</span><span class='line'>      <span class="nv">add_field</span> <span class="o">=</span>&gt; <span class="o">[</span> <span class="s2">&quot;received_at&quot;</span>, <span class="s2">&quot;%{@timestamp}&quot;</span> <span class="o">]</span>
+</span><span class='line'>      <span class="nv">add_field</span> <span class="o">=</span>&gt; <span class="o">[</span> <span class="s2">&quot;received_from&quot;</span>, <span class="s2">&quot;%{host}&quot;</span> <span class="o">]</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    syslog_pri <span class="o">{</span> <span class="o">}</span>
+</span><span class='line'>    date <span class="o">{</span>
+</span><span class='line'>      <span class="nv">match</span> <span class="o">=</span>&gt; <span class="o">[</span> <span class="s2">&quot;syslog_timestamp&quot;</span>, <span class="s2">&quot;MMM  d HH:mm:ss&quot;</span>, <span class="s2">&quot;MMM dd HH:mm:ss&quot;</span> <span class="o">]</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo vi /etc/logstash/conf.d/30-elasticsearch-output.conf
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>30-elasticsearch-output.conf</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>output <span class="o">{</span>
+</span><span class='line'>  elasticsearch <span class="o">{</span> <span class="nv">hosts</span> <span class="o">=</span>&gt; <span class="o">[</span><span class="s2">&quot;localhost:9200&quot;</span><span class="o">]</span> <span class="o">}</span>
+</span><span class='line'>  stdout <span class="o">{</span> <span class="nv">codec</span> <span class="o">=</span>&gt; rubydebug <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>test</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo service logstash configtest
+</span><span class='line'><span class="nv">$ </span>sudo service logstash restart
+</span><span class='line'><span class="nv">$ </span>sudo update-rc.d logstash defaults <span class="m">96</span> 9
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Filebeat (Client)</h2>
+
+<h3>SSL Certificate</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>scp /etc/pki/tls/certs/logstash-forwarder.crt user@client_server_private_address:/tmp
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Install Filebeat</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">echo</span> <span class="s2">&quot;deb https://packages.elastic.co/beats/apt stable main&quot;</span> <span class="p">|</span>  sudo tee -a /etc/apt/sources.list.d/beats.list
+</span><span class='line'><span class="nv">$ </span>wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch <span class="p">|</span> sudo apt-key add -
+</span><span class='line'><span class="nv">$ </span>sudo apt-get update
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install filebeat
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo mkdir -p /etc/pki/tls/certs
+</span><span class='line'><span class="nv">$ </span>sudo cp /tmp/logstash-forwarder.crt /etc/pki/tls/certs/
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Config Filebeat</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo vi /etc/filebeat/filebeat.yml
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>/etc/filebeat/filebeat.yml</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>...
+</span><span class='line'>      paths:
+</span><span class='line'>         - /var/log/auth.log
+</span><span class='line'>         - /var/log/syslog
+</span><span class='line'><span class="c">#        - /var/log/*.log</span>
+</span><span class='line'>...
+</span><span class='line'>
+</span><span class='line'>...
+</span><span class='line'>      document_type: syslog
+</span><span class='line'>...
+</span><span class='line'>
+</span><span class='line'>...
+</span><span class='line'>output:
+</span><span class='line'>
+</span><span class='line'>  <span class="c">### Elasticsearch as output</span>
+</span><span class='line'>  elasticsearch:
+</span><span class='line'>    enabled: <span class="nb">false</span>
+</span><span class='line'>...
+</span><span class='line'>
+</span><span class='line'>  <span class="c">### Logstash as output</span>
+</span><span class='line'>  logstash:
+</span><span class='line'>    <span class="c"># The Logstash hosts</span>
+</span><span class='line'>    hosts: <span class="o">[</span><span class="s2">&quot;ELK_server_private_IP:5044&quot;</span><span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'>...
+</span><span class='line'>    tls:
+</span><span class='line'>      <span class="c"># List of root certificates for HTTPS server verifications</span>
+</span><span class='line'>      certificate_authorities: <span class="o">[</span><span class="s2">&quot;/etc/pki/tls/certs/logstash-forwarder.crt&quot;</span><span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>test</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo service filebeat restart
+</span><span class='line'><span class="nv">$ </span>sudo update-rc.d filebeat defaults <span class="m">95</span> 10
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Setting Up OpenNao With VirtualBox]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/12/28/setting-up-opennao-with-virtualbox/"/>
+    <updated>2015-12-28T22:44:11+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/12/28/setting-up-opennao-with-virtualbox</id>
+    <content type="html"><![CDATA[<h2>1. Downloading OpenNao</h2>
+
+<p>Download OpenNao <a href="https://community.aldebaran.com/en/dl/ZmllbGRfY29sbGVjdGlvbl9pdGVtLTU1NC1maWVsZF9zb2Z0X2RsX2V4dGVybmFsX2xpbmstMC1mYTc0ZTQ%3D?width=500&amp;height=auto">OVA file</a>.</p>
+
+<h2>2. Setting up VirtualBox</h2>
+
+<p>Start VirtualBox: File -> Import Appliance -> Import *.ova file</p>
+
+<p>Start VM, login with username/password: nao/nao</p>
+
+<h2>References</h2>
+
+<ul>
+<li><a href="https://community.aldebaran.com/en/resources/software/language/en-gb">Aldebaran Dev Toolkits</a></li>
+<li><a href="http://doc.aldebaran.com/1-14/dev/tools/vm-setup.html">Setting up the OpenNAO virtual machine</a></li>
+<li><a href="http://doc.aldebaran.com/1-14/dev/tools/opennao.html#opennao-user-account">OpenNAO - NAO OS</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Getting Started With Cassandra]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/12/28/getting-started-with-cassandra/"/>
+    <updated>2015-12-28T18:26:26+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/12/28/getting-started-with-cassandra</id>
+    <content type="html"><![CDATA[<h2>1. Installation</h2>
+
+<ul>
+<li>Ubuntu 14.04</li>
+<li>Java 8</li>
+<li>Apache Cassandra</li>
+</ul>
+
+
+<p>Java</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo add-apt-repository ppa:webupd8team/java
+</span><span class='line'><span class="nv">$ </span>sudo apt-get update
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install oracle-java8-installer
+</span><span class='line'><span class="nv">$ </span>java -version
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install oracle-java8-set-default
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Cassandra</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo vim /etc/apt/source.list.d/cassandra.list
+</span><span class='line'>
+</span><span class='line'><span class="c"># add source list</span>
+</span><span class='line'>deb http://www.apache.org/dist/cassandra/debian 21x main
+</span><span class='line'>deb-src http://www.apache.org/dist/cassandra/debian 21x main
+</span><span class='line'>
+</span><span class='line'><span class="c"># add public key</span>
+</span><span class='line'><span class="nv">$ </span>gpg --keyserver pgp.mit.edu --recv-keys F758CE318D77295D
+</span><span class='line'><span class="nv">$ </span>gpg --export --armor F758CE318D77295D <span class="p">|</span> sudo apt-key add -
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo apt-get update
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install cassandra
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>2. Configuration</h2>
+
+<p>config paths:</p>
+
+<ul>
+<li>data directories: /var/lib/cassandra</li>
+<li>log directory: /var/log/cassandra</li>
+<li>runtime files: /var/run/cassandra</li>
+<li>environment settings: /usr/share/cassandra</li>
+<li>JAR files: /usr/share/cassandra/lib</li>
+<li>binary files: /usr/bin</li>
+<li>/usr/sbin</li>
+<li>configuration files: /etc/cassandra</li>
+<li>service startup script: /etc/init.d</li>
+<li>cassandra user limits: /etc/security/limits.d</li>
+<li>/etc/default</li>
+</ul>
+
+
+<h2>3. Testing</h2>
+
+<p>running cassandra</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo cassandra
+</span><span class='line'><span class="nv">$ </span>sudo cassandra -f
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>cassandra-cli
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>running cql</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo cqlsh
+</span><span class='line'><span class="nv">$ </span>sudo cqlsh 127.0.0.1 9042
+</span><span class='line'>Connected to Test Cluster at 127.0.0.1:9042.
+</span><span class='line'><span class="o">[</span>cqlsh 5.0.1 <span class="p">|</span> Cassandra 2.1.12 <span class="p">|</span> CQL spec 3.2.1 <span class="p">|</span> Native protocol v3<span class="o">]</span>
+</span><span class='line'>Use HELP <span class="k">for</span> help.
+</span><span class='line'>
+</span><span class='line'>cqlsh&gt; CREATE KEYSPACE <span class="nb">test </span>WITH <span class="nv">REPLICATION</span> <span class="o">=</span> <span class="o">{</span> <span class="s1">&#39;class&#39;</span>: <span class="s1">&#39;SimpleStrategy&#39;</span>, <span class="s1">&#39;replication_factor&#39;</span>: <span class="m">1</span> <span class="o">}</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>cqlsh&gt; USE <span class="nb">test</span><span class="p">;</span>
+</span><span class='line'>cqlsh:test&gt; CREATE TABLE users <span class="o">(</span>
+</span><span class='line'>        ... user_id int PRIMARY KEY,
+</span><span class='line'>        ... fname text,
+</span><span class='line'>        ... lname text
+</span><span class='line'>        ... <span class="o">)</span><span class="p">;</span>
+</span><span class='line'>cqlsh:test&gt; INSERT INTO users <span class="o">(</span>user_id, fname, lname<span class="o">)</span> VALUES <span class="o">(</span>1722, <span class="s1">&#39;joe&#39;</span>, <span class="s1">&#39;lambert&#39;</span><span class="o">)</span><span class="p">;</span>
+</span><span class='line'>cqlsh:test&gt; INSERT INTO users <span class="o">(</span>user_id, fname, lname<span class="o">)</span> VALUES <span class="o">(</span>1832, <span class="s1">&#39;alice&#39;</span>, <span class="s1">&#39;parker&#39;</span><span class="o">)</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>cqlsh:test&gt; SELECT * FROM users<span class="p">;</span>
+</span><span class='line'>cqlsh:test&gt; CREATE INDEX ON users <span class="o">(</span>lname<span class="o">)</span><span class="p">;</span>
+</span><span class='line'>cqlsh:test&gt; SELECT * FROM users WHERE <span class="nv">lname</span> <span class="o">=</span> <span class="s1">&#39;smith&#39;</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Trouble Shooting</h2>
+
+<h3>CQL Connection refused</h3>
+
+<p>error message</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Connection error: <span class="o">(</span><span class="s1">&#39;Unable to connect to any servers&#39;</span>, <span class="o">{</span><span class="s1">&#39;127.0.0.1&#39;</span>: error<span class="o">(</span>111, <span class="s2">&quot;Tried connecting to [(&#39;127.0.0.1&#39;, 9042)]. Last error: Connection refused&quot;</span><span class="o">)})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>solution: update Java Version (Up to Java 8)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[A Little Bird]]></title>
+    <link href="http://k.arttechresearch.com/life/2015/12/27/a-little-bird/"/>
+    <updated>2015-12-27T21:10:14+08:00</updated>
+    <id>http://k.arttechresearch.com/life/2015/12/27/a-little-bird</id>
+    <content type="html"><![CDATA[<h2>小鸟</h2>
+
+<p>小鸟和妈妈住在树林里，有一天，小鸟想到树下看看地面。这时，恰好风雨，树枝与地面平衡，小鸟顺着树枝
+到地面了。</p>
+
+<p>到了地面，小鸟想回到树上，小鸟看看树上，蹦啊跳呀，尝试几次，跃回了树上，回到了最初和妈妈站立的地
+方。小鸟哭了，妈妈转身，看着小鸟，惊讶不已。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Machine Learning From Facebook Tech Talk]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/12/13/machine-learning-from-facebook-tech-talk/"/>
+    <updated>2015-12-13T22:39:48+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/12/13/machine-learning-from-facebook-tech-talk</id>
+    <content type="html"><![CDATA[<p>There were three topics about machine learning on Facebook Tech Talk 2015 (Shanghai).</p>
+
+<ul>
+<li>Ads Click</li>
+<li>Friend Recommendation</li>
+<li>Content Feeds</li>
+</ul>
+
+
+<p>Login Facebook, and go to the user dashboard, content feeds are in the middle, friend
+recommendataion is located at the right sidebar (top right), ads click is located at
+the right sidebar (behind the friend recommendation)</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>|------------------------------------------------------------------|
+</span><span class='line'>|             |                                  |                 |
+</span><span class='line'>|             |                                  |                 |
+</span><span class='line'>|             | content feeds                    | friends         |
+</span><span class='line'>|             |                                  | ads             |
+</span><span class='line'>|             |                                  |                 |
+</span><span class='line'>|------------------------------------------------------------------|</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>1. Ads Click</h2>
+
+<p>NOTE:</p>
+
+<p>If you play a song on piano, some phrases might be easy to play, some might be hard, then
+ you have to practice the hard parts again and again, memorizing the techniques by hands.</p>
+
+<p>For machine learning, somelike as the same. One algorith might be fitted for some data,
+some might be not, for improving the accurency, you&rsquo;d better apply other algorithms which
+are fit these kinds of the dataset to the incorrect outputs, retrain the data again and
+again.</p>
+
+<h3>Overview</h3>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/9f/87/62/9f87621c1ed63452776097be842713de.jpg" /></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/5f/64/13/5f641372540309676f956a4771034e24.jpg" /></p>
+
+<h3>Layer 1</h3>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/d2/73/ad/d273adf93b99c3b0813584976a77f8ce.jpg" /></p>
+
+<h3>Layer 2</h3>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/8d/5d/4f/8d5d4fa8dc863fa4d226c36b91a07bc7.jpg" /></p>
+
+<h3>Model</h3>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/67/4e/26/674e268a17b893d14ac2a2a3d8b507c6.jpg" /></p>
+
+<h3>Outputs</h3>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/f4/b8/7c/f4b87c2a0afda71f33786bfc06bb186b.jpg" /></p>
+
+<p>When a user views the ads once, he/she might not click these ads, but he/she might click
+the ads a few minutes later, then we&rsquo;d better show the ads to the user by time ranges (
+such as 15 minutes later, 1 hour laster etc), that&rsquo;s why we use the queue.</p>
+
+<h3>Evaluation</h3>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/1e/64/a2/1e64a2626be15098c6d7aa13643cc05b.jpg" /></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/3c/ba/02/3cba02e1a2b4d9548c974d86980f94dc.jpg" /></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/fb/5e/6d/fb5e6d541ea0e57a4f303b1ade61ce5c.jpg" /></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/99/69/35/996935ee6fa3a20152453c9c0d20a755.jpg" /></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/0e/68/60/0e6860c4634db9ff38097662332d00c7.jpg" /></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/1b/e7/5b/1be75bf3f92ab17af4a73b0398b2f7a1.jpg" /></p>
+
+<h2>2. Friend Recommendation</h2>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/9e/ec/14/9eec1418e533540b4ec5d64a14f1a137.jpg" /></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/fc/75/b7/fc75b7ce4dd488307eae141995f21db4.jpg" /></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/c0/3b/be/c03bbe0c49f67684b094ddbf5244c02b.jpg" /></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/c4/ee/a9/c4eea9ff648979eb05650e0288458c61.jpg" /></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/69/9e/11/699e1119bc29df039a907fcb3e58a00f.jpg" /></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/cc/fc/ce/ccfcce6747a28857f567caa0dd8d1bf5.jpg" /></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/26/f6/45/26f6453e61da588965960e78c9260fd1.jpg" /></p>
+
+<h2>3. Content Feeds</h2>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/76/67/70/7667706db9c43f7cbe5f672b75daee03.jpg" /></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/0d/83/b9/0d83b9c9cd86bcfde10ff208efcadb79.jpg" /></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/38/dc/72/38dc72e03b726c3025d3dfcb37725d9f.jpg" /></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/4f/22/e9/4f22e9f3d21b05c84d634e3a7dd113d9.jpg" /></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/0b/38/82/0b3882c2b3c956bb8ccf8ff343e2d88a.jpg" /></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/04/38/4e/04384edef1d3726b9b2ea4debd3a3012.jpg" /></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/c0/f9/e5/c0f9e5c432913bbfd310e7f4c9ea6a87.jpg" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[The Land]]></title>
+    <link href="http://k.arttechresearch.com/art/2015/12/13/the-land/"/>
+    <updated>2015-12-13T22:30:29+08:00</updated>
+    <id>http://k.arttechresearch.com/art/2015/12/13/the-land</id>
+    <content type="html"><![CDATA[<p><img src="https://s-media-cache-ak0.pinimg.com/736x/cc/f6/3d/ccf63d47a567fd1a4f8cc1d8164041e6.jpg" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Connecting to MSSQL Using FreeTDS / ODBC in Python]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/11/15/connecting-to-mssql-using-freetds-slash-odbc-in-python/"/>
+    <updated>2015-11-15T21:23:21+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/11/15/connecting-to-mssql-using-freetds-slash-odbc-in-python</id>
+    <content type="html"><![CDATA[<h2>Prequisitions</h2>
+
+<ul>
+<li>OS: Debian 7.8</li>
+<li>Dependencies: freetds-dev, freetd-bin, unixodbc-dev, tdsodbc</li>
+<li>Python packages: pyodbc, sqlalchemy</li>
+</ul>
+
+
+<h2>Steps</h2>
+
+<p>Installing the dependencies</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install freetds-dev freetds-bin unixodbc-dev tdsodbc
+</span><span class='line'><span class="nv">$ </span>pip install pyodbc sqlalchemy
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Configuring <code>/etc/odbcinst.ini</code></p>
+
+<figure class='code'><figcaption><span>/etc/odbcinst.ini</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>FreeTDS<span class="o">]</span>
+</span><span class='line'><span class="nv">Description</span>     <span class="o">=</span> TDS driver <span class="o">(</span>Sybase/MS SQL<span class="o">)</span>
+</span><span class='line'><span class="nv">Driver</span>          <span class="o">=</span> /usr/lib/x86_64-linux-gnu/odbc/libtdsodbc.so
+</span><span class='line'><span class="nv">Setup</span>           <span class="o">=</span> /usr/lib/x86_64-linux-gnu/odbc/libtdsS.so
+</span><span class='line'><span class="nv">CPTimeout</span>       <span class="o">=</span>
+</span><span class='line'><span class="nv">CPReuse</span>         <span class="o">=</span>
+</span><span class='line'><span class="nv">UsageCount</span>      <span class="o">=</span> 1
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Configuring <code>/etc/freetds/freetds.conf</code></p>
+
+<figure class='code'><figcaption><span>/etc/freetds/freetds.conf</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>global<span class="o">]</span>
+</span><span class='line'>    <span class="nv">port</span> <span class="o">=</span> 1433
+</span><span class='line'>    tds <span class="nv">version</span> <span class="o">=</span> 7.0
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Testing</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>tsql -H host_name -p <span class="m">3688</span> -U user_name
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>example: pyodbc</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">pyodbc</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">connect_db</span><span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">DATABASE</span><span class="p">,</span> <span class="n">UID</span><span class="p">,</span> <span class="n">PWD</span><span class="p">,</span> <span class="n">TDS_Version</span><span class="p">):</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">connection</span> <span class="o">=</span> <span class="n">pyodbc</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&#39;DRIVER=FreeTDS; </span><span class="se">\</span>
+</span><span class='line'><span class="s">                             SERVER=HOST; </span><span class="se">\</span>
+</span><span class='line'><span class="s">                             PORT=1433; </span><span class="se">\</span>
+</span><span class='line'><span class="s">                             DATABASE=DATABASE; </span><span class="se">\</span>
+</span><span class='line'><span class="s">                             UID=UID; </span><span class="se">\</span>
+</span><span class='line'><span class="s">                             PWD=PWD; </span><span class="se">\</span>
+</span><span class='line'><span class="s">                             TDS_Version=8.0;&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">cursor</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">cursor</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">query_data</span><span class="p">(</span><span class="n">cursor</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">):</span>
+</span><span class='line'>        <span class="k">print</span> <span class="n">row</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">=</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">HOST</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>                         <span class="c"># server</span>
+</span><span class='line'>    <span class="n">DATABASE</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>                     <span class="c"># database_name</span>
+</span><span class='line'>    <span class="n">UID</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>                          <span class="c"># user_name</span>
+</span><span class='line'>    <span class="n">PWD</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>                          <span class="c"># password</span>
+</span><span class='line'>    <span class="n">TDS_Version</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>                  <span class="c"># TDS_Version</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">cursor</span> <span class="o">=</span> <span class="n">connect_db</span><span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">DATABASE</span><span class="p">,</span> <span class="n">UID</span><span class="p">,</span> <span class="n">PWD</span><span class="p">,</span> <span class="n">TDS_Version</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">query_data</span><span class="p">(</span><span class="n">cursor</span><span class="p">,</span> <span class="s">&#39;select 6 * 7 as [Result];&#39;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>example: sqlalchemy</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">urllib</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">connect_db</span><span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">DATABASE</span><span class="p">,</span> <span class="n">UID</span><span class="p">,</span> <span class="n">PWD</span><span class="p">,</span> <span class="n">TDS_Version</span><span class="p">):</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">db_settings</span> <span class="o">=</span> <span class="s">&#39;DRIVER=FreeTDS; </span><span class="se">\</span>
+</span><span class='line'><span class="s">                   SERVER=</span><span class="si">%s</span><span class="s">; </span><span class="se">\</span>
+</span><span class='line'><span class="s">                   PORT=1433; </span><span class="se">\</span>
+</span><span class='line'><span class="s">                   DATABASE=</span><span class="si">%s</span><span class="s">; </span><span class="se">\</span>
+</span><span class='line'><span class="s">                   UID=</span><span class="si">%s</span><span class="s">; </span><span class="se">\</span>
+</span><span class='line'><span class="s">                   PWD=</span><span class="si">%s</span><span class="s">; </span><span class="se">\</span>
+</span><span class='line'><span class="s">                   TDS_Version=</span><span class="si">%s</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">DATABASE</span><span class="p">,</span> <span class="n">UID</span><span class="p">,</span> <span class="n">PWD</span><span class="p">,</span> <span class="n">TDS_Version</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&#39;mssql+pyodbc:///?odbc_connect&#39;</span> <span class="o">+</span> <span class="n">urllib</span><span class="o">.</span><span class="n">quote_plus</span><span class="p">(</span><span class="n">db_settings</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">engine</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">query_db</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">engine</span><span class="o">.</span><span class="n">excute</span><span class="p">(</span><span class="n">query</span><span class="p">):</span>
+</span><span class='line'>        <span class="k">print</span> <span class="n">row</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">=</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">HOST</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>                         <span class="c"># server</span>
+</span><span class='line'>    <span class="n">DATABASE</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>                     <span class="c"># database_name</span>
+</span><span class='line'>    <span class="n">UID</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>                          <span class="c"># user_name</span>
+</span><span class='line'>    <span class="n">PWD</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>                          <span class="c"># password</span>
+</span><span class='line'>    <span class="n">TDS_Version</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>                  <span class="c"># TDS_Version</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">engine</span> <span class="o">=</span> <span class="n">connect_db</span><span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">DATABASE</span><span class="p">,</span> <span class="n">UID</span><span class="p">,</span> <span class="n">PWD</span><span class="p">,</span> <span class="n">TDS_Version</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">query_data</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="s">&#39;select 6 * 7 as [Result];&#39;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Generating a Self-Signed SSL Certificate]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/11/09/generating-a-self-signed-ssl-certificate/"/>
+    <updated>2015-11-09T22:59:53+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/11/09/generating-a-self-signed-ssl-certificate</id>
+    <content type="html"><![CDATA[<h2>Prequistion</h2>
+
+<p>openssl</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>which openssl
+</span><span class='line'>
+</span><span class='line'><span class="c"># OS X</span>
+</span><span class='line'><span class="nv">$ </span>brew install openssl
+</span><span class='line'>
+</span><span class='line'><span class="c"># Ubuntu</span>
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install openssl
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>1. Private key and certificate signing request</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>openssl genrsa -des3 -passout pass:x -out server.pass.key 2048
+</span><span class='line'><span class="nv">$ </span>openssl rsa -passin pass:x -in server.pass.key -out server.key
+</span><span class='line'><span class="nv">$ </span>rm server.pass.key
+</span><span class='line'><span class="nv">$ </span>openssl req -new -key server.key -out server.csr
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>2. SSL Certificate</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>openssl x509 -req -days <span class="m">365</span> -in server.csr -signkey server.key -out server.crt
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Python Challenge L4]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/11/08/python-challenge-l4/"/>
+    <updated>2015-11-08T21:30:05+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/11/08/python-challenge-l4</id>
+    <content type="html"><![CDATA[<p><a href="">Python Challenge</a></p>
+
+<h2>L4. Linkedlist</h2>
+
+<p><a href="http://www.pythonchallenge.com/pc/def/linkedlist.php">L4</a></p>
+
+<p>urllib may help. DON&rsquo;T TRY ALL NOTHINGS, since it will never end. 400 times is more than enough.</p>
+
+<figure class='code'><figcaption><span>linkedlist.py</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">urllib</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">get_param</span><span class="p">(</span><span class="n">param_value</span><span class="p">):</span>
+</span><span class='line'>    <span class="sd">&quot;&quot;&quot;Return the nothing_value from the specific url</span>
+</span><span class='line'><span class="sd">    &quot;&quot;&quot;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">param</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlencode</span><span class="p">({</span><span class="s">&#39;nothing&#39;</span><span class="p">:</span> <span class="n">param_value</span><span class="p">})</span>
+</span><span class='line'>    <span class="n">url</span> <span class="o">=</span> <span class="s">&quot;http://www.pythonchallenge.com/pc/def/linkedlist.php?</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">param</span>
+</span><span class='line'>    <span class="n">content</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</span><span class='line'>    <span class="c"># split the content by &quot; &quot; and return the last word</span>
+</span><span class='line'>    <span class="n">value</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">value</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">init_value</span> <span class="o">=</span> <span class="s">&quot;12345&quot;</span>
+</span><span class='line'>    <span class="n">param</span> <span class="o">=</span> <span class="n">get_param</span><span class="p">(</span><span class="n">init_value</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">while</span> <span class="n">param</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">print</span> <span class="n">param</span>
+</span><span class='line'>        <span class="n">param</span> <span class="o">=</span> <span class="n">get_param</span><span class="p">(</span><span class="n">param</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The figures are repeating, but once <code>peak.html</code> occurs, update the url with
+<code>peak.html</code>, then jump to L5.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Reading]]></title>
+    <link href="http://k.arttechresearch.com/life/2015/11/08/reading/"/>
+    <updated>2015-11-08T02:48:04+08:00</updated>
+    <id>http://k.arttechresearch.com/life/2015/11/08/reading</id>
+    <content type="html"><![CDATA[<h2>夜读</h2>
+
+<p>读杨绛先生的《我们仨》，在深夜，绝迹于微信之后，重拾夜读，一如去年夜读法语那般，似乎，已是很
+久远的事情，但，这份阅读的宁静，又让时光延长了，一个短暂的夜，变成了杨绛先生一家的一生，如时光
+穿梭机。</p>
+
+<p>我是喜欢杨绛先生的，从读到她最希望得到的法宝是隐身衣，再读到《我们仨》，不过是加深了对杨先生的
+喜爱。杨先生的淡然处世，平安度她过了运动时期。杨先生叙事的文字平实，又很容易想起三毛；杨先生
+和钱钟书先生的感情，再联想到三毛和荷西。不过杨先生和三毛是不同的，杨先生更安宁，三毛是不羁的，
+但两人的文字都真实。</p>
+
+<p>顺着杨先生梦境般的描述，走过了奈何桥，再回到旧时光，回忆的点点滴滴，陪伴着老人剩余的生命，这
+样的回忆，应该也是甜蜜的，只是，对一位92岁高龄的老人，或许意味着更多，我很想了解一位已然104岁
+的老人现时的生活。到底是有多淡然的态度，才能波澜不惊地面对生活的起伏动荡；但，无论多淡然的人，
+在面对生离死别、生老病死这样的自然规律和现象时，还是会无助的。</p>
+
+<p>但愿这样的夜读继续。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Python Challenge L3]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/11/07/python-challenge-l3/"/>
+    <updated>2015-11-07T20:35:25+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/11/07/python-challenge-l3</id>
+    <content type="html"><![CDATA[<p><a href="">Python Challenge</a></p>
+
+<h2>L3. Equality</h2>
+
+<p><a href="http://www.pythonchallenge.com/pc/def/equality.html">L3</a></p>
+
+<p>One small letter, surrounded by EXACTLY three big bodyguards on each of its
+sides.</p>
+
+<figure class='code'><figcaption><span>equality.py</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">re</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">search_equality</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+</span><span class='line'>    <span class="sd">&quot;&quot;&quot; Return the letter if that matches the pattern, else return None</span>
+</span><span class='line'><span class="sd">    &quot;&quot;&quot;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c"># pattern: [1 lower](3 uppers)[1 lower](3 uppers)[1 lower], e.g.: aBBDiLDMx</span>
+</span><span class='line'>    <span class="n">pattern</span> <span class="o">=</span> <span class="s">&quot;[a-z][A-Z][A-Z][A-Z][a-z][A-Z][A-Z][A-Z][a-z]&quot;</span>
+</span><span class='line'>    <span class="n">equality</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">equality</span><span class="p">:</span>
+</span><span class='line'>        <span class="c"># just return the lowercase on the position 5 (index[4])</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">equality</span><span class="o">.</span><span class="n">group</span><span class="p">()[</span><span class="mi">4</span><span class="p">]</span>
+</span><span class='line'>    <span class="k">else</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">return</span> <span class="bp">None</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">text_path</span> <span class="o">=</span> <span class="s">&quot;./data/3_equality.txt&quot;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">equalities</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class='line'>    <span class="n">text</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">text_path</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
+</span><span class='line'>        <span class="c"># search the letters those matching the patterns</span>
+</span><span class='line'>        <span class="n">equality</span> <span class="o">=</span> <span class="n">search_equality</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+</span><span class='line'>        <span class="c"># just append the valid letters, None exclusive</span>
+</span><span class='line'>        <span class="n">equalities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">equality</span><span class="p">)</span> <span class="k">if</span> <span class="n">equality</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">equalities</span>
+</span><span class='line'>    <span class="n">text</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">print</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">letter</span> <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">equalities</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>output</p>
+
+<figure class='code'><figcaption><span>equality ouptut</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">linkedlist</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Update the url with <code>linkedlist</code>, then jump to a new page with <code>linkedlist.php</code>,
+update the url with <code>linkedlist.php</code>, then jump to L4.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Configurating Colortheme for iTerm]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/11/05/configurating-colortheme-for-iterm/"/>
+    <updated>2015-11-05T23:08:34+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/11/05/configurating-colortheme-for-iterm</id>
+    <content type="html"><![CDATA[<p>The colortheme files of iTerm is <code>*.itermcolors</code>, everyone can create or update a colortheme and
+then import it to iTerm. Alternatively, you can download the colorthemes which are shared in
+public and then update them in iTerm.</p>
+
+<p>If Vim is set as the editor, it would be better to keep the colortheme as the same as iTerm.</p>
+
+<h2>1. Colorthemes</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git clone git://github.com/altercation/solarized.git
+</span><span class='line'><span class="nv">$ </span>git clone https://github.com/mbadolato/iTerm2-Color-Schemes.git
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>2. iTerm</h2>
+
+<ul>
+<li>iTerm -> Preferences -> Profiles -> Colors -> Load Presets -> import</li>
+</ul>
+
+
+<p>import the colorthemes</p>
+
+<ul>
+<li>if solarized: iterm2-colors-soloarized</li>
+<li>if iTerm2-Color-Schemes: <code>*.itermcolors</code></li>
+</ul>
+
+
+<h2>3. .bash_profile</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>brew install coreutils
+</span><span class='line'><span class="nv">$ </span>vim ~/.bash_profile             <span class="c"># add export clicolor</span>
+</span><span class='line'><span class="nv">$ </span><span class="nb">source</span> ~/.bash_profile
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>.bash_profile</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">export </span><span class="nv">CLICOLOR</span><span class="o">=</span>1
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Preview</p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/d7/ba/d3/d7bad3e5432d03d2330b88f49dc4b488.jpg" /></p>
+
+<h2>4. vim</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># copy the colorscheme</span>
+</span><span class='line'><span class="nv">$ </span>mkdir ~/.vim/colors
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> ~/.vim/colors
+</span><span class='line'><span class="nv">$ </span>cp /path/to/solarized/vim-colors-solarized/colors/solarized.vim ./
+</span><span class='line'>
+</span><span class='line'><span class="c"># update the .vimrc</span>
+</span><span class='line'><span class="nv">$ </span>vim ~/.vimrc
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>.vimrc</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>syntax <span class="nb">enable</span>
+</span><span class='line'><span class="nb">set </span><span class="nv">background</span><span class="o">=</span>dark
+</span><span class='line'>colorscheme solarized
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Preview</p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/31/f1/93/31f19309e06e9affcd25b81f0b8ddc06.jpg" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Python Challenge L0-L2]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/11/05/python-challenge-l0-l2/"/>
+    <updated>2015-11-05T16:07:22+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/11/05/python-challenge-l0-l2</id>
+    <content type="html"><![CDATA[<p><a href="http://www.pythonchallenge.com">Python Challenge</a></p>
+
+<h2>L0</h2>
+
+<p><a href="http://www.pythonchallenge.com/pc/def/0.html">L0</a></p>
+
+<p>Hint: try to change the URL address.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="mi">2</span><span class="o">**</span><span class="mi">38</span>
+</span><span class='line'><span class="mi">274877906944</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Update the url.</p>
+
+<h2>L1. Map</h2>
+
+<p><a href="http://www.pythonchallenge.com/pc/def/map.html">L1</a></p>
+
+<p>everybody thinks twice before solving this.</p>
+
+<p>solution</p>
+
+<figure class='code'><figcaption><span>map.py</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">from</span> <span class="nn">string</span> <span class="kn">import</span> <span class="n">maketrans</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">alphabet</span> <span class="o">=</span> <span class="s">&quot;abcdefghijklmnopqrstuvwxyz&quot;</span>
+</span><span class='line'><span class="n">alphabet_decode</span> <span class="o">=</span> <span class="s">&quot;cdefghijklmnopqrstuvwxyzab&quot;</span>
+</span><span class='line'><span class="n">map_table</span> <span class="o">=</span> <span class="n">maketrans</span><span class="p">(</span><span class="n">alphabet</span><span class="p">,</span> <span class="n">alphabet_decode</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">strings</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+</span><span class='line'><span class="s">    g fmnc wms bgblr rpylqjyrc gr zw fylb. rfyrq ufyr amknsrcpq ypc dmp. bmgle gr gl zw fylb gq glcddgagclr ylb rfyr&#39;q ufw rfgq rcvr gq qm jmle. sqgle qrpgle.kyicrpylq() gq pcamkkclbcb. lmu ynnjw ml rfc spj.</span>
+</span><span class='line'><span class="s">    &quot;&quot;&quot;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">url</span> <span class="o">=</span> <span class="s">&quot;map&quot;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">print</span> <span class="n">strings</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">map_table</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">print</span> <span class="n">url</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">map_table</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>result</p>
+
+<figure class='code'><figcaption><span>map outputs</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">i</span> <span class="n">hope</span> <span class="n">you</span> <span class="n">didnt</span> <span class="n">translate</span> <span class="n">it</span> <span class="n">by</span> <span class="n">hand</span><span class="o">.</span> <span class="n">thats</span> <span class="n">what</span> <span class="n">computers</span> <span class="n">are</span> <span class="k">for</span><span class="o">.</span> <span class="n">doing</span> <span class="n">it</span> <span class="ow">in</span> <span class="n">by</span> <span class="n">hand</span> <span class="ow">is</span> <span class="n">inefficient</span> <span class="ow">and</span> <span class="n">that</span><span class="s">&#39;s why this text is so long. using string.maketrans() is recommended. now apply on the url.</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">ocr</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then update the url with <code>ocr</code>.</p>
+
+<h2>L2. OCR</h2>
+
+<p><a href="http://www.pythonchallenge.com/pc/def/ocr.html">L2</a></p>
+
+<p>recognize the characters. maybe they are in the book,
+but MAYBE they are in the page source.</p>
+
+<figure class='code'><figcaption><span>ocr.py</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c"># dictionary: http://www.math.sjsu.edu/~foster/dictionary.txt</span>
+</span><span class='line'><span class="c"># download the dictionary for mapping the words</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">print_sorted_keys</span><span class="p">(</span><span class="n">dictionary</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">print</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">dictionary</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">dictionary</span><span class="p">:</span> <span class="n">dictionary</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">print_sorted_values</span><span class="p">(</span><span class="n">dictionary</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">print</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">dictionary</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">dictionary</span><span class="p">:</span> <span class="n">dictionary</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">generate_word_dict</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">word_counts</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">text</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+</span><span class='line'>            <span class="k">if</span> <span class="n">char</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">word_counts</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+</span><span class='line'>                <span class="n">word_counts</span><span class="p">[</span><span class="n">char</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>            <span class="k">else</span><span class="p">:</span>
+</span><span class='line'>                <span class="n">word_counts</span><span class="p">[</span><span class="n">char</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span class='line'>    <span class="n">text</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">word_counts</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">mapping</span><span class="p">(</span><span class="n">letters</span><span class="p">,</span> <span class="n">dictbook</span><span class="p">):</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">words</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">dictbook</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">dictbook</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">dictbook</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
+</span><span class='line'>        <span class="c"># if set(line.strip()) == set(letters):</span>
+</span><span class='line'>        <span class="c">#     words.append(line.strip())</span>
+</span><span class='line'>        <span class="n">words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="k">if</span> <span class="nb">set</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="o">==</span> <span class="nb">set</span><span class="p">(</span><span class="n">letters</span><span class="p">)</span> <span class="k">else</span> <span class="n">words</span>
+</span><span class='line'>    <span class="n">dictbook</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">words</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">file_path</span> <span class="o">=</span> <span class="s">&#39;./data/2_ocr.txt&#39;</span>
+</span><span class='line'>    <span class="n">dictbook</span> <span class="o">=</span> <span class="s">&quot;./data/dictionary.txt&quot;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c"># find the letters</span>
+</span><span class='line'>    <span class="n">word_counts</span> <span class="o">=</span> <span class="n">generate_word_dict</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">print_sorted_keys</span><span class="p">(</span><span class="n">word_counts</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">print_sorted_values</span><span class="p">(</span><span class="n">word_counts</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c"># look for a word from a dictionary</span>
+</span><span class='line'>    <span class="n">letters</span> <span class="o">=</span> <span class="s">&quot;aeilquty&quot;</span>
+</span><span class='line'>    <span class="n">words</span> <span class="o">=</span> <span class="n">mapping</span><span class="p">(</span><span class="n">letters</span><span class="p">,</span> <span class="n">dictbook</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">print</span> <span class="n">words</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>result</p>
+
+<figure class='code'><figcaption><span>ocr outputs</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="p">[(</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;e&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;i&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;l&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;q&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;u&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;t&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;y&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">,</span> <span class="mi">1220</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;^&#39;</span><span class="p">,</span> <span class="mi">6030</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;*&#39;</span><span class="p">,</span> <span class="mi">6034</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;&amp;&#39;</span><span class="p">,</span> <span class="mi">6043</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;$&#39;</span><span class="p">,</span> <span class="mi">6046</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;{&#39;</span><span class="p">,</span> <span class="mi">6046</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;+&#39;</span><span class="p">,</span> <span class="mi">6066</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;!&#39;</span><span class="p">,</span> <span class="mi">6079</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;%&#39;</span><span class="p">,</span> <span class="mi">6104</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;}&#39;</span><span class="p">,</span> <span class="mi">6105</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;[&#39;</span><span class="p">,</span> <span class="mi">6108</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;_&#39;</span><span class="p">,</span> <span class="mi">6112</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;#&#39;</span><span class="p">,</span> <span class="mi">6115</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;]&#39;</span><span class="p">,</span> <span class="mi">6152</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;(&#39;</span><span class="p">,</span> <span class="mi">6154</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;@&#39;</span><span class="p">,</span> <span class="mi">6157</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;)&#39;</span><span class="p">,</span> <span class="mi">6186</span><span class="p">)]</span>
+</span><span class='line'><span class="p">[</span><span class="s">&#39;equality&#39;</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Update the url with <code>equality</code>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Business Models]]></title>
+    <link href="http://k.arttechresearch.com/life/2015/10/26/business-models/"/>
+    <updated>2015-10-26T22:38:09+08:00</updated>
+    <id>http://k.arttechresearch.com/life/2015/10/26/business-models</id>
+    <content type="html"><![CDATA[<h2>商业模式</h2>
+
+<p>2008那年坐地铁，经常会碰到免费派报纸还送一些小礼品（水或纸巾等）的情况，当时还好奇，报纸
+从何盈利，然后知道了广告在支持着报社、杂志社的日常运营。相比小时候每天订阅的报纸，当时
+的商业模式，也许也是时代和行业的一种革新。</p>
+
+<p>再到后来，接触到互联网的商业模式，更是五花八门了。恰好有人提起，随手记记自己知道的免费的商业模式。</p>
+
+<h3>1. 广告</h3>
+
+<p>2008年前，这可能是大多数互联网企业的盈利方式之一，尤其是网络刚普及的时候，大量网站如雨后
+春笋，早起的鸟儿，只要保持网站的一定流量，广告收益足以维持网站运营。那时也有很多站长自立
+门户。</p>
+
+<p>典型企业：谷歌广告</p>
+
+<h3>2. 佣金</h3>
+
+<p>媒介平台常用的一种方式，平台类似集市，只是提供一个载体，平台用户分成两类，平台在交易金中
+抽取提成。提成一般是交易的百分之几。用户可以是买家和卖家，雇佣者和被雇佣者，教师和学生等。</p>
+
+<p>典型企业：eBay、Freelancer。</p>
+
+<h3>3. 阶梯式</h3>
+
+<p>有些以用户作分类，有些以功能作分类。如果是以用户作分类，比如个人用户和企业用户，普通会员和
+高级会员等；如果是以功能作分类，基础功能免费，高级功能（附加增值功能）付费。</p>
+
+<p>典型企业：LinkedIn</p>
+
+<h3>4. 捐赠</h3>
+
+<p>接受个人或机构的捐款。</p>
+
+<p>典型企业：维基百科</p>
+
+<h3>5. 初创企业</h3>
+
+<p>初创企业为了培养早期用户，也会提供免费的产品和服务，尤其是这两年，移动端的叫车软件和外卖软件
+早期一般会给用户补贴，鼓励用户使用新产品，以培养早期的一批用户。移动端的互联网金融，也有类似的
+现象。</p>
+
+<p>典型企业：滴滴打车、淘点点</p>
+
+<h3>6. 增值服务</h3>
+
+<p>给主流用户提供免费的产品，然后挖掘用户价值，给特定的企业提供相应的产品和服务。比如在线教育平台，
+除了提供免费课程外，认证证书付费外，还为企业提供人才（猎头角色）。也有一些数据公司，给用户提供一
+种产品，然后给特定企业提供数据服务。</p>
+
+<p>典型企业：Coursera</p>
+
+<h3>7. 咨询服务</h3>
+
+<p>一些开源的软件，软件是免费的，但咨询和方案是付费的。</p>
+
+<p>典型企业：Linux、Ｒ、Hadoop</p>
+
+<h3>8. 线下业务</h3>
+
+<p>有些站点，线上平台只是交流的接口，线下业务才是盈利的核心。这种情况，似乎传统行业转互联网企业
+的情况比较多。比如一些在线二手车交易平台，公司内部会有专人收购这类车，再转手卖出；比如一些电商
+平台，线上只是订单，线下产品配送，售卖产品才是核心。</p>
+
+<p>典型企业：亚马逊在线商店</p>
+
+<h3>总结</h3>
+
+<p>企业的盈利模式，免费只是表象，背后一定有其他业务在支撑着运营。而在互联网企业中，企业的盈利模式
+很可能是多样的，是几种方式的结合。</p>
+
+<p>回到传统行业或传统的商业模式：提供一种或多种付费产品和（或）付费服务，互联网企业的“免费”的盈利
+方式，几乎都是一种或几种其他业务，支撑着一个大容量的免费的用户平台。从这点看，还是很遵守八二法
+则的。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Blogging]]></title>
+    <link href="http://k.arttechresearch.com/life/2015/10/24/blogging/"/>
+    <updated>2015-10-24T23:36:19+08:00</updated>
+    <id>http://k.arttechresearch.com/life/2015/10/24/blogging</id>
+    <content type="html"><![CDATA[<h2>日志</h2>
+
+<p>最近一直在整理日志，从2005年至今，从最初的第三方平台，到后来自己搭建平台；从博客的新兴，
+到如今的末落；从web 1.0到2.0，再到移动时代；从读书年代，到如今离校多年，无论技术如何更新
+换代，最怀念的依然是博客时代：当年的博友，当年的讨论，还有当年前辈们的指引。</p>
+
+<p>10年前，曾经和博友说：“如果可以在这个博客呆10年，不知10年后的我们会怎样”，在经历了初期试
+用各种博客平台，到后来选定后的安定一处，我真的在那个博客呆了整整10年，看着平台的兴盛到末
+落，也看着一家互联网企业从当年国内的领军到如今的奄奄。10年，有太多的故事，无论从哪个角度
+切入，似乎都是一部漫长的故事。但，当年一位博友说，回忆录需要在临终前写，倒叙的方式，所以，
+现在的自己还不适合回忆。有趣的是，当年博友们的年纪，也是我现在的年纪，回想当年说过的一些
+话，似乎也是一一验证，我依然非常想念那时的朋友，尤其是如今微信盛行的年代，博客其实更适合
+更加深入的思考，写短了不好看，但写太长似乎也不能频频更新，当年适时而生的轻博客，在国内也
+只算是昙花一现，一下子就被微博和后来的微信淹没。</p>
+
+<p>很多话想说的时候，总会是无言收场，尤其是这两年体会到人生、命运以及日常现象的多样性和复杂性，
+似乎站在每个人同样的角度看问题，一切都成了可理解，当事物变得可理解的时候，同时觉得批判反而是
+不合适的，便更加觉得沉默反而是平和安宁的方式。在网络写文章是有风险的，尤其是见过互联网大大小
+小的人肉搜索和语言暴力事件之后，理性的讨论需要以尊重和共识为前提。</p>
+
+<p>我不确定博客是否在以后会有复兴的时代，但短期肯定是不会了。微博和微信虽然便捷，也非常适合记录
+一闪而过的灵感；而更深入的思考，我依然以为博客是适合的方式。我从来没想过以营销的方式来运营这
+个地方，一如过去只是一群相熟的博友的笔头交流那般。太热闹了容易失真。</p>
+
+<p>断不成续，暂且以此，作为这个地方的起点吧。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Autumn]]></title>
+    <link href="http://k.arttechresearch.com/art/2015/10/24/autumn/"/>
+    <updated>2015-10-24T16:32:23+08:00</updated>
+    <id>http://k.arttechresearch.com/art/2015/10/24/autumn</id>
+    <content type="html"><![CDATA[<p><img src="https://s-media-cache-ak0.pinimg.com/736x/ac/63/a3/ac63a33e86737a04e21097f0ed397774.jpg
+" /></p>
+
+<p>Tool: Autodesk Pixlr</p>
+]]></content>
+  </entry>
+  
+</feed>

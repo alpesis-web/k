@@ -1,0 +1,779 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Data APIs - K</title>
+  <meta name="author" content="K">
+
+  
+  <meta name="description" content="1. Yelp API installation 1
+$ pip install rauth example 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://k.arttechresearch.com/tech/2014/07/13/data-apis/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="K" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/libs/jquery-1.9.1.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+
+  <script src="/javascripts/libs/jquery.tableofcontents.min.js" type="text/javascript"></script>
+  <script src="/javascripts/toc_generator.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  <!-- MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+</head>
+
+<body   >
+  <header role="banner"><ul class="soc">
+
+  
+    <li><a class="soc-github" href="https://github.com/KellyChan"></a></li>
+  
+
+  
+    <li><a class="soc-twitter" href="https://twitter.com/kwailamchan"></a></li>
+  
+
+  
+    <li><a class="soc-pinterest" href="https://www.pinterest.com/wailamchan/"></a></li>
+  
+
+  
+    <li><a class="soc-slideshare" href="http://www.slideshare.net/wailamchan"></a></li>
+  
+
+  
+    <li><a class="soc-email1 soc-icon-last" href="mailto:support@arttechresearch.com"></a></li>
+  
+</ul>
+
+<hgroup>
+  <h1><a href="/">K</a></h1>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="k.arttechresearch.com">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/tech">Tech</a></li>
+  <li><a href="/art">Art</a></li>
+  <li><a href="/life">Life</a></li>
+  <li><a href="/archives">Archives</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <li><a href="/devkits">Devkits</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+
+    
+      <h1 class="entry-title">Data APIs</h1>
+    
+
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-07-13T02:39:10+08:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>2:39 am</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://k.arttechresearch.com">Comments</a>
+        
+      </p>
+    
+
+  </header>
+
+
+
+  <div class="entry-content"><h2>1. Yelp API</h2>
+
+<p>installation</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>pip install rauth
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>example</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">time</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">rauth</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">pandas</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">simplejson</span> <span class="kn">as</span> <span class="nn">json</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">defineParams</span><span class="p">(</span><span class="n">latitude</span><span class="p">,</span> <span class="n">longitude</span><span class="p">):</span>
+</span><span class='line'>    <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span class='line'>    <span class="n">params</span><span class="p">[</span><span class="s">&quot;term&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;restaurants&quot;</span>
+</span><span class='line'>    <span class="n">params</span><span class="p">[</span><span class="s">&quot;ll&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;{},{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">latitude</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">longitude</span><span class="p">))</span>
+</span><span class='line'>    <span class="n">params</span><span class="p">[</span><span class="s">&quot;radius_filter&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;2000&quot;</span>
+</span><span class='line'>    <span class="n">params</span><span class="p">[</span><span class="s">&quot;limit&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;10&quot;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">params</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">getData</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c"># setting up personal Yelp account</span>
+</span><span class='line'>    <span class="n">consumer_key</span> <span class="o">=</span> <span class="s">&quot;XXX&quot;</span>
+</span><span class='line'>    <span class="n">consumer_secret</span> <span class="o">=</span> <span class="s">&quot;XXXX&quot;</span>
+</span><span class='line'>    <span class="n">token</span> <span class="o">=</span> <span class="s">&quot;XXX&quot;</span>
+</span><span class='line'>    <span class="n">token_secret</span> <span class="o">=</span> <span class="s">&quot;XXX&quot;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">session</span> <span class="o">=</span> <span class="n">rauth</span><span class="o">.</span><span class="n">OAuth1Session</span><span class="p">(</span><span class="n">consumer_key</span> <span class="o">=</span> <span class="n">consumer_key</span><span class="p">,</span>
+</span><span class='line'>                                  <span class="n">consumer_secret</span> <span class="o">=</span> <span class="n">consumer_secret</span><span class="p">,</span>
+</span><span class='line'>                                  <span class="n">access_token</span> <span class="o">=</span> <span class="n">token</span><span class="p">,</span>
+</span><span class='line'>                                  <span class="n">access_token_secret</span> <span class="o">=</span> <span class="n">token_secret</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">request</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;http://api.yelp.com/v2/search&quot;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c"># transforming the data in JSON format</span>
+</span><span class='line'>    <span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</span><span class='line'>    <span class="n">session</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">data</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">locations</span> <span class="o">=</span> <span class="p">[(</span><span class="mf">39.98</span><span class="p">,</span><span class="o">-</span><span class="mf">82.98</span><span class="p">),(</span><span class="mf">42.24</span><span class="p">,</span><span class="o">-</span><span class="mf">83.61</span><span class="p">),(</span><span class="mf">41.33</span><span class="p">,</span><span class="o">-</span><span class="mf">89.13</span><span class="p">)]</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">apiData</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">latitude</span><span class="p">,</span> <span class="n">longitude</span> <span class="ow">in</span> <span class="n">locations</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">params</span> <span class="o">=</span> <span class="n">defineParams</span><span class="p">(</span><span class="n">latitude</span><span class="p">,</span> <span class="n">longitude</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">apiData</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">getData</span><span class="p">(</span><span class="n">params</span><span class="p">))</span>
+</span><span class='line'>        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c">#print len(apiData)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">apiData</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+</span><span class='line'>        <span class="k">print</span> <span class="n">key</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">apiData</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">print</span> <span class="n">record</span><span class="p">[</span><span class="s">&quot;businesses&quot;</span><span class="p">]</span>
+</span><span class='line'>        <span class="k">print</span> <span class="n">record</span><span class="p">[</span><span class="s">&#39;total&#39;</span><span class="p">]</span>
+</span><span class='line'>        <span class="k">print</span> <span class="n">record</span><span class="p">[</span><span class="s">&#39;region&#39;</span><span class="p">]</span>
+</span><span class='line'>    <span class="k">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">apiData</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span> <span class="o">*</span> <span class="s">&#39; &#39;</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span class='line'>    <span class="n">main</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>2. Factual API</h2>
+
+<p>installation</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>pip install factual-api
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>example</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">factual</span> <span class="kn">import</span> <span class="n">Factual</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">factual.utils</span> <span class="kn">import</span> <span class="n">circle</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">Database</span><span class="p">:</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">secret</span><span class="p">):</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="n">key</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">secret</span> <span class="o">=</span> <span class="n">secret</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">Factual</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">secret</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">schema</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tableName</span><span class="p">):</span>
+</span><span class='line'>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="n">tableName</span><span class="p">)</span><span class="o">.</span><span class="n">schema</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tableName</span><span class="p">):</span>
+</span><span class='line'>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="n">tableName</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tableName</span><span class="p">,</span> <span class="n">searchContent</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">table</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="n">tableName</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">tableQuery</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">searchContent</span><span class="p">)</span><span class="o">.</span><span class="n">include_count</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">tableQuery</span><span class="o">.</span><span class="n">included_rows</span><span class="p">(),</span> \
+</span><span class='line'>               <span class="n">tableQuery</span><span class="o">.</span><span class="n">total_row_count</span><span class="p">(),</span> \
+</span><span class='line'>               <span class="n">tableQuery</span><span class="o">.</span><span class="n">data</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tableName</span><span class="p">,</span> <span class="n">condition</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">table</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="n">tableName</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">data</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">filters</span><span class="p">(</span><span class="n">condition</span><span class="p">)</span><span class="o">.</span><span class="n">data</span><span class="p">()</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">data</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">search_filters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tableName</span><span class="p">,</span> <span class="n">searchContent</span><span class="p">,</span> <span class="n">condition</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">table</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="n">tableName</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">data</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">searchContent</span><span class="p">)</span><span class="o">.</span><span class="n">filters</span><span class="p">(</span><span class="n">condition</span><span class="p">)</span><span class="o">.</span><span class="n">data</span><span class="p">()</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">data</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">search_filters_paging</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tableName</span><span class="p">,</span> <span class="n">searchContent</span><span class="p">,</span> <span class="n">condition</span><span class="p">,</span> <span class="n">pages</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">table</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="n">tableName</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">data</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">searchContent</span><span class="p">)</span><span class="o">.</span><span class="n">filters</span><span class="p">(</span><span class="n">condition</span><span class="p">)</span><span class="o">.</span><span class="n">offset</span><span class="p">(</span><span class="n">pages</span><span class="p">)</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="n">pages</span><span class="p">)</span><span class="o">.</span><span class="n">data</span><span class="p">()</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">data</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">geofilters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tableName</span><span class="p">,</span> <span class="n">searchContent</span><span class="p">,</span> <span class="n">latitude</span><span class="p">,</span> <span class="n">longitude</span><span class="p">,</span> <span class="n">radius</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">table</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="n">tableName</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">data</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">searchContent</span><span class="p">)</span><span class="o">.</span><span class="n">geo</span><span class="p">(</span><span class="n">circle</span><span class="p">(</span><span class="n">latitude</span><span class="p">,</span> <span class="n">longitude</span><span class="p">,</span> <span class="n">radius</span><span class="p">))</span><span class="o">.</span><span class="n">data</span><span class="p">()</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">data</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">factual</span> <span class="o">=</span> <span class="n">Database</span><span class="p">(</span><span class="s">&#39;YOUR_KEY&#39;</span><span class="p">,</span> <span class="s">&#39;YOUR_SECRET&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">schemaPlaces</span> <span class="o">=</span> <span class="n">factual</span><span class="o">.</span><span class="n">schema</span><span class="p">(</span><span class="s">&#39;places&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="c">#pprint(schemaPlaces)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">places</span> <span class="o">=</span> <span class="n">factual</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="s">&#39;places&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="c">#print places</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">rows</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">factual</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&#39;places&#39;</span><span class="p">,</span> <span class="s">&#39;century city mall&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="c">#print rows</span>
+</span><span class='line'>    <span class="c">#print N</span>
+</span><span class='line'>    <span class="c">#pprint(data)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c">#  search restaurants (http://developer.factual.com/working-with-categories/)</span>
+</span><span class='line'>    <span class="n">data</span> <span class="o">=</span> <span class="n">factual</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="s">&#39;places&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s">&#39;category_ids&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;$includes&#39;</span><span class="p">:</span> <span class="mi">347</span><span class="p">}})</span>
+</span><span class='line'>    <span class="c">#pprint(data)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c">#  search restaurants or bars</span>
+</span><span class='line'>    <span class="n">data</span> <span class="o">=</span> <span class="n">factual</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="s">&#39;places&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s">&#39;category_ids&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;$includes_any&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">312</span><span class="p">,</span><span class="mi">347</span><span class="p">]}})</span>
+</span><span class='line'>    <span class="c">#pprint(data)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c">#  search entertainment venues but NOT adult entertainment</span>
+</span><span class='line'>    <span class="n">filters</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;$and&#39;</span><span class="p">:</span> <span class="p">[</span> \
+</span><span class='line'>                         <span class="p">{</span><span class="s">&#39;category_ids&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;$includes&#39;</span><span class="p">:</span> <span class="mi">317</span><span class="p">}},</span> \
+</span><span class='line'>                         <span class="p">{</span><span class="s">&#39;category_ids&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;$excludes&#39;</span><span class="p">:</span> <span class="mi">318</span><span class="p">}}</span>  \
+</span><span class='line'>                       <span class="p">]</span>
+</span><span class='line'>              <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">data</span> <span class="o">=</span> <span class="n">factual</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="s">&#39;places&#39;</span><span class="p">,</span> <span class="n">filters</span><span class="p">)</span>
+</span><span class='line'>    <span class="c">#pprint(data)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c">#  search for Starbucks in Los Angeles</span>
+</span><span class='line'>    <span class="n">tableName</span> <span class="o">=</span> <span class="s">&#39;places&#39;</span>
+</span><span class='line'>    <span class="n">searchContent</span> <span class="o">=</span> <span class="s">&#39;starbucks&#39;</span>
+</span><span class='line'>    <span class="n">filters</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;locality&#39;</span><span class="p">:</span> <span class="s">&#39;los angeles&#39;</span><span class="p">}</span>
+</span><span class='line'>    <span class="n">data</span> <span class="o">=</span> <span class="n">factual</span><span class="o">.</span><span class="n">search_filters</span><span class="p">(</span><span class="n">tableName</span><span class="p">,</span> <span class="n">searchContent</span><span class="p">,</span> <span class="n">filters</span><span class="p">)</span>
+</span><span class='line'>    <span class="c">#pprint(data)</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>    <span class="c">#  search for starbucks in Los Angeles or Santa Monica </span>
+</span><span class='line'>    <span class="n">tableName</span> <span class="o">=</span> <span class="s">&#39;places&#39;</span>
+</span><span class='line'>    <span class="n">searchContent</span> <span class="o">=</span> <span class="s">&#39;starbucks&#39;</span>
+</span><span class='line'>    <span class="n">filters</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;$or&#39;</span><span class="p">:[{</span><span class="s">&#39;locality&#39;</span><span class="p">:{</span><span class="s">&#39;$eq&#39;</span><span class="p">:</span><span class="s">&#39;los angeles&#39;</span><span class="p">}},{</span><span class="s">&#39;locality&#39;</span><span class="p">:{</span><span class="s">&#39;$eq&#39;</span><span class="p">:</span><span class="s">&#39;santa monica&#39;</span><span class="p">}}]}</span>
+</span><span class='line'>    <span class="n">data</span> <span class="o">=</span> <span class="n">factual</span><span class="o">.</span><span class="n">search_filters</span><span class="p">(</span><span class="n">tableName</span><span class="p">,</span> <span class="n">searchContent</span><span class="p">,</span> <span class="n">filters</span><span class="p">)</span>
+</span><span class='line'>    <span class="c">#pprint(data)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c">#  paging </span>
+</span><span class='line'>    <span class="n">tableName</span> <span class="o">=</span> <span class="s">&#39;places&#39;</span>
+</span><span class='line'>    <span class="n">searchContent</span> <span class="o">=</span> <span class="s">&#39;starbucks&#39;</span>
+</span><span class='line'>    <span class="n">filters</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;$or&#39;</span><span class="p">:[{</span><span class="s">&#39;locality&#39;</span><span class="p">:{</span><span class="s">&#39;$eq&#39;</span><span class="p">:</span><span class="s">&#39;los angeles&#39;</span><span class="p">}},{</span><span class="s">&#39;locality&#39;</span><span class="p">:{</span><span class="s">&#39;$eq&#39;</span><span class="p">:</span><span class="s">&#39;santa monica&#39;</span><span class="p">}}]}</span>
+</span><span class='line'>    <span class="n">data</span> <span class="o">=</span> <span class="n">factual</span><span class="o">.</span><span class="n">search_filters_paging</span><span class="p">(</span><span class="n">tableName</span><span class="p">,</span> <span class="n">searchContent</span><span class="p">,</span> <span class="n">filters</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+</span><span class='line'>    <span class="c">#pprint(data)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c"># Geo filter:</span>
+</span><span class='line'>    <span class="c">#  coffee near the Factual office</span>
+</span><span class='line'>    <span class="n">tableName</span> <span class="o">=</span> <span class="s">&#39;places&#39;</span>
+</span><span class='line'>    <span class="n">searchContent</span> <span class="o">=</span> <span class="s">&#39;coffee&#39;</span>
+</span><span class='line'>    <span class="n">latitude</span> <span class="o">=</span> <span class="mf">34.058583</span>
+</span><span class='line'>    <span class="n">longitude</span> <span class="o">=</span> <span class="o">-</span><span class="mf">118.416582</span>
+</span><span class='line'>    <span class="n">radius</span> <span class="o">=</span> <span class="mi">1000</span>
+</span><span class='line'>    <span class="n">data</span> <span class="o">=</span> <span class="n">factual</span><span class="o">.</span><span class="n">geofilters</span><span class="p">(</span><span class="n">tableName</span><span class="p">,</span> <span class="n">searchContent</span><span class="p">,</span> <span class="n">latitude</span><span class="p">,</span> <span class="n">longitude</span><span class="p">,</span> <span class="n">radius</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">pprint</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+</span><span class='line'>    <span class="n">main</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+
+
+
+
+
+
+  <footer>
+
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">K</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-07-13T02:39:10+08:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>2:39 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/tech/'>tech</a>
+  
+</span>
+
+
+      
+
+<span class="categories">
+  
+    <a class='tag' href='/tags/api/'>api</a>, <a class='tag' href='/tags/data/'>data</a>, <a class='tag' href='/tags/python/'>python</a>
+  
+</span>
+
+
+    </p>
+
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://k.arttechresearch.com/tech/2014/07/13/data-apis/" data-via="kwailamchan" data-counturl="http://k.arttechresearch.com/tech/2014/07/13/data-apis/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/tech/2014/07/12/downloading-images-by-batch/" title="Previous Post: Downloading Images by Batch">&laquo; Downloading Images by Batch</a>
+      
+      
+        <a class="basic-alignment right" href="/tech/2014/07/13/regular-expression/" title="Next Post: Regular Expression">Regular Expression &raquo;</a>
+      
+    </p>
+
+  </footer>
+
+</article>
+
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Tech</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/tech/2015/12/31/python-sphinx/">Python Sphinx</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/12/30/web-apis/">Web APIs</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/12/30/framework-vs-library/">Framework vs Library</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/12/29/installing-logstack-elasticsearch-kibana-on-ubuntu/">Installing Logstack ElasticSearch Kibana on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/12/28/setting-up-opennao-with-virtualbox/">Setting Up OpenNao With VirtualBox</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/12/28/getting-started-with-cassandra/">Getting Started With Cassandra</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/12/13/machine-learning-from-facebook-tech-talk/">Machine Learning From Facebook Tech Talk</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/11/15/connecting-to-mssql-using-freetds-slash-odbc-in-python/">Connecting to MSSQL Using FreeTDS / ODBC in Python</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/11/09/generating-a-self-signed-ssl-certificate/">Generating a Self-Signed SSL Certificate</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/11/08/python-challenge-l4/">Python Challenge L4</a>
+      </li>
+    
+  </ul>
+</section>
+<section class="category-list">
+    <h1>Projects</h1>
+    <ul id="category-list">
+        <li>
+            <span><a href="/tags/edx">edX</a></span> / 
+            <span><a href="/tags/will">Will</a></span>
+        </li>
+    </ul>
+
+    <h1>Programming</h1>
+    <ul id="category-list">
+        <li>
+            <span><a href="/tags/python">Python</a></span> /
+            <span><a href="/tags/ruby">Ruby</a></span> /
+            <span><a href="/tags/nodejs">Node.js</a></span>
+        </li>
+    </ul>
+
+</section>
+<section class="tag-cloud">
+
+
+  <h1>Tags</h1>
+    <ul id="category-list"><a href='/tags/algorithm' style='font-size: 109.41176470588235%'>algorithm(7)</a> <a href='/tags/ansible' style='font-size: 93.23529411764706%'>ansible(2)</a> <a href='/tags/apache' style='font-size: 93.23529411764706%'>apache(2)</a> <a href='/tags/api' style='font-size: 96.47058823529412%'>api(3)</a> <a href='/tags/ascii' style='font-size: 90.0%'>ascii(1)</a> <a href='/tags/beautifulsoup' style='font-size: 90.0%'>beautifulsoup(1)</a> <a href='/tags/butter' style='font-size: 90.0%'>butter(1)</a> <a href='/tags/career' style='font-size: 93.23529411764706%'>career(2)</a> <a href='/tags/cassandra' style='font-size: 90.0%'>cassandra(1)</a> <a href='/tags/cg' style='font-size: 90.0%'>cg(1)</a> <a href='/tags/chatbot' style='font-size: 96.47058823529412%'>chatbot(3)</a> <a href='/tags/classification' style='font-size: 93.23529411764706%'>classification(2)</a> <a href='/tags/cloud' style='font-size: 90.0%'>cloud(1)</a> <a href='/tags/cloudera' style='font-size: 109.41176470588235%'>cloudera(7)</a> <a href='/tags/cloudera-manager' style='font-size: 96.47058823529412%'>cloudera manager(3)</a> <a href='/tags/cluster' style='font-size: 151.47058823529412%'>cluster(20)</a> <a href='/tags/computer-vision' style='font-size: 90.0%'>computer vision(1)</a> <a href='/tags/crawler' style='font-size: 93.23529411764706%'>crawler(2)</a> <a href='/tags/css' style='font-size: 93.23529411764706%'>css(2)</a> <a href='/tags/data' style='font-size: 90.0%'>data(1)</a> <a href='/tags/db' style='font-size: 102.94117647058823%'>db(5)</a> <a href='/tags/debian' style='font-size: 90.0%'>debian(1)</a> <a href='/tags/devops' style='font-size: 99.70588235294117%'>devops(4)</a> <a href='/tags/django' style='font-size: 93.23529411764706%'>django(2)</a> <a href='/tags/dns' style='font-size: 90.0%'>dns(1)</a> <a href='/tags/docker' style='font-size: 96.47058823529412%'>docker(3)</a> <a href='/tags/edx' style='font-size: 128.8235294117647%'>edX(13)</a> <a href='/tags/edx-ai' style='font-size: 90.0%'>edX AI(1)</a> <a href='/tags/edx-analytics' style='font-size: 112.64705882352942%'>edX Analytics(8)</a> <a href='/tags/edx-platform' style='font-size: 96.47058823529412%'>edX Platform(3)</a> <a href='/tags/elasticsearch' style='font-size: 90.0%'>elasticsearch(1)</a> <a href='/tags/emacs' style='font-size: 93.23529411764706%'>emacs(2)</a> <a href='/tags/exhibition' style='font-size: 93.23529411764706%'>exhibition(2)</a> <a href='/tags/fiction' style='font-size: 109.41176470588235%'>fiction(7)</a> <a href='/tags/filebeat' style='font-size: 90.0%'>filebeat(1)</a> <a href='/tags/forever' style='font-size: 93.23529411764706%'>forever(2)</a> <a href='/tags/framework' style='font-size: 90.0%'>framework(1)</a> <a href='/tags/freetds' style='font-size: 90.0%'>freetds(1)</a> <a href='/tags/french' style='font-size: 90.0%'>french(1)</a> <a href='/tags/ghost' style='font-size: 99.70588235294117%'>ghost(4)</a> <a href='/tags/git' style='font-size: 102.94117647058823%'>git(5)</a> <a href='/tags/github' style='font-size: 93.23529411764706%'>github(2)</a> <a href='/tags/gitosis' style='font-size: 90.0%'>gitosis(1)</a> <a href='/tags/gitweb' style='font-size: 90.0%'>gitweb(1)</a> <a href='/tags/gunicorn' style='font-size: 90.0%'>gunicorn(1)</a> <a href='/tags/hadoop' style='font-size: 135.29411764705884%'>hadoop(15)</a> <a href='/tags/hbase' style='font-size: 102.94117647058823%'>hbase(5)</a> <a href='/tags/hdfs' style='font-size: 93.23529411764706%'>hdfs(2)</a> <a href='/tags/hipchat' style='font-size: 96.47058823529412%'>hipchat(3)</a> <a href='/tags/hive' style='font-size: 96.47058823529412%'>hive(3)</a> <a href='/tags/html' style='font-size: 93.23529411764706%'>html(2)</a> <a href='/tags/hue' style='font-size: 93.23529411764706%'>hue(2)</a> <a href='/tags/ide' style='font-size: 96.47058823529412%'>ide(3)</a> <a href='/tags/iterm' style='font-size: 90.0%'>iterm(1)</a> <a href='/tags/java' style='font-size: 93.23529411764706%'>java(2)</a> <a href='/tags/javascript' style='font-size: 99.70588235294117%'>javascript(4)</a> <a href='/tags/jekyll' style='font-size: 93.23529411764706%'>jekyll(2)</a> <a href='/tags/jenkins' style='font-size: 90.0%'>jenkins(1)</a> <a href='/tags/kibana' style='font-size: 90.0%'>kibana(1)</a> <a href='/tags/leisure' style='font-size: 151.47058823529412%'>leisure(20)</a> <a href='/tags/library' style='font-size: 90.0%'>library(1)</a> <a href='/tags/linux' style='font-size: 115.88235294117646%'>linux(9)</a> <a href='/tags/logstack' style='font-size: 90.0%'>logstack(1)</a> <a href='/tags/machine-learning' style='font-size: 125.58823529411765%'>machine learning(12)</a> <a href='/tags/mapreduce' style='font-size: 93.23529411764706%'>mapreduce(2)</a> <a href='/tags/markdown' style='font-size: 90.0%'>markdown(1)</a> <a href='/tags/mathjax' style='font-size: 93.23529411764706%'>mathjax(2)</a> <a href='/tags/mongo' style='font-size: 90.0%'>mongo(1)</a> <a href='/tags/mongovue' style='font-size: 90.0%'>mongovue(1)</a> <a href='/tags/mssql' style='font-size: 90.0%'>mssql(1)</a> <a href='/tags/mysql' style='font-size: 112.64705882352942%'>mysql(8)</a> <a href='/tags/mysql-workbench' style='font-size: 93.23529411764706%'>mysql workbench(2)</a> <a href='/tags/nao' style='font-size: 90.0%'>nao(1)</a> <a href='/tags/network' style='font-size: 90.0%'>network(1)</a> <a href='/tags/nginx' style='font-size: 99.70588235294117%'>nginx(4)</a> <a href='/tags/nlp' style='font-size: 106.17647058823529%'>nlp(6)</a> <a href='/tags/nltk' style='font-size: 90.0%'>nltk(1)</a> <a href='/tags/nodejs' style='font-size: 106.17647058823529%'>nodejs(6)</a> <a href='/tags/octopress' style='font-size: 112.64705882352942%'>octopress(8)</a> <a href='/tags/odbc' style='font-size: 90.0%'>odbc(1)</a> <a href='/tags/oil-painting' style='font-size: 90.0%'>oil painting(1)</a> <a href='/tags/openstack' style='font-size: 90.0%'>openstack(1)</a> <a href='/tags/painting' style='font-size: 90.0%'>painting(1)</a> <a href='/tags/pandas' style='font-size: 93.23529411764706%'>pandas(2)</a> <a href='/tags/photos' style='font-size: 128.8235294117647%'>photos(13)</a> <a href='/tags/poem' style='font-size: 99.70588235294117%'>poem(4)</a> <a href='/tags/prediction' style='font-size: 90.0%'>prediction(1)</a> <a href='/tags/programming' style='font-size: 93.23529411764706%'>programming(2)</a> <a href='/tags/pycharm' style='font-size: 90.0%'>pycharm(1)</a> <a href='/tags/python' style='font-size: 200.0%'>python(35)</a> <a href='/tags/python-challenge' style='font-size: 96.47058823529412%'>Python Challenge(3)</a> <a href='/tags/redis' style='font-size: 90.0%'>redis(1)</a> <a href='/tags/redmine' style='font-size: 90.0%'>redmine(1)</a> <a href='/tags/regex' style='font-size: 90.0%'>regex(1)</a> <a href='/tags/rest' style='font-size: 90.0%'>rest(1)</a> <a href='/tags/robotics' style='font-size: 99.70588235294117%'>robotics(4)</a> <a href='/tags/ruby' style='font-size: 119.11764705882354%'>ruby(10)</a> <a href='/tags/soap' style='font-size: 90.0%'>soap(1)</a> <a href='/tags/sphinx' style='font-size: 90.0%'>sphinx(1)</a> <a href='/tags/sql' style='font-size: 90.0%'>sql(1)</a> <a href='/tags/sqoop' style='font-size: 96.47058823529412%'>sqoop(3)</a> <a href='/tags/ssl' style='font-size: 93.23529411764706%'>ssl(2)</a> <a href='/tags/supervisor' style='font-size: 90.0%'>supervisor(1)</a> <a href='/tags/tech-talks' style='font-size: 90.0%'>tech talks(1)</a> <a href='/tags/time-series' style='font-size: 90.0%'>time series(1)</a> <a href='/tags/translation' style='font-size: 90.0%'>translation(1)</a> <a href='/tags/ubuntu' style='font-size: 115.88235294117646%'>ubuntu(9)</a> <a href='/tags/unicode' style='font-size: 90.0%'>unicode(1)</a> <a href='/tags/vagrant' style='font-size: 96.47058823529412%'>vagrant(3)</a> <a href='/tags/vim' style='font-size: 93.23529411764706%'>vim(2)</a> <a href='/tags/virtualbox' style='font-size: 96.47058823529412%'>virtualbox(3)</a> <a href='/tags/vm' style='font-size: 93.23529411764706%'>vm(2)</a> <a href='/tags/web' style='font-size: 109.41176470588235%'>web(7)</a> <a href='/tags/will' style='font-size: 96.47058823529412%'>will(3)</a> <a href='/tags/yarn' style='font-size: 90.0%'>yarn(1)</a> <a href='/tags/zookeeper' style='font-size: 102.94117647058823%'>zookeeper(5)</a> </ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2006-2016 - K
+</p>
+
+
+
+<script type="text/javascript">
+
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-53625944-7', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'kwailamc';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://k.arttechresearch.com/tech/2014/07/13/data-apis/';
+        var disqus_url = 'http://k.arttechresearch.com/tech/2014/07/13/data-apis/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

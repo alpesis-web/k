@@ -1,0 +1,588 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Installing Sqoop on a Single Node - K</title>
+  <meta name="author" content="K">
+
+  
+  <meta name="description" content="Installing Sqoop on a Single Node Dec 7th, 2014 5:33 pm | Comments Requirements Hadoop
+Hive
+Zookeeper
+HBase
+MySQL Driver for Java 1. Installation 1 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://k.arttechresearch.com/tech/2014/12/07/installing-sqoop-on-a-single-node/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="K" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/libs/jquery-1.9.1.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+
+  <script src="/javascripts/libs/jquery.tableofcontents.min.js" type="text/javascript"></script>
+  <script src="/javascripts/toc_generator.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  <!-- MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+</head>
+
+<body   >
+  <header role="banner"><ul class="soc">
+
+  
+    <li><a class="soc-github" href="https://github.com/KellyChan"></a></li>
+  
+
+  
+    <li><a class="soc-twitter" href="https://twitter.com/kwailamchan"></a></li>
+  
+
+  
+    <li><a class="soc-pinterest" href="https://www.pinterest.com/wailamchan/"></a></li>
+  
+
+  
+    <li><a class="soc-slideshare" href="http://www.slideshare.net/wailamchan"></a></li>
+  
+
+  
+    <li><a class="soc-email1 soc-icon-last" href="mailto:support@arttechresearch.com"></a></li>
+  
+</ul>
+
+<hgroup>
+  <h1><a href="/">K</a></h1>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="k.arttechresearch.com">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/tech">Tech</a></li>
+  <li><a href="/art">Art</a></li>
+  <li><a href="/life">Life</a></li>
+  <li><a href="/archives">Archives</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <li><a href="/devkits">Devkits</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+
+    
+      <h1 class="entry-title">Installing Sqoop on a Single Node</h1>
+    
+
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-12-07T17:33:32+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>5:33 pm</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://k.arttechresearch.com">Comments</a>
+        
+      </p>
+    
+
+  </header>
+
+
+
+  <div class="entry-content"><h2>Requirements</h2>
+
+<ul>
+<li>Hadoop</li>
+<li>Hive</li>
+<li>Zookeeper</li>
+<li>HBase</li>
+<li>MySQL Driver for Java</li>
+</ul>
+
+
+<h2>1. Installation</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo wget http://mirrors.oschina.net/apache/sqoop/1.4.4/sqoop-1.4.4.bin__hadoop-2.0.4-alpha.tar.gz
+</span><span class='line'><span class="nv">$ </span>sudo tar xzf sqoop-1.4.4.bin__hadoop-2.0.4-alpha.tar.gz
+</span><span class='line'><span class="nv">$ </span>sudo mv sqoop-1.4.4.bin__hadoop-2.0.4-alpha.tar.gz /usr/local/sqoop
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo chown -R hduser:hadoop /usr/local/sqoop
+</span><span class='line'><span class="nv">$ </span>sudo chmod <span class="m">755</span> /usr/local/sqoop
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>2. Configuration</h2>
+
+<ul>
+<li>.bashrc</li>
+<li>sqoop-env.sh</li>
+<li>configure-sqoop</li>
+</ul>
+
+
+<h3>2.1. .bashrc</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo nano <span class="nv">$HOME</span>/.bashrc
+</span><span class='line'><span class="nv">$ </span><span class="nb">source</span> <span class="nv">$HOME</span>/.bashrc
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>.bashrc</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># Set SQOOP_HOME</span>
+</span><span class='line'><span class="nb">export </span><span class="nv">SQOOP_HOME</span><span class="o">=</span>/usr/local/sqoop
+</span><span class='line'><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$SQOOP_HOME</span>/bin
+</span><span class='line'><span class="nb">export </span><span class="nv">CLASSPATH</span><span class="o">=</span><span class="nv">$CLASSPATH</span>:<span class="nv">$SQOOP_HOME</span>/lib
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>2.2. sqoop-env.sh</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /usr/local/sqoop/conf
+</span><span class='line'><span class="nv">$ </span>cp sqoop-env-template.sh   sqoop-env.sh
+</span><span class='line'><span class="nv">$ </span>sudo nano sqoop-env.sh
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>sqoop-env.sh</p>
+
+<figure class='code'><figcaption><span>sqoop-env.sh</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#Set path to where bin/hadoop is available</span>
+</span><span class='line'><span class="nb">export </span><span class="nv">HADOOP_COMMON_HOME</span><span class="o">=</span>/usr/local/hadoop
+</span><span class='line'>
+</span><span class='line'><span class="c">#Set path to where hadoop-*-core.jar is available</span>
+</span><span class='line'><span class="nb">export </span><span class="nv">HADOOP_MAPRED_HOME</span><span class="o">=</span>/usr/local/hadoop
+</span><span class='line'>
+</span><span class='line'><span class="c">#set the path to where bin/hbase is available</span>
+</span><span class='line'><span class="nb">export </span><span class="nv">HBASE_HOME</span><span class="o">=</span>/usr/local/hbase
+</span><span class='line'>
+</span><span class='line'><span class="c">#Set the path to where bin/hive is available</span>
+</span><span class='line'><span class="nb">export </span><span class="nv">HIVE_HOME</span><span class="o">=</span>/usr/local/hive
+</span><span class='line'>
+</span><span class='line'><span class="c">#Set the path for where zookeper config dir is</span>
+</span><span class='line'><span class="nb">export </span><span class="nv">ZOOCFGDIR</span><span class="o">=</span>/usr/local/hbase/lib
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>2.3. configure-sqoop</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /usr/local/sqoop/bin
+</span><span class='line'><span class="nv">$ </span>sudo nano configure-sqoop
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>configure-sqoop</p>
+
+<figure class='code'><figcaption><span>configure-sqoop</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#if [ -z &quot;${HCAT_HOME}&quot; ]; then</span>
+</span><span class='line'><span class="c">#  HCAT_HOME=/usr/lib/hcatalog</span>
+</span><span class='line'><span class="c">#fi</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">## Moved to be a runtime check in sqoop.</span>
+</span><span class='line'><span class="c">#if [ ! -d &quot;${HCAT_HOME}&quot; ]; then</span>
+</span><span class='line'><span class="c">#  echo &quot;Warning: $HCAT_HOME does not exist! HCatalog jobs will fail.&quot; </span>
+</span><span class='line'><span class="c">#  echo &#39;Please set $HCAT_HOME to the root of your HCatalog installation.&#39;</span>
+</span><span class='line'><span class="c">#fi</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Add HCatalog to dependency list</span>
+</span><span class='line'><span class="c">#if [ -e &quot;${HCAT_HOME}/bin/hcat&quot; ]; then</span>
+</span><span class='line'><span class="c">#  TMP_SQOOP_CLASSPATH=${SQOOP_CLASSPATH}:`${HCAT_HOME}/bin/hcat -classpath`</span>
+</span><span class='line'><span class="c">#  if [ -z &quot;${HIVE_CONF_DIR}&quot; ]; then</span>
+</span><span class='line'><span class="c">#    TMP_SQOOP_CLASSPATH=${TMP_SQOOP_CLASSPATH}:${HIVE_CONF_DIR}</span>
+</span><span class='line'><span class="c">#  fi</span>
+</span><span class='line'><span class="c">#  SQOOP_CLASSPATH=${TMP_SQOOP_CLASSPATH}</span>
+</span><span class='line'><span class="c">#fi</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>3. MySQL Driver</h2>
+
+<p>If database is MySQl, copy mysql-connector-java-5.1.25-bin.jar to <code>/usr/local/sqoop/lib</code></p>
+
+<p>download: <a href="http://yun.baidu.com/share/link?shareid=903445453&amp;uk=3826203270">mysql-connector-java-5.1.25-bin.jar</a></p>
+
+<h2>4. Testing</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sqoop <span class="nb">help</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>outputs</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>hduser@precise64:/usr/local/sqoop/conf<span class="nv">$ </span>sqoop <span class="nb">help</span>
+</span><span class='line'>usage: sqoop COMMAND <span class="o">[</span>ARGS<span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'>Available commands:
+</span><span class='line'>  codegen            Generate code to interact with database records
+</span><span class='line'>  create-hive-table  Import a table definition into Hive
+</span><span class='line'>  <span class="nb">eval               </span>Evaluate a SQL statement and display the results
+</span><span class='line'>  <span class="nb">export             </span>Export an HDFS directory to a database table
+</span><span class='line'>  <span class="nb">help               </span>List available commands
+</span><span class='line'>  import             Import a table from a database to HDFS
+</span><span class='line'>  import-all-tables  Import tables from a database to HDFS
+</span><span class='line'>  job                Work with saved <span class="nb">jobs</span>
+</span><span class='line'><span class="nb">  </span>list-databases     List available databases on a server
+</span><span class='line'>  list-tables        List available tables in a database
+</span><span class='line'>  merge              Merge results of incremental imports
+</span><span class='line'>  metastore          Run a standalone Sqoop metastore
+</span><span class='line'>  version            Display version information
+</span><span class='line'>
+</span><span class='line'>See <span class="s1">&#39;sqoop help COMMAND&#39;</span> <span class="k">for</span> information on a specific command.
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Reference</h2>
+
+<ul>
+<li><a href="http://yuanxiaolong.gitcafe.com/blog/2014/08/17/install-sqoop-on-local/">介绍一下单机安装sqoop的过程</a></li>
+</ul>
+
+</div>
+
+
+
+  <script type="text/javascript">
+  jQuery(document).ready(function() {
+    // Put a TOC right before the entry content.
+    generateTOC('.entry-content', 'Table of Contents');
+  });
+  </script>
+
+
+
+
+  <footer>
+
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">K</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-12-07T17:33:32+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>5:33 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/tech/'>tech</a>
+  
+</span>
+
+
+      
+
+<span class="categories">
+  
+    <a class='tag' href='/tags/cluster/'>cluster</a>, <a class='tag' href='/tags/hadoop/'>hadoop</a>, <a class='tag' href='/tags/sqoop/'>sqoop</a>
+  
+</span>
+
+
+    </p>
+
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://k.arttechresearch.com/tech/2014/12/07/installing-sqoop-on-a-single-node/" data-via="kwailamchan" data-counturl="http://k.arttechresearch.com/tech/2014/12/07/installing-sqoop-on-a-single-node/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/tech/2014/12/07/installing-hbase-on-a-single-node/" title="Previous Post: Installing HBase on A Single Node">&laquo; Installing HBase on A Single Node</a>
+      
+      
+        <a class="basic-alignment right" href="/tech/2014/12/08/installing-hue-on-a-single-node/" title="Next Post: Installing Hue on A Single Node">Installing Hue on A Single Node &raquo;</a>
+      
+    </p>
+
+  </footer>
+
+</article>
+
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Tech</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/tech/2015/12/31/python-sphinx/">Python Sphinx</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/12/30/web-apis/">Web APIs</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/12/30/framework-vs-library/">Framework vs Library</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/12/29/installing-logstack-elasticsearch-kibana-on-ubuntu/">Installing Logstack ElasticSearch Kibana on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/12/28/setting-up-opennao-with-virtualbox/">Setting Up OpenNao With VirtualBox</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/12/28/getting-started-with-cassandra/">Getting Started With Cassandra</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/12/13/machine-learning-from-facebook-tech-talk/">Machine Learning From Facebook Tech Talk</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/11/15/connecting-to-mssql-using-freetds-slash-odbc-in-python/">Connecting to MSSQL Using FreeTDS / ODBC in Python</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/11/09/generating-a-self-signed-ssl-certificate/">Generating a Self-Signed SSL Certificate</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/11/08/python-challenge-l4/">Python Challenge L4</a>
+      </li>
+    
+  </ul>
+</section>
+<section class="category-list">
+    <h1>Projects</h1>
+    <ul id="category-list">
+        <li>
+            <span><a href="/tags/edx">edX</a></span> / 
+            <span><a href="/tags/will">Will</a></span>
+        </li>
+    </ul>
+
+    <h1>Programming</h1>
+    <ul id="category-list">
+        <li>
+            <span><a href="/tags/python">Python</a></span> /
+            <span><a href="/tags/ruby">Ruby</a></span> /
+            <span><a href="/tags/nodejs">Node.js</a></span>
+        </li>
+    </ul>
+
+</section>
+<section class="tag-cloud">
+
+
+  <h1>Tags</h1>
+    <ul id="category-list"><a href='/tags/algorithm' style='font-size: 109.41176470588235%'>algorithm(7)</a> <a href='/tags/ansible' style='font-size: 93.23529411764706%'>ansible(2)</a> <a href='/tags/apache' style='font-size: 93.23529411764706%'>apache(2)</a> <a href='/tags/api' style='font-size: 96.47058823529412%'>api(3)</a> <a href='/tags/ascii' style='font-size: 90.0%'>ascii(1)</a> <a href='/tags/beautifulsoup' style='font-size: 90.0%'>beautifulsoup(1)</a> <a href='/tags/butter' style='font-size: 90.0%'>butter(1)</a> <a href='/tags/career' style='font-size: 93.23529411764706%'>career(2)</a> <a href='/tags/cassandra' style='font-size: 90.0%'>cassandra(1)</a> <a href='/tags/cg' style='font-size: 90.0%'>cg(1)</a> <a href='/tags/chatbot' style='font-size: 96.47058823529412%'>chatbot(3)</a> <a href='/tags/classification' style='font-size: 93.23529411764706%'>classification(2)</a> <a href='/tags/cloud' style='font-size: 90.0%'>cloud(1)</a> <a href='/tags/cloudera' style='font-size: 109.41176470588235%'>cloudera(7)</a> <a href='/tags/cloudera-manager' style='font-size: 96.47058823529412%'>cloudera manager(3)</a> <a href='/tags/cluster' style='font-size: 151.47058823529412%'>cluster(20)</a> <a href='/tags/computer-vision' style='font-size: 90.0%'>computer vision(1)</a> <a href='/tags/crawler' style='font-size: 93.23529411764706%'>crawler(2)</a> <a href='/tags/css' style='font-size: 93.23529411764706%'>css(2)</a> <a href='/tags/data' style='font-size: 90.0%'>data(1)</a> <a href='/tags/db' style='font-size: 102.94117647058823%'>db(5)</a> <a href='/tags/debian' style='font-size: 90.0%'>debian(1)</a> <a href='/tags/devops' style='font-size: 99.70588235294117%'>devops(4)</a> <a href='/tags/django' style='font-size: 93.23529411764706%'>django(2)</a> <a href='/tags/dns' style='font-size: 90.0%'>dns(1)</a> <a href='/tags/docker' style='font-size: 96.47058823529412%'>docker(3)</a> <a href='/tags/edx' style='font-size: 128.8235294117647%'>edX(13)</a> <a href='/tags/edx-ai' style='font-size: 90.0%'>edX AI(1)</a> <a href='/tags/edx-analytics' style='font-size: 112.64705882352942%'>edX Analytics(8)</a> <a href='/tags/edx-platform' style='font-size: 96.47058823529412%'>edX Platform(3)</a> <a href='/tags/elasticsearch' style='font-size: 90.0%'>elasticsearch(1)</a> <a href='/tags/emacs' style='font-size: 93.23529411764706%'>emacs(2)</a> <a href='/tags/exhibition' style='font-size: 93.23529411764706%'>exhibition(2)</a> <a href='/tags/fiction' style='font-size: 109.41176470588235%'>fiction(7)</a> <a href='/tags/filebeat' style='font-size: 90.0%'>filebeat(1)</a> <a href='/tags/forever' style='font-size: 93.23529411764706%'>forever(2)</a> <a href='/tags/framework' style='font-size: 90.0%'>framework(1)</a> <a href='/tags/freetds' style='font-size: 90.0%'>freetds(1)</a> <a href='/tags/french' style='font-size: 90.0%'>french(1)</a> <a href='/tags/ghost' style='font-size: 99.70588235294117%'>ghost(4)</a> <a href='/tags/git' style='font-size: 102.94117647058823%'>git(5)</a> <a href='/tags/github' style='font-size: 93.23529411764706%'>github(2)</a> <a href='/tags/gitosis' style='font-size: 90.0%'>gitosis(1)</a> <a href='/tags/gitweb' style='font-size: 90.0%'>gitweb(1)</a> <a href='/tags/gunicorn' style='font-size: 90.0%'>gunicorn(1)</a> <a href='/tags/hadoop' style='font-size: 135.29411764705884%'>hadoop(15)</a> <a href='/tags/hbase' style='font-size: 102.94117647058823%'>hbase(5)</a> <a href='/tags/hdfs' style='font-size: 93.23529411764706%'>hdfs(2)</a> <a href='/tags/hipchat' style='font-size: 96.47058823529412%'>hipchat(3)</a> <a href='/tags/hive' style='font-size: 96.47058823529412%'>hive(3)</a> <a href='/tags/html' style='font-size: 93.23529411764706%'>html(2)</a> <a href='/tags/hue' style='font-size: 93.23529411764706%'>hue(2)</a> <a href='/tags/ide' style='font-size: 96.47058823529412%'>ide(3)</a> <a href='/tags/iterm' style='font-size: 90.0%'>iterm(1)</a> <a href='/tags/java' style='font-size: 93.23529411764706%'>java(2)</a> <a href='/tags/javascript' style='font-size: 99.70588235294117%'>javascript(4)</a> <a href='/tags/jekyll' style='font-size: 93.23529411764706%'>jekyll(2)</a> <a href='/tags/jenkins' style='font-size: 90.0%'>jenkins(1)</a> <a href='/tags/kibana' style='font-size: 90.0%'>kibana(1)</a> <a href='/tags/leisure' style='font-size: 151.47058823529412%'>leisure(20)</a> <a href='/tags/library' style='font-size: 90.0%'>library(1)</a> <a href='/tags/linux' style='font-size: 115.88235294117646%'>linux(9)</a> <a href='/tags/logstack' style='font-size: 90.0%'>logstack(1)</a> <a href='/tags/machine-learning' style='font-size: 125.58823529411765%'>machine learning(12)</a> <a href='/tags/mapreduce' style='font-size: 93.23529411764706%'>mapreduce(2)</a> <a href='/tags/markdown' style='font-size: 90.0%'>markdown(1)</a> <a href='/tags/mathjax' style='font-size: 93.23529411764706%'>mathjax(2)</a> <a href='/tags/mongo' style='font-size: 90.0%'>mongo(1)</a> <a href='/tags/mongovue' style='font-size: 90.0%'>mongovue(1)</a> <a href='/tags/mssql' style='font-size: 90.0%'>mssql(1)</a> <a href='/tags/mysql' style='font-size: 112.64705882352942%'>mysql(8)</a> <a href='/tags/mysql-workbench' style='font-size: 93.23529411764706%'>mysql workbench(2)</a> <a href='/tags/nao' style='font-size: 90.0%'>nao(1)</a> <a href='/tags/network' style='font-size: 90.0%'>network(1)</a> <a href='/tags/nginx' style='font-size: 99.70588235294117%'>nginx(4)</a> <a href='/tags/nlp' style='font-size: 106.17647058823529%'>nlp(6)</a> <a href='/tags/nltk' style='font-size: 90.0%'>nltk(1)</a> <a href='/tags/nodejs' style='font-size: 106.17647058823529%'>nodejs(6)</a> <a href='/tags/octopress' style='font-size: 112.64705882352942%'>octopress(8)</a> <a href='/tags/odbc' style='font-size: 90.0%'>odbc(1)</a> <a href='/tags/oil-painting' style='font-size: 90.0%'>oil painting(1)</a> <a href='/tags/openstack' style='font-size: 90.0%'>openstack(1)</a> <a href='/tags/painting' style='font-size: 90.0%'>painting(1)</a> <a href='/tags/pandas' style='font-size: 93.23529411764706%'>pandas(2)</a> <a href='/tags/photos' style='font-size: 128.8235294117647%'>photos(13)</a> <a href='/tags/poem' style='font-size: 99.70588235294117%'>poem(4)</a> <a href='/tags/prediction' style='font-size: 90.0%'>prediction(1)</a> <a href='/tags/programming' style='font-size: 93.23529411764706%'>programming(2)</a> <a href='/tags/pycharm' style='font-size: 90.0%'>pycharm(1)</a> <a href='/tags/python' style='font-size: 200.0%'>python(35)</a> <a href='/tags/python-challenge' style='font-size: 96.47058823529412%'>Python Challenge(3)</a> <a href='/tags/redis' style='font-size: 90.0%'>redis(1)</a> <a href='/tags/redmine' style='font-size: 90.0%'>redmine(1)</a> <a href='/tags/regex' style='font-size: 90.0%'>regex(1)</a> <a href='/tags/rest' style='font-size: 90.0%'>rest(1)</a> <a href='/tags/robotics' style='font-size: 99.70588235294117%'>robotics(4)</a> <a href='/tags/ruby' style='font-size: 119.11764705882354%'>ruby(10)</a> <a href='/tags/soap' style='font-size: 90.0%'>soap(1)</a> <a href='/tags/sphinx' style='font-size: 90.0%'>sphinx(1)</a> <a href='/tags/sql' style='font-size: 90.0%'>sql(1)</a> <a href='/tags/sqoop' style='font-size: 96.47058823529412%'>sqoop(3)</a> <a href='/tags/ssl' style='font-size: 93.23529411764706%'>ssl(2)</a> <a href='/tags/supervisor' style='font-size: 90.0%'>supervisor(1)</a> <a href='/tags/tech-talks' style='font-size: 90.0%'>tech talks(1)</a> <a href='/tags/time-series' style='font-size: 90.0%'>time series(1)</a> <a href='/tags/translation' style='font-size: 90.0%'>translation(1)</a> <a href='/tags/ubuntu' style='font-size: 115.88235294117646%'>ubuntu(9)</a> <a href='/tags/unicode' style='font-size: 90.0%'>unicode(1)</a> <a href='/tags/vagrant' style='font-size: 96.47058823529412%'>vagrant(3)</a> <a href='/tags/vim' style='font-size: 93.23529411764706%'>vim(2)</a> <a href='/tags/virtualbox' style='font-size: 96.47058823529412%'>virtualbox(3)</a> <a href='/tags/vm' style='font-size: 93.23529411764706%'>vm(2)</a> <a href='/tags/web' style='font-size: 109.41176470588235%'>web(7)</a> <a href='/tags/will' style='font-size: 96.47058823529412%'>will(3)</a> <a href='/tags/yarn' style='font-size: 90.0%'>yarn(1)</a> <a href='/tags/zookeeper' style='font-size: 102.94117647058823%'>zookeeper(5)</a> </ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2006-2016 - K
+</p>
+
+
+
+<script type="text/javascript">
+
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-53625944-7', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'kwailamc';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://k.arttechresearch.com/tech/2014/12/07/installing-sqoop-on-a-single-node/';
+        var disqus_url = 'http://k.arttechresearch.com/tech/2014/12/07/installing-sqoop-on-a-single-node/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

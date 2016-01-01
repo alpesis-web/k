@@ -1,0 +1,2325 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Stanford NLP 4 - Language Modeling - K</title>
+  <meta name="author" content="K">
+
+  
+  <meta name="description" content="1. Introduction to N-grams 1.1. Probabilistic Language Models goal: assign a probability to a sentence mahcine translation: $$ P(high\,winds\,tonite &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://k.arttechresearch.com/tech/2014/06/23/stanford-nlp-4-language-modeling/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="K" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/libs/jquery-1.9.1.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+
+  <script src="/javascripts/libs/jquery.tableofcontents.min.js" type="text/javascript"></script>
+  <script src="/javascripts/toc_generator.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  <!-- MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+</head>
+
+<body   >
+  <header role="banner"><ul class="soc">
+
+  
+    <li><a class="soc-github" href="https://github.com/KellyChan"></a></li>
+  
+
+  
+    <li><a class="soc-twitter" href="https://twitter.com/kwailamchan"></a></li>
+  
+
+  
+    <li><a class="soc-pinterest" href="https://www.pinterest.com/wailamchan/"></a></li>
+  
+
+  
+    <li><a class="soc-slideshare" href="http://www.slideshare.net/wailamchan"></a></li>
+  
+
+  
+    <li><a class="soc-email1 soc-icon-last" href="mailto:support@arttechresearch.com"></a></li>
+  
+</ul>
+
+<hgroup>
+  <h1><a href="/">K</a></h1>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="k.arttechresearch.com">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/tech">Tech</a></li>
+  <li><a href="/art">Art</a></li>
+  <li><a href="/life">Life</a></li>
+  <li><a href="/archives">Archives</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <li><a href="/devkits">Devkits</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+
+    
+      <h1 class="entry-title">Stanford NLP 4 - Language Modeling</h1>
+    
+
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-23T13:49:23+08:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>23</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>1:49 pm</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://k.arttechresearch.com">Comments</a>
+        
+      </p>
+    
+
+  </header>
+
+
+
+  <div class="entry-content"><h2>1. Introduction to N-grams</h2>
+
+<h3>1.1. Probabilistic Language Models</h3>
+
+<ul>
+<li>goal: assign a probability to a sentence
+
+<ul>
+<li>mahcine translation: $$ P(high\,winds\,tonite) > P(large\,winds\,tonite) $$</li>
+<li>spell correction: $$P(about\,fifteen\,minutes\,from) > P(about\,fifteen\,minuets\,from)$$</li>
+<li>speech recognition: $$P(I\,saw\,a\,van) >> P(eyes\,awe\,of\,an)$$</li>
+<li>summarization, question-answering, etc., etc.!!</li>
+</ul>
+</li>
+<li>goal: compute the probability of a sentence or sequence of words $$P(W) = P(w1,w2,w3,w4,w5&hellip;wn)$$</li>
+<li>related task: probability of an upcoming word $$P(w5|w1,w2,w3,w4)$$</li>
+<li>a model that computes either of these $$P(W)$$ or $$P(Wn|w1,w2&hellip;wn-1)$$ is called a language model</li>
+<li>better: the grammar, but language model or LM is standard</li>
+</ul>
+
+
+<h3>1.2. How to compute P(W)</h3>
+
+<ul>
+<li>how to compute this joint probability: $$P(its, water, is, so transparent, that)$$</li>
+<li>intuition: let&rsquo;s rely on the Chian Rule of Probability</li>
+</ul>
+
+
+<h3>1.3. Reminder: The Chain Rule</h3>
+
+<ul>
+<li>recall the definition of conditional probabilities<br/>
+  $$P(A|B) = P(A,B) / P(B)$$<br/>
+  $$P(A|B)<em>P(B) = P(A,B)$$<br/>
+  $$P(A,B) = P(A|B)</em>P(B)$$</li>
+<li>more variables:<br/>
+  $$P(A,B,C,D) = P(A)P(B|A)P(C|A,B)P(D|A,B,C)$$<br/>
+  the chain rule in general: $$P(x1,x2,x3,&hellip;,xn) = P(x1)P(x2|x1)P(x3|x1,x2)&hellip;P(xn|x1,&hellip;,xn-1)$$</li>
+</ul>
+
+
+<h3>1.4. The Chain Rule applied to compute joint probability of words in sentence</h3>
+
+<p>$$P(w_1*w_2&hellip;w_n = \prod_i {P(w_i | w_1 * w_2&hellip;w_{i-1})}$$</p>
+
+<p>$$P(&ldquo;its water is so transparent&rdquo;) = P(its) * P(water|its) * P(is| its\,water) * P(so| its\,water\,is) * P(transparent| its\,water\,is\,so)$$</p>
+
+<h3>1.5. How to estimate these probabilities</h3>
+
+<ul>
+<li><p>could we just count and divide?</p>
+
+<p>$$P(the| its\,water\,is\,so\,transparent\,that) = Count(its\,water\,is\,so\,transparent\,that\,the) / Count(its\,water\,is\,so\,transparent\,that)$$</p></li>
+<li><p>NO! TOO MANY possible sentences!</p></li>
+<li>we&rsquo;ll never see enough data for estimating these</li>
+</ul>
+
+
+<h3>1.6. Markov Assumption</h3>
+
+<ul>
+<li>simplifying assumption<br/>
+$$P(the|its\,water\,is\,so\,transparent\,that) \approx P(the| that)$$</li>
+<li>or maybe<br/>
+$$P(the|its\,water\,is\,so\,transparent\,that) \approx P(the|transparent\,that)$$</li>
+</ul>
+
+
+<h3>1.7. Markov Assumption</h3>
+
+<p>the probability of current word = the conditional probability of some previous words</p>
+
+<p>$$P(w_1w_2&hellip;w_n) \approx \prod_i P(w_i | w<em>{i-k}&hellip;w</em>{i-1})$$</p>
+
+<ul>
+<li>in other words, we approximate each component in the product</li>
+</ul>
+
+
+<p>$$P(w_i | w_1w_2&hellip;w<em>{i-1}) \approx P(w_i | w</em>{i-k}&hellip;w_{i-1})$$</p>
+
+<h3>1.8. Simplest case: unigram model</h3>
+
+<p>the probability of currect = the probability of the previous word</p>
+
+<p>$$P(w_1w_2&hellip;w_n) \approx \prod_i P(w_i)$$</p>
+
+<h3>1.9. N-gram models</h3>
+
+<ul>
+<li>we can extend to trigrams, 4-grams, 5-grams</li>
+<li>in general this is an insufficient model of language
+
+<ul>
+<li>because language has long-distance dependencies:</li>
+</ul>
+</li>
+</ul>
+
+
+<p>&ldquo;The (computer) which I had just put into the machine room on the fifth (floor) [crashed]&rdquo;</p>
+
+<ul>
+<li>but we can often get away with N-gram models</li>
+</ul>
+
+
+<h2>2. Estimating N-gram Probabilities</h2>
+
+<h3>2.1. Estimating bigram probabilities</h3>
+
+<ul>
+<li>the maximum likelihood estimate</li>
+</ul>
+
+
+<p>$$P(w_i | w<em>{i-1} = count(w</em>{i-1},w_i) / count(w<em>{i-1})$$<br/>
+$$P(w_i | w</em>{i-1} = c(w<em>{i-1}, w_i) / c(w</em>{i-1})$$</p>
+
+<h3>2.2. An example</h3>
+
+<p>$$ P(w_i | w<em>{i-1}) = c(w</em>{i-1},w_i) / c(w_{i-1}) $$</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;s&gt; I am Sam &lt;/s&gt;  
+</span><span class='line'>&lt;s&gt; Sam I am &lt;/s&gt;  
+</span><span class='line'>&lt;s&gt; I do not like green eggs and ham &lt;/s&gt;  </span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>$$ P(I | <code>&lt;s&gt;</code>) = c(<code>&lt;s&gt;</code>,I) / c(<code>&lt;s&gt;</code>) = 2/3 = .67 $$</li>
+<li>$$ P(Sam | <code>&lt;s&gt;</code>) = 1/3 = .33 $$</li>
+<li>$$ P(am | I) = 2/3 = .67 $$</li>
+<li>$$ P(</s> | Sam) = &frac12; = 0.5 $$</li>
+<li>$$ P(Sam | am) = &frac12; = .5 $$</li>
+<li>$$ P(do | I) = 1/3 = .33 $$</li>
+</ul>
+
+
+<h3>2.3. More examples: Berkeley Restaurant Project sentences</h3>
+
+<ul>
+<li>can you tell me about any good cantonese restaurants close by</li>
+<li>mid priced thai food is what i&rsquo;m looking for</li>
+<li>tell me about chez panisse</li>
+<li>can you give me a listing of the kinds of food that are available</li>
+<li>i&rsquo;m looking for a good place to eat breakfast</li>
+<li>when is caffe venezia open during the day</li>
+</ul>
+
+
+<h3>2.4. Raw bigram counts</h3>
+
+<ul>
+<li>out of 9222 sentences</li>
+</ul>
+
+
+<p>$$P(w_i | w<em>{i-1}) = c(w</em>{i-1}, w_i) / c(w_{i-1})$$</p>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">         </th>
+<th style="text-align:left;"> i  </th>
+<th style="text-align:left;"> want </th>
+<th style="text-align:left;"> to  </th>
+<th style="text-align:left;"> eat </th>
+<th style="text-align:left;"> chinese </th>
+<th style="text-align:left;"> food </th>
+<th style="text-align:left;"> lunch </th>
+<th style="text-align:left;"> spend </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> i       </td>
+<td style="text-align:left;"> 5  </td>
+<td style="text-align:left;"> 827  </td>
+<td style="text-align:left;"> 0   </td>
+<td style="text-align:left;"> 9   </td>
+<td style="text-align:left;"> 0       </td>
+<td style="text-align:left;"> 0    </td>
+<td style="text-align:left;"> 0     </td>
+<td style="text-align:left;"> 2     </td>
+</tr>
+<tr>
+<td style="text-align:left;"> want    </td>
+<td style="text-align:left;"> 2  </td>
+<td style="text-align:left;"> 0    </td>
+<td style="text-align:left;"> 608 </td>
+<td style="text-align:left;"> 1   </td>
+<td style="text-align:left;"> 6       </td>
+<td style="text-align:left;"> 6    </td>
+<td style="text-align:left;"> 5     </td>
+<td style="text-align:left;"> 1     </td>
+</tr>
+<tr>
+<td style="text-align:left;"> to      </td>
+<td style="text-align:left;"> 2  </td>
+<td style="text-align:left;"> 0    </td>
+<td style="text-align:left;"> 4   </td>
+<td style="text-align:left;"> 686 </td>
+<td style="text-align:left;"> 2       </td>
+<td style="text-align:left;"> 0    </td>
+<td style="text-align:left;"> 6     </td>
+<td style="text-align:left;"> 211   </td>
+</tr>
+<tr>
+<td style="text-align:left;"> eat     </td>
+<td style="text-align:left;"> 0  </td>
+<td style="text-align:left;"> 0    </td>
+<td style="text-align:left;"> 2   </td>
+<td style="text-align:left;"> 0   </td>
+<td style="text-align:left;"> 16      </td>
+<td style="text-align:left;"> 2    </td>
+<td style="text-align:left;"> 42    </td>
+<td style="text-align:left;"> 0     </td>
+</tr>
+<tr>
+<td style="text-align:left;"> chinese </td>
+<td style="text-align:left;"> 1  </td>
+<td style="text-align:left;"> 0    </td>
+<td style="text-align:left;"> 0   </td>
+<td style="text-align:left;"> 0   </td>
+<td style="text-align:left;"> 0       </td>
+<td style="text-align:left;"> 82   </td>
+<td style="text-align:left;"> 1     </td>
+<td style="text-align:left;"> 0     </td>
+</tr>
+<tr>
+<td style="text-align:left;"> food    </td>
+<td style="text-align:left;"> 15 </td>
+<td style="text-align:left;"> 0    </td>
+<td style="text-align:left;"> 15  </td>
+<td style="text-align:left;"> 0   </td>
+<td style="text-align:left;"> 1       </td>
+<td style="text-align:left;"> 4    </td>
+<td style="text-align:left;"> 0     </td>
+<td style="text-align:left;"> 0     </td>
+</tr>
+<tr>
+<td style="text-align:left;"> lunch   </td>
+<td style="text-align:left;"> 2  </td>
+<td style="text-align:left;"> 0    </td>
+<td style="text-align:left;"> 0   </td>
+<td style="text-align:left;"> 0   </td>
+<td style="text-align:left;"> 0       </td>
+<td style="text-align:left;"> 1    </td>
+<td style="text-align:left;"> 0     </td>
+<td style="text-align:left;"> 0     </td>
+</tr>
+<tr>
+<td style="text-align:left;"> spend   </td>
+<td style="text-align:left;"> 1  </td>
+<td style="text-align:left;"> 0    </td>
+<td style="text-align:left;"> 1   </td>
+<td style="text-align:left;"> 0   </td>
+<td style="text-align:left;"> 0       </td>
+<td style="text-align:left;"> 0    </td>
+<td style="text-align:left;"> 0     </td>
+<td style="text-align:left;"> 0     </td>
+</tr>
+</tbody>
+</table>
+
+
+<ul>
+<li>normalize by unigrams</li>
+</ul>
+
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;"> i    </th>
+<th style="text-align:left;"> want </th>
+<th style="text-align:left;"> to   </th>
+<th style="text-align:left;"> eat  </th>
+<th style="text-align:left;"> chinese </th>
+<th style="text-align:left;"> food </th>
+<th style="text-align:left;"> lunch </th>
+<th style="text-align:left;"> spend </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> 2533 </td>
+<td style="text-align:left;"> 927  </td>
+<td style="text-align:left;"> 2417 </td>
+<td style="text-align:left;"> 746  </td>
+<td style="text-align:left;"> 158     </td>
+<td style="text-align:left;"> 1093 </td>
+<td style="text-align:left;"> 341   </td>
+<td style="text-align:left;"> 278   </td>
+</tr>
+</tbody>
+</table>
+
+
+<ul>
+<li>result</li>
+</ul>
+
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">         </th>
+<th style="text-align:left;"> i       </th>
+<th style="text-align:left;"> want </th>
+<th style="text-align:left;"> to     </th>
+<th style="text-align:left;"> eat    </th>
+<th style="text-align:left;"> chinese </th>
+<th style="text-align:left;"> food   </th>
+<th style="text-align:left;"> lunch  </th>
+<th style="text-align:left;"> spend   </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> i       </td>
+<td style="text-align:left;"> 0.002   </td>
+<td style="text-align:left;"> 0.33 </td>
+<td style="text-align:left;"> 0      </td>
+<td style="text-align:left;"> 0.0036 </td>
+<td style="text-align:left;"> 0       </td>
+<td style="text-align:left;"> 0      </td>
+<td style="text-align:left;"> 0      </td>
+<td style="text-align:left;"> 0.00079 </td>
+</tr>
+<tr>
+<td style="text-align:left;"> want    </td>
+<td style="text-align:left;"> 0.0022  </td>
+<td style="text-align:left;"> 0    </td>
+<td style="text-align:left;"> 0.66   </td>
+<td style="text-align:left;"> 0.0011 </td>
+<td style="text-align:left;"> 0.0065  </td>
+<td style="text-align:left;"> 0.0065 </td>
+<td style="text-align:left;"> 0.0054 </td>
+<td style="text-align:left;"> 0.0011  </td>
+</tr>
+<tr>
+<td style="text-align:left;"> to      </td>
+<td style="text-align:left;"> 0.00083 </td>
+<td style="text-align:left;"> 0    </td>
+<td style="text-align:left;"> 0.0017 </td>
+<td style="text-align:left;"> 0.28   </td>
+<td style="text-align:left;"> 0.00083 </td>
+<td style="text-align:left;"> 0      </td>
+<td style="text-align:left;"> 0.0025 </td>
+<td style="text-align:left;"> 0.087   </td>
+</tr>
+<tr>
+<td style="text-align:left;"> eat     </td>
+<td style="text-align:left;"> 0       </td>
+<td style="text-align:left;"> 0    </td>
+<td style="text-align:left;"> 0.0027 </td>
+<td style="text-align:left;"> 0      </td>
+<td style="text-align:left;"> 0.021   </td>
+<td style="text-align:left;"> 0.0027 </td>
+<td style="text-align:left;"> 0.056  </td>
+<td style="text-align:left;"> 0       </td>
+</tr>
+<tr>
+<td style="text-align:left;"> chinese </td>
+<td style="text-align:left;"> 0.0063  </td>
+<td style="text-align:left;"> 0    </td>
+<td style="text-align:left;"> 0      </td>
+<td style="text-align:left;"> 0      </td>
+<td style="text-align:left;"> 0       </td>
+<td style="text-align:left;"> 0.52   </td>
+<td style="text-align:left;"> 0.0063 </td>
+<td style="text-align:left;"> 0       </td>
+</tr>
+<tr>
+<td style="text-align:left;"> food    </td>
+<td style="text-align:left;"> 0.014   </td>
+<td style="text-align:left;"> 0    </td>
+<td style="text-align:left;"> 0.014  </td>
+<td style="text-align:left;"> 0      </td>
+<td style="text-align:left;"> 0.00092 </td>
+<td style="text-align:left;"> 0.0037 </td>
+<td style="text-align:left;"> 0      </td>
+<td style="text-align:left;"> 0       </td>
+</tr>
+<tr>
+<td style="text-align:left;"> lunch   </td>
+<td style="text-align:left;"> 0.0059  </td>
+<td style="text-align:left;"> 0    </td>
+<td style="text-align:left;"> 0      </td>
+<td style="text-align:left;"> 0      </td>
+<td style="text-align:left;"> 0       </td>
+<td style="text-align:left;"> 0.0029 </td>
+<td style="text-align:left;"> 0      </td>
+<td style="text-align:left;"> 0       </td>
+</tr>
+<tr>
+<td style="text-align:left;"> spend   </td>
+<td style="text-align:left;"> 0.0036  </td>
+<td style="text-align:left;"> 0    </td>
+<td style="text-align:left;"> 0.0036 </td>
+<td style="text-align:left;"> 0      </td>
+<td style="text-align:left;"> 0       </td>
+<td style="text-align:left;"> 0      </td>
+<td style="text-align:left;"> 0      </td>
+<td style="text-align:left;"> 0       </td>
+</tr>
+</tbody>
+</table>
+
+
+<h3>2.5. Bigram estimates of sentence probabilities</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>P (&lt;s&gt; I want english food &lt;/s&gt;) = P(I | &lt;s&gt;) *
+</span><span class='line'>                                   P(want | I) *
+</span><span class='line'>                                   P(english | want) *
+</span><span class='line'>                                   P(food | english) *
+</span><span class='line'>                                   P(&lt;/s&gt; | food)
+</span><span class='line'>                                 = 0.000031</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>2.6. What kinds of knowledge?</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>P(english | want) = 0.0011
+</span><span class='line'>P(chinese | want) = 0.0065   &lt;- people like chinese cuisine
+</span><span class='line'>P(to | want) = 0.66          &lt;- want - infinite grammar
+</span><span class='line'>P(eat | to) = 0.28
+</span><span class='line'>P(food | to) = 0
+</span><span class='line'>P(want | spend) = 0          &lt;- grammatical disallowed
+</span><span class='line'>P(i | &lt;s&gt;) = 0.25</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>2.7. Practical Issues</h3>
+
+<ul>
+<li>what do everything in log space
+
+<ul>
+<li>avoid underflow</li>
+<li>also adding is faster than multiplying</li>
+</ul>
+</li>
+</ul>
+
+
+<p>$$p_1 * p_2 * p_3 * p_4 = log p_1 + log p_2 + log p_3 + log p_4$$</p>
+
+<h3>2.8. Language Modeling Toolkits</h3>
+
+<ul>
+<li><a href="http://www.speech.sri.com/projects/srilm/">SRILM</a></li>
+<li><a href="http://googleresearch.blogspot.ae/2006/08/all-our-n-gram-are-belong-to-you.html">Google N-Gram Release, August 2006</a></li>
+<li><a href="http://ngrams.googlelabs.com/">Google Book N-grams</a></li>
+</ul>
+
+
+<h2>3. Evaluation and Perplexity</h2>
+
+<h3>3.1. Evaluation: How good is our model?</h3>
+
+<ul>
+<li>does our language model prefer good sentences to bad ones?
+
+<ul>
+<li>assign higher probability to &ldquo;real&rdquo; or &ldquo;frequently observed&rdquo; sentences
+
+<ul>
+<li>than &ldquo;ungrammatical&rdquo; or &ldquo;rarely observed&rdquo; sentences?</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>we train parameters of our model on a training set</li>
+<li>we test the model&rsquo;s performance on data we haven&rsquo;t seen
+
+<ul>
+<li>a test set is an unseen dataset that is different from our training set, totally unused</li>
+<li>an evaluation metric tells us how well our model does on the test set</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>3.2. Extrinsic evaluation of N-gram models</h3>
+
+<ul>
+<li>best evaluation for comparing models A and B
+
+<ul>
+<li>put each model in a task
+
+<ul>
+<li>spelling corrector, speech recognizer, MT system</li>
+</ul>
+</li>
+<li>run the task, get an accuracy for A and for B
+
+<ul>
+<li>how many misspelled words corrected properly</li>
+<li>how many words translated correctly</li>
+</ul>
+</li>
+<li>compare accuracy for A and B</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>3.3. Difficulty of extrinsic (in-vivo) evaluation of N-gram models</h3>
+
+<ul>
+<li>extrinsic evaluation
+
+<ul>
+<li>time-consuming, can tak days or weeks</li>
+</ul>
+</li>
+<li>so
+
+<ul>
+<li>sometimes use intrinsic evaluation: perplexity</li>
+<li>bad approximation
+
+<ul>
+<li>unless the test data looks just like the training data</li>
+<li>so generally only useful in pilot experiments</li>
+</ul>
+</li>
+<li>but is helpful to think about</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>3.4. Intuition of Perplexity</h3>
+
+<ul>
+<li>the Shannon Game:
+
+<ul>
+<li>How well can we predict the next word?</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>      I always order pizza with cheese and ____ 
+</span><span class='line'>      - mushrooms 0.1
+</span><span class='line'>      - pepperoni 0.1
+</span><span class='line'>      - anchovies 0.01
+</span><span class='line'>      - fried rice 0.0001
+</span><span class='line'>      - ...
+</span><span class='line'>      - and 1e-100
+</span><span class='line'>    
+</span><span class='line'>      The 33rd President of the US was _____
+</span><span class='line'>      I saw a ______</span></code></pre></td></tr></table></div></figure>
+
+
+<pre><code>- unigrams are terrible at this game (why?)
+</code></pre>
+
+<ul>
+<li>a better model of a text
+
+<ul>
+<li>is one which assigns a higher probability to the word that actually occurs</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>3.5. Perplexity</h3>
+
+<p>the best language model is one that best predicts an unseen test set<br/>
+- gives the highest $$P(sentence)$$</p>
+
+<p>Perplexity is the probability of the test test, normalized by the number of words<br/>
+$$PP(W) = P(w_1w_2&hellip;w_N)^{-1/N} = \sqrt[N]{1/P(w_1w_2&hellip;w_N)}$$</p>
+
+<p>Chain rule:<br/>
+$$PP(W) = \sqrt[N]{\prod<em>{i=1}^N 1 / P(w_i|w_1&hellip;w</em>{i-1})}$$</p>
+
+<p>for bigrams:<br/>
+$$PP(W) = \sqrt[N]{\prod<em>{i=1}^N 1 / P(w_i | w</em>{i-1})}$$</p>
+
+<p>minimizing perplexity is the same as maximmizing probability</p>
+
+<h3>3.6. The Shannon Game intuition for perplexity</h3>
+
+<ul>
+<li>from Josh Goodman</li>
+<li>How hard is the task of recognizing digits &lsquo;0,1,2,3,4,5,6,7,8,9&rsquo;
+
+<ul>
+<li>perplexity 10</li>
+</ul>
+</li>
+<li>How hard is recognizing (30,000) names at Microsoft
+
+<ul>
+<li>perplexity = 30,000</li>
+</ul>
+</li>
+<li>if a system has to recognize
+
+<ul>
+<li>operator (1 in 4)</li>
+<li>sales (1 in 4)</li>
+<li>technical support (1 in 4)</li>
+<li>30,000 names (1 in 120,000 each)</li>
+<li>perplexity is 54</li>
+</ul>
+</li>
+<li>perplexity is weighted equivalent branching factor</li>
+</ul>
+
+
+<h3>3.7. Perplexity as branching factor</h3>
+
+<ul>
+<li>let&rsquo;s suppose a sentence consisting of random digits</li>
+<li>what is the perplexity of this sentence according to a model that assign P=1/20 to each digit?</li>
+</ul>
+
+
+<p>$$PP(W) = P(w_1w_2&hellip;w_N)^{-1/N} = (1<sup>N</sup>/10)^{-1/N} = 1<sup>-1</sup>/10 = 10$$</p>
+
+<h3>3.8. Lower perplexity = better model</h3>
+
+<ul>
+<li>training 38 million words, test 1.5 million words, WSJ</li>
+</ul>
+
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;"> N-gram Order </th>
+<th style="text-align:left;"> Unigram </th>
+<th style="text-align:left;"> Bigram </th>
+<th style="text-align:left;"> Trigram </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> Perplexity   </td>
+<td style="text-align:left;"> 962     </td>
+<td style="text-align:left;"> 170    </td>
+<td style="text-align:left;"> 109     </td>
+</tr>
+</tbody>
+</table>
+
+
+<h2>4. Generalization and Zeros</h2>
+
+<h3>4.1. The Shannon Visualization Method</h3>
+
+<ul>
+<li>choose a random bigram
+
+<ul>
+<li>(<s>,w) according to its probability</li>
+</ul>
+</li>
+<li>now choose a random bigram
+
+<ul>
+<li>(w,x) according to its probability</li>
+</ul>
+</li>
+<li>and so on until we choose </s></li>
+<li>then string the words together</li>
+</ul>
+
+
+<h3>4.2. Shakespeare as corpus</h3>
+
+<ul>
+<li>N=884,647 tokens, V=29,066</li>
+<li>Shakespeare produced 300,000 bigram types out of V<sup>2</sup>=844 million possible bigrams
+
+<ul>
+<li>so 99.96% of the possible bigrams were never seen (have zero entries in the table)</li>
+</ul>
+</li>
+<li>Quadrigrams worse: what&rsquo;s coming out looks like Shakespeare because it is Shakespeare</li>
+</ul>
+
+
+<h3>4.3. The perils of overfitting</h3>
+
+<ul>
+<li>N-grams only work well for word prediction if the test corpus looks like the training corpus
+
+<ul>
+<li>in real life, it often doesn&rsquo;t</li>
+<li>we need to train robust models that generalize!</li>
+<li>one kind of generalization: Zeros!
+
+<ul>
+<li>things that don&rsquo;t ever occur in the training set
+
+<ul>
+<li>but occur in the test set</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>4.4. Zero</h3>
+
+<ul>
+<li>training set:
+
+<ul>
+<li>denied the allegations</li>
+<li>denied the reports</li>
+<li>denied the claims</li>
+<li>denied the request</li>
+</ul>
+</li>
+</ul>
+
+
+<p>$$P(&ldquo;offer&rdquo; | denied\,the) = 0$$</p>
+
+<ul>
+<li>test set:
+
+<ul>
+<li>denied the offer</li>
+<li>denied the loan</li>
+</ul>
+</li>
+</ul>
+
+
+<p>$$P(&ldquo;offer&rdquo; | denied\,the) = 0?$$</p>
+
+<h3>4.5. Zero probability bigrams</h3>
+
+<ul>
+<li>bigrams with zero probability
+
+<ul>
+<li>mean that we will assign 0 probability to the test set</li>
+</ul>
+</li>
+<li>and hence we cannot compute perplexity (can&rsquo;t divide by 0)!</li>
+</ul>
+
+
+<h2>5. Smoothing Add-One (Laplace) smoothing</h2>
+
+<h3>5.1. The intuition of smoothing from Dan Klein)</h3>
+
+<ul>
+<li>when we have sparse statistics
+
+<ul>
+<li>P(w | denied the)
+
+<ul>
+<li>3 allegations</li>
+<li>2 reports</li>
+<li>1 claims</li>
+<li>1 request</li>
+<li>7 total</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>steal probability mass to generalize better
+
+<ul>
+<li>P(w | denied the)
+
+<ul>
+<li>2.5 allegations</li>
+<li>1.5 reports</li>
+<li>0.5 claims</li>
+<li>0.5 request</li>
+<li>2 other</li>
+<li>7 total</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>5.2. Add-one estimation</h3>
+
+<ul>
+<li>also called Laplace smoothing</li>
+<li>pretend we saw each word one more time than we did</li>
+<li>just add one to all the counts</li>
+</ul>
+
+
+<p>MLE estimate: $$P_MLE(w_i | w<em>{i-1}) = c(w</em>{i-1},w_i) / c(w<em>{i-1})$$<br/>
+Add-1 estimate: $$P_Add-1(w_i | w</em>{i-1}) = \frac {c(w<em>{i-1},w_i) + 1}{c(w</em>{i-1}) + V}$$</p>
+
+<h3>5.3. Maximum Likelihood Estimates</h3>
+
+<ul>
+<li>the maximum likelihood estimate
+
+<ul>
+<li>of some parameter of a model M from a training set T</li>
+<li>maximizes the likelihood of the training set T given the model M</li>
+</ul>
+</li>
+<li>suppose the word &ldquo;bagel&rdquo; occurs 400 times in a corpus of a million words</li>
+<li>what is the probability that a random word from some other text will be &ldquo;bagel&rdquo;?</li>
+<li>MLE estimate is 400/1,000,000 = 0.0004</li>
+<li>this may be a bad estimate for some other corpus
+
+<ul>
+<li>but it is the estimate that makes it most likely that &ldquo;bagel&rdquo; will occur 400 times in a million word corpus</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>5.4. Berkeley Restaurant Corpus: Laplace smoothed bigram counts</h3>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">         </th>
+<th style="text-align:left;"> i  </th>
+<th style="text-align:left;"> want </th>
+<th style="text-align:left;"> to  </th>
+<th style="text-align:left;"> eat </th>
+<th style="text-align:left;"> chinese </th>
+<th style="text-align:left;"> food </th>
+<th style="text-align:left;"> lunch </th>
+<th style="text-align:left;"> spend </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> i       </td>
+<td style="text-align:left;"> 6  </td>
+<td style="text-align:left;"> 828  </td>
+<td style="text-align:left;"> 1   </td>
+<td style="text-align:left;"> 10  </td>
+<td style="text-align:left;"> 1       </td>
+<td style="text-align:left;"> 1    </td>
+<td style="text-align:left;"> 1     </td>
+<td style="text-align:left;"> 3     </td>
+</tr>
+<tr>
+<td style="text-align:left;"> want    </td>
+<td style="text-align:left;"> 3  </td>
+<td style="text-align:left;"> 1    </td>
+<td style="text-align:left;"> 609 </td>
+<td style="text-align:left;"> 2   </td>
+<td style="text-align:left;"> 7       </td>
+<td style="text-align:left;"> 7    </td>
+<td style="text-align:left;"> 6     </td>
+<td style="text-align:left;"> 2     </td>
+</tr>
+<tr>
+<td style="text-align:left;"> to      </td>
+<td style="text-align:left;"> 3  </td>
+<td style="text-align:left;"> 1    </td>
+<td style="text-align:left;"> 5   </td>
+<td style="text-align:left;"> 687 </td>
+<td style="text-align:left;"> 3       </td>
+<td style="text-align:left;"> 1    </td>
+<td style="text-align:left;"> 7     </td>
+<td style="text-align:left;"> 212   </td>
+</tr>
+<tr>
+<td style="text-align:left;"> eat     </td>
+<td style="text-align:left;"> 1  </td>
+<td style="text-align:left;"> 1    </td>
+<td style="text-align:left;"> 3   </td>
+<td style="text-align:left;"> 1   </td>
+<td style="text-align:left;"> 17      </td>
+<td style="text-align:left;"> 3    </td>
+<td style="text-align:left;"> 43    </td>
+<td style="text-align:left;"> 1     </td>
+</tr>
+<tr>
+<td style="text-align:left;"> chinese </td>
+<td style="text-align:left;"> 2  </td>
+<td style="text-align:left;"> 1    </td>
+<td style="text-align:left;"> 1   </td>
+<td style="text-align:left;"> 1   </td>
+<td style="text-align:left;"> 1       </td>
+<td style="text-align:left;"> 83   </td>
+<td style="text-align:left;"> 2     </td>
+<td style="text-align:left;"> 1     </td>
+</tr>
+<tr>
+<td style="text-align:left;"> food    </td>
+<td style="text-align:left;"> 16 </td>
+<td style="text-align:left;"> 1    </td>
+<td style="text-align:left;"> 16  </td>
+<td style="text-align:left;"> 1   </td>
+<td style="text-align:left;"> 2       </td>
+<td style="text-align:left;"> 5    </td>
+<td style="text-align:left;"> 1     </td>
+<td style="text-align:left;"> 1     </td>
+</tr>
+<tr>
+<td style="text-align:left;"> lunch   </td>
+<td style="text-align:left;"> 3  </td>
+<td style="text-align:left;"> 1    </td>
+<td style="text-align:left;"> 1   </td>
+<td style="text-align:left;"> 1   </td>
+<td style="text-align:left;"> 1       </td>
+<td style="text-align:left;"> 2    </td>
+<td style="text-align:left;"> 1     </td>
+<td style="text-align:left;"> 1     </td>
+</tr>
+<tr>
+<td style="text-align:left;"> spend   </td>
+<td style="text-align:left;"> 2  </td>
+<td style="text-align:left;"> 1    </td>
+<td style="text-align:left;"> 2   </td>
+<td style="text-align:left;"> 1   </td>
+<td style="text-align:left;"> 1       </td>
+<td style="text-align:left;"> 1    </td>
+<td style="text-align:left;"> 1     </td>
+<td style="text-align:left;"> 1     </td>
+</tr>
+</tbody>
+</table>
+
+
+<h3>5.5. Laplace-smoothed bigrams</h3>
+
+<p>$$P^*(w_n | w<em>{n-1}) = \frac {C(w</em>{n-1}w_n) + 1}{C(w_{n-1}) + V}$$</p>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">         </th>
+<th style="text-align:left;"> i       </th>
+<th style="text-align:left;"> want    </th>
+<th style="text-align:left;"> to      </th>
+<th style="text-align:left;"> eat     </th>
+<th style="text-align:left;"> chinese </th>
+<th style="text-align:left;"> food    </th>
+<th style="text-align:left;"> lunch   </th>
+<th style="text-align:left;"> spend   </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> i       </td>
+<td style="text-align:left;"> 0.00015 </td>
+<td style="text-align:left;"> 0.21    </td>
+<td style="text-align:left;"> 0.00025 </td>
+<td style="text-align:left;"> 0.0025  </td>
+<td style="text-align:left;"> 0.00025 </td>
+<td style="text-align:left;"> 0.00025 </td>
+<td style="text-align:left;"> 0.00025 </td>
+<td style="text-align:left;"> 0.00075 </td>
+</tr>
+<tr>
+<td style="text-align:left;"> want    </td>
+<td style="text-align:left;"> 0.0013  </td>
+<td style="text-align:left;"> 0.00042 </td>
+<td style="text-align:left;"> 0.26    </td>
+<td style="text-align:left;"> 0.00084 </td>
+<td style="text-align:left;"> 0.0029  </td>
+<td style="text-align:left;"> 0.0029  </td>
+<td style="text-align:left;"> 0.0025  </td>
+<td style="text-align:left;"> 0.00084 </td>
+</tr>
+<tr>
+<td style="text-align:left;"> to      </td>
+<td style="text-align:left;"> 0.00078 </td>
+<td style="text-align:left;"> 0.00026 </td>
+<td style="text-align:left;"> 0.0013  </td>
+<td style="text-align:left;"> 0.18    </td>
+<td style="text-align:left;"> 0.00078 </td>
+<td style="text-align:left;"> 0.00026 </td>
+<td style="text-align:left;"> 0.0018  </td>
+<td style="text-align:left;"> 0.055   </td>
+</tr>
+<tr>
+<td style="text-align:left;"> eat     </td>
+<td style="text-align:left;"> 0.00046 </td>
+<td style="text-align:left;"> 0.00046 </td>
+<td style="text-align:left;"> 0.0014  </td>
+<td style="text-align:left;"> 0.00046 </td>
+<td style="text-align:left;"> 0.078   </td>
+<td style="text-align:left;"> 0.0014  </td>
+<td style="text-align:left;"> 0.02    </td>
+<td style="text-align:left;"> 0.00046 </td>
+</tr>
+<tr>
+<td style="text-align:left;"> chinese </td>
+<td style="text-align:left;"> 0.0012  </td>
+<td style="text-align:left;"> 0.00062 </td>
+<td style="text-align:left;"> 0.00062 </td>
+<td style="text-align:left;"> 0.00062 </td>
+<td style="text-align:left;"> 0.00062 </td>
+<td style="text-align:left;"> 0.052   </td>
+<td style="text-align:left;"> 0.0012  </td>
+<td style="text-align:left;"> 0.00062 </td>
+</tr>
+<tr>
+<td style="text-align:left;"> food    </td>
+<td style="text-align:left;"> 0.0063  </td>
+<td style="text-align:left;"> 0.00039 </td>
+<td style="text-align:left;"> 0.0063  </td>
+<td style="text-align:left;"> 0.00039 </td>
+<td style="text-align:left;"> 0.00079 </td>
+<td style="text-align:left;"> 0.002   </td>
+<td style="text-align:left;"> 0.00039 </td>
+<td style="text-align:left;"> 0.00039 </td>
+</tr>
+<tr>
+<td style="text-align:left;"> lunch   </td>
+<td style="text-align:left;"> 0.0017  </td>
+<td style="text-align:left;"> 0.00056 </td>
+<td style="text-align:left;"> 0.00056 </td>
+<td style="text-align:left;"> 0.00056 </td>
+<td style="text-align:left;"> 0.00056 </td>
+<td style="text-align:left;"> 0.0011  </td>
+<td style="text-align:left;"> 0.00056 </td>
+<td style="text-align:left;"> 0.00056 </td>
+</tr>
+<tr>
+<td style="text-align:left;"> spend   </td>
+<td style="text-align:left;"> 0.0012  </td>
+<td style="text-align:left;"> 0.00058 </td>
+<td style="text-align:left;"> 0.00058 </td>
+<td style="text-align:left;"> 0.00058 </td>
+<td style="text-align:left;"> 0.00058 </td>
+<td style="text-align:left;"> 0.00058 </td>
+<td style="text-align:left;"> 0.00058 </td>
+<td style="text-align:left;"> 0.00058 </td>
+</tr>
+</tbody>
+</table>
+
+
+<h3>5.6. Reconstituted counts</h3>
+
+<p>$$C^*(w<em>{n-1}w_n) = \frac {[C(w</em>{n-1}w_n) + 1] * C(w<em>{n-1})}{C(w</em>{n-1}) + V}$$</p>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">         </th>
+<th style="text-align:left;"> i    </th>
+<th style="text-align:left;"> want  </th>
+<th style="text-align:left;"> to    </th>
+<th style="text-align:left;"> eat   </th>
+<th style="text-align:left;"> chinese </th>
+<th style="text-align:left;"> food    </th>
+<th style="text-align:left;"> lunch   </th>
+<th style="text-align:left;"> spend   </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> i       </td>
+<td style="text-align:left;"> 3.8  </td>
+<td style="text-align:left;"> 527   </td>
+<td style="text-align:left;"> 0.64  </td>
+<td style="text-align:left;"> 6.4   </td>
+<td style="text-align:left;"> 0.64    </td>
+<td style="text-align:left;"> 0.64    </td>
+<td style="text-align:left;"> 0.64    </td>
+<td style="text-align:left;"> 1.9     </td>
+</tr>
+<tr>
+<td style="text-align:left;"> want    </td>
+<td style="text-align:left;"> 1.2  </td>
+<td style="text-align:left;"> 0.39  </td>
+<td style="text-align:left;"> 238   </td>
+<td style="text-align:left;"> 0.78  </td>
+<td style="text-align:left;"> 2.7     </td>
+<td style="text-align:left;"> 2.7     </td>
+<td style="text-align:left;"> 2.3     </td>
+<td style="text-align:left;"> 0.78    </td>
+</tr>
+<tr>
+<td style="text-align:left;"> to      </td>
+<td style="text-align:left;"> 1.9  </td>
+<td style="text-align:left;"> 0.63  </td>
+<td style="text-align:left;"> 3.1   </td>
+<td style="text-align:left;"> 430   </td>
+<td style="text-align:left;"> 1.9     </td>
+<td style="text-align:left;"> 0.63    </td>
+<td style="text-align:left;"> 4.4     </td>
+<td style="text-align:left;"> 133     </td>
+</tr>
+<tr>
+<td style="text-align:left;"> eat     </td>
+<td style="text-align:left;"> 0.34 </td>
+<td style="text-align:left;"> 0.34  </td>
+<td style="text-align:left;"> 1     </td>
+<td style="text-align:left;"> 0.34  </td>
+<td style="text-align:left;"> 5.8     </td>
+<td style="text-align:left;"> 1       </td>
+<td style="text-align:left;"> 15      </td>
+<td style="text-align:left;"> 0.34    </td>
+</tr>
+<tr>
+<td style="text-align:left;"> chinese </td>
+<td style="text-align:left;"> 0.2  </td>
+<td style="text-align:left;"> 0.098 </td>
+<td style="text-align:left;"> 0.098 </td>
+<td style="text-align:left;"> 0.098 </td>
+<td style="text-align:left;"> 0.098   </td>
+<td style="text-align:left;"> 8.2     </td>
+<td style="text-align:left;"> 0.2     </td>
+<td style="text-align:left;"> 0.098   </td>
+</tr>
+<tr>
+<td style="text-align:left;"> food    </td>
+<td style="text-align:left;"> 6.9  </td>
+<td style="text-align:left;"> 0.43  </td>
+<td style="text-align:left;"> 6.9   </td>
+<td style="text-align:left;"> 0.43  </td>
+<td style="text-align:left;"> 0.86    </td>
+<td style="text-align:left;"> 2.2     </td>
+<td style="text-align:left;"> 0.43    </td>
+<td style="text-align:left;"> 0.43    </td>
+</tr>
+<tr>
+<td style="text-align:left;"> lunch   </td>
+<td style="text-align:left;"> 0.57 </td>
+<td style="text-align:left;"> 0.19  </td>
+<td style="text-align:left;"> 0.19  </td>
+<td style="text-align:left;"> 0.19  </td>
+<td style="text-align:left;"> 0.19    </td>
+<td style="text-align:left;"> 0.38    </td>
+<td style="text-align:left;"> 0.19    </td>
+<td style="text-align:left;"> 0.19    </td>
+</tr>
+<tr>
+<td style="text-align:left;"> spend   </td>
+<td style="text-align:left;"> 0.32 </td>
+<td style="text-align:left;"> 0.16  </td>
+<td style="text-align:left;"> 0.32  </td>
+<td style="text-align:left;"> 0.16  </td>
+<td style="text-align:left;"> 0.16    </td>
+<td style="text-align:left;"> 0.16    </td>
+<td style="text-align:left;"> 0.16    </td>
+<td style="text-align:left;"> 0.16    </td>
+</tr>
+</tbody>
+</table>
+
+
+<h3>5.7. Compare with raw bigram counts</h3>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">         </th>
+<th style="text-align:left;"> i  </th>
+<th style="text-align:left;"> want </th>
+<th style="text-align:left;"> to  </th>
+<th style="text-align:left;"> eat </th>
+<th style="text-align:left;"> chinese </th>
+<th style="text-align:left;"> food </th>
+<th style="text-align:left;"> lunch </th>
+<th style="text-align:left;"> spend </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> i       </td>
+<td style="text-align:left;"> 5  </td>
+<td style="text-align:left;"> 827  </td>
+<td style="text-align:left;"> 0   </td>
+<td style="text-align:left;"> 9   </td>
+<td style="text-align:left;"> 0       </td>
+<td style="text-align:left;"> 0    </td>
+<td style="text-align:left;"> 0     </td>
+<td style="text-align:left;"> 2     </td>
+</tr>
+<tr>
+<td style="text-align:left;"> want    </td>
+<td style="text-align:left;"> 2  </td>
+<td style="text-align:left;"> 0    </td>
+<td style="text-align:left;"> 608 </td>
+<td style="text-align:left;"> 1   </td>
+<td style="text-align:left;"> 6       </td>
+<td style="text-align:left;"> 6    </td>
+<td style="text-align:left;"> 5     </td>
+<td style="text-align:left;"> 1     </td>
+</tr>
+<tr>
+<td style="text-align:left;"> to      </td>
+<td style="text-align:left;"> 2  </td>
+<td style="text-align:left;"> 0    </td>
+<td style="text-align:left;"> 4   </td>
+<td style="text-align:left;"> 686 </td>
+<td style="text-align:left;"> 2       </td>
+<td style="text-align:left;"> 0    </td>
+<td style="text-align:left;"> 6     </td>
+<td style="text-align:left;"> 211   </td>
+</tr>
+<tr>
+<td style="text-align:left;"> eat     </td>
+<td style="text-align:left;"> 0  </td>
+<td style="text-align:left;"> 0    </td>
+<td style="text-align:left;"> 2   </td>
+<td style="text-align:left;"> 0   </td>
+<td style="text-align:left;"> 16      </td>
+<td style="text-align:left;"> 2    </td>
+<td style="text-align:left;"> 42    </td>
+<td style="text-align:left;"> 0     </td>
+</tr>
+<tr>
+<td style="text-align:left;"> chinese </td>
+<td style="text-align:left;"> 1  </td>
+<td style="text-align:left;"> 0    </td>
+<td style="text-align:left;"> 0   </td>
+<td style="text-align:left;"> 0   </td>
+<td style="text-align:left;"> 0       </td>
+<td style="text-align:left;"> 82   </td>
+<td style="text-align:left;"> 1     </td>
+<td style="text-align:left;"> 0     </td>
+</tr>
+<tr>
+<td style="text-align:left;"> food    </td>
+<td style="text-align:left;"> 15 </td>
+<td style="text-align:left;"> 0    </td>
+<td style="text-align:left;"> 15  </td>
+<td style="text-align:left;"> 0   </td>
+<td style="text-align:left;"> 1       </td>
+<td style="text-align:left;"> 4    </td>
+<td style="text-align:left;"> 0     </td>
+<td style="text-align:left;"> 0     </td>
+</tr>
+<tr>
+<td style="text-align:left;"> lunch   </td>
+<td style="text-align:left;"> 2  </td>
+<td style="text-align:left;"> 0    </td>
+<td style="text-align:left;"> 0   </td>
+<td style="text-align:left;"> 0   </td>
+<td style="text-align:left;"> 0       </td>
+<td style="text-align:left;"> 1    </td>
+<td style="text-align:left;"> 0     </td>
+<td style="text-align:left;"> 0     </td>
+</tr>
+<tr>
+<td style="text-align:left;"> spend   </td>
+<td style="text-align:left;"> 1  </td>
+<td style="text-align:left;"> 0    </td>
+<td style="text-align:left;"> 1   </td>
+<td style="text-align:left;"> 0   </td>
+<td style="text-align:left;"> 0       </td>
+<td style="text-align:left;"> 0    </td>
+<td style="text-align:left;"> 0     </td>
+<td style="text-align:left;"> 0     </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>add-1 smoothing is maximum to change the original counts</p>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">         </th>
+<th style="text-align:left;"> i    </th>
+<th style="text-align:left;"> want  </th>
+<th style="text-align:left;"> to    </th>
+<th style="text-align:left;"> eat   </th>
+<th style="text-align:left;"> chinese </th>
+<th style="text-align:left;"> food    </th>
+<th style="text-align:left;"> lunch   </th>
+<th style="text-align:left;"> spend   </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> i       </td>
+<td style="text-align:left;"> 3.8  </td>
+<td style="text-align:left;"> 527   </td>
+<td style="text-align:left;"> 0.64  </td>
+<td style="text-align:left;"> 6.4   </td>
+<td style="text-align:left;"> 0.64    </td>
+<td style="text-align:left;"> 0.64    </td>
+<td style="text-align:left;"> 0.64    </td>
+<td style="text-align:left;"> 1.9     </td>
+</tr>
+<tr>
+<td style="text-align:left;"> want    </td>
+<td style="text-align:left;"> 1.2  </td>
+<td style="text-align:left;"> 0.39  </td>
+<td style="text-align:left;"> 238   </td>
+<td style="text-align:left;"> 0.78  </td>
+<td style="text-align:left;"> 2.7     </td>
+<td style="text-align:left;"> 2.7     </td>
+<td style="text-align:left;"> 2.3     </td>
+<td style="text-align:left;"> 0.78    </td>
+</tr>
+<tr>
+<td style="text-align:left;"> to      </td>
+<td style="text-align:left;"> 1.9  </td>
+<td style="text-align:left;"> 0.63  </td>
+<td style="text-align:left;"> 3.1   </td>
+<td style="text-align:left;"> 430   </td>
+<td style="text-align:left;"> 1.9     </td>
+<td style="text-align:left;"> 0.63    </td>
+<td style="text-align:left;"> 4.4     </td>
+<td style="text-align:left;"> 133     </td>
+</tr>
+<tr>
+<td style="text-align:left;"> eat     </td>
+<td style="text-align:left;"> 0.34 </td>
+<td style="text-align:left;"> 0.34  </td>
+<td style="text-align:left;"> 1     </td>
+<td style="text-align:left;"> 0.34  </td>
+<td style="text-align:left;"> 5.8     </td>
+<td style="text-align:left;"> 1       </td>
+<td style="text-align:left;"> 15      </td>
+<td style="text-align:left;"> 0.34    </td>
+</tr>
+<tr>
+<td style="text-align:left;"> chinese </td>
+<td style="text-align:left;"> 0.2  </td>
+<td style="text-align:left;"> 0.098 </td>
+<td style="text-align:left;"> 0.098 </td>
+<td style="text-align:left;"> 0.098 </td>
+<td style="text-align:left;"> 0.098   </td>
+<td style="text-align:left;"> 8.2     </td>
+<td style="text-align:left;"> 0.2     </td>
+<td style="text-align:left;"> 0.098   </td>
+</tr>
+<tr>
+<td style="text-align:left;"> food    </td>
+<td style="text-align:left;"> 6.9  </td>
+<td style="text-align:left;"> 0.43  </td>
+<td style="text-align:left;"> 6.9   </td>
+<td style="text-align:left;"> 0.43  </td>
+<td style="text-align:left;"> 0.86    </td>
+<td style="text-align:left;"> 2.2     </td>
+<td style="text-align:left;"> 0.43    </td>
+<td style="text-align:left;"> 0.43    </td>
+</tr>
+<tr>
+<td style="text-align:left;"> lunch   </td>
+<td style="text-align:left;"> 0.57 </td>
+<td style="text-align:left;"> 0.19  </td>
+<td style="text-align:left;"> 0.19  </td>
+<td style="text-align:left;"> 0.19  </td>
+<td style="text-align:left;"> 0.19    </td>
+<td style="text-align:left;"> 0.38    </td>
+<td style="text-align:left;"> 0.19    </td>
+<td style="text-align:left;"> 0.19    </td>
+</tr>
+<tr>
+<td style="text-align:left;"> spend   </td>
+<td style="text-align:left;"> 0.32 </td>
+<td style="text-align:left;"> 0.16  </td>
+<td style="text-align:left;"> 0.32  </td>
+<td style="text-align:left;"> 0.16  </td>
+<td style="text-align:left;"> 0.16    </td>
+<td style="text-align:left;"> 0.16    </td>
+<td style="text-align:left;"> 0.16    </td>
+<td style="text-align:left;"> 0.16    </td>
+</tr>
+</tbody>
+</table>
+
+
+<h3>5.8. Add-1 estimation is a blunt instrument</h3>
+
+<ul>
+<li>so add-1 isn&rsquo;t used for N-grams
+
+<ul>
+<li>we&rsquo;ll see better methods</li>
+</ul>
+</li>
+<li>but add-1 is used to smooth other NLP models
+
+<ul>
+<li>for text classification</li>
+<li>in domains where the number of zeros isn&rsquo;t so huge</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>6. Interpolation, Backoff, and Web-Scale LMs</h2>
+
+<h3>6.1. Backoff and Interpolation</h3>
+
+<ul>
+<li>sometimes it helps to use less context
+
+<ul>
+<li>condition on less context for contexts you haven&rsquo;t learned much about</li>
+</ul>
+</li>
+<li>backoff
+
+<ul>
+<li>use trigram if you have good evidence</li>
+<li>otherwise bigram</li>
+<li>otherwise unigram</li>
+</ul>
+</li>
+<li>interpolation
+
+<ul>
+<li>mix unigram, bigram, trigram</li>
+</ul>
+</li>
+<li>interpolation works better</li>
+</ul>
+
+
+<h3>6.2. Linear Interpolation</h3>
+
+<ul>
+<li>simple interpolation</li>
+</ul>
+
+
+<p>$$\hat P(w_n | w<em>{n-1}w</em>{n-2}) = \lambda_1 P(w_n | w<em>{n-1}w</em>{n-2}) + \lambda_2 P(w_n | w_{n-1}) + \lambda_3 P(w_n)$$<br/>
+$$\sum_i \lambda_i = 1$$</p>
+
+<ul>
+<li>lambdas conditional on context</li>
+</ul>
+
+
+<p>$$\hat P(w_n | w<em>{n-2}w</em>{n-1}) = \lambda_1 (w<em>{n-2}^{n-1}) P(w_n | w</em>{n-2}w<em>{n-1})
+                                  + \lambda_2 (w</em>{n-2}^{n-1}) P(w_n | w<em>{n-1})
+                                  + \lambda_3 (w</em>{n-2}^{n-1}) P(w_n)
+$$</p>
+
+<h3>6.3. How to set the lambdas</h3>
+
+<ul>
+<li>use a held-out corpus</li>
+</ul>
+
+
+<p>training data -> held-out data (dev set) -> test data</p>
+
+<ul>
+<li>choose $$\lambda$$s to maximize the probability of held-out data
+
+<ul>
+<li>fix the N-gram probabilities (on the training data)</li>
+<li>then search for $$\lambda$$s that give largest probability to held-out set:</li>
+</ul>
+</li>
+</ul>
+
+
+<p>$$log P(w_1&hellip;w_n | M(\lambda_1&hellip;\lambda_k)) = \sum_i log P<em>{M(\lambda_1&hellip;\lambda_k)}(w_i | w</em>{i-1})$$</p>
+
+<h3>6.4. Unknown words: Open versus closed vocabulary tasks</h3>
+
+<ul>
+<li>if we know all the words in advanced
+
+<ul>
+<li>vocabulary V is fixed</li>
+<li>closed vcabulary task</li>
+</ul>
+</li>
+<li>often we don&rsquo;t know this
+
+<ul>
+<li>out of vocabulary = OOV words</li>
+<li>open vocabulary task</li>
+</ul>
+</li>
+<li>instead: create an unknown word token <UNK>
+
+<ul>
+<li>training of <UNK> probabilities
+
+<ul>
+<li>create a fixed lexicon L of size V</li>
+<li>at text normalization phase, any training word not in L changed to <UNK></li>
+<li>now we train its probabilities like a normal word</li>
+</ul>
+</li>
+<li>at decoding time
+
+<ul>
+<li>if text input: use UNK probabilities for any word not in training</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>6.5. Smoothing for Web-scale N-grams</h3>
+
+<ul>
+<li>&ldquo;stupid backoff&rdquo; (Brants et al. 2007)</li>
+<li>no discounting, just use relative frequencies</li>
+</ul>
+
+
+<p>$$S(w_i | w<em>{i-k+1}^{i-1}) = { \frac {count(w</em>{i-k+1}^i)}{count(w<em>{i-k+1}^{i-1})} \qquad if \quad count(w</em>{i=k+1}^i) > 0$$<br/>
+$$S(w_i | w<em>{i-k+1}^{i-1}) = { 0.4S(w_i | w</em>{i-k+2}^{i-1})  \qquad otherwise$$</p>
+
+<p>$$S(w_i) = \frac {count(w_i)}{N}$$</p>
+
+<h3>6.6. N-gram Smoothing Summary</h3>
+
+<ul>
+<li>Add-1 smoothing
+
+<ul>
+<li>OK for text categorization, not for language modeling</li>
+</ul>
+</li>
+<li>the most commonly used method
+
+<ul>
+<li>extended interpolated Kneser-ney</li>
+</ul>
+</li>
+<li>For very large N-grams like the web
+
+<ul>
+<li>stupid backoff</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>6.7. Advanced language Modeling</h3>
+
+<ul>
+<li>Discriminative models
+
+<ul>
+<li>choose n-gram weights to improve a task, not to fit the training set</li>
+</ul>
+</li>
+<li>parsing-based models</li>
+<li>caching models
+
+<ul>
+<li><p>recently used words are more likely to appear</p>
+
+<p>  $$P<em>{CACHE}(w | history) = \lambda P(w_i | w</em>{i-2}w_{i-1}) + (1-\lambda) \frac{c(w\in history)}{|history|} $$</p></li>
+<li><p>these perform very poorly for speech recognition (why?)</p></li>
+</ul>
+</li>
+</ul>
+
+
+<h2>7. Advanced: Good-Turing Smoothing</h2>
+
+<h3>7.1. Reminder: Add-1 (Laplace) Smoothing</h3>
+
+<p>$$P<em>{Add-1}(w_i | w</em>{i-1}) = \frac{c(w<em>{i-1},w_i) + 1}{c(w</em>{i-1} + V)}$$</p>
+
+<h3>7.2. More general formulations: Add-k</h3>
+
+<p>$$P<em>{Add-k}(w_i | w</em>{i-1}) = \frac{c(w<em>{i-1}, w_i) + k}{c(w</em>{i-1} + kV)}$$</p>
+
+<p>$$P<em>{Add-k}(w_i | w</em>{i-1}) = \frac {c(w<em>{i-1}, w_i)+m(\frac1V)}{c(w</em>{i-1})+m}$$</p>
+
+<h3>7.3. Unigram prior smoothing</h3>
+
+<p>$$P<em>{Add-k}(w_i | w</em>{i-1}) = \frac {c(w<em>{i-1}, w_i) + m(\frac 1V)}{c(w</em>{i-1}) + m)}$$</p>
+
+<p>$$P<em>{UnigramPrior}(w_i | w</em>{i-1}) = \frac {c(w<em>{i-1}, w_i) + mP(w_i)}{c(w</em>{i-1}) + m}$$</p>
+
+<h3>7.4. Advanced smoothing algorithms</h3>
+
+<ul>
+<li>intuition used by many smoothing algorithms
+
+<ul>
+<li>Good-Turing</li>
+<li>Kneser-Ney</li>
+<li>Witten-Bell</li>
+</ul>
+</li>
+<li>use the count of things we&rsquo;ve seen once
+
+<ul>
+<li>to help estimate the count of things we&rsquo;ve never seen</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>7.5. Notation: $$N_c$$ = Frequency of frequency c</h3>
+
+<p>$$N_c$$ = the count of things we&rsquo;ve seen c times</p>
+
+<p>example: Sam I am I am Sam I do not eat</p>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;"> Word </th>
+<th style="text-align:left;"> Frequnecy </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> I    </td>
+<td style="text-align:left;"> 3         </td>
+</tr>
+<tr>
+<td style="text-align:left;"> sam  </td>
+<td style="text-align:left;"> 2         </td>
+</tr>
+<tr>
+<td style="text-align:left;"> am   </td>
+<td style="text-align:left;"> 2         </td>
+</tr>
+<tr>
+<td style="text-align:left;"> do   </td>
+<td style="text-align:left;"> 1         </td>
+</tr>
+<tr>
+<td style="text-align:left;"> not  </td>
+<td style="text-align:left;"> 1         </td>
+</tr>
+<tr>
+<td style="text-align:left;"> eat  </td>
+<td style="text-align:left;"> 1         </td>
+</tr>
+</tbody>
+</table>
+
+
+<ul>
+<li>$$N_1$$ = 3</li>
+<li>$$N_2$$ = 2</li>
+<li>$$N_3$$ = 1</li>
+</ul>
+
+
+<h3>7.6. Good-Turing smoothing intuition</h3>
+
+<ul>
+<li>You are fishing (a scenario from Josh Goodman), and caught
+
+<ul>
+<li>10 carp, 3 perch, 2 whitefish, 1 trout, 1 salmon, 1 eel = 18 fish</li>
+</ul>
+</li>
+<li>How likely is it that next species is trout?
+
+<ul>
+<li>1/18</li>
+</ul>
+</li>
+<li>How likely is it that next species is new (i.e. catfish or bass)
+
+<ul>
+<li>let&rsquo;s use our estimate of things-we-saw-once to estimate the new things</li>
+<li>3/18 (because N_1 = 3)</li>
+</ul>
+</li>
+<li>assuming so, how likely is it that next species is trout?
+
+<ul>
+<li>must be less than 1/18</li>
+<li>how to estimate?</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>7.7. Good Turing calculations</h3>
+
+<p>$$P_{GT}(things\,with\,zero\,frequency) = \frac{N_1}{N}$$</p>
+
+<p>$$C^{*} = \frac{(c+1)N_{c+1}}{N_c}$$</p>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">            </th>
+<th style="text-align:left;"> unseen (bass or catfish)    </th>
+<th style="text-align:left;"> seen once (trout)    </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> c          </td>
+<td style="text-align:left;"> c=0                         </td>
+<td style="text-align:left;"> c=1                  </td>
+</tr>
+<tr>
+<td style="text-align:left;"> MLE        </td>
+<td style="text-align:left;"> p=0/18=0                    </td>
+<td style="text-align:left;"> p = 1/18             </td>
+</tr>
+<tr>
+<td style="text-align:left;"> $$P_{GT}$$ </td>
+<td style="text-align:left;"> P_GT(unseen) = N_1/N = 3/18 </td>
+<td style="text-align:left;"> C(trout) = 2 * N2/N1 = 2 * 1/3 = 2/3 , P_GT(trout) = 2/3 / 18 = 1/27 </td>
+</tr>
+</tbody>
+</table>
+
+
+<h3>7.8. Ney et al.&rsquo;s Good Turing Intuition</h3>
+
+<p>datasets: training, held-out</p>
+
+<ul>
+<li>intuition from leave-one-out validation
+
+<ul>
+<li>take each of the c training words out in turn</li>
+<li>c training sets of size c-1, held-out of size 1</li>
+<li>what fraction of held-out words are unseen in training: N_1 / C</li>
+<li>what fraction of held-out words are seen k times in training: k times, (k+1)N_{k+1}/C</li>
+<li>so in the future we expect (k+1)N_(k+1)/c of the words to be those with training count k</li>
+<li>there are N_k words with training count k</li>
+<li>each should occur with probability (k+1)N_{k+1}/c/N_k</li>
+<li>or expected count: k* = (k+1)N_{k+1} / N_k</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>7.9. Good-Turing complications</h3>
+
+<ul>
+<li>problems: what about &ldquo;the&rdquo;? (say c=4417)
+
+<ul>
+<li>for small k, N_k > N_{k+1}</li>
+<li>for large k, too jumpy, zeros wrech estimates</li>
+</ul>
+</li>
+<li>simple Good-Turing [Gale and Sampson]: replace empirical N_k with a best-fit power law once count counts get unreliable</li>
+</ul>
+
+
+<h3>7.10. Resulting Good-Turing numbers</h3>
+
+<ul>
+<li>numbers from Church and Gale (1991)</li>
+<li>22 million words of AP Newswire</li>
+</ul>
+
+
+<p>$$c^{*} = \frac{(c+1)N_{c+1}}{N_c}$$</p>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;"> Count c </th>
+<th style="text-align:left;"> Good Turing c* </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> 0       </td>
+<td style="text-align:left;"> .0000270       </td>
+</tr>
+<tr>
+<td style="text-align:left;"> 1       </td>
+<td style="text-align:left;"> 0.446          </td>
+</tr>
+<tr>
+<td style="text-align:left;"> 2       </td>
+<td style="text-align:left;"> 1.26           </td>
+</tr>
+<tr>
+<td style="text-align:left;"> 3       </td>
+<td style="text-align:left;"> 2.24           </td>
+</tr>
+<tr>
+<td style="text-align:left;"> 4       </td>
+<td style="text-align:left;"> 3.24           </td>
+</tr>
+<tr>
+<td style="text-align:left;"> 5       </td>
+<td style="text-align:left;"> 4.22           </td>
+</tr>
+<tr>
+<td style="text-align:left;"> 6       </td>
+<td style="text-align:left;"> 4.19           </td>
+</tr>
+<tr>
+<td style="text-align:left;"> 7       </td>
+<td style="text-align:left;"> 6.21           </td>
+</tr>
+<tr>
+<td style="text-align:left;"> 8       </td>
+<td style="text-align:left;"> 7.24           </td>
+</tr>
+<tr>
+<td style="text-align:left;"> 9       </td>
+<td style="text-align:left;"> 8.25           </td>
+</tr>
+</tbody>
+</table>
+
+
+<h2>8. Kneser-Ney Smoothing</h2>
+
+<h3>8.1. Absolute Discounting Interpolation</h3>
+
+<ul>
+<li>save ourselves some time and just subtract 0.75 (or some d)!</li>
+</ul>
+
+
+<p>$$P<em>{AbsoluteDiscounting}(w_i | w</em>{i-1}) = discounted bigram + \lambda * InterpolationWeight * unigram$$</p>
+
+<p>$$P<em>{AbsoluteDiscounting}(w_i | w</em>{i-1}) = \frac {c(w<em>{i-1}, w_i) - d}{c(w</em>{i-1})} + \lambda(w_{i-1})P(w)$$</p>
+
+<ul>
+<li>maybe keeping a couple extra values of d for counts 1 and 2</li>
+<li>but should we really just use the regular unigram P(w)?</li>
+</ul>
+
+
+<h3>8.2. Kneser-Ney Smoothing I</h3>
+
+<ul>
+<li>better estimate for probabilities of lower-order unigrams
+
+<ul>
+<li>Shannon game: I can&rsquo;t see without my reading ______ ?</li>
+<li>&ldquo;Francisco&rdquo; is more common than &ldquo;glasses&rdquo;</li>
+<li>but &ldquo;Francisco&rdquo; always follows &ldquo;San&rdquo;</li>
+</ul>
+</li>
+<li>the unigram is useful exactly when we haven&rsquo;t seen this bigram!</li>
+<li>instead of P(w): &ldquo;How likely is w&rdquo;</li>
+<li>P_continuation(w): &ldquo;How likely is w to appear as a novel continuation?
+
+<ul>
+<li>for each word, count the number of bigram types it completes</li>
+<li>every bigram type was a novel continuation the first time it was seen</li>
+</ul>
+</li>
+</ul>
+
+
+<p>$$P<em>{CONTINUATION}(w): |{w</em>{i-1}: c(w_{i-1},w) > 0}|$$</p>
+
+<h3>8.3. Kneser-Ney Smoothing II</h3>
+
+<ul>
+<li>how many times does w appear as a novel continuation</li>
+</ul>
+
+
+<p>$$P<em>{CONTINUATION}(w): |{w</em>{i-1}: c(w_{i-1},w) > 0}|$$</p>
+
+<ul>
+<li>normalized by the total number of word bigram types</li>
+</ul>
+
+
+<p>$$|{(w<em>{j-1},w_j):c(w</em>{j-1},w_j)>0}|$$</p>
+
+<p>$$P<em>{CONTINUATION}(w) = \frac {|{w</em>{i-1}: c(w<em>{i-1},w) > 0}|}{|{(w</em>{j-1},w_j):c(w_{j-1},w_j)}|}$$</p>
+
+<h3>8.4. Kneser-Ney Smoothing III</h3>
+
+<ul>
+<li>alternative metaphor: the number of # of word types seen to precede w</li>
+</ul>
+
+
+<p>$$|{w<em>{i-1}: c(w</em>{i-1}, w)>0}|$$</p>
+
+<ul>
+<li>normalized by the # of words preceding all words</li>
+</ul>
+
+
+<p>$$ P<em>{CONTINUATION}(w) = \frac {|{w</em>{i-1}: c(w<em>{i-1}, w)>0}|}
+                               {\sum</em>{w'} |{w'<em>{i-1}: c(w'</em>{i-1}, w')>0}|}
+$$</p>
+
+<ul>
+<li>a frequent word (Francisco) occurring in only one context (San) will have a low continuation probability</li>
+</ul>
+
+
+<h3>8.5. Kneser-Ney Smoothing IV</h3>
+
+<p>$$P<em>{KN}(w_i | w</em>{i-1}) = \frac {max(c(w<em>{i-1}, w_i)-d,0)}{c(w</em>{i-1})} +
+                           \lambda(w<em>{i-1}P</em>{CONTINUATION}(w_i)
+$$</p>
+
+<p>$$\lambda$$ is a normalizing constant; the probability mass we&rsquo;ve discounted</p>
+
+<p>$$\lambda(w_{i-1}) = theNormalizedDiscount * theNumberOfWordTypesThatCanFollowWi-1$$</p>
+
+<p>the number of word types that can follow w_i-1<br/>
+= # of word types we discounted
+= # of times we applied normalized discount</p>
+
+<p>$$\lambda(w<em>{i-1}) = \frac{d}{c(w</em>{i-1})} |{w: c(w_{i-1},w)>0}|$$</p>
+
+<h3>8.6. Kneser-Ney Smoothing: Recursive formulation</h3>
+
+<p>$$ P<em>{KN}(w_i | w</em>{i-n+1}^{i-1}) = \frac {max(c<em>{KN}(w</em>{i-n+1}^i)-d,0)}{c<em>{KN}(w</em>{i-n+1}^{i-1})} +
+                                    \lambda(w<em>{i-n+1}^{i-1}P</em>{KN}(w_i | w_{i-n+2}^{i-1}))
+$$</p>
+
+<p>$$C_{KN}(\circ) = { count(\circ) \qquad for\,the\,highest\,order$$</p>
+
+<p>$$C_{KN}(\circ) = { continuationcount(\circ) \qquad for\,lower\,order$$</p>
+
+<p>continuation count = Number of unique single word contexts for $$\circ$$</p>
+
+<h2>References</h2>
+
+<ol>
+<li>video courses: <a href="https://www.youtube.com/watch?v=s3kKlUBa3b0&amp;list=PL6397E4B26D00A269&amp;index=12">part 1</a>, <a href="https://www.youtube.com/watch?v=o-CvoOkVrnY&amp;index=13&amp;list=PL6397E4B26D00A269">part 2</a>, <a href="https://www.youtube.com/watch?v=OHyVNCvnsTo&amp;index=14&amp;list=PL6397E4B26D00A269">part 3</a>, <a href="https://www.youtube.com/watch?v=s5Yg6qac9ag&amp;index=15&amp;list=PL6397E4B26D00A269">part 4</a>, <a href="https://www.youtube.com/watch?v=d8nVJjlMOYo&amp;list=PL6397E4B26D00A269&amp;index=16">part 5</a>, <a href="https://www.youtube.com/watch?v=-aMYz1tMfPg&amp;list=PL6397E4B26D00A269&amp;index=17">part 6</a>, <a href="https://www.youtube.com/watch?v=XdjCCkFUBKU&amp;index=18&amp;list=PL6397E4B26D00A269">part 7</a>, <a href="https://www.youtube.com/watch?v=wtB00EczoCM&amp;list=PL6397E4B26D00A269&amp;index=19">part 8</a></li>
+</ol>
+
+</div>
+
+
+
+
+
+
+  <footer>
+
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">K</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-06-23T13:49:23+08:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>23</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>1:49 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/tech/'>tech</a>
+  
+</span>
+
+
+      
+
+<span class="categories">
+  
+    <a class='tag' href='/tags/machine-learning/'>machine learning</a>, <a class='tag' href='/tags/nlp/'>nlp</a>
+  
+</span>
+
+
+    </p>
+
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://k.arttechresearch.com/tech/2014/06/23/stanford-nlp-4-language-modeling/" data-via="kwailamchan" data-counturl="http://k.arttechresearch.com/tech/2014/06/23/stanford-nlp-4-language-modeling/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/tech/2014/06/20/stanford-nlp-3-minimum-edit-distance/" title="Previous Post: Stanford NLP 3 - Minimum Edit Distance">&laquo; Stanford NLP 3 - Minimum Edit Distance</a>
+      
+      
+        <a class="basic-alignment right" href="/tech/2014/06/23/stanford-nlp-5-spelling-correction-and-the-noisy-channel/" title="Next Post: Stanford NLP 5 - Spelling Correction and the Noisy Channel">Stanford NLP 5 - Spelling Correction and the Noisy Channel &raquo;</a>
+      
+    </p>
+
+  </footer>
+
+</article>
+
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Tech</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/tech/2015/12/31/python-sphinx/">Python Sphinx</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/12/30/web-apis/">Web APIs</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/12/30/framework-vs-library/">Framework vs Library</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/12/29/installing-logstack-elasticsearch-kibana-on-ubuntu/">Installing Logstack ElasticSearch Kibana on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/12/28/setting-up-opennao-with-virtualbox/">Setting Up OpenNao With VirtualBox</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/12/28/getting-started-with-cassandra/">Getting Started With Cassandra</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/12/13/machine-learning-from-facebook-tech-talk/">Machine Learning From Facebook Tech Talk</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/11/15/connecting-to-mssql-using-freetds-slash-odbc-in-python/">Connecting to MSSQL Using FreeTDS / ODBC in Python</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/11/09/generating-a-self-signed-ssl-certificate/">Generating a Self-Signed SSL Certificate</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/11/08/python-challenge-l4/">Python Challenge L4</a>
+      </li>
+    
+  </ul>
+</section>
+<section class="category-list">
+    <h1>Projects</h1>
+    <ul id="category-list">
+        <li>
+            <span><a href="/tags/edx">edX</a></span> / 
+            <span><a href="/tags/will">Will</a></span>
+        </li>
+    </ul>
+
+    <h1>Programming</h1>
+    <ul id="category-list">
+        <li>
+            <span><a href="/tags/python">Python</a></span> /
+            <span><a href="/tags/ruby">Ruby</a></span> /
+            <span><a href="/tags/nodejs">Node.js</a></span>
+        </li>
+    </ul>
+
+</section>
+<section class="tag-cloud">
+
+
+  <h1>Tags</h1>
+    <ul id="category-list"><a href='/tags/algorithm' style='font-size: 109.41176470588235%'>algorithm(7)</a> <a href='/tags/ansible' style='font-size: 93.23529411764706%'>ansible(2)</a> <a href='/tags/apache' style='font-size: 93.23529411764706%'>apache(2)</a> <a href='/tags/api' style='font-size: 96.47058823529412%'>api(3)</a> <a href='/tags/ascii' style='font-size: 90.0%'>ascii(1)</a> <a href='/tags/beautifulsoup' style='font-size: 90.0%'>beautifulsoup(1)</a> <a href='/tags/butter' style='font-size: 90.0%'>butter(1)</a> <a href='/tags/career' style='font-size: 93.23529411764706%'>career(2)</a> <a href='/tags/cassandra' style='font-size: 90.0%'>cassandra(1)</a> <a href='/tags/cg' style='font-size: 90.0%'>cg(1)</a> <a href='/tags/chatbot' style='font-size: 96.47058823529412%'>chatbot(3)</a> <a href='/tags/classification' style='font-size: 93.23529411764706%'>classification(2)</a> <a href='/tags/cloud' style='font-size: 90.0%'>cloud(1)</a> <a href='/tags/cloudera' style='font-size: 109.41176470588235%'>cloudera(7)</a> <a href='/tags/cloudera-manager' style='font-size: 96.47058823529412%'>cloudera manager(3)</a> <a href='/tags/cluster' style='font-size: 151.47058823529412%'>cluster(20)</a> <a href='/tags/computer-vision' style='font-size: 90.0%'>computer vision(1)</a> <a href='/tags/crawler' style='font-size: 93.23529411764706%'>crawler(2)</a> <a href='/tags/css' style='font-size: 93.23529411764706%'>css(2)</a> <a href='/tags/data' style='font-size: 90.0%'>data(1)</a> <a href='/tags/db' style='font-size: 102.94117647058823%'>db(5)</a> <a href='/tags/debian' style='font-size: 90.0%'>debian(1)</a> <a href='/tags/devops' style='font-size: 99.70588235294117%'>devops(4)</a> <a href='/tags/django' style='font-size: 93.23529411764706%'>django(2)</a> <a href='/tags/dns' style='font-size: 90.0%'>dns(1)</a> <a href='/tags/docker' style='font-size: 96.47058823529412%'>docker(3)</a> <a href='/tags/edx' style='font-size: 128.8235294117647%'>edX(13)</a> <a href='/tags/edx-ai' style='font-size: 90.0%'>edX AI(1)</a> <a href='/tags/edx-analytics' style='font-size: 112.64705882352942%'>edX Analytics(8)</a> <a href='/tags/edx-platform' style='font-size: 96.47058823529412%'>edX Platform(3)</a> <a href='/tags/elasticsearch' style='font-size: 90.0%'>elasticsearch(1)</a> <a href='/tags/emacs' style='font-size: 93.23529411764706%'>emacs(2)</a> <a href='/tags/exhibition' style='font-size: 93.23529411764706%'>exhibition(2)</a> <a href='/tags/fiction' style='font-size: 109.41176470588235%'>fiction(7)</a> <a href='/tags/filebeat' style='font-size: 90.0%'>filebeat(1)</a> <a href='/tags/forever' style='font-size: 93.23529411764706%'>forever(2)</a> <a href='/tags/framework' style='font-size: 90.0%'>framework(1)</a> <a href='/tags/freetds' style='font-size: 90.0%'>freetds(1)</a> <a href='/tags/french' style='font-size: 90.0%'>french(1)</a> <a href='/tags/ghost' style='font-size: 99.70588235294117%'>ghost(4)</a> <a href='/tags/git' style='font-size: 102.94117647058823%'>git(5)</a> <a href='/tags/github' style='font-size: 93.23529411764706%'>github(2)</a> <a href='/tags/gitosis' style='font-size: 90.0%'>gitosis(1)</a> <a href='/tags/gitweb' style='font-size: 90.0%'>gitweb(1)</a> <a href='/tags/gunicorn' style='font-size: 90.0%'>gunicorn(1)</a> <a href='/tags/hadoop' style='font-size: 135.29411764705884%'>hadoop(15)</a> <a href='/tags/hbase' style='font-size: 102.94117647058823%'>hbase(5)</a> <a href='/tags/hdfs' style='font-size: 93.23529411764706%'>hdfs(2)</a> <a href='/tags/hipchat' style='font-size: 96.47058823529412%'>hipchat(3)</a> <a href='/tags/hive' style='font-size: 96.47058823529412%'>hive(3)</a> <a href='/tags/html' style='font-size: 93.23529411764706%'>html(2)</a> <a href='/tags/hue' style='font-size: 93.23529411764706%'>hue(2)</a> <a href='/tags/ide' style='font-size: 96.47058823529412%'>ide(3)</a> <a href='/tags/iterm' style='font-size: 90.0%'>iterm(1)</a> <a href='/tags/java' style='font-size: 93.23529411764706%'>java(2)</a> <a href='/tags/javascript' style='font-size: 99.70588235294117%'>javascript(4)</a> <a href='/tags/jekyll' style='font-size: 93.23529411764706%'>jekyll(2)</a> <a href='/tags/jenkins' style='font-size: 90.0%'>jenkins(1)</a> <a href='/tags/kibana' style='font-size: 90.0%'>kibana(1)</a> <a href='/tags/leisure' style='font-size: 151.47058823529412%'>leisure(20)</a> <a href='/tags/library' style='font-size: 90.0%'>library(1)</a> <a href='/tags/linux' style='font-size: 115.88235294117646%'>linux(9)</a> <a href='/tags/logstack' style='font-size: 90.0%'>logstack(1)</a> <a href='/tags/machine-learning' style='font-size: 125.58823529411765%'>machine learning(12)</a> <a href='/tags/mapreduce' style='font-size: 93.23529411764706%'>mapreduce(2)</a> <a href='/tags/markdown' style='font-size: 90.0%'>markdown(1)</a> <a href='/tags/mathjax' style='font-size: 93.23529411764706%'>mathjax(2)</a> <a href='/tags/mongo' style='font-size: 90.0%'>mongo(1)</a> <a href='/tags/mongovue' style='font-size: 90.0%'>mongovue(1)</a> <a href='/tags/mssql' style='font-size: 90.0%'>mssql(1)</a> <a href='/tags/mysql' style='font-size: 112.64705882352942%'>mysql(8)</a> <a href='/tags/mysql-workbench' style='font-size: 93.23529411764706%'>mysql workbench(2)</a> <a href='/tags/nao' style='font-size: 90.0%'>nao(1)</a> <a href='/tags/network' style='font-size: 90.0%'>network(1)</a> <a href='/tags/nginx' style='font-size: 99.70588235294117%'>nginx(4)</a> <a href='/tags/nlp' style='font-size: 106.17647058823529%'>nlp(6)</a> <a href='/tags/nltk' style='font-size: 90.0%'>nltk(1)</a> <a href='/tags/nodejs' style='font-size: 106.17647058823529%'>nodejs(6)</a> <a href='/tags/octopress' style='font-size: 112.64705882352942%'>octopress(8)</a> <a href='/tags/odbc' style='font-size: 90.0%'>odbc(1)</a> <a href='/tags/oil-painting' style='font-size: 90.0%'>oil painting(1)</a> <a href='/tags/openstack' style='font-size: 90.0%'>openstack(1)</a> <a href='/tags/painting' style='font-size: 90.0%'>painting(1)</a> <a href='/tags/pandas' style='font-size: 93.23529411764706%'>pandas(2)</a> <a href='/tags/photos' style='font-size: 128.8235294117647%'>photos(13)</a> <a href='/tags/poem' style='font-size: 99.70588235294117%'>poem(4)</a> <a href='/tags/prediction' style='font-size: 90.0%'>prediction(1)</a> <a href='/tags/programming' style='font-size: 93.23529411764706%'>programming(2)</a> <a href='/tags/pycharm' style='font-size: 90.0%'>pycharm(1)</a> <a href='/tags/python' style='font-size: 200.0%'>python(35)</a> <a href='/tags/python-challenge' style='font-size: 96.47058823529412%'>Python Challenge(3)</a> <a href='/tags/redis' style='font-size: 90.0%'>redis(1)</a> <a href='/tags/redmine' style='font-size: 90.0%'>redmine(1)</a> <a href='/tags/regex' style='font-size: 90.0%'>regex(1)</a> <a href='/tags/rest' style='font-size: 90.0%'>rest(1)</a> <a href='/tags/robotics' style='font-size: 99.70588235294117%'>robotics(4)</a> <a href='/tags/ruby' style='font-size: 119.11764705882354%'>ruby(10)</a> <a href='/tags/soap' style='font-size: 90.0%'>soap(1)</a> <a href='/tags/sphinx' style='font-size: 90.0%'>sphinx(1)</a> <a href='/tags/sql' style='font-size: 90.0%'>sql(1)</a> <a href='/tags/sqoop' style='font-size: 96.47058823529412%'>sqoop(3)</a> <a href='/tags/ssl' style='font-size: 93.23529411764706%'>ssl(2)</a> <a href='/tags/supervisor' style='font-size: 90.0%'>supervisor(1)</a> <a href='/tags/tech-talks' style='font-size: 90.0%'>tech talks(1)</a> <a href='/tags/time-series' style='font-size: 90.0%'>time series(1)</a> <a href='/tags/translation' style='font-size: 90.0%'>translation(1)</a> <a href='/tags/ubuntu' style='font-size: 115.88235294117646%'>ubuntu(9)</a> <a href='/tags/unicode' style='font-size: 90.0%'>unicode(1)</a> <a href='/tags/vagrant' style='font-size: 96.47058823529412%'>vagrant(3)</a> <a href='/tags/vim' style='font-size: 93.23529411764706%'>vim(2)</a> <a href='/tags/virtualbox' style='font-size: 96.47058823529412%'>virtualbox(3)</a> <a href='/tags/vm' style='font-size: 93.23529411764706%'>vm(2)</a> <a href='/tags/web' style='font-size: 109.41176470588235%'>web(7)</a> <a href='/tags/will' style='font-size: 96.47058823529412%'>will(3)</a> <a href='/tags/yarn' style='font-size: 90.0%'>yarn(1)</a> <a href='/tags/zookeeper' style='font-size: 102.94117647058823%'>zookeeper(5)</a> </ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2006-2016 - K
+</p>
+
+
+
+<script type="text/javascript">
+
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-53625944-7', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'kwailamc';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://k.arttechresearch.com/tech/2014/06/23/stanford-nlp-4-language-modeling/';
+        var disqus_url = 'http://k.arttechresearch.com/tech/2014/06/23/stanford-nlp-4-language-modeling/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

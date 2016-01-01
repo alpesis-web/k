@@ -1,0 +1,759 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Tech | K]]></title>
+  <link href="http://k.arttechresearch.com/categories/tech/atom.xml" rel="self"/>
+  <link href="http://k.arttechresearch.com/"/>
+  <updated>2016-01-02T00:29:37+08:00</updated>
+  <id>http://k.arttechresearch.com/</id>
+  <author>
+    <name><![CDATA[K]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Python Sphinx]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/12/31/python-sphinx/"/>
+    <updated>2015-12-31T01:25:59+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/12/31/python-sphinx</id>
+    <content type="html"><![CDATA[<p>Sphinx is a Python documentation generator. To write the project documentation with
+Sphinx, here are the steps:</p>
+
+<ol>
+<li>Installing Sphinx and setting up a project</li>
+<li>Configuring Sphinx</li>
+<li>Customizing the theme</li>
+<li>Writing the docs</li>
+</ol>
+
+
+<h2>Sphinx Setup</h2>
+
+<p>Sphinx and plugins</p>
+
+<ul>
+<li>sphinx</li>
+<li>sphinx-autobuild: live html preview</li>
+</ul>
+
+
+<h3>Installation</h3>
+
+<pre><code class="bash">$ pip install sphinx
+$ pip install sphinx-autobuild
+</code></pre>
+
+<h3>Quick Start</h3>
+
+<pre><code class="bash">$ sphinx-quickstart
+
+# sphinx-autobuild &lt;DOCS_PATH&gt; &lt;DOCS_PATH/BUILD/HTML&gt;
+$ sphinx-autobuild docs docs/_build/html
+</code></pre>
+
+<p>other commands</p>
+
+<pre><code class="bash make.bat">if "%1" == "help" (
+        :help
+        echo.Please use `make ^&lt;target^&gt;` where ^&lt;target^&gt; is one of
+        echo.  html       to make standalone HTML files
+        echo.  dirhtml    to make HTML files named index.html in directories
+        echo.  singlehtml to make a single large HTML file
+        echo.  pickle     to make pickle files
+        echo.  json       to make JSON files
+        echo.  htmlhelp   to make HTML files and a HTML help project
+        echo.  qthelp     to make HTML files and a qthelp project
+        echo.  devhelp    to make HTML files and a Devhelp project
+        echo.  epub       to make an epub
+        echo.  latex      to make LaTeX files, you can set PAPER=a4 or PAPER=letter
+        echo.  text       to make text files
+        echo.  man        to make manual pages
+        echo.  texinfo    to make Texinfo files
+        echo.  gettext    to make PO message catalogs
+        echo.  changes    to make an overview over all changed/added/deprecated items
+        echo.  xml        to make Docutils-native XML files
+        echo.  pseudoxml  to make pseudoxml-XML files for display purposes
+        echo.  linkcheck  to check all external links for integrity
+        echo.  doctest    to run all doctests embedded in the documentation if enabled
+        echo.  coverage   to run coverage check of the documentation if enabled
+        goto end
+)
+</code></pre>
+
+<h2>Sphinx Settings</h2>
+
+<pre><code class="python conf.py"># -- General configuration ------------------------------------------------
+# -- Options for HTML output ----------------------------------------------
+# -- Options for LaTeX output ---------------------------------------------
+# -- Options for manual page output ---------------------------------------
+# -- Options for Texinfo output -------------------------------------------
+</code></pre>
+
+<h2>Sphinx Theming</h2>
+
+<p>There are two options to create a theme:</p>
+
+<ul>
+<li>one is to change a default theme,</li>
+<li>another is to create a new one by yourself.</li>
+</ul>
+
+
+<h3>Default Themes</h3>
+
+<p>All html configurations are stored in <code>conf.py</code>. Official docs is <a href="http://sphinx-doc.org/theming.html">here</a>.</p>
+
+<pre><code class="python conf.py"># -- Options for HTML output ----------------------------------------------
+
+# The theme to use for HTML and HTML Help pages.  See the documentation for
+# a list of builtin themes.
+# default themes: alabaster, sphinx_rtd_theme, classic, sphinxdoc,
+#     scrolls, agogo, traditional, nature, haiku, pyramid, bizstyle
+html_theme = 'nature'
+
+# Theme options are theme-specific and customize the look and feel of a theme
+# further.  For a list of options available for each theme, see the
+# documentation.
+# html_theme_options = {
+#     "rightsidebar": "true",
+#     "relbarbgcolor": "black"
+# }
+html_theme_options = {}
+
+# Add any paths that contain custom themes here, relative to this directory.
+# html_theme_path = ["."]
+html_theme_path = []
+</code></pre>
+
+<h3>Custom Themes</h3>
+
+<h2>RST</h2>
+
+<h3>Makeup Constructs</h3>
+
+<p>Official docs is <a href="http://sphinx-doc.org/markup/index.html">here</a>.</p>
+
+<h4>toctree</h4>
+
+<pre><code class="python toctree">.. toctree::
+   :maxdepth: 2
+
+.. toctree::
+   :numbered:
+
+.. toctree::
+   :caption: Table of Contents
+   :name: mastertoc
+
+.. toctree::
+   :titlesonly:
+
+.. toctree::
+   :glob:
+
+.. toctree::
+   :hidden:
+
+.. toctree::
+   :includehidden:
+</code></pre>
+
+<h4>paragraph-level makeup</h4>
+
+<pre><code class="python paragraph-level">.. note::
+.. warning::
+
+.. versionadded:: 2.5
+.. versionchanged:: version
+.. deprecated:: 3.1
+
+.. seealso::
+
+.. rubric:: title
+
+.. centered:: LICENSE AGREEMENT
+
+.. hlist::
+   :columns: 3
+
+   * A list of
+   * short items
+   * that should be
+   * displayed
+   * horizontally
+
+.. glossary::
+.. productionlist::
+</code></pre>
+
+<h4>codes</h4>
+
+<p>Official docs is <a href="http://sphinx-doc.org/markup/code.html">here</a>.</p>
+
+<pre><code class="python codes">.. highlight:: c
+.. code-block:: ruby
+
+.. highlight:: python
+   :linenothreshold: 5
+
+.. code-block:: ruby
+   :linenos:
+
+.. code-block:: python
+   :emphasize-lines: 3,5
+
+.. literalinclude:: example.py
+
+.. literalinclude:: example.rb
+   :language: ruby
+   :emphasize-lines: 12,15-18
+   :linenos:
+
+.. literalinclude:: example.py
+   :encoding: latin-1
+
+.. literalinclude:: example.py
+   :pyobject: Timer.start
+
+.. literalinclude:: example.py
+   :lines: 1,3,5-10,20-
+
+.. literalinclude:: example.py
+   :diff: example.py.orig
+
+.. code-block:: python
+   :caption: this.py
+   :name: this-py
+
+.. literalinclude:: example.rb
+   :language: ruby
+   :dedent: 4
+   :lines: 10-15
+</code></pre>
+
+<h4>inline makeup</h4>
+
+<p>Official docs is <a href="http://sphinx-doc.org/markup/inline.html">here</a>.</p>
+
+<pre><code class="python inline">:any:
+:ref:
+:doc:
+
+:download:
+
+:numref:
+
+:envvar:
+:token:
+:keyword:
+:option:
+:term:
+
+:abbr:
+:command:
+:dfn:
+:file:
+:guilabel:
+:kbd:
+:mailheader:
+:makevar:
+:manpage:
+:menuselection:
+:mimetype:
+:newsgroup:
+:program:
+:regexp:
+:samp:
+:pep:
+:rfc:
+
+|release|
+|version|
+|today|
+</code></pre>
+
+<h4>others</h4>
+
+<pre><code class="python otheres">:fieldname: Field content
+
+.. sectionauthor:: name &lt;email&gt;
+.. sectionauthor:: Guido van Rossum &lt;guido@python.org&gt;
+.. codeauthor:: name &lt;email&gt;
+
+.. index:: &lt;entries&gt;
+.. index::
+   single: execution; context
+   module: __main__
+   module: sys
+   triple: module; search; path
+
+.. index:: Python
+.. index:: ! Python
+.. index:: BNF, grammar, syntax, notation
+
+.. only:: &lt;expression&gt;
+.. only:: html and draft
+
+.. tabularcolumns:: column spec
+|l|l|l|
+</code></pre>
+
+<h3>Primer</h3>
+
+<p>Official docs is <a href="http://sphinx-doc.org/rest.html">here</a>.</p>
+
+<h2>References</h2>
+
+<ul>
+<li><a href="http://sphinx-doc.org/contents.html">Official Docs</a></li>
+<li><a href="https://pythonhosted.org/sphinxcontrib-httpdomain/">sphinxcontrib-httpdomain</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Web APIs]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/12/30/web-apis/"/>
+    <updated>2015-12-30T16:21:13+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/12/30/web-apis</id>
+    <content type="html"><![CDATA[<h2>Definition</h2>
+
+<p>Web API is a set of Hypertext Transfer Protocol (HTTP) request mesages along with the structure of reponse messages (XML or JSON format).</p>
+
+<p>Types:</p>
+
+<ul>
+<li>Simple Object Access Protocol (SOAP)</li>
+<li>REpresentational State Transfer (REST)</li>
+</ul>
+
+
+<h2>SOAP</h2>
+
+<p>SOAP is a protocol specification for exchanging structured inforamtion of web service (XML based) by Hypertext Transfer Protocol (HTTP) or Simple Mail Transfer Protocol (SMTP).</p>
+
+<h2>REST</h2>
+
+<h3>Definition</h3>
+
+<p>REST was definied by Roy Thomas Fieldiing in his 2000 PhD dissertation <a href="http://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm">&ldquo;Architectural Styles and the Design of Network-based Software Architectures&rdquo;</a>.</p>
+
+<p>Referring to Wikipedia, <a href="https://en.wikipedia.org/wiki/Representational_state_transfer">REST</a> communicates over Hypertext Transfer Protocal (HTTP) with the same HTTP verbs (GET, POST, PUT, DELETE, etc.) that web browsers user to retrieve web pages and to send data to remote servers.</p>
+
+<p>REST architectural style</p>
+
+<ul>
+<li>Performance</li>
+<li>Scalability</li>
+<li>Simplicity of interfaces</li>
+<li>Modifiability of components to meet changing needs (even while the application is running)</li>
+<li>Visibility of communication between components by service agents</li>
+<li>Portability of components by moving program code with the data</li>
+<li>Reliability is the resistance to failure at the system level in the presence of failures within components, connectors, or data</li>
+</ul>
+
+
+<h3>RESTful APIs</h3>
+
+<p>elements</p>
+
+<ul>
+<li>URI</li>
+<li>JSON data</li>
+<li>HTTP methods: GET, POST, PUT, DELETE, etc</li>
+</ul>
+
+
+<p>design rules</p>
+
+<ul>
+<li>client-server: there should be a sepration between the server that offers a service, and the client that consumes it.</li>
+<li>stateless: each requests from a client must contain all the inforamtion required by the server to carry out the request.</li>
+<li>cacheable: the server must indicate to the client if requests can be cached or not.</li>
+<li>layered system: communication between a client and a server should be standarized in such a way that allows intermediaries to respond to requests instead of the end server, without the client having to do anything different.</li>
+<li>code on demand: servers can provide executable code or scripts for clients to execute in their context.</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Framework vs Library]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/12/30/framework-vs-library/"/>
+    <updated>2015-12-30T15:11:22+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/12/30/framework-vs-library</id>
+    <content type="html"><![CDATA[<p><img src="https://s-media-cache-ak0.pinimg.com/474x/fe/4e/3b/fe4e3b8680d390b80d9bf64976af1b0a.jpg" /></p>
+
+<p>image source: <a href="http://tom.lokhorst.eu/2010/09/why-libraries-are-better-than-frameworks">http://tom.lokhorst.eu/2010/09/why-libraries-are-better-than-frameworks</a></p>
+
+<h2>Framework</h2>
+
+<p>Referring to the Wikipedia, <a href="https://en.wikipedia.org/wiki/Software_framework">framework</a> is</p>
+
+<ul>
+<li>an abstraction of providing generic functionality which can be rewritten by users</li>
+<li>a universal, resuable software environment that provides particular functionality</li>
+<li>including support programs, compilers, code libraries, tool sets and APIs, etc</li>
+</ul>
+
+
+<p>4 Features</p>
+
+<ul>
+<li>inversion of control</li>
+<li>default behavior</li>
+<li>extensibility</li>
+<li>non-modifiable framwork code</li>
+</ul>
+
+
+<h2>Library</h2>
+
+<p>Referring to the Wikipedia, <a href="https://en.wikipedia.org/wiki/Library_(computing)">library</a> is</p>
+
+<ul>
+<li>a collection of non-volatile resources used by computer programs</li>
+<li>a collection of implementation of behavior, written in terms of a language with well-defined interface by which the behavir is invoked</li>
+<li>including configration data, documentation, help data, message templates, pre-written code and
+sub routines, classes, values or type specifications</li>
+</ul>
+
+
+<p>Types</p>
+
+<ul>
+<li>static libraries</li>
+<li>shared libraries
+
+<ul>
+<li>memory sharing</li>
+<li>dynamic linking</li>
+<li>optimizations</li>
+<li>dynamic loading</li>
+</ul>
+</li>
+<li>remote libraries</li>
+<li>code generation libraries</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Installing Logstack ElasticSearch Kibana on Ubuntu]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/12/29/installing-logstack-elasticsearch-kibana-on-ubuntu/"/>
+    <updated>2015-12-29T14:52:55+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/12/29/installing-logstack-elasticsearch-kibana-on-ubuntu</id>
+    <content type="html"><![CDATA[<h2>Installation Steps</h2>
+
+<ul>
+<li>Step 1. java</li>
+<li>Step 2. elasticsearch</li>
+<li>Step 3. kibana/nginx</li>
+<li>Step 4. logstack</li>
+<li>Step 5. filebeat</li>
+</ul>
+
+
+<h2>Process</h2>
+
+<p>Applications:</p>
+
+<ul>
+<li>filebeat: ship logs</li>
+<li>logstack: process and index logs</li>
+<li>elasticsearch: store logs</li>
+<li>kibana: search and visualize logs</li>
+<li>nginx: reverse proxy</li>
+</ul>
+
+
+<p>Process:</p>
+
+<pre><code>App Server - filebeat -|
+                       |-&gt; logstack -&gt; elasticsearch -&gt; kibana -&gt; nginx
+DB Server  - filebeat -|
+</code></pre>
+
+<h2>Prequisitions</h2>
+
+<ul>
+<li>Ubuntu 14.04</li>
+<li>Java 8</li>
+<li>Logstack</li>
+<li>ElasticSearch</li>
+<li>Kibana</li>
+<li>Filebeat</li>
+</ul>
+
+
+<h2>Java 8</h2>
+
+<pre><code class="bash">$ sudo add-apt-repository -y ppa:webupd8team/java
+$ sudo apt-get update
+$ sudo apt-get -y install oracle-java8-installer
+</code></pre>
+
+<h2>ElasticSearch</h2>
+
+<h3>Install ElasticSearch</h3>
+
+<pre><code class="bash">$ wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+$ echo "deb http://packages.elastic.co/elasticsearch/2.x/debian stable main" | sudo tee -a /etc/apt/sources.list.d/elasticsearch-2.x.list
+$ sudo apt-get update
+$ sudo apt-get -y install elasticsearch
+
+$ sudo vim /etc/elasticsearch/elasticsearch.yml
+# network.host: 192.168.0.1
+# network.host: localhost
+network.host: 0.0.0.0
+
+$ sudo service elasticsearch restart
+$ sudo update-rc.d elasticsearch defaults 95 10
+</code></pre>
+
+<p>Website: <a href="http://localhost:9200">http://localhost:9200</a></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/b0/81/cc/b081cc477c42be5c5d48f55fed6c6a09.jpg" /></p>
+
+<h3>Install ElasticSearch-Head</h3>
+
+<pre><code class="bash">$ sudo /usr/share/elasticsearch/bin/plugin install mobz/elasticsearch-head
+</code></pre>
+
+<p>Website: <a href="http://localhost:9200/_plugin/head/">http://localhost:9200/_plugin/head/</a></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/24/94/7c/24947c5722c70134ef4bd199fe7ca114.jpg" /></p>
+
+<h2>Kibana</h2>
+
+<pre><code class="bash">$ sudo groupadd -g 1999 kibana
+$ sudo useradd -u 1999 -g 1999 kibana
+
+$ cd /tmp
+$ wget https://download.elastic.co/kibana/kibana/kibana-4.3.0-linux-x64.tar.gz
+$ tar xvf kibana-*.tar.gz
+$ cd kibana-4.3.0-linux-x64
+$ vim config/kibana.yml      # update some configurations
+
+
+$ sudo mkdir -p /opt/kibana
+$ sudo cp -R kibana-4.3.0-linux-x64/* /opt/kibana/
+$ ls /opt/kibana/
+$ sudo chown -R kibana: /opt/kibana
+
+$ cd /etc/init.d &amp;&amp; sudo curl -o kibana https://gist.githubusercontent.com/thisismitch/8b15ac909aed214ad04a/raw/fc5025c3fc499ad8262aff34ba7fde8c87ead7c0/kibana-4.x-init
+$ cd /etc/default &amp;&amp; sudo curl -o kibana https://gist.githubusercontent.com/thisismitch/8b15ac909aed214ad04a/raw/fc5025c3fc499ad8262aff34ba7fde8c87ead7c0/kibana-4.x-default 
+
+$ sudo chmod +x /etc/init.d/kibana
+$ sudo update-rc.d kibana defaults 96 9
+$ sudo service kibana start
+</code></pre>
+
+<p>test: <a href="http://localhost:5601">http://localhost:5601</a></p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/cf/05/2c/cf052c0e3e1b3781238082cb844e33e1.jpg" /></p>
+
+<h3>Nginx</h3>
+
+<pre><code class="bash">$ sudo apt-get install nginx apache2-utils
+$ sudo htpasswd -c /etc/nginx/htpasswd.users kibanaadmin
+
+$ sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/kibana # update config
+$ sudo ln /etc/nginx/sites-available/kibana /etc/nginx/sites-enabled/kibana
+$ sudo service nginx restart
+</code></pre>
+
+<p>/etc/nginx/sites-available/kibana</p>
+
+<pre><code class="bash">server {
+    listen 80;
+
+    server_name example.com;
+
+    auth_basic "Restricted Access";
+    auth_basic_user_file /etc/nginx/htpasswd.users;
+
+    location / {
+        proxy_pass http://localhost:5601;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;        
+    }
+}
+</code></pre>
+
+<h2>Logstack</h2>
+
+<h3>Install Logstack</h3>
+
+<pre><code class="bash">$ echo 'deb http://packages.elasticsearch.org/logstash/2.1/debian stable main' | sudo tee /etc/apt/sources.list.d/logstash.list
+$ sudo apt-get update
+$ sudo apt-get install logstash
+</code></pre>
+
+<h3>SSL Certificate</h3>
+
+<pre><code class="bash">$ sudo mkdir -p /etc/pki/tls/certs
+$ sudo mkdir /etc/pki/tls/private
+$ cd /etc/pki/tls; sudo openssl req -subj '/CN=logstash_server_fqdn/' -x509 -days 3650 -batch -nodes -newkey rsa:2048 -keyout private/logstash-forwarder.key -out certs/logstash-forwarder.crt
+</code></pre>
+
+<h3>Config Logstack</h3>
+
+<ul>
+<li>/etc/logstash/conf.d/02-filebeat-input.conf</li>
+<li>/etc/logstash/conf.d/10-syslog.conf</li>
+<li>/etc/logstash/conf.d/30-elasticsearch-output.conf</li>
+</ul>
+
+
+<pre><code class="bash">$ sudo vi /etc/logstash/conf.d/02-filebeat-input.conf
+</code></pre>
+
+<p>02-filebeat-input.conf</p>
+
+<pre><code class="bash">input {
+  beats {
+    port =&gt; 5044
+    type =&gt; "logs"
+    ssl =&gt; true
+    ssl_certificate =&gt; "/etc/pki/tls/certs/logstash-forwarder.crt"
+    ssl_key =&gt; "/etc/pki/tls/private/logstash-forwarder.key"
+  }
+}
+</code></pre>
+
+<pre><code class="bash">$ sudo vi /etc/logstash/conf.d/10-syslog.conf
+</code></pre>
+
+<p>10-syslog.conf</p>
+
+<pre><code class="bash">filter {
+  if [type] == "syslog" {
+    grok {
+      match =&gt; { "message" =&gt; "%{SYSLOGTIMESTAMP:syslog_timestamp} %{SYSLOGHOST:syslog_hostname} %{DATA:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{GREEDYDATA:syslog_message}" }
+      add_field =&gt; [ "received_at", "%{@timestamp}" ]
+      add_field =&gt; [ "received_from", "%{host}" ]
+    }
+    syslog_pri { }
+    date {
+      match =&gt; [ "syslog_timestamp", "MMM  d HH:mm:ss", "MMM dd HH:mm:ss" ]
+    }
+  }
+}
+</code></pre>
+
+<pre><code class="bash">$ sudo vi /etc/logstash/conf.d/30-elasticsearch-output.conf
+</code></pre>
+
+<p>30-elasticsearch-output.conf</p>
+
+<pre><code class="bash">output {
+  elasticsearch { hosts =&gt; ["localhost:9200"] }
+  stdout { codec =&gt; rubydebug }
+}
+</code></pre>
+
+<p>test</p>
+
+<pre><code class="bash">$ sudo service logstash configtest
+$ sudo service logstash restart
+$ sudo update-rc.d logstash defaults 96 9
+</code></pre>
+
+<h2>Filebeat (Client)</h2>
+
+<h3>SSL Certificate</h3>
+
+<pre><code class="bash">$ scp /etc/pki/tls/certs/logstash-forwarder.crt user@client_server_private_address:/tmp
+</code></pre>
+
+<h3>Install Filebeat</h3>
+
+<pre><code class="bash">$ echo "deb https://packages.elastic.co/beats/apt stable main" |  sudo tee -a /etc/apt/sources.list.d/beats.list
+$ wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+$ sudo apt-get update
+$ sudo apt-get install filebeat
+
+$ sudo mkdir -p /etc/pki/tls/certs
+$ sudo cp /tmp/logstash-forwarder.crt /etc/pki/tls/certs/
+</code></pre>
+
+<h3>Config Filebeat</h3>
+
+<pre><code class="bash">$ sudo vi /etc/filebeat/filebeat.yml
+</code></pre>
+
+<p>/etc/filebeat/filebeat.yml</p>
+
+<pre><code class="bash">...
+      paths:
+         - /var/log/auth.log
+         - /var/log/syslog
+#        - /var/log/*.log
+...
+
+...
+      document_type: syslog
+...
+
+...
+output:
+
+  ### Elasticsearch as output
+  elasticsearch:
+    enabled: false
+...
+
+  ### Logstash as output
+  logstash:
+    # The Logstash hosts
+    hosts: ["ELK_server_private_IP:5044"]
+
+...
+    tls:
+      # List of root certificates for HTTPS server verifications
+      certificate_authorities: ["/etc/pki/tls/certs/logstash-forwarder.crt"]
+</code></pre>
+
+<p>test</p>
+
+<pre><code class="bash">$ sudo service filebeat restart
+$ sudo update-rc.d filebeat defaults 95 10
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Setting Up OpenNao With VirtualBox]]></title>
+    <link href="http://k.arttechresearch.com/tech/2015/12/28/setting-up-opennao-with-virtualbox/"/>
+    <updated>2015-12-28T22:44:11+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2015/12/28/setting-up-opennao-with-virtualbox</id>
+    <content type="html"><![CDATA[<h2>1. Downloading OpenNao</h2>
+
+<p>Download OpenNao <a href="https://community.aldebaran.com/en/dl/ZmllbGRfY29sbGVjdGlvbl9pdGVtLTU1NC1maWVsZF9zb2Z0X2RsX2V4dGVybmFsX2xpbmstMC1mYTc0ZTQ%3D?width=500&amp;height=auto">OVA file</a>.</p>
+
+<h2>2. Setting up VirtualBox</h2>
+
+<p>Start VirtualBox: File -> Import Appliance -> Import *.ova file</p>
+
+<p>Start VM, login with username/password: nao/nao</p>
+
+<h2>References</h2>
+
+<ul>
+<li><a href="https://community.aldebaran.com/en/resources/software/language/en-gb">Aldebaran Dev Toolkits</a></li>
+<li><a href="http://doc.aldebaran.com/1-14/dev/tools/vm-setup.html">Setting up the OpenNAO virtual machine</a></li>
+<li><a href="http://doc.aldebaran.com/1-14/dev/tools/opennao.html#opennao-user-account">OpenNAO - NAO OS</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

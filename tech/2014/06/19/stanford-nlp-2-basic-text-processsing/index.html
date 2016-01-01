@@ -1,0 +1,1247 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Stanford NLP 2 - Basic Text Processsing - K</title>
+  <meta name="author" content="K">
+
+  
+  <meta name="description" content="1. Regular Expressions A formal language for specifying text strings 1.1. Regular Expressions: Disjunctions How can we search for any of these? ( &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://k.arttechresearch.com/tech/2014/06/19/stanford-nlp-2-basic-text-processsing/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="K" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/libs/jquery-1.9.1.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+
+  <script src="/javascripts/libs/jquery.tableofcontents.min.js" type="text/javascript"></script>
+  <script src="/javascripts/toc_generator.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  <!-- MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+</head>
+
+<body   >
+  <header role="banner"><ul class="soc">
+
+  
+    <li><a class="soc-github" href="https://github.com/KellyChan"></a></li>
+  
+
+  
+    <li><a class="soc-twitter" href="https://twitter.com/kwailamchan"></a></li>
+  
+
+  
+    <li><a class="soc-pinterest" href="https://www.pinterest.com/wailamchan/"></a></li>
+  
+
+  
+    <li><a class="soc-slideshare" href="http://www.slideshare.net/wailamchan"></a></li>
+  
+
+  
+    <li><a class="soc-email1 soc-icon-last" href="mailto:support@arttechresearch.com"></a></li>
+  
+</ul>
+
+<hgroup>
+  <h1><a href="/">K</a></h1>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="k.arttechresearch.com">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/tech">Tech</a></li>
+  <li><a href="/art">Art</a></li>
+  <li><a href="/life">Life</a></li>
+  <li><a href="/archives">Archives</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <li><a href="/devkits">Devkits</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+
+    
+      <h1 class="entry-title">Stanford NLP 2 - Basic Text Processsing</h1>
+    
+
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-19T20:18:34+08:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>19</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>8:18 pm</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://k.arttechresearch.com">Comments</a>
+        
+      </p>
+    
+
+  </header>
+
+
+
+  <div class="entry-content"><h2>1. Regular Expressions</h2>
+
+<p>A formal language for specifying text strings</p>
+
+<h2>1.1. Regular Expressions: Disjunctions</h2>
+
+<p>How can we search for any of these?</p>
+
+<ul>
+<li>(singular) woodchuck</li>
+<li>(plural) woodchucks</li>
+<li>(capital) Woodchuck</li>
+<li>(combination) Woodchucks</li>
+</ul>
+
+
+<p>Regular Expressions:</p>
+
+<ul>
+<li>letters inside square brackets []</li>
+<li>ranges [A-Z]</li>
+<li>negations [^Ss]
+
+<ul>
+<li>carat means negation only when first in []</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>1.2. Regular Expressions: More Disjunction</h2>
+
+<ul>
+<li>Woodchucks is another name for groundhog!</li>
+<li>The pipe | for disjunction</li>
+</ul>
+
+
+<h2>1.3. Regular Expressions: ? * + .</h2>
+
+<h2>1.4. Regular Expressions: anchors ^ $</h2>
+
+<p>example: find me all instances of the word “the” in a text</p>
+
+<ul>
+<li>the: [^A-Za-z][Tt]he[^A-Za-z]</li>
+</ul>
+
+
+<h2>1.5. Summary</h2>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;"> Pattern                      </th>
+<th style="text-align:left;"> Matches                    </th>
+<th> Example                 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> [wW]oodchuck                 </td>
+<td style="text-align:left;"> Woodchuck, woodchuck       </td>
+<td>                         </td>
+</tr>
+<tr>
+<td style="text-align:left;"> [1234567890]                 </td>
+<td style="text-align:left;"> Any digit                  </td>
+<td>                         </td>
+</tr>
+<tr>
+<td style="text-align:left;"> [A-Z]                        </td>
+<td style="text-align:left;"> an upper case letter       </td>
+<td>                         </td>
+</tr>
+<tr>
+<td style="text-align:left;"> [a-z]                        </td>
+<td style="text-align:left;"> a lower case letter        </td>
+<td>                         </td>
+</tr>
+<tr>
+<td style="text-align:left;"> [0-9]                        </td>
+<td style="text-align:left;"> a single digit             </td>
+<td>                         </td>
+</tr>
+<tr>
+<td style="text-align:left;"> [^A-Z]                       </td>
+<td style="text-align:left;"> not an upper case letter   </td>
+<td>                         </td>
+</tr>
+<tr>
+<td style="text-align:left;"> [^Ss]                        </td>
+<td style="text-align:left;"> neither &rsquo;S' nor &rsquo;s'        </td>
+<td>                         </td>
+</tr>
+<tr>
+<td style="text-align:left;"> [^e^]                        </td>
+<td style="text-align:left;"> neither e nor ^            </td>
+<td>                         </td>
+</tr>
+<tr>
+<td style="text-align:left;"> a<sup>b</sup>                          </td>
+<td style="text-align:left;"> the pattern a carat b      </td>
+<td>                         </td>
+</tr>
+<tr>
+<td style="text-align:left;"> groundhog | woodchuck       </td>
+<td style="text-align:left;">                            </td>
+<td>                         </td>
+</tr>
+<tr>
+<td style="text-align:left;"> yours | mine                </td>
+<td style="text-align:left;"> yours mine                 </td>
+<td>                         </td>
+</tr>
+<tr>
+<td style="text-align:left;"> a|b|c                      </td>
+<td style="text-align:left;"> =[abc]                     </td>
+<td>                         </td>
+</tr>
+<tr>
+<td style="text-align:left;"> [gG]roundhog | [wW]oodchuck </td>
+<td style="text-align:left;">                            </td>
+<td>                         </td>
+</tr>
+<tr>
+<td style="text-align:left;"> oo*h!                       </td>
+<td style="text-align:left;"> 0 or more of previous char </td>
+<td> oh! ooh! oooh! ooooh!   </td>
+</tr>
+<tr>
+<td style="text-align:left;"> o+h!                         </td>
+<td style="text-align:left;"> 1 or more of previous char </td>
+<td> oh! ooh! oooh! oooh!    </td>
+</tr>
+<tr>
+<td style="text-align:left;"> baa+                         </td>
+<td style="text-align:left;">                            </td>
+<td> baa baaa baaa baaa      </td>
+</tr>
+<tr>
+<td style="text-align:left;"> beg.n                        </td>
+<td style="text-align:left;"> anyone                     </td>
+<td> begin begun begun beg3n </td>
+</tr>
+<tr>
+<td style="text-align:left;"> colou?r                      </td>
+<td style="text-align:left;"> optional previous char     </td>
+<td> color colour            </td>
+</tr>
+<tr>
+<td style="text-align:left;"> ^[A-Z]                       </td>
+<td style="text-align:left;"> begin of the line          </td>
+<td> Palo Alto               </td>
+</tr>
+<tr>
+<td style="text-align:left;"> ^[A-Za-z]                    </td>
+<td style="text-align:left;"> begin of the line          </td>
+<td> 1 &ldquo;Hello&rdquo;               </td>
+</tr>
+<tr>
+<td style="text-align:left;"> .$                           </td>
+<td style="text-align:left;"> end of the line            </td>
+<td> The end.                </td>
+</tr>
+<tr>
+<td style="text-align:left;"> .$                           </td>
+<td style="text-align:left;"> end of the line            </td>
+<td> The end? The end!       </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>.</p>
+
+<p><strong>Errors</strong></p>
+
+<p>The process we just went through was based on fixing two kinds of errors</p>
+
+<ul>
+<li>(Type I - False positives) matching strings that we should not have matched (there, then, other)</li>
+<li>(Type II - False negatives) not matching things that we should have matched (The)</li>
+</ul>
+
+
+<p><strong>Errors Cont.</strong></p>
+
+<p>in NLP we are always dealing with these kinds of errors</p>
+
+<p>reducing the error rate for an application often involved two antagonistic efforts</p>
+
+<ul>
+<li>increasing accuracy or precision (minimizing false positives)</li>
+<li>increasing coverage or recall (minimizing false negatives)</li>
+</ul>
+
+
+<p><strong>Summary</strong></p>
+
+<p>regular expressions play a surprisingly large role</p>
+
+<ul>
+<li>sophisticated sequences of regular expressions are often the first model for any text processing text</li>
+</ul>
+
+
+<p>for many hard tasks, we use machine learning classifiers</p>
+
+<ul>
+<li>but regular expressions are used as features in the classifiers</li>
+<li>can be very useful in capturing generalizations</li>
+</ul>
+
+
+<h2>2. Word Tokenization</h2>
+
+<h3>2.1. Text Normalization</h3>
+
+<p>every NLP task needs to do text</p>
+
+<p>normalization</p>
+
+<ul>
+<li>segmenting/ tokenizing words in running text</li>
+<li>normalizing word formats</li>
+<li>segmenting sentences in running text</li>
+</ul>
+
+
+<h3>2.2. How many words?</h3>
+
+<p>I do uh main- mianly business data processing</p>
+
+<ul>
+<li>fragments, filled pauses</li>
+</ul>
+
+
+<p>Seuss’s cat in the hat is different from other cats!</p>
+
+<ul>
+<li>lemma: same stem, part of speech, rough word sense
+
+<ul>
+<li>cat and cats = same lemma</li>
+</ul>
+</li>
+<li>wordform: the full inflected surface form
+
+<ul>
+<li>cat and cats = different wordforms</li>
+</ul>
+</li>
+</ul>
+
+
+<p>Definitions:</p>
+
+<ul>
+<li>type: an element of the vocabulary - V = vocabulary = set of types - |V| is the size of the vocabulary</li>
+<li>token: an instance of that type in running text - N = number of token</li>
+<li>Church and Gale (1990): |V| > O(N<sup>1</sup>/2)</li>
+</ul>
+
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">                                 </th>
+<th style="text-align:left;"> Tokens = N  </th>
+<th style="text-align:left;"> Types = |V| </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> Switchboard phone sonversations </td>
+<td style="text-align:left;"> 2.4 million </td>
+<td style="text-align:left;"> 20 thousand   </td>
+</tr>
+<tr>
+<td style="text-align:left;"> Shakespeare                     </td>
+<td style="text-align:left;"> 884,000     </td>
+<td style="text-align:left;"> 31 thousand   </td>
+</tr>
+<tr>
+<td style="text-align:left;"> Google N-grams                  </td>
+<td style="text-align:left;"> 1 trillion  </td>
+<td style="text-align:left;"> 13 million    </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>example:</p>
+
+<p>They lay back on the San Francisco grass and looked at the starts and their</p>
+
+<p>how many?</p>
+
+<ul>
+<li>15 tokens (or 14) -> San Francisco is one word or two words?</li>
+<li>13 types (or 12)(or 11?)</li>
+</ul>
+
+
+<h3>2.3. Issues in Tokenization</h3>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">                     </th>
+<th style="text-align:left;">                                  </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> Finland&rsquo;s capital   </td>
+<td style="text-align:left;"> Finland Finlands Finland&rsquo;s?      </td>
+</tr>
+<tr>
+<td style="text-align:left;"> what&rsquo;re, I&rsquo;m, isn&rsquo;t </td>
+<td style="text-align:left;"> What are, I am, is not           </td>
+</tr>
+<tr>
+<td style="text-align:left;"> Hewlett-Packard     </td>
+<td style="text-align:left;"> Hewlett Packard?                 </td>
+</tr>
+<tr>
+<td style="text-align:left;"> state-of-the-art    </td>
+<td style="text-align:left;"> state of the art?                </td>
+</tr>
+<tr>
+<td style="text-align:left;"> Lowercase           </td>
+<td style="text-align:left;"> lower-case lowercase lower case? </td>
+</tr>
+<tr>
+<td style="text-align:left;"> m.p.h., PhD.        </td>
+<td style="text-align:left;"> ??                               </td>
+</tr>
+</tbody>
+</table>
+
+
+<h3>2.4. Tokenization: language issues</h3>
+
+<p>French</p>
+
+<ul>
+<li>L’ensemble -> one token or two?
+
+<ul>
+<li>L? l’? Le?</li>
+<li>Want l’ensemble to match with un ensemble</li>
+</ul>
+</li>
+</ul>
+
+
+<p>German noun compounds are not segmented</p>
+
+<ul>
+<li>Lebensversicherungsgesellschaftsangestellter</li>
+<li>‘life insurance company employee’</li>
+<li>German information retrieval needs compound splitter</li>
+</ul>
+
+
+<p>Chinese and Japanese no spaces between words:</p>
+
+<ul>
+<li>莎拉波娃现在居住在美国东南部的佛罗里达</li>
+<li>莎拉波娃 现在 居住 在 美国 东南部 的 佛罗里达</li>
+<li>Sharapova now lives in US southeastern Florida</li>
+</ul>
+
+
+<p>Further complicated in Japanese, with multiple alphabets intermingled</p>
+
+<ul>
+<li>Dates/amounts in multiple formats</li>
+<li>Katakana Hiragana Kanji Romaji</li>
+</ul>
+
+
+<p>End-user can express query entirely in hiragana!</p>
+
+<h3>2.5. Word Tokenization in Chinese</h3>
+
+<p>also called Word Segmentation</p>
+
+<ul>
+<li>Chinese words are composed of characters</li>
+<li>characters are generally 1 syllable and 1 morepheme</li>
+</ul>
+
+
+<p>average word is 2.4 characters long</p>
+
+<p>standard baseline segmentation algorithm:</p>
+
+<ul>
+<li>maximum matching (also called greedy)</li>
+</ul>
+
+
+<h3>2.6. Maximum Matching Word Segmentation Algorithm</h3>
+
+<p>given a wordlist of Chinese, and a string</p>
+
+<ol>
+<li>start a pointer at the beginning of the string</li>
+<li>find the longest word in dictionary that matches the string starting at pointer</li>
+<li>move the pointer over the word in string</li>
+<li>go to 2</li>
+</ol>
+
+
+<h3>2.7. Max-match segmentation illustration</h3>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">                   </th>
+<th style="text-align:left;">                      </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> Thecatinthehat    </td>
+<td style="text-align:left;"> the cat in the hat   </td>
+</tr>
+<tr>
+<td style="text-align:left;"> Thetabledownthere </td>
+<td style="text-align:left;"> the table down there </td>
+</tr>
+<tr>
+<td style="text-align:left;">                   </td>
+<td style="text-align:left;"> theta bled own there </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>Doesn’t generally work in English!</p>
+
+<p>But works astonishingly well in Chinese</p>
+
+<ul>
+<li>莎拉波娃现在居住在美国东南部的佛罗里达</li>
+<li>莎拉波娃 现在 居住 在 美国 东南部 的 佛罗里达</li>
+</ul>
+
+
+<p>Modern probabilistic segmentation algorithms even better</p>
+
+<h2>3. Word Normalization and Stemming</h2>
+
+<h3>3.1. Normalization</h3>
+
+<p>need to “normalize” terms</p>
+
+<ul>
+<li>information retrieval: indexed text and query terms must have same form
+
+<ul>
+<li>we want to match U.S.A and USA</li>
+</ul>
+</li>
+</ul>
+
+
+<p>we impicitly define equivalence classes of terms</p>
+
+<ul>
+<li>e.g., deleting periods in a term</li>
+</ul>
+
+
+<p>alternative: asymmetric expansion</p>
+
+<p>potentially more powerful, but less efficient</p>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;"> Enter   </th>
+<th style="text-align:left;"> Search                   </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> window  </td>
+<td style="text-align:left;"> window, windows          </td>
+</tr>
+<tr>
+<td style="text-align:left;"> windows </td>
+<td style="text-align:left;"> Windows, windows, window </td>
+</tr>
+<tr>
+<td style="text-align:left;"> Windows </td>
+<td style="text-align:left;"> Windows                  </td>
+</tr>
+</tbody>
+</table>
+
+
+<h3>3.2. Case folding</h3>
+
+<p>applications like IR: educe all letters to lower case</p>
+
+<ul>
+<li>since users tend to use lower case</li>
+<li>possible exception: upper case in mid-sentence?
+
+<ul>
+<li>e.g., General Motors</li>
+<li>Fed vs. fed</li>
+<li>SAIL vs. sail</li>
+</ul>
+</li>
+</ul>
+
+
+<p>for sentiment analysis, MT, Information extraction</p>
+
+<ul>
+<li>case is helpful (US versus us is important)</li>
+</ul>
+
+
+<h3>3.3. Lemmatization</h3>
+
+<ul>
+<li>reduce inflections or variant forms to base form</li>
+<li>lemmatization: have to find correct dictionary headword form</li>
+<li>machine translation
+
+<ul>
+<li>Spanish quiero (“I want”), quieres (“you want”) same lemma as querer “want”</li>
+</ul>
+</li>
+</ul>
+
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;"> inflections or variant forms  </th>
+<th style="text-align:left;"> base form </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> am, are, is                   </td>
+<td style="text-align:left;"> be        </td>
+</tr>
+<tr>
+<td style="text-align:left;"> car, cars, car&rsquo;s, cars'       </td>
+<td style="text-align:left;"> car       </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>example:</p>
+
+<p>the boy&rsquo;s cars are different colors -> the boy car be different color</p>
+
+<h3>3.4. Morphology</h3>
+
+<p>morphemes</p>
+
+<ul>
+<li>the small meaningful units that make up words</li>
+<li>stems: the core meaning-bearing units</li>
+<li>affixes: bits and pieces that adhere to stems
+
+<ul>
+<li>often with grammatical functions</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>3.5. Stemming</h3>
+
+<ul>
+<li>reduce terms to their stems in information retrieval</li>
+<li>stemming is crude chopping of affixes
+
+<ul>
+<li>language dependent</li>
+<li>e.g., automate(s), automatic, automation all reduced to automat</li>
+</ul>
+</li>
+</ul>
+
+
+<p>example:</p>
+
+<p>for example compressed and compression are both accepted as equivalent to compress</p>
+
+<ul>
+<li>for exampl compress and compress ar both accept as equival to compress</li>
+</ul>
+
+
+<h3>3.6. Porter’s algorithm - the most common English stemmer</h3>
+
+<p>step 1a</p>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">      </th>
+<th style="text-align:left;">    </th>
+<th style="text-align:left;">                    </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> sses </td>
+<td style="text-align:left;"> s  </td>
+<td style="text-align:left;"> caresses -> caress </td>
+</tr>
+<tr>
+<td style="text-align:left;"> ies  </td>
+<td style="text-align:left;"> i  </td>
+<td style="text-align:left;"> ponies -> poni     </td>
+</tr>
+<tr>
+<td style="text-align:left;"> ss   </td>
+<td style="text-align:left;"> ss </td>
+<td style="text-align:left;"> caress -> caress   </td>
+</tr>
+<tr>
+<td style="text-align:left;"> s    </td>
+<td style="text-align:left;">  / </td>
+<td style="text-align:left;"> cats -> cat        </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>step 1b</p>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">            </th>
+<th style="text-align:left;">    </th>
+<th style="text-align:left;">                      </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> (*v*)ing </td>
+<td style="text-align:left;">  / </td>
+<td style="text-align:left;"> walking -> walk      </td>
+</tr>
+<tr>
+<td style="text-align:left;">            </td>
+<td style="text-align:left;">    </td>
+<td style="text-align:left;"> sing -> sing         </td>
+</tr>
+<tr>
+<td style="text-align:left;"> (*v*)ed  </td>
+<td style="text-align:left;">  / </td>
+<td style="text-align:left;"> plastered -> plaster </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>step 2 (for long stems)</p>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">          </th>
+<th style="text-align:left;">     </th>
+<th style="text-align:left;">                       </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> ational  </td>
+<td style="text-align:left;"> ate </td>
+<td style="text-align:left;"> relational -> relate  </td>
+</tr>
+<tr>
+<td style="text-align:left;"> izer     </td>
+<td style="text-align:left;"> ize </td>
+<td style="text-align:left;"> digitizer -> digitize </td>
+</tr>
+<tr>
+<td style="text-align:left;"> ator     </td>
+<td style="text-align:left;"> ate </td>
+<td style="text-align:left;"> operator -> operate   </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>step 3 (for longer stems)</p>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">      </th>
+<th style="text-align:left;">     </th>
+<th style="text-align:left;">                      </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> al   </td>
+<td style="text-align:left;">  /  </td>
+<td style="text-align:left;"> revival -> reviv     </td>
+</tr>
+<tr>
+<td style="text-align:left;"> able </td>
+<td style="text-align:left;">  /  </td>
+<td style="text-align:left;"> adjustable -> adjust </td>
+</tr>
+<tr>
+<td style="text-align:left;"> ate  </td>
+<td style="text-align:left;">  /  </td>
+<td style="text-align:left;"> activate -> activ    </td>
+</tr>
+</tbody>
+</table>
+
+
+<h3>3.7. Viewing morphology in a corpus - Why only strip -ing if there is a vowel?</h3>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">            </th>
+<th style="text-align:left;">    </th>
+<th style="text-align:left;">                 </th>
+<th style="text-align:left;">                           </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> (*v*)ing </td>
+<td style="text-align:left;">  / </td>
+<td style="text-align:left;"> walking -> walk </td>
+<td style="text-align:left;"> with an earlier vowel &ldquo;a&rdquo; </td>
+</tr>
+<tr>
+<td style="text-align:left;">            </td>
+<td style="text-align:left;">    </td>
+<td style="text-align:left;"> sing -> sing    </td>
+<td style="text-align:left;"> without vowel             </td>
+</tr>
+</tbody>
+</table>
+
+
+<h3>3.8. Dealing with complex morphology is sometimes necessary</h3>
+
+<ul>
+<li>some languages requires complex morpheme segmentation
+
+<ul>
+<li> Turkish</li>
+<li> Uygarlastiranoadiklarimizdanmissinizcasina</li>
+<li> <code>(behaving) as if you are among those whom we could not civilize</code></li>
+<li> Uygar <code>civilized</code> + las <code>become</code>
+
+<ul>
+<li> <code>+</code> tir <code>cause</code> + ama <code>not able</code></li>
+<li> <code>+</code> dik <code>past</code> + lar <code>plural</code></li>
+<li> <code>+</code> imiz <code>p1pl</code> + dan <code>abl</code></li>
+<li> <code>+</code> mis <code>past</code> + siniz <code>2pl</code> + casina <code>as if</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>4. Sentence Segmentation and Decision Trees</h2>
+
+<h3>4.1. Sentence Segmentation</h3>
+
+<p>!, ? are relatively unambiguous</p>
+
+<p>Period “.” is quite ambiguous</p>
+
+<ul>
+<li>Sentence boundary</li>
+<li>Abbreviations like Inc. or Dr.</li>
+<li>Numbers like .02% or 4.3</li>
+</ul>
+
+
+<p>solution: build a binary classifier</p>
+
+<ul>
+<li>looks at a “.”</li>
+<li>decides EndOfSentence/ NotEndOfSentence</li>
+<li>classifiers: hand0written rules, regular expressions, or machine learning</li>
+</ul>
+
+
+<h3>4.2. Determining if a word is end-of-sentence: a Decision Tree</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>lots of blank lines after me?
+</span><span class='line'>    |--- YES ---&gt; E-O-S
+</span><span class='line'>    |--- NO  ---&gt; final punctuation is ?, !, or :?
+</span><span class='line'>                     |--- YES ---&gt; E-O-S
+</span><span class='line'>                     |--- NO  ---&gt; final punctuation is period
+</span><span class='line'>                                        |--- YES ---&gt; I am "etc" or other abbreviation
+</span><span class='line'>                                                        |--- YES ---&gt; not E-O-S
+</span><span class='line'>                                                        |--- NO  ---&gt; E-O-S
+</span><span class='line'>                                        |--- NO  ---&gt; not E-O-S</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>4.3. More sophisticated decision tree features</h3>
+
+<p>case of word with/after “.”: Upper, Lower, Cap, Number</p>
+
+<p>numeric features</p>
+
+<ul>
+<li>length of word with “.”</li>
+<li>probability(word with “.” occurs at end-of-s)</li>
+<li>probability(word after “.” occurs at beginning-of-s)</li>
+</ul>
+
+
+<h3>4.4. Implementing Decision Trees</h3>
+
+<p>a decision tree is just an if-then-else statement</p>
+
+<p>the interesting research is choosing the features</p>
+
+<p>setting up the structure is often too hard to do by hand</p>
+
+<ul>
+<li>hand-building only possible for very simple features, domains
+
+<ul>
+<li>for numeric features, it’s too hard to pick each threshold</li>
+</ul>
+</li>
+<li>instead, structure usually learned by machine learning from a training corpus</li>
+</ul>
+
+
+<h3>4.5. Decision Trees and other classifiers</h3>
+
+<p>we can think of the questions in a decision tree</p>
+
+<p>as features that could be exploited by an kind of classifier</p>
+
+<ul>
+<li>logistic regression</li>
+<li>svm</li>
+<li>neural nets</li>
+<li>etc.</li>
+</ul>
+
+
+<h2>References</h2>
+
+<ol>
+<li>video courses: <a href="https://www.youtube.com/watch?v=hwDhO1GLb_4&amp;list=PL6397E4B26D00A269&amp;index=2">part 1</a>, <a href="https://www.youtube.com/watch?v=RGLldper5II&amp;index=3&amp;list=PL6397E4B26D00A269">part 2</a>, <a href="https://www.youtube.com/watch?v=jBk24DI8kg0&amp;index=4&amp;list=PL6397E4B26D00A269">part 3</a>, <a href="https://www.youtube.com/watch?v=2s7f8mBwnko&amp;list=PL6397E4B26D00A269&amp;index=5">part 4</a>, <a href="https://www.youtube.com/watch?v=di0N3kXfGYg&amp;index=6&amp;list=PL6397E4B26D00A269">part 5</a></li>
+<li>tools: <a href="regexpal.com">RegexPal</a></li>
+</ol>
+
+</div>
+
+
+
+
+
+
+  <footer>
+
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">K</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-06-19T20:18:34+08:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>19</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>8:18 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/tech/'>tech</a>
+  
+</span>
+
+
+      
+
+<span class="categories">
+  
+    <a class='tag' href='/tags/machine-learning/'>machine learning</a>, <a class='tag' href='/tags/nlp/'>nlp</a>
+  
+</span>
+
+
+    </p>
+
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://k.arttechresearch.com/tech/2014/06/19/stanford-nlp-2-basic-text-processsing/" data-via="kwailamchan" data-counturl="http://k.arttechresearch.com/tech/2014/06/19/stanford-nlp-2-basic-text-processsing/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/tech/2014/06/19/stanford-nlp-1-introduction/" title="Previous Post: Stanford NLP 1 - Introduction">&laquo; Stanford NLP 1 - Introduction</a>
+      
+      
+        <a class="basic-alignment right" href="/tech/2014/06/20/stanford-nlp-3-minimum-edit-distance/" title="Next Post: Stanford NLP 3 - Minimum Edit Distance">Stanford NLP 3 - Minimum Edit Distance &raquo;</a>
+      
+    </p>
+
+  </footer>
+
+</article>
+
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Tech</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/tech/2015/12/31/python-sphinx/">Python Sphinx</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/12/30/web-apis/">Web APIs</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/12/30/framework-vs-library/">Framework vs Library</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/12/29/installing-logstack-elasticsearch-kibana-on-ubuntu/">Installing Logstack ElasticSearch Kibana on Ubuntu</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/12/28/setting-up-opennao-with-virtualbox/">Setting Up OpenNao With VirtualBox</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/12/28/getting-started-with-cassandra/">Getting Started With Cassandra</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/12/13/machine-learning-from-facebook-tech-talk/">Machine Learning From Facebook Tech Talk</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/11/15/connecting-to-mssql-using-freetds-slash-odbc-in-python/">Connecting to MSSQL Using FreeTDS / ODBC in Python</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/11/09/generating-a-self-signed-ssl-certificate/">Generating a Self-Signed SSL Certificate</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2015/11/08/python-challenge-l4/">Python Challenge L4</a>
+      </li>
+    
+  </ul>
+</section>
+<section class="category-list">
+    <h1>Projects</h1>
+    <ul id="category-list">
+        <li>
+            <span><a href="/tags/edx">edX</a></span> / 
+            <span><a href="/tags/will">Will</a></span>
+        </li>
+    </ul>
+
+    <h1>Programming</h1>
+    <ul id="category-list">
+        <li>
+            <span><a href="/tags/python">Python</a></span> /
+            <span><a href="/tags/ruby">Ruby</a></span> /
+            <span><a href="/tags/nodejs">Node.js</a></span>
+        </li>
+    </ul>
+
+</section>
+<section class="tag-cloud">
+
+
+  <h1>Tags</h1>
+    <ul id="category-list"><a href='/tags/algorithm' style='font-size: 109.41176470588235%'>algorithm(7)</a> <a href='/tags/ansible' style='font-size: 93.23529411764706%'>ansible(2)</a> <a href='/tags/apache' style='font-size: 93.23529411764706%'>apache(2)</a> <a href='/tags/api' style='font-size: 96.47058823529412%'>api(3)</a> <a href='/tags/ascii' style='font-size: 90.0%'>ascii(1)</a> <a href='/tags/beautifulsoup' style='font-size: 90.0%'>beautifulsoup(1)</a> <a href='/tags/butter' style='font-size: 90.0%'>butter(1)</a> <a href='/tags/career' style='font-size: 93.23529411764706%'>career(2)</a> <a href='/tags/cassandra' style='font-size: 90.0%'>cassandra(1)</a> <a href='/tags/cg' style='font-size: 90.0%'>cg(1)</a> <a href='/tags/chatbot' style='font-size: 96.47058823529412%'>chatbot(3)</a> <a href='/tags/classification' style='font-size: 93.23529411764706%'>classification(2)</a> <a href='/tags/cloud' style='font-size: 90.0%'>cloud(1)</a> <a href='/tags/cloudera' style='font-size: 109.41176470588235%'>cloudera(7)</a> <a href='/tags/cloudera-manager' style='font-size: 96.47058823529412%'>cloudera manager(3)</a> <a href='/tags/cluster' style='font-size: 151.47058823529412%'>cluster(20)</a> <a href='/tags/computer-vision' style='font-size: 90.0%'>computer vision(1)</a> <a href='/tags/crawler' style='font-size: 93.23529411764706%'>crawler(2)</a> <a href='/tags/css' style='font-size: 93.23529411764706%'>css(2)</a> <a href='/tags/data' style='font-size: 90.0%'>data(1)</a> <a href='/tags/db' style='font-size: 102.94117647058823%'>db(5)</a> <a href='/tags/debian' style='font-size: 90.0%'>debian(1)</a> <a href='/tags/devops' style='font-size: 99.70588235294117%'>devops(4)</a> <a href='/tags/django' style='font-size: 93.23529411764706%'>django(2)</a> <a href='/tags/dns' style='font-size: 90.0%'>dns(1)</a> <a href='/tags/docker' style='font-size: 96.47058823529412%'>docker(3)</a> <a href='/tags/edx' style='font-size: 128.8235294117647%'>edX(13)</a> <a href='/tags/edx-ai' style='font-size: 90.0%'>edX AI(1)</a> <a href='/tags/edx-analytics' style='font-size: 112.64705882352942%'>edX Analytics(8)</a> <a href='/tags/edx-platform' style='font-size: 96.47058823529412%'>edX Platform(3)</a> <a href='/tags/elasticsearch' style='font-size: 90.0%'>elasticsearch(1)</a> <a href='/tags/emacs' style='font-size: 93.23529411764706%'>emacs(2)</a> <a href='/tags/exhibition' style='font-size: 93.23529411764706%'>exhibition(2)</a> <a href='/tags/fiction' style='font-size: 109.41176470588235%'>fiction(7)</a> <a href='/tags/filebeat' style='font-size: 90.0%'>filebeat(1)</a> <a href='/tags/forever' style='font-size: 93.23529411764706%'>forever(2)</a> <a href='/tags/framework' style='font-size: 90.0%'>framework(1)</a> <a href='/tags/freetds' style='font-size: 90.0%'>freetds(1)</a> <a href='/tags/french' style='font-size: 90.0%'>french(1)</a> <a href='/tags/ghost' style='font-size: 99.70588235294117%'>ghost(4)</a> <a href='/tags/git' style='font-size: 102.94117647058823%'>git(5)</a> <a href='/tags/github' style='font-size: 93.23529411764706%'>github(2)</a> <a href='/tags/gitosis' style='font-size: 90.0%'>gitosis(1)</a> <a href='/tags/gitweb' style='font-size: 90.0%'>gitweb(1)</a> <a href='/tags/gunicorn' style='font-size: 90.0%'>gunicorn(1)</a> <a href='/tags/hadoop' style='font-size: 135.29411764705884%'>hadoop(15)</a> <a href='/tags/hbase' style='font-size: 102.94117647058823%'>hbase(5)</a> <a href='/tags/hdfs' style='font-size: 93.23529411764706%'>hdfs(2)</a> <a href='/tags/hipchat' style='font-size: 96.47058823529412%'>hipchat(3)</a> <a href='/tags/hive' style='font-size: 96.47058823529412%'>hive(3)</a> <a href='/tags/html' style='font-size: 93.23529411764706%'>html(2)</a> <a href='/tags/hue' style='font-size: 93.23529411764706%'>hue(2)</a> <a href='/tags/ide' style='font-size: 96.47058823529412%'>ide(3)</a> <a href='/tags/iterm' style='font-size: 90.0%'>iterm(1)</a> <a href='/tags/java' style='font-size: 93.23529411764706%'>java(2)</a> <a href='/tags/javascript' style='font-size: 99.70588235294117%'>javascript(4)</a> <a href='/tags/jekyll' style='font-size: 93.23529411764706%'>jekyll(2)</a> <a href='/tags/jenkins' style='font-size: 90.0%'>jenkins(1)</a> <a href='/tags/kibana' style='font-size: 90.0%'>kibana(1)</a> <a href='/tags/leisure' style='font-size: 151.47058823529412%'>leisure(20)</a> <a href='/tags/library' style='font-size: 90.0%'>library(1)</a> <a href='/tags/linux' style='font-size: 115.88235294117646%'>linux(9)</a> <a href='/tags/logstack' style='font-size: 90.0%'>logstack(1)</a> <a href='/tags/machine-learning' style='font-size: 125.58823529411765%'>machine learning(12)</a> <a href='/tags/mapreduce' style='font-size: 93.23529411764706%'>mapreduce(2)</a> <a href='/tags/markdown' style='font-size: 90.0%'>markdown(1)</a> <a href='/tags/mathjax' style='font-size: 93.23529411764706%'>mathjax(2)</a> <a href='/tags/mongo' style='font-size: 90.0%'>mongo(1)</a> <a href='/tags/mongovue' style='font-size: 90.0%'>mongovue(1)</a> <a href='/tags/mssql' style='font-size: 90.0%'>mssql(1)</a> <a href='/tags/mysql' style='font-size: 112.64705882352942%'>mysql(8)</a> <a href='/tags/mysql-workbench' style='font-size: 93.23529411764706%'>mysql workbench(2)</a> <a href='/tags/nao' style='font-size: 90.0%'>nao(1)</a> <a href='/tags/network' style='font-size: 90.0%'>network(1)</a> <a href='/tags/nginx' style='font-size: 99.70588235294117%'>nginx(4)</a> <a href='/tags/nlp' style='font-size: 106.17647058823529%'>nlp(6)</a> <a href='/tags/nltk' style='font-size: 90.0%'>nltk(1)</a> <a href='/tags/nodejs' style='font-size: 106.17647058823529%'>nodejs(6)</a> <a href='/tags/octopress' style='font-size: 112.64705882352942%'>octopress(8)</a> <a href='/tags/odbc' style='font-size: 90.0%'>odbc(1)</a> <a href='/tags/oil-painting' style='font-size: 90.0%'>oil painting(1)</a> <a href='/tags/openstack' style='font-size: 90.0%'>openstack(1)</a> <a href='/tags/painting' style='font-size: 90.0%'>painting(1)</a> <a href='/tags/pandas' style='font-size: 93.23529411764706%'>pandas(2)</a> <a href='/tags/photos' style='font-size: 128.8235294117647%'>photos(13)</a> <a href='/tags/poem' style='font-size: 99.70588235294117%'>poem(4)</a> <a href='/tags/prediction' style='font-size: 90.0%'>prediction(1)</a> <a href='/tags/programming' style='font-size: 93.23529411764706%'>programming(2)</a> <a href='/tags/pycharm' style='font-size: 90.0%'>pycharm(1)</a> <a href='/tags/python' style='font-size: 200.0%'>python(35)</a> <a href='/tags/python-challenge' style='font-size: 96.47058823529412%'>Python Challenge(3)</a> <a href='/tags/redis' style='font-size: 90.0%'>redis(1)</a> <a href='/tags/redmine' style='font-size: 90.0%'>redmine(1)</a> <a href='/tags/regex' style='font-size: 90.0%'>regex(1)</a> <a href='/tags/rest' style='font-size: 90.0%'>rest(1)</a> <a href='/tags/robotics' style='font-size: 99.70588235294117%'>robotics(4)</a> <a href='/tags/ruby' style='font-size: 119.11764705882354%'>ruby(10)</a> <a href='/tags/soap' style='font-size: 90.0%'>soap(1)</a> <a href='/tags/sphinx' style='font-size: 90.0%'>sphinx(1)</a> <a href='/tags/sql' style='font-size: 90.0%'>sql(1)</a> <a href='/tags/sqoop' style='font-size: 96.47058823529412%'>sqoop(3)</a> <a href='/tags/ssl' style='font-size: 93.23529411764706%'>ssl(2)</a> <a href='/tags/supervisor' style='font-size: 90.0%'>supervisor(1)</a> <a href='/tags/tech-talks' style='font-size: 90.0%'>tech talks(1)</a> <a href='/tags/time-series' style='font-size: 90.0%'>time series(1)</a> <a href='/tags/translation' style='font-size: 90.0%'>translation(1)</a> <a href='/tags/ubuntu' style='font-size: 115.88235294117646%'>ubuntu(9)</a> <a href='/tags/unicode' style='font-size: 90.0%'>unicode(1)</a> <a href='/tags/vagrant' style='font-size: 96.47058823529412%'>vagrant(3)</a> <a href='/tags/vim' style='font-size: 93.23529411764706%'>vim(2)</a> <a href='/tags/virtualbox' style='font-size: 96.47058823529412%'>virtualbox(3)</a> <a href='/tags/vm' style='font-size: 93.23529411764706%'>vm(2)</a> <a href='/tags/web' style='font-size: 109.41176470588235%'>web(7)</a> <a href='/tags/will' style='font-size: 96.47058823529412%'>will(3)</a> <a href='/tags/yarn' style='font-size: 90.0%'>yarn(1)</a> <a href='/tags/zookeeper' style='font-size: 102.94117647058823%'>zookeeper(5)</a> </ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2006-2016 - K
+</p>
+
+
+
+<script type="text/javascript">
+
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-53625944-7', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'kwailamc';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://k.arttechresearch.com/tech/2014/06/19/stanford-nlp-2-basic-text-processsing/';
+        var disqus_url = 'http://k.arttechresearch.com/tech/2014/06/19/stanford-nlp-2-basic-text-processsing/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
