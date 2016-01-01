@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Tech | K]]></title>
-  <link href="http://k.arttechresearch.com/categories/tech/atom.xml" rel="self"/>
-  <link href="http://k.arttechresearch.com/"/>
-  <updated>2016-01-02T00:29:37+08:00</updated>
-  <id>http://k.arttechresearch.com/</id>
+  <link href="http://k.arttechresearch.com/k/categories/tech/atom.xml" rel="self"/>
+  <link href="http://k.arttechresearch.com/k/"/>
+  <updated>2016-01-02T00:32:23+08:00</updated>
+  <id>http://k.arttechresearch.com/k/</id>
   <author>
     <name><![CDATA[K]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Python Sphinx]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/12/31/python-sphinx/"/>
+    <link href="http://k.arttechresearch.com/k/tech/2015/12/31/python-sphinx/"/>
     <updated>2015-12-31T01:25:59+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/12/31/python-sphinx</id>
+    <id>http://k.arttechresearch.com/k/tech/2015/12/31/python-sphinx</id>
     <content type="html"><![CDATA[<p>Sphinx is a Python documentation generator. To write the project documentation with
 Sphinx, here are the steps:</p>
 
@@ -316,9 +316,9 @@ html_theme_path = []
   
   <entry>
     <title type="html"><![CDATA[Web APIs]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/12/30/web-apis/"/>
+    <link href="http://k.arttechresearch.com/k/tech/2015/12/30/web-apis/"/>
     <updated>2015-12-30T16:21:13+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/12/30/web-apis</id>
+    <id>http://k.arttechresearch.com/k/tech/2015/12/30/web-apis</id>
     <content type="html"><![CDATA[<h2>Definition</h2>
 
 <p>Web API is a set of Hypertext Transfer Protocol (HTTP) request mesages along with the structure of reponse messages (XML or JSON format).</p>
@@ -382,9 +382,9 @@ html_theme_path = []
   
   <entry>
     <title type="html"><![CDATA[Framework vs Library]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/12/30/framework-vs-library/"/>
+    <link href="http://k.arttechresearch.com/k/tech/2015/12/30/framework-vs-library/"/>
     <updated>2015-12-30T15:11:22+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/12/30/framework-vs-library</id>
+    <id>http://k.arttechresearch.com/k/tech/2015/12/30/framework-vs-library</id>
     <content type="html"><![CDATA[<p><img src="https://s-media-cache-ak0.pinimg.com/474x/fe/4e/3b/fe4e3b8680d390b80d9bf64976af1b0a.jpg" /></p>
 
 <p>image source: <a href="http://tom.lokhorst.eu/2010/09/why-libraries-are-better-than-frameworks">http://tom.lokhorst.eu/2010/09/why-libraries-are-better-than-frameworks</a></p>
@@ -444,9 +444,9 @@ sub routines, classes, values or type specifications</li>
   
   <entry>
     <title type="html"><![CDATA[Installing Logstack ElasticSearch Kibana on Ubuntu]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/12/29/installing-logstack-elasticsearch-kibana-on-ubuntu/"/>
+    <link href="http://k.arttechresearch.com/k/tech/2015/12/29/installing-logstack-elasticsearch-kibana-on-ubuntu/"/>
     <updated>2015-12-29T14:52:55+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/12/29/installing-logstack-elasticsearch-kibana-on-ubuntu</id>
+    <id>http://k.arttechresearch.com/k/tech/2015/12/29/installing-logstack-elasticsearch-kibana-on-ubuntu</id>
     <content type="html"><![CDATA[<h2>Installation Steps</h2>
 
 <ul>
@@ -732,9 +732,9 @@ $ sudo update-rc.d filebeat defaults 95 10
   
   <entry>
     <title type="html"><![CDATA[Setting Up OpenNao With VirtualBox]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/12/28/setting-up-opennao-with-virtualbox/"/>
+    <link href="http://k.arttechresearch.com/k/tech/2015/12/28/setting-up-opennao-with-virtualbox/"/>
     <updated>2015-12-28T22:44:11+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/12/28/setting-up-opennao-with-virtualbox</id>
+    <id>http://k.arttechresearch.com/k/tech/2015/12/28/setting-up-opennao-with-virtualbox</id>
     <content type="html"><![CDATA[<h2>1. Downloading OpenNao</h2>
 
 <p>Download OpenNao <a href="https://community.aldebaran.com/en/dl/ZmllbGRfY29sbGVjdGlvbl9pdGVtLTU1NC1maWVsZF9zb2Z0X2RsX2V4dGVybmFsX2xpbmstMC1mYTc0ZTQ%3D?width=500&amp;height=auto">OVA file</a>.</p>

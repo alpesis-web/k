@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: 
 
-Sitemap: http://k.arttechresearch.com/sitemap.xml 
+Sitemap: http://k.arttechresearch.com/k/sitemap.xml 

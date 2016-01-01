@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Art | K]]></title>
-  <link href="http://k.arttechresearch.com/categories/art/atom.xml" rel="self"/>
-  <link href="http://k.arttechresearch.com/"/>
-  <updated>2016-01-02T00:29:37+08:00</updated>
-  <id>http://k.arttechresearch.com/</id>
+  <link href="http://k.arttechresearch.com/k/categories/art/atom.xml" rel="self"/>
+  <link href="http://k.arttechresearch.com/k/"/>
+  <updated>2016-01-02T00:32:23+08:00</updated>
+  <id>http://k.arttechresearch.com/k/</id>
   <author>
     <name><![CDATA[K]]></name>
     
@@ -15,18 +15,18 @@
   
   <entry>
     <title type="html"><![CDATA[The Land]]></title>
-    <link href="http://k.arttechresearch.com/art/2015/12/13/the-land/"/>
+    <link href="http://k.arttechresearch.com/k/art/2015/12/13/the-land/"/>
     <updated>2015-12-13T22:30:29+08:00</updated>
-    <id>http://k.arttechresearch.com/art/2015/12/13/the-land</id>
+    <id>http://k.arttechresearch.com/k/art/2015/12/13/the-land</id>
     <content type="html"><![CDATA[<p><img src="https://s-media-cache-ak0.pinimg.com/736x/cc/f6/3d/ccf63d47a567fd1a4f8cc1d8164041e6.jpg" /></p>
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[Autumn]]></title>
-    <link href="http://k.arttechresearch.com/art/2015/10/24/autumn/"/>
+    <link href="http://k.arttechresearch.com/k/art/2015/10/24/autumn/"/>
     <updated>2015-10-24T16:32:23+08:00</updated>
-    <id>http://k.arttechresearch.com/art/2015/10/24/autumn</id>
+    <id>http://k.arttechresearch.com/k/art/2015/10/24/autumn</id>
     <content type="html"><![CDATA[<p><img src="https://s-media-cache-ak0.pinimg.com/736x/ac/63/a3/ac63a33e86737a04e21097f0ed397774.jpg
 " /></p>
 
@@ -36,9 +36,9 @@
   
   <entry>
     <title type="html"><![CDATA[Oil Paintings From Shanghai University]]></title>
-    <link href="http://k.arttechresearch.com/art/2015/10/18/oil-paintings-from-shanghai-university/"/>
+    <link href="http://k.arttechresearch.com/k/art/2015/10/18/oil-paintings-from-shanghai-university/"/>
     <updated>2015-10-18T06:53:47+08:00</updated>
-    <id>http://k.arttechresearch.com/art/2015/10/18/oil-paintings-from-shanghai-university</id>
+    <id>http://k.arttechresearch.com/k/art/2015/10/18/oil-paintings-from-shanghai-university</id>
     <content type="html"><![CDATA[<p>上海大学美术学院油画系作品展</p>
 
 <h2>展品1. 卫城</h2>
@@ -73,18 +73,18 @@
   
   <entry>
     <title type="html"><![CDATA[The Old Camera at the Camera Mesuem]]></title>
-    <link href="http://k.arttechresearch.com/art/2015/10/07/the-old-camera-at-the-camera-mesuem/"/>
+    <link href="http://k.arttechresearch.com/k/art/2015/10/07/the-old-camera-at-the-camera-mesuem/"/>
     <updated>2015-10-07T21:46:23+08:00</updated>
-    <id>http://k.arttechresearch.com/art/2015/10/07/the-old-camera-at-the-camera-mesuem</id>
+    <id>http://k.arttechresearch.com/k/art/2015/10/07/the-old-camera-at-the-camera-mesuem</id>
     <content type="html"><![CDATA[<p><img src="https://s-media-cache-ak0.pinimg.com/736x/09/21/10/092110522b2510703bbbe2712c1d51df.jpg" /></p>
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[The Photos by Eric Valli]]></title>
-    <link href="http://k.arttechresearch.com/art/2015/09/27/the-photos-by-eric-valli/"/>
+    <link href="http://k.arttechresearch.com/k/art/2015/09/27/the-photos-by-eric-valli/"/>
     <updated>2015-09-27T20:31:26+08:00</updated>
-    <id>http://k.arttechresearch.com/art/2015/09/27/the-photos-by-eric-valli</id>
+    <id>http://k.arttechresearch.com/k/art/2015/09/27/the-photos-by-eric-valli</id>
     <content type="html"><![CDATA[<p>This was the exhibition held by Sworavski Water School, which was to introduce the Long River
 and the life of the people living near the river. All photos were shot by Eric Valli,
 a French photographer. His photographics are very clear, pure and like the oil paintings.

@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Life | K]]></title>
-  <link href="http://k.arttechresearch.com/categories/life/atom.xml" rel="self"/>
-  <link href="http://k.arttechresearch.com/"/>
-  <updated>2016-01-02T00:29:37+08:00</updated>
-  <id>http://k.arttechresearch.com/</id>
+  <link href="http://k.arttechresearch.com/k/categories/life/atom.xml" rel="self"/>
+  <link href="http://k.arttechresearch.com/k/"/>
+  <updated>2016-01-02T00:32:23+08:00</updated>
+  <id>http://k.arttechresearch.com/k/</id>
   <author>
     <name><![CDATA[K]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Knowledge Refactoring]]></title>
-    <link href="http://k.arttechresearch.com/life/2015/12/31/knowledge-refactoring/"/>
+    <link href="http://k.arttechresearch.com/k/life/2015/12/31/knowledge-refactoring/"/>
     <updated>2015-12-31T00:24:26+08:00</updated>
-    <id>http://k.arttechresearch.com/life/2015/12/31/knowledge-refactoring</id>
+    <id>http://k.arttechresearch.com/k/life/2015/12/31/knowledge-refactoring</id>
     <content type="html"><![CDATA[<h2>知识的重构</h2>
 
 <p>1</p>
@@ -70,9 +70,9 @@
   
   <entry>
     <title type="html"><![CDATA[A Little Bird]]></title>
-    <link href="http://k.arttechresearch.com/life/2015/12/27/a-little-bird/"/>
+    <link href="http://k.arttechresearch.com/k/life/2015/12/27/a-little-bird/"/>
     <updated>2015-12-27T21:10:14+08:00</updated>
-    <id>http://k.arttechresearch.com/life/2015/12/27/a-little-bird</id>
+    <id>http://k.arttechresearch.com/k/life/2015/12/27/a-little-bird</id>
     <content type="html"><![CDATA[<h2>小鸟</h2>
 
 <p>小鸟和妈妈住在树林里，有一天，小鸟想到树下看看地面。这时，恰好风雨，树枝与地面平衡，小鸟顺着树枝
@@ -85,9 +85,9 @@
   
   <entry>
     <title type="html"><![CDATA[Reading]]></title>
-    <link href="http://k.arttechresearch.com/life/2015/11/08/reading/"/>
+    <link href="http://k.arttechresearch.com/k/life/2015/11/08/reading/"/>
     <updated>2015-11-08T02:48:04+08:00</updated>
-    <id>http://k.arttechresearch.com/life/2015/11/08/reading</id>
+    <id>http://k.arttechresearch.com/k/life/2015/11/08/reading</id>
     <content type="html"><![CDATA[<h2>夜读</h2>
 
 <p>读杨绛先生的《我们仨》，在深夜，绝迹于微信之后，重拾夜读，一如去年夜读法语那般，似乎，已是很
@@ -110,9 +110,9 @@
   
   <entry>
     <title type="html"><![CDATA[Business Models]]></title>
-    <link href="http://k.arttechresearch.com/life/2015/10/26/business-models/"/>
+    <link href="http://k.arttechresearch.com/k/life/2015/10/26/business-models/"/>
     <updated>2015-10-26T22:38:09+08:00</updated>
-    <id>http://k.arttechresearch.com/life/2015/10/26/business-models</id>
+    <id>http://k.arttechresearch.com/k/life/2015/10/26/business-models</id>
     <content type="html"><![CDATA[<h2>商业模式</h2>
 
 <p>2008那年坐地铁，经常会碰到免费派报纸还送一些小礼品（水或纸巾等）的情况，当时还好奇，报纸
@@ -192,9 +192,9 @@
   
   <entry>
     <title type="html"><![CDATA[Blogging]]></title>
-    <link href="http://k.arttechresearch.com/life/2015/10/24/blogging/"/>
+    <link href="http://k.arttechresearch.com/k/life/2015/10/24/blogging/"/>
     <updated>2015-10-24T23:36:19+08:00</updated>
-    <id>http://k.arttechresearch.com/life/2015/10/24/blogging</id>
+    <id>http://k.arttechresearch.com/k/life/2015/10/24/blogging</id>
     <content type="html"><![CDATA[<h2>日志</h2>
 
 <p>最近一直在整理日志，从2005年至今，从最初的第三方平台，到后来自己搭建平台；从博客的新兴，

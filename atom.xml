@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[K]]></title>
-  <link href="http://k.arttechresearch.com/atom.xml" rel="self"/>
-  <link href="http://k.arttechresearch.com/"/>
-  <updated>2016-01-02T00:29:37+08:00</updated>
-  <id>http://k.arttechresearch.com/</id>
+  <link href="http://k.arttechresearch.com/k/atom.xml" rel="self"/>
+  <link href="http://k.arttechresearch.com/k/"/>
+  <updated>2016-01-02T00:32:23+08:00</updated>
+  <id>http://k.arttechresearch.com/k/</id>
   <author>
     <name><![CDATA[K]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Python Sphinx]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/12/31/python-sphinx/"/>
+    <link href="http://k.arttechresearch.com/k/tech/2015/12/31/python-sphinx/"/>
     <updated>2015-12-31T01:25:59+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/12/31/python-sphinx</id>
+    <id>http://k.arttechresearch.com/k/tech/2015/12/31/python-sphinx</id>
     <content type="html"><![CDATA[<p>Sphinx is a Python documentation generator. To write the project documentation with
 Sphinx, here are the steps:</p>
 
@@ -523,9 +523,9 @@ Sphinx, here are the steps:</p>
   
   <entry>
     <title type="html"><![CDATA[Knowledge Refactoring]]></title>
-    <link href="http://k.arttechresearch.com/life/2015/12/31/knowledge-refactoring/"/>
+    <link href="http://k.arttechresearch.com/k/life/2015/12/31/knowledge-refactoring/"/>
     <updated>2015-12-31T00:24:26+08:00</updated>
-    <id>http://k.arttechresearch.com/life/2015/12/31/knowledge-refactoring</id>
+    <id>http://k.arttechresearch.com/k/life/2015/12/31/knowledge-refactoring</id>
     <content type="html"><![CDATA[<h2>知识的重构</h2>
 
 <p>1</p>
@@ -578,9 +578,9 @@ Sphinx, here are the steps:</p>
   
   <entry>
     <title type="html"><![CDATA[Web APIs]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/12/30/web-apis/"/>
+    <link href="http://k.arttechresearch.com/k/tech/2015/12/30/web-apis/"/>
     <updated>2015-12-30T16:21:13+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/12/30/web-apis</id>
+    <id>http://k.arttechresearch.com/k/tech/2015/12/30/web-apis</id>
     <content type="html"><![CDATA[<h2>Definition</h2>
 
 <p>Web API is a set of Hypertext Transfer Protocol (HTTP) request mesages along with the structure of reponse messages (XML or JSON format).</p>
@@ -644,9 +644,9 @@ Sphinx, here are the steps:</p>
   
   <entry>
     <title type="html"><![CDATA[Framework vs Library]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/12/30/framework-vs-library/"/>
+    <link href="http://k.arttechresearch.com/k/tech/2015/12/30/framework-vs-library/"/>
     <updated>2015-12-30T15:11:22+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/12/30/framework-vs-library</id>
+    <id>http://k.arttechresearch.com/k/tech/2015/12/30/framework-vs-library</id>
     <content type="html"><![CDATA[<p><img src="https://s-media-cache-ak0.pinimg.com/474x/fe/4e/3b/fe4e3b8680d390b80d9bf64976af1b0a.jpg" /></p>
 
 <p>image source: <a href="http://tom.lokhorst.eu/2010/09/why-libraries-are-better-than-frameworks">http://tom.lokhorst.eu/2010/09/why-libraries-are-better-than-frameworks</a></p>
@@ -706,9 +706,9 @@ sub routines, classes, values or type specifications</li>
   
   <entry>
     <title type="html"><![CDATA[Installing Logstack ElasticSearch Kibana on Ubuntu]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/12/29/installing-logstack-elasticsearch-kibana-on-ubuntu/"/>
+    <link href="http://k.arttechresearch.com/k/tech/2015/12/29/installing-logstack-elasticsearch-kibana-on-ubuntu/"/>
     <updated>2015-12-29T14:52:55+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/12/29/installing-logstack-elasticsearch-kibana-on-ubuntu</id>
+    <id>http://k.arttechresearch.com/k/tech/2015/12/29/installing-logstack-elasticsearch-kibana-on-ubuntu</id>
     <content type="html"><![CDATA[<h2>Installation Steps</h2>
 
 <ul>
@@ -1158,9 +1158,9 @@ sub routines, classes, values or type specifications</li>
   
   <entry>
     <title type="html"><![CDATA[Setting Up OpenNao With VirtualBox]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/12/28/setting-up-opennao-with-virtualbox/"/>
+    <link href="http://k.arttechresearch.com/k/tech/2015/12/28/setting-up-opennao-with-virtualbox/"/>
     <updated>2015-12-28T22:44:11+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/12/28/setting-up-opennao-with-virtualbox</id>
+    <id>http://k.arttechresearch.com/k/tech/2015/12/28/setting-up-opennao-with-virtualbox</id>
     <content type="html"><![CDATA[<h2>1. Downloading OpenNao</h2>
 
 <p>Download OpenNao <a href="https://community.aldebaran.com/en/dl/ZmllbGRfY29sbGVjdGlvbl9pdGVtLTU1NC1maWVsZF9zb2Z0X2RsX2V4dGVybmFsX2xpbmstMC1mYTc0ZTQ%3D?width=500&amp;height=auto">OVA file</a>.</p>
@@ -1184,9 +1184,9 @@ sub routines, classes, values or type specifications</li>
   
   <entry>
     <title type="html"><![CDATA[Getting Started With Cassandra]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/12/28/getting-started-with-cassandra/"/>
+    <link href="http://k.arttechresearch.com/k/tech/2015/12/28/getting-started-with-cassandra/"/>
     <updated>2015-12-28T18:26:26+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/12/28/getting-started-with-cassandra</id>
+    <id>http://k.arttechresearch.com/k/tech/2015/12/28/getting-started-with-cassandra</id>
     <content type="html"><![CDATA[<h2>1. Installation</h2>
 
 <ul>
@@ -1336,9 +1336,9 @@ sub routines, classes, values or type specifications</li>
   
   <entry>
     <title type="html"><![CDATA[A Little Bird]]></title>
-    <link href="http://k.arttechresearch.com/life/2015/12/27/a-little-bird/"/>
+    <link href="http://k.arttechresearch.com/k/life/2015/12/27/a-little-bird/"/>
     <updated>2015-12-27T21:10:14+08:00</updated>
-    <id>http://k.arttechresearch.com/life/2015/12/27/a-little-bird</id>
+    <id>http://k.arttechresearch.com/k/life/2015/12/27/a-little-bird</id>
     <content type="html"><![CDATA[<h2>小鸟</h2>
 
 <p>小鸟和妈妈住在树林里，有一天，小鸟想到树下看看地面。这时，恰好风雨，树枝与地面平衡，小鸟顺着树枝
@@ -1351,9 +1351,9 @@ sub routines, classes, values or type specifications</li>
   
   <entry>
     <title type="html"><![CDATA[Machine Learning From Facebook Tech Talk]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/12/13/machine-learning-from-facebook-tech-talk/"/>
+    <link href="http://k.arttechresearch.com/k/tech/2015/12/13/machine-learning-from-facebook-tech-talk/"/>
     <updated>2015-12-13T22:39:48+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/12/13/machine-learning-from-facebook-tech-talk</id>
+    <id>http://k.arttechresearch.com/k/tech/2015/12/13/machine-learning-from-facebook-tech-talk</id>
     <content type="html"><![CDATA[<p>There were three topics about machine learning on Facebook Tech Talk 2015 (Shanghai).</p>
 
 <ul>
@@ -1471,18 +1471,18 @@ such as 15 minutes later, 1 hour laster etc), that&rsquo;s why we use the queue.
   
   <entry>
     <title type="html"><![CDATA[The Land]]></title>
-    <link href="http://k.arttechresearch.com/art/2015/12/13/the-land/"/>
+    <link href="http://k.arttechresearch.com/k/art/2015/12/13/the-land/"/>
     <updated>2015-12-13T22:30:29+08:00</updated>
-    <id>http://k.arttechresearch.com/art/2015/12/13/the-land</id>
+    <id>http://k.arttechresearch.com/k/art/2015/12/13/the-land</id>
     <content type="html"><![CDATA[<p><img src="https://s-media-cache-ak0.pinimg.com/736x/cc/f6/3d/ccf63d47a567fd1a4f8cc1d8164041e6.jpg" /></p>
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[Connecting to MSSQL Using FreeTDS / ODBC in Python]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/11/15/connecting-to-mssql-using-freetds-slash-odbc-in-python/"/>
+    <link href="http://k.arttechresearch.com/k/tech/2015/11/15/connecting-to-mssql-using-freetds-slash-odbc-in-python/"/>
     <updated>2015-11-15T21:23:21+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/11/15/connecting-to-mssql-using-freetds-slash-odbc-in-python</id>
+    <id>http://k.arttechresearch.com/k/tech/2015/11/15/connecting-to-mssql-using-freetds-slash-odbc-in-python</id>
     <content type="html"><![CDATA[<h2>Prequisitions</h2>
 
 <ul>
@@ -1678,9 +1678,9 @@ such as 15 minutes later, 1 hour laster etc), that&rsquo;s why we use the queue.
   
   <entry>
     <title type="html"><![CDATA[Generating a Self-Signed SSL Certificate]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/11/09/generating-a-self-signed-ssl-certificate/"/>
+    <link href="http://k.arttechresearch.com/k/tech/2015/11/09/generating-a-self-signed-ssl-certificate/"/>
     <updated>2015-11-09T22:59:53+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/11/09/generating-a-self-signed-ssl-certificate</id>
+    <id>http://k.arttechresearch.com/k/tech/2015/11/09/generating-a-self-signed-ssl-certificate</id>
     <content type="html"><![CDATA[<h2>Prequistion</h2>
 
 <p>openssl</p>
@@ -1726,9 +1726,9 @@ such as 15 minutes later, 1 hour laster etc), that&rsquo;s why we use the queue.
   
   <entry>
     <title type="html"><![CDATA[Python Challenge L4]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/11/08/python-challenge-l4/"/>
+    <link href="http://k.arttechresearch.com/k/tech/2015/11/08/python-challenge-l4/"/>
     <updated>2015-11-08T21:30:05+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/11/08/python-challenge-l4</id>
+    <id>http://k.arttechresearch.com/k/tech/2015/11/08/python-challenge-l4</id>
     <content type="html"><![CDATA[<p><a href="">Python Challenge</a></p>
 
 <h2>L4. Linkedlist</h2>
@@ -1791,9 +1791,9 @@ such as 15 minutes later, 1 hour laster etc), that&rsquo;s why we use the queue.
   
   <entry>
     <title type="html"><![CDATA[Reading]]></title>
-    <link href="http://k.arttechresearch.com/life/2015/11/08/reading/"/>
+    <link href="http://k.arttechresearch.com/k/life/2015/11/08/reading/"/>
     <updated>2015-11-08T02:48:04+08:00</updated>
-    <id>http://k.arttechresearch.com/life/2015/11/08/reading</id>
+    <id>http://k.arttechresearch.com/k/life/2015/11/08/reading</id>
     <content type="html"><![CDATA[<h2>夜读</h2>
 
 <p>读杨绛先生的《我们仨》，在深夜，绝迹于微信之后，重拾夜读，一如去年夜读法语那般，似乎，已是很
@@ -1816,9 +1816,9 @@ such as 15 minutes later, 1 hour laster etc), that&rsquo;s why we use the queue.
   
   <entry>
     <title type="html"><![CDATA[Python Challenge L3]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/11/07/python-challenge-l3/"/>
+    <link href="http://k.arttechresearch.com/k/tech/2015/11/07/python-challenge-l3/"/>
     <updated>2015-11-07T20:35:25+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/11/07/python-challenge-l3</id>
+    <id>http://k.arttechresearch.com/k/tech/2015/11/07/python-challenge-l3</id>
     <content type="html"><![CDATA[<p><a href="">Python Challenge</a></p>
 
 <h2>L3. Equality</h2>
@@ -1903,9 +1903,9 @@ update the url with <code>linkedlist.php</code>, then jump to L4.</p>
   
   <entry>
     <title type="html"><![CDATA[Configurating Colortheme for iTerm]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/11/05/configurating-colortheme-for-iterm/"/>
+    <link href="http://k.arttechresearch.com/k/tech/2015/11/05/configurating-colortheme-for-iterm/"/>
     <updated>2015-11-05T23:08:34+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/11/05/configurating-colortheme-for-iterm</id>
+    <id>http://k.arttechresearch.com/k/tech/2015/11/05/configurating-colortheme-for-iterm</id>
     <content type="html"><![CDATA[<p>The colortheme files of iTerm is <code>*.itermcolors</code>, everyone can create or update a colortheme and
 then import it to iTerm. Alternatively, you can download the colorthemes which are shared in
 public and then update them in iTerm.</p>
@@ -1996,9 +1996,9 @@ public and then update them in iTerm.</p>
   
   <entry>
     <title type="html"><![CDATA[Python Challenge L0-L2]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/11/05/python-challenge-l0-l2/"/>
+    <link href="http://k.arttechresearch.com/k/tech/2015/11/05/python-challenge-l0-l2/"/>
     <updated>2015-11-05T16:07:22+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/11/05/python-challenge-l0-l2</id>
+    <id>http://k.arttechresearch.com/k/tech/2015/11/05/python-challenge-l0-l2</id>
     <content type="html"><![CDATA[<p><a href="http://www.pythonchallenge.com">Python Challenge</a></p>
 
 <h2>L0</h2>
@@ -2201,9 +2201,9 @@ but MAYBE they are in the page source.</p>
   
   <entry>
     <title type="html"><![CDATA[Business Models]]></title>
-    <link href="http://k.arttechresearch.com/life/2015/10/26/business-models/"/>
+    <link href="http://k.arttechresearch.com/k/life/2015/10/26/business-models/"/>
     <updated>2015-10-26T22:38:09+08:00</updated>
-    <id>http://k.arttechresearch.com/life/2015/10/26/business-models</id>
+    <id>http://k.arttechresearch.com/k/life/2015/10/26/business-models</id>
     <content type="html"><![CDATA[<h2>商业模式</h2>
 
 <p>2008那年坐地铁，经常会碰到免费派报纸还送一些小礼品（水或纸巾等）的情况，当时还好奇，报纸
@@ -2283,9 +2283,9 @@ but MAYBE they are in the page source.</p>
   
   <entry>
     <title type="html"><![CDATA[Blogging]]></title>
-    <link href="http://k.arttechresearch.com/life/2015/10/24/blogging/"/>
+    <link href="http://k.arttechresearch.com/k/life/2015/10/24/blogging/"/>
     <updated>2015-10-24T23:36:19+08:00</updated>
-    <id>http://k.arttechresearch.com/life/2015/10/24/blogging</id>
+    <id>http://k.arttechresearch.com/k/life/2015/10/24/blogging</id>
     <content type="html"><![CDATA[<h2>日志</h2>
 
 <p>最近一直在整理日志，从2005年至今，从最初的第三方平台，到后来自己搭建平台；从博客的新兴，
@@ -2316,9 +2316,9 @@ but MAYBE they are in the page source.</p>
   
   <entry>
     <title type="html"><![CDATA[Autumn]]></title>
-    <link href="http://k.arttechresearch.com/art/2015/10/24/autumn/"/>
+    <link href="http://k.arttechresearch.com/k/art/2015/10/24/autumn/"/>
     <updated>2015-10-24T16:32:23+08:00</updated>
-    <id>http://k.arttechresearch.com/art/2015/10/24/autumn</id>
+    <id>http://k.arttechresearch.com/k/art/2015/10/24/autumn</id>
     <content type="html"><![CDATA[<p><img src="https://s-media-cache-ak0.pinimg.com/736x/ac/63/a3/ac63a33e86737a04e21097f0ed397774.jpg
 " /></p>
 
