@@ -47,6 +47,8 @@ footer: true
 [PEP8]() 
 [Pylint]() 
 
+[Sphinx](http://sphinx-doc.org) 
+
 ### Ruby
 
 ### Javascript
