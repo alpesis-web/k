@@ -4,7 +4,7 @@ title: "Linux Commands"
 date: 2014-11-02 14:10:18 +0800
 comments: true
 categories: [tech]
-tags: [linux]
+tags: [linux, shell]
 ---
 
 ## 1. Linux File System

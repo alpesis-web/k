@@ -21,10 +21,13 @@ tags: [vim, ide]
 | move                  | left, right, down, up | h, l, j, k                                   |
 |                       | back word             | b                                            |
 |                       | next word             | w                                            |
+|                       | bebin of line         | ^                                            |
 |                       | end of line           | $                                            |
+|                       | jump to line col      | (col)|                                       |
 |                       | page up               | ctrl + u                                     |
 |                       | page down             | ctrl + d                                     |
 |                       | top of the file       | gg                                           |
+|                       | end of the file       | shift + g                                    |
 | copy, paste, change   | yank, copy            | y(xxx)                                       |
 |                       | cureent line          | yy                                           |
 |                       | paste                 | p                                            |
