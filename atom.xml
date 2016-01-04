@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[K]]></title>
-  <link href="http://k.arttechresearch.com/k/atom.xml" rel="self"/>
-  <link href="http://k.arttechresearch.com/k/"/>
-  <updated>2016-01-02T00:32:23+08:00</updated>
-  <id>http://k.arttechresearch.com/k/</id>
+  <link href="http://k.arttechresearch.com/atom.xml" rel="self"/>
+  <link href="http://k.arttechresearch.com/"/>
+  <updated>2016-01-04T14:04:42+08:00</updated>
+  <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[K]]></name>
     
@@ -14,10 +14,338 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Installing Scala]]></title>
+    <link href="http://k.arttechresearch.com/tech/2016/01/04/installing-scala/"/>
+    <updated>2016-01-04T13:06:34+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2016/01/04/installing-scala</id>
+    <content type="html"><![CDATA[<h2>Installation</h2>
+
+<h3>Ubuntu 14.04</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /tmp
+</span><span class='line'><span class="nv">$ </span>wget http://www.scala-lang.org/files/archive/scala-2.11.6.deb
+</span><span class='line'><span class="nv">$ </span>sudo dpkg -i scala-2.11.6.deb
+</span><span class='line'><span class="nv">$ </span>sudo apt-get update
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install scala
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>OS X</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>brew update
+</span><span class='line'><span class="nv">$ </span>brew install scala
+</span><span class='line'><span class="nv">$ </span>brew install sbt
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Testing</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>vagrant@vagrant-ubuntu-trusty-64:/vagrant/scala<span class="nv">$ </span>scala
+</span><span class='line'>Welcome to Scala version 2.11.6 <span class="o">(</span>Java HotSpot<span class="o">(</span>TM<span class="o">)</span> 64-Bit Server VM, Java 1.8.0_66<span class="o">)</span>.
+</span><span class='line'>Type in expressions to have them evaluated.
+</span><span class='line'>Type :help <span class="k">for</span> more information.
+</span><span class='line'>
+</span><span class='line'>scala&gt; 1+1
+</span><span class='line'>res0: <span class="nv">Int</span> <span class="o">=</span> 2
+</span><span class='line'>
+</span><span class='line'>scala&gt; println<span class="o">(</span><span class="s2">&quot;Hello&quot;</span><span class="o">)</span>
+</span><span class='line'>Hello
+</span><span class='line'>
+</span><span class='line'>scala&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Vim Configuration</h2>
+
+<p>syntax highlight: <a href="https://github.com/derekwyatt/vim-scala">vim-scala</a></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># wget</span>
+</span><span class='line'><span class="nv">$ </span>mkdir -p ~/.vim/<span class="o">{</span>ftdetect,indent,syntax<span class="o">}</span> <span class="o">&amp;&amp;</span> <span class="k">for</span> d in ftdetect indent syntax <span class="p">;</span> <span class="k">do</span> wget -O ~/.vim/<span class="nv">$d</span>/scala.vim https://raw.githubusercontent.com/derekwyatt/vim-scala/master/<span class="nv">$d</span>/scala.vim<span class="p">;</span> <span class="k">done</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># curl</span>
+</span><span class='line'><span class="nv">$ </span>mkdir -p ~/.vim/<span class="o">{</span>ftdetect,indent,syntax<span class="o">}</span> <span class="o">&amp;&amp;</span> <span class="k">for</span> d in ftdetect indent syntax <span class="p">;</span> <span class="k">do</span> curl -o ~/.vim/<span class="nv">$d</span>/scala.vim https://raw.githubusercontent.com/derekwyatt/vim-scala/master/<span class="nv">$d</span>/scala.vim<span class="p">;</span> <span class="k">done</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Linux Advanced Commands]]></title>
+    <link href="http://k.arttechresearch.com/tech/2016/01/03/linux-advanced-commands/"/>
+    <updated>2016-01-03T22:20:08+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2016/01/03/linux-advanced-commands</id>
+    <content type="html"><![CDATA[<h2>mkdir</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>mkdir -p project/<span class="o">{</span>bin,venvs,app/<span class="o">{</span>requirements,app/tests,docs,scripts<span class="o">}}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>tar</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>tar xvf -C /path/to/dest xxx.tar.gz
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /path/to/dest <span class="o">&amp;&amp;</span> tar xvf xxx.tar.gz
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /path/to/dest <span class="o">||</span> mkdir -p /path/to/dest
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /path/to/dest <span class="o">||</span> mkdir -p /path/to/dest <span class="o">&amp;&amp;</span> tar xvf -C /path/to/dest xxx.tar.gz
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /path/to/dest <span class="o">||</span> <span class="se">\</span>
+</span><span class='line'>&gt; mkdir -p /path/to/dest <span class="o">&amp;&amp;</span> <span class="se">\</span>
+</span><span class='line'>&gt; tar xvf -C /path/to/dest xxx.tar.gz
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span><span class="o">(</span> <span class="nb">cd</span> /path/to/dest <span class="o">||</span> mkdir -p /path/to/dest <span class="o">&amp;&amp;</span> <span class="se">\</span>
+</span><span class='line'>&gt; <span class="nv">VAR</span><span class="o">=</span><span class="nv">$PWD</span><span class="p">;</span> <span class="nb">cd</span> ~<span class="p">;</span> tar xvf -C <span class="nv">$VAR</span> archive.tar <span class="o">)</span> <span class="p">|</span> <span class="se">\</span>
+</span><span class='line'>&gt; mailx admin -S <span class="s2">&quot;Archive contents&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span><span class="o">{</span> cp <span class="k">$(</span>VAR<span class="k">)</span>a . <span class="o">&amp;&amp;</span> chown -R guest.guest a <span class="o">&amp;&amp;</span> <span class="se">\</span>
+</span><span class='line'>&gt; tar cvf newarchive.tar a<span class="p">;</span> <span class="o">}</span> <span class="p">|</span> <span class="se">\</span>
+</span><span class='line'>&gt; mailx admin -S <span class="s2">&quot;New archive&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>patterns</h2>
+
+<h3>file name: xargs</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>find some-file-criteria some-file-path <span class="p">|</span> xargs some-great-command-that-needs-filename-arguements
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>file contents: grep</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">time </span>grep and tmp/a/longfile.txt <span class="p">|</span> wc -l             <span class="c"># multiple files</span>
+</span><span class='line'><span class="nv">$ </span><span class="nb">time </span>grep -c and tmp/a/longfile.txt                  <span class="c"># single file</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>grep -o and tmp/a/longfile.txt <span class="p">|</span> wc -l
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>content lines: awk</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>ls -la <span class="p">|</span> awk <span class="s1">&#39;$6 == &quot;Dec&quot;&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Flask-Restless]]></title>
+    <link href="http://k.arttechresearch.com/tech/2016/01/03/flask-restless/"/>
+    <updated>2016-01-03T00:09:13+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2016/01/03/flask-restless</id>
+    <content type="html"><![CDATA[<p>Source Codes:</p>
+
+<ul>
+<li>original: <a href="https://github.com/jfinkels/flask-restless">https://github.com/jfinkels/flask-restless</a></li>
+<li>refactored: <a href="https://github.com/KellyChan/flask-restless">https://github.com/KellyChan/flask-restless</a></li>
+</ul>
+
+
+<p>Notes:
+Flask-restless was developed by jfinkels, this article is the study notes
+of his source code, and refactoring some codes by personal purpose.</p>
+
+<p>All the commands and codes below are based on the <a href="https://github.com/KellyChan/flask-restless">refactored codes</a>.</p>
+
+<h2>Setup DevEnv</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git clone https://github.com/KellyChan/flask-restless
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>flask-restless
+</span><span class='line'>
+</span><span class='line'><span class="c"># update Vagrantfile (Virtualbox + Vagrant)</span>
+</span><span class='line'><span class="c"># then create the project and setup the virtualenv</span>
+</span><span class='line'><span class="nv">$ </span>virtualenv venvs/flask-restless
+</span><span class='line'><span class="nv">$ </span><span class="nb">source </span>venvs/flask-restless/bin/activate
+</span><span class='line'>
+</span><span class='line'><span class="c"># install requirements</span>
+</span><span class='line'><span class="nv">$ </span>pip install -r requirements/base.txt
+</span><span class='line'><span class="nv">$ </span>pip install -r requirements/test.txt
+</span><span class='line'><span class="nv">$ </span>pip install -r requirements/docs.txt
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Project Structure</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Dev
+</span><span class='line'>  <span class="p">|</span>---- requirements/
+</span><span class='line'>  <span class="p">|</span>---- flask_restless/
+</span><span class='line'>  <span class="p">|</span>---- artwork/
+</span><span class='line'>
+</span><span class='line'>DevOps
+</span><span class='line'>  <span class="p">|</span>---- setup.cfg
+</span><span class='line'>  <span class="p">|</span>---- setup.py
+</span><span class='line'>  <span class="p">|</span>---- scripts/
+</span><span class='line'>
+</span><span class='line'>Tests
+</span><span class='line'>  <span class="p">|</span>---- tests/
+</span><span class='line'>
+</span><span class='line'>Docs
+</span><span class='line'>  <span class="p">|</span>---- docs/
+</span><span class='line'>  <span class="p">|</span>---- examples/
+</span><span class='line'>
+</span><span class='line'>Others
+</span><span class='line'>  <span class="p">|</span>---- AUTHORS
+</span><span class='line'>  <span class="p">|</span>---- licenses/
+</span><span class='line'>  <span class="p">|</span>---- CHANGES
+</span><span class='line'>  <span class="p">|</span>---- README.md
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Dev</h2>
+
+<p>files</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>flask-restless/
+</span><span class='line'>    <span class="p">|</span>---- helpers.py                   <span class="c"># utils, mostly about SQLalchemy objects</span>
+</span><span class='line'>    <span class="p">|</span>---- manager.py                   <span class="c"># API creator</span>
+</span><span class='line'>    <span class="p">|</span>---- search.py                    <span class="c"># seraching database</span>
+</span><span class='line'>    <span class="p">|</span>---- views.py                     <span class="c"># views</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Test</h2>
+
+<h3>cli</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>nosetests
+</span><span class='line'><span class="nv">$ </span>python setup.py <span class="nb">test</span>
+</span><span class='line'><span class="nv">$ </span>nosetests --with-coverage --cover-package<span class="o">=</span>flask_restless --cover-html <span class="se">\</span>
+</span><span class='line'>    --cover-html-dir<span class="o">=</span>&lt;somedir&gt;
+</span><span class='line'><span class="nv">$ </span>savalidation
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Docs</h2>
+
+<h3>cli</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git submodule update --init
+</span><span class='line'><span class="nv">$ </span>python setup.py develop
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>docs
+</span><span class='line'><span class="nv">$ </span>make html
+</span><span class='line'><span class="nv">$ </span>sphinx-autobuild ./ _build/html/
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>theming</h3>
+
+<h2>DevOps</h2>
+
+<p>installation</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>python setup.py --help
+</span><span class='line'><span class="nv">$ </span>python setup.py install
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>References</h2>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Python Sphinx]]></title>
-    <link href="http://k.arttechresearch.com/k/tech/2015/12/31/python-sphinx/"/>
+    <link href="http://k.arttechresearch.com/tech/2015/12/31/python-sphinx/"/>
     <updated>2015-12-31T01:25:59+08:00</updated>
-    <id>http://k.arttechresearch.com/k/tech/2015/12/31/python-sphinx</id>
+    <id>http://k.arttechresearch.com/tech/2015/12/31/python-sphinx</id>
     <content type="html"><![CDATA[<p>Sphinx is a Python documentation generator. To write the project documentation with
 Sphinx, here are the steps:</p>
 
@@ -523,9 +851,9 @@ Sphinx, here are the steps:</p>
   
   <entry>
     <title type="html"><![CDATA[Knowledge Refactoring]]></title>
-    <link href="http://k.arttechresearch.com/k/life/2015/12/31/knowledge-refactoring/"/>
+    <link href="http://k.arttechresearch.com/life/2015/12/31/knowledge-refactoring/"/>
     <updated>2015-12-31T00:24:26+08:00</updated>
-    <id>http://k.arttechresearch.com/k/life/2015/12/31/knowledge-refactoring</id>
+    <id>http://k.arttechresearch.com/life/2015/12/31/knowledge-refactoring</id>
     <content type="html"><![CDATA[<h2>知识的重构</h2>
 
 <p>1</p>
@@ -578,9 +906,9 @@ Sphinx, here are the steps:</p>
   
   <entry>
     <title type="html"><![CDATA[Web APIs]]></title>
-    <link href="http://k.arttechresearch.com/k/tech/2015/12/30/web-apis/"/>
+    <link href="http://k.arttechresearch.com/tech/2015/12/30/web-apis/"/>
     <updated>2015-12-30T16:21:13+08:00</updated>
-    <id>http://k.arttechresearch.com/k/tech/2015/12/30/web-apis</id>
+    <id>http://k.arttechresearch.com/tech/2015/12/30/web-apis</id>
     <content type="html"><![CDATA[<h2>Definition</h2>
 
 <p>Web API is a set of Hypertext Transfer Protocol (HTTP) request mesages along with the structure of reponse messages (XML or JSON format).</p>
@@ -644,9 +972,9 @@ Sphinx, here are the steps:</p>
   
   <entry>
     <title type="html"><![CDATA[Framework vs Library]]></title>
-    <link href="http://k.arttechresearch.com/k/tech/2015/12/30/framework-vs-library/"/>
+    <link href="http://k.arttechresearch.com/tech/2015/12/30/framework-vs-library/"/>
     <updated>2015-12-30T15:11:22+08:00</updated>
-    <id>http://k.arttechresearch.com/k/tech/2015/12/30/framework-vs-library</id>
+    <id>http://k.arttechresearch.com/tech/2015/12/30/framework-vs-library</id>
     <content type="html"><![CDATA[<p><img src="https://s-media-cache-ak0.pinimg.com/474x/fe/4e/3b/fe4e3b8680d390b80d9bf64976af1b0a.jpg" /></p>
 
 <p>image source: <a href="http://tom.lokhorst.eu/2010/09/why-libraries-are-better-than-frameworks">http://tom.lokhorst.eu/2010/09/why-libraries-are-better-than-frameworks</a></p>
@@ -706,9 +1034,9 @@ sub routines, classes, values or type specifications</li>
   
   <entry>
     <title type="html"><![CDATA[Installing Logstack ElasticSearch Kibana on Ubuntu]]></title>
-    <link href="http://k.arttechresearch.com/k/tech/2015/12/29/installing-logstack-elasticsearch-kibana-on-ubuntu/"/>
+    <link href="http://k.arttechresearch.com/tech/2015/12/29/installing-logstack-elasticsearch-kibana-on-ubuntu/"/>
     <updated>2015-12-29T14:52:55+08:00</updated>
-    <id>http://k.arttechresearch.com/k/tech/2015/12/29/installing-logstack-elasticsearch-kibana-on-ubuntu</id>
+    <id>http://k.arttechresearch.com/tech/2015/12/29/installing-logstack-elasticsearch-kibana-on-ubuntu</id>
     <content type="html"><![CDATA[<h2>Installation Steps</h2>
 
 <ul>
@@ -1158,9 +1486,9 @@ sub routines, classes, values or type specifications</li>
   
   <entry>
     <title type="html"><![CDATA[Setting Up OpenNao With VirtualBox]]></title>
-    <link href="http://k.arttechresearch.com/k/tech/2015/12/28/setting-up-opennao-with-virtualbox/"/>
+    <link href="http://k.arttechresearch.com/tech/2015/12/28/setting-up-opennao-with-virtualbox/"/>
     <updated>2015-12-28T22:44:11+08:00</updated>
-    <id>http://k.arttechresearch.com/k/tech/2015/12/28/setting-up-opennao-with-virtualbox</id>
+    <id>http://k.arttechresearch.com/tech/2015/12/28/setting-up-opennao-with-virtualbox</id>
     <content type="html"><![CDATA[<h2>1. Downloading OpenNao</h2>
 
 <p>Download OpenNao <a href="https://community.aldebaran.com/en/dl/ZmllbGRfY29sbGVjdGlvbl9pdGVtLTU1NC1maWVsZF9zb2Z0X2RsX2V4dGVybmFsX2xpbmstMC1mYTc0ZTQ%3D?width=500&amp;height=auto">OVA file</a>.</p>
@@ -1184,9 +1512,9 @@ sub routines, classes, values or type specifications</li>
   
   <entry>
     <title type="html"><![CDATA[Getting Started With Cassandra]]></title>
-    <link href="http://k.arttechresearch.com/k/tech/2015/12/28/getting-started-with-cassandra/"/>
+    <link href="http://k.arttechresearch.com/tech/2015/12/28/getting-started-with-cassandra/"/>
     <updated>2015-12-28T18:26:26+08:00</updated>
-    <id>http://k.arttechresearch.com/k/tech/2015/12/28/getting-started-with-cassandra</id>
+    <id>http://k.arttechresearch.com/tech/2015/12/28/getting-started-with-cassandra</id>
     <content type="html"><![CDATA[<h2>1. Installation</h2>
 
 <ul>
@@ -1336,9 +1664,9 @@ sub routines, classes, values or type specifications</li>
   
   <entry>
     <title type="html"><![CDATA[A Little Bird]]></title>
-    <link href="http://k.arttechresearch.com/k/life/2015/12/27/a-little-bird/"/>
+    <link href="http://k.arttechresearch.com/life/2015/12/27/a-little-bird/"/>
     <updated>2015-12-27T21:10:14+08:00</updated>
-    <id>http://k.arttechresearch.com/k/life/2015/12/27/a-little-bird</id>
+    <id>http://k.arttechresearch.com/life/2015/12/27/a-little-bird</id>
     <content type="html"><![CDATA[<h2>小鸟</h2>
 
 <p>小鸟和妈妈住在树林里，有一天，小鸟想到树下看看地面。这时，恰好风雨，树枝与地面平衡，小鸟顺着树枝
@@ -1351,9 +1679,9 @@ sub routines, classes, values or type specifications</li>
   
   <entry>
     <title type="html"><![CDATA[Machine Learning From Facebook Tech Talk]]></title>
-    <link href="http://k.arttechresearch.com/k/tech/2015/12/13/machine-learning-from-facebook-tech-talk/"/>
+    <link href="http://k.arttechresearch.com/tech/2015/12/13/machine-learning-from-facebook-tech-talk/"/>
     <updated>2015-12-13T22:39:48+08:00</updated>
-    <id>http://k.arttechresearch.com/k/tech/2015/12/13/machine-learning-from-facebook-tech-talk</id>
+    <id>http://k.arttechresearch.com/tech/2015/12/13/machine-learning-from-facebook-tech-talk</id>
     <content type="html"><![CDATA[<p>There were three topics about machine learning on Facebook Tech Talk 2015 (Shanghai).</p>
 
 <ul>
@@ -1471,18 +1799,18 @@ such as 15 minutes later, 1 hour laster etc), that&rsquo;s why we use the queue.
   
   <entry>
     <title type="html"><![CDATA[The Land]]></title>
-    <link href="http://k.arttechresearch.com/k/art/2015/12/13/the-land/"/>
+    <link href="http://k.arttechresearch.com/art/2015/12/13/the-land/"/>
     <updated>2015-12-13T22:30:29+08:00</updated>
-    <id>http://k.arttechresearch.com/k/art/2015/12/13/the-land</id>
+    <id>http://k.arttechresearch.com/art/2015/12/13/the-land</id>
     <content type="html"><![CDATA[<p><img src="https://s-media-cache-ak0.pinimg.com/736x/cc/f6/3d/ccf63d47a567fd1a4f8cc1d8164041e6.jpg" /></p>
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[Connecting to MSSQL Using FreeTDS / ODBC in Python]]></title>
-    <link href="http://k.arttechresearch.com/k/tech/2015/11/15/connecting-to-mssql-using-freetds-slash-odbc-in-python/"/>
+    <link href="http://k.arttechresearch.com/tech/2015/11/15/connecting-to-mssql-using-freetds-slash-odbc-in-python/"/>
     <updated>2015-11-15T21:23:21+08:00</updated>
-    <id>http://k.arttechresearch.com/k/tech/2015/11/15/connecting-to-mssql-using-freetds-slash-odbc-in-python</id>
+    <id>http://k.arttechresearch.com/tech/2015/11/15/connecting-to-mssql-using-freetds-slash-odbc-in-python</id>
     <content type="html"><![CDATA[<h2>Prequisitions</h2>
 
 <ul>
@@ -1678,9 +2006,9 @@ such as 15 minutes later, 1 hour laster etc), that&rsquo;s why we use the queue.
   
   <entry>
     <title type="html"><![CDATA[Generating a Self-Signed SSL Certificate]]></title>
-    <link href="http://k.arttechresearch.com/k/tech/2015/11/09/generating-a-self-signed-ssl-certificate/"/>
+    <link href="http://k.arttechresearch.com/tech/2015/11/09/generating-a-self-signed-ssl-certificate/"/>
     <updated>2015-11-09T22:59:53+08:00</updated>
-    <id>http://k.arttechresearch.com/k/tech/2015/11/09/generating-a-self-signed-ssl-certificate</id>
+    <id>http://k.arttechresearch.com/tech/2015/11/09/generating-a-self-signed-ssl-certificate</id>
     <content type="html"><![CDATA[<h2>Prequistion</h2>
 
 <p>openssl</p>
@@ -1726,9 +2054,9 @@ such as 15 minutes later, 1 hour laster etc), that&rsquo;s why we use the queue.
   
   <entry>
     <title type="html"><![CDATA[Python Challenge L4]]></title>
-    <link href="http://k.arttechresearch.com/k/tech/2015/11/08/python-challenge-l4/"/>
+    <link href="http://k.arttechresearch.com/tech/2015/11/08/python-challenge-l4/"/>
     <updated>2015-11-08T21:30:05+08:00</updated>
-    <id>http://k.arttechresearch.com/k/tech/2015/11/08/python-challenge-l4</id>
+    <id>http://k.arttechresearch.com/tech/2015/11/08/python-challenge-l4</id>
     <content type="html"><![CDATA[<p><a href="">Python Challenge</a></p>
 
 <h2>L4. Linkedlist</h2>
@@ -1791,9 +2119,9 @@ such as 15 minutes later, 1 hour laster etc), that&rsquo;s why we use the queue.
   
   <entry>
     <title type="html"><![CDATA[Reading]]></title>
-    <link href="http://k.arttechresearch.com/k/life/2015/11/08/reading/"/>
+    <link href="http://k.arttechresearch.com/life/2015/11/08/reading/"/>
     <updated>2015-11-08T02:48:04+08:00</updated>
-    <id>http://k.arttechresearch.com/k/life/2015/11/08/reading</id>
+    <id>http://k.arttechresearch.com/life/2015/11/08/reading</id>
     <content type="html"><![CDATA[<h2>夜读</h2>
 
 <p>读杨绛先生的《我们仨》，在深夜，绝迹于微信之后，重拾夜读，一如去年夜读法语那般，似乎，已是很
@@ -1816,9 +2144,9 @@ such as 15 minutes later, 1 hour laster etc), that&rsquo;s why we use the queue.
   
   <entry>
     <title type="html"><![CDATA[Python Challenge L3]]></title>
-    <link href="http://k.arttechresearch.com/k/tech/2015/11/07/python-challenge-l3/"/>
+    <link href="http://k.arttechresearch.com/tech/2015/11/07/python-challenge-l3/"/>
     <updated>2015-11-07T20:35:25+08:00</updated>
-    <id>http://k.arttechresearch.com/k/tech/2015/11/07/python-challenge-l3</id>
+    <id>http://k.arttechresearch.com/tech/2015/11/07/python-challenge-l3</id>
     <content type="html"><![CDATA[<p><a href="">Python Challenge</a></p>
 
 <h2>L3. Equality</h2>
@@ -1903,9 +2231,9 @@ update the url with <code>linkedlist.php</code>, then jump to L4.</p>
   
   <entry>
     <title type="html"><![CDATA[Configurating Colortheme for iTerm]]></title>
-    <link href="http://k.arttechresearch.com/k/tech/2015/11/05/configurating-colortheme-for-iterm/"/>
+    <link href="http://k.arttechresearch.com/tech/2015/11/05/configurating-colortheme-for-iterm/"/>
     <updated>2015-11-05T23:08:34+08:00</updated>
-    <id>http://k.arttechresearch.com/k/tech/2015/11/05/configurating-colortheme-for-iterm</id>
+    <id>http://k.arttechresearch.com/tech/2015/11/05/configurating-colortheme-for-iterm</id>
     <content type="html"><![CDATA[<p>The colortheme files of iTerm is <code>*.itermcolors</code>, everyone can create or update a colortheme and
 then import it to iTerm. Alternatively, you can download the colorthemes which are shared in
 public and then update them in iTerm.</p>
@@ -1996,9 +2324,9 @@ public and then update them in iTerm.</p>
   
   <entry>
     <title type="html"><![CDATA[Python Challenge L0-L2]]></title>
-    <link href="http://k.arttechresearch.com/k/tech/2015/11/05/python-challenge-l0-l2/"/>
+    <link href="http://k.arttechresearch.com/tech/2015/11/05/python-challenge-l0-l2/"/>
     <updated>2015-11-05T16:07:22+08:00</updated>
-    <id>http://k.arttechresearch.com/k/tech/2015/11/05/python-challenge-l0-l2</id>
+    <id>http://k.arttechresearch.com/tech/2015/11/05/python-challenge-l0-l2</id>
     <content type="html"><![CDATA[<p><a href="http://www.pythonchallenge.com">Python Challenge</a></p>
 
 <h2>L0</h2>
@@ -2196,133 +2524,6 @@ but MAYBE they are in the page source.</p>
 
 
 <p>Update the url with <code>equality</code>.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Business Models]]></title>
-    <link href="http://k.arttechresearch.com/k/life/2015/10/26/business-models/"/>
-    <updated>2015-10-26T22:38:09+08:00</updated>
-    <id>http://k.arttechresearch.com/k/life/2015/10/26/business-models</id>
-    <content type="html"><![CDATA[<h2>商业模式</h2>
-
-<p>2008那年坐地铁，经常会碰到免费派报纸还送一些小礼品（水或纸巾等）的情况，当时还好奇，报纸
-从何盈利，然后知道了广告在支持着报社、杂志社的日常运营。相比小时候每天订阅的报纸，当时
-的商业模式，也许也是时代和行业的一种革新。</p>
-
-<p>再到后来，接触到互联网的商业模式，更是五花八门了。恰好有人提起，随手记记自己知道的免费的商业模式。</p>
-
-<h3>1. 广告</h3>
-
-<p>2008年前，这可能是大多数互联网企业的盈利方式之一，尤其是网络刚普及的时候，大量网站如雨后
-春笋，早起的鸟儿，只要保持网站的一定流量，广告收益足以维持网站运营。那时也有很多站长自立
-门户。</p>
-
-<p>典型企业：谷歌广告</p>
-
-<h3>2. 佣金</h3>
-
-<p>媒介平台常用的一种方式，平台类似集市，只是提供一个载体，平台用户分成两类，平台在交易金中
-抽取提成。提成一般是交易的百分之几。用户可以是买家和卖家，雇佣者和被雇佣者，教师和学生等。</p>
-
-<p>典型企业：eBay、Freelancer。</p>
-
-<h3>3. 阶梯式</h3>
-
-<p>有些以用户作分类，有些以功能作分类。如果是以用户作分类，比如个人用户和企业用户，普通会员和
-高级会员等；如果是以功能作分类，基础功能免费，高级功能（附加增值功能）付费。</p>
-
-<p>典型企业：LinkedIn</p>
-
-<h3>4. 捐赠</h3>
-
-<p>接受个人或机构的捐款。</p>
-
-<p>典型企业：维基百科</p>
-
-<h3>5. 初创企业</h3>
-
-<p>初创企业为了培养早期用户，也会提供免费的产品和服务，尤其是这两年，移动端的叫车软件和外卖软件
-早期一般会给用户补贴，鼓励用户使用新产品，以培养早期的一批用户。移动端的互联网金融，也有类似的
-现象。</p>
-
-<p>典型企业：滴滴打车、淘点点</p>
-
-<h3>6. 增值服务</h3>
-
-<p>给主流用户提供免费的产品，然后挖掘用户价值，给特定的企业提供相应的产品和服务。比如在线教育平台，
-除了提供免费课程外，认证证书付费外，还为企业提供人才（猎头角色）。也有一些数据公司，给用户提供一
-种产品，然后给特定企业提供数据服务。</p>
-
-<p>典型企业：Coursera</p>
-
-<h3>7. 咨询服务</h3>
-
-<p>一些开源的软件，软件是免费的，但咨询和方案是付费的。</p>
-
-<p>典型企业：Linux、Ｒ、Hadoop</p>
-
-<h3>8. 线下业务</h3>
-
-<p>有些站点，线上平台只是交流的接口，线下业务才是盈利的核心。这种情况，似乎传统行业转互联网企业
-的情况比较多。比如一些在线二手车交易平台，公司内部会有专人收购这类车，再转手卖出；比如一些电商
-平台，线上只是订单，线下产品配送，售卖产品才是核心。</p>
-
-<p>典型企业：亚马逊在线商店</p>
-
-<h3>总结</h3>
-
-<p>企业的盈利模式，免费只是表象，背后一定有其他业务在支撑着运营。而在互联网企业中，企业的盈利模式
-很可能是多样的，是几种方式的结合。</p>
-
-<p>回到传统行业或传统的商业模式：提供一种或多种付费产品和（或）付费服务，互联网企业的“免费”的盈利
-方式，几乎都是一种或几种其他业务，支撑着一个大容量的免费的用户平台。从这点看，还是很遵守八二法
-则的。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Blogging]]></title>
-    <link href="http://k.arttechresearch.com/k/life/2015/10/24/blogging/"/>
-    <updated>2015-10-24T23:36:19+08:00</updated>
-    <id>http://k.arttechresearch.com/k/life/2015/10/24/blogging</id>
-    <content type="html"><![CDATA[<h2>日志</h2>
-
-<p>最近一直在整理日志，从2005年至今，从最初的第三方平台，到后来自己搭建平台；从博客的新兴，
-到如今的末落；从web 1.0到2.0，再到移动时代；从读书年代，到如今离校多年，无论技术如何更新
-换代，最怀念的依然是博客时代：当年的博友，当年的讨论，还有当年前辈们的指引。</p>
-
-<p>10年前，曾经和博友说：“如果可以在这个博客呆10年，不知10年后的我们会怎样”，在经历了初期试
-用各种博客平台，到后来选定后的安定一处，我真的在那个博客呆了整整10年，看着平台的兴盛到末
-落，也看着一家互联网企业从当年国内的领军到如今的奄奄。10年，有太多的故事，无论从哪个角度
-切入，似乎都是一部漫长的故事。但，当年一位博友说，回忆录需要在临终前写，倒叙的方式，所以，
-现在的自己还不适合回忆。有趣的是，当年博友们的年纪，也是我现在的年纪，回想当年说过的一些
-话，似乎也是一一验证，我依然非常想念那时的朋友，尤其是如今微信盛行的年代，博客其实更适合
-更加深入的思考，写短了不好看，但写太长似乎也不能频频更新，当年适时而生的轻博客，在国内也
-只算是昙花一现，一下子就被微博和后来的微信淹没。</p>
-
-<p>很多话想说的时候，总会是无言收场，尤其是这两年体会到人生、命运以及日常现象的多样性和复杂性，
-似乎站在每个人同样的角度看问题，一切都成了可理解，当事物变得可理解的时候，同时觉得批判反而是
-不合适的，便更加觉得沉默反而是平和安宁的方式。在网络写文章是有风险的，尤其是见过互联网大大小
-小的人肉搜索和语言暴力事件之后，理性的讨论需要以尊重和共识为前提。</p>
-
-<p>我不确定博客是否在以后会有复兴的时代，但短期肯定是不会了。微博和微信虽然便捷，也非常适合记录
-一闪而过的灵感；而更深入的思考，我依然以为博客是适合的方式。我从来没想过以营销的方式来运营这
-个地方，一如过去只是一群相熟的博友的笔头交流那般。太热闹了容易失真。</p>
-
-<p>断不成续，暂且以此，作为这个地方的起点吧。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Autumn]]></title>
-    <link href="http://k.arttechresearch.com/k/art/2015/10/24/autumn/"/>
-    <updated>2015-10-24T16:32:23+08:00</updated>
-    <id>http://k.arttechresearch.com/k/art/2015/10/24/autumn</id>
-    <content type="html"><![CDATA[<p><img src="https://s-media-cache-ak0.pinimg.com/736x/ac/63/a3/ac63a33e86737a04e21097f0ed397774.jpg
-" /></p>
-
-<p>Tool: Autodesk Pixlr</p>
 ]]></content>
   </entry>
   
