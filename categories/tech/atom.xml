@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tech | K]]></title>
   <link href="http://k.arttechresearch.com/categories/tech/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2016-01-04T14:04:42+08:00</updated>
+  <updated>2016-01-07T21:53:17+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[K]]></name>
@@ -14,11 +14,522 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Cloudera Hadoop by Example]]></title>
+    <link href="http://k.arttechresearch.com/tech/2016/01/06/cloudera-hadoop-by-example/"/>
+    <updated>2016-01-06T22:05:08+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2016/01/06/cloudera-hadoop-by-example</id>
+    <content type="html"><![CDATA[<p>Contents</p>
+
+<ul>
+<li>analyzing structured data (sqoop, impala)</li>
+<li>analyzing unstructured data (beeline, impala)</li>
+<li>analyzing data in realtime (spark)</li>
+<li>indexing and search data (solr)</li>
+</ul>
+
+
+<h2>Analyzing Structured Data: MySQL Data</h2>
+
+<p>Tools:</p>
+
+<ul>
+<li>sqoop</li>
+<li>hive</li>
+<li>hdfs</li>
+<li>avro</li>
+<li>mysql</li>
+<li>mapreduce</li>
+</ul>
+
+
+<h3>Loading data by sqoop</h3>
+
+<p>Steps:</p>
+
+<ul>
+<li>connecting MySQL database</li>
+<li>lauching MapReduce jobs</li>
+<li>putting the export files in Avro format in HDFS, and creating the Avro schema</li>
+<li>(later) loading Hive tables for use in Impala</li>
+</ul>
+
+
+<pre><code class="bash loading data from local to HDFS by sqoop">$ cd /path/to/project
+
+$ sqoop import-all-tables \
+-m 1 \
+--connect jdbc:mysql://quickstart:3306/retail_db \
+--username=retail_dba \
+--password=cloudera \
+--compression-codec=snappy \
+--as-avrodatafile \
+--warehouse-dir=/user/hive/warehouse
+</code></pre>
+
+<h3>Validation</h3>
+
+<p>NOTE: <code>*.avsc</code> files is located on the local system.</p>
+
+<pre><code class="bash validating data in HDFS">$ hadoop fs -ls /user/hive/warehouse                     # HDFS
+$ hadoop fs -ls /user/hive/warehouse/categories/         # HDFS
+
+$ ls -l *.avsc                                           # local, schema files
+</code></pre>
+
+<h3>Copying the schema files (<code>*.avsc</code>) to HDFS</h3>
+
+<pre><code class="bash copying avro schemas to HDFS">$ sudo -u hdfs hadoop fs -mkdir /user/examples
+$ sudo -u hdfs hadoop fs -chmod +rw /user/examples
+$ hadoop fs -copyFromLocal ./*.avsc /user/examples/
+</code></pre>
+
+<p>NOTES: Hive and Impala</p>
+
+<p>Hive and Impala both read the data from files in HDFS, and they even share metadata about the tables.</p>
+
+<p>Hive - executes queries by compiling them to MapReduce jobs, this means it can be more flexible, but is much slower.</p>
+
+<p>Impala - is an MPP query engine that reads the data directly from the file system itself. This allows it to execute queries fast enough for interactive analysis and exploration.</p>
+
+<h3>Creating tables</h3>
+
+<p>tools:</p>
+
+<ul>
+<li>hue</li>
+<li>impala</li>
+</ul>
+
+
+<p>Hue -> Impala: creating tables</p>
+
+<pre><code class="sql creating table in Impala">CREATE EXTERNAL TABLE categories STORED AS AVRO
+LOCATION 'hdfs:///user/hive/warehouse/categories'
+TBLPROPERTIES ('avro.schema.url'='hdfs://quickstart/user/examples/sqoop_import_categories.avsc');
+
+CREATE EXTERNAL TABLE customers STORED AS AVRO
+LOCATION 'hdfs:///user/hive/warehouse/customers'
+TBLPROPERTIES ('avro.schema.url'='hdfs://quickstart/user/examples/sqoop_import_customers.avsc');
+
+CREATE EXTERNAL TABLE departments STORED AS AVRO
+LOCATION 'hdfs:///user/hive/warehouse/departments'
+TBLPROPERTIES ('avro.schema.url'='hdfs://quickstart/user/examples/sqoop_import_departments.avsc');
+
+CREATE EXTERNAL TABLE orders STORED AS AVRO
+LOCATION 'hdfs:///user/hive/warehouse/orders'
+TBLPROPERTIES ('avro.schema.url'='hdfs://quickstart/user/examples/sqoop_import_orders.avsc');
+
+CREATE EXTERNAL TABLE order_items STORED AS AVRO
+LOCATION 'hdfs:///user/hive/warehouse/order_items'
+TBLPROPERTIES ('avro.schema.url'='hdfs://quickstart/user/examples/sqoop_import_order_items.avsc');
+
+CREATE EXTERNAL TABLE products STORED AS AVRO
+LOCATION 'hdfs:///user/hive/warehouse/products'
+TBLPROPERTIES ('avro.schema.url'='hdfs://quickstart/user/examples/sqoop_import_products.avsc');
+
+show tables;
+</code></pre>
+
+<h3>Exploring data</h3>
+
+<p>queries</p>
+
+<pre><code class="sql exploring data in Impala">-- Most popular product categories
+select c.category_name, count(order_item_quantity) as count
+from order_items oi
+inner join products p on oi.order_item_product_id = p.product_id
+inner join categories c on c.category_id = p.product_category_id
+group by c.category_name
+order by count desc
+limit 10;
+
+
+-- top 10 revenue generating products
+select p.product_id, p.product_name, r.revenue
+from products p 
+inner join (
+    select oi.order_item_product_id, sum(cast(oi.order_item_subtotal as float)) as revenue
+    from order_items oi
+    inner join orders o on oi.order_item_order_id = o.order_id
+    where o.order_status &lt;&gt; ‘CANCELED’ and o.order_status &lt;&gt; ’SUSPECTED_FRAUD’
+    group by order_item_product_id
+) r on p.product_id = r.order_item_product_id
+order by r.revenue desc
+limit 10;
+</code></pre>
+
+<h2>Analyzing Unstructured data: log files</h2>
+
+<p>tools:</p>
+
+<ul>
+<li>flume/beeline</li>
+<li>hive</li>
+<li>impala</li>
+</ul>
+
+
+<h3>Copying the log files to HDFS</h3>
+
+<pre><code class="bash copy the log files to HDFS">$ sudo -u hdfs hadoop fs -mkdir /user/hive/warehouse/original_access_logs
+$ sudo -u hdfs hadoop fs -copyFromLocal /opt/examples/log_files/access.log.2 /user/hive/warehouse/original_access_logs
+$ hadoop fs -ls /user/hive/warehouse/original_access_logs
+</code></pre>
+
+<h3>Creating Intermediate Table</h3>
+
+<p>local logs -> intermediate table -> final table</p>
+
+<pre><code class="bash loading log files to Hive">$ beeline -u adbc:hive2://quickstart:10000/default -n admin -d org.apache.hive.jdbc.HiveDriver
+
+0: jdbc:hive2://quickstart:10000/default&gt; CREATE EXTERNAL TABLE intermediate_access_logs (
+ip STRING,
+date STRING,
+method STRING,
+url STRING,
+http_version STRING,
+code1 STRING,
+code2 STRING,
+dash STRING,
+user_agent STRING)
+ROW FORMAT SERDE ‘org.apache.hadoop.hive.contrib.serde2.RegexSerDe’
+WITH SERDEPROPERTIES (
+‘input.regex’ = ‘([^ }*) - - \\[([^\\]]*)\\] “([^\ ]*) ([^\ ]*) ([^\ ]*)” (\\d*) (\\d*) “([^”]*)” “([^”]*”’,
+‘output.format.string’ = “%1$s %2$s %3$s %4$s %5$s %6$s %7$s %8$s %9$s”
+)
+LOCATION ‘/user/hive/warehouse/original_access_logs’;
+
+0: jdbc:hive2://quickstart:10000/default&gt; CREATE EXTERNAL TABLE tokenized_access_log (
+ip STRING,
+date STRING,
+method STRING,
+url STRING,
+http_version STRING,
+code1 STRING,
+code2 STRING,
+dash STRING,
+user_agent STRING)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ‘,’
+LOCATION ‘/user/hive/warehouse/tokenized_access_logs';
+
+0: jdbc:hive2://quickstart:10000/default&gt; ADD JAR /usr/lib/hive/lib/hive-contrib.jar
+0: jdbc:hive2://quickstart:10000/default&gt; INSERT OVERWRITE TABLE tokenized_access_logs SELECT * FROM intermediate_access_logs;
+0: jdbc:hive2://quickstart:10000/default&gt; !quit
+</code></pre>
+
+<h3>Validating in Impala</h3>
+
+<pre><code class="sql validating tables in Impala">invalidate metadata;
+show tables;
+
+select count(*),  url from tokenized_access_logs
+where url like ‘%\/product\/%’
+group by url
+order by count(*) desc;
+</code></pre>
+
+<h2>Analyzing data with Spark</h2>
+
+<h3>Start Spark</h3>
+
+<pre><code class="bash start Spark">$ spark-shell —jars /usr/lib/avro/avro-mapred.jar \
+—conf spark.serializer=org.apache.spark.serializer.KryoSerializer
+</code></pre>
+
+<h3>Programming in Scala</h3>
+
+<pre><code class="scala relationship strengh analytics">// First we're going to import the classes we need and open some of the files
+// we imported from our relational database into Hadoop with Sqoop
+
+import org.apache.avro.generic.GenericRecord
+import org.apache.avro.mapred.{AvroInputFormat, AvroWrapper}
+import org.apache.hadoop.io.NullWritable
+
+val warehouse = "hdfs://quickstart/user/hive/warehouse"
+
+val order_items_path = warehouse + "order_items"
+val order_items = sc.hadoopFile[AvroWrapper[GenericRecord], NullWritable, AvroInputFormat[GenericRecord]](order_items_path)
+
+val products_path = warehouse + "products"
+val products = sc.hadoopFile[AvroWrapper[GenericRecord], NullWritable, AvroInputFormat[GenericRecord]](product_path)
+
+
+
+// Next, we extract the fields from order_items and products that we care about
+// and get a list of every product, its name and quantity, grouped by order
+
+val orders = order_items.map { x =&gt; (
+  x._1.datum.get("order_item_product_id"),
+  (x._1.datum.get("order_item_order_id"), x._1.datum.get("order_item_quantity"))
+)}.join(
+  products.map { x =&gt; (
+    x._1.datum.get("product_id"),
+    (x._1.datum.get("product_name"))
+)}).map(x =&gt; (
+  scala.Int.unbox(x._2._1._1), // order_id
+  (
+    scala.Int.unbox(x._2._1._2), // quantity
+    x._2._2.toString // product_name
+  )
+)).groupByKey()
+
+
+// Finally, we tally how many times each combination of products appears
+// together in an order, and print the 10 most common combinations.
+
+val cooccurrences = orders.map(order =&gt; (
+  order._1,
+  order._2.toList.combinations(2).map(order_pair =&gt; (
+    if (order_pair(0)._2 &lt; order_pair(1)._2) (order_pair(0)._2, order_pair(1)._2)
+    else (order_pair(1)._2, order_pair(0)._2), order_pair(0)._1 * order_pair(1)._1
+  ))
+))
+
+val combos = cooccurrrences.flatMap(x =&gt; x._2).reduceByKey((a,b) =&gt; a+b)
+val mostCommon = combos.map(x =&gt; (x._2, x._1)).sortByKey(false).take(10)
+
+println(mostCommon.deep.mkString("\n"))
+
+exit
+</code></pre>
+
+<p>NOTE:</p>
+
+<p>When we do a &lsquo;map&rsquo;, we specify a function that will take each record and output a modified record. This is useful when we only need a couple of fields from each record  or when we need the record to use a different field as the key: we simply invoke map with a function that takes in the entire record, and returns a new record with the fields and the key we want.</p>
+
+<p>The &lsquo;reduce&rsquo; operations - like &lsquo;join&rsquo; and &lsquo;groupBy&rsquo; - will organise these records by their keys so we can group similar records together and then process them as a group.</p>
+
+<h2>Indexing data and search by Solr</h2>
+
+<h3>Creating a search schema</h3>
+
+<p>steps</p>
+
+<ul>
+<li>creating an empty configuration</li>
+<li>editing your schema</li>
+<li>uploading your configuration</li>
+<li>creating your collection</li>
+</ul>
+
+
+<pre><code class="bash creating a search schame by Solr">$ solrctl --zk quickstart:2181/solr instancedir --generate solr_configs
+$ cd /opt/examples/flume
+$ solrctl --zk quickstart:2181/solr instancedir --create live_logs ./solr_configs
+$ solrctl --zk quickstart:2181/solr collection --create live_logs -s 1
+</code></pre>
+
+<h3>Loading data into Solr</h3>
+
+<p>tools</p>
+
+<ul>
+<li>flume - a tool for ingesting streams of data into your cluster from sources such as log files, network streams, and more; is a system for collecting, aggregating, and moving large amounts of log data from many different sources to a centralised data source.</li>
+<li>morphines - a Java library for doing ETL on-the-fly.</li>
+</ul>
+
+
+<pre><code class="bash loading data by flume">$ start_logs
+$ tail_logs
+$ stop_logs
+
+$ flume-ng agent \
+--conf /opt/examples/flume/conf \
+--conf-file /opt/examples/flume/conf/flume.conf \
+--name agent1 \
+-Dflume.root.logger=DEBUG,INFO,console
+</code></pre>
+
+<h3>Playing data in Solr</h3>
+
+<p>Hue -> Search -> Solr Search -> Dashboard</p>
+
+<ul>
+<li>browsing the data</li>
+<li>charting</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[The Comparison of Programming Languages Libraries]]></title>
+    <link href="http://k.arttechresearch.com/tech/2016/01/06/the-comparison-of-programming-languages-libraries/"/>
+    <updated>2016-01-06T01:44:45+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2016/01/06/the-comparison-of-programming-languages-libraries</id>
+    <content type="html"><![CDATA[<h2>Web</h2>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;"> Language </th>
+<th style="text-align:left;"> Web Framework          </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> Python   </td>
+<td style="text-align:left;"> Django, Tornado, Flask </td>
+</tr>
+<tr>
+<td style="text-align:left;"> Ruby     </td>
+<td style="text-align:left;"> Rails                  </td>
+</tr>
+<tr>
+<td style="text-align:left;"> Node.js  </td>
+<td style="text-align:left;"> Express                </td>
+</tr>
+<tr>
+<td style="text-align:left;"> Scala    </td>
+<td style="text-align:left;"> Life                   </td>
+</tr>
+</tbody>
+</table>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Notes on Programming in Scala]]></title>
+    <link href="http://k.arttechresearch.com/tech/2016/01/04/notes-on-programming-in-scala/"/>
+    <updated>2016-01-04T15:15:52+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2016/01/04/notes-on-programming-in-scala</id>
+    <content type="html"><![CDATA[<p>Programming in Scala: <a href="http://www.artima.com/pins1ed/">http://www.artima.com/pins1ed/</a></p>
+
+<h2>Funtional Language and Scala</h2>
+
+<h3>Functional Language</h3>
+
+<p>object object-orientaed programming</p>
+
+<p>In principle, the motivation for object-oriented programming is very simple: all but
+the most the trivial programs need some sort of structure. The most straightforward way
+to do this is to put data and operations into some form of containers. The great idea of
+object-oriented programming is to make these containers fully general, so that they can
+contain operations as well as data, and that they are themselves values that can be stored
+in other containers, or passed as paramters to operations. Such containers are called
+objects.</p>
+
+<p>Alan Kay, the inventor of Smalltalk, remarked that in this way the simplest object has
+the same construction principle as a full computer: it combines data with operations
+under a formalized interface. So objects have a lot to do with language scalability:
+the same techniques apply to the construction of small as well as large programs.</p>
+
+<h3>Scala</h3>
+
+<ul>
+<li>compatibility</li>
+<li>brevity</li>
+<li>high-level abstractions</li>
+<li>advanced static typing</li>
+</ul>
+
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/52/c2/15/52c2157c0b2f25cfae2d295e67ef32f8.jpg" /></p>
+
+<h2>Scala Elements</h2>
+
+<h3>Val vs Var</h3>
+
+<p>Prefer vals, immutable objects, and methods without side effects. Reach for them first.</p>
+
+<p>Use vars, mutable objects, and methods with side effects when you have a specific need and justification for them.</p>
+
+<h3>Types and Operations</h3>
+
+<ul>
+<li>types</li>
+<li>literals</li>
+<li>operations</li>
+</ul>
+
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/b3/98/ab/b398ab10483fd8a9892880e0fe324326.jpg" /></p>
+
+<p>image source: Table 5.1 · Some basic types, Chpater 5, Programming in Scala, page 118</p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/fc/91/b6/fc91b687d2acfcf714bf5278ef37c4f9.jpg" /></p>
+
+<p>image source: Rich types, Chapter 5, Programming in Scala, page 138</p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/cb/ce/46/cbce46c71c592e1fe97448e3a5fc1ed4.jpg" /></p>
+
+<p>image source: Chapter 5, Programming in Scala</p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/b3/0e/50/b30e502bcc31787ad660c38ea4104b3c.jpg" /></p>
+
+<p>image source: Operator precedence, Chapter 5, Programming in Scala, p135</p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/92/85/5b/92855b63af3053f3cd522150b3d1c7b4.jpg" /></p>
+
+<p>image source: Rich Operations, Chapter 5, Programming in Scala, page 138</p>
+
+<h3>Collections</h3>
+
+<ul>
+<li>array</li>
+<li>list</li>
+<li>tuple</li>
+<li>set</li>
+<li>map</li>
+</ul>
+
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/1e/ac/60/1eac6035eaee581df8a0b46eecd14d3a.jpg" /></p>
+
+<p>image source: Class hierarchy for Scala sets, Chapter 3, Programming in Scala, page 92</p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/d3/af/00/d3af004af2898246aee87b91006895fd.jpg" /></p>
+
+<p>image source: Class hierarchy for Scala maps, Chapter 3, Programming in Scala, page 94</p>
+
+<h3>Class and Objects</h3>
+
+<ul>
+<li>class</li>
+<li>object</li>
+<li>app</li>
+</ul>
+
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/93/7c/06/937c06add4c4e06b27e77a096a5e0975.jpg" /></p>
+
+<p>image source: Scala Class Hierarchy, Chapter 10, Programming in Scala</p>
+
+<p>Trait or not trait</p>
+
+<ul>
+<li>If the behavior will not be reused, then make it a concrete class. It is not reusable behavior after all.</li>
+<li>If it might be reused in multiple, unrelated classes, make it a trait. Only traits can be mixed into different parts of the class hierarchy.</li>
+<li>If you want to inherit from it in Java code, use an abstract class, use an abstract class. Since traits with code do not have a close Java analog, it tends to be awkward to inherit from a trait in a Java class. Inheriting from a Scala class, meanwhile, is exactly like inheriting from a Java class. As one exception, a Scala trait with only abstract members translates directly to a Java interface, so you should feel free to define such traits even if you expect Java code to inherit from it. See Chapter 31 for more information on working with Java and Scala together.</li>
+<li>If you plan to distribute it in compiled form, and you expect outside groups to write classes inheriting from it, you might lean towards using an abstract class. The issue is that when a trait gains or loses a member, any classes that inherit from it must be recompiled, even if they have not changed. If outside clients will only call into the behavior, instead of inheriting from it, then using a trait is fine.</li>
+<li>If efficiency is very important, lean towards using a class. Most Java
+runtimes make a virtual method invocation of a class member a faster oper- ation than an interface method invocation. Traits get compiled to interfaces and therefore may pay a slight performance overhead. However, you should make this choice only if you know that the trait in question constitutes a per- formance bottleneck and have evidence that using a class instead actually solves the problem.</li>
+<li>If you still do not know, after considering the above, then start by making it as a trait. You can always change it later, and in general using a trait keeps more options open.</li>
+</ul>
+
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/50/e0/b6/50e0b6173313209d85c1b08647f06709.jpg" /></p>
+
+<p>image source: Collection hierarchy, Chapter 24, Programming in Scala, Page 536</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Installing Scala]]></title>
     <link href="http://k.arttechresearch.com/tech/2016/01/04/installing-scala/"/>
     <updated>2016-01-04T13:06:34+08:00</updated>
     <id>http://k.arttechresearch.com/tech/2016/01/04/installing-scala</id>
-    <content type="html"><![CDATA[<h2>Installation</h2>
+    <content type="html"><![CDATA[<h2>Prequisition</h2>
+
+<p>Java</p>
+
+<pre><code class="bash">$ sudo add-apt-repository -y ppa:webupd8team/java
+$ sudo apt-get update
+$ sudo apt-get -y install oracle-java8-installer
+</code></pre>
+
+<h2>Installation</h2>
 
 <h3>Ubuntu 14.04</h3>
 
@@ -49,7 +560,7 @@ res0: Int = 2
 scala&gt; println("Hello")
 Hello
 
-scala&gt;
+scala&gt;:quit
 </code></pre>
 
 <h2>Vim Configuration</h2>
@@ -115,481 +626,6 @@ $ grep -o and tmp/a/longfile.txt | wc -l
 
 <pre><code class="bash">$ ls -la | awk '$6 == "Dec"'
 </code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Flask-Restless]]></title>
-    <link href="http://k.arttechresearch.com/tech/2016/01/03/flask-restless/"/>
-    <updated>2016-01-03T00:09:13+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2016/01/03/flask-restless</id>
-    <content type="html"><![CDATA[<p>Source Codes:</p>
-
-<ul>
-<li>original: <a href="https://github.com/jfinkels/flask-restless">https://github.com/jfinkels/flask-restless</a></li>
-<li>refactored: <a href="https://github.com/KellyChan/flask-restless">https://github.com/KellyChan/flask-restless</a></li>
-</ul>
-
-
-<p>Notes:
-Flask-restless was developed by jfinkels, this article is the study notes
-of his source code, and refactoring some codes by personal purpose.</p>
-
-<p>All the commands and codes below are based on the <a href="https://github.com/KellyChan/flask-restless">refactored codes</a>.</p>
-
-<h2>Setup DevEnv</h2>
-
-<pre><code class="bash">$ git clone https://github.com/KellyChan/flask-restless
-$ cd flask-restless
-
-# update Vagrantfile (Virtualbox + Vagrant)
-# then create the project and setup the virtualenv
-$ virtualenv venvs/flask-restless
-$ source venvs/flask-restless/bin/activate
-
-# install requirements
-$ pip install -r requirements/base.txt
-$ pip install -r requirements/test.txt
-$ pip install -r requirements/docs.txt
-</code></pre>
-
-<h2>Project Structure</h2>
-
-<pre><code class="bash">Dev
-  |---- requirements/
-  |---- flask_restless/
-  |---- artwork/
-
-DevOps
-  |---- setup.cfg
-  |---- setup.py
-  |---- scripts/
-
-Tests
-  |---- tests/
-
-Docs
-  |---- docs/
-  |---- examples/
-
-Others
-  |---- AUTHORS
-  |---- licenses/
-  |---- CHANGES
-  |---- README.md
-</code></pre>
-
-<h2>Dev</h2>
-
-<p>files</p>
-
-<pre><code class="bash">flask-restless/
-    |---- helpers.py                   # utils, mostly about SQLalchemy objects
-    |---- manager.py                   # API creator
-    |---- search.py                    # seraching database
-    |---- views.py                     # views
-</code></pre>
-
-<h2>Test</h2>
-
-<h3>cli</h3>
-
-<pre><code class="bash">$ nosetests
-$ python setup.py test
-$ nosetests --with-coverage --cover-package=flask_restless --cover-html \
-    --cover-html-dir=&lt;somedir&gt;
-$ savalidation
-</code></pre>
-
-<h2>Docs</h2>
-
-<h3>cli</h3>
-
-<pre><code class="bash">$ git submodule update --init
-$ python setup.py develop
-$ cd docs
-$ make html
-$ sphinx-autobuild ./ _build/html/
-</code></pre>
-
-<h3>theming</h3>
-
-<h2>DevOps</h2>
-
-<p>installation</p>
-
-<pre><code class="bash">$ python setup.py --help
-$ python setup.py install
-</code></pre>
-
-<h2>References</h2>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Python Sphinx]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/12/31/python-sphinx/"/>
-    <updated>2015-12-31T01:25:59+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/12/31/python-sphinx</id>
-    <content type="html"><![CDATA[<p>Sphinx is a Python documentation generator. To write the project documentation with
-Sphinx, here are the steps:</p>
-
-<ol>
-<li>Installing Sphinx and setting up a project</li>
-<li>Configuring Sphinx</li>
-<li>Customizing the theme</li>
-<li>Writing the docs</li>
-</ol>
-
-
-<h2>Sphinx Setup</h2>
-
-<p>Sphinx and plugins</p>
-
-<ul>
-<li>sphinx</li>
-<li>sphinx-autobuild: live html preview</li>
-</ul>
-
-
-<h3>Installation</h3>
-
-<pre><code class="bash">$ pip install sphinx
-$ pip install sphinx-autobuild
-</code></pre>
-
-<h3>Quick Start</h3>
-
-<pre><code class="bash">$ sphinx-quickstart
-
-# sphinx-autobuild &lt;DOCS_PATH&gt; &lt;DOCS_PATH/BUILD/HTML&gt;
-$ sphinx-autobuild docs docs/_build/html
-</code></pre>
-
-<p>other commands</p>
-
-<pre><code class="bash make.bat">if "%1" == "help" (
-        :help
-        echo.Please use `make ^&lt;target^&gt;` where ^&lt;target^&gt; is one of
-        echo.  html       to make standalone HTML files
-        echo.  dirhtml    to make HTML files named index.html in directories
-        echo.  singlehtml to make a single large HTML file
-        echo.  pickle     to make pickle files
-        echo.  json       to make JSON files
-        echo.  htmlhelp   to make HTML files and a HTML help project
-        echo.  qthelp     to make HTML files and a qthelp project
-        echo.  devhelp    to make HTML files and a Devhelp project
-        echo.  epub       to make an epub
-        echo.  latex      to make LaTeX files, you can set PAPER=a4 or PAPER=letter
-        echo.  text       to make text files
-        echo.  man        to make manual pages
-        echo.  texinfo    to make Texinfo files
-        echo.  gettext    to make PO message catalogs
-        echo.  changes    to make an overview over all changed/added/deprecated items
-        echo.  xml        to make Docutils-native XML files
-        echo.  pseudoxml  to make pseudoxml-XML files for display purposes
-        echo.  linkcheck  to check all external links for integrity
-        echo.  doctest    to run all doctests embedded in the documentation if enabled
-        echo.  coverage   to run coverage check of the documentation if enabled
-        goto end
-)
-</code></pre>
-
-<h2>Sphinx Settings</h2>
-
-<pre><code class="python conf.py"># -- General configuration ------------------------------------------------
-# -- Options for HTML output ----------------------------------------------
-# -- Options for LaTeX output ---------------------------------------------
-# -- Options for manual page output ---------------------------------------
-# -- Options for Texinfo output -------------------------------------------
-</code></pre>
-
-<h2>Sphinx Theming</h2>
-
-<p>There are two options to create a theme:</p>
-
-<ul>
-<li>one is to change a default theme,</li>
-<li>another is to create a new one by yourself.</li>
-</ul>
-
-
-<h3>Default Themes</h3>
-
-<p>All html configurations are stored in <code>conf.py</code>. Official docs is <a href="http://sphinx-doc.org/theming.html">here</a>.</p>
-
-<pre><code class="python conf.py"># -- Options for HTML output ----------------------------------------------
-
-# The theme to use for HTML and HTML Help pages.  See the documentation for
-# a list of builtin themes.
-# default themes: alabaster, sphinx_rtd_theme, classic, sphinxdoc,
-#     scrolls, agogo, traditional, nature, haiku, pyramid, bizstyle
-html_theme = 'nature'
-
-# Theme options are theme-specific and customize the look and feel of a theme
-# further.  For a list of options available for each theme, see the
-# documentation.
-# html_theme_options = {
-#     "rightsidebar": "true",
-#     "relbarbgcolor": "black"
-# }
-html_theme_options = {}
-
-# Add any paths that contain custom themes here, relative to this directory.
-# html_theme_path = ["."]
-html_theme_path = []
-</code></pre>
-
-<h3>Custom Themes</h3>
-
-<h2>RST</h2>
-
-<h3>Makeup Constructs</h3>
-
-<p>Official docs is <a href="http://sphinx-doc.org/markup/index.html">here</a>.</p>
-
-<h4>toctree</h4>
-
-<pre><code class="python toctree">.. toctree::
-   :maxdepth: 2
-
-.. toctree::
-   :numbered:
-
-.. toctree::
-   :caption: Table of Contents
-   :name: mastertoc
-
-.. toctree::
-   :titlesonly:
-
-.. toctree::
-   :glob:
-
-.. toctree::
-   :hidden:
-
-.. toctree::
-   :includehidden:
-</code></pre>
-
-<h4>paragraph-level makeup</h4>
-
-<pre><code class="python paragraph-level">.. note::
-.. warning::
-
-.. versionadded:: 2.5
-.. versionchanged:: version
-.. deprecated:: 3.1
-
-.. seealso::
-
-.. rubric:: title
-
-.. centered:: LICENSE AGREEMENT
-
-.. hlist::
-   :columns: 3
-
-   * A list of
-   * short items
-   * that should be
-   * displayed
-   * horizontally
-
-.. glossary::
-.. productionlist::
-</code></pre>
-
-<h4>codes</h4>
-
-<p>Official docs is <a href="http://sphinx-doc.org/markup/code.html">here</a>.</p>
-
-<pre><code class="python codes">.. highlight:: c
-.. code-block:: ruby
-
-.. highlight:: python
-   :linenothreshold: 5
-
-.. code-block:: ruby
-   :linenos:
-
-.. code-block:: python
-   :emphasize-lines: 3,5
-
-.. literalinclude:: example.py
-
-.. literalinclude:: example.rb
-   :language: ruby
-   :emphasize-lines: 12,15-18
-   :linenos:
-
-.. literalinclude:: example.py
-   :encoding: latin-1
-
-.. literalinclude:: example.py
-   :pyobject: Timer.start
-
-.. literalinclude:: example.py
-   :lines: 1,3,5-10,20-
-
-.. literalinclude:: example.py
-   :diff: example.py.orig
-
-.. code-block:: python
-   :caption: this.py
-   :name: this-py
-
-.. literalinclude:: example.rb
-   :language: ruby
-   :dedent: 4
-   :lines: 10-15
-</code></pre>
-
-<h4>inline makeup</h4>
-
-<p>Official docs is <a href="http://sphinx-doc.org/markup/inline.html">here</a>.</p>
-
-<pre><code class="python inline">:any:
-:ref:
-:doc:
-
-:download:
-
-:numref:
-
-:envvar:
-:token:
-:keyword:
-:option:
-:term:
-
-:abbr:
-:command:
-:dfn:
-:file:
-:guilabel:
-:kbd:
-:mailheader:
-:makevar:
-:manpage:
-:menuselection:
-:mimetype:
-:newsgroup:
-:program:
-:regexp:
-:samp:
-:pep:
-:rfc:
-
-|release|
-|version|
-|today|
-</code></pre>
-
-<h4>others</h4>
-
-<pre><code class="python otheres">:fieldname: Field content
-
-.. sectionauthor:: name &lt;email&gt;
-.. sectionauthor:: Guido van Rossum &lt;guido@python.org&gt;
-.. codeauthor:: name &lt;email&gt;
-
-.. index:: &lt;entries&gt;
-.. index::
-   single: execution; context
-   module: __main__
-   module: sys
-   triple: module; search; path
-
-.. index:: Python
-.. index:: ! Python
-.. index:: BNF, grammar, syntax, notation
-
-.. only:: &lt;expression&gt;
-.. only:: html and draft
-
-.. tabularcolumns:: column spec
-|l|l|l|
-</code></pre>
-
-<h3>Primer</h3>
-
-<p>Official docs is <a href="http://sphinx-doc.org/rest.html">here</a>.</p>
-
-<h2>References</h2>
-
-<ul>
-<li><a href="http://sphinx-doc.org/contents.html">Official Docs</a></li>
-<li><a href="https://pythonhosted.org/sphinxcontrib-httpdomain/">sphinxcontrib-httpdomain</a></li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Web APIs]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/12/30/web-apis/"/>
-    <updated>2015-12-30T16:21:13+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/12/30/web-apis</id>
-    <content type="html"><![CDATA[<h2>Definition</h2>
-
-<p>Web API is a set of Hypertext Transfer Protocol (HTTP) request mesages along with the structure of reponse messages (XML or JSON format).</p>
-
-<p>Types:</p>
-
-<ul>
-<li>Simple Object Access Protocol (SOAP)</li>
-<li>REpresentational State Transfer (REST)</li>
-</ul>
-
-
-<h2>SOAP</h2>
-
-<p>SOAP is a protocol specification for exchanging structured inforamtion of web service (XML based) by Hypertext Transfer Protocol (HTTP) or Simple Mail Transfer Protocol (SMTP).</p>
-
-<h2>REST</h2>
-
-<h3>Definition</h3>
-
-<p>REST was definied by Roy Thomas Fieldiing in his 2000 PhD dissertation <a href="http://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm">&ldquo;Architectural Styles and the Design of Network-based Software Architectures&rdquo;</a>.</p>
-
-<p>Referring to Wikipedia, <a href="https://en.wikipedia.org/wiki/Representational_state_transfer">REST</a> communicates over Hypertext Transfer Protocal (HTTP) with the same HTTP verbs (GET, POST, PUT, DELETE, etc.) that web browsers user to retrieve web pages and to send data to remote servers.</p>
-
-<p>REST architectural style</p>
-
-<ul>
-<li>Performance</li>
-<li>Scalability</li>
-<li>Simplicity of interfaces</li>
-<li>Modifiability of components to meet changing needs (even while the application is running)</li>
-<li>Visibility of communication between components by service agents</li>
-<li>Portability of components by moving program code with the data</li>
-<li>Reliability is the resistance to failure at the system level in the presence of failures within components, connectors, or data</li>
-</ul>
-
-
-<h3>RESTful APIs</h3>
-
-<p>elements</p>
-
-<ul>
-<li>URI</li>
-<li>JSON data</li>
-<li>HTTP methods: GET, POST, PUT, DELETE, etc</li>
-</ul>
-
-
-<p>design rules</p>
-
-<ul>
-<li>client-server: there should be a sepration between the server that offers a service, and the client that consumes it.</li>
-<li>stateless: each requests from a client must contain all the inforamtion required by the server to carry out the request.</li>
-<li>cacheable: the server must indicate to the client if requests can be cached or not.</li>
-<li>layered system: communication between a client and a server should be standarized in such a way that allows intermediaries to respond to requests instead of the end server, without the client having to do anything different.</li>
-<li>code on demand: servers can provide executable code or scripts for clients to execute in their context.</li>
-</ul>
-
 ]]></content>
   </entry>
   

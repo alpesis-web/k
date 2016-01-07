@@ -4,7 +4,7 @@
   <title><![CDATA[K]]></title>
   <link href="http://k.arttechresearch.com/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2016-01-04T14:04:42+08:00</updated>
+  <updated>2016-01-07T21:53:17+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[K]]></name>
@@ -14,11 +14,732 @@
 
   
   <entry>
+    <title type="html"><![CDATA[MOOC]]></title>
+    <link href="http://k.arttechresearch.com/life/2016/01/07/mooc/"/>
+    <updated>2016-01-07T14:46:32+08:00</updated>
+    <id>http://k.arttechresearch.com/life/2016/01/07/mooc</id>
+    <content type="html"><![CDATA[<p>在MOOC的三大学习网站里，edX，Coursera，Udacity的定位是不同。</p>
+
+<p>edX，以MIT和Harvard为主，引领着美国其他常春藤学校，精品课程较多，而文科和社科性质的课程，是很好的；而现在引入的工业协会和微软等，也是edX的核心竞争力之一。</p>
+
+<p>Coursera，课程大而全，非常像综合性大学，汇聚了世界各大高校，而各个水平的高校和各个学科的课程，都可以在此找到；斯坦福的课程也主要在此。</p>
+
+<p>Udacity，更像是理工科学校，而又以计算机科学为主，与工业界挂钩，计算机专业的人，可以在这里找到很好的企业培训，这边的课程以实用性为止，如果是计算机课程，我是非常喜欢Udacity的课程的。</p>
+
+<p>但，如果是计算机专业，单是上网课是不足够的，项目，尤其是企业项目，才是进步最快的学习方式。以项目带动学习，在项目中碰到问题，然后再寻找课程学习具体的内容，这样的学习动机，效率是明显的。有意识地建立自己的知识架构，拓展枝叶，这是我的学习方式。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Cloudera Hadoop by Example]]></title>
+    <link href="http://k.arttechresearch.com/tech/2016/01/06/cloudera-hadoop-by-example/"/>
+    <updated>2016-01-06T22:05:08+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2016/01/06/cloudera-hadoop-by-example</id>
+    <content type="html"><![CDATA[<p>Contents</p>
+
+<ul>
+<li>analyzing structured data (sqoop, impala)</li>
+<li>analyzing unstructured data (beeline, impala)</li>
+<li>analyzing data in realtime (spark)</li>
+<li>indexing and search data (solr)</li>
+</ul>
+
+
+<h2>Analyzing Structured Data: MySQL Data</h2>
+
+<p>Tools:</p>
+
+<ul>
+<li>sqoop</li>
+<li>hive</li>
+<li>hdfs</li>
+<li>avro</li>
+<li>mysql</li>
+<li>mapreduce</li>
+</ul>
+
+
+<h3>Loading data by sqoop</h3>
+
+<p>Steps:</p>
+
+<ul>
+<li>connecting MySQL database</li>
+<li>lauching MapReduce jobs</li>
+<li>putting the export files in Avro format in HDFS, and creating the Avro schema</li>
+<li>(later) loading Hive tables for use in Impala</li>
+</ul>
+
+
+<figure class='code'><figcaption><span>loading data from local to HDFS by sqoop</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /path/to/project
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sqoop import-all-tables <span class="se">\</span>
+</span><span class='line'>-m <span class="m">1</span> <span class="se">\</span>
+</span><span class='line'>--connect jdbc:mysql://quickstart:3306/retail_db <span class="se">\</span>
+</span><span class='line'>--username<span class="o">=</span>retail_dba <span class="se">\</span>
+</span><span class='line'>--password<span class="o">=</span>cloudera <span class="se">\</span>
+</span><span class='line'>--compression-codec<span class="o">=</span>snappy <span class="se">\</span>
+</span><span class='line'>--as-avrodatafile <span class="se">\</span>
+</span><span class='line'>--warehouse-dir<span class="o">=</span>/user/hive/warehouse
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Validation</h3>
+
+<p>NOTE: <code>*.avsc</code> files is located on the local system.</p>
+
+<figure class='code'><figcaption><span>validating data in HDFS</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>hadoop fs -ls /user/hive/warehouse                     <span class="c"># HDFS</span>
+</span><span class='line'><span class="nv">$ </span>hadoop fs -ls /user/hive/warehouse/categories/         <span class="c"># HDFS</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>ls -l *.avsc                                           <span class="c"># local, schema files</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Copying the schema files (<code>*.avsc</code>) to HDFS</h3>
+
+<figure class='code'><figcaption><span>copying avro schemas to HDFS</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo -u hdfs hadoop fs -mkdir /user/examples
+</span><span class='line'><span class="nv">$ </span>sudo -u hdfs hadoop fs -chmod +rw /user/examples
+</span><span class='line'><span class="nv">$ </span>hadoop fs -copyFromLocal ./*.avsc /user/examples/
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>NOTES: Hive and Impala</p>
+
+<p>Hive and Impala both read the data from files in HDFS, and they even share metadata about the tables.</p>
+
+<p>Hive - executes queries by compiling them to MapReduce jobs, this means it can be more flexible, but is much slower.</p>
+
+<p>Impala - is an MPP query engine that reads the data directly from the file system itself. This allows it to execute queries fast enough for interactive analysis and exploration.</p>
+
+<h3>Creating tables</h3>
+
+<p>tools:</p>
+
+<ul>
+<li>hue</li>
+<li>impala</li>
+</ul>
+
+
+<p>Hue -> Impala: creating tables</p>
+
+<figure class='code'><figcaption><span>creating table in Impala</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">CREATE</span> <span class="k">EXTERNAL</span> <span class="k">TABLE</span> <span class="n">categories</span> <span class="n">STORED</span> <span class="k">AS</span> <span class="n">AVRO</span>
+</span><span class='line'><span class="k">LOCATION</span> <span class="s1">&#39;hdfs:///user/hive/warehouse/categories&#39;</span>
+</span><span class='line'><span class="n">TBLPROPERTIES</span> <span class="p">(</span><span class="s1">&#39;avro.schema.url&#39;</span><span class="o">=</span><span class="s1">&#39;hdfs://quickstart/user/examples/sqoop_import_categories.avsc&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">CREATE</span> <span class="k">EXTERNAL</span> <span class="k">TABLE</span> <span class="n">customers</span> <span class="n">STORED</span> <span class="k">AS</span> <span class="n">AVRO</span>
+</span><span class='line'><span class="k">LOCATION</span> <span class="s1">&#39;hdfs:///user/hive/warehouse/customers&#39;</span>
+</span><span class='line'><span class="n">TBLPROPERTIES</span> <span class="p">(</span><span class="s1">&#39;avro.schema.url&#39;</span><span class="o">=</span><span class="s1">&#39;hdfs://quickstart/user/examples/sqoop_import_customers.avsc&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">CREATE</span> <span class="k">EXTERNAL</span> <span class="k">TABLE</span> <span class="n">departments</span> <span class="n">STORED</span> <span class="k">AS</span> <span class="n">AVRO</span>
+</span><span class='line'><span class="k">LOCATION</span> <span class="s1">&#39;hdfs:///user/hive/warehouse/departments&#39;</span>
+</span><span class='line'><span class="n">TBLPROPERTIES</span> <span class="p">(</span><span class="s1">&#39;avro.schema.url&#39;</span><span class="o">=</span><span class="s1">&#39;hdfs://quickstart/user/examples/sqoop_import_departments.avsc&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">CREATE</span> <span class="k">EXTERNAL</span> <span class="k">TABLE</span> <span class="n">orders</span> <span class="n">STORED</span> <span class="k">AS</span> <span class="n">AVRO</span>
+</span><span class='line'><span class="k">LOCATION</span> <span class="s1">&#39;hdfs:///user/hive/warehouse/orders&#39;</span>
+</span><span class='line'><span class="n">TBLPROPERTIES</span> <span class="p">(</span><span class="s1">&#39;avro.schema.url&#39;</span><span class="o">=</span><span class="s1">&#39;hdfs://quickstart/user/examples/sqoop_import_orders.avsc&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">CREATE</span> <span class="k">EXTERNAL</span> <span class="k">TABLE</span> <span class="n">order_items</span> <span class="n">STORED</span> <span class="k">AS</span> <span class="n">AVRO</span>
+</span><span class='line'><span class="k">LOCATION</span> <span class="s1">&#39;hdfs:///user/hive/warehouse/order_items&#39;</span>
+</span><span class='line'><span class="n">TBLPROPERTIES</span> <span class="p">(</span><span class="s1">&#39;avro.schema.url&#39;</span><span class="o">=</span><span class="s1">&#39;hdfs://quickstart/user/examples/sqoop_import_order_items.avsc&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">CREATE</span> <span class="k">EXTERNAL</span> <span class="k">TABLE</span> <span class="n">products</span> <span class="n">STORED</span> <span class="k">AS</span> <span class="n">AVRO</span>
+</span><span class='line'><span class="k">LOCATION</span> <span class="s1">&#39;hdfs:///user/hive/warehouse/products&#39;</span>
+</span><span class='line'><span class="n">TBLPROPERTIES</span> <span class="p">(</span><span class="s1">&#39;avro.schema.url&#39;</span><span class="o">=</span><span class="s1">&#39;hdfs://quickstart/user/examples/sqoop_import_products.avsc&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">show</span> <span class="n">tables</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Exploring data</h3>
+
+<p>queries</p>
+
+<figure class='code'><figcaption><span>exploring data in Impala</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="c1">-- Most popular product categories</span>
+</span><span class='line'><span class="k">select</span> <span class="k">c</span><span class="p">.</span><span class="n">category_name</span><span class="p">,</span> <span class="k">count</span><span class="p">(</span><span class="n">order_item_quantity</span><span class="p">)</span> <span class="k">as</span> <span class="k">count</span>
+</span><span class='line'><span class="k">from</span> <span class="n">order_items</span> <span class="n">oi</span>
+</span><span class='line'><span class="k">inner</span> <span class="k">join</span> <span class="n">products</span> <span class="n">p</span> <span class="k">on</span> <span class="n">oi</span><span class="p">.</span><span class="n">order_item_product_id</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">product_id</span>
+</span><span class='line'><span class="k">inner</span> <span class="k">join</span> <span class="n">categories</span> <span class="k">c</span> <span class="k">on</span> <span class="k">c</span><span class="p">.</span><span class="n">category_id</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">product_category_id</span>
+</span><span class='line'><span class="k">group</span> <span class="k">by</span> <span class="k">c</span><span class="p">.</span><span class="n">category_name</span>
+</span><span class='line'><span class="k">order</span> <span class="k">by</span> <span class="k">count</span> <span class="k">desc</span>
+</span><span class='line'><span class="k">limit</span> <span class="mi">10</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="c1">-- top 10 revenue generating products</span>
+</span><span class='line'><span class="k">select</span> <span class="n">p</span><span class="p">.</span><span class="n">product_id</span><span class="p">,</span> <span class="n">p</span><span class="p">.</span><span class="n">product_name</span><span class="p">,</span> <span class="n">r</span><span class="p">.</span><span class="n">revenue</span>
+</span><span class='line'><span class="k">from</span> <span class="n">products</span> <span class="n">p</span>
+</span><span class='line'><span class="k">inner</span> <span class="k">join</span> <span class="p">(</span>
+</span><span class='line'>    <span class="k">select</span> <span class="n">oi</span><span class="p">.</span><span class="n">order_item_product_id</span><span class="p">,</span> <span class="k">sum</span><span class="p">(</span><span class="k">cast</span><span class="p">(</span><span class="n">oi</span><span class="p">.</span><span class="n">order_item_subtotal</span> <span class="k">as</span> <span class="nb">float</span><span class="p">))</span> <span class="k">as</span> <span class="n">revenue</span>
+</span><span class='line'>    <span class="k">from</span> <span class="n">order_items</span> <span class="n">oi</span>
+</span><span class='line'>    <span class="k">inner</span> <span class="k">join</span> <span class="n">orders</span> <span class="n">o</span> <span class="k">on</span> <span class="n">oi</span><span class="p">.</span><span class="n">order_item_order_id</span> <span class="o">=</span> <span class="n">o</span><span class="p">.</span><span class="n">order_id</span>
+</span><span class='line'>    <span class="k">where</span> <span class="n">o</span><span class="p">.</span><span class="n">order_status</span> <span class="o">&lt;&gt;</span> <span class="err">‘</span><span class="n">CANCELED</span><span class="err">’</span> <span class="k">and</span> <span class="n">o</span><span class="p">.</span><span class="n">order_status</span> <span class="o">&lt;&gt;</span> <span class="err">’</span><span class="n">SUSPECTED_FRAUD</span><span class="err">’</span>
+</span><span class='line'>    <span class="k">group</span> <span class="k">by</span> <span class="n">order_item_product_id</span>
+</span><span class='line'><span class="p">)</span> <span class="n">r</span> <span class="k">on</span> <span class="n">p</span><span class="p">.</span><span class="n">product_id</span> <span class="o">=</span> <span class="n">r</span><span class="p">.</span><span class="n">order_item_product_id</span>
+</span><span class='line'><span class="k">order</span> <span class="k">by</span> <span class="n">r</span><span class="p">.</span><span class="n">revenue</span> <span class="k">desc</span>
+</span><span class='line'><span class="k">limit</span> <span class="mi">10</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Analyzing Unstructured data: log files</h2>
+
+<p>tools:</p>
+
+<ul>
+<li>flume/beeline</li>
+<li>hive</li>
+<li>impala</li>
+</ul>
+
+
+<h3>Copying the log files to HDFS</h3>
+
+<figure class='code'><figcaption><span>copy the log files to HDFS</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo -u hdfs hadoop fs -mkdir /user/hive/warehouse/original_access_logs
+</span><span class='line'><span class="nv">$ </span>sudo -u hdfs hadoop fs -copyFromLocal /opt/examples/log_files/access.log.2 /user/hive/warehouse/original_access_logs
+</span><span class='line'><span class="nv">$ </span>hadoop fs -ls /user/hive/warehouse/original_access_logs
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Creating Intermediate Table</h3>
+
+<p>local logs -> intermediate table -> final table</p>
+
+<figure class='code'><figcaption><span>loading log files to Hive</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>beeline -u adbc:hive2://quickstart:10000/default -n admin -d org.apache.hive.jdbc.HiveDriver
+</span><span class='line'>
+</span><span class='line'>0: jdbc:hive2://quickstart:10000/default&gt; CREATE EXTERNAL TABLE intermediate_access_logs <span class="o">(</span>
+</span><span class='line'>ip STRING,
+</span><span class='line'>date STRING,
+</span><span class='line'>method STRING,
+</span><span class='line'>url STRING,
+</span><span class='line'>http_version STRING,
+</span><span class='line'>code1 STRING,
+</span><span class='line'>code2 STRING,
+</span><span class='line'>dash STRING,
+</span><span class='line'>user_agent STRING<span class="o">)</span>
+</span><span class='line'>ROW FORMAT SERDE ‘org.apache.hadoop.hive.contrib.serde2.RegexSerDe’
+</span><span class='line'>WITH SERDEPROPERTIES <span class="o">(</span>
+</span><span class='line'>‘input.regex’ <span class="o">=</span> ‘<span class="o">([</span>^ <span class="o">}</span>*<span class="o">)</span> - - <span class="se">\\</span><span class="o">[([</span>^<span class="se">\\</span><span class="o">]]</span>*<span class="o">)</span><span class="se">\\</span><span class="o">]</span> “<span class="o">([</span>^<span class="se">\ </span><span class="o">]</span>*<span class="o">)</span> <span class="o">([</span>^<span class="se">\ </span><span class="o">]</span>*<span class="o">)</span> <span class="o">([</span>^<span class="se">\ </span><span class="o">]</span>*<span class="o">)</span>” <span class="o">(</span><span class="se">\\</span>d*<span class="o">)</span> <span class="o">(</span><span class="se">\\</span>d*<span class="o">)</span> “<span class="o">([</span>^”<span class="o">]</span>*<span class="o">)</span>” “<span class="o">([</span>^”<span class="o">]</span>*”’,
+</span><span class='line'>‘output.format.string’ <span class="o">=</span> “%1<span class="nv">$s</span> %2<span class="nv">$s</span> %3<span class="nv">$s</span> %4<span class="nv">$s</span> %5<span class="nv">$s</span> %6<span class="nv">$s</span> %7<span class="nv">$s</span> %8<span class="nv">$s</span> %9<span class="nv">$s</span>”
+</span><span class='line'><span class="o">)</span>
+</span><span class='line'>LOCATION ‘/user/hive/warehouse/original_access_logs’<span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>0: jdbc:hive2://quickstart:10000/default&gt; CREATE EXTERNAL TABLE tokenized_access_log <span class="o">(</span>
+</span><span class='line'>ip STRING,
+</span><span class='line'>date STRING,
+</span><span class='line'>method STRING,
+</span><span class='line'>url STRING,
+</span><span class='line'>http_version STRING,
+</span><span class='line'>code1 STRING,
+</span><span class='line'>code2 STRING,
+</span><span class='line'>dash STRING,
+</span><span class='line'>user_agent STRING<span class="o">)</span>
+</span><span class='line'>ROW FORMAT DELIMITED FIELDS TERMINATED BY ‘,’
+</span><span class='line'>LOCATION ‘/user/hive/warehouse/tokenized_access_logs<span class="err">&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>0: jdbc:hive2://quickstart:10000/default&gt; ADD JAR /usr/lib/hive/lib/hive-contrib.jar
+</span><span class='line'>0: jdbc:hive2://quickstart:10000/default&gt; INSERT OVERWRITE TABLE tokenized_access_logs SELECT * FROM intermediate_access_logs<span class="p">;</span>
+</span><span class='line'>0: jdbc:hive2://quickstart:10000/default&gt; !quit
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Validating in Impala</h3>
+
+<figure class='code'><figcaption><span>validating tables in Impala</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="n">invalidate</span> <span class="n">metadata</span><span class="p">;</span>
+</span><span class='line'><span class="k">show</span> <span class="n">tables</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">select</span> <span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">),</span>  <span class="n">url</span> <span class="k">from</span> <span class="n">tokenized_access_logs</span>
+</span><span class='line'><span class="k">where</span> <span class="n">url</span> <span class="k">like</span> <span class="err">‘</span><span class="o">%</span><span class="err">\</span><span class="o">/</span><span class="n">product</span><span class="err">\</span><span class="o">/%</span><span class="err">’</span>
+</span><span class='line'><span class="k">group</span> <span class="k">by</span> <span class="n">url</span>
+</span><span class='line'><span class="k">order</span> <span class="k">by</span> <span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">desc</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Analyzing data with Spark</h2>
+
+<h3>Start Spark</h3>
+
+<figure class='code'><figcaption><span>start Spark</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>spark-shell —jars /usr/lib/avro/avro-mapred.jar <span class="se">\</span>
+</span><span class='line'>—conf spark.serializer<span class="o">=</span>org.apache.spark.serializer.KryoSerializer
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Programming in Scala</h3>
+
+<figure class='code'><figcaption><span>relationship strengh analytics</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="c1">// First we&#39;re going to import the classes we need and open some of the files</span>
+</span><span class='line'><span class="c1">// we imported from our relational database into Hadoop with Sqoop</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">import</span> <span class="nn">org.apache.avro.generic.GenericRecord</span>
+</span><span class='line'><span class="k">import</span> <span class="nn">org.apache.avro.mapred.</span><span class="o">{</span><span class="nc">AvroInputFormat</span><span class="o">,</span> <span class="nc">AvroWrapper</span><span class="o">}</span>
+</span><span class='line'><span class="k">import</span> <span class="nn">org.apache.hadoop.io.NullWritable</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">val</span> <span class="n">warehouse</span> <span class="k">=</span> <span class="s">&quot;hdfs://quickstart/user/hive/warehouse&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">val</span> <span class="n">order_items_path</span> <span class="k">=</span> <span class="n">warehouse</span> <span class="o">+</span> <span class="s">&quot;order_items&quot;</span>
+</span><span class='line'><span class="k">val</span> <span class="n">order_items</span> <span class="k">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">hadoopFile</span><span class="o">[</span><span class="kt">AvroWrapper</span><span class="o">[</span><span class="kt">GenericRecord</span><span class="o">]</span>, <span class="kt">NullWritable</span>, <span class="kt">AvroInputFormat</span><span class="o">[</span><span class="kt">GenericRecord</span><span class="o">]](</span><span class="n">order_items_path</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">val</span> <span class="n">products_path</span> <span class="k">=</span> <span class="n">warehouse</span> <span class="o">+</span> <span class="s">&quot;products&quot;</span>
+</span><span class='line'><span class="k">val</span> <span class="n">products</span> <span class="k">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">hadoopFile</span><span class="o">[</span><span class="kt">AvroWrapper</span><span class="o">[</span><span class="kt">GenericRecord</span><span class="o">]</span>, <span class="kt">NullWritable</span>, <span class="kt">AvroInputFormat</span><span class="o">[</span><span class="kt">GenericRecord</span><span class="o">]](</span><span class="n">product_path</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// Next, we extract the fields from order_items and products that we care about</span>
+</span><span class='line'><span class="c1">// and get a list of every product, its name and quantity, grouped by order</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">val</span> <span class="n">orders</span> <span class="k">=</span> <span class="n">order_items</span><span class="o">.</span><span class="n">map</span> <span class="o">{</span> <span class="n">x</span> <span class="k">=&gt;</span> <span class="o">(</span>
+</span><span class='line'>  <span class="n">x</span><span class="o">.</span><span class="n">_1</span><span class="o">.</span><span class="n">datum</span><span class="o">.</span><span class="n">get</span><span class="o">(</span><span class="s">&quot;order_item_product_id&quot;</span><span class="o">),</span>
+</span><span class='line'>  <span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="n">_1</span><span class="o">.</span><span class="n">datum</span><span class="o">.</span><span class="n">get</span><span class="o">(</span><span class="s">&quot;order_item_order_id&quot;</span><span class="o">),</span> <span class="n">x</span><span class="o">.</span><span class="n">_1</span><span class="o">.</span><span class="n">datum</span><span class="o">.</span><span class="n">get</span><span class="o">(</span><span class="s">&quot;order_item_quantity&quot;</span><span class="o">))</span>
+</span><span class='line'><span class="o">)}.</span><span class="n">join</span><span class="o">(</span>
+</span><span class='line'>  <span class="n">products</span><span class="o">.</span><span class="n">map</span> <span class="o">{</span> <span class="n">x</span> <span class="k">=&gt;</span> <span class="o">(</span>
+</span><span class='line'>    <span class="n">x</span><span class="o">.</span><span class="n">_1</span><span class="o">.</span><span class="n">datum</span><span class="o">.</span><span class="n">get</span><span class="o">(</span><span class="s">&quot;product_id&quot;</span><span class="o">),</span>
+</span><span class='line'>    <span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="n">_1</span><span class="o">.</span><span class="n">datum</span><span class="o">.</span><span class="n">get</span><span class="o">(</span><span class="s">&quot;product_name&quot;</span><span class="o">))</span>
+</span><span class='line'><span class="o">)}).</span><span class="n">map</span><span class="o">(</span><span class="n">x</span> <span class="k">=&gt;</span> <span class="o">(</span>
+</span><span class='line'>  <span class="n">scala</span><span class="o">.</span><span class="nc">Int</span><span class="o">.</span><span class="n">unbox</span><span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="n">_2</span><span class="o">.</span><span class="n">_1</span><span class="o">.</span><span class="n">_1</span><span class="o">),</span> <span class="c1">// order_id</span>
+</span><span class='line'>  <span class="o">(</span>
+</span><span class='line'>    <span class="n">scala</span><span class="o">.</span><span class="nc">Int</span><span class="o">.</span><span class="n">unbox</span><span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="n">_2</span><span class="o">.</span><span class="n">_1</span><span class="o">.</span><span class="n">_2</span><span class="o">),</span> <span class="c1">// quantity</span>
+</span><span class='line'>    <span class="n">x</span><span class="o">.</span><span class="n">_2</span><span class="o">.</span><span class="n">_2</span><span class="o">.</span><span class="n">toString</span> <span class="c1">// product_name</span>
+</span><span class='line'>  <span class="o">)</span>
+</span><span class='line'><span class="o">)).</span><span class="n">groupByKey</span><span class="o">()</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// Finally, we tally how many times each combination of products appears</span>
+</span><span class='line'><span class="c1">// together in an order, and print the 10 most common combinations.</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">val</span> <span class="n">cooccurrences</span> <span class="k">=</span> <span class="n">orders</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="n">order</span> <span class="k">=&gt;</span> <span class="o">(</span>
+</span><span class='line'>  <span class="n">order</span><span class="o">.</span><span class="n">_1</span><span class="o">,</span>
+</span><span class='line'>  <span class="n">order</span><span class="o">.</span><span class="n">_2</span><span class="o">.</span><span class="n">toList</span><span class="o">.</span><span class="n">combinations</span><span class="o">(</span><span class="mi">2</span><span class="o">).</span><span class="n">map</span><span class="o">(</span><span class="n">order_pair</span> <span class="k">=&gt;</span> <span class="o">(</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">order_pair</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="n">_2</span> <span class="o">&lt;</span> <span class="n">order_pair</span><span class="o">(</span><span class="mi">1</span><span class="o">).</span><span class="n">_2</span><span class="o">)</span> <span class="o">(</span><span class="n">order_pair</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="n">_2</span><span class="o">,</span> <span class="n">order_pair</span><span class="o">(</span><span class="mi">1</span><span class="o">).</span><span class="n">_2</span><span class="o">)</span>
+</span><span class='line'>    <span class="k">else</span> <span class="o">(</span><span class="n">order_pair</span><span class="o">(</span><span class="mi">1</span><span class="o">).</span><span class="n">_2</span><span class="o">,</span> <span class="n">order_pair</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="n">_2</span><span class="o">),</span> <span class="n">order_pair</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="n">_1</span> <span class="o">*</span> <span class="n">order_pair</span><span class="o">(</span><span class="mi">1</span><span class="o">).</span><span class="n">_1</span>
+</span><span class='line'>  <span class="o">))</span>
+</span><span class='line'><span class="o">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">val</span> <span class="n">combos</span> <span class="k">=</span> <span class="n">cooccurrrences</span><span class="o">.</span><span class="n">flatMap</span><span class="o">(</span><span class="n">x</span> <span class="k">=&gt;</span> <span class="n">x</span><span class="o">.</span><span class="n">_2</span><span class="o">).</span><span class="n">reduceByKey</span><span class="o">((</span><span class="n">a</span><span class="o">,</span><span class="n">b</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="o">)</span>
+</span><span class='line'><span class="k">val</span> <span class="n">mostCommon</span> <span class="k">=</span> <span class="n">combos</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="n">x</span> <span class="k">=&gt;</span> <span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="n">_2</span><span class="o">,</span> <span class="n">x</span><span class="o">.</span><span class="n">_1</span><span class="o">)).</span><span class="n">sortByKey</span><span class="o">(</span><span class="kc">false</span><span class="o">).</span><span class="n">take</span><span class="o">(</span><span class="mi">10</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">println</span><span class="o">(</span><span class="n">mostCommon</span><span class="o">.</span><span class="n">deep</span><span class="o">.</span><span class="n">mkString</span><span class="o">(</span><span class="s">&quot;\n&quot;</span><span class="o">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">exit</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>NOTE:</p>
+
+<p>When we do a &lsquo;map&rsquo;, we specify a function that will take each record and output a modified record. This is useful when we only need a couple of fields from each record  or when we need the record to use a different field as the key: we simply invoke map with a function that takes in the entire record, and returns a new record with the fields and the key we want.</p>
+
+<p>The &lsquo;reduce&rsquo; operations - like &lsquo;join&rsquo; and &lsquo;groupBy&rsquo; - will organise these records by their keys so we can group similar records together and then process them as a group.</p>
+
+<h2>Indexing data and search by Solr</h2>
+
+<h3>Creating a search schema</h3>
+
+<p>steps</p>
+
+<ul>
+<li>creating an empty configuration</li>
+<li>editing your schema</li>
+<li>uploading your configuration</li>
+<li>creating your collection</li>
+</ul>
+
+
+<figure class='code'><figcaption><span>creating a search schame by Solr</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>solrctl --zk quickstart:2181/solr instancedir --generate solr_configs
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /opt/examples/flume
+</span><span class='line'><span class="nv">$ </span>solrctl --zk quickstart:2181/solr instancedir --create live_logs ./solr_configs
+</span><span class='line'><span class="nv">$ </span>solrctl --zk quickstart:2181/solr collection --create live_logs -s 1
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Loading data into Solr</h3>
+
+<p>tools</p>
+
+<ul>
+<li>flume - a tool for ingesting streams of data into your cluster from sources such as log files, network streams, and more; is a system for collecting, aggregating, and moving large amounts of log data from many different sources to a centralised data source.</li>
+<li>morphines - a Java library for doing ETL on-the-fly.</li>
+</ul>
+
+
+<figure class='code'><figcaption><span>loading data by flume</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>start_logs
+</span><span class='line'><span class="nv">$ </span>tail_logs
+</span><span class='line'><span class="nv">$ </span>stop_logs
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>flume-ng agent <span class="se">\</span>
+</span><span class='line'>--conf /opt/examples/flume/conf <span class="se">\</span>
+</span><span class='line'>--conf-file /opt/examples/flume/conf/flume.conf <span class="se">\</span>
+</span><span class='line'>--name agent1 <span class="se">\</span>
+</span><span class='line'>-Dflume.root.logger<span class="o">=</span>DEBUG,INFO,console
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Playing data in Solr</h3>
+
+<p>Hue -> Search -> Solr Search -> Dashboard</p>
+
+<ul>
+<li>browsing the data</li>
+<li>charting</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[The Comparison of Programming Languages Libraries]]></title>
+    <link href="http://k.arttechresearch.com/tech/2016/01/06/the-comparison-of-programming-languages-libraries/"/>
+    <updated>2016-01-06T01:44:45+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2016/01/06/the-comparison-of-programming-languages-libraries</id>
+    <content type="html"><![CDATA[<h2>Web</h2>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;"> Language </th>
+<th style="text-align:left;"> Web Framework          </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> Python   </td>
+<td style="text-align:left;"> Django, Tornado, Flask </td>
+</tr>
+<tr>
+<td style="text-align:left;"> Ruby     </td>
+<td style="text-align:left;"> Rails                  </td>
+</tr>
+<tr>
+<td style="text-align:left;"> Node.js  </td>
+<td style="text-align:left;"> Express                </td>
+</tr>
+<tr>
+<td style="text-align:left;"> Scala    </td>
+<td style="text-align:left;"> Life                   </td>
+</tr>
+</tbody>
+</table>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Notes on Programming in Scala]]></title>
+    <link href="http://k.arttechresearch.com/tech/2016/01/04/notes-on-programming-in-scala/"/>
+    <updated>2016-01-04T15:15:52+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2016/01/04/notes-on-programming-in-scala</id>
+    <content type="html"><![CDATA[<p>Programming in Scala: <a href="http://www.artima.com/pins1ed/">http://www.artima.com/pins1ed/</a></p>
+
+<h2>Funtional Language and Scala</h2>
+
+<h3>Functional Language</h3>
+
+<p>object object-orientaed programming</p>
+
+<p>In principle, the motivation for object-oriented programming is very simple: all but
+the most the trivial programs need some sort of structure. The most straightforward way
+to do this is to put data and operations into some form of containers. The great idea of
+object-oriented programming is to make these containers fully general, so that they can
+contain operations as well as data, and that they are themselves values that can be stored
+in other containers, or passed as paramters to operations. Such containers are called
+objects.</p>
+
+<p>Alan Kay, the inventor of Smalltalk, remarked that in this way the simplest object has
+the same construction principle as a full computer: it combines data with operations
+under a formalized interface. So objects have a lot to do with language scalability:
+the same techniques apply to the construction of small as well as large programs.</p>
+
+<h3>Scala</h3>
+
+<ul>
+<li>compatibility</li>
+<li>brevity</li>
+<li>high-level abstractions</li>
+<li>advanced static typing</li>
+</ul>
+
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/474x/52/c2/15/52c2157c0b2f25cfae2d295e67ef32f8.jpg" /></p>
+
+<h2>Scala Elements</h2>
+
+<h3>Val vs Var</h3>
+
+<p>Prefer vals, immutable objects, and methods without side effects. Reach for them first.</p>
+
+<p>Use vars, mutable objects, and methods with side effects when you have a specific need and justification for them.</p>
+
+<h3>Types and Operations</h3>
+
+<ul>
+<li>types</li>
+<li>literals</li>
+<li>operations</li>
+</ul>
+
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/b3/98/ab/b398ab10483fd8a9892880e0fe324326.jpg" /></p>
+
+<p>image source: Table 5.1 · Some basic types, Chpater 5, Programming in Scala, page 118</p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/fc/91/b6/fc91b687d2acfcf714bf5278ef37c4f9.jpg" /></p>
+
+<p>image source: Rich types, Chapter 5, Programming in Scala, page 138</p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/cb/ce/46/cbce46c71c592e1fe97448e3a5fc1ed4.jpg" /></p>
+
+<p>image source: Chapter 5, Programming in Scala</p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/b3/0e/50/b30e502bcc31787ad660c38ea4104b3c.jpg" /></p>
+
+<p>image source: Operator precedence, Chapter 5, Programming in Scala, p135</p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/92/85/5b/92855b63af3053f3cd522150b3d1c7b4.jpg" /></p>
+
+<p>image source: Rich Operations, Chapter 5, Programming in Scala, page 138</p>
+
+<h3>Collections</h3>
+
+<ul>
+<li>array</li>
+<li>list</li>
+<li>tuple</li>
+<li>set</li>
+<li>map</li>
+</ul>
+
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/1e/ac/60/1eac6035eaee581df8a0b46eecd14d3a.jpg" /></p>
+
+<p>image source: Class hierarchy for Scala sets, Chapter 3, Programming in Scala, page 92</p>
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/d3/af/00/d3af004af2898246aee87b91006895fd.jpg" /></p>
+
+<p>image source: Class hierarchy for Scala maps, Chapter 3, Programming in Scala, page 94</p>
+
+<h3>Class and Objects</h3>
+
+<ul>
+<li>class</li>
+<li>object</li>
+<li>app</li>
+</ul>
+
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/93/7c/06/937c06add4c4e06b27e77a096a5e0975.jpg" /></p>
+
+<p>image source: Scala Class Hierarchy, Chapter 10, Programming in Scala</p>
+
+<p>Trait or not trait</p>
+
+<ul>
+<li>If the behavior will not be reused, then make it a concrete class. It is not reusable behavior after all.</li>
+<li>If it might be reused in multiple, unrelated classes, make it a trait. Only traits can be mixed into different parts of the class hierarchy.</li>
+<li>If you want to inherit from it in Java code, use an abstract class, use an abstract class. Since traits with code do not have a close Java analog, it tends to be awkward to inherit from a trait in a Java class. Inheriting from a Scala class, meanwhile, is exactly like inheriting from a Java class. As one exception, a Scala trait with only abstract members translates directly to a Java interface, so you should feel free to define such traits even if you expect Java code to inherit from it. See Chapter 31 for more information on working with Java and Scala together.</li>
+<li>If you plan to distribute it in compiled form, and you expect outside groups to write classes inheriting from it, you might lean towards using an abstract class. The issue is that when a trait gains or loses a member, any classes that inherit from it must be recompiled, even if they have not changed. If outside clients will only call into the behavior, instead of inheriting from it, then using a trait is fine.</li>
+<li>If efficiency is very important, lean towards using a class. Most Java
+runtimes make a virtual method invocation of a class member a faster oper- ation than an interface method invocation. Traits get compiled to interfaces and therefore may pay a slight performance overhead. However, you should make this choice only if you know that the trait in question constitutes a per- formance bottleneck and have evidence that using a class instead actually solves the problem.</li>
+<li>If you still do not know, after considering the above, then start by making it as a trait. You can always change it later, and in general using a trait keeps more options open.</li>
+</ul>
+
+
+<p><img src="https://s-media-cache-ak0.pinimg.com/736x/50/e0/b6/50e0b6173313209d85c1b08647f06709.jpg" /></p>
+
+<p>image source: Collection hierarchy, Chapter 24, Programming in Scala, Page 536</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Installing Scala]]></title>
     <link href="http://k.arttechresearch.com/tech/2016/01/04/installing-scala/"/>
     <updated>2016-01-04T13:06:34+08:00</updated>
     <id>http://k.arttechresearch.com/tech/2016/01/04/installing-scala</id>
-    <content type="html"><![CDATA[<h2>Installation</h2>
+    <content type="html"><![CDATA[<h2>Prequisition</h2>
+
+<p>Java</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo add-apt-repository -y ppa:webupd8team/java
+</span><span class='line'><span class="nv">$ </span>sudo apt-get update
+</span><span class='line'><span class="nv">$ </span>sudo apt-get -y install oracle-java8-installer
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Installation</h2>
 
 <h3>Ubuntu 14.04</h3>
 
@@ -71,7 +792,7 @@
 </span><span class='line'>scala&gt; println<span class="o">(</span><span class="s2">&quot;Hello&quot;</span><span class="o">)</span>
 </span><span class='line'>Hello
 </span><span class='line'>
-</span><span class='line'>scala&gt;
+</span><span class='line'>scala&gt;:quit
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -2114,416 +2835,6 @@ such as 15 minutes later, 1 hour laster etc), that&rsquo;s why we use the queue.
 
 <p>The figures are repeating, but once <code>peak.html</code> occurs, update the url with
 <code>peak.html</code>, then jump to L5.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Reading]]></title>
-    <link href="http://k.arttechresearch.com/life/2015/11/08/reading/"/>
-    <updated>2015-11-08T02:48:04+08:00</updated>
-    <id>http://k.arttechresearch.com/life/2015/11/08/reading</id>
-    <content type="html"><![CDATA[<h2>夜读</h2>
-
-<p>读杨绛先生的《我们仨》，在深夜，绝迹于微信之后，重拾夜读，一如去年夜读法语那般，似乎，已是很
-久远的事情，但，这份阅读的宁静，又让时光延长了，一个短暂的夜，变成了杨绛先生一家的一生，如时光
-穿梭机。</p>
-
-<p>我是喜欢杨绛先生的，从读到她最希望得到的法宝是隐身衣，再读到《我们仨》，不过是加深了对杨先生的
-喜爱。杨先生的淡然处世，平安度她过了运动时期。杨先生叙事的文字平实，又很容易想起三毛；杨先生
-和钱钟书先生的感情，再联想到三毛和荷西。不过杨先生和三毛是不同的，杨先生更安宁，三毛是不羁的，
-但两人的文字都真实。</p>
-
-<p>顺着杨先生梦境般的描述，走过了奈何桥，再回到旧时光，回忆的点点滴滴，陪伴着老人剩余的生命，这
-样的回忆，应该也是甜蜜的，只是，对一位92岁高龄的老人，或许意味着更多，我很想了解一位已然104岁
-的老人现时的生活。到底是有多淡然的态度，才能波澜不惊地面对生活的起伏动荡；但，无论多淡然的人，
-在面对生离死别、生老病死这样的自然规律和现象时，还是会无助的。</p>
-
-<p>但愿这样的夜读继续。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Python Challenge L3]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/11/07/python-challenge-l3/"/>
-    <updated>2015-11-07T20:35:25+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/11/07/python-challenge-l3</id>
-    <content type="html"><![CDATA[<p><a href="">Python Challenge</a></p>
-
-<h2>L3. Equality</h2>
-
-<p><a href="http://www.pythonchallenge.com/pc/def/equality.html">L3</a></p>
-
-<p>One small letter, surrounded by EXACTLY three big bodyguards on each of its
-sides.</p>
-
-<figure class='code'><figcaption><span>equality.py</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">re</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">def</span> <span class="nf">search_equality</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
-</span><span class='line'>    <span class="sd">&quot;&quot;&quot; Return the letter if that matches the pattern, else return None</span>
-</span><span class='line'><span class="sd">    &quot;&quot;&quot;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c"># pattern: [1 lower](3 uppers)[1 lower](3 uppers)[1 lower], e.g.: aBBDiLDMx</span>
-</span><span class='line'>    <span class="n">pattern</span> <span class="o">=</span> <span class="s">&quot;[a-z][A-Z][A-Z][A-Z][a-z][A-Z][A-Z][A-Z][a-z]&quot;</span>
-</span><span class='line'>    <span class="n">equality</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">if</span> <span class="n">equality</span><span class="p">:</span>
-</span><span class='line'>        <span class="c"># just return the lowercase on the position 5 (index[4])</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">equality</span><span class="o">.</span><span class="n">group</span><span class="p">()[</span><span class="mi">4</span><span class="p">]</span>
-</span><span class='line'>    <span class="k">else</span><span class="p">:</span>
-</span><span class='line'>        <span class="k">return</span> <span class="bp">None</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">text_path</span> <span class="o">=</span> <span class="s">&quot;./data/3_equality.txt&quot;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">equalities</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span class='line'>    <span class="n">text</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">text_path</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
-</span><span class='line'>        <span class="c"># search the letters those matching the patterns</span>
-</span><span class='line'>        <span class="n">equality</span> <span class="o">=</span> <span class="n">search_equality</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
-</span><span class='line'>        <span class="c"># just append the valid letters, None exclusive</span>
-</span><span class='line'>        <span class="n">equalities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">equality</span><span class="p">)</span> <span class="k">if</span> <span class="n">equality</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">equalities</span>
-</span><span class='line'>    <span class="n">text</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">print</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">letter</span> <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">equalities</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>output</p>
-
-<figure class='code'><figcaption><span>equality ouptut</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">linkedlist</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Update the url with <code>linkedlist</code>, then jump to a new page with <code>linkedlist.php</code>,
-update the url with <code>linkedlist.php</code>, then jump to L4.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Configurating Colortheme for iTerm]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/11/05/configurating-colortheme-for-iterm/"/>
-    <updated>2015-11-05T23:08:34+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/11/05/configurating-colortheme-for-iterm</id>
-    <content type="html"><![CDATA[<p>The colortheme files of iTerm is <code>*.itermcolors</code>, everyone can create or update a colortheme and
-then import it to iTerm. Alternatively, you can download the colorthemes which are shared in
-public and then update them in iTerm.</p>
-
-<p>If Vim is set as the editor, it would be better to keep the colortheme as the same as iTerm.</p>
-
-<h2>1. Colorthemes</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git clone git://github.com/altercation/solarized.git
-</span><span class='line'><span class="nv">$ </span>git clone https://github.com/mbadolato/iTerm2-Color-Schemes.git
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>2. iTerm</h2>
-
-<ul>
-<li>iTerm -> Preferences -> Profiles -> Colors -> Load Presets -> import</li>
-</ul>
-
-
-<p>import the colorthemes</p>
-
-<ul>
-<li>if solarized: iterm2-colors-soloarized</li>
-<li>if iTerm2-Color-Schemes: <code>*.itermcolors</code></li>
-</ul>
-
-
-<h2>3. .bash_profile</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>brew install coreutils
-</span><span class='line'><span class="nv">$ </span>vim ~/.bash_profile             <span class="c"># add export clicolor</span>
-</span><span class='line'><span class="nv">$ </span><span class="nb">source</span> ~/.bash_profile
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>.bash_profile</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">export </span><span class="nv">CLICOLOR</span><span class="o">=</span>1
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Preview</p>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/d7/ba/d3/d7bad3e5432d03d2330b88f49dc4b488.jpg" /></p>
-
-<h2>4. vim</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># copy the colorscheme</span>
-</span><span class='line'><span class="nv">$ </span>mkdir ~/.vim/colors
-</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> ~/.vim/colors
-</span><span class='line'><span class="nv">$ </span>cp /path/to/solarized/vim-colors-solarized/colors/solarized.vim ./
-</span><span class='line'>
-</span><span class='line'><span class="c"># update the .vimrc</span>
-</span><span class='line'><span class="nv">$ </span>vim ~/.vimrc
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>.vimrc</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>syntax <span class="nb">enable</span>
-</span><span class='line'><span class="nb">set </span><span class="nv">background</span><span class="o">=</span>dark
-</span><span class='line'>colorscheme solarized
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Preview</p>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/31/f1/93/31f19309e06e9affcd25b81f0b8ddc06.jpg" /></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Python Challenge L0-L2]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/11/05/python-challenge-l0-l2/"/>
-    <updated>2015-11-05T16:07:22+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/11/05/python-challenge-l0-l2</id>
-    <content type="html"><![CDATA[<p><a href="http://www.pythonchallenge.com">Python Challenge</a></p>
-
-<h2>L0</h2>
-
-<p><a href="http://www.pythonchallenge.com/pc/def/0.html">L0</a></p>
-
-<p>Hint: try to change the URL address.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="mi">2</span><span class="o">**</span><span class="mi">38</span>
-</span><span class='line'><span class="mi">274877906944</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Update the url.</p>
-
-<h2>L1. Map</h2>
-
-<p><a href="http://www.pythonchallenge.com/pc/def/map.html">L1</a></p>
-
-<p>everybody thinks twice before solving this.</p>
-
-<p>solution</p>
-
-<figure class='code'><figcaption><span>map.py</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">from</span> <span class="nn">string</span> <span class="kn">import</span> <span class="n">maketrans</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">alphabet</span> <span class="o">=</span> <span class="s">&quot;abcdefghijklmnopqrstuvwxyz&quot;</span>
-</span><span class='line'><span class="n">alphabet_decode</span> <span class="o">=</span> <span class="s">&quot;cdefghijklmnopqrstuvwxyzab&quot;</span>
-</span><span class='line'><span class="n">map_table</span> <span class="o">=</span> <span class="n">maketrans</span><span class="p">(</span><span class="n">alphabet</span><span class="p">,</span> <span class="n">alphabet_decode</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">strings</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
-</span><span class='line'><span class="s">    g fmnc wms bgblr rpylqjyrc gr zw fylb. rfyrq ufyr amknsrcpq ypc dmp. bmgle gr gl zw fylb gq glcddgagclr ylb rfyr&#39;q ufw rfgq rcvr gq qm jmle. sqgle qrpgle.kyicrpylq() gq pcamkkclbcb. lmu ynnjw ml rfc spj.</span>
-</span><span class='line'><span class="s">    &quot;&quot;&quot;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">url</span> <span class="o">=</span> <span class="s">&quot;map&quot;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">print</span> <span class="n">strings</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">map_table</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">print</span> <span class="n">url</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">map_table</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>result</p>
-
-<figure class='code'><figcaption><span>map outputs</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">i</span> <span class="n">hope</span> <span class="n">you</span> <span class="n">didnt</span> <span class="n">translate</span> <span class="n">it</span> <span class="n">by</span> <span class="n">hand</span><span class="o">.</span> <span class="n">thats</span> <span class="n">what</span> <span class="n">computers</span> <span class="n">are</span> <span class="k">for</span><span class="o">.</span> <span class="n">doing</span> <span class="n">it</span> <span class="ow">in</span> <span class="n">by</span> <span class="n">hand</span> <span class="ow">is</span> <span class="n">inefficient</span> <span class="ow">and</span> <span class="n">that</span><span class="s">&#39;s why this text is so long. using string.maketrans() is recommended. now apply on the url.</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">ocr</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then update the url with <code>ocr</code>.</p>
-
-<h2>L2. OCR</h2>
-
-<p><a href="http://www.pythonchallenge.com/pc/def/ocr.html">L2</a></p>
-
-<p>recognize the characters. maybe they are in the book,
-but MAYBE they are in the page source.</p>
-
-<figure class='code'><figcaption><span>ocr.py</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c"># dictionary: http://www.math.sjsu.edu/~foster/dictionary.txt</span>
-</span><span class='line'><span class="c"># download the dictionary for mapping the words</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">def</span> <span class="nf">print_sorted_keys</span><span class="p">(</span><span class="n">dictionary</span><span class="p">):</span>
-</span><span class='line'>    <span class="k">print</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">dictionary</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">dictionary</span><span class="p">:</span> <span class="n">dictionary</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">def</span> <span class="nf">print_sorted_values</span><span class="p">(</span><span class="n">dictionary</span><span class="p">):</span>
-</span><span class='line'>    <span class="k">print</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">dictionary</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">dictionary</span><span class="p">:</span> <span class="n">dictionary</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">def</span> <span class="nf">generate_word_dict</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">word_counts</span> <span class="o">=</span> <span class="p">{}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">text</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
-</span><span class='line'>        <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
-</span><span class='line'>            <span class="k">if</span> <span class="n">char</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">word_counts</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-</span><span class='line'>                <span class="n">word_counts</span><span class="p">[</span><span class="n">char</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-</span><span class='line'>            <span class="k">else</span><span class="p">:</span>
-</span><span class='line'>                <span class="n">word_counts</span><span class="p">[</span><span class="n">char</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
-</span><span class='line'>    <span class="n">text</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">return</span> <span class="n">word_counts</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">def</span> <span class="nf">mapping</span><span class="p">(</span><span class="n">letters</span><span class="p">,</span> <span class="n">dictbook</span><span class="p">):</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">words</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">dictbook</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">dictbook</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">dictbook</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
-</span><span class='line'>        <span class="c"># if set(line.strip()) == set(letters):</span>
-</span><span class='line'>        <span class="c">#     words.append(line.strip())</span>
-</span><span class='line'>        <span class="n">words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="k">if</span> <span class="nb">set</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="o">==</span> <span class="nb">set</span><span class="p">(</span><span class="n">letters</span><span class="p">)</span> <span class="k">else</span> <span class="n">words</span>
-</span><span class='line'>    <span class="n">dictbook</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">return</span> <span class="n">words</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">file_path</span> <span class="o">=</span> <span class="s">&#39;./data/2_ocr.txt&#39;</span>
-</span><span class='line'>    <span class="n">dictbook</span> <span class="o">=</span> <span class="s">&quot;./data/dictionary.txt&quot;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c"># find the letters</span>
-</span><span class='line'>    <span class="n">word_counts</span> <span class="o">=</span> <span class="n">generate_word_dict</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">print_sorted_keys</span><span class="p">(</span><span class="n">word_counts</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">print_sorted_values</span><span class="p">(</span><span class="n">word_counts</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c"># look for a word from a dictionary</span>
-</span><span class='line'>    <span class="n">letters</span> <span class="o">=</span> <span class="s">&quot;aeilquty&quot;</span>
-</span><span class='line'>    <span class="n">words</span> <span class="o">=</span> <span class="n">mapping</span><span class="p">(</span><span class="n">letters</span><span class="p">,</span> <span class="n">dictbook</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">print</span> <span class="n">words</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>result</p>
-
-<figure class='code'><figcaption><span>ocr outputs</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="p">[(</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;e&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;i&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;l&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;q&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;u&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;t&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;y&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">,</span> <span class="mi">1220</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;^&#39;</span><span class="p">,</span> <span class="mi">6030</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;*&#39;</span><span class="p">,</span> <span class="mi">6034</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;&amp;&#39;</span><span class="p">,</span> <span class="mi">6043</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;$&#39;</span><span class="p">,</span> <span class="mi">6046</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;{&#39;</span><span class="p">,</span> <span class="mi">6046</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;+&#39;</span><span class="p">,</span> <span class="mi">6066</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;!&#39;</span><span class="p">,</span> <span class="mi">6079</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;%&#39;</span><span class="p">,</span> <span class="mi">6104</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;}&#39;</span><span class="p">,</span> <span class="mi">6105</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;[&#39;</span><span class="p">,</span> <span class="mi">6108</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;_&#39;</span><span class="p">,</span> <span class="mi">6112</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;#&#39;</span><span class="p">,</span> <span class="mi">6115</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;]&#39;</span><span class="p">,</span> <span class="mi">6152</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;(&#39;</span><span class="p">,</span> <span class="mi">6154</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;@&#39;</span><span class="p">,</span> <span class="mi">6157</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;)&#39;</span><span class="p">,</span> <span class="mi">6186</span><span class="p">)]</span>
-</span><span class='line'><span class="p">[</span><span class="s">&#39;equality&#39;</span><span class="p">]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Update the url with <code>equality</code>.</p>
 ]]></content>
   </entry>
   
