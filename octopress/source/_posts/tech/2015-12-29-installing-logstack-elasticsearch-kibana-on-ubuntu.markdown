@@ -4,7 +4,7 @@ title: "Installing Logstack ElasticSearch Kibana on Ubuntu"
 date: 2015-12-29 14:52:55 +0800
 comments: true
 categories: [tech]
-tags: [logstack, elasticsearch, kibana, nginx, ssl, filebeat]
+tags: [java, logstack, elasticsearch, kibana, nginx, ssl, filebeat]
 toc: true
 ---
 

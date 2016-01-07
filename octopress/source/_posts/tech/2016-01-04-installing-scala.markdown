@@ -4,9 +4,19 @@ title: "Installing Scala"
 date: 2016-01-04 13:06:34 +0800
 comments: true
 categories: [tech]
-tags: [scala]
+tags: [scala, java]
 toc: false
 ---
+
+## Prequisition
+
+Java
+
+```bash
+$ sudo add-apt-repository -y ppa:webupd8team/java
+$ sudo apt-get update
+$ sudo apt-get -y install oracle-java8-installer
+```
 
 ## Installation
 
@@ -42,7 +52,7 @@ res0: Int = 2
 scala> println("Hello")
 Hello
 
-scala>
+scala>:quit
 ```
 
 ## Vim Configuration
