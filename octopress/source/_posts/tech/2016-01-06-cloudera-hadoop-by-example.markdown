@@ -14,7 +14,7 @@ Contents
 - analyzing structured data (sqoop, impala)
 - analyzing unstructured data (beeline, impala)
 - analyzing data in realtime (spark)
-- indexing and search data (solr)
+- indexing and searching data (solr)
 
 ## Analyzing Structured Data: MySQL Data
 
