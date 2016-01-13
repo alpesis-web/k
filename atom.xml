@@ -4,7 +4,7 @@
   <title><![CDATA[K]]></title>
   <link href="http://k.arttechresearch.com/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2016-01-07T21:53:17+08:00</updated>
+  <updated>2016-01-13T21:17:37+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[K]]></name>
@@ -12,6 +12,163 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Git Commands]]></title>
+    <link href="http://k.arttechresearch.com/tech/2016/01/08/git-commands/"/>
+    <updated>2016-01-08T18:06:55+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2016/01/08/git-commands</id>
+    <content type="html"><![CDATA[<ul>
+<li>config</li>
+<li>remote</li>
+<li>pull/commit</li>
+<li>log</li>
+</ul>
+
+
+<h2>Config</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git config --global user.name <span class="s1">&#39;xxx&#39;</span>
+</span><span class='line'><span class="nv">$ </span>git config --global user.email <span class="s1">&#39;xxx&#39;</span>
+</span><span class='line'><span class="nv">$ </span>git config --local user.name <span class="s1">&#39;xxx&#39;</span>
+</span><span class='line'><span class="nv">$ </span>git config --local user.email <span class="s1">&#39;xxx&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>git config --global alias.logtree <span class="s2">&quot;log --color --graph --pretty=format:&#39;%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset&#39; --abbrev-commit&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Remote</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git remote add origin https://xxxx                    <span class="c"># set remote url</span>
+</span><span class='line'><span class="nv">$ </span>git remote <span class="nb">set</span>-url origin https://xxxx                <span class="c"># update remote url</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Pull</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git pull --rebase origin branch_name
+</span><span class='line'><span class="nv">$ </span>git fetch origin
+</span><span class='line'><span class="nv">$ </span>git rebase origin
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Commit</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git diff &lt;file&gt;
+</span><span class='line'><span class="nv">$ </span>git add &lt;file<span class="o">(</span>s<span class="o">)</span>&gt;
+</span><span class='line'><span class="nv">$ </span>git status
+</span><span class='line'><span class="nv">$ </span>git reset HEAD &lt;file&gt;
+</span><span class='line'><span class="nv">$ </span>git commit -m <span class="s2">&quot;xxx&quot;</span>
+</span><span class='line'><span class="nv">$ </span>git push origin &lt;branch_name&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Log</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git log
+</span><span class='line'><span class="nv">$ </span>git show &lt;id&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[SNS]]></title>
+    <link href="http://k.arttechresearch.com/life/2016/01/08/sns/"/>
+    <updated>2016-01-08T17:11:58+08:00</updated>
+    <id>http://k.arttechresearch.com/life/2016/01/08/sns</id>
+    <content type="html"><![CDATA[<h2>社交网络</h2>
+
+<p>由最初的邮件，到IM如ICQ，QQ等；再到博客，微博和轻博客；再到移动端诸如Instragram，Line，微信，沟通工具的变化，不过是由电脑，再而网络发展，由web1.0到2.0，再到移动端，电子设备和网络技术的更新换代，跟随着软件的相继更新，就像一个系列，一整套设备（软硬件）同时切换，但，人没有变，只不过切换了电子设备和应用软件，人谈论的话题也没有变。</p>
+
+<p>最近小学同学进入了我微信圈，让我想起了当初QQ的发展，最初只是国内的ICQ，国内有了QQ，逐渐由早期上网的用户，扩大到普罗大众，随着用户群体的扩张，腾讯完成了产品的纵向和横向扩展。而现在通用的微信，腾讯似乎在把QQ的用户群体，逐渐扩展到微信用户，而微信，亦如当年的QQ，一样地盛行起来。于是，由最初微信的小圈子，到现在微信扩展到由我的同事朋友，再到亲戚同学（小学同学），无论人在世界何地，曾经遇到的人和环境，随着网络的入侵，连二带三地全部回来了。看着同学们谈论的话题，其实跟以前的QQ群并没有什么异样，不变的是人性。宏观的定性，总是稳定的，千百年过去了，人性还是那么地亘古不变，经典和大师以及他们的作品，显得更加经典。</p>
+
+<p>看着发展壮大的微信群，看着各个群里谈论的话题，社交网络，说到底，还是人的社会。物以类聚，人以群分，在群里也是相似的。正是因为用户多样化了，用户需求也多样化起来，产品功能也会不断增加或删减（其实这是更新）。</p>
+
+<p>无论电子设备和应用软件如何更新换代，人的交流，依然是重质不重量。所以，我依然怀念着当年博客里纯粹思想的交流，博客是经过思考的文字，经过深层思考的话，更值得深入探讨。</p>
+
+<p>最近让我失望的还有另一个圈子，是豆瓣，这个曾经只以书、音、影结伴的网站，我承认，一开始我便觉得豆瓣的页面交互不够扁平，所以，一开始我只使用它记录个人的书、音、影，而不将其作为社交网站。随着微信圈的热情退散，最近加入了豆瓣圈，但豆瓣圈在向年轻化、浅层化发展，所以，很快，到昨天为止，我还是失望，准备将其回到最初的记录书、音、影的状态。如果找到一个更好的替代产品，我将弃用豆瓣，但，惊讶的是，国外目前还没有找到一个书、音、影结合的网站，书虽然有GoodReads，但用户体验一般，Amazon上也有书评，但那里的功能更多是作为购书的参考，缺少更加深层的探讨性质；影有YouTube，但YouTube也不是一个电影评论网站，发布视频和电影评论还是有差别的。或许我可以尝试自己整合一个。</p>
+
+<p>豆瓣现在的产品线太多，太杂，页面布局和交互，都非我能满意的产品。如果连人群也不能深入思考和评论，那就失去了社交网站的意义。或者说，豆瓣未能满意我个人用户的个人需求。</p>
+
+<p>现在退回我个人博客是好的，在这里，可以作相对深入一些的思考；我也没有营销过这片土地，有人观之则观，无人过问也是乐得自在。</p>
+
+<p>志趣相投者难遇，随遇而安。安耕于Github和Twitter或是一些技术论坛，也是好的，毕竟这些都是因为志趣相投而聚在一起的群体，这才是社交网络的意义吧。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Real-time Analytics With Apache Storm]]></title>
+    <link href="http://k.arttechresearch.com/tech/2016/01/07/real-time-analytics-with-apache-storm/"/>
+    <updated>2016-01-07T23:26:08+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2016/01/07/real-time-analytics-with-apache-storm</id>
+    <content type="html"><![CDATA[<h2>Toolkits</h2>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;"> DevOps        </th>
+<th style="text-align:left;">        </th>
+<th style="text-align:left;">       </th>
+<th style="text-align:left;"> Backend                                </th>
+<th style="text-align:left;"> Frontend    </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> Vagrant       </td>
+<td style="text-align:left;"> Ubuntu </td>
+<td style="text-align:left;"> Storm </td>
+<td style="text-align:left;"> Python (BeautifulSoup, Flask, Lettuce) </td>
+<td style="text-align:left;"> Javascript  </td>
+</tr>
+<tr>
+<td style="text-align:left;"> Vagrant Cloud </td>
+<td style="text-align:left;"> Git    </td>
+<td style="text-align:left;">       </td>
+<td style="text-align:left;"> Java                                   </td>
+<td style="text-align:left;"> D3          </td>
+</tr>
+<tr>
+<td style="text-align:left;"> VirtualBox    </td>
+<td style="text-align:left;"> Maven  </td>
+<td style="text-align:left;">       </td>
+<td style="text-align:left;"> Redis                                  </td>
+<td style="text-align:left;">             </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>Others</p>
+
+<ul>
+<li>Clojure</li>
+<li>Cluster Administration</li>
+<li>Ack</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[MOOC]]></title>
@@ -41,7 +198,7 @@
 <li>analyzing structured data (sqoop, impala)</li>
 <li>analyzing unstructured data (beeline, impala)</li>
 <li>analyzing data in realtime (spark)</li>
-<li>indexing and search data (solr)</li>
+<li>indexing and searching data (solr)</li>
 </ul>
 
 
@@ -2524,317 +2681,6 @@ such as 15 minutes later, 1 hour laster etc), that&rsquo;s why we use the queue.
     <updated>2015-12-13T22:30:29+08:00</updated>
     <id>http://k.arttechresearch.com/art/2015/12/13/the-land</id>
     <content type="html"><![CDATA[<p><img src="https://s-media-cache-ak0.pinimg.com/736x/cc/f6/3d/ccf63d47a567fd1a4f8cc1d8164041e6.jpg" /></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Connecting to MSSQL Using FreeTDS / ODBC in Python]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/11/15/connecting-to-mssql-using-freetds-slash-odbc-in-python/"/>
-    <updated>2015-11-15T21:23:21+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/11/15/connecting-to-mssql-using-freetds-slash-odbc-in-python</id>
-    <content type="html"><![CDATA[<h2>Prequisitions</h2>
-
-<ul>
-<li>OS: Debian 7.8</li>
-<li>Dependencies: freetds-dev, freetd-bin, unixodbc-dev, tdsodbc</li>
-<li>Python packages: pyodbc, sqlalchemy</li>
-</ul>
-
-
-<h2>Steps</h2>
-
-<p>Installing the dependencies</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install freetds-dev freetds-bin unixodbc-dev tdsodbc
-</span><span class='line'><span class="nv">$ </span>pip install pyodbc sqlalchemy
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Configuring <code>/etc/odbcinst.ini</code></p>
-
-<figure class='code'><figcaption><span>/etc/odbcinst.ini</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>FreeTDS<span class="o">]</span>
-</span><span class='line'><span class="nv">Description</span>     <span class="o">=</span> TDS driver <span class="o">(</span>Sybase/MS SQL<span class="o">)</span>
-</span><span class='line'><span class="nv">Driver</span>          <span class="o">=</span> /usr/lib/x86_64-linux-gnu/odbc/libtdsodbc.so
-</span><span class='line'><span class="nv">Setup</span>           <span class="o">=</span> /usr/lib/x86_64-linux-gnu/odbc/libtdsS.so
-</span><span class='line'><span class="nv">CPTimeout</span>       <span class="o">=</span>
-</span><span class='line'><span class="nv">CPReuse</span>         <span class="o">=</span>
-</span><span class='line'><span class="nv">UsageCount</span>      <span class="o">=</span> 1
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Configuring <code>/etc/freetds/freetds.conf</code></p>
-
-<figure class='code'><figcaption><span>/etc/freetds/freetds.conf</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>global<span class="o">]</span>
-</span><span class='line'>    <span class="nv">port</span> <span class="o">=</span> 1433
-</span><span class='line'>    tds <span class="nv">version</span> <span class="o">=</span> 7.0
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Testing</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>tsql -H host_name -p <span class="m">3688</span> -U user_name
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>example: pyodbc</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">pyodbc</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="k">def</span> <span class="nf">connect_db</span><span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">DATABASE</span><span class="p">,</span> <span class="n">UID</span><span class="p">,</span> <span class="n">PWD</span><span class="p">,</span> <span class="n">TDS_Version</span><span class="p">):</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">connection</span> <span class="o">=</span> <span class="n">pyodbc</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&#39;DRIVER=FreeTDS; </span><span class="se">\</span>
-</span><span class='line'><span class="s">                             SERVER=HOST; </span><span class="se">\</span>
-</span><span class='line'><span class="s">                             PORT=1433; </span><span class="se">\</span>
-</span><span class='line'><span class="s">                             DATABASE=DATABASE; </span><span class="se">\</span>
-</span><span class='line'><span class="s">                             UID=UID; </span><span class="se">\</span>
-</span><span class='line'><span class="s">                             PWD=PWD; </span><span class="se">\</span>
-</span><span class='line'><span class="s">                             TDS_Version=8.0;&#39;</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">cursor</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">cursor</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">def</span> <span class="nf">query_data</span><span class="p">(</span><span class="n">cursor</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">):</span>
-</span><span class='line'>        <span class="k">print</span> <span class="n">row</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">=</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">HOST</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>                         <span class="c"># server</span>
-</span><span class='line'>    <span class="n">DATABASE</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>                     <span class="c"># database_name</span>
-</span><span class='line'>    <span class="n">UID</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>                          <span class="c"># user_name</span>
-</span><span class='line'>    <span class="n">PWD</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>                          <span class="c"># password</span>
-</span><span class='line'>    <span class="n">TDS_Version</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>                  <span class="c"># TDS_Version</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">cursor</span> <span class="o">=</span> <span class="n">connect_db</span><span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">DATABASE</span><span class="p">,</span> <span class="n">UID</span><span class="p">,</span> <span class="n">PWD</span><span class="p">,</span> <span class="n">TDS_Version</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">query_data</span><span class="p">(</span><span class="n">cursor</span><span class="p">,</span> <span class="s">&#39;select 6 * 7 as [Result];&#39;</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>example: sqlalchemy</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">urllib</span>
-</span><span class='line'><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">def</span> <span class="nf">connect_db</span><span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">DATABASE</span><span class="p">,</span> <span class="n">UID</span><span class="p">,</span> <span class="n">PWD</span><span class="p">,</span> <span class="n">TDS_Version</span><span class="p">):</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">db_settings</span> <span class="o">=</span> <span class="s">&#39;DRIVER=FreeTDS; </span><span class="se">\</span>
-</span><span class='line'><span class="s">                   SERVER=</span><span class="si">%s</span><span class="s">; </span><span class="se">\</span>
-</span><span class='line'><span class="s">                   PORT=1433; </span><span class="se">\</span>
-</span><span class='line'><span class="s">                   DATABASE=</span><span class="si">%s</span><span class="s">; </span><span class="se">\</span>
-</span><span class='line'><span class="s">                   UID=</span><span class="si">%s</span><span class="s">; </span><span class="se">\</span>
-</span><span class='line'><span class="s">                   PWD=</span><span class="si">%s</span><span class="s">; </span><span class="se">\</span>
-</span><span class='line'><span class="s">                   TDS_Version=</span><span class="si">%s</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">DATABASE</span><span class="p">,</span> <span class="n">UID</span><span class="p">,</span> <span class="n">PWD</span><span class="p">,</span> <span class="n">TDS_Version</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&#39;mssql+pyodbc:///?odbc_connect&#39;</span> <span class="o">+</span> <span class="n">urllib</span><span class="o">.</span><span class="n">quote_plus</span><span class="p">(</span><span class="n">db_settings</span><span class="p">))</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">return</span> <span class="n">engine</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">def</span> <span class="nf">query_db</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">engine</span><span class="o">.</span><span class="n">excute</span><span class="p">(</span><span class="n">query</span><span class="p">):</span>
-</span><span class='line'>        <span class="k">print</span> <span class="n">row</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">=</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">HOST</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>                         <span class="c"># server</span>
-</span><span class='line'>    <span class="n">DATABASE</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>                     <span class="c"># database_name</span>
-</span><span class='line'>    <span class="n">UID</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>                          <span class="c"># user_name</span>
-</span><span class='line'>    <span class="n">PWD</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>                          <span class="c"># password</span>
-</span><span class='line'>    <span class="n">TDS_Version</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>                  <span class="c"># TDS_Version</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">engine</span> <span class="o">=</span> <span class="n">connect_db</span><span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">DATABASE</span><span class="p">,</span> <span class="n">UID</span><span class="p">,</span> <span class="n">PWD</span><span class="p">,</span> <span class="n">TDS_Version</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">query_data</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="s">&#39;select 6 * 7 as [Result];&#39;</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Generating a Self-Signed SSL Certificate]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/11/09/generating-a-self-signed-ssl-certificate/"/>
-    <updated>2015-11-09T22:59:53+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/11/09/generating-a-self-signed-ssl-certificate</id>
-    <content type="html"><![CDATA[<h2>Prequistion</h2>
-
-<p>openssl</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>which openssl
-</span><span class='line'>
-</span><span class='line'><span class="c"># OS X</span>
-</span><span class='line'><span class="nv">$ </span>brew install openssl
-</span><span class='line'>
-</span><span class='line'><span class="c"># Ubuntu</span>
-</span><span class='line'><span class="nv">$ </span>sudo apt-get install openssl
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>1. Private key and certificate signing request</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>openssl genrsa -des3 -passout pass:x -out server.pass.key 2048
-</span><span class='line'><span class="nv">$ </span>openssl rsa -passin pass:x -in server.pass.key -out server.key
-</span><span class='line'><span class="nv">$ </span>rm server.pass.key
-</span><span class='line'><span class="nv">$ </span>openssl req -new -key server.key -out server.csr
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>2. SSL Certificate</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>openssl x509 -req -days <span class="m">365</span> -in server.csr -signkey server.key -out server.crt
-</span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Python Challenge L4]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/11/08/python-challenge-l4/"/>
-    <updated>2015-11-08T21:30:05+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/11/08/python-challenge-l4</id>
-    <content type="html"><![CDATA[<p><a href="">Python Challenge</a></p>
-
-<h2>L4. Linkedlist</h2>
-
-<p><a href="http://www.pythonchallenge.com/pc/def/linkedlist.php">L4</a></p>
-
-<p>urllib may help. DON&rsquo;T TRY ALL NOTHINGS, since it will never end. 400 times is more than enough.</p>
-
-<figure class='code'><figcaption><span>linkedlist.py</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">urllib</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">def</span> <span class="nf">get_param</span><span class="p">(</span><span class="n">param_value</span><span class="p">):</span>
-</span><span class='line'>    <span class="sd">&quot;&quot;&quot;Return the nothing_value from the specific url</span>
-</span><span class='line'><span class="sd">    &quot;&quot;&quot;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">param</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlencode</span><span class="p">({</span><span class="s">&#39;nothing&#39;</span><span class="p">:</span> <span class="n">param_value</span><span class="p">})</span>
-</span><span class='line'>    <span class="n">url</span> <span class="o">=</span> <span class="s">&quot;http://www.pythonchallenge.com/pc/def/linkedlist.php?</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">param</span>
-</span><span class='line'>    <span class="n">content</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-</span><span class='line'>    <span class="c"># split the content by &quot; &quot; and return the last word</span>
-</span><span class='line'>    <span class="n">value</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">return</span> <span class="n">value</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">init_value</span> <span class="o">=</span> <span class="s">&quot;12345&quot;</span>
-</span><span class='line'>    <span class="n">param</span> <span class="o">=</span> <span class="n">get_param</span><span class="p">(</span><span class="n">init_value</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">while</span> <span class="n">param</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-</span><span class='line'>        <span class="k">print</span> <span class="n">param</span>
-</span><span class='line'>        <span class="n">param</span> <span class="o">=</span> <span class="n">get_param</span><span class="p">(</span><span class="n">param</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The figures are repeating, but once <code>peak.html</code> occurs, update the url with
-<code>peak.html</code>, then jump to L5.</p>
 ]]></content>
   </entry>
   

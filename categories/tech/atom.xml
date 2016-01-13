@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tech | K]]></title>
   <link href="http://k.arttechresearch.com/categories/tech/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2016-01-07T21:53:17+08:00</updated>
+  <updated>2016-01-13T21:17:37+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[K]]></name>
@@ -12,6 +12,114 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Git Commands]]></title>
+    <link href="http://k.arttechresearch.com/tech/2016/01/08/git-commands/"/>
+    <updated>2016-01-08T18:06:55+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2016/01/08/git-commands</id>
+    <content type="html"><![CDATA[<ul>
+<li>config</li>
+<li>remote</li>
+<li>pull/commit</li>
+<li>log</li>
+</ul>
+
+
+<h2>Config</h2>
+
+<pre><code class="bash">$ git config --global user.name 'xxx'
+$ git config --global user.email 'xxx'
+$ git config --local user.name 'xxx'
+$ git config --local user.email 'xxx'
+
+$ git config --global alias.logtree "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset' --abbrev-commit"
+</code></pre>
+
+<h2>Remote</h2>
+
+<pre><code class="bash">$ git remote add origin https://xxxx                    # set remote url
+$ git remote set-url origin https://xxxx                # update remote url
+</code></pre>
+
+<h2>Pull</h2>
+
+<pre><code class="bash">$ git pull --rebase origin branch_name
+$ git fetch origin
+$ git rebase origin
+</code></pre>
+
+<h2>Commit</h2>
+
+<pre><code class="bash">$ git diff &lt;file&gt;
+$ git add &lt;file(s)&gt;
+$ git status
+$ git reset HEAD &lt;file&gt;
+$ git commit -m "xxx"
+$ git push origin &lt;branch_name&gt;
+</code></pre>
+
+<h2>Log</h2>
+
+<pre><code class="bash">$ git log
+$ git show &lt;id&gt;
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Real-time Analytics With Apache Storm]]></title>
+    <link href="http://k.arttechresearch.com/tech/2016/01/07/real-time-analytics-with-apache-storm/"/>
+    <updated>2016-01-07T23:26:08+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2016/01/07/real-time-analytics-with-apache-storm</id>
+    <content type="html"><![CDATA[<h2>Toolkits</h2>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;"> DevOps        </th>
+<th style="text-align:left;">        </th>
+<th style="text-align:left;">       </th>
+<th style="text-align:left;"> Backend                                </th>
+<th style="text-align:left;"> Frontend    </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> Vagrant       </td>
+<td style="text-align:left;"> Ubuntu </td>
+<td style="text-align:left;"> Storm </td>
+<td style="text-align:left;"> Python (BeautifulSoup, Flask, Lettuce) </td>
+<td style="text-align:left;"> Javascript  </td>
+</tr>
+<tr>
+<td style="text-align:left;"> Vagrant Cloud </td>
+<td style="text-align:left;"> Git    </td>
+<td style="text-align:left;">       </td>
+<td style="text-align:left;"> Java                                   </td>
+<td style="text-align:left;"> D3          </td>
+</tr>
+<tr>
+<td style="text-align:left;"> VirtualBox    </td>
+<td style="text-align:left;"> Maven  </td>
+<td style="text-align:left;">       </td>
+<td style="text-align:left;"> Redis                                  </td>
+<td style="text-align:left;">             </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>Others</p>
+
+<ul>
+<li>Clojure</li>
+<li>Cluster Administration</li>
+<li>Ack</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Cloudera Hadoop by Example]]></title>
@@ -24,7 +132,7 @@
 <li>analyzing structured data (sqoop, impala)</li>
 <li>analyzing unstructured data (beeline, impala)</li>
 <li>analyzing data in realtime (spark)</li>
-<li>indexing and search data (solr)</li>
+<li>indexing and searching data (solr)</li>
 </ul>
 
 
@@ -512,120 +620,6 @@ runtimes make a virtual method invocation of a class member a faster oper- ation
 <p><img src="https://s-media-cache-ak0.pinimg.com/736x/50/e0/b6/50e0b6173313209d85c1b08647f06709.jpg" /></p>
 
 <p>image source: Collection hierarchy, Chapter 24, Programming in Scala, Page 536</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Installing Scala]]></title>
-    <link href="http://k.arttechresearch.com/tech/2016/01/04/installing-scala/"/>
-    <updated>2016-01-04T13:06:34+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2016/01/04/installing-scala</id>
-    <content type="html"><![CDATA[<h2>Prequisition</h2>
-
-<p>Java</p>
-
-<pre><code class="bash">$ sudo add-apt-repository -y ppa:webupd8team/java
-$ sudo apt-get update
-$ sudo apt-get -y install oracle-java8-installer
-</code></pre>
-
-<h2>Installation</h2>
-
-<h3>Ubuntu 14.04</h3>
-
-<pre><code class="bash">$ cd /tmp
-$ wget http://www.scala-lang.org/files/archive/scala-2.11.6.deb
-$ sudo dpkg -i scala-2.11.6.deb
-$ sudo apt-get update
-$ sudo apt-get install scala
-</code></pre>
-
-<h3>OS X</h3>
-
-<pre><code class="bash">$ brew update
-$ brew install scala
-$ brew install sbt
-</code></pre>
-
-<h2>Testing</h2>
-
-<pre><code class="bash">vagrant@vagrant-ubuntu-trusty-64:/vagrant/scala$ scala
-Welcome to Scala version 2.11.6 (Java HotSpot(TM) 64-Bit Server VM, Java 1.8.0_66).
-Type in expressions to have them evaluated.
-Type :help for more information.
-
-scala&gt; 1+1
-res0: Int = 2
-
-scala&gt; println("Hello")
-Hello
-
-scala&gt;:quit
-</code></pre>
-
-<h2>Vim Configuration</h2>
-
-<p>syntax highlight: <a href="https://github.com/derekwyatt/vim-scala">vim-scala</a></p>
-
-<pre><code class="bash"># wget
-$ mkdir -p ~/.vim/{ftdetect,indent,syntax} &amp;&amp; for d in ftdetect indent syntax ; do wget -O ~/.vim/$d/scala.vim https://raw.githubusercontent.com/derekwyatt/vim-scala/master/$d/scala.vim; done
-
-# curl
-$ mkdir -p ~/.vim/{ftdetect,indent,syntax} &amp;&amp; for d in ftdetect indent syntax ; do curl -o ~/.vim/$d/scala.vim https://raw.githubusercontent.com/derekwyatt/vim-scala/master/$d/scala.vim; done
-</code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Linux Advanced Commands]]></title>
-    <link href="http://k.arttechresearch.com/tech/2016/01/03/linux-advanced-commands/"/>
-    <updated>2016-01-03T22:20:08+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2016/01/03/linux-advanced-commands</id>
-    <content type="html"><![CDATA[<h2>mkdir</h2>
-
-<pre><code class="bash">$ mkdir -p project/{bin,venvs,app/{requirements,app/tests,docs,scripts}}
-</code></pre>
-
-<h2>tar</h2>
-
-<pre><code class="bash">$ tar xvf -C /path/to/dest xxx.tar.gz
-$ cd /path/to/dest &amp;&amp; tar xvf xxx.tar.gz
-$ cd /path/to/dest || mkdir -p /path/to/dest
-
-$ cd /path/to/dest || mkdir -p /path/to/dest &amp;&amp; tar xvf -C /path/to/dest xxx.tar.gz
-
-$ cd /path/to/dest || \
-&gt; mkdir -p /path/to/dest &amp;&amp; \
-&gt; tar xvf -C /path/to/dest xxx.tar.gz
-
-$ ( cd /path/to/dest || mkdir -p /path/to/dest &amp;&amp; \
-&gt; VAR=$PWD; cd ~; tar xvf -C $VAR archive.tar ) | \
-&gt; mailx admin -S "Archive contents"
-
-$ { cp $(VAR)a . &amp;&amp; chown -R guest.guest a &amp;&amp; \
-&gt; tar cvf newarchive.tar a; } | \
-&gt; mailx admin -S "New archive"
-</code></pre>
-
-<h2>patterns</h2>
-
-<h3>file name: xargs</h3>
-
-<pre><code class="bash">$ find some-file-criteria some-file-path | xargs some-great-command-that-needs-filename-arguements
-</code></pre>
-
-<h3>file contents: grep</h3>
-
-<pre><code class="bash">$ time grep and tmp/a/longfile.txt | wc -l             # multiple files
-$ time grep -c and tmp/a/longfile.txt                  # single file
-
-$ grep -o and tmp/a/longfile.txt | wc -l
-</code></pre>
-
-<h3>content lines: awk</h3>
-
-<pre><code class="bash">$ ls -la | awk '$6 == "Dec"'
-</code></pre>
 ]]></content>
   </entry>
   

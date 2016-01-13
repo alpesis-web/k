@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://k.arttechresearch.com/tech/2016/01/08/git-commands/</loc>
+    <lastmod>2016-01-08T18:06:55+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/life/2016/01/08/sns/</loc>
+    <lastmod>2016-01-08T17:11:58+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2016/01/07/real-time-analytics-with-apache-storm/</loc>
+    <lastmod>2016-01-07T23:26:08+08:00</lastmod>
+  </url>
+  <url>
     <loc>http://k.arttechresearch.com/life/2016/01/07/mooc/</loc>
     <lastmod>2016-01-07T14:46:32+08:00</lastmod>
   </url>
