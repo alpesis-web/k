@@ -10,53 +10,54 @@ footer: true
 
 ### OS
 
-[Ubuntu](http://www.ubuntu.com/download/server)
+[ubuntu](http://www.ubuntu.com/download/server)
 
 ### VM
 
-[VirtualBox](https://www.virtualbox.org/wiki/Downloads) 
-[Docker]() 
-[Vagrant]() 
+[virtualbox](https://www.virtualbox.org/wiki/Downloads) 
+[docker]() 
+[vagrant]() 
 
 ### Cloud
 
-[OpenStack]() 
-[Heroku](https://www.heroku.com/home) 
+[openStack]() 
+[heroku](https://www.heroku.com/home) 
 
-[Cloudera]() 
+[cloudera]() 
 
 ## Programming
 
 ### Python
 
+[python](https://www.python.org)
 
-[Django]() 
-[Tornado]() 
-
-
-[SQLAlchemy](http://www.sqlalchemy.org) 
+[django]() 
+[tornado]() 
 
 
-[Celery](http://www.celeryproject.org) 
+[sqlalchemy](http://www.sqlalchemy.org) 
+
+
+[celery](http://www.celeryproject.org) 
 
 
 [lettuce]() 
 [tox](https://tox.readthedocs.org/en/latest/index.html) 
 
 
-[PEP8]() 
-[Pylint]() 
+[pep8]() 
+[pylint]() 
 
-[Sphinx](http://sphinx-doc.org) 
+[sphinx](http://sphinx-doc.org) 
 
 ### Ruby
 
 ### Javascript
 
-[Node]() 
+[node]() 
 
-[Angular]() 
-[Backbone]() 
+[angular]() 
+[backbone]() 
 
 [phantom](http://phantomjs.org) 
 [grunt](http://gruntjs.com/getting-started) 
@@ -66,6 +67,13 @@ footer: true
 ### Go
 
 ### Scala
+
+[scala](http://www.scala-lang.org)
+[lift](http://liftweb.net/index)
+[sbt](http://www.scala-sbt.org)
+
+[scala style guide](http://docs.scala-lang.org/style/)
+
 
 ### Erlang
 
