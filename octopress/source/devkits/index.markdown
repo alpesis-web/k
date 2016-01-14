@@ -43,8 +43,6 @@ footer: true
 
 [lettuce]() 
 [tox](https://tox.readthedocs.org/en/latest/index.html) 
-
-
 [pep8]() 
 [pylint]() 
 
@@ -81,6 +79,23 @@ footer: true
 
 ## Web 
 
+### OAuth
+
+[oauth2](http://oauth.net/2/)
+
+### developers
+
+[paypal](https://developer.paypal.com)
+
+[github](https://developer.github.com)
+
+[twitter](https://dev.twitter.com)
+[facebook](https://developers.facebook.com)
+[google](https://developers.google.com)
+
+### webkit
+
+[how secure is my passowrd](https://howsecureismypassword.net)
 
 ### JS Libraries
 
