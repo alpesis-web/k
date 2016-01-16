@@ -4,7 +4,7 @@
   <title><![CDATA[K]]></title>
   <link href="http://k.arttechresearch.com/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2016-01-14T13:28:47+08:00</updated>
+  <updated>2016-01-16T19:28:51+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[K]]></name>
@@ -12,6 +12,149 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Solving a Technical Question]]></title>
+    <link href="http://k.arttechresearch.com/tech/2016/01/14/solving-a-technical-question/"/>
+    <updated>2016-01-14T15:24:40+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2016/01/14/solving-a-technical-question</id>
+    <content type="html"><![CDATA[<p>Source: Cracking the Coding Interview</p>
+
+<p>5 Steps</p>
+
+<ol>
+<li>Ask questions.</li>
+<li>Design a algorithm.</li>
+<li>Pseudocode</li>
+<li>Code</li>
+<li>Test</li>
+</ol>
+
+
+<h2>1. Ask Questions</h2>
+
+<ul>
+<li>What are the data types?</li>
+<li>How much data is there?</li>
+<li>What assuptions do you need to solve the problem?</li>
+<li>WHo is the user?</li>
+</ul>
+
+
+<h2>2. Design a algorithm</h2>
+
+<ul>
+<li>What are its space and time complexity?</li>
+<li>What happens if there is a lot of data?</li>
+<li>Does your design cause other issues? For example, if you&rsquo;re creating a modified version of a binary search tree, did your design impact the time for insert, find, or delete?</li>
+<li>If there are other issues or limitations, did you make the right trade-offs? For which scenarios might the trade-off be less optimal?</li>
+<li>If they gave you specific data (e.g., mentioned that the data is ages, or in sorted order), have you leveraged that information? Usually there&rsquo;s a reason that an inter- viewer gave you specific information.</li>
+</ul>
+
+
+<p>approaches</p>
+
+<ul>
+<li>examplify</li>
+<li>pattern matching</li>
+<li>simplify and generalize</li>
+<li>base case and build</li>
+<li>data structure brainstorm</li>
+</ul>
+
+
+<h2>3. Pseudocode</h2>
+
+<h2>4. Code</h2>
+
+<ul>
+<li>correct: expected and unexpected inputs</li>
+<li>efficient: time and space</li>
+<li>simple</li>
+<li>readable</li>
+<li>maintainable</li>
+</ul>
+
+
+<h2>5. Test</h2>
+
+<ul>
+<li>Extremecases: 0, negative, null, maximums, minimums.</li>
+<li>User error:What happens if the user passes in null or a negative value?</li>
+<li>General cases: Test the normal case.</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Power Table]]></title>
+    <link href="http://k.arttechresearch.com/tech/2016/01/14/power-table/"/>
+    <updated>2016-01-14T15:08:07+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2016/01/14/power-table</id>
+    <content type="html"><![CDATA[<table>
+<thead>
+<tr>
+<th style="text-align:left;"> Power of 2 </th>
+<th style="text-align:left;"> Exact Value (X)   </th>
+<th style="text-align:left;"> Approx. Value </th>
+<th style="text-align:left;"> X Bytes into MB, GB, etc </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> 7          </td>
+<td style="text-align:left;"> 128               </td>
+<td style="text-align:left;">               </td>
+<td style="text-align:left;">                          </td>
+</tr>
+<tr>
+<td style="text-align:left;"> 8          </td>
+<td style="text-align:left;"> 256               </td>
+<td style="text-align:left;">               </td>
+<td style="text-align:left;">                          </td>
+</tr>
+<tr>
+<td style="text-align:left;"> 10         </td>
+<td style="text-align:left;"> 1024              </td>
+<td style="text-align:left;"> 1 thousand    </td>
+<td style="text-align:left;"> 1 K                      </td>
+</tr>
+<tr>
+<td style="text-align:left;"> 16         </td>
+<td style="text-align:left;"> 65,536            </td>
+<td style="text-align:left;">               </td>
+<td style="text-align:left;"> 64 K                     </td>
+</tr>
+<tr>
+<td style="text-align:left;"> 20         </td>
+<td style="text-align:left;"> 1,048,576         </td>
+<td style="text-align:left;"> 1 million     </td>
+<td style="text-align:left;"> 1 MB                     </td>
+</tr>
+<tr>
+<td style="text-align:left;"> 30         </td>
+<td style="text-align:left;"> 1,073,741,824     </td>
+<td style="text-align:left;"> 1 billion     </td>
+<td style="text-align:left;"> 1 GB                     </td>
+</tr>
+<tr>
+<td style="text-align:left;"> 32         </td>
+<td style="text-align:left;"> 4,294,967,296     </td>
+<td style="text-align:left;">               </td>
+<td style="text-align:left;"> 4 GB                     </td>
+</tr>
+<tr>
+<td style="text-align:left;"> 40         </td>
+<td style="text-align:left;"> 1,099,511,627,776 </td>
+<td style="text-align:left;"> 1 trillion    </td>
+<td style="text-align:left;"> 1 TB                     </td>
+</tr>
+</tbody>
+</table>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Data Visualization With D3]]></title>
@@ -2459,173 +2602,6 @@ sub routines, classes, values or type specifications</li>
 <li><a href="http://doc.aldebaran.com/1-14/dev/tools/opennao.html#opennao-user-account">OpenNAO - NAO OS</a></li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Getting Started With Cassandra]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/12/28/getting-started-with-cassandra/"/>
-    <updated>2015-12-28T18:26:26+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/12/28/getting-started-with-cassandra</id>
-    <content type="html"><![CDATA[<h2>1. Installation</h2>
-
-<ul>
-<li>Ubuntu 14.04</li>
-<li>Java 8</li>
-<li>Apache Cassandra</li>
-</ul>
-
-
-<p>Java</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo add-apt-repository ppa:webupd8team/java
-</span><span class='line'><span class="nv">$ </span>sudo apt-get update
-</span><span class='line'><span class="nv">$ </span>sudo apt-get install oracle-java8-installer
-</span><span class='line'><span class="nv">$ </span>java -version
-</span><span class='line'><span class="nv">$ </span>sudo apt-get install oracle-java8-set-default
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Cassandra</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo vim /etc/apt/source.list.d/cassandra.list
-</span><span class='line'>
-</span><span class='line'><span class="c"># add source list</span>
-</span><span class='line'>deb http://www.apache.org/dist/cassandra/debian 21x main
-</span><span class='line'>deb-src http://www.apache.org/dist/cassandra/debian 21x main
-</span><span class='line'>
-</span><span class='line'><span class="c"># add public key</span>
-</span><span class='line'><span class="nv">$ </span>gpg --keyserver pgp.mit.edu --recv-keys F758CE318D77295D
-</span><span class='line'><span class="nv">$ </span>gpg --export --armor F758CE318D77295D <span class="p">|</span> sudo apt-key add -
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span>sudo apt-get update
-</span><span class='line'><span class="nv">$ </span>sudo apt-get install cassandra
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>2. Configuration</h2>
-
-<p>config paths:</p>
-
-<ul>
-<li>data directories: /var/lib/cassandra</li>
-<li>log directory: /var/log/cassandra</li>
-<li>runtime files: /var/run/cassandra</li>
-<li>environment settings: /usr/share/cassandra</li>
-<li>JAR files: /usr/share/cassandra/lib</li>
-<li>binary files: /usr/bin</li>
-<li>/usr/sbin</li>
-<li>configuration files: /etc/cassandra</li>
-<li>service startup script: /etc/init.d</li>
-<li>cassandra user limits: /etc/security/limits.d</li>
-<li>/etc/default</li>
-</ul>
-
-
-<h2>3. Testing</h2>
-
-<p>running cassandra</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo cassandra
-</span><span class='line'><span class="nv">$ </span>sudo cassandra -f
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span>cassandra-cli
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>running cql</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo cqlsh
-</span><span class='line'><span class="nv">$ </span>sudo cqlsh 127.0.0.1 9042
-</span><span class='line'>Connected to Test Cluster at 127.0.0.1:9042.
-</span><span class='line'><span class="o">[</span>cqlsh 5.0.1 <span class="p">|</span> Cassandra 2.1.12 <span class="p">|</span> CQL spec 3.2.1 <span class="p">|</span> Native protocol v3<span class="o">]</span>
-</span><span class='line'>Use HELP <span class="k">for</span> help.
-</span><span class='line'>
-</span><span class='line'>cqlsh&gt; CREATE KEYSPACE <span class="nb">test </span>WITH <span class="nv">REPLICATION</span> <span class="o">=</span> <span class="o">{</span> <span class="s1">&#39;class&#39;</span>: <span class="s1">&#39;SimpleStrategy&#39;</span>, <span class="s1">&#39;replication_factor&#39;</span>: <span class="m">1</span> <span class="o">}</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>cqlsh&gt; USE <span class="nb">test</span><span class="p">;</span>
-</span><span class='line'>cqlsh:test&gt; CREATE TABLE users <span class="o">(</span>
-</span><span class='line'>        ... user_id int PRIMARY KEY,
-</span><span class='line'>        ... fname text,
-</span><span class='line'>        ... lname text
-</span><span class='line'>        ... <span class="o">)</span><span class="p">;</span>
-</span><span class='line'>cqlsh:test&gt; INSERT INTO users <span class="o">(</span>user_id, fname, lname<span class="o">)</span> VALUES <span class="o">(</span>1722, <span class="s1">&#39;joe&#39;</span>, <span class="s1">&#39;lambert&#39;</span><span class="o">)</span><span class="p">;</span>
-</span><span class='line'>cqlsh:test&gt; INSERT INTO users <span class="o">(</span>user_id, fname, lname<span class="o">)</span> VALUES <span class="o">(</span>1832, <span class="s1">&#39;alice&#39;</span>, <span class="s1">&#39;parker&#39;</span><span class="o">)</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>cqlsh:test&gt; SELECT * FROM users<span class="p">;</span>
-</span><span class='line'>cqlsh:test&gt; CREATE INDEX ON users <span class="o">(</span>lname<span class="o">)</span><span class="p">;</span>
-</span><span class='line'>cqlsh:test&gt; SELECT * FROM users WHERE <span class="nv">lname</span> <span class="o">=</span> <span class="s1">&#39;smith&#39;</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Trouble Shooting</h2>
-
-<h3>CQL Connection refused</h3>
-
-<p>error message</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>Connection error: <span class="o">(</span><span class="s1">&#39;Unable to connect to any servers&#39;</span>, <span class="o">{</span><span class="s1">&#39;127.0.0.1&#39;</span>: error<span class="o">(</span>111, <span class="s2">&quot;Tried connecting to [(&#39;127.0.0.1&#39;, 9042)]. Last error: Connection refused&quot;</span><span class="o">)})</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>solution: update Java Version (Up to Java 8)</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[A Little Bird]]></title>
-    <link href="http://k.arttechresearch.com/life/2015/12/27/a-little-bird/"/>
-    <updated>2015-12-27T21:10:14+08:00</updated>
-    <id>http://k.arttechresearch.com/life/2015/12/27/a-little-bird</id>
-    <content type="html"><![CDATA[<h2>小鸟</h2>
-
-<p>小鸟和妈妈住在树林里，有一天，小鸟想到树下看看地面。这时，恰好风雨，树枝与地面平衡，小鸟顺着树枝
-到地面了。</p>
-
-<p>到了地面，小鸟想回到树上，小鸟看看树上，蹦啊跳呀，尝试几次，跃回了树上，回到了最初和妈妈站立的地
-方。小鸟哭了，妈妈转身，看着小鸟，惊讶不已。</p>
 ]]></content>
   </entry>
   
