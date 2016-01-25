@@ -749,9 +749,6 @@
     <lastmod>2006-05-29T11:15:00+08:00</lastmod>
   </url>
   <url>
-    <loc>http://k.arttechresearch.com/art/</loc>
-  </url>
-  <url>
     <loc>http://k.arttechresearch.com/</loc>
   </url>
   <url>
@@ -759,6 +756,9 @@
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tech/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/art/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/archives/</loc>

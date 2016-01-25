@@ -9,8 +9,8 @@
   <meta name="author" content="K">
 
   
-  <meta name="description" content="Projects AI HangmanBot HangmanBot is an app for automatically playing a Hangman Game which
-is developed by Python. It uses the English word elements &hellip;">
+  <meta name="description" content="Projects ## AI #### [HangmanBot](https://github.com/KellyChan/hangmanbot) HangmanBot is an app for automatically playing a Hangman Game which
+is &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +19,7 @@ is developed by Python. It uses the English word elements &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://k.arttechresearch.com/projects/">
+  <link rel="canonical" href="http://k.arttechresearch.com/:w">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="K" type="application/atom+xml">
@@ -124,21 +124,24 @@ is developed by Python. It uses the English word elements &hellip;">
     <h1 class="entry-title">Projects</h1>
   </header>
   
-  <h2>AI</h2>
+  ## AI
 
-<h4><a href="https://github.com/KellyChan/hangmanbot">HangmanBot</a></h4>
 
-<p>HangmanBot is an app for automatically playing a Hangman Game which
+#### [HangmanBot](https://github.com/KellyChan/hangmanbot)
+
+HangmanBot is an app for automatically playing a Hangman Game which
 is developed by Python. It uses the English word elements (word root,
-sufixes, prefixes) which is leart from a dictionary to guess the words.</p>
+sufixes, prefixes) which is leart from a dictionary to guess the words.
 
-<h2>Framework and Templates</h2>
 
-<h4><a href="https://github.com/KellyChan/sphinx-framework-rtd">sphinx-framework-rtd</a></h4>
+## Framework and Templates
 
-<p>Sphinx frameword RTD is the development docs template in the devlopment phase
+
+#### [sphinx-framework-rtd](https://github.com/KellyChan/sphinx-framework-rtd)
+
+Sphinx frameword RTD is the development docs template in the devlopment phase
 which is integrated sphinx-autobuild and ReadTheDocs framword and the document
-templates etc.</p>
+templates etc.
 
   
     <footer>
@@ -216,8 +219,8 @@ templates etc.</p>
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://k.arttechresearch.com/projects/index.html';
-        var disqus_url = 'http://k.arttechresearch.com/projects/index.html';
+        var disqus_identifier = 'http://k.arttechresearch.com/:w';
+        var disqus_url = 'http://k.arttechresearch.com/:w';
         var disqus_script = 'embed.js';
       
     (function () {
