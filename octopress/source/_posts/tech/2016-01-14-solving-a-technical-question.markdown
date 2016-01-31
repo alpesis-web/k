@@ -45,6 +45,12 @@ approaches
 
 ## 4. Code
 
+- correct: expected and unexpected inputs
+- efficient: time and space
+- simple
+- readable
+- maintainable
+
 ## 5. Test
 
 - Extremecases: 0, negative, null, maximums, minimums.
