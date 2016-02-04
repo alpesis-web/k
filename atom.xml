@@ -4,7 +4,7 @@
   <title><![CDATA[K]]></title>
   <link href="http://k.arttechresearch.com/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2016-02-03T02:36:26+08:00</updated>
+  <updated>2016-02-04T17:36:04+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[K]]></name>
@@ -12,6 +12,348 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Installing Caffe on Ubuntu 14.04]]></title>
+    <link href="http://k.arttechresearch.com/tech/2016/02/03/installing-caffe-on-ubuntu-14-dot-04/"/>
+    <updated>2016-02-03T05:07:12+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2016/02/03/installing-caffe-on-ubuntu-14-dot-04</id>
+    <content type="html"><![CDATA[<h2>Prequisitions</h2>
+
+<ul>
+<li>Vagrant/VirtualBox</li>
+<li>Ubuntu 14.04</li>
+<li>VM Memory: 4096 MB</li>
+</ul>
+
+
+<h2>Caffe Installation</h2>
+
+<p>Requirements</p>
+
+<ul>
+<li>CUDA</li>
+<li>BLAS</li>
+<li>OpenCV</li>
+<li>Anaconda</li>
+<li>Boost</li>
+<li>Caffe dependencies</li>
+<li>Protobuf</li>
+<li>Caffe</li>
+</ul>
+
+
+<h3>CUDA</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># reference: https://gist.github.com/titipata/f0ef48ad2f0ebc07bcb9</span>
+</span><span class='line'><span class="c"># check version</span>
+</span><span class='line'><span class="nv">$ </span>lspci <span class="p">|</span> grep -i nvidia
+</span><span class='line'><span class="nv">$ </span>uname -m <span class="o">&amp;&amp;</span> cat /etc/*release
+</span><span class='line'><span class="nv">$ </span>gcc --version
+</span><span class='line'>
+</span><span class='line'><span class="c"># CUDA</span>
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /tmp
+</span><span class='line'><span class="nv">$ </span>wget http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1404/x86_64/cuda-repo-ubuntu1404_6.5-14_amd64.deb
+</span><span class='line'><span class="nv">$ </span>sudo dpkg -i cuda-repo-ubuntu1404_6.5-14_amd64.deb
+</span><span class='line'><span class="nv">$ </span>sudo apt-get update
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install cuda
+</span><span class='line'><span class="nv">$ </span>sudo reboot
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>BLAS</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install libopenblas-dev
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>OpenCV</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install git unzip
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /tmp
+</span><span class='line'><span class="nv">$ </span>wget https://raw.githubusercontent.com/jayrambhia/Install-OpenCV/master/Ubuntu/2.4/opencv2_4_9.sh
+</span><span class='line'><span class="nv">$ </span>sudo chmod +x opencv2_4_9.sh
+</span><span class='line'><span class="nv">$ </span>./opencv2_4_9.sh
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Anaconda</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /tmp
+</span><span class='line'><span class="nv">$ </span>wget http://09c8d0b2229f813c1b93-c95ac804525aac4b6dba79b00b39d1d3.r79.cf1.rackcdn.com/Anaconda-2.1.0-Linux-x86_64.sh
+</span><span class='line'><span class="nv">$ </span>sudo bash Anaconda-2.1.0-Linux-x86.sh
+</span><span class='line'><span class="c"># path: /usr/local/anaconda</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Boost</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install libboost-all-dev
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Caffe dependencies</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># reference: http://caffe.berkeleyvision.org/install_apt.html</span>
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install libprotobuf-dev libleveldb-dev libsnappy-dev libopencv-dev libboost-all-devlibhdf5-serial-dev
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install libgflags-dev libgoogle-glog-dev liblmdb-dev protobuf-compiler
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Protobuf</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install python-pip
+</span><span class='line'><span class="nv">$ </span>sudo pip install protobuf
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Caffe</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /usr/local
+</span><span class='line'><span class="nv">$ </span>sudo git clone https://github.com/BVLC/caffe
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>caffe/
+</span><span class='line'><span class="nv">$ </span>sudo cp Makefile.config.example Makefile.config
+</span><span class='line'><span class="c"># modify Makefile.config if needed</span>
+</span><span class='line'><span class="c">###################################################</span>
+</span><span class='line'><span class="c"># CPU-only switch (uncomment to build without GPU support).</span>
+</span><span class='line'>CPU_ONLY :<span class="o">=</span> 1
+</span><span class='line'><span class="c">###################################################</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>sudo make all
+</span><span class='line'><span class="nv">$ </span>sudo make <span class="nb">test</span>
+</span><span class='line'><span class="nv">$ </span>sudo vim ~/.bashrc              <span class="c"># update paths</span>
+</span><span class='line'><span class="nv">$ </span><span class="nb">source</span> ~/.bashrc
+</span><span class='line'><span class="nv">$ </span>make runtest
+</span><span class='line'>...
+</span><span class='line'><span class="o">[</span>----------<span class="o">]</span> Global <span class="nb">test </span>environment tear-down
+</span><span class='line'><span class="o">[==========]</span> <span class="m">1019</span> tests from <span class="m">144</span> <span class="nb">test </span>cases ran. <span class="o">(</span><span class="m">34669</span> ms total<span class="o">)</span>
+</span><span class='line'><span class="o">[</span>  PASSED  <span class="o">]</span> <span class="m">1019</span> tests.
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>~/.bashrc</code> config:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># CUDA</span>
+</span><span class='line'><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/usr/local/cuda-7.5/bin:<span class="nv">$PATH</span>
+</span><span class='line'><span class="nb">export </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span>/usr/local/cuda-7.5/lib64:<span class="nv">$LD_LIBRARY_PATH</span>
+</span><span class='line'><span class="nb">export </span>PATH
+</span><span class='line'><span class="c"># Anaconda</span>
+</span><span class='line'><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/usr/local/anaconda/bin:<span class="nv">$PATH</span>
+</span><span class='line'><span class="c"># Caffe Root</span>
+</span><span class='line'><span class="nb">export </span><span class="nv">CAFFE_ROOT</span><span class="o">=</span>/usr/local/caffe
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>config python library</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo make pycaffe
+</span><span class='line'><span class="nv">$ </span>sudo make distribute
+</span><span class='line'><span class="c"># make dir for custom python modules, install caffe</span>
+</span><span class='line'><span class="nv">$ </span>mkdir ~/pycaffe
+</span><span class='line'><span class="nv">$ </span>mv distribute/python/caffe ~/pycaffe
+</span><span class='line'><span class="c">#################################################################</span>
+</span><span class='line'><span class="c"># set PYTHONPATH (this should go in your .bashrc or whatever</span>
+</span><span class='line'><span class="c"># export PYTHONPATH=${HOME}/pycaffe:$PYTHONPATH</span>
+</span><span class='line'><span class="nb">export </span><span class="nv">PYTHONPATH</span><span class="o">=</span>/usr/local/caffe/python:<span class="nv">$PYTHONPATH</span>
+</span><span class='line'><span class="c">#################################################################</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Install the python dependencies</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /usr/local/cafffe/python
+</span><span class='line'><span class="nv">$ </span>sudo pip install -r requirements.txt
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>import caffe on IPython</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># fixed Anaconda issue</span>
+</span><span class='line'><span class="nv">$ </span>sudo rm /usr/local/anaconda/lib/libm.*
+</span><span class='line'><span class="nv">$ </span>ipython
+</span><span class='line'><span class="nv">$ </span>conda install protobuf
+</span><span class='line'><span class="c"># import caffe</span>
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /usr/local/caffe/python
+</span><span class='line'><span class="nv">$ </span>import caffe
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>import caffe on python script</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># import matplotlib for fixing the issue when importing caffe</span>
+</span><span class='line'><span class="c"># so, matplotlib is a must</span>
+</span><span class='line'>import matplotlib
+</span><span class='line'>matplotlib.use<span class="o">(</span><span class="s1">&#39;Agg&#39;</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>import sys
+</span><span class='line'>sys.path.insert<span class="o">(</span>0, <span class="s1">&#39;/usr/local/caffe/python/&#39;</span><span class="o">)</span>
+</span><span class='line'>import caffe
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>DeepDream</h2>
+
+<h3>Dependencies</h3>
+
+<ul>
+<li>Python: scipy, numpy, pillow</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># python</span>
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install python-dev python-virtualenv
+</span><span class='line'><span class="c"># pillow</span>
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install libtiff5-dev libjpeg8-dev zlib1g-dev <span class="se">\</span>
+</span><span class='line'>libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python-tk
+</span><span class='line'><span class="c"># scipy</span>
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install libblas-dev liblapack-dev libatlas-base-dev gfortran
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>base.txt</code>: python requirements</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># NOTE: if it doesn&#39;t run on anaconda, `scikit-image` and `cython` </span>
+</span><span class='line'><span class="c"># must be installed on PYTHONPATH. Otherwise, it will show some </span>
+</span><span class='line'><span class="c"># errors when `import caffe`.</span>
+</span><span class='line'><span class="nv">numpy</span><span class="o">==</span>1.10.4
+</span><span class='line'><span class="nv">Pillow</span><span class="o">==</span>3.1.0
+</span><span class='line'><span class="nv">scipy</span><span class="o">==</span>0.17.0
+</span><span class='line'><span class="nv">protobuf</span><span class="o">==</span>2.6.1
+</span><span class='line'>scikit-image<span class="o">==</span>0.11.3
+</span><span class='line'><span class="nv">cython</span><span class="o">==</span>0.23.4
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo pip install -r base.txt
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Repo</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git clone https://github.com/google/deepdream.git
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>deepdream
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Models</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>wget wget -P /usr/local/caffe/models/bvlc_googlenet http://dl.caffe.berkeleyvision.org/bvlc_googlenet.caffemodel
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Run</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>ipython notebook ./dream.ipynb
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Solving a Technical Question]]></title>
@@ -2567,32 +2909,6 @@ sub routines, classes, values or type specifications</li>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo service filebeat restart
 </span><span class='line'><span class="nv">$ </span>sudo update-rc.d filebeat defaults <span class="m">95</span> 10
 </span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Setting Up OpenNao With VirtualBox]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/12/28/setting-up-opennao-with-virtualbox/"/>
-    <updated>2015-12-28T22:44:11+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/12/28/setting-up-opennao-with-virtualbox</id>
-    <content type="html"><![CDATA[<h2>1. Downloading OpenNao</h2>
-
-<p>Download OpenNao <a href="https://community.aldebaran.com/en/dl/ZmllbGRfY29sbGVjdGlvbl9pdGVtLTU1NC1maWVsZF9zb2Z0X2RsX2V4dGVybmFsX2xpbmstMC1mYTc0ZTQ%3D?width=500&amp;height=auto">OVA file</a>.</p>
-
-<h2>2. Setting up VirtualBox</h2>
-
-<p>Start VirtualBox: File -> Import Appliance -> Import *.ova file</p>
-
-<p>Start VM, login with username/password: nao/nao</p>
-
-<h2>References</h2>
-
-<ul>
-<li><a href="https://community.aldebaran.com/en/resources/software/language/en-gb">Aldebaran Dev Toolkits</a></li>
-<li><a href="http://doc.aldebaran.com/1-14/dev/tools/vm-setup.html">Setting up the OpenNAO virtual machine</a></li>
-<li><a href="http://doc.aldebaran.com/1-14/dev/tools/opennao.html#opennao-user-account">OpenNAO - NAO OS</a></li>
-</ul>
 
 ]]></content>
   </entry>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tech | K]]></title>
   <link href="http://k.arttechresearch.com/categories/tech/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2016-02-03T02:36:26+08:00</updated>
+  <updated>2016-02-04T17:36:04+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[K]]></name>
@@ -12,6 +12,223 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Installing Caffe on Ubuntu 14.04]]></title>
+    <link href="http://k.arttechresearch.com/tech/2016/02/03/installing-caffe-on-ubuntu-14-dot-04/"/>
+    <updated>2016-02-03T05:07:12+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2016/02/03/installing-caffe-on-ubuntu-14-dot-04</id>
+    <content type="html"><![CDATA[<h2>Prequisitions</h2>
+
+<ul>
+<li>Vagrant/VirtualBox</li>
+<li>Ubuntu 14.04</li>
+<li>VM Memory: 4096 MB</li>
+</ul>
+
+
+<h2>Caffe Installation</h2>
+
+<p>Requirements</p>
+
+<ul>
+<li>CUDA</li>
+<li>BLAS</li>
+<li>OpenCV</li>
+<li>Anaconda</li>
+<li>Boost</li>
+<li>Caffe dependencies</li>
+<li>Protobuf</li>
+<li>Caffe</li>
+</ul>
+
+
+<h3>CUDA</h3>
+
+<pre><code class="bash"># reference: https://gist.github.com/titipata/f0ef48ad2f0ebc07bcb9
+# check version
+$ lspci | grep -i nvidia
+$ uname -m &amp;&amp; cat /etc/*release
+$ gcc --version
+
+# CUDA
+$ cd /tmp
+$ wget http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1404/x86_64/cuda-repo-ubuntu1404_6.5-14_amd64.deb
+$ sudo dpkg -i cuda-repo-ubuntu1404_6.5-14_amd64.deb
+$ sudo apt-get update
+$ sudo apt-get install cuda
+$ sudo reboot
+</code></pre>
+
+<h3>BLAS</h3>
+
+<pre><code class="bash">$ sudo apt-get install libopenblas-dev
+</code></pre>
+
+<h3>OpenCV</h3>
+
+<pre><code class="bash">$ sudo apt-get install git unzip
+$ cd /tmp
+$ wget https://raw.githubusercontent.com/jayrambhia/Install-OpenCV/master/Ubuntu/2.4/opencv2_4_9.sh
+$ sudo chmod +x opencv2_4_9.sh
+$ ./opencv2_4_9.sh
+</code></pre>
+
+<h3>Anaconda</h3>
+
+<pre><code class="bash">$ cd /tmp
+$ wget http://09c8d0b2229f813c1b93-c95ac804525aac4b6dba79b00b39d1d3.r79.cf1.rackcdn.com/Anaconda-2.1.0-Linux-x86_64.sh
+$ sudo bash Anaconda-2.1.0-Linux-x86.sh
+# path: /usr/local/anaconda
+</code></pre>
+
+<h3>Boost</h3>
+
+<pre><code class="bash">$ sudo apt-get install libboost-all-dev
+</code></pre>
+
+<h3>Caffe dependencies</h3>
+
+<pre><code class="bash"># reference: http://caffe.berkeleyvision.org/install_apt.html
+$ sudo apt-get install libprotobuf-dev libleveldb-dev libsnappy-dev libopencv-dev libboost-all-devlibhdf5-serial-dev
+$ sudo apt-get install libgflags-dev libgoogle-glog-dev liblmdb-dev protobuf-compiler
+</code></pre>
+
+<h3>Protobuf</h3>
+
+<pre><code class="bash">$ sudo apt-get install python-pip
+$ sudo pip install protobuf
+</code></pre>
+
+<h3>Caffe</h3>
+
+<pre><code class="bash">$ cd /usr/local
+$ sudo git clone https://github.com/BVLC/caffe
+$ cd caffe/
+$ sudo cp Makefile.config.example Makefile.config
+# modify Makefile.config if needed
+###################################################
+# CPU-only switch (uncomment to build without GPU support).
+CPU_ONLY := 1
+###################################################
+
+$ sudo make all
+$ sudo make test
+$ sudo vim ~/.bashrc              # update paths
+$ source ~/.bashrc
+$ make runtest
+...
+[----------] Global test environment tear-down
+[==========] 1019 tests from 144 test cases ran. (34669 ms total)
+[  PASSED  ] 1019 tests.
+</code></pre>
+
+<p><code>~/.bashrc</code> config:</p>
+
+<pre><code class="bash"># CUDA
+export PATH=/usr/local/cuda-7.5/bin:$PATH
+export LD_LIBRARY_PATH=/usr/local/cuda-7.5/lib64:$LD_LIBRARY_PATH
+export PATH
+# Anaconda
+export PATH=/usr/local/anaconda/bin:$PATH
+# Caffe Root
+export CAFFE_ROOT=/usr/local/caffe
+</code></pre>
+
+<p>config python library</p>
+
+<pre><code class="bash">$ sudo make pycaffe
+$ sudo make distribute
+# make dir for custom python modules, install caffe
+$ mkdir ~/pycaffe
+$ mv distribute/python/caffe ~/pycaffe
+#################################################################
+# set PYTHONPATH (this should go in your .bashrc or whatever
+# export PYTHONPATH=${HOME}/pycaffe:$PYTHONPATH
+export PYTHONPATH=/usr/local/caffe/python:$PYTHONPATH
+#################################################################
+</code></pre>
+
+<p>Install the python dependencies</p>
+
+<pre><code class="bash">$ cd /usr/local/cafffe/python
+$ sudo pip install -r requirements.txt
+</code></pre>
+
+<p>import caffe on IPython</p>
+
+<pre><code class="bash"># fixed Anaconda issue
+$ sudo rm /usr/local/anaconda/lib/libm.*
+$ ipython
+$ conda install protobuf
+# import caffe
+$ cd /usr/local/caffe/python
+$ import caffe
+</code></pre>
+
+<p>import caffe on python script</p>
+
+<pre><code># import matplotlib for fixing the issue when importing caffe
+# so, matplotlib is a must
+import matplotlib
+matplotlib.use('Agg')
+
+import sys
+sys.path.insert(0, '/usr/local/caffe/python/')
+import caffe
+</code></pre>
+
+<h2>DeepDream</h2>
+
+<h3>Dependencies</h3>
+
+<ul>
+<li>Python: scipy, numpy, pillow</li>
+</ul>
+
+
+<pre><code class="bash"># python
+$ sudo apt-get install python-dev python-virtualenv
+# pillow
+$ sudo apt-get install libtiff5-dev libjpeg8-dev zlib1g-dev \
+libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python-tk
+# scipy
+$ sudo apt-get install libblas-dev liblapack-dev libatlas-base-dev gfortran
+</code></pre>
+
+<p><code>base.txt</code>: python requirements</p>
+
+<pre><code># NOTE: if it doesn't run on anaconda, `scikit-image` and `cython` 
+# must be installed on PYTHONPATH. Otherwise, it will show some 
+# errors when `import caffe`.
+numpy==1.10.4
+Pillow==3.1.0
+scipy==0.17.0
+protobuf==2.6.1
+scikit-image==0.11.3
+cython==0.23.4
+</code></pre>
+
+<pre><code class="bash">$ sudo pip install -r base.txt
+</code></pre>
+
+<h3>Repo</h3>
+
+<pre><code class="bash">$ git clone https://github.com/google/deepdream.git
+$ cd deepdream
+</code></pre>
+
+<h3>Models</h3>
+
+<pre><code class="bash">$ wget wget -P /usr/local/caffe/models/bvlc_googlenet http://dl.caffe.berkeleyvision.org/bvlc_googlenet.caffemodel
+</code></pre>
+
+<h3>Run</h3>
+
+<pre><code class="bash">$ ipython notebook ./dream.ipynb
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Solving a Technical Question]]></title>
@@ -227,60 +444,6 @@
 <p><img src="https://s-media-cache-ak0.pinimg.com/736x/da/f6/be/daf6be7b4e7a69ce774b04f7e8a08738.jpg" /></p>
 
 <p><img src="https://s-media-cache-ak0.pinimg.com/736x/6c/c0/86/6cc0860c7a360a43e32edea481c7ac80.jpg" /></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Git Commands]]></title>
-    <link href="http://k.arttechresearch.com/tech/2016/01/08/git-commands/"/>
-    <updated>2016-01-08T18:06:55+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2016/01/08/git-commands</id>
-    <content type="html"><![CDATA[<ul>
-<li>config</li>
-<li>remote</li>
-<li>pull/commit</li>
-<li>log</li>
-</ul>
-
-
-<h2>Config</h2>
-
-<pre><code class="bash">$ git config --global user.name 'xxx'
-$ git config --global user.email 'xxx'
-$ git config --local user.name 'xxx'
-$ git config --local user.email 'xxx'
-
-$ git config --global alias.logtree "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset' --abbrev-commit"
-</code></pre>
-
-<h2>Remote</h2>
-
-<pre><code class="bash">$ git remote add origin https://xxxx                    # set remote url
-$ git remote set-url origin https://xxxx                # update remote url
-</code></pre>
-
-<h2>Pull</h2>
-
-<pre><code class="bash">$ git pull --rebase origin branch_name
-$ git fetch origin
-$ git rebase origin
-</code></pre>
-
-<h2>Commit</h2>
-
-<pre><code class="bash">$ git diff &lt;file&gt;
-$ git add &lt;file(s)&gt;
-$ git status
-$ git reset HEAD &lt;file&gt;
-$ git commit -m "xxx"
-$ git push origin &lt;branch_name&gt;
-</code></pre>
-
-<h2>Log</h2>
-
-<pre><code class="bash">$ git log
-$ git show &lt;id&gt;
-</code></pre>
 ]]></content>
   </entry>
   
