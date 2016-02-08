@@ -4,7 +4,7 @@ title: "Reading"
 date: 2015-11-08 02:48:04 +0800
 comments: true
 categories: [life]
-tags: [leisure]
+tags: [reading]
 toc: false
 ---
 
