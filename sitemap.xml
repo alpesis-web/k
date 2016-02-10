@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://k.arttechresearch.com/art/2016/02/10/spring/</loc>
+    <lastmod>2016-02-10T16:44:59+08:00</lastmod>
+  </url>
+  <url>
     <loc>http://k.arttechresearch.com/tech/2016/02/03/installing-caffe-on-ubuntu-14-dot-04/</loc>
     <lastmod>2016-02-03T05:07:12+08:00</lastmod>
   </url>
