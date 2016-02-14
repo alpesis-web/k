@@ -9,14 +9,15 @@
   <meta name="author" content="K">
 
   
-  <meta name="description" content="Prequisitions Vagrant/VirtualBox
-Ubuntu 14.04
-VM Memory: 4096 MB Caffe Installation Requirements CUDA
-BLAS
-OpenCV
-Anaconda
-Boost
-Caffe dependencies &hellip;">
+  <meta name="description" content="Steps Installations
+Project creation Installations Java 8
+Maven 3: a build tool
+Tomcat 8: a web server
+Eclipse: IDE Java 1
+2
+3
+4
+$ sudo add-apt- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -126,6 +127,435 @@ Caffe dependencies &hellip;">
       <div class="blog-index">
 
   
+  
+  
+    <article>
+      
+  <header>
+
+    
+      <h1 class="entry-title"><a href="/tech/2016/02/14/getting-started-with-spring-mvc/">Getting Started With Spring MVC</a></h1>
+    
+
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2016-02-14T18:04:37+08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>6:04 pm</span></time>
+        
+           | <a href="/tech/2016/02/14/getting-started-with-spring-mvc/#disqus_thread"
+             data-disqus-identifier="http://k.arttechresearch.com/tech/2016/02/14/getting-started-with-spring-mvc/">Comments</a>
+        
+      </p>
+    
+
+  </header>
+
+
+
+  <div class="entry-content"><p>Steps</p>
+
+<ul>
+<li>Installations</li>
+<li>Project creation</li>
+</ul>
+
+
+<h2>Installations</h2>
+
+<ul>
+<li>Java 8</li>
+<li>Maven 3: a build tool</li>
+<li>Tomcat 8: a web server</li>
+<li>Eclipse: IDE</li>
+</ul>
+
+
+<h3>Java</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo add-apt-repository -y ppa:webupd8team/java
+</span><span class='line'><span class="nv">$ </span>sudo apt-get update
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install -y oracle-java8-installer
+</span><span class='line'><span class="nv">$ </span>java -version
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Maven</h3>
+
+<p><a href="http://maven.apache.org/download.cgi">maven</a></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>wget http://apache.mirror.anlx.net/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.zip
+</span><span class='line'><span class="nv">$ </span>sudo unzip apache-maven-3.3.9-bin.zip
+</span><span class='line'><span class="nv">$ </span>sudo mv apache-maven-3.3.9/ /usr/local/maven/
+</span><span class='line'><span class="nv">$ </span>vim ~/.bashrc
+</span><span class='line'><span class="nv">$ </span><span class="nb">source</span> ~/.bashrc
+</span><span class='line'><span class="nv">$ </span>mvn -v
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>~/.bashrc</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># maven</span>
+</span><span class='line'><span class="nb">export </span><span class="nv">MAVEN_HOME</span><span class="o">=</span>/usr/local/maven
+</span><span class='line'><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$MAVEN_HOME</span>/bin
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Tomcat</h3>
+
+<p><a href="http://tomcat.apache.org/download-80.cgi">Tomcat</a></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>wget http://www.mirrorservice.org/sites/ftp.apache.org/tomcat/tomcat-8/v8.0.32/bin/apache-tomcat-8.0.32.zip
+</span><span class='line'><span class="nv">$ </span>sudo unzip apache-tomcat-8.0.32.zip
+</span><span class='line'><span class="nv">$ </span>sudo mv apache-tomcat-8.0.32/ /usr/local/tomcat/
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /usr/local/tomcat/
+</span><span class='line'><span class="nv">$ </span>sudo chmod +x bin/*.sh
+</span><span class='line'><span class="nv">$ </span>sudo bin/catalina.sh run
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /tmp
+</span><span class='line'><span class="nv">$ </span>curl http://localhost:8080
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Eclipse</h3>
+
+<p><a href="http://www.eclipse.org/downloads/">Eclipse IDE for Java EE Developers</a></p>
+
+<h2>Project Creation</h2>
+
+<ul>
+<li>creating a maven project</li>
+</ul>
+
+
+<h3>Maven Project</h3>
+
+<p><a href="https://maven.apache.org/guides/getting-started/">Maven Getting Started</a></p>
+
+<h4>mvn</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>mvn -B archetype:generate <span class="se">\</span>
+</span><span class='line'>      -DarchetypeGroupId<span class="o">=</span>org.apache.maven.archetypes <span class="se">\</span>
+</span><span class='line'>      -DgroupId<span class="o">=</span>com.mycompany.app <span class="se">\</span>
+</span><span class='line'>      -DartifactId<span class="o">=</span>my-app <span class="se">\</span>
+</span><span class='line'>      -DarchetypeArtifactId<span class="o">=</span>maven-archetype-quickstart <span class="se">\</span>
+</span><span class='line'>      -DinteractiveMode<span class="o">=</span><span class="nb">false</span> <span class="se">\</span>
+</span><span class='line'>      -Dpackaging<span class="o">=</span>war
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>folder</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>my-app
+</span><span class='line'><span class="p">|</span>-- pom.xml
+</span><span class='line'><span class="sb">`</span>-- src
+</span><span class='line'>    <span class="p">|</span>-- main
+</span><span class='line'>    <span class="p">|</span>   <span class="sb">`</span>-- java
+</span><span class='line'>    <span class="p">|</span>       <span class="sb">`</span>-- com
+</span><span class='line'>    <span class="p">|</span>           <span class="sb">`</span>-- mycompany
+</span><span class='line'>    <span class="p">|</span>               <span class="sb">`</span>-- app
+</span><span class='line'>    <span class="p">|</span>                   <span class="sb">`</span>-- App.java
+</span><span class='line'>    <span class="sb">`</span>-- <span class="nb">test</span>
+</span><span class='line'>        <span class="sb">`</span>-- java
+</span><span class='line'>            <span class="sb">`</span>-- com
+</span><span class='line'>                <span class="sb">`</span>-- mycompany
+</span><span class='line'>                    <span class="sb">`</span>-- app
+</span><span class='line'>                        <span class="sb">`</span>-- AppTest.java
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>pom.xml</h4>
+
+<p>Dependencies:</p>
+
+<ul>
+<li>Servlet</li>
+<li>Spring</li>
+</ul>
+
+
+<p>edit pom.xml</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;properties&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;java.version&gt;</span>1.8<span class="nt">&lt;/java.version&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;spring.version&gt;</span>4.1.6.RELEASE<span class="nt">&lt;/spring.version&gt;</span>
+</span><span class='line'><span class="nt">&lt;/properties&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;dependencies&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c">&lt;!-- Servlet API --&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;dependency&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;groupId&gt;</span>javax.servlet<span class="nt">&lt;/groupId&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;artifactId&gt;</span>javax.servlet-api<span class="nt">&lt;/artifactId&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;version&gt;</span>3.1.0<span class="nt">&lt;/version&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;scope&gt;</span>provided<span class="nt">&lt;/scope&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/dependency&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c">&lt;!-- Spring Core --&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;dependency&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;groupId&gt;</span>org.springframework<span class="nt">&lt;/groupId&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;artifactId&gt;</span>spring-context<span class="nt">&lt;/artifactId&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;version&gt;</span>${spring.version}<span class="nt">&lt;/version&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/dependency&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c">&lt;!-- Spring MVC --&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;dependency&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;groupId&gt;</span>org.springframework<span class="nt">&lt;/groupId&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;artifactId&gt;</span>spring-webmvc<span class="nt">&lt;/artifactId&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;version&gt;</span>${spring.version}<span class="nt">&lt;/version&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/dependency&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;/dependencies&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&lt;!-- boilerplate code allowing Maven to generate a .war archive without requiring a web.xml file --&gt;</span>
+</span><span class='line'><span class="nt">&lt;build&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;finalName&gt;</span>springwebapp<span class="nt">&lt;/finalName&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nt">&lt;plugins&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;plugin&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="nt">&lt;/groupId&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;artifactId&gt;</span>maven-war-plugin<span class="nt">&lt;/artifactId&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;version&gt;</span>2.6<span class="nt">&lt;/version&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;configuration&gt;</span>
+</span><span class='line'>              <span class="nt">&lt;failOnMissingWebXml&gt;</span>false<span class="nt">&lt;/failOnMissingWebXml&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;/configuration&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;/plugin&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/plugins&gt;</span>
+</span><span class='line'><span class="nt">&lt;/build&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Spring MVC</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>src/main/java/com/&lt;groupId&gt;/
+</span><span class='line'><span class="nv">$ </span>mkdir config
+</span><span class='line'><span class="nv">$ </span>mkdir controller
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Config</h4>
+
+<figure class='code'><figcaption><span>AppConfig.java</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">package</span> <span class="n">com</span><span class="o">.</span><span class="na">todo</span><span class="o">.</span><span class="na">config</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">org.springframework.context.annotation.ComponentScan</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Configuration</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">org.springframework.web.servlet.config.annotation.EnableWebMvc</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@Configuration</span>
+</span><span class='line'><span class="nd">@EnableWebMvc</span>
+</span><span class='line'><span class="nd">@ComponentScan</span><span class="o">(</span><span class="n">basePackages</span> <span class="o">=</span> <span class="o">{</span><span class="s">&quot;com.todo.controller&quot;</span><span class="o">})</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">AppConfig</span><span class="o">{</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>ServletInitializer.java</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">package</span> <span class="n">com</span><span class="o">.</span><span class="na">todo</span><span class="o">.</span><span class="na">config</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ServletInitializer</span> <span class="kd">extends</span> <span class="n">AbstractAnnotationConfigDispatcherServletInitializer</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nd">@Override</span>
+</span><span class='line'>  <span class="kd">protected</span> <span class="n">Class</span><span class="o">&lt;?&gt;[]</span> <span class="n">getRootConfigClasses</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="k">new</span> <span class="n">Class</span><span class="o">&lt;?&gt;[</span><span class="mi">0</span><span class="o">];</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nd">@Override</span>
+</span><span class='line'>  <span class="kd">protected</span> <span class="n">Class</span><span class="o">&lt;?&gt;[]</span> <span class="n">getServletConfigClasses</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="k">new</span> <span class="n">Class</span><span class="o">&lt;?&gt;[]{</span><span class="n">AppConfig</span><span class="o">.</span><span class="na">class</span><span class="o">};</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nd">@Override</span>
+</span><span class='line'>  <span class="kd">protected</span> <span class="n">String</span><span class="o">[]</span> <span class="nf">getServletMappings</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="k">new</span> <span class="n">String</span><span class="o">[]{</span><span class="s">&quot;/&quot;</span><span class="o">};</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Controller</h4>
+
+<figure class='code'><figcaption><span>HelloController.java</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">package</span> <span class="n">com</span><span class="o">.</span><span class="na">todo</span><span class="o">.</span><span class="na">controller</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">org.springframework.stereotype.Controller</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.RequestMapping</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.ResponseBody</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@Controller</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloController</span> <span class="o">{</span>
+</span><span class='line'>  <span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">&quot;hi&quot;</span><span class="o">)</span>
+</span><span class='line'>  <span class="nd">@ResponseBody</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="n">String</span> <span class="nf">hi</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="s">&quot;Hello world.&quot;</span><span class="o">;</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Run</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>mvn clean install
+</span><span class='line'><span class="nv">$ </span>sudo cp target/springwebapp.war /usr/local/tomcat/webapps/
+</span><span class='line'><span class="nv">$ </span>curl http://localhost:8080/springwebapp/hi
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+
+  
+
+
+
+
+    </article>
   
   
     <article>
@@ -38944,6 +39374,10 @@ Y = ATT<code>ATC</code></p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/tech/2016/02/14/getting-started-with-spring-mvc/">Getting Started With Spring MVC</a>
+      </li>
+    
+      <li class="post">
         <a href="/tech/2016/02/03/installing-caffe-on-ubuntu-14-dot-04/">Installing Caffe on Ubuntu 14.04</a>
       </li>
     
@@ -38979,10 +39413,6 @@ Y = ATT<code>ATC</code></p>
         <a href="/tech/2016/01/06/the-comparison-of-programming-languages-libraries/">The Comparison of Programming Languages Libraries</a>
       </li>
     
-      <li class="post">
-        <a href="/tech/2016/01/04/notes-on-programming-in-scala/">Notes on Programming in Scala</a>
-      </li>
-    
   </ul>
 </section>
 <section class="category-list">
@@ -39008,7 +39438,7 @@ Y = ATT<code>ATC</code></p>
 
 
   <h1>Tags</h1>
-    <ul id="category-list"><a href='/tags/algorithm' style='font-size: 113.78378378378378%'>algorithm(9)</a> <a href='/tags/ansible' style='font-size: 92.97297297297297%'>ansible(2)</a> <a href='/tags/apache' style='font-size: 92.97297297297297%'>apache(2)</a> <a href='/tags/api' style='font-size: 98.91891891891892%'>api(4)</a> <a href='/tags/ascii' style='font-size: 90.0%'>ascii(1)</a> <a href='/tags/beautifulsoup' style='font-size: 90.0%'>beautifulsoup(1)</a> <a href='/tags/beeline' style='font-size: 90.0%'>beeline(1)</a> <a href='/tags/butter' style='font-size: 90.0%'>butter(1)</a> <a href='/tags/caffe' style='font-size: 90.0%'>caffe(1)</a> <a href='/tags/career' style='font-size: 92.97297297297297%'>career(2)</a> <a href='/tags/cassandra' style='font-size: 90.0%'>cassandra(1)</a> <a href='/tags/cg' style='font-size: 90.0%'>cg(1)</a> <a href='/tags/chatbot' style='font-size: 95.94594594594595%'>chatbot(3)</a> <a href='/tags/classification' style='font-size: 92.97297297297297%'>classification(2)</a> <a href='/tags/cloud' style='font-size: 90.0%'>cloud(1)</a> <a href='/tags/cloudera' style='font-size: 110.8108108108108%'>cloudera(8)</a> <a href='/tags/cloudera-manager' style='font-size: 95.94594594594595%'>cloudera manager(3)</a> <a href='/tags/cluster' style='font-size: 149.45945945945945%'>cluster(21)</a> <a href='/tags/computer-vision' style='font-size: 90.0%'>computer vision(1)</a> <a href='/tags/crawler' style='font-size: 92.97297297297297%'>crawler(2)</a> <a href='/tags/css' style='font-size: 92.97297297297297%'>css(2)</a> <a href='/tags/d3' style='font-size: 90.0%'>d3(1)</a> <a href='/tags/data' style='font-size: 90.0%'>data(1)</a> <a href='/tags/db' style='font-size: 101.89189189189189%'>db(5)</a> <a href='/tags/debian' style='font-size: 90.0%'>debian(1)</a> <a href='/tags/deepdream' style='font-size: 90.0%'>deepdream(1)</a> <a href='/tags/devops' style='font-size: 98.91891891891892%'>devops(4)</a> <a href='/tags/django' style='font-size: 92.97297297297297%'>django(2)</a> <a href='/tags/dns' style='font-size: 90.0%'>dns(1)</a> <a href='/tags/docker' style='font-size: 95.94594594594595%'>docker(3)</a> <a href='/tags/edx' style='font-size: 125.67567567567568%'>edX(13)</a> <a href='/tags/edx-ai' style='font-size: 90.0%'>edX AI(1)</a> <a href='/tags/edx-analytics' style='font-size: 110.8108108108108%'>edX Analytics(8)</a> <a href='/tags/edx-platform' style='font-size: 95.94594594594595%'>edX Platform(3)</a> <a href='/tags/elasticsearch' style='font-size: 90.0%'>elasticsearch(1)</a> <a href='/tags/emacs' style='font-size: 92.97297297297297%'>emacs(2)</a> <a href='/tags/exhibition' style='font-size: 92.97297297297297%'>exhibition(2)</a> <a href='/tags/fiction' style='font-size: 107.83783783783784%'>fiction(7)</a> <a href='/tags/filebeat' style='font-size: 90.0%'>filebeat(1)</a> <a href='/tags/flask' style='font-size: 90.0%'>flask(1)</a> <a href='/tags/flume' style='font-size: 90.0%'>flume(1)</a> <a href='/tags/forever' style='font-size: 92.97297297297297%'>forever(2)</a> <a href='/tags/framework' style='font-size: 90.0%'>framework(1)</a> <a href='/tags/freetds' style='font-size: 90.0%'>freetds(1)</a> <a href='/tags/french' style='font-size: 90.0%'>french(1)</a> <a href='/tags/ghost' style='font-size: 98.91891891891892%'>ghost(4)</a> <a href='/tags/git' style='font-size: 104.86486486486487%'>git(6)</a> <a href='/tags/github' style='font-size: 92.97297297297297%'>github(2)</a> <a href='/tags/gitosis' style='font-size: 90.0%'>gitosis(1)</a> <a href='/tags/gitweb' style='font-size: 90.0%'>gitweb(1)</a> <a href='/tags/gunicorn' style='font-size: 90.0%'>gunicorn(1)</a> <a href='/tags/hadoop' style='font-size: 134.59459459459458%'>hadoop(16)</a> <a href='/tags/hbase' style='font-size: 101.89189189189189%'>hbase(5)</a> <a href='/tags/hdfs' style='font-size: 92.97297297297297%'>hdfs(2)</a> <a href='/tags/hipchat' style='font-size: 95.94594594594595%'>hipchat(3)</a> <a href='/tags/hive' style='font-size: 98.91891891891892%'>hive(4)</a> <a href='/tags/html' style='font-size: 92.97297297297297%'>html(2)</a> <a href='/tags/hue' style='font-size: 92.97297297297297%'>hue(2)</a> <a href='/tags/ide' style='font-size: 95.94594594594595%'>ide(3)</a> <a href='/tags/impala' style='font-size: 90.0%'>impala(1)</a> <a href='/tags/iterm' style='font-size: 90.0%'>iterm(1)</a> <a href='/tags/java' style='font-size: 98.91891891891892%'>java(4)</a> <a href='/tags/javascript' style='font-size: 101.89189189189189%'>javascript(5)</a> <a href='/tags/jekyll' style='font-size: 92.97297297297297%'>jekyll(2)</a> <a href='/tags/jenkins' style='font-size: 90.0%'>jenkins(1)</a> <a href='/tags/kibana' style='font-size: 90.0%'>kibana(1)</a> <a href='/tags/leisure' style='font-size: 149.45945945945945%'>leisure(21)</a> <a href='/tags/library' style='font-size: 90.0%'>library(1)</a> <a href='/tags/linux' style='font-size: 116.75675675675676%'>linux(10)</a> <a href='/tags/logstack' style='font-size: 90.0%'>logstack(1)</a> <a href='/tags/machine-learning' style='font-size: 128.64864864864865%'>machine learning(14)</a> <a href='/tags/mapreduce' style='font-size: 92.97297297297297%'>mapreduce(2)</a> <a href='/tags/markdown' style='font-size: 90.0%'>markdown(1)</a> <a href='/tags/mathjax' style='font-size: 92.97297297297297%'>mathjax(2)</a> <a href='/tags/mongo' style='font-size: 90.0%'>mongo(1)</a> <a href='/tags/mongovue' style='font-size: 90.0%'>mongovue(1)</a> <a href='/tags/mssql' style='font-size: 90.0%'>mssql(1)</a> <a href='/tags/mysql' style='font-size: 110.8108108108108%'>mysql(8)</a> <a href='/tags/mysql-workbench' style='font-size: 92.97297297297297%'>mysql workbench(2)</a> <a href='/tags/nao' style='font-size: 90.0%'>nao(1)</a> <a href='/tags/network' style='font-size: 90.0%'>network(1)</a> <a href='/tags/nginx' style='font-size: 98.91891891891892%'>nginx(4)</a> <a href='/tags/nlp' style='font-size: 104.86486486486487%'>nlp(6)</a> <a href='/tags/nltk' style='font-size: 90.0%'>nltk(1)</a> <a href='/tags/nodejs' style='font-size: 107.83783783783784%'>nodejs(7)</a> <a href='/tags/octopress' style='font-size: 110.8108108108108%'>octopress(8)</a> <a href='/tags/odbc' style='font-size: 90.0%'>odbc(1)</a> <a href='/tags/oil-painting' style='font-size: 90.0%'>oil painting(1)</a> <a href='/tags/openstack' style='font-size: 90.0%'>openstack(1)</a> <a href='/tags/painting' style='font-size: 90.0%'>painting(1)</a> <a href='/tags/pandas' style='font-size: 92.97297297297297%'>pandas(2)</a> <a href='/tags/photos' style='font-size: 128.64864864864865%'>photos(14)</a> <a href='/tags/poem' style='font-size: 98.91891891891892%'>poem(4)</a> <a href='/tags/prediction' style='font-size: 90.0%'>prediction(1)</a> <a href='/tags/programming' style='font-size: 98.91891891891892%'>programming(4)</a> <a href='/tags/pycharm' style='font-size: 90.0%'>pycharm(1)</a> <a href='/tags/python' style='font-size: 200.0%'>python(38)</a> <a href='/tags/python-challenge' style='font-size: 95.94594594594595%'>Python Challenge(3)</a> <a href='/tags/reading' style='font-size: 90.0%'>reading(1)</a> <a href='/tags/redis' style='font-size: 90.0%'>redis(1)</a> <a href='/tags/redmine' style='font-size: 90.0%'>redmine(1)</a> <a href='/tags/regex' style='font-size: 90.0%'>regex(1)</a> <a href='/tags/rest' style='font-size: 92.97297297297297%'>rest(2)</a> <a href='/tags/robotics' style='font-size: 98.91891891891892%'>robotics(4)</a> <a href='/tags/ruby' style='font-size: 119.72972972972973%'>ruby(11)</a> <a href='/tags/scala' style='font-size: 95.94594594594595%'>scala(3)</a> <a href='/tags/shell' style='font-size: 92.97297297297297%'>shell(2)</a> <a href='/tags/soap' style='font-size: 90.0%'>soap(1)</a> <a href='/tags/solr' style='font-size: 90.0%'>solr(1)</a> <a href='/tags/spark' style='font-size: 90.0%'>spark(1)</a> <a href='/tags/sphinx' style='font-size: 90.0%'>sphinx(1)</a> <a href='/tags/sql' style='font-size: 90.0%'>sql(1)</a> <a href='/tags/sqoop' style='font-size: 98.91891891891892%'>sqoop(4)</a> <a href='/tags/ssl' style='font-size: 92.97297297297297%'>ssl(2)</a> <a href='/tags/supervisor' style='font-size: 90.0%'>supervisor(1)</a> <a href='/tags/tech-talks' style='font-size: 90.0%'>tech talks(1)</a> <a href='/tags/time-series' style='font-size: 90.0%'>time series(1)</a> <a href='/tags/translation' style='font-size: 90.0%'>translation(1)</a> <a href='/tags/ubuntu' style='font-size: 113.78378378378378%'>ubuntu(9)</a> <a href='/tags/unicode' style='font-size: 90.0%'>unicode(1)</a> <a href='/tags/vagrant' style='font-size: 95.94594594594595%'>vagrant(3)</a> <a href='/tags/vim' style='font-size: 92.97297297297297%'>vim(2)</a> <a href='/tags/virtualbox' style='font-size: 95.94594594594595%'>virtualbox(3)</a> <a href='/tags/vm' style='font-size: 92.97297297297297%'>vm(2)</a> <a href='/tags/web' style='font-size: 107.83783783783784%'>web(7)</a> <a href='/tags/will' style='font-size: 95.94594594594595%'>will(3)</a> <a href='/tags/yarn' style='font-size: 90.0%'>yarn(1)</a> <a href='/tags/zookeeper' style='font-size: 101.89189189189189%'>zookeeper(5)</a> </ul>
+    <ul id="category-list"><a href='/tags/algorithm' style='font-size: 113.78378378378378%'>algorithm(9)</a> <a href='/tags/ansible' style='font-size: 92.97297297297297%'>ansible(2)</a> <a href='/tags/apache' style='font-size: 92.97297297297297%'>apache(2)</a> <a href='/tags/api' style='font-size: 98.91891891891892%'>api(4)</a> <a href='/tags/ascii' style='font-size: 90.0%'>ascii(1)</a> <a href='/tags/beautifulsoup' style='font-size: 90.0%'>beautifulsoup(1)</a> <a href='/tags/beeline' style='font-size: 90.0%'>beeline(1)</a> <a href='/tags/butter' style='font-size: 90.0%'>butter(1)</a> <a href='/tags/caffe' style='font-size: 90.0%'>caffe(1)</a> <a href='/tags/career' style='font-size: 92.97297297297297%'>career(2)</a> <a href='/tags/cassandra' style='font-size: 90.0%'>cassandra(1)</a> <a href='/tags/cg' style='font-size: 90.0%'>cg(1)</a> <a href='/tags/chatbot' style='font-size: 95.94594594594595%'>chatbot(3)</a> <a href='/tags/classification' style='font-size: 92.97297297297297%'>classification(2)</a> <a href='/tags/cloud' style='font-size: 90.0%'>cloud(1)</a> <a href='/tags/cloudera' style='font-size: 110.8108108108108%'>cloudera(8)</a> <a href='/tags/cloudera-manager' style='font-size: 95.94594594594595%'>cloudera manager(3)</a> <a href='/tags/cluster' style='font-size: 149.45945945945945%'>cluster(21)</a> <a href='/tags/computer-vision' style='font-size: 90.0%'>computer vision(1)</a> <a href='/tags/crawler' style='font-size: 92.97297297297297%'>crawler(2)</a> <a href='/tags/css' style='font-size: 92.97297297297297%'>css(2)</a> <a href='/tags/d3' style='font-size: 90.0%'>d3(1)</a> <a href='/tags/data' style='font-size: 90.0%'>data(1)</a> <a href='/tags/db' style='font-size: 101.89189189189189%'>db(5)</a> <a href='/tags/debian' style='font-size: 90.0%'>debian(1)</a> <a href='/tags/deepdream' style='font-size: 90.0%'>deepdream(1)</a> <a href='/tags/devops' style='font-size: 98.91891891891892%'>devops(4)</a> <a href='/tags/django' style='font-size: 92.97297297297297%'>django(2)</a> <a href='/tags/dns' style='font-size: 90.0%'>dns(1)</a> <a href='/tags/docker' style='font-size: 95.94594594594595%'>docker(3)</a> <a href='/tags/edx' style='font-size: 125.67567567567568%'>edX(13)</a> <a href='/tags/edx-ai' style='font-size: 90.0%'>edX AI(1)</a> <a href='/tags/edx-analytics' style='font-size: 110.8108108108108%'>edX Analytics(8)</a> <a href='/tags/edx-platform' style='font-size: 95.94594594594595%'>edX Platform(3)</a> <a href='/tags/elasticsearch' style='font-size: 90.0%'>elasticsearch(1)</a> <a href='/tags/emacs' style='font-size: 92.97297297297297%'>emacs(2)</a> <a href='/tags/exhibition' style='font-size: 92.97297297297297%'>exhibition(2)</a> <a href='/tags/fiction' style='font-size: 107.83783783783784%'>fiction(7)</a> <a href='/tags/filebeat' style='font-size: 90.0%'>filebeat(1)</a> <a href='/tags/flask' style='font-size: 90.0%'>flask(1)</a> <a href='/tags/flume' style='font-size: 90.0%'>flume(1)</a> <a href='/tags/forever' style='font-size: 92.97297297297297%'>forever(2)</a> <a href='/tags/framework' style='font-size: 90.0%'>framework(1)</a> <a href='/tags/freetds' style='font-size: 90.0%'>freetds(1)</a> <a href='/tags/french' style='font-size: 90.0%'>french(1)</a> <a href='/tags/ghost' style='font-size: 98.91891891891892%'>ghost(4)</a> <a href='/tags/git' style='font-size: 104.86486486486487%'>git(6)</a> <a href='/tags/github' style='font-size: 92.97297297297297%'>github(2)</a> <a href='/tags/gitosis' style='font-size: 90.0%'>gitosis(1)</a> <a href='/tags/gitweb' style='font-size: 90.0%'>gitweb(1)</a> <a href='/tags/gunicorn' style='font-size: 90.0%'>gunicorn(1)</a> <a href='/tags/hadoop' style='font-size: 134.59459459459458%'>hadoop(16)</a> <a href='/tags/hbase' style='font-size: 101.89189189189189%'>hbase(5)</a> <a href='/tags/hdfs' style='font-size: 92.97297297297297%'>hdfs(2)</a> <a href='/tags/hipchat' style='font-size: 95.94594594594595%'>hipchat(3)</a> <a href='/tags/hive' style='font-size: 98.91891891891892%'>hive(4)</a> <a href='/tags/html' style='font-size: 92.97297297297297%'>html(2)</a> <a href='/tags/hue' style='font-size: 92.97297297297297%'>hue(2)</a> <a href='/tags/ide' style='font-size: 95.94594594594595%'>ide(3)</a> <a href='/tags/impala' style='font-size: 90.0%'>impala(1)</a> <a href='/tags/iterm' style='font-size: 90.0%'>iterm(1)</a> <a href='/tags/java' style='font-size: 101.89189189189189%'>java(5)</a> <a href='/tags/javascript' style='font-size: 101.89189189189189%'>javascript(5)</a> <a href='/tags/jekyll' style='font-size: 92.97297297297297%'>jekyll(2)</a> <a href='/tags/jenkins' style='font-size: 90.0%'>jenkins(1)</a> <a href='/tags/kibana' style='font-size: 90.0%'>kibana(1)</a> <a href='/tags/leisure' style='font-size: 149.45945945945945%'>leisure(21)</a> <a href='/tags/library' style='font-size: 90.0%'>library(1)</a> <a href='/tags/linux' style='font-size: 116.75675675675676%'>linux(10)</a> <a href='/tags/logstack' style='font-size: 90.0%'>logstack(1)</a> <a href='/tags/machine-learning' style='font-size: 128.64864864864865%'>machine learning(14)</a> <a href='/tags/mapreduce' style='font-size: 92.97297297297297%'>mapreduce(2)</a> <a href='/tags/markdown' style='font-size: 90.0%'>markdown(1)</a> <a href='/tags/mathjax' style='font-size: 92.97297297297297%'>mathjax(2)</a> <a href='/tags/maven' style='font-size: 90.0%'>maven(1)</a> <a href='/tags/mongo' style='font-size: 90.0%'>mongo(1)</a> <a href='/tags/mongovue' style='font-size: 90.0%'>mongovue(1)</a> <a href='/tags/mssql' style='font-size: 90.0%'>mssql(1)</a> <a href='/tags/mysql' style='font-size: 110.8108108108108%'>mysql(8)</a> <a href='/tags/mysql-workbench' style='font-size: 92.97297297297297%'>mysql workbench(2)</a> <a href='/tags/nao' style='font-size: 90.0%'>nao(1)</a> <a href='/tags/network' style='font-size: 90.0%'>network(1)</a> <a href='/tags/nginx' style='font-size: 98.91891891891892%'>nginx(4)</a> <a href='/tags/nlp' style='font-size: 104.86486486486487%'>nlp(6)</a> <a href='/tags/nltk' style='font-size: 90.0%'>nltk(1)</a> <a href='/tags/nodejs' style='font-size: 107.83783783783784%'>nodejs(7)</a> <a href='/tags/octopress' style='font-size: 110.8108108108108%'>octopress(8)</a> <a href='/tags/odbc' style='font-size: 90.0%'>odbc(1)</a> <a href='/tags/oil-painting' style='font-size: 90.0%'>oil painting(1)</a> <a href='/tags/openstack' style='font-size: 90.0%'>openstack(1)</a> <a href='/tags/painting' style='font-size: 90.0%'>painting(1)</a> <a href='/tags/pandas' style='font-size: 92.97297297297297%'>pandas(2)</a> <a href='/tags/photos' style='font-size: 128.64864864864865%'>photos(14)</a> <a href='/tags/poem' style='font-size: 98.91891891891892%'>poem(4)</a> <a href='/tags/prediction' style='font-size: 90.0%'>prediction(1)</a> <a href='/tags/programming' style='font-size: 98.91891891891892%'>programming(4)</a> <a href='/tags/pycharm' style='font-size: 90.0%'>pycharm(1)</a> <a href='/tags/python' style='font-size: 200.0%'>python(38)</a> <a href='/tags/python-challenge' style='font-size: 95.94594594594595%'>Python Challenge(3)</a> <a href='/tags/reading' style='font-size: 90.0%'>reading(1)</a> <a href='/tags/redis' style='font-size: 90.0%'>redis(1)</a> <a href='/tags/redmine' style='font-size: 90.0%'>redmine(1)</a> <a href='/tags/regex' style='font-size: 90.0%'>regex(1)</a> <a href='/tags/rest' style='font-size: 92.97297297297297%'>rest(2)</a> <a href='/tags/robotics' style='font-size: 98.91891891891892%'>robotics(4)</a> <a href='/tags/ruby' style='font-size: 119.72972972972973%'>ruby(11)</a> <a href='/tags/scala' style='font-size: 95.94594594594595%'>scala(3)</a> <a href='/tags/servlet' style='font-size: 90.0%'>servlet(1)</a> <a href='/tags/shell' style='font-size: 92.97297297297297%'>shell(2)</a> <a href='/tags/soap' style='font-size: 90.0%'>soap(1)</a> <a href='/tags/solr' style='font-size: 90.0%'>solr(1)</a> <a href='/tags/spark' style='font-size: 90.0%'>spark(1)</a> <a href='/tags/sphinx' style='font-size: 90.0%'>sphinx(1)</a> <a href='/tags/spring' style='font-size: 90.0%'>spring(1)</a> <a href='/tags/sql' style='font-size: 90.0%'>sql(1)</a> <a href='/tags/sqoop' style='font-size: 98.91891891891892%'>sqoop(4)</a> <a href='/tags/ssl' style='font-size: 92.97297297297297%'>ssl(2)</a> <a href='/tags/supervisor' style='font-size: 90.0%'>supervisor(1)</a> <a href='/tags/tech-talks' style='font-size: 90.0%'>tech talks(1)</a> <a href='/tags/time-series' style='font-size: 90.0%'>time series(1)</a> <a href='/tags/tomcat' style='font-size: 90.0%'>tomcat(1)</a> <a href='/tags/translation' style='font-size: 90.0%'>translation(1)</a> <a href='/tags/ubuntu' style='font-size: 113.78378378378378%'>ubuntu(9)</a> <a href='/tags/unicode' style='font-size: 90.0%'>unicode(1)</a> <a href='/tags/vagrant' style='font-size: 95.94594594594595%'>vagrant(3)</a> <a href='/tags/vim' style='font-size: 92.97297297297297%'>vim(2)</a> <a href='/tags/virtualbox' style='font-size: 95.94594594594595%'>virtualbox(3)</a> <a href='/tags/vm' style='font-size: 92.97297297297297%'>vm(2)</a> <a href='/tags/web' style='font-size: 107.83783783783784%'>web(7)</a> <a href='/tags/will' style='font-size: 95.94594594594595%'>will(3)</a> <a href='/tags/yarn' style='font-size: 90.0%'>yarn(1)</a> <a href='/tags/zookeeper' style='font-size: 101.89189189189189%'>zookeeper(5)</a> </ul>
 </section>
 
     
