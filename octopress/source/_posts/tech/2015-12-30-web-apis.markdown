@@ -4,7 +4,7 @@ title: "Web APIs"
 date: 2015-12-30 16:21:13 +0800
 comments: true
 categories: [tech]
-tags: [programming, web, api, soap, rest]
+tags: [web, api, soap, rest]
 toc: true
 ---
 

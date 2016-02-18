@@ -84,7 +84,7 @@ The differences between abstract factory and builder are
 - factory is the subclass: Car -> Honda/Ford
 - builder implements the whole parts: Card -> Honda()/Ford() with custom updates
 
-```python
+```python FormBuilder
 
 class AbstractFormBuilder(metaclass=abc.ABCMeta):
 
@@ -149,7 +149,7 @@ own right, but can be taken further and used in cases where we cannot know the c
 advance (e.g. the class to use is based on what we read from a file or depends on user
 input).
 
-```python
+```python Factory method
 
 BLACK, WHITE = ("BLACK", "WHITE")
 
@@ -225,7 +225,7 @@ if __name__ == '__main__':
 The prototype pattern is used to create new objects by cloning an original object,
 and then modifying the clone.
 
-```python
+```python Prototype
 class Point:
 
     __slots__ = ("x", "y")
@@ -284,7 +284,7 @@ The adapter pattern is a technique for adapting an interface so that one class
 can make use of another -- that has an incompatible interface -- without changing either
 of the classes being used.
 
-```python
+```python Adapter
 """
 Page
  --> renderer <---- Renderer Interface
@@ -396,7 +396,7 @@ and this instance serves as a bridge between the abstract interface and the conc
 
 Bridge pattern is to pass serveral separated classes into a base class (bridge).
 
-```python
+```python Bridge
 """
 BarCharter
   |----> renderer  <---- Bar Charter Interface
@@ -477,7 +477,7 @@ or ungroup, some of the components might be single items (e.g., a rectangle), wh
 others might be composite (e.g., a face made up of many different shapes).
 
 
-```python
+```python Composite
 """
 Boxed Pencil Set
   |----> Box
@@ -569,7 +569,7 @@ function with the same name as the original function but with enhanced functiona
 Decorators are often used by frameworks (e.g., web frameworks) to make it easy to integrate
 our own functions within the framework.
 
-```python
+```python Decorator
 """
 @decorator #3
   @decorator #2
@@ -695,7 +695,7 @@ The facade pattern is used to present a simplified and uniform interface to a
 subsystem whose interface is too complex or too low-level for convenient use.
 
 
-```python
+```python Facade
 
 """
 Archive
@@ -764,7 +764,7 @@ where many of the small objects are duplicates of each other. The pattern is imp
 representing each unique object only once, and by sharing this unique instance wherever it
 is needed.
 
-```python
+```python Flyweight
 red, gree, blud = "red", "green", "blue"
 x = (red, green, blue, red, green, blue, red, green)
 y = ("red", "green", "blue", "red", "green", "blue", "red", "green")
@@ -804,7 +804,7 @@ Four use cases:
 
 Proxy pattern is also be used in unit testing.
 
-```python
+```python Proxy
 
 class ImageProxy:
 
@@ -847,25 +847,719 @@ if __name__ == '__main__':
 
 ## 3. Behavioral Design Patterns
 
+The behavioral patterns are concerned with how things get done, that is, with algorithms
+and object interactions. They provide powerful ways of thinking about and organizing
+computations.
+
 ### 3.1. Chain of responsibility
+
+The chain of responsibility pattern is designed to decouple the sender of a request from
+the recipient that processes the request.
+
+The first function sends a request to a chain of receivers. The first receiver in the chain
+either can handle the request to the next receiver in the chain. The second receiver has the
+same choices, and so on, until the last one is reached (which could choose to throw the request
+away or to raise an exception).
+
+
+```python Conventional Chain
+"""
+Conventional Chain
+
+A generator is a function or method that has one or more yield expressions instead of
+returns. Whenever a yield is reached, the value yielded is produced, and the function
+or method is suspended with all its state intact. At this point the function has
+yielded the processor (to the receiver of the value it has produced), so although
+suspended, the function does not block. Then, when the function or method is used again,
+execution resumes from the statement following the yield. So, value are pulled from a
+generator by iterating over it (e.g., using for value in generator:) or by calling
+next() on it.
+
+    <event> -> TimeHandler -> KeyHandler -> MouseHandler -> NullHandler
+"""
+
+class NullHandler:
+
+    def __init__(self, successor=None):
+        self.__successor = successor
+
+    def handle(self, event):
+        if self.__successor is not None:
+            self.__successor.handle(event)
+
+class MouseHandler(NullHandler):
+
+    def handle(self, event):
+        if event.kind == Event.MOUSE:
+            print("Click: {}".format(event))
+        else:
+            super().handle(event)
+
+class DebugHandler(NullHandler):
+
+    def __init__(self, successor=None, file=sys.stdout):
+        super().__init__(successor)
+        self.__file = file
+
+    def handle(self, event):
+        self.__file.write("*DEBUG*: {}\n".format(event))
+        super().handle(event)
+
+
+if __name__ == '__main__':
+
+    handler1 = TimerHandler(KeyHandler(MouseHandler(NullHandler())))
+    handler2 = DebugHandler(handler1)
+```
+
+Coroutine-based Chain
+
+A coroutine uses the same yield expression as a generator but has different behavior.
+A coroutine executes an infinite loop and starts out suspended at its first (or only)
+yield expression, waiting for a value to be sent to it. If and when a value is sent,
+the coroutine receives this as the value ofo its yield expression. The coroutine can then
+do any processing it wants and when it has finished, it loops and again becomes suspended
+waiting for a value to arrive at its next yield expression. So, values are pushed into a
+coroutine by calling the coroutine's send() and throw() methods.
+
+
+```python Coroutine-based Chain
+
+def coroutine(function):
+    @functools.wraps(function)
+    def wrapper(*args, **kwargs):
+        generator = function(*args, **kwargs)
+        next(generator)
+        return generator
+    return wrapper
+
+@coroutine
+def key_handler(successor=None):
+    while True:
+        event = (yield)
+        if event.kind == Event.KEYPRESS:
+            print("Press: {}".format(event))
+        elif successor is not None:
+            successor.send(event)
+
+@coroutine
+def debug_handler(successor, file=sys.stdout):
+    while True:
+        event = (yield)
+        file.write("*DEBUG*: {}\n".format(event))
+        successor.send(event)
+
+if __name__ == '__main__':
+
+    pipeline = key_handler(mouse_handler(timer_handler()))
+    pipeline - debug_handler(pipeline)
+```
 
 ### 3.2. Command
 
+The command pattern is used to encapsulate commands as objects. This makes it possible,
+for example, to build up a sequence of commands for deferred execution or to create undoable
+commands.
+
+
+```python Command
+class Grid:
+
+    def __init__(self, width, height):
+        pass
+
+    def cell(self, x, y, color=None):
+        pass
+
+    @property
+    def rows(self):
+        pass
+
+    @property
+    def columns(self):
+        pass
+
+
+class UndoableGrid(Grid):
+
+    def create_cell_command(self, x, y, color):
+        def undo(self):
+            pass
+
+        def do(self):
+            pass
+
+        def create_rectangle_macro(self, x0, x0, x1, y1, color):
+            pass
+
+class Command:
+
+    def __init__(self, do, undo, description=""):
+        pass
+
+    def __call__(self):
+        self.do()
+
+class Macro:
+
+    def __init__(self, description=''):
+        pass
+
+    def add(self, command):
+        pass
+
+    def __call__(self):
+        pass
+
+    do = __call__
+
+    def undo(self):
+        pass
+
+if __name__ == '__main__':
+
+    grid = UndoableGrid(8, 3)
+    redLeft = grid.create_cell_command(2, 1, "red")
+    redRight = grid.create_cell_command(5, 0, "red")
+    redLeft()
+    redRight.do()
+```
+
 ### 3.3. Interpreter
+
+The interpreter pattern formalize two common requirements:
+
+- providing some means by which users can enter nonstring values into applications
+- allowing users to program applications
+
+```python Interpreter: Expression Evaluataion with eval()/exec()/subprocess
+import math
+
+def global_context():
+    globaContext = globals().copy()
+    for name in dir(math):
+        if not name.startswith("_"):
+            globalContext[name] = getattr(math, name)
+    return globalContext
+
+def calculate(expression, globalContext, localContext, current):
+    pass
+
+def update(localContext, result, current):
+    pass
+
+
+if __name__ == '__main__':
+
+    quit = "Ctrl+Z,Enter" if sys.platform.startswith("win") else "Ctrl+D"
+    prompt = "Enter an expression ({} to quit): ".format(quit)
+    current = types.SimpleNamespace(letter='A')
+    globalContext = global_context()
+    localContext = collections.OrderedDict()
+    while True:
+        try:
+            expression = input(prompt)
+            if expression:
+                calculate(expression, globalContext, localContext, current)
+        except EOFError:
+            print()
+            break
+
+#--------------------------------------------------#
+
+def execute(code, context):
+
+    try:
+        exec(code.code, globals(), context)
+        result = context.gete("result)"
+        error = context.get("error")
+        handle_result(code, result, error)
+    except Exception as err:
+        print(err)
+
+if __name__ == '__main__':
+
+    context = dict(genome=genome, target='', replace='')
+    execute(code, context)
+```
 
 ### 3.4. Iterator
 
+The iterator pattern provides a way of sequentially accessing the items inside a
+collection or an aggregate object without exposing any of the internals of the
+collection or aggregate's implementation.
+
+```python SequenceProtocolIterators
+
+class AtoZ:
+
+    def __getitem__(self, index):
+        if 0 <= index < 26:
+            return chr(index + ord("A"))
+        raise IndexError()
+
+if __name__ == '__main__':
+
+    for letter in AtoZ():
+        print(letter, end='')
+
+```
+
+```python Two-Argument iter() Function Iterators
+
+class Presidents:
+
+    __names = ("George Washington", "John Adams", "Thomas Jefferson", ...)
+
+    def __init__(self, first=None):
+        self.index = (-1 if first is None else Presidents.__names.index(first)-1)
+
+    def __call__(self):
+        self.index += 1
+        if self.index < len(Presidents.__names):
+            return Presidents.__names(self.index)
+        raise StopIteration()
+
+if __name__ == '__main__':
+
+    for president in iter(Presidents("George Bush"), None):
+        print(president, end=" * ")
+    print()
+```
+
+```python IteratorProtocolIterators
+class Bag:
+
+    def __init__(self, items=None):
+        self.__bag = {}
+        if items is not None:
+            for item in items:
+                self.add(item)
+
+    def add(self, item):
+        self.__bag[item] = self.__bag.get(item, 0) + 1
+
+    def __delitem__(self, item):
+        if self.__bag.get(item) is not None:
+            self.__bag[item] -= 1
+            if self.__bag[item] <= 0:
+                del self.__bag[item]
+
+        else:
+            raise KeyError(str(item))
+
+    def count(self, item):
+        return self.__bag.get(item, 0)
+
+    def __len__(self):
+        return sum(count for count in self.__bag.values())
+
+    def __contains__(self, item):
+        return item in self.__bag
+
+    def __iter__(self):
+        items = []
+        for item, count in self.__bag.items():
+            for _ in range(count):
+                items.append(item)
+        return iter(items)
+```
+
+
 ### 3.5. Mediator 
+
+The mediator pattern provides a means of creating an object - the mediator - that can
+encapsulate the interactions between other objects. This makes it possible to achieve
+iteractions between objects that have no direct knowledge of each other.
+
+
+```python Mediator
+"""
+Text   #1
+Text   #2
+             --> Mediator --> updateui()/clicked()
+Button #1
+Button #2
+"""
+
+class Form:
+
+    def __init__(self):
+        self.create_widgets()
+        self.create_mediator()
+
+    def create_widgets(self):
+        self.nameText = Text()
+        self.emailText = Text()
+        self.okButton = Button("OK")
+        self.cancelButton = Button("Cancel")
+
+    def create_mediator(self):
+        self.mediator = Mediator(((self.nameText, self.update_ui),
+                                  (self.emailText, self.update_ui),
+                                  (self.okButton, self.clicked),
+                                  (self.cancelButton, self.clicked)))
+        self.update_ui()
+
+    def update_ui(self, widget=None):
+        self.okButton.enabled = (bool(self.nameText.text) and bool(self.emailText.text))
+
+    def clicked(self, widget):
+        if widget == self.okButton:
+            print("OK")
+        elif widget == self.cancelButton:
+            print("Cancel")
+
+class Mediator:
+
+    def __init__(self, widgetCallablePairs):
+        self.callablesForWidget = collections.defaultdict(list)
+        for widget, caller in widgetCallablePairs:
+            self.callablesForWidget[widget].append(caller)
+            widget.mediator = self
+
+    def on_change(self, widget):
+        callables = self.callablesForWidget.get(widget)
+        if callables is not None:
+            for caller in callables:
+                caller(widget)
+        else:
+            raise AttributeError("No on_change() method registered for {}".format(widget))
+
+class Mediated:
+
+    def __init__(self):
+        self.mediator = None
+
+    def on_change(self):
+        if self.mediator is not None:
+            self.mediator.on_change(self)
+
+class Button(Mediated):
+        
+    def __init__(self, text=""):
+        super().__init__()
+        self.enabled = True
+        self.text = text
+
+    def click(self):
+        if self.enabled:
+            self.on_change()
+
+class Text(Mediated):
+   
+    def __init__(self, text=""):
+        super().__init__()
+        self.__text = text
+
+    @property
+    def text(self):
+        return self.__text
+
+    @text.setter
+    def text(self, text):
+        if self.text != text:
+            self.__text = text
+            self.on_change()
+```
+
+```python Coroutine-Based Mediator
+
+def create_mediator(self):
+    self.mediator = self._update_ui_mediator(self._clicked_mediator())
+    for widget in (self.nameText, self.emailText, self.okButton, self.cancelButton):
+        widget.mediator = self.mediator
+    self.mediator.send(None)
+
+@coroutine
+def _update_ui_mediator(self, successor=None):
+    while True:
+        widget = (yield)
+        self.okButton.enabled = (bool(self.nameText.text) and bool(self.emailText.text))
+
+        if successor is not None:
+            successor.send(widget)
+
+@coroutine
+def _clicked_mediator(self, successor=None):
+    while True:
+        widget = (yield)
+        if widget == self.okButton:
+            print("OK")
+        elif widget == self.cancelButton:
+            print("Cancel")
+        elif successor is not None:
+            successor.send(widget)
+
+class Mediated:
+
+    def __init__(self):
+        self.mediator = None
+
+    def on_change(self):
+        if self.mediator is not None:
+            self.mediator.send(self)
+```
+
 
 ### 3.6. Memento 
 
+The memento pattern is a means of saving and restoring an object's state without
+violating encapsulation.
+
 ### 3.7. Observer 
+
+The observer pattern supports many-to-many dependency relationships between objects,
+such that when one object changes state, all its related objects are notified.
+
+Nowadays, probably the most commmon expression of this pattern and its variants is
+the mode/view/controller(MVC) paradigm. In this paradigm, a model represents data,
+one or more views visualize that data, and one or more controllers mediate between
+input(e.g. user interaction) and the model. And any changes to the model are
+automatically reflected in the associated views.
+
+
+```python Observer
+"""
+SliderModel
+  |----> HistoryView
+  |----> LiveView
+"""
+
+class Observed:
+
+    def __init__(self):
+        self.__observers = set()
+
+    def observers_add(self, observer, *observers):
+        for observer in itertools.chain((observer,), observers):
+            self.__observers.add(observer)
+            observer.update(self)
+
+    def observer_discard(self, observer):
+        self.__observers.discard(observer)
+
+    def observers_notify(self):
+        for observer in self.__observers:
+            observer.update(self)
+
+class SliderModel(Observed):
+
+    def __init__(self, minimum, value, maximum):
+        super().__init_()
+        self.__minimum = self.__value = self.__mximum = None
+        self.minimum = minimum
+        self.value = value
+        self.maximum = maximum
+
+    @property
+    def value(self):
+        return self.__value
+
+    @value.setter
+    def value(self, value):
+        if self.__value != value:
+            self.__value = value
+            self.observers_notify()
+
+class HistoryView:
+
+    def __init__(self):
+        self.data = []
+
+    def update(self, model):
+        self.data.append((model.value, time.time()))
+
+class LiveView:
+
+    def __init__(self, length=40):
+        self.length = length
+
+    def update(self, model):
+        tippingPoint = round(model.value * self.length / (model.maximum - model.minimum))
+        td = ""
+        html = ""
+        html.extend("")
+        print("".join(html))
+
+
+if __name__ == '__main__':
+
+    historyView = HistoryView()
+    liveView = LiveView()
+    model = SliderModel(0, 0, 40)
+    model.observers_add(historyView, liveView)
+    for value in (7, 23, 37):
+        model.value = value
+    for value, timestamp in historyView.data:
+        print("{:3} {}".format(value, datetime.datetime.fromtimestamp(timestamp)), file=sys.stderr)
+```
 
 ### 3.8. State 
 
+The state pattern is intended to provide objects whose behavior changes when their state
+changes; that is, objects that have modes.
+
+```python State
+class Counter:
+
+    def __init__(self, *names):
+        pass
+
+    def __call__(self, event):
+        pass
+
+class Event:
+
+    def __init__(self, name, count=1):
+        pass
+
+class Multiplexer:
+
+    ACTIVE, DORMANT = ("ACTIVE", "DORMANT")
+
+    def __init__(self):
+        pass
+
+    def connect(self, eventName, callback):
+        pass
+
+    def disconnect(self, eventName, callback=None):
+        pass
+
+    def send(self, event):
+        pass
+
+    # @property
+    # def state(self):
+    #     pass
+
+    @state.setter
+    def state(self, state):
+        pass
+
+    def __active_connect(self, eventName, callback):
+        pass
+
+
+if __name__ == '__main__':
+
+    totalCounter = Counter()
+    carCounter = Counter("cars")
+    commercialCounter = Counter("vans", "trucks")
+
+    multiiplexer = Multiplexer()
+    for eventName, callback in (("cars", carCounter), 
+                                ("vans", commercialCounter),
+                                ("trucks", commercialCounter)):
+        multiplexer.connect(eventName, callback)
+        multiplexer.connect(eventName, totalCounter)
+```
+
 ### 3.9. Strategy 
+
+The strategy pattern provides a means of encapsulating a set of algorithms that
+can be used interchangeably, depending on the user's needs.
+
+```python Strategy
+WINNERS = ("Niko", "Mat", "Birgit", "Sawao")
+
+class Layout:
+
+    def __init__(self, tabulator):
+        self.tabulator = tabulator
+
+    def tabulate(self, rows, items):
+        return self.tabulator(rows, items)
+
+
+class Layout:
+
+    def __init__(self, tabulator):
+        self.tabulate = tabulator
+
+    def html_tabulator(rows, items):
+        pass
+
+if __name__ == '__main__':
+
+    htmlLayout = Layout(html_tabulator)
+    for rows in range(2, 6):
+        print(htmlLayout.tabulate(rows, WINNERS))
+   
+    textLayout = Layout(text_tabulator)
+    for rows in range(2, 6):
+        print(textLayout.tabulate(rows, WINNERS)
+```
 
 ### 3.10. Template method 
 
+The template method pattern allows us to define the steps of an algorithm but defer the
+execution of some of those steps to subclasses.
+
+```python TemplateMethod
+def count_words(filename):
+    pass
+
+class AbstractWordCounter:
+
+    @staticmethod
+    def can_count(filename):
+        raise NotImplementedError()
+
+    @staticmethod
+    def count(filename):
+        raise NotImplementedError()
+
+class AbstractWordCounter(metaclass=abc.ABCMeta):
+
+    @staticmethod
+    @abc.abcstractmethod
+    def can_count(filename):
+        pass
+
+    @staticmethod
+    @abc.abcstractmethod
+    def count(filename):
+        pass
+
+class PlainTextWordCounter(AbstractWordCounter):
+
+    @staticmethod
+    def can_count(filename):
+        pass
+
+    @staticmethod
+    def count(filename):
+        pass
+
+class HtmlWordCounter(AbstactWordCounter):
+
+    @staticmethod
+    def can_count(filename):
+        pass
+
+    @staticmethod
+    def count(filename):
+        pass
+
+    class __HtmlParser(html.parser.HTMLParser):
+   
+        def __init__(self):
+            super().__init__()
+            pass
+
+        def handle_starttag(self, tag, attrs):
+            pass
+
+        def handle_endtag(self, tag):
+            pass
+
+        def handle_data(self, text):
+            pass
+```
+
 ### 3.11. Visitor 
 
+The visitor pattern is used to apply a function to every item in a collection or
+aggregate object.
