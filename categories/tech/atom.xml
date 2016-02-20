@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tech | K]]></title>
   <link href="http://k.arttechresearch.com/categories/tech/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2016-02-17T13:36:08+08:00</updated>
+  <updated>2016-02-20T21:17:37+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[K]]></name>
@@ -12,6 +12,45 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Installing ROS on Ubuntu]]></title>
+    <link href="http://k.arttechresearch.com/tech/2016/02/20/installing-ros-on-ubuntu/"/>
+    <updated>2016-02-20T21:04:48+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2016/02/20/installing-ros-on-ubuntu</id>
+    <content type="html"><![CDATA[<h2>Requirement</h2>
+
+<ul>
+<li>Ubuntu 14.04</li>
+</ul>
+
+
+<h2>ROS</h2>
+
+<h3>Installation</h3>
+
+<pre><code class="bash">$ sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" &gt; /etc/apt/sources.list.d/ros-latest.list'
+$ sudo apt-key adv --keyserver hkp://pool.sks-keyservers.net:80 --recv-key 0xB01FA116
+$ sudo apt-get update
+
+$ sudo apt-get install ros-jade-desktop-full
+</code></pre>
+
+<h3>Configuration</h3>
+
+<pre><code class="bash">$ sudo rosdep init
+$ rosdep update
+
+$ echo "source /opt/ros/jade/setup.bash" &gt;&gt; ~/.bashrc
+$ source ~/.bashrc
+</code></pre>
+
+<h3>Additional Tools</h3>
+
+<pre><code class="bash">$ sudo apt-get install python-rosinstall
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Design Patterns in Python]]></title>
@@ -2100,75 +2139,6 @@ $ cd deepdream
 <li>User error:What happens if the user passes in null or a negative value?</li>
 <li>General cases: Test the normal case.</li>
 </ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Power Table]]></title>
-    <link href="http://k.arttechresearch.com/tech/2016/01/14/power-table/"/>
-    <updated>2016-01-14T15:08:07+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2016/01/14/power-table</id>
-    <content type="html"><![CDATA[<table>
-<thead>
-<tr>
-<th style="text-align:left;"> Power of 2 </th>
-<th style="text-align:left;"> Exact Value (X)   </th>
-<th style="text-align:left;"> Approx. Value </th>
-<th style="text-align:left;"> X Bytes into MB, GB, etc </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;"> 7          </td>
-<td style="text-align:left;"> 128               </td>
-<td style="text-align:left;">               </td>
-<td style="text-align:left;">                          </td>
-</tr>
-<tr>
-<td style="text-align:left;"> 8          </td>
-<td style="text-align:left;"> 256               </td>
-<td style="text-align:left;">               </td>
-<td style="text-align:left;">                          </td>
-</tr>
-<tr>
-<td style="text-align:left;"> 10         </td>
-<td style="text-align:left;"> 1024              </td>
-<td style="text-align:left;"> 1 thousand    </td>
-<td style="text-align:left;"> 1 K                      </td>
-</tr>
-<tr>
-<td style="text-align:left;"> 16         </td>
-<td style="text-align:left;"> 65,536            </td>
-<td style="text-align:left;">               </td>
-<td style="text-align:left;"> 64 K                     </td>
-</tr>
-<tr>
-<td style="text-align:left;"> 20         </td>
-<td style="text-align:left;"> 1,048,576         </td>
-<td style="text-align:left;"> 1 million     </td>
-<td style="text-align:left;"> 1 MB                     </td>
-</tr>
-<tr>
-<td style="text-align:left;"> 30         </td>
-<td style="text-align:left;"> 1,073,741,824     </td>
-<td style="text-align:left;"> 1 billion     </td>
-<td style="text-align:left;"> 1 GB                     </td>
-</tr>
-<tr>
-<td style="text-align:left;"> 32         </td>
-<td style="text-align:left;"> 4,294,967,296     </td>
-<td style="text-align:left;">               </td>
-<td style="text-align:left;"> 4 GB                     </td>
-</tr>
-<tr>
-<td style="text-align:left;"> 40         </td>
-<td style="text-align:left;"> 1,099,511,627,776 </td>
-<td style="text-align:left;"> 1 trillion    </td>
-<td style="text-align:left;"> 1 TB                     </td>
-</tr>
-</tbody>
-</table>
 
 ]]></content>
   </entry>
