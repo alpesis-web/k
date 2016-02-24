@@ -10,11 +10,11 @@ toc: false
 
 ## Web
 
-| Language | Web Framework          |
-|:---------|:-----------------------|
-| Python   | Django, Tornado, Flask |
+| Language | Web Framework          | Docs   | Testing | QA           |
+|:---------|:-----------------------|:-------|:--------|:-------------|
+| Python   | Django, Tornado, Flask | Sphinx | Nose    | PEP8, Pylint |
 | Ruby     | Rails                  |
-| Node.js  | Express                |
+| Node     | Express                |
+| Angular  |                        |        | Protractor |           |
 | Scala    | Life                   |
-
-
+| Java     | Spring                 |
