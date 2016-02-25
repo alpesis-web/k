@@ -4,7 +4,7 @@
   <title><![CDATA[K]]></title>
   <link href="http://k.arttechresearch.com/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2016-02-24T22:08:16+08:00</updated>
+  <updated>2016-02-25T20:58:07+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[K]]></name>
@@ -12,6 +12,556 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Installing OpenCV on Ubuntu]]></title>
+    <link href="http://k.arttechresearch.com/tech/2016/02/25/installing-opencv-on-ubuntu/"/>
+    <updated>2016-02-25T18:59:03+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2016/02/25/installing-opencv-on-ubuntu</id>
+    <content type="html"><![CDATA[<p>Installation Steps:</p>
+
+<ul>
+<li>Dependencies</li>
+<li>Python</li>
+<li>OpenCV</li>
+<li>Test</li>
+</ul>
+
+
+<h2>Dependencies</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="c"># update os</span>
+</span><span class='line'><span class="nv">$ </span>sudo apt-get update
+</span><span class='line'><span class="nv">$ </span>sudo apt-get upgrade
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span><span class="c"># update devtools</span>
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install build-essential cmake git pkg-config
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span><span class="c"># image I/O dependencies</span>
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install libjpeg8-dev libtiff4-dev libjasper-dev libpng12-dev
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span><span class="c"># highgui dependencies</span>
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install libgtk2.0-dev
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span><span class="c"># video dependencies</span>
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install libavcodec-dev libavformat-dev libswscale-dev libv4l-dev
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span><span class="c"># opencv optimization dependencies</span>
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install libatlas-base-dev gfortran
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Python</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="c"># pip and virtualenv</span>
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install python-pip
+</span><span class='line'><span class="nv">$ </span>sudo pip install virtualenv virtualenvwrapper
+</span><span class='line'><span class="nv">$ </span>vim ~/.bashrc
+</span><span class='line'><span class="nv">$ </span><span class="c">#######################################</span>
+</span><span class='line'><span class="nv">$ </span><span class="c"># virtualenv and virtualenvwrapper</span>
+</span><span class='line'><span class="nv">$ </span><span class="nb">export </span><span class="nv">WORKON_HOME</span><span class="o">=</span><span class="nv">$HOME</span>/.virtualenvs
+</span><span class='line'><span class="nv">$ </span><span class="nb">source</span> /usr/local/bin/virtualenvwrapper.sh
+</span><span class='line'><span class="nv">$ </span><span class="c">#######################################</span>
+</span><span class='line'><span class="nv">$ </span><span class="nb">source</span> ~/.bashrc
+</span><span class='line'><span class="nv">$ </span>mkvirtualenv cv
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install python2.7-dev
+</span><span class='line'><span class="nv">$ </span>pip install numpy
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>OpenCV</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="c"># opencv</span>
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> ~
+</span><span class='line'><span class="nv">$ </span>git clone https://github.com/Itseez/opencv.git
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>opencv
+</span><span class='line'><span class="nv">$ </span>git checkout 3.0.0
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> ~
+</span><span class='line'><span class="nv">$ </span>git clone https://github.com/Itseez/opencv_contrib.git
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>opencv_contrib
+</span><span class='line'><span class="nv">$ </span>git checkout 3.0.0
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> ~/opencv
+</span><span class='line'><span class="nv">$ </span>mkdir build
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>build
+</span><span class='line'><span class="c"># when build python, numpy is a must</span>
+</span><span class='line'><span class="nv">$ </span>cmake -D <span class="nv">CMAKE_BUILD_TYPE</span><span class="o">=</span>RELEASE <span class="se">\</span>
+</span><span class='line'>        -D <span class="nv">CMAKE_INSTALL_PREFIX</span><span class="o">=</span>/usr/local <span class="se">\</span>
+</span><span class='line'>        -D <span class="nv">INSTALL_C_EXAMPLES</span><span class="o">=</span>ON <span class="se">\</span>
+</span><span class='line'>        -D <span class="nv">INSTALL_PYTHON_EXAMPLES</span><span class="o">=</span>ON <span class="se">\</span>
+</span><span class='line'>        -D <span class="nv">OPENCV_EXTRA_MODULES_PATH</span><span class="o">=</span>~/opencv_contrib/modules <span class="se">\</span>
+</span><span class='line'>        -D <span class="nv">BUILD_EXAMPLES</span><span class="o">=</span>ON ..
+</span><span class='line'><span class="nv">$ </span>make -j4
+</span><span class='line'><span class="nv">$ </span>sudo make install
+</span><span class='line'><span class="nv">$ </span>sudo ldconfig
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Installed Paths:</p>
+
+<ul>
+<li>OpenCV: /usr/local/share/OpenCV</li>
+<li>PyOpenCV: /usr/local/lib/python2.7/site-packages/cv2.so</li>
+</ul>
+
+
+<h2>Test</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="c"># config opencv</span>
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> ~/.virtualenvs/cv/lib/python2.7/site-packages/
+</span><span class='line'><span class="nv">$ </span>cp /usr/local/lib/python2.7/site-packages/cv2.so cv2.so
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span><span class="c"># test</span>
+</span><span class='line'><span class="nv">$ </span>workon cv
+</span><span class='line'><span class="nv">$ </span>python
+</span><span class='line'><span class="nv">$ </span>&gt;&gt;&gt;import cv2
+</span><span class='line'><span class="nv">$ </span>&gt;&gt;&gt;cv2.__version__
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>demo</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c"># import the necessary packages</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">cv2</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># load the games image</span>
+</span><span class='line'><span class="c"># games.jpg: http://www.pyimagesearch.com/wp-content/uploads/2015/06/games.jpg</span>
+</span><span class='line'><span class="n">image</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s">&quot;games.jpg&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># find the red color game in the image</span>
+</span><span class='line'><span class="n">upper</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">65</span><span class="p">,</span> <span class="mi">65</span><span class="p">,</span> <span class="mi">255</span><span class="p">])</span>
+</span><span class='line'><span class="n">lower</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">200</span><span class="p">])</span>
+</span><span class='line'><span class="n">mask</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">inRange</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># find contours in the masked image and keep the largest one</span>
+</span><span class='line'><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">cnts</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">findContours</span><span class="p">(</span><span class="n">mask</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">cv2</span><span class="o">.</span><span class="n">RETR_EXTERNAL</span><span class="p">,</span>
+</span><span class='line'>  <span class="n">cv2</span><span class="o">.</span><span class="n">CHAIN_APPROX_SIMPLE</span><span class="p">)</span>
+</span><span class='line'><span class="n">c</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">cnts</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">cv2</span><span class="o">.</span><span class="n">contourArea</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># approximate the contour</span>
+</span><span class='line'><span class="n">peri</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">arcLength</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+</span><span class='line'><span class="n">approx</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">approxPolyDP</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="mf">0.05</span> <span class="o">*</span> <span class="n">peri</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># draw a green bounding box surrounding the red game</span>
+</span><span class='line'><span class="n">cv2</span><span class="o">.</span><span class="n">drawContours</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="p">[</span><span class="n">approx</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">4</span><span class="p">)</span>
+</span><span class='line'><span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s">&quot;Image&quot;</span><span class="p">,</span> <span class="n">image</span><span class="p">)</span>
+</span><span class='line'><span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Setting Up DevEnv for Nao]]></title>
+    <link href="http://k.arttechresearch.com/tech/2016/02/25/setting-up-devenv-for-nao/"/>
+    <updated>2016-02-25T13:07:11+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2016/02/25/setting-up-devenv-for-nao</id>
+    <content type="html"><![CDATA[<p>Summary:</p>
+
+<ul>
+<li>Nao OS</li>
+<li>Devkits
+
+<ul>
+<li>Choregraphe suite</li>
+<li>Naoqi SDK</li>
+<li>Simulators: webots</li>
+</ul>
+</li>
+<li>VM</li>
+<li>TroubleShooting</li>
+</ul>
+
+
+<h2>1. Nao OS</h2>
+
+<h2>2. Choregraphe suite</h2>
+
+<p>Linux/Mac/Windows</p>
+
+<ul>
+<li>Download the installation package, and install it in a specific os</li>
+</ul>
+
+
+<h2>3. Naoqi SDK</h2>
+
+<ul>
+<li>Python SDK</li>
+<li>C++ SDK</li>
+<li>Java SDK</li>
+</ul>
+
+
+<h3>3.1. Python SDK</h3>
+
+<h4>Ubuntu</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># download the package</span>
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /tmp
+</span><span class='line'><span class="nv">$ </span>wget http://xxxx      <span class="c"># package path</span>
+</span><span class='line'><span class="nv">$ </span>tar -xvf pynaoqi-python2.7-x.x.x.x-linux64
+</span><span class='line'><span class="nv">$ </span>mv pynaoqi-python2.7-x.x.x.x-linux64 pynaoqi-sdk
+</span><span class='line'><span class="nv">$ </span>mv pynaoqi-sdk /usr/local/pynaoqi-sdk
+</span><span class='line'><span class="nv">$ </span>vim ~/.bashrc
+</span><span class='line'><span class="c">###########################################</span>
+</span><span class='line'><span class="nb">export </span><span class="nv">PYTHONPATH</span><span class="o">=</span><span class="k">${</span><span class="nv">PYTHONPATH</span><span class="k">}</span>:/usr/local/pynaoqi-sdk
+</span><span class='line'><span class="c">########################################### </span>
+</span><span class='line'><span class="nv">$ </span><span class="nb">source</span> ~/.bashrc
+</span><span class='line'><span class="nv">$ </span>python
+</span><span class='line'><span class="c">###########################################</span>
+</span><span class='line'>import naoqi
+</span><span class='line'><span class="c">###########################################</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Mac</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># download the package</span>
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /tmp
+</span><span class='line'><span class="nv">$ </span>wget http://xxxx      <span class="c"># package path</span>
+</span><span class='line'><span class="nv">$ </span>tar -xvf pynaoqi-python2.7-x.x.x.x-linux64
+</span><span class='line'><span class="nv">$ </span>mv pynaoqi-python2.7-x.x.x.x-linux64 pynaoqi-sdk
+</span><span class='line'><span class="nv">$ </span>mv pynaoqi-sdk /usr/local/pynaoqi-sdk
+</span><span class='line'><span class="nv">$ </span>vim ~/.bash_profile
+</span><span class='line'><span class="c">###########################################</span>
+</span><span class='line'><span class="nb">export </span><span class="nv">PYTHONPATH</span><span class="o">=</span><span class="k">${</span><span class="nv">PYTHONPATH</span><span class="k">}</span>:/usr/local/pynaoqi-sdk
+</span><span class='line'><span class="nb">export </span><span class="nv">DYLD_LIBRARY_PATH</span><span class="o">=</span><span class="k">${</span><span class="nv">DYLD_LIBRARY_PATH</span><span class="k">}</span>:/path/to/python-sdk
+</span><span class='line'><span class="c">########################################### </span>
+</span><span class='line'><span class="nv">$ </span><span class="nb">source</span> ~/.bash_profile
+</span><span class='line'><span class="nv">$ </span>python
+</span><span class='line'><span class="c">###########################################</span>
+</span><span class='line'>import naoqi
+</span><span class='line'><span class="c">###########################################</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Windows</h4>
+
+<h3>3.2. C++ SDK</h3>
+
+<h4>Ubuntu</h4>
+
+<h4>Mac</h4>
+
+<h4>Windows</h4>
+
+<h3>3.3. Java SDK</h3>
+
+<h2>4. Simulators</h2>
+
+<h3>4.1. Webot</h3>
+
+<ul>
+<li>Download the specific installation package</li>
+<li>Install</li>
+<li>Register a license</li>
+<li>Update the packages</li>
+<li>Go to the dashboard</li>
+</ul>
+
+
+<h2>5. VM</h2>
+
+<ul>
+<li>Download the box file</li>
+<li>Load the file into VirtualBox</li>
+<li>Login the OS with user/pass: nao/nao</li>
+</ul>
+
+
+<h2>6. TroubleShooting</h2>
+
+<h2>References</h2>
+
+<ul>
+<li><a href="https://community.aldebaran.com/en/resources/software/language/en-gb">Aldebaran Softwares</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[OpenCV Overview]]></title>
+    <link href="http://k.arttechresearch.com/tech/2016/02/25/opencv-overview/"/>
+    <updated>2016-02-25T00:13:01+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2016/02/25/opencv-overview</id>
+    <content type="html"><![CDATA[<ul>
+<li>installation</li>
+<li>modules</li>
+<li>api</li>
+</ul>
+
+
+<h2>Installation</h2>
+
+<ul>
+<li>OS: Ubuntu 14.04</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install libopencv-dev python-opencv
+</span><span class='line'><span class="nv">$ </span><span class="c"># sudo apt-get autoremove libopencv-dev python-opencv</span>
+</span><span class='line'><span class="nv">$ </span>pkg-config opencv --cflags
+</span><span class='line'><span class="nv">$ </span>pkg-config opencv --libs
+</span><span class='line'><span class="nv">$ </span>pkg-config --modversion opencv
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>test</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>vim test.cpp
+</span><span class='line'><span class="nv">$ </span>g++ test.cpp -o <span class="nb">test</span>
+</span><span class='line'><span class="nv">$ </span>./test
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Modules</h2>
+
+<ul>
+<li><code>core</code>: main OpenCV, data structure + basic image processing</li>
+<li><code>highgui</code>: user interface, image + video codecs/capturing/mouse etc.</li>
+<li><code>imgproc</code>: image processing algorithms, image filtering/transformations etc.</li>
+<li><code>video</code>: video analysis, object tracking algorithms + background subtraction etc.</li>
+<li><code>objdetect</code>: object detection + object recognition</li>
+</ul>
+
+
+<h2>API</h2>
+
+<h3>header files</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="cp">#include &quot;opencv2/core/core.hpp&quot;</span>
+</span><span class='line'><span class="cp">#include &quot;opencv2/flann/miniflann.hpp&quot;</span>
+</span><span class='line'><span class="cp">#include &quot;opencv2/imgproc/imgproc.hpp&quot;</span>
+</span><span class='line'><span class="cp">#include &quot;opencv2/photo/photo.hpp&quot;</span>
+</span><span class='line'><span class="cp">#include &quot;opencv2/video/video.hpp&quot;</span>
+</span><span class='line'><span class="cp">#include &quot;opencv2/features2d/features2d.hpp&quot;</span>
+</span><span class='line'><span class="cp">#include &quot;opencv2/objdetect/objdetect.hpp&quot;</span>
+</span><span class='line'><span class="cp">#include &quot;opencv2/calib3d/calib3d.hpp&quot;</span>
+</span><span class='line'><span class="cp">#include &quot;opencv2/ml/ml.hpp&quot;</span>
+</span><span class='line'><span class="cp">#include &quot;opencv2/highgui/highgui.hpp&quot;</span>
+</span><span class='line'><span class="cp">#include &quot;opencv2/contrib/contrib.hpp&quot;</span>
+</span><span class='line'><span class="cp">#include &quot;opencv2/core/core_c.h&quot;</span>
+</span><span class='line'><span class="cp">#include &quot;opencv2/highgui/highgui_c.h&quot;</span>
+</span><span class='line'><span class="cp">#include &quot;opencv2/imgproc/imgproc_c.h&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<h3>namespace</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="cp">#include &quot;opencv2/core/core.hpp&quot;</span>
+</span><span class='line'><span class="k">using</span> <span class="k">namespace</span> <span class="n">cv</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="n">Mat</span> <span class="n">frame</span> <span class="o">=</span> <span class="n">cvQueryFrame</span><span class="p">(</span><span class="n">capture</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">imshow</span><span class="p">(</span><span class="s">&quot;Video&quot;</span><span class="p">,</span> <span class="n">frame</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="cp">#include &quot;opencv2/core/core.hpp&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">frame</span> <span class="o">=</span> <span class="n">cvQueryFrame</span><span class="p">(</span><span class="n">capture</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">cv</span><span class="o">::</span><span class="n">imshow</span><span class="p">(</span><span class="s">&quot;Video&quot;</span><span class="p">,</span> <span class="n">frame</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>data types for arrays</h3>
+
+<p>single channel array:</p>
+
+<ul>
+<li>CV_8U (8 bit unsigned integer)</li>
+<li>CV_8S (8 bit signed integer)</li>
+<li>CV_16U (16 bit unsigned integer)</li>
+<li>CV_16S (16 bit signed integer)</li>
+<li>CV_32S (32 bit signed integer)</li>
+<li>CV_32F (32 bit floating point number)</li>
+<li>CV_64F (64 bit float floating point number)</li>
+</ul>
+
+
+<p>multi channel array:</p>
+
+<ul>
+<li>CV_8UC1 (single channel array with 8 bit unsigned integers)</li>
+<li>CV_8UC2 (2 channel array with 8 bit unsigned integers)</li>
+<li>CV_8UC3 (3 channel array with 8 bit unsigned integers)</li>
+<li>CV_8UC4 (4 channel array with 8 bit unsigned integers)</li>
+<li>CV_8UC(n) (n channel array with 8 bit unsigned integers (n can be from 1 to 512) )</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Installing ROS on Ubuntu]]></title>
@@ -4818,761 +5368,6 @@ runtimes make a virtual method invocation of a class member a faster oper- ation
 </span><span class='line'><span class="c"># curl</span>
 </span><span class='line'><span class="nv">$ </span>mkdir -p ~/.vim/<span class="o">{</span>ftdetect,indent,syntax<span class="o">}</span> <span class="o">&amp;&amp;</span> <span class="k">for</span> d in ftdetect indent syntax <span class="p">;</span> <span class="k">do</span> curl -o ~/.vim/<span class="nv">$d</span>/scala.vim https://raw.githubusercontent.com/derekwyatt/vim-scala/master/<span class="nv">$d</span>/scala.vim<span class="p">;</span> <span class="k">done</span>
 </span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Linux Advanced Commands]]></title>
-    <link href="http://k.arttechresearch.com/tech/2016/01/03/linux-advanced-commands/"/>
-    <updated>2016-01-03T22:20:08+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2016/01/03/linux-advanced-commands</id>
-    <content type="html"><![CDATA[<h2>mkdir</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>mkdir -p project/<span class="o">{</span>bin,venvs,app/<span class="o">{</span>requirements,app/tests,docs,scripts<span class="o">}}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>tar</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>tar xvf -C /path/to/dest xxx.tar.gz
-</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /path/to/dest <span class="o">&amp;&amp;</span> tar xvf xxx.tar.gz
-</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /path/to/dest <span class="o">||</span> mkdir -p /path/to/dest
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /path/to/dest <span class="o">||</span> mkdir -p /path/to/dest <span class="o">&amp;&amp;</span> tar xvf -C /path/to/dest xxx.tar.gz
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /path/to/dest <span class="o">||</span> <span class="se">\</span>
-</span><span class='line'>&gt; mkdir -p /path/to/dest <span class="o">&amp;&amp;</span> <span class="se">\</span>
-</span><span class='line'>&gt; tar xvf -C /path/to/dest xxx.tar.gz
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span><span class="o">(</span> <span class="nb">cd</span> /path/to/dest <span class="o">||</span> mkdir -p /path/to/dest <span class="o">&amp;&amp;</span> <span class="se">\</span>
-</span><span class='line'>&gt; <span class="nv">VAR</span><span class="o">=</span><span class="nv">$PWD</span><span class="p">;</span> <span class="nb">cd</span> ~<span class="p">;</span> tar xvf -C <span class="nv">$VAR</span> archive.tar <span class="o">)</span> <span class="p">|</span> <span class="se">\</span>
-</span><span class='line'>&gt; mailx admin -S <span class="s2">&quot;Archive contents&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span><span class="o">{</span> cp <span class="k">$(</span>VAR<span class="k">)</span>a . <span class="o">&amp;&amp;</span> chown -R guest.guest a <span class="o">&amp;&amp;</span> <span class="se">\</span>
-</span><span class='line'>&gt; tar cvf newarchive.tar a<span class="p">;</span> <span class="o">}</span> <span class="p">|</span> <span class="se">\</span>
-</span><span class='line'>&gt; mailx admin -S <span class="s2">&quot;New archive&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>patterns</h2>
-
-<h3>file name: xargs</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>find some-file-criteria some-file-path <span class="p">|</span> xargs some-great-command-that-needs-filename-arguements
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>file contents: grep</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">time </span>grep and tmp/a/longfile.txt <span class="p">|</span> wc -l             <span class="c"># multiple files</span>
-</span><span class='line'><span class="nv">$ </span><span class="nb">time </span>grep -c and tmp/a/longfile.txt                  <span class="c"># single file</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span>grep -o and tmp/a/longfile.txt <span class="p">|</span> wc -l
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>content lines: awk</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>ls -la <span class="p">|</span> awk <span class="s1">&#39;$6 == &quot;Dec&quot;&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Flask-Restless]]></title>
-    <link href="http://k.arttechresearch.com/tech/2016/01/03/flask-restless/"/>
-    <updated>2016-01-03T00:09:13+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2016/01/03/flask-restless</id>
-    <content type="html"><![CDATA[<p>Source Codes:</p>
-
-<ul>
-<li>original: <a href="https://github.com/jfinkels/flask-restless">https://github.com/jfinkels/flask-restless</a></li>
-<li>refactored: <a href="https://github.com/KellyChan/flask-restless">https://github.com/KellyChan/flask-restless</a></li>
-</ul>
-
-
-<p>Notes:
-Flask-restless was developed by jfinkels, this article is the study notes
-of his source code, and refactoring some codes by personal purpose.</p>
-
-<p>All the commands and codes below are based on the <a href="https://github.com/KellyChan/flask-restless">refactored codes</a>.</p>
-
-<h2>Setup DevEnv</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git clone https://github.com/KellyChan/flask-restless
-</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>flask-restless
-</span><span class='line'>
-</span><span class='line'><span class="c"># update Vagrantfile (Virtualbox + Vagrant)</span>
-</span><span class='line'><span class="c"># then create the project and setup the virtualenv</span>
-</span><span class='line'><span class="nv">$ </span>virtualenv venvs/flask-restless
-</span><span class='line'><span class="nv">$ </span><span class="nb">source </span>venvs/flask-restless/bin/activate
-</span><span class='line'>
-</span><span class='line'><span class="c"># install requirements</span>
-</span><span class='line'><span class="nv">$ </span>pip install -r requirements/base.txt
-</span><span class='line'><span class="nv">$ </span>pip install -r requirements/test.txt
-</span><span class='line'><span class="nv">$ </span>pip install -r requirements/docs.txt
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Project Structure</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>Dev
-</span><span class='line'>  <span class="p">|</span>---- requirements/
-</span><span class='line'>  <span class="p">|</span>---- flask_restless/
-</span><span class='line'>  <span class="p">|</span>---- artwork/
-</span><span class='line'>
-</span><span class='line'>DevOps
-</span><span class='line'>  <span class="p">|</span>---- setup.cfg
-</span><span class='line'>  <span class="p">|</span>---- setup.py
-</span><span class='line'>  <span class="p">|</span>---- scripts/
-</span><span class='line'>
-</span><span class='line'>Tests
-</span><span class='line'>  <span class="p">|</span>---- tests/
-</span><span class='line'>
-</span><span class='line'>Docs
-</span><span class='line'>  <span class="p">|</span>---- docs/
-</span><span class='line'>  <span class="p">|</span>---- examples/
-</span><span class='line'>
-</span><span class='line'>Others
-</span><span class='line'>  <span class="p">|</span>---- AUTHORS
-</span><span class='line'>  <span class="p">|</span>---- licenses/
-</span><span class='line'>  <span class="p">|</span>---- CHANGES
-</span><span class='line'>  <span class="p">|</span>---- README.md
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Dev</h2>
-
-<p>files</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>flask-restless/
-</span><span class='line'>    <span class="p">|</span>---- helpers.py                   <span class="c"># utils, mostly about SQLalchemy objects</span>
-</span><span class='line'>    <span class="p">|</span>---- manager.py                   <span class="c"># API creator</span>
-</span><span class='line'>    <span class="p">|</span>---- search.py                    <span class="c"># seraching database</span>
-</span><span class='line'>    <span class="p">|</span>---- views.py                     <span class="c"># views</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Test</h2>
-
-<h3>cli</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>nosetests
-</span><span class='line'><span class="nv">$ </span>python setup.py <span class="nb">test</span>
-</span><span class='line'><span class="nv">$ </span>nosetests --with-coverage --cover-package<span class="o">=</span>flask_restless --cover-html <span class="se">\</span>
-</span><span class='line'>    --cover-html-dir<span class="o">=</span>&lt;somedir&gt;
-</span><span class='line'><span class="nv">$ </span>savalidation
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Docs</h2>
-
-<h3>cli</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git submodule update --init
-</span><span class='line'><span class="nv">$ </span>python setup.py develop
-</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>docs
-</span><span class='line'><span class="nv">$ </span>make html
-</span><span class='line'><span class="nv">$ </span>sphinx-autobuild ./ _build/html/
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>theming</h3>
-
-<h2>DevOps</h2>
-
-<p>installation</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>python setup.py --help
-</span><span class='line'><span class="nv">$ </span>python setup.py install
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>References</h2>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Python Sphinx]]></title>
-    <link href="http://k.arttechresearch.com/tech/2015/12/31/python-sphinx/"/>
-    <updated>2015-12-31T01:25:59+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2015/12/31/python-sphinx</id>
-    <content type="html"><![CDATA[<p>Sphinx is a Python documentation generator. To write the project documentation with
-Sphinx, here are the steps:</p>
-
-<ol>
-<li>Installing Sphinx and setting up a project</li>
-<li>Configuring Sphinx</li>
-<li>Customizing the theme</li>
-<li>Writing the docs</li>
-</ol>
-
-
-<h2>Sphinx Setup</h2>
-
-<p>Sphinx and plugins</p>
-
-<ul>
-<li>sphinx</li>
-<li>sphinx-autobuild: live html preview</li>
-</ul>
-
-
-<h3>Installation</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>pip install sphinx
-</span><span class='line'><span class="nv">$ </span>pip install sphinx-autobuild
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Quick Start</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sphinx-quickstart
-</span><span class='line'>
-</span><span class='line'><span class="c"># sphinx-autobuild &lt;DOCS_PATH&gt; &lt;DOCS_PATH/BUILD/HTML&gt;</span>
-</span><span class='line'><span class="nv">$ </span>sphinx-autobuild docs docs/_build/html
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>other commands</p>
-
-<figure class='code'><figcaption><span>make.bat</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="k">if</span> <span class="s2">&quot;%1&quot;</span> <span class="o">==</span> <span class="s2">&quot;help&quot;</span> <span class="o">(</span>
-</span><span class='line'>        :help
-</span><span class='line'>        echo.Please use <span class="sb">`</span>make ^&lt;target^&gt;<span class="sb">`</span> where ^&lt;target^&gt; is one of
-</span><span class='line'>        echo.  html       to make standalone HTML files
-</span><span class='line'>        echo.  dirhtml    to make HTML files named index.html in directories
-</span><span class='line'>        echo.  singlehtml to make a single large HTML file
-</span><span class='line'>        echo.  pickle     to make pickle files
-</span><span class='line'>        echo.  json       to make JSON files
-</span><span class='line'>        echo.  htmlhelp   to make HTML files and a HTML <span class="nb">help </span>project
-</span><span class='line'>        echo.  qthelp     to make HTML files and a qthelp project
-</span><span class='line'>        echo.  devhelp    to make HTML files and a Devhelp project
-</span><span class='line'>        echo.  epub       to make an epub
-</span><span class='line'>        echo.  latex      to make LaTeX files, you can <span class="nb">set </span><span class="nv">PAPER</span><span class="o">=</span>a4 or <span class="nv">PAPER</span><span class="o">=</span>letter
-</span><span class='line'>        echo.  text       to make text files
-</span><span class='line'>        echo.  man        to make manual pages
-</span><span class='line'>        echo.  texinfo    to make Texinfo files
-</span><span class='line'>        echo.  gettext    to make PO message catalogs
-</span><span class='line'>        echo.  changes    to make an overview over all changed/added/deprecated items
-</span><span class='line'>        echo.  xml        to make Docutils-native XML files
-</span><span class='line'>        echo.  pseudoxml  to make pseudoxml-XML files <span class="k">for</span> display purposes
-</span><span class='line'>        echo.  linkcheck  to check all external links <span class="k">for</span> integrity
-</span><span class='line'>        echo.  doctest    to run all doctests embedded in the documentation <span class="k">if</span> enabled
-</span><span class='line'>        echo.  coverage   to run coverage check of the documentation <span class="k">if</span> enabled
-</span><span class='line'>        goto end
-</span><span class='line'><span class="o">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Sphinx Settings</h2>
-
-<figure class='code'><figcaption><span>conf.py</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c"># -- General configuration ------------------------------------------------</span>
-</span><span class='line'><span class="c"># -- Options for HTML output ----------------------------------------------</span>
-</span><span class='line'><span class="c"># -- Options for LaTeX output ---------------------------------------------</span>
-</span><span class='line'><span class="c"># -- Options for manual page output ---------------------------------------</span>
-</span><span class='line'><span class="c"># -- Options for Texinfo output -------------------------------------------</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Sphinx Theming</h2>
-
-<p>There are two options to create a theme:</p>
-
-<ul>
-<li>one is to change a default theme,</li>
-<li>another is to create a new one by yourself.</li>
-</ul>
-
-
-<h3>Default Themes</h3>
-
-<p>All html configurations are stored in <code>conf.py</code>. Official docs is <a href="http://sphinx-doc.org/theming.html">here</a>.</p>
-
-<figure class='code'><figcaption><span>conf.py</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c"># -- Options for HTML output ----------------------------------------------</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># The theme to use for HTML and HTML Help pages.  See the documentation for</span>
-</span><span class='line'><span class="c"># a list of builtin themes.</span>
-</span><span class='line'><span class="c"># default themes: alabaster, sphinx_rtd_theme, classic, sphinxdoc,</span>
-</span><span class='line'><span class="c">#     scrolls, agogo, traditional, nature, haiku, pyramid, bizstyle</span>
-</span><span class='line'><span class="n">html_theme</span> <span class="o">=</span> <span class="s">&#39;nature&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># Theme options are theme-specific and customize the look and feel of a theme</span>
-</span><span class='line'><span class="c"># further.  For a list of options available for each theme, see the</span>
-</span><span class='line'><span class="c"># documentation.</span>
-</span><span class='line'><span class="c"># html_theme_options = {</span>
-</span><span class='line'><span class="c">#     &quot;rightsidebar&quot;: &quot;true&quot;,</span>
-</span><span class='line'><span class="c">#     &quot;relbarbgcolor&quot;: &quot;black&quot;</span>
-</span><span class='line'><span class="c"># }</span>
-</span><span class='line'><span class="n">html_theme_options</span> <span class="o">=</span> <span class="p">{}</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># Add any paths that contain custom themes here, relative to this directory.</span>
-</span><span class='line'><span class="c"># html_theme_path = [&quot;.&quot;]</span>
-</span><span class='line'><span class="n">html_theme_path</span> <span class="o">=</span> <span class="p">[]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Custom Themes</h3>
-
-<h2>RST</h2>
-
-<h3>Makeup Constructs</h3>
-
-<p>Official docs is <a href="http://sphinx-doc.org/markup/index.html">here</a>.</p>
-
-<h4>toctree</h4>
-
-<figure class='code'><figcaption><span>toctree</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">..</span> <span class="n">toctree</span><span class="p">::</span>
-</span><span class='line'>   <span class="p">:</span><span class="n">maxdepth</span><span class="p">:</span> <span class="mi">2</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">..</span> <span class="n">toctree</span><span class="p">::</span>
-</span><span class='line'>   <span class="p">:</span><span class="n">numbered</span><span class="p">:</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">..</span> <span class="n">toctree</span><span class="p">::</span>
-</span><span class='line'>   <span class="p">:</span><span class="n">caption</span><span class="p">:</span> <span class="n">Table</span> <span class="n">of</span> <span class="n">Contents</span>
-</span><span class='line'>   <span class="p">:</span><span class="n">name</span><span class="p">:</span> <span class="n">mastertoc</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">..</span> <span class="n">toctree</span><span class="p">::</span>
-</span><span class='line'>   <span class="p">:</span><span class="n">titlesonly</span><span class="p">:</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">..</span> <span class="n">toctree</span><span class="p">::</span>
-</span><span class='line'>   <span class="p">:</span><span class="n">glob</span><span class="p">:</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">..</span> <span class="n">toctree</span><span class="p">::</span>
-</span><span class='line'>   <span class="p">:</span><span class="n">hidden</span><span class="p">:</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">..</span> <span class="n">toctree</span><span class="p">::</span>
-</span><span class='line'>   <span class="p">:</span><span class="n">includehidden</span><span class="p">:</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h4>paragraph-level makeup</h4>
-
-<figure class='code'><figcaption><span>paragraph-level</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">..</span> <span class="n">note</span><span class="p">::</span>
-</span><span class='line'><span class="o">..</span> <span class="n">warning</span><span class="p">::</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">..</span> <span class="n">versionadded</span><span class="p">::</span> <span class="mf">2.5</span>
-</span><span class='line'><span class="o">..</span> <span class="n">versionchanged</span><span class="p">::</span> <span class="n">version</span>
-</span><span class='line'><span class="o">..</span> <span class="n">deprecated</span><span class="p">::</span> <span class="mf">3.1</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">..</span> <span class="n">seealso</span><span class="p">::</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">..</span> <span class="n">rubric</span><span class="p">::</span> <span class="n">title</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">..</span> <span class="n">centered</span><span class="p">::</span> <span class="n">LICENSE</span> <span class="n">AGREEMENT</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">..</span> <span class="n">hlist</span><span class="p">::</span>
-</span><span class='line'>   <span class="p">:</span><span class="n">columns</span><span class="p">:</span> <span class="mi">3</span>
-</span><span class='line'>
-</span><span class='line'>   <span class="o">*</span> <span class="n">A</span> <span class="nb">list</span> <span class="n">of</span>
-</span><span class='line'>   <span class="o">*</span> <span class="n">short</span> <span class="n">items</span>
-</span><span class='line'>   <span class="o">*</span> <span class="n">that</span> <span class="n">should</span> <span class="n">be</span>
-</span><span class='line'>   <span class="o">*</span> <span class="n">displayed</span>
-</span><span class='line'>   <span class="o">*</span> <span class="n">horizontally</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">..</span> <span class="n">glossary</span><span class="p">::</span>
-</span><span class='line'><span class="o">..</span> <span class="n">productionlist</span><span class="p">::</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h4>codes</h4>
-
-<p>Official docs is <a href="http://sphinx-doc.org/markup/code.html">here</a>.</p>
-
-<figure class='code'><figcaption><span>codes</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">..</span> <span class="n">highlight</span><span class="p">::</span> <span class="n">c</span>
-</span><span class='line'><span class="o">..</span> <span class="n">code</span><span class="o">-</span><span class="n">block</span><span class="p">::</span> <span class="n">ruby</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">..</span> <span class="n">highlight</span><span class="p">::</span> <span class="n">python</span>
-</span><span class='line'>   <span class="p">:</span><span class="n">linenothreshold</span><span class="p">:</span> <span class="mi">5</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">..</span> <span class="n">code</span><span class="o">-</span><span class="n">block</span><span class="p">::</span> <span class="n">ruby</span>
-</span><span class='line'>   <span class="p">:</span><span class="n">linenos</span><span class="p">:</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">..</span> <span class="n">code</span><span class="o">-</span><span class="n">block</span><span class="p">::</span> <span class="n">python</span>
-</span><span class='line'>   <span class="p">:</span><span class="n">emphasize</span><span class="o">-</span><span class="n">lines</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span><span class="mi">5</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">..</span> <span class="n">literalinclude</span><span class="p">::</span> <span class="n">example</span><span class="o">.</span><span class="n">py</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">..</span> <span class="n">literalinclude</span><span class="p">::</span> <span class="n">example</span><span class="o">.</span><span class="n">rb</span>
-</span><span class='line'>   <span class="p">:</span><span class="n">language</span><span class="p">:</span> <span class="n">ruby</span>
-</span><span class='line'>   <span class="p">:</span><span class="n">emphasize</span><span class="o">-</span><span class="n">lines</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span><span class="mi">15</span><span class="o">-</span><span class="mi">18</span>
-</span><span class='line'>   <span class="p">:</span><span class="n">linenos</span><span class="p">:</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">..</span> <span class="n">literalinclude</span><span class="p">::</span> <span class="n">example</span><span class="o">.</span><span class="n">py</span>
-</span><span class='line'>   <span class="p">:</span><span class="n">encoding</span><span class="p">:</span> <span class="n">latin</span><span class="o">-</span><span class="mi">1</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">..</span> <span class="n">literalinclude</span><span class="p">::</span> <span class="n">example</span><span class="o">.</span><span class="n">py</span>
-</span><span class='line'>   <span class="p">:</span><span class="n">pyobject</span><span class="p">:</span> <span class="n">Timer</span><span class="o">.</span><span class="n">start</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">..</span> <span class="n">literalinclude</span><span class="p">::</span> <span class="n">example</span><span class="o">.</span><span class="n">py</span>
-</span><span class='line'>   <span class="p">:</span><span class="n">lines</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="o">-</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">..</span> <span class="n">literalinclude</span><span class="p">::</span> <span class="n">example</span><span class="o">.</span><span class="n">py</span>
-</span><span class='line'>   <span class="p">:</span><span class="n">diff</span><span class="p">:</span> <span class="n">example</span><span class="o">.</span><span class="n">py</span><span class="o">.</span><span class="n">orig</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">..</span> <span class="n">code</span><span class="o">-</span><span class="n">block</span><span class="p">::</span> <span class="n">python</span>
-</span><span class='line'>   <span class="p">:</span><span class="n">caption</span><span class="p">:</span> <span class="n">this</span><span class="o">.</span><span class="n">py</span>
-</span><span class='line'>   <span class="p">:</span><span class="n">name</span><span class="p">:</span> <span class="n">this</span><span class="o">-</span><span class="n">py</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">..</span> <span class="n">literalinclude</span><span class="p">::</span> <span class="n">example</span><span class="o">.</span><span class="n">rb</span>
-</span><span class='line'>   <span class="p">:</span><span class="n">language</span><span class="p">:</span> <span class="n">ruby</span>
-</span><span class='line'>   <span class="p">:</span><span class="n">dedent</span><span class="p">:</span> <span class="mi">4</span>
-</span><span class='line'>   <span class="p">:</span><span class="n">lines</span><span class="p">:</span> <span class="mi">10</span><span class="o">-</span><span class="mi">15</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h4>inline makeup</h4>
-
-<p>Official docs is <a href="http://sphinx-doc.org/markup/inline.html">here</a>.</p>
-
-<figure class='code'><figcaption><span>inline</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="p">:</span><span class="nb">any</span><span class="p">:</span>
-</span><span class='line'><span class="p">:</span><span class="n">ref</span><span class="p">:</span>
-</span><span class='line'><span class="p">:</span><span class="n">doc</span><span class="p">:</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">:</span><span class="n">download</span><span class="p">:</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">:</span><span class="n">numref</span><span class="p">:</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">:</span><span class="n">envvar</span><span class="p">:</span>
-</span><span class='line'><span class="p">:</span><span class="n">token</span><span class="p">:</span>
-</span><span class='line'><span class="p">:</span><span class="n">keyword</span><span class="p">:</span>
-</span><span class='line'><span class="p">:</span><span class="n">option</span><span class="p">:</span>
-</span><span class='line'><span class="p">:</span><span class="n">term</span><span class="p">:</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">:</span><span class="n">abbr</span><span class="p">:</span>
-</span><span class='line'><span class="p">:</span><span class="n">command</span><span class="p">:</span>
-</span><span class='line'><span class="p">:</span><span class="n">dfn</span><span class="p">:</span>
-</span><span class='line'><span class="p">:</span><span class="nb">file</span><span class="p">:</span>
-</span><span class='line'><span class="p">:</span><span class="n">guilabel</span><span class="p">:</span>
-</span><span class='line'><span class="p">:</span><span class="n">kbd</span><span class="p">:</span>
-</span><span class='line'><span class="p">:</span><span class="n">mailheader</span><span class="p">:</span>
-</span><span class='line'><span class="p">:</span><span class="n">makevar</span><span class="p">:</span>
-</span><span class='line'><span class="p">:</span><span class="n">manpage</span><span class="p">:</span>
-</span><span class='line'><span class="p">:</span><span class="n">menuselection</span><span class="p">:</span>
-</span><span class='line'><span class="p">:</span><span class="n">mimetype</span><span class="p">:</span>
-</span><span class='line'><span class="p">:</span><span class="n">newsgroup</span><span class="p">:</span>
-</span><span class='line'><span class="p">:</span><span class="n">program</span><span class="p">:</span>
-</span><span class='line'><span class="p">:</span><span class="n">regexp</span><span class="p">:</span>
-</span><span class='line'><span class="p">:</span><span class="n">samp</span><span class="p">:</span>
-</span><span class='line'><span class="p">:</span><span class="n">pep</span><span class="p">:</span>
-</span><span class='line'><span class="p">:</span><span class="n">rfc</span><span class="p">:</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">|</span><span class="n">release</span><span class="o">|</span>
-</span><span class='line'><span class="o">|</span><span class="n">version</span><span class="o">|</span>
-</span><span class='line'><span class="o">|</span><span class="n">today</span><span class="o">|</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h4>others</h4>
-
-<figure class='code'><figcaption><span>otheres</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="p">:</span><span class="n">fieldname</span><span class="p">:</span> <span class="n">Field</span> <span class="n">content</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">..</span> <span class="n">sectionauthor</span><span class="p">::</span> <span class="n">name</span> <span class="o">&lt;</span><span class="n">email</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">..</span> <span class="n">sectionauthor</span><span class="p">::</span> <span class="n">Guido</span> <span class="n">van</span> <span class="n">Rossum</span> <span class="o">&lt;</span><span class="n">guido</span><span class="nd">@python.org</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">..</span> <span class="n">codeauthor</span><span class="p">::</span> <span class="n">name</span> <span class="o">&lt;</span><span class="n">email</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">..</span> <span class="n">index</span><span class="p">::</span> <span class="o">&lt;</span><span class="n">entries</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">..</span> <span class="n">index</span><span class="p">::</span>
-</span><span class='line'>   <span class="n">single</span><span class="p">:</span> <span class="n">execution</span><span class="p">;</span> <span class="n">context</span>
-</span><span class='line'>   <span class="n">module</span><span class="p">:</span> <span class="n">__main__</span>
-</span><span class='line'>   <span class="n">module</span><span class="p">:</span> <span class="n">sys</span>
-</span><span class='line'>   <span class="n">triple</span><span class="p">:</span> <span class="n">module</span><span class="p">;</span> <span class="n">search</span><span class="p">;</span> <span class="n">path</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">..</span> <span class="n">index</span><span class="p">::</span> <span class="n">Python</span>
-</span><span class='line'><span class="o">..</span> <span class="n">index</span><span class="p">::</span> <span class="err">!</span> <span class="n">Python</span>
-</span><span class='line'><span class="o">..</span> <span class="n">index</span><span class="p">::</span> <span class="n">BNF</span><span class="p">,</span> <span class="n">grammar</span><span class="p">,</span> <span class="n">syntax</span><span class="p">,</span> <span class="n">notation</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">..</span> <span class="n">only</span><span class="p">::</span> <span class="o">&lt;</span><span class="n">expression</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">..</span> <span class="n">only</span><span class="p">::</span> <span class="n">html</span> <span class="ow">and</span> <span class="n">draft</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">..</span> <span class="n">tabularcolumns</span><span class="p">::</span> <span class="n">column</span> <span class="n">spec</span>
-</span><span class='line'><span class="o">|</span><span class="n">l</span><span class="o">|</span><span class="n">l</span><span class="o">|</span><span class="n">l</span><span class="o">|</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Primer</h3>
-
-<p>Official docs is <a href="http://sphinx-doc.org/rest.html">here</a>.</p>
-
-<h2>References</h2>
-
-<ul>
-<li><a href="http://sphinx-doc.org/contents.html">Official Docs</a></li>
-<li><a href="https://pythonhosted.org/sphinxcontrib-httpdomain/">sphinxcontrib-httpdomain</a></li>
-</ul>
 
 ]]></content>
   </entry>

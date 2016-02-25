@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tech | K]]></title>
   <link href="http://k.arttechresearch.com/categories/tech/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2016-02-24T22:08:16+08:00</updated>
+  <updated>2016-02-25T20:58:07+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[K]]></name>
@@ -12,6 +12,382 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Installing OpenCV on Ubuntu]]></title>
+    <link href="http://k.arttechresearch.com/tech/2016/02/25/installing-opencv-on-ubuntu/"/>
+    <updated>2016-02-25T18:59:03+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2016/02/25/installing-opencv-on-ubuntu</id>
+    <content type="html"><![CDATA[<p>Installation Steps:</p>
+
+<ul>
+<li>Dependencies</li>
+<li>Python</li>
+<li>OpenCV</li>
+<li>Test</li>
+</ul>
+
+
+<h2>Dependencies</h2>
+
+<pre><code class="bash">$ # update os
+$ sudo apt-get update
+$ sudo apt-get upgrade
+
+$ # update devtools
+$ sudo apt-get install build-essential cmake git pkg-config
+
+$ # image I/O dependencies
+$ sudo apt-get install libjpeg8-dev libtiff4-dev libjasper-dev libpng12-dev
+
+$ # highgui dependencies
+$ sudo apt-get install libgtk2.0-dev
+
+$ # video dependencies
+$ sudo apt-get install libavcodec-dev libavformat-dev libswscale-dev libv4l-dev
+
+$ # opencv optimization dependencies
+$ sudo apt-get install libatlas-base-dev gfortran
+</code></pre>
+
+<h2>Python</h2>
+
+<pre><code class="bash">$ # pip and virtualenv
+$ sudo apt-get install python-pip
+$ sudo pip install virtualenv virtualenvwrapper
+$ vim ~/.bashrc
+$ #######################################
+$ # virtualenv and virtualenvwrapper
+$ export WORKON_HOME=$HOME/.virtualenvs
+$ source /usr/local/bin/virtualenvwrapper.sh
+$ #######################################
+$ source ~/.bashrc
+$ mkvirtualenv cv
+$ sudo apt-get install python2.7-dev
+$ pip install numpy
+</code></pre>
+
+<h2>OpenCV</h2>
+
+<pre><code class="bash">$ # opencv
+$ cd ~
+$ git clone https://github.com/Itseez/opencv.git
+$ cd opencv
+$ git checkout 3.0.0
+
+$ cd ~
+$ git clone https://github.com/Itseez/opencv_contrib.git
+$ cd opencv_contrib
+$ git checkout 3.0.0
+
+$ cd ~/opencv
+$ mkdir build
+$ cd build
+# when build python, numpy is a must
+$ cmake -D CMAKE_BUILD_TYPE=RELEASE \
+        -D CMAKE_INSTALL_PREFIX=/usr/local \
+        -D INSTALL_C_EXAMPLES=ON \
+        -D INSTALL_PYTHON_EXAMPLES=ON \
+        -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib/modules \
+        -D BUILD_EXAMPLES=ON ..
+$ make -j4
+$ sudo make install
+$ sudo ldconfig
+</code></pre>
+
+<p>Installed Paths:</p>
+
+<ul>
+<li>OpenCV: /usr/local/share/OpenCV</li>
+<li>PyOpenCV: /usr/local/lib/python2.7/site-packages/cv2.so</li>
+</ul>
+
+
+<h2>Test</h2>
+
+<pre><code class="bash">$ # config opencv
+$ cd ~/.virtualenvs/cv/lib/python2.7/site-packages/
+$ cp /usr/local/lib/python2.7/site-packages/cv2.so cv2.so
+
+$ # test
+$ workon cv
+$ python
+$ &gt;&gt;&gt;import cv2
+$ &gt;&gt;&gt;cv2.__version__
+</code></pre>
+
+<p>demo</p>
+
+<pre><code class="python"># import the necessary packages
+import numpy as np
+import cv2
+
+# load the games image
+# games.jpg: http://www.pyimagesearch.com/wp-content/uploads/2015/06/games.jpg
+image = cv2.imread("games.jpg")
+
+# find the red color game in the image
+upper = np.array([65, 65, 255])
+lower = np.array([0, 0, 200])
+mask = cv2.inRange(image, lower, upper)
+
+# find contours in the masked image and keep the largest one
+(_, cnts, _) = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL,
+    cv2.CHAIN_APPROX_SIMPLE)
+c = max(cnts, key=cv2.contourArea)
+
+# approximate the contour
+peri = cv2.arcLength(c, True)
+approx = cv2.approxPolyDP(c, 0.05 * peri, True)
+
+# draw a green bounding box surrounding the red game
+cv2.drawContours(image, [approx], -1, (0, 255, 0), 4)
+cv2.imshow("Image", image)
+cv2.waitKey(0)
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Setting Up DevEnv for Nao]]></title>
+    <link href="http://k.arttechresearch.com/tech/2016/02/25/setting-up-devenv-for-nao/"/>
+    <updated>2016-02-25T13:07:11+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2016/02/25/setting-up-devenv-for-nao</id>
+    <content type="html"><![CDATA[<p>Summary:</p>
+
+<ul>
+<li>Nao OS</li>
+<li>Devkits
+
+<ul>
+<li>Choregraphe suite</li>
+<li>Naoqi SDK</li>
+<li>Simulators: webots</li>
+</ul>
+</li>
+<li>VM</li>
+<li>TroubleShooting</li>
+</ul>
+
+
+<h2>1. Nao OS</h2>
+
+<h2>2. Choregraphe suite</h2>
+
+<p>Linux/Mac/Windows</p>
+
+<ul>
+<li>Download the installation package, and install it in a specific os</li>
+</ul>
+
+
+<h2>3. Naoqi SDK</h2>
+
+<ul>
+<li>Python SDK</li>
+<li>C++ SDK</li>
+<li>Java SDK</li>
+</ul>
+
+
+<h3>3.1. Python SDK</h3>
+
+<h4>Ubuntu</h4>
+
+<pre><code class="bash"># download the package
+$ cd /tmp
+$ wget http://xxxx      # package path
+$ tar -xvf pynaoqi-python2.7-x.x.x.x-linux64
+$ mv pynaoqi-python2.7-x.x.x.x-linux64 pynaoqi-sdk
+$ mv pynaoqi-sdk /usr/local/pynaoqi-sdk
+$ vim ~/.bashrc
+###########################################
+export PYTHONPATH=${PYTHONPATH}:/usr/local/pynaoqi-sdk
+########################################### 
+$ source ~/.bashrc
+$ python
+###########################################
+import naoqi
+###########################################
+</code></pre>
+
+<h4>Mac</h4>
+
+<pre><code class="bash"># download the package
+$ cd /tmp
+$ wget http://xxxx      # package path
+$ tar -xvf pynaoqi-python2.7-x.x.x.x-linux64
+$ mv pynaoqi-python2.7-x.x.x.x-linux64 pynaoqi-sdk
+$ mv pynaoqi-sdk /usr/local/pynaoqi-sdk
+$ vim ~/.bash_profile
+###########################################
+export PYTHONPATH=${PYTHONPATH}:/usr/local/pynaoqi-sdk
+export DYLD_LIBRARY_PATH=${DYLD_LIBRARY_PATH}:/path/to/python-sdk
+########################################### 
+$ source ~/.bash_profile
+$ python
+###########################################
+import naoqi
+###########################################
+</code></pre>
+
+<h4>Windows</h4>
+
+<h3>3.2. C++ SDK</h3>
+
+<h4>Ubuntu</h4>
+
+<h4>Mac</h4>
+
+<h4>Windows</h4>
+
+<h3>3.3. Java SDK</h3>
+
+<h2>4. Simulators</h2>
+
+<h3>4.1. Webot</h3>
+
+<ul>
+<li>Download the specific installation package</li>
+<li>Install</li>
+<li>Register a license</li>
+<li>Update the packages</li>
+<li>Go to the dashboard</li>
+</ul>
+
+
+<h2>5. VM</h2>
+
+<ul>
+<li>Download the box file</li>
+<li>Load the file into VirtualBox</li>
+<li>Login the OS with user/pass: nao/nao</li>
+</ul>
+
+
+<h2>6. TroubleShooting</h2>
+
+<h2>References</h2>
+
+<ul>
+<li><a href="https://community.aldebaran.com/en/resources/software/language/en-gb">Aldebaran Softwares</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[OpenCV Overview]]></title>
+    <link href="http://k.arttechresearch.com/tech/2016/02/25/opencv-overview/"/>
+    <updated>2016-02-25T00:13:01+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2016/02/25/opencv-overview</id>
+    <content type="html"><![CDATA[<ul>
+<li>installation</li>
+<li>modules</li>
+<li>api</li>
+</ul>
+
+
+<h2>Installation</h2>
+
+<ul>
+<li>OS: Ubuntu 14.04</li>
+</ul>
+
+
+<pre><code class="bash">$ sudo apt-get install libopencv-dev python-opencv
+$ # sudo apt-get autoremove libopencv-dev python-opencv
+$ pkg-config opencv --cflags
+$ pkg-config opencv --libs
+$ pkg-config --modversion opencv
+</code></pre>
+
+<p>test</p>
+
+<pre><code class="bash">$ vim test.cpp
+$ g++ test.cpp -o test
+$ ./test
+</code></pre>
+
+<h2>Modules</h2>
+
+<ul>
+<li><code>core</code>: main OpenCV, data structure + basic image processing</li>
+<li><code>highgui</code>: user interface, image + video codecs/capturing/mouse etc.</li>
+<li><code>imgproc</code>: image processing algorithms, image filtering/transformations etc.</li>
+<li><code>video</code>: video analysis, object tracking algorithms + background subtraction etc.</li>
+<li><code>objdetect</code>: object detection + object recognition</li>
+</ul>
+
+
+<h2>API</h2>
+
+<h3>header files</h3>
+
+<pre><code class="cpp">#include "opencv2/core/core.hpp"
+#include "opencv2/flann/miniflann.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/photo/photo.hpp"
+#include "opencv2/video/video.hpp"
+#include "opencv2/features2d/features2d.hpp"
+#include "opencv2/objdetect/objdetect.hpp"
+#include "opencv2/calib3d/calib3d.hpp"
+#include "opencv2/ml/ml.hpp"
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/contrib/contrib.hpp"
+#include "opencv2/core/core_c.h"
+#include "opencv2/highgui/highgui_c.h"
+#include "opencv2/imgproc/imgproc_c.h"
+</code></pre>
+
+<h3>namespace</h3>
+
+<pre><code class="cpp">#include "opencv2/core/core.hpp"
+using namespace cv;
+
+int main()
+{
+  Mat frame = cvQueryFrame(capture);
+  imshow("Video", frame);
+}
+</code></pre>
+
+<pre><code class="cpp">#include "opencv2/core/core.hpp"
+
+int main()
+{
+  cv::Mat frame = cvQueryFrame(capture);
+  cv::imshow("Video", frame);
+}
+</code></pre>
+
+<h3>data types for arrays</h3>
+
+<p>single channel array:</p>
+
+<ul>
+<li>CV_8U (8 bit unsigned integer)</li>
+<li>CV_8S (8 bit signed integer)</li>
+<li>CV_16U (16 bit unsigned integer)</li>
+<li>CV_16S (16 bit signed integer)</li>
+<li>CV_32S (32 bit signed integer)</li>
+<li>CV_32F (32 bit floating point number)</li>
+<li>CV_64F (64 bit float floating point number)</li>
+</ul>
+
+
+<p>multi channel array:</p>
+
+<ul>
+<li>CV_8UC1 (single channel array with 8 bit unsigned integers)</li>
+<li>CV_8UC2 (2 channel array with 8 bit unsigned integers)</li>
+<li>CV_8UC3 (3 channel array with 8 bit unsigned integers)</li>
+<li>CV_8UC4 (4 channel array with 8 bit unsigned integers)</li>
+<li>CV_8UC(n) (n channel array with 8 bit unsigned integers (n can be from 1 to 512) )</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Installing ROS on Ubuntu]]></title>
@@ -1593,553 +1969,6 @@ class HtmlWordCounter(AbstactWordCounter):
 
 <p>The visitor pattern is used to apply a function to every item in a collection or
 aggregate object.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Getting Started With Spring MVC]]></title>
-    <link href="http://k.arttechresearch.com/tech/2016/02/14/getting-started-with-spring-mvc/"/>
-    <updated>2016-02-14T18:04:37+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2016/02/14/getting-started-with-spring-mvc</id>
-    <content type="html"><![CDATA[<p>Steps</p>
-
-<ul>
-<li>Installations</li>
-<li>Project creation</li>
-</ul>
-
-
-<h2>Installations</h2>
-
-<ul>
-<li>Java 8</li>
-<li>Maven 3: a build tool</li>
-<li>Tomcat 8: a web server</li>
-<li>Eclipse: IDE</li>
-</ul>
-
-
-<h3>Java</h3>
-
-<pre><code class="bash">$ sudo add-apt-repository -y ppa:webupd8team/java
-$ sudo apt-get update
-$ sudo apt-get install -y oracle-java8-installer
-$ java -version
-</code></pre>
-
-<h3>Maven</h3>
-
-<p><a href="http://maven.apache.org/download.cgi">maven</a></p>
-
-<pre><code class="bash">$ wget http://apache.mirror.anlx.net/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.zip
-$ sudo unzip apache-maven-3.3.9-bin.zip
-$ sudo mv apache-maven-3.3.9/ /usr/local/maven/
-$ vim ~/.bashrc
-$ source ~/.bashrc
-$ mvn -v
-</code></pre>
-
-<p><code>~/.bashrc</code></p>
-
-<pre><code class="bash"># maven
-export MAVEN_HOME=/usr/local/maven
-export PATH=$PATH:$MAVEN_HOME/bin
-</code></pre>
-
-<h3>Tomcat</h3>
-
-<p><a href="http://tomcat.apache.org/download-80.cgi">Tomcat</a></p>
-
-<pre><code class="bash">$ wget http://www.mirrorservice.org/sites/ftp.apache.org/tomcat/tomcat-8/v8.0.32/bin/apache-tomcat-8.0.32.zip
-$ sudo unzip apache-tomcat-8.0.32.zip
-$ sudo mv apache-tomcat-8.0.32/ /usr/local/tomcat/
-$ cd /usr/local/tomcat/
-$ sudo chmod +x bin/*.sh
-$ sudo bin/catalina.sh run
-$ cd /tmp
-$ curl http://localhost:8080
-</code></pre>
-
-<h3>Eclipse</h3>
-
-<p><a href="http://www.eclipse.org/downloads/">Eclipse IDE for Java EE Developers</a></p>
-
-<h2>Project Creation</h2>
-
-<ul>
-<li>creating a maven project</li>
-</ul>
-
-
-<h3>Maven Project</h3>
-
-<p><a href="https://maven.apache.org/guides/getting-started/">Maven Getting Started</a></p>
-
-<h4>mvn</h4>
-
-<pre><code class="bash">$ mvn -B archetype:generate \
-      -DarchetypeGroupId=org.apache.maven.archetypes \
-      -DgroupId=com.mycompany.app \
-      -DartifactId=my-app \
-      -DarchetypeArtifactId=maven-archetype-quickstart \
-      -DinteractiveMode=false \
-      -Dpackaging=war
-</code></pre>
-
-<p>folder</p>
-
-<pre><code>my-app
-|-- pom.xml
-`-- src
-    |-- main
-    |   `-- java
-    |       `-- com
-    |           `-- mycompany
-    |               `-- app
-    |                   `-- App.java
-    `-- test
-        `-- java
-            `-- com
-                `-- mycompany
-                    `-- app
-                        `-- AppTest.java
-</code></pre>
-
-<h4>pom.xml</h4>
-
-<p>Dependencies:</p>
-
-<ul>
-<li>Servlet</li>
-<li>Spring</li>
-</ul>
-
-
-<p>edit pom.xml</p>
-
-<p>```xml
-<properties>
-    &lt;java.version>1.8&lt;/java.version>
-    &lt;spring.version>4.1.6.RELEASE&lt;/spring.version>
-</properties></p>
-
-<p><dependencies></p>
-
-<pre><code>&lt;!-- Servlet API --&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;javax.servlet&lt;/groupId&gt;
-    &lt;artifactId&gt;javax.servlet-api&lt;/artifactId&gt;
-    &lt;version&gt;3.1.0&lt;/version&gt;
-    &lt;scope&gt;provided&lt;/scope&gt;
-&lt;/dependency&gt;
-
-&lt;!-- Spring Core --&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;org.springframework&lt;/groupId&gt;
-    &lt;artifactId&gt;spring-context&lt;/artifactId&gt;
-    &lt;version&gt;${spring.version}&lt;/version&gt;
-&lt;/dependency&gt;
-
-&lt;!-- Spring MVC --&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;org.springframework&lt;/groupId&gt;
-    &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt;
-    &lt;version&gt;${spring.version}&lt;/version&gt;
-&lt;/dependency&gt;
-</code></pre>
-
-<p></dependencies></p>
-
-<!-- boilerplate code allowing Maven to generate a .war archive without requiring a web.xml file -->
-
-
-<p><build>
-    <finalName>springwebapp</finalName></p>
-
-<pre><code>&lt;plugins&gt;
-    &lt;plugin&gt;
-        &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
-        &lt;artifactId&gt;maven-war-plugin&lt;/artifactId&gt;
-        &lt;version&gt;2.6&lt;/version&gt;
-        &lt;configuration&gt;
-            &lt;failOnMissingWebXml&gt;false&lt;/failOnMissingWebXml&gt;
-        &lt;/configuration&gt;
-    &lt;/plugin&gt;
-&lt;/plugins&gt;
-</code></pre>
-
-<p></build>
-```</p>
-
-<h3>Spring MVC</h3>
-
-<pre><code class="bash">$ cd src/main/java/com/&lt;groupId&gt;/
-$ mkdir config
-$ mkdir controller
-</code></pre>
-
-<h4>Config</h4>
-
-<pre><code class="java AppConfig.java">package com.todo.config;
-
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-
-@Configuration
-@EnableWebMvc
-@ComponentScan(basePackages = {"com.todo.controller"})
-public class AppConfig{
-}
-</code></pre>
-
-<pre><code class="java ServletInitializer.java">package com.todo.config;
-
-import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
-
-public class ServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
-
-  @Override
-  protected Class&lt;?&gt;[] getRootConfigClasses() {
-    return new Class&lt;?&gt;[0];
-  }
-
-  @Override
-  protected Class&lt;?&gt;[] getServletConfigClasses() {
-    return new Class&lt;?&gt;[]{AppConfig.class};
-  }
-
-  @Override
-  protected String[] getServletMappings() {
-    return new String[]{"/"};
-  }
-}
-</code></pre>
-
-<h4>Controller</h4>
-
-<pre><code class="java HelloController.java">package com.todo.controller;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-@Controller
-public class HelloController {
-  @RequestMapping("hi")
-  @ResponseBody
-  public String hi() {
-    return "Hello world.";
-  }
-}
-</code></pre>
-
-<h3>Run</h3>
-
-<pre><code class="bash">$ mvn clean install
-$ sudo cp target/springwebapp.war /usr/local/tomcat/webapps/
-$ curl http://localhost:8080/springwebapp/hi
-</code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Installing Caffe on Ubuntu 14.04]]></title>
-    <link href="http://k.arttechresearch.com/tech/2016/02/03/installing-caffe-on-ubuntu-14-dot-04/"/>
-    <updated>2016-02-03T05:07:12+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2016/02/03/installing-caffe-on-ubuntu-14-dot-04</id>
-    <content type="html"><![CDATA[<h2>Prequisitions</h2>
-
-<ul>
-<li>Vagrant/VirtualBox</li>
-<li>Ubuntu 14.04</li>
-<li>VM Memory: 4096 MB</li>
-</ul>
-
-
-<h2>Caffe Installation</h2>
-
-<p>Requirements</p>
-
-<ul>
-<li>CUDA</li>
-<li>BLAS</li>
-<li>OpenCV</li>
-<li>Anaconda</li>
-<li>Boost</li>
-<li>Caffe dependencies</li>
-<li>Protobuf</li>
-<li>Caffe</li>
-</ul>
-
-
-<h3>CUDA</h3>
-
-<pre><code class="bash"># reference: https://gist.github.com/titipata/f0ef48ad2f0ebc07bcb9
-# check version
-$ lspci | grep -i nvidia
-$ uname -m &amp;&amp; cat /etc/*release
-$ gcc --version
-
-# CUDA
-$ cd /tmp
-$ wget http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1404/x86_64/cuda-repo-ubuntu1404_6.5-14_amd64.deb
-$ sudo dpkg -i cuda-repo-ubuntu1404_6.5-14_amd64.deb
-$ sudo apt-get update
-$ sudo apt-get install cuda
-$ sudo reboot
-</code></pre>
-
-<h3>BLAS</h3>
-
-<pre><code class="bash">$ sudo apt-get install libopenblas-dev
-</code></pre>
-
-<h3>OpenCV</h3>
-
-<pre><code class="bash">$ sudo apt-get install git unzip
-$ cd /tmp
-$ wget https://raw.githubusercontent.com/jayrambhia/Install-OpenCV/master/Ubuntu/2.4/opencv2_4_9.sh
-$ sudo chmod +x opencv2_4_9.sh
-$ ./opencv2_4_9.sh
-</code></pre>
-
-<h3>Anaconda</h3>
-
-<pre><code class="bash">$ cd /tmp
-$ wget http://09c8d0b2229f813c1b93-c95ac804525aac4b6dba79b00b39d1d3.r79.cf1.rackcdn.com/Anaconda-2.1.0-Linux-x86_64.sh
-$ sudo bash Anaconda-2.1.0-Linux-x86.sh
-# path: /usr/local/anaconda
-</code></pre>
-
-<h3>Boost</h3>
-
-<pre><code class="bash">$ sudo apt-get install libboost-all-dev
-</code></pre>
-
-<h3>Caffe dependencies</h3>
-
-<pre><code class="bash"># reference: http://caffe.berkeleyvision.org/install_apt.html
-$ sudo apt-get install libprotobuf-dev libleveldb-dev libsnappy-dev libopencv-dev libboost-all-devlibhdf5-serial-dev
-$ sudo apt-get install libgflags-dev libgoogle-glog-dev liblmdb-dev protobuf-compiler
-</code></pre>
-
-<h3>Protobuf</h3>
-
-<pre><code class="bash">$ sudo apt-get install python-pip
-$ sudo pip install protobuf
-</code></pre>
-
-<h3>Caffe</h3>
-
-<pre><code class="bash">$ cd /usr/local
-$ sudo git clone https://github.com/BVLC/caffe
-$ cd caffe/
-$ sudo cp Makefile.config.example Makefile.config
-# modify Makefile.config if needed
-###################################################
-# CPU-only switch (uncomment to build without GPU support).
-CPU_ONLY := 1
-###################################################
-
-$ sudo make all
-$ sudo make test
-$ sudo vim ~/.bashrc              # update paths
-$ source ~/.bashrc
-$ make runtest
-...
-[----------] Global test environment tear-down
-[==========] 1019 tests from 144 test cases ran. (34669 ms total)
-[  PASSED  ] 1019 tests.
-</code></pre>
-
-<p><code>~/.bashrc</code> config:</p>
-
-<pre><code class="bash"># CUDA
-export PATH=/usr/local/cuda-7.5/bin:$PATH
-export LD_LIBRARY_PATH=/usr/local/cuda-7.5/lib64:$LD_LIBRARY_PATH
-export PATH
-# Anaconda
-export PATH=/usr/local/anaconda/bin:$PATH
-# Caffe Root
-export CAFFE_ROOT=/usr/local/caffe
-</code></pre>
-
-<p>config python library</p>
-
-<pre><code class="bash">$ sudo make pycaffe
-$ sudo make distribute
-# make dir for custom python modules, install caffe
-$ mkdir ~/pycaffe
-$ mv distribute/python/caffe ~/pycaffe
-#################################################################
-# set PYTHONPATH (this should go in your .bashrc or whatever
-# export PYTHONPATH=${HOME}/pycaffe:$PYTHONPATH
-export PYTHONPATH=/usr/local/caffe/python:$PYTHONPATH
-#################################################################
-</code></pre>
-
-<p>Install the python dependencies</p>
-
-<pre><code class="bash">$ cd /usr/local/cafffe/python
-$ sudo pip install -r requirements.txt
-</code></pre>
-
-<p>import caffe on IPython</p>
-
-<pre><code class="bash"># fixed Anaconda issue
-$ sudo rm /usr/local/anaconda/lib/libm.*
-$ ipython
-$ conda install protobuf
-# import caffe
-$ cd /usr/local/caffe/python
-$ import caffe
-</code></pre>
-
-<p>import caffe on python script</p>
-
-<pre><code># import matplotlib for fixing the issue when importing caffe
-# so, matplotlib is a must
-import matplotlib
-matplotlib.use('Agg')
-
-import sys
-sys.path.insert(0, '/usr/local/caffe/python/')
-import caffe
-</code></pre>
-
-<h2>DeepDream</h2>
-
-<h3>IPython Notebook (Optional)</h3>
-
-<pre><code class="bash">$ sudo pip install ipython
-$ sudo pip install jupyter
-$ ipython notebook --ip 0.0.0.0
-</code></pre>
-
-<p>ipython notebook url: <a href="http://localhost:8888">http://localhost:8888</a></p>
-
-<h3>Dependencies</h3>
-
-<ul>
-<li>Python: scipy, numpy, pillow</li>
-</ul>
-
-
-<pre><code class="bash"># python
-$ sudo apt-get install python-dev python-virtualenv
-# pillow
-$ sudo apt-get install libtiff5-dev libjpeg8-dev zlib1g-dev \
-libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python-tk
-# scipy
-$ sudo apt-get install libblas-dev liblapack-dev libatlas-base-dev gfortran
-</code></pre>
-
-<p><code>base.txt</code>: python requirements</p>
-
-<pre><code># NOTE: if it doesn't run on anaconda, `scikit-image` and `cython` 
-# must be installed on PYTHONPATH. Otherwise, it will show some 
-# errors when `import caffe`.
-numpy==1.10.4
-Pillow==3.1.0
-scipy==0.17.0
-protobuf==2.6.1
-scikit-image==0.11.3
-cython==0.23.4
-</code></pre>
-
-<pre><code class="bash">$ sudo pip install -r base.txt
-</code></pre>
-
-<h3>Repo</h3>
-
-<pre><code class="bash">$ git clone https://github.com/google/deepdream.git
-$ cd deepdream
-</code></pre>
-
-<h3>Models</h3>
-
-<pre><code class="bash">$ wget wget -P /usr/local/caffe/models/bvlc_googlenet http://dl.caffe.berkeleyvision.org/bvlc_googlenet.caffemodel
-</code></pre>
-
-<h3>Run</h3>
-
-<pre><code class="bash">$ ipython notebook ./dream.ipynb
-</code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Solving a Technical Question]]></title>
-    <link href="http://k.arttechresearch.com/tech/2016/01/14/solving-a-technical-question/"/>
-    <updated>2016-01-14T15:24:40+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2016/01/14/solving-a-technical-question</id>
-    <content type="html"><![CDATA[<p>Source: Cracking the Coding Interview</p>
-
-<p>5 Steps</p>
-
-<ol>
-<li>Ask questions.</li>
-<li>Design a algorithm.</li>
-<li>Pseudocode</li>
-<li>Code</li>
-<li>Test</li>
-</ol>
-
-
-<h2>1. Ask Questions</h2>
-
-<ul>
-<li>What are the data types?</li>
-<li>How much data is there?</li>
-<li>What assuptions do you need to solve the problem?</li>
-<li>WHo is the user?</li>
-</ul>
-
-
-<h2>2. Design a algorithm</h2>
-
-<ul>
-<li>What are its space and time complexity?</li>
-<li>What happens if there is a lot of data?</li>
-<li>Does your design cause other issues? For example, if you&rsquo;re creating a modified version of a binary search tree, did your design impact the time for insert, find, or delete?</li>
-<li>If there are other issues or limitations, did you make the right trade-offs? For which scenarios might the trade-off be less optimal?</li>
-<li>If they gave you specific data (e.g., mentioned that the data is ages, or in sorted order), have you leveraged that information? Usually there&rsquo;s a reason that an inter- viewer gave you specific information.</li>
-</ul>
-
-
-<p>approaches</p>
-
-<ul>
-<li>examplify</li>
-<li>pattern matching</li>
-<li>simplify and generalize</li>
-<li>base case and build</li>
-<li>data structure brainstorm</li>
-</ul>
-
-
-<h2>3. Pseudocode</h2>
-
-<h2>4. Code</h2>
-
-<ul>
-<li>correct: expected and unexpected inputs</li>
-<li>efficient: time and space</li>
-<li>simple</li>
-<li>readable</li>
-<li>maintainable</li>
-</ul>
-
-
-<h2>5. Test</h2>
-
-<ul>
-<li>Extremecases: 0, negative, null, maximums, minimums.</li>
-<li>User error:What happens if the user passes in null or a negative value?</li>
-<li>General cases: Test the normal case.</li>
-</ul>
-
 ]]></content>
   </entry>
   

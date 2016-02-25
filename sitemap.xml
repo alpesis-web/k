@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://k.arttechresearch.com/tech/2016/02/25/installing-opencv-on-ubuntu/</loc>
+    <lastmod>2016-02-25T18:59:03+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2016/02/25/setting-up-devenv-for-nao/</loc>
+    <lastmod>2016-02-25T13:07:11+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2016/02/25/opencv-overview/</loc>
+    <lastmod>2016-02-25T00:13:01+08:00</lastmod>
+  </url>
+  <url>
     <loc>http://k.arttechresearch.com/tech/2016/02/20/installing-ros-on-ubuntu/</loc>
     <lastmod>2016-02-20T21:04:48+08:00</lastmod>
   </url>
@@ -1202,5 +1214,29 @@
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/ros/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/cpp/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/opencv/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/aldebaran/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/choregraphe/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/naoqi/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/webots/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/virtualenv/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/virtualenvwrapper/</loc>
   </url>
 </urlset>
