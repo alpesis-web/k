@@ -4,7 +4,7 @@
   <title><![CDATA[K]]></title>
   <link href="http://k.arttechresearch.com/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2016-02-26T13:51:25+08:00</updated>
+  <updated>2016-02-27T19:28:28+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[K]]></name>
@@ -12,6 +12,15 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Roses]]></title>
+    <link href="http://k.arttechresearch.com/art/2016/02/27/roses/"/>
+    <updated>2016-02-27T19:25:14+08:00</updated>
+    <id>http://k.arttechresearch.com/art/2016/02/27/roses</id>
+    <content type="html"><![CDATA[<p><img src="https://s-media-cache-ak0.pinimg.com/originals/b0/a2/9d/b0a29de9191ee443c1344b62f754220b.jpg" /></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Installing OpenCV on Ubuntu]]></title>
@@ -3852,7 +3861,8 @@ aggregate object.</p>
 
 <h3>CUDA</h3>
 
-<p>If GPU, then install CUDA; if CPU only, ignore.</p>
+<p>If installed in the VirtualBox, <code>VBoxGuestAddition</code> should be installed first.
+Otherwise, it could be booted.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -5277,100 +5287,6 @@ runtimes make a virtual method invocation of a class member a faster oper- ation
 <p><img src="https://s-media-cache-ak0.pinimg.com/736x/50/e0/b6/50e0b6173313209d85c1b08647f06709.jpg" /></p>
 
 <p>image source: Collection hierarchy, Chapter 24, Programming in Scala, Page 536</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Installing Scala]]></title>
-    <link href="http://k.arttechresearch.com/tech/2016/01/04/installing-scala/"/>
-    <updated>2016-01-04T13:06:34+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2016/01/04/installing-scala</id>
-    <content type="html"><![CDATA[<h2>Prequisition</h2>
-
-<p>Java</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo add-apt-repository -y ppa:webupd8team/java
-</span><span class='line'><span class="nv">$ </span>sudo apt-get update
-</span><span class='line'><span class="nv">$ </span>sudo apt-get -y install oracle-java8-installer
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Installation</h2>
-
-<h3>Ubuntu 14.04</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /tmp
-</span><span class='line'><span class="nv">$ </span>wget http://www.scala-lang.org/files/archive/scala-2.11.6.deb
-</span><span class='line'><span class="nv">$ </span>sudo dpkg -i scala-2.11.6.deb
-</span><span class='line'><span class="nv">$ </span>sudo apt-get update
-</span><span class='line'><span class="nv">$ </span>sudo apt-get install scala
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>OS X</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>brew update
-</span><span class='line'><span class="nv">$ </span>brew install scala
-</span><span class='line'><span class="nv">$ </span>brew install sbt
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Testing</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>vagrant@vagrant-ubuntu-trusty-64:/vagrant/scala<span class="nv">$ </span>scala
-</span><span class='line'>Welcome to Scala version 2.11.6 <span class="o">(</span>Java HotSpot<span class="o">(</span>TM<span class="o">)</span> 64-Bit Server VM, Java 1.8.0_66<span class="o">)</span>.
-</span><span class='line'>Type in expressions to have them evaluated.
-</span><span class='line'>Type :help <span class="k">for</span> more information.
-</span><span class='line'>
-</span><span class='line'>scala&gt; 1+1
-</span><span class='line'>res0: <span class="nv">Int</span> <span class="o">=</span> 2
-</span><span class='line'>
-</span><span class='line'>scala&gt; println<span class="o">(</span><span class="s2">&quot;Hello&quot;</span><span class="o">)</span>
-</span><span class='line'>Hello
-</span><span class='line'>
-</span><span class='line'>scala&gt;:quit
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Vim Configuration</h2>
-
-<p>syntax highlight: <a href="https://github.com/derekwyatt/vim-scala">vim-scala</a></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># wget</span>
-</span><span class='line'><span class="nv">$ </span>mkdir -p ~/.vim/<span class="o">{</span>ftdetect,indent,syntax<span class="o">}</span> <span class="o">&amp;&amp;</span> <span class="k">for</span> d in ftdetect indent syntax <span class="p">;</span> <span class="k">do</span> wget -O ~/.vim/<span class="nv">$d</span>/scala.vim https://raw.githubusercontent.com/derekwyatt/vim-scala/master/<span class="nv">$d</span>/scala.vim<span class="p">;</span> <span class="k">done</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># curl</span>
-</span><span class='line'><span class="nv">$ </span>mkdir -p ~/.vim/<span class="o">{</span>ftdetect,indent,syntax<span class="o">}</span> <span class="o">&amp;&amp;</span> <span class="k">for</span> d in ftdetect indent syntax <span class="p">;</span> <span class="k">do</span> curl -o ~/.vim/<span class="nv">$d</span>/scala.vim https://raw.githubusercontent.com/derekwyatt/vim-scala/master/<span class="nv">$d</span>/scala.vim<span class="p">;</span> <span class="k">done</span>
-</span></code></pre></td></tr></table></div></figure>
-
 ]]></content>
   </entry>
   
