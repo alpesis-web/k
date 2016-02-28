@@ -4,7 +4,7 @@
   <title><![CDATA[K]]></title>
   <link href="http://k.arttechresearch.com/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2016-02-27T19:45:10+08:00</updated>
+  <updated>2016-02-28T16:48:00+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[K]]></name>
@@ -12,6 +12,129 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Installing Caffe on Ubuntu With VirtualBox]]></title>
+    <link href="http://k.arttechresearch.com/tech/2016/02/27/installing-caffe-on-ubuntu-with-virtualbox/"/>
+    <updated>2016-02-27T22:47:46+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2016/02/27/installing-caffe-on-ubuntu-with-virtualbox</id>
+    <content type="html"><![CDATA[<h2>Ubuntu + VirtualBox</h2>
+
+<ul>
+<li>download Ubuntu ISO file</li>
+<li>create a new VM in VirtualBox (Linux/Ubuntu/64bit/DynamicHD/8GbRAM/…)</li>
+<li>install Ubuntu OS and update and upgrade</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install build-essential
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install linux-headers-<span class="sb">`</span>uname -r<span class="sb">`</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>VirtualBox</p>
+
+<ul>
+<li>VirtualBox ToolBar -> Devices -> Insert Guest Additions CD Image -> Install GuestAddition</li>
+<li>VirtualBox VM -> Preferences -> General -> Advanced -> Shared Clipboard</li>
+</ul>
+
+
+<h2>Cuda</h2>
+
+<p><a href="https://developer.nvidia.com/cuda-downloads">CUDA 7.5</a></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install curl
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> ~/Downloads/
+</span><span class='line'><span class="nv">$ </span>curl -O <span class="s2">&quot;http://developer.download.nvidia.com/compute/cuda/6_5/rel/installers/cuda_6.5.14_linux_64.run&quot;</span>
+</span><span class='line'><span class="nv">$ </span>chmod +x cuda_6.5.14_linux_64.run
+</span><span class='line'><span class="nv">$ </span>sudo ./cuda_6.5.14_linux_64.run --kernel-source-path<span class="o">=</span>/usr/src/linux-headers-<span class="sb">`</span>uname -r<span class="sb">`</span>/
+</span><span class='line'><span class="c"># - Accept the EULA</span>
+</span><span class='line'><span class="c"># - DO NOT INSTALL DRIVER</span>
+</span><span class='line'><span class="c"># - Install the toolkit</span>
+</span><span class='line'><span class="c"># - Install the symbolic link</span>
+</span><span class='line'><span class="c"># - Install samples</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span><span class="nb">echo</span> <span class="s1">&#39;export PATH=/usr/local/cuda/bin:$PATH&#39;</span> &gt;&gt; ~/.bashrc
+</span><span class='line'><span class="nv">$ </span><span class="nb">echo</span> <span class="s1">&#39;export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib&#39;</span> &gt;&gt; ~/.bashrc
+</span><span class='line'><span class="nv">$ </span><span class="nb">source</span> ~/.bashrc
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Caffe</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install -y libprotobuf-dev libleveldb-dev libsnappy-dev libopencv-dev libboost-all-dev libhdf5-serial-dev protobuf-compiler gfortran libjpeg62 libfreeimage-dev libatlas-base-dev git python-dev python-pip libgoogle-glog-dev libbz2-dev libxml2-dev libxslt-dev libffi-dev libssl-dev libgflags-dev liblmdb-dev python-yaml
+</span><span class='line'><span class="nv">$ </span>sudo easy_install pillow
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> ~
+</span><span class='line'><span class="nv">$ </span>git clone https://github.com/BVLC/caffe.git
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>caffe
+</span><span class='line'><span class="nv">$ </span>cat python/requirements.txt <span class="p">|</span> xargs -L <span class="m">1</span> sudo pip install
+</span><span class='line'><span class="nv">$ </span>sudo ln -s /usr/include/python2.7/ /usr/local/include/python2.7
+</span><span class='line'><span class="nv">$ </span>sudo ln -s /usr/local/lib/python2.7/dist-packages/numpy/core/include/numpy/ /usr/local/include/python2.7/numpy
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>cp Makefile.config.example Makefile.config
+</span><span class='line'><span class="nv">$ </span>nano Makefile.config
+</span><span class='line'><span class="c"># - uncomment # CPU_ONLY := 1</span>
+</span><span class='line'><span class="c"># - PYTHON_INCLUDE: </span>
+</span><span class='line'><span class="c">#   - /usr/include/python2.7 -&gt; /usr/local/include/python2.7</span>
+</span><span class='line'><span class="c">#   - /usr/lib/python2.7/dist-packages/numpy/core/include -&gt; /usr/local/lib/python2.7/dist-packages/numpy/core/include</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>make pycaffe
+</span><span class='line'><span class="nv">$ </span>make all
+</span><span class='line'><span class="nv">$ </span>make <span class="nb">test</span>
+</span><span class='line'><span class="c"># if something error, then it could not recompile, try to delete build and .build_release</span>
+</span><span class='line'><span class="c"># and then rerun the commands</span>
+</span><span class='line'><span class="c"># or use `make clean`</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Reference</h2>
+
+<p><a href="https://github.com/BVLC/caffe/wiki/Ubuntu-14.04-VirtualBox-VM">Ubuntu 14.04 VirtualBox VM</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Roses]]></title>
@@ -5163,132 +5286,6 @@ Otherwise, it could be booted.</p>
 </tbody>
 </table>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Notes on Programming in Scala]]></title>
-    <link href="http://k.arttechresearch.com/tech/2016/01/04/notes-on-programming-in-scala/"/>
-    <updated>2016-01-04T15:15:52+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2016/01/04/notes-on-programming-in-scala</id>
-    <content type="html"><![CDATA[<p>Programming in Scala: <a href="http://www.artima.com/pins1ed/">http://www.artima.com/pins1ed/</a></p>
-
-<h2>Funtional Language and Scala</h2>
-
-<h3>Functional Language</h3>
-
-<p>object object-orientaed programming</p>
-
-<p>In principle, the motivation for object-oriented programming is very simple: all but
-the most the trivial programs need some sort of structure. The most straightforward way
-to do this is to put data and operations into some form of containers. The great idea of
-object-oriented programming is to make these containers fully general, so that they can
-contain operations as well as data, and that they are themselves values that can be stored
-in other containers, or passed as paramters to operations. Such containers are called
-objects.</p>
-
-<p>Alan Kay, the inventor of Smalltalk, remarked that in this way the simplest object has
-the same construction principle as a full computer: it combines data with operations
-under a formalized interface. So objects have a lot to do with language scalability:
-the same techniques apply to the construction of small as well as large programs.</p>
-
-<h3>Scala</h3>
-
-<ul>
-<li>compatibility</li>
-<li>brevity</li>
-<li>high-level abstractions</li>
-<li>advanced static typing</li>
-</ul>
-
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/474x/52/c2/15/52c2157c0b2f25cfae2d295e67ef32f8.jpg" /></p>
-
-<h2>Scala Elements</h2>
-
-<h3>Val vs Var</h3>
-
-<p>Prefer vals, immutable objects, and methods without side effects. Reach for them first.</p>
-
-<p>Use vars, mutable objects, and methods with side effects when you have a specific need and justification for them.</p>
-
-<h3>Types and Operations</h3>
-
-<ul>
-<li>types</li>
-<li>literals</li>
-<li>operations</li>
-</ul>
-
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/b3/98/ab/b398ab10483fd8a9892880e0fe324326.jpg" /></p>
-
-<p>image source: Table 5.1 · Some basic types, Chpater 5, Programming in Scala, page 118</p>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/fc/91/b6/fc91b687d2acfcf714bf5278ef37c4f9.jpg" /></p>
-
-<p>image source: Rich types, Chapter 5, Programming in Scala, page 138</p>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/cb/ce/46/cbce46c71c592e1fe97448e3a5fc1ed4.jpg" /></p>
-
-<p>image source: Chapter 5, Programming in Scala</p>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/b3/0e/50/b30e502bcc31787ad660c38ea4104b3c.jpg" /></p>
-
-<p>image source: Operator precedence, Chapter 5, Programming in Scala, p135</p>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/92/85/5b/92855b63af3053f3cd522150b3d1c7b4.jpg" /></p>
-
-<p>image source: Rich Operations, Chapter 5, Programming in Scala, page 138</p>
-
-<h3>Collections</h3>
-
-<ul>
-<li>array</li>
-<li>list</li>
-<li>tuple</li>
-<li>set</li>
-<li>map</li>
-</ul>
-
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/1e/ac/60/1eac6035eaee581df8a0b46eecd14d3a.jpg" /></p>
-
-<p>image source: Class hierarchy for Scala sets, Chapter 3, Programming in Scala, page 92</p>
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/d3/af/00/d3af004af2898246aee87b91006895fd.jpg" /></p>
-
-<p>image source: Class hierarchy for Scala maps, Chapter 3, Programming in Scala, page 94</p>
-
-<h3>Class and Objects</h3>
-
-<ul>
-<li>class</li>
-<li>object</li>
-<li>app</li>
-</ul>
-
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/93/7c/06/937c06add4c4e06b27e77a096a5e0975.jpg" /></p>
-
-<p>image source: Scala Class Hierarchy, Chapter 10, Programming in Scala</p>
-
-<p>Trait or not trait</p>
-
-<ul>
-<li>If the behavior will not be reused, then make it a concrete class. It is not reusable behavior after all.</li>
-<li>If it might be reused in multiple, unrelated classes, make it a trait. Only traits can be mixed into different parts of the class hierarchy.</li>
-<li>If you want to inherit from it in Java code, use an abstract class, use an abstract class. Since traits with code do not have a close Java analog, it tends to be awkward to inherit from a trait in a Java class. Inheriting from a Scala class, meanwhile, is exactly like inheriting from a Java class. As one exception, a Scala trait with only abstract members translates directly to a Java interface, so you should feel free to define such traits even if you expect Java code to inherit from it. See Chapter 31 for more information on working with Java and Scala together.</li>
-<li>If you plan to distribute it in compiled form, and you expect outside groups to write classes inheriting from it, you might lean towards using an abstract class. The issue is that when a trait gains or loses a member, any classes that inherit from it must be recompiled, even if they have not changed. If outside clients will only call into the behavior, instead of inheriting from it, then using a trait is fine.</li>
-<li>If efficiency is very important, lean towards using a class. Most Java
-runtimes make a virtual method invocation of a class member a faster oper- ation than an interface method invocation. Traits get compiled to interfaces and therefore may pay a slight performance overhead. However, you should make this choice only if you know that the trait in question constitutes a per- formance bottleneck and have evidence that using a class instead actually solves the problem.</li>
-<li>If you still do not know, after considering the above, then start by making it as a trait. You can always change it later, and in general using a trait keeps more options open.</li>
-</ul>
-
-
-<p><img src="https://s-media-cache-ak0.pinimg.com/736x/50/e0/b6/50e0b6173313209d85c1b08647f06709.jpg" /></p>
-
-<p>image source: Collection hierarchy, Chapter 24, Programming in Scala, Page 536</p>
 ]]></content>
   </entry>
   
