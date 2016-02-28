@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Life | K]]></title>
   <link href="http://k.arttechresearch.com/categories/life/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2016-02-28T23:42:02+08:00</updated>
+  <updated>2016-02-29T00:42:32+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[K]]></name>
@@ -12,25 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[Learning Curve]]></title>
-    <link href="http://k.arttechresearch.com/life/2016/02/28/learning-curve/"/>
-    <updated>2016-02-28T23:25:46+08:00</updated>
-    <id>http://k.arttechresearch.com/life/2016/02/28/learning-curve</id>
-    <content type="html"><![CDATA[<p><img src="https://s-media-cache-ak0.pinimg.com/564x/80/8e/66/808e66dca0eb0003070de78f1d14ba0d.jpg" /></p>
-
-<p>Finally got it done in 2 hours after fixing a lot of issues on the current system.</p>
-
-<p>When the development environments for some projects are deployed on an OS,
-the configuration would be messed up, then they would pollute the others.</p>
-
-<p>When started a new Virtual Machine (VirtualBox), and repeated the steps one by one, it worked
-pretty well. But it doesn&rsquo;t mean that it is useless to invest the time in exploring the knowledge and understanding the theory and configurations of each step, if without such steps, I could not make it done once eventually.</p>
-
-<p>When the logic behind the practice becomes clear, everything is up to correct.</p>
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[SNS]]></title>
@@ -133,6 +114,31 @@ pretty well. But it doesn&rsquo;t mean that it is useless to invest the time in 
 
 <p>到了地面，小鸟想回到树上，小鸟看看树上，蹦啊跳呀，尝试几次，跃回了树上，回到了最初和妈妈站立的地
 方。小鸟哭了，妈妈转身，看着小鸟，惊讶不已。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Reading]]></title>
+    <link href="http://k.arttechresearch.com/life/2015/11/08/reading/"/>
+    <updated>2015-11-08T02:48:04+08:00</updated>
+    <id>http://k.arttechresearch.com/life/2015/11/08/reading</id>
+    <content type="html"><![CDATA[<h2>夜读</h2>
+
+<p>读杨绛先生的《我们仨》，在深夜，绝迹于微信之后，重拾夜读，一如去年夜读法语那般，似乎，已是很
+久远的事情，但，这份阅读的宁静，又让时光延长了，一个短暂的夜，变成了杨绛先生一家的一生，如时光
+穿梭机。</p>
+
+<p>我是喜欢杨绛先生的，从读到她最希望得到的法宝是隐身衣，再读到《我们仨》，不过是加深了对杨先生的
+喜爱。杨先生的淡然处世，平安度她过了运动时期。杨先生叙事的文字平实，又很容易想起三毛；杨先生
+和钱钟书先生的感情，再联想到三毛和荷西。不过杨先生和三毛是不同的，杨先生更安宁，三毛是不羁的，
+但两人的文字都真实。</p>
+
+<p>顺着杨先生梦境般的描述，走过了奈何桥，再回到旧时光，回忆的点点滴滴，陪伴着老人剩余的生命，这
+样的回忆，应该也是甜蜜的，只是，对一位92岁高龄的老人，或许意味着更多，我很想了解一位已然104岁
+的老人现时的生活。到底是有多淡然的态度，才能波澜不惊地面对生活的起伏动荡；但，无论多淡然的人，
+在面对生离死别、生老病死这样的自然规律和现象时，还是会无助的。</p>
+
+<p>但愿这样的夜读继续。</p>
 ]]></content>
   </entry>
   
