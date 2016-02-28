@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tech | K]]></title>
   <link href="http://k.arttechresearch.com/categories/tech/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2016-02-28T16:48:00+08:00</updated>
+  <updated>2016-02-28T23:42:02+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[K]]></name>
@@ -75,7 +75,6 @@ $ cp Makefile.config.example Makefile.config
 $ nano Makefile.config
 # - uncomment # CPU_ONLY := 1
 # - PYTHON_INCLUDE: 
-#   - /usr/include/python2.7 -&gt; /usr/local/include/python2.7
 #   - /usr/lib/python2.7/dist-packages/numpy/core/include -&gt; /usr/local/lib/python2.7/dist-packages/numpy/core/include
 
 
@@ -85,6 +84,12 @@ $ make test
 # if something error, then it could not recompile, try to delete build and .build_release
 # and then rerun the commands
 # or use `make clean`
+</code></pre>
+
+<h2>Test</h2>
+
+<pre><code class="bash">$ ./scripts/download_model_binary.py models/bvlc_reference_caffenet
+$ ./data/ilsvrc12/get_ilsvrc_aux.sh
 </code></pre>
 
 <h2>Reference</h2>
