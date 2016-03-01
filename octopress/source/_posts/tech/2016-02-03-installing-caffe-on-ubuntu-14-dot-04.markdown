@@ -29,6 +29,9 @@ Requirements
 
 ### CUDA
 
+If installed in the VirtualBox, `VBoxGuestAddition` should be installed first.
+Otherwise, it could be booted.
+
 ```bash
 # reference: https://gist.github.com/titipata/f0ef48ad2f0ebc07bcb9
 # check version

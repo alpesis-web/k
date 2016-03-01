@@ -1,0 +1,13 @@
+---
+layout: post_art
+title: "Roses"
+date: 2016-02-27 19:25:14 +0800
+comments: true
+categories: [art]
+tags: [photos]
+toc: false
+---
+
+<img src="https://s-media-cache-ak0.pinimg.com/originals/b0/a2/9d/b0a29de9191ee443c1344b62f754220b.jpg" />
+
+<img src="https://s-media-cache-ak0.pinimg.com/originals/34/8b/af/348baf3f3a6aa2f833fd9c49483a2c41.jpg" />
