@@ -1,0 +1,980 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>MongoDB - K</title>
+  <meta name="author" content="K">
+
+  
+  <meta name="description" content="MongoDB Mar 10th, 2016 11:13 pm | Comments This article aims at overviewing the MongoDB. What is MongoDB MongoDB is a NoSQL document database that &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://k.arttechresearch.com/tech/2016/03/10/mongodb/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="K" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/libs/jquery-1.9.1.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+
+  <script src="/javascripts/libs/jquery.tableofcontents.min.js" type="text/javascript"></script>
+  <script src="/javascripts/toc_generator.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  <!-- MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+</head>
+
+<body   >
+  <header role="banner"><ul class="soc">
+
+  
+    <li><a class="soc-github" href="https://github.com/KellyChan"></a></li>
+  
+
+  
+    <li><a class="soc-twitter" href="https://twitter.com/kwailamchan"></a></li>
+  
+
+  
+    <li><a class="soc-pinterest" href="https://www.pinterest.com/wailamchan/"></a></li>
+  
+
+  
+    <li><a class="soc-slideshare" href="http://www.slideshare.net/wailamchan"></a></li>
+  
+
+  
+    <li><a class="soc-email1 soc-icon-last" href="mailto:support@arttechresearch.com"></a></li>
+  
+</ul>
+
+<hgroup>
+  <h1><a href="/">K</a></h1>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="k.arttechresearch.com">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/tech">Tech</a></li>
+  <li><a href="/art">Art</a></li>
+  <li><a href="/life">Life</a></li>
+  <li><a href="/archives">Archives</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <li><a href="/devkits">Devkits</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+
+    
+      <h1 class="entry-title">MongoDB</h1>
+    
+
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2016-03-10T23:13:54+08:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>11:13 pm</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://k.arttechresearch.com">Comments</a>
+        
+      </p>
+    
+
+  </header>
+
+
+
+  <div class="entry-content"><p>This article aims at overviewing the MongoDB.</p>
+
+<h2>What is MongoDB</h2>
+
+<p>MongoDB is a NoSQL document database that is apdating to the agile application development.</p>
+
+<p>MongoDB Components</p>
+
+<ul>
+<li>user level: MongoShell, MongoCompass, MongoBI</li>
+<li>develop level: Mongo Drivers, MongoDB</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Developers        DBA                     Users                      Analyst
+</span><span class='line'>---------------------------------------------------------------------------------
+</span><span class='line'>Mongo Drivers     MongoShell               MongoCompass               MongoBI
+</span><span class='line'>---------------------------------------------------------------------------------
+</span><span class='line'>MongoDB
+</span><span class='line'>---------------------------------------------------------------------------------</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Installation</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># mongodb</span>
+</span><span class='line'><span class="nv">$ </span>sudo apt-get install mongodb
+</span><span class='line'><span class="nv">$ </span>mongo
+</span><span class='line'>&gt; <span class="nb">help</span>
+</span><span class='line'><span class="nb"> </span>db.help<span class="o">()</span>                    <span class="nb">help </span>on db methods
+</span><span class='line'>  db.mycoll.help<span class="o">()</span>             <span class="nb">help </span>on collection methods
+</span><span class='line'>  sh.help<span class="o">()</span>                    sharding helpers
+</span><span class='line'>  rs.help<span class="o">()</span>                    replica <span class="nb">set </span>helpers
+</span><span class='line'>  <span class="nb">help </span>admin                   administrative <span class="nb">help</span>
+</span><span class='line'><span class="nb"> help </span>connect                 connecting to a db <span class="nb">help</span>
+</span><span class='line'><span class="nb"> help </span>keys                    key shortcuts
+</span><span class='line'>  <span class="nb">help </span>misc                    misc things to know
+</span><span class='line'>  <span class="nb">help </span>mr                      mapreduce
+</span><span class='line'>
+</span><span class='line'>  show dbs                     show database names
+</span><span class='line'>  show collections             show collections in current database
+</span><span class='line'>  show users                   show users in current database
+</span><span class='line'>  show profile                 show most recent system.profile entries with <span class="nb">time</span> &gt;<span class="o">=</span> 1ms
+</span><span class='line'>  show logs                    show the accessible logger names
+</span><span class='line'>  show log <span class="o">[</span>name<span class="o">]</span>              prints out the last segment of log in memory, <span class="s1">&#39;global&#39;</span> is default
+</span><span class='line'>  use &lt;db_name&gt;                <span class="nb">set </span>current database
+</span><span class='line'>  db.foo.find<span class="o">()</span>                list objects in collection foo
+</span><span class='line'>  db.foo.find<span class="o">(</span> <span class="o">{</span> a : <span class="m">1</span> <span class="o">}</span> <span class="o">)</span>     list objects in foo where <span class="nv">a</span> <span class="o">==</span> 1
+</span><span class='line'>  it                           result of the last line evaluated<span class="p">;</span> use to further iterate
+</span><span class='line'>  DBQuery.shellBatchSize <span class="o">=</span> x   <span class="nb">set </span>default number of items to display on shell
+</span><span class='line'>  <span class="nb">exit                         </span>quit the mongo shell
+</span><span class='line'>
+</span><span class='line'>&gt; show dbs
+</span><span class='line'>&gt; use demo
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>MongoDB User Level</h2>
+
+<h3>Database Design</h3>
+
+<h3>Database Languages</h3>
+
+<ul>
+<li>DML</li>
+<li>DQL</li>
+</ul>
+
+
+<h4>DML</h4>
+
+<p>CRUD</p>
+
+<ul>
+<li>Create:</li>
+<li>Read:</li>
+<li>Update:</li>
+<li>Delete:</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="n">db</span><span class="p">.</span><span class="n">collection</span><span class="p">.</span><span class="n">insertOne</span><span class="p">()</span>
+</span><span class='line'><span class="n">db</span><span class="p">.</span><span class="n">collection</span><span class="p">.</span><span class="n">insertMany</span><span class="p">()</span>
+</span><span class='line'><span class="n">db</span><span class="p">.</span><span class="n">collection</span><span class="p">.</span><span class="k">insert</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">db</span><span class="p">.</span><span class="n">collection</span><span class="p">.</span><span class="n">updateOne</span><span class="p">()</span>
+</span><span class='line'><span class="n">db</span><span class="p">.</span><span class="n">collection</span><span class="p">.</span><span class="n">updateMany</span><span class="p">()</span>
+</span><span class='line'><span class="n">db</span><span class="p">.</span><span class="n">collection</span><span class="p">.</span><span class="n">replaceOne</span><span class="p">()</span>
+</span><span class='line'><span class="n">db</span><span class="p">.</span><span class="n">collection</span><span class="p">.</span><span class="k">update</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="n">db</span><span class="p">.</span><span class="n">collection</span><span class="p">.</span><span class="n">deleteOne</span><span class="p">()</span>
+</span><span class='line'><span class="n">db</span><span class="p">.</span><span class="n">collection</span><span class="p">.</span><span class="n">deleteMany</span><span class="p">()</span>
+</span><span class='line'><span class="n">db</span><span class="p">.</span><span class="n">collection</span><span class="p">.</span><span class="n">remove</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">db</span><span class="p">.</span><span class="n">users</span><span class="p">.</span><span class="k">insert</span><span class="p">(</span>
+</span><span class='line'>   <span class="err">{</span>
+</span><span class='line'>      <span class="n">name</span><span class="p">:</span> <span class="ss">&quot;sue&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="n">age</span><span class="p">:</span> <span class="mi">26</span><span class="p">,</span>
+</span><span class='line'>      <span class="n">status</span><span class="p">:</span> <span class="ss">&quot;A&quot;</span>
+</span><span class='line'>   <span class="err">}</span>
+</span><span class='line'><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">db</span><span class="p">.</span><span class="n">users</span><span class="p">.</span><span class="n">find</span><span class="p">(</span>
+</span><span class='line'>    <span class="err">{</span> <span class="n">age</span><span class="p">:</span> <span class="err">{</span> <span class="err">$</span><span class="n">gt</span><span class="p">:</span> <span class="mi">18</span>  <span class="err">}</span> <span class="err">}</span><span class="p">,</span>
+</span><span class='line'>    <span class="err">{</span> <span class="n">name</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="n">address</span><span class="p">:</span> <span class="mi">1</span> <span class="err">}</span>
+</span><span class='line'><span class="p">).</span><span class="k">limit</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>DQL</h4>
+
+<p>queries</p>
+
+<ul>
+<li>key-value:</li>
+<li>range: greater than, less than, equal to, between</li>
+<li>geospatial: point, line, circle, polygon</li>
+<li>text search: AND, OR, NOT</li>
+<li>aggregation: count, min, max, average, $lookup</li>
+<li>mapreduce: complex data processing</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="err">$</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Database Management</h3>
+
+<h4>Mongo Shell</h4>
+
+<p>help</p>
+
+<ul>
+<li>xxx.help(): db/coll methods, sharding, replica</li>
+<li>help xxx: admin, connect, keys, misc, mr</li>
+<li>show xxx: dbs, collections, users, profile, logs, log [name]</li>
+<li>db: use xxx, db.foo.find(), it</li>
+<li>shell: DBQuery.shellBatchSize, exit</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>&gt; <span class="nb">help</span>
+</span><span class='line'><span class="nb"> </span>db.help<span class="o">()</span>                    <span class="nb">help </span>on db methods
+</span><span class='line'>  db.mycoll.help<span class="o">()</span>             <span class="nb">help </span>on collection methods
+</span><span class='line'>  sh.help<span class="o">()</span>                    sharding helpers
+</span><span class='line'>  rs.help<span class="o">()</span>                    replica <span class="nb">set </span>helpers
+</span><span class='line'>  <span class="nb">help </span>admin                   administrative <span class="nb">help</span>
+</span><span class='line'><span class="nb"> help </span>connect                 connecting to a db <span class="nb">help</span>
+</span><span class='line'><span class="nb"> help </span>keys                    key shortcuts
+</span><span class='line'>  <span class="nb">help </span>misc                    misc things to know
+</span><span class='line'>  <span class="nb">help </span>mr                      mapreduce
+</span><span class='line'>
+</span><span class='line'>  show dbs                     show database names
+</span><span class='line'>  show collections             show collections in current database
+</span><span class='line'>  show users                   show users in current database
+</span><span class='line'>  show profile                 show most recent system.profile entries with <span class="nb">time</span> &gt;<span class="o">=</span> 1ms
+</span><span class='line'>  show logs                    show the accessible logger names
+</span><span class='line'>  show log <span class="o">[</span>name<span class="o">]</span>              prints out the last segment of log in memory, <span class="s1">&#39;global&#39;</span> is default
+</span><span class='line'>  use &lt;db_name&gt;                <span class="nb">set </span>current database
+</span><span class='line'>  db.foo.find<span class="o">()</span>                list objects in collection foo
+</span><span class='line'>  db.foo.find<span class="o">(</span> <span class="o">{</span> a : <span class="m">1</span> <span class="o">}</span> <span class="o">)</span>     list objects in foo where <span class="nv">a</span> <span class="o">==</span> 1
+</span><span class='line'>  it                           result of the last line evaluated<span class="p">;</span> use to further iterate
+</span><span class='line'>  DBQuery.shellBatchSize <span class="o">=</span> x   <span class="nb">set </span>default number of items to display on shell
+</span><span class='line'>  <span class="nb">exit                         </span>quit the mongo shell
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>DB methods</p>
+
+<ul>
+<li>admin:
+
+<ul>
+<li>admin: <code>db.adminCommand()</code>,</li>
+<li>user: <code>db.addUser()</code>, <code>db.auth()</code>, <code>db.removeUser()</code></li>
+<li>operation: <code>db.currentOp()</code>, <code>db.eval()</code>, <code>db.killOp()</code>, <code>db.loadServerScripts()</code>, <code>db.runCommand(cmdObj)</code></li>
+<li>lock: <code>db.fsyncLock()</code>, <code>db.fsyncUnlock()</code>, <code>db.repairDatabase()</code></li>
+<li>err: <code>db.getLastError()</code>, <code>db.getLastErrorObj()</code>, <code>db.getPrevError()</code>, <code>db.resetError()</code></li>
+<li>connection: <code>db.getMongo()</code>, <code>db.getMongo().setSlaveOk()</code>, <code>db.shutdownServer()</code></li>
+<li>profiling: <code>db.getProfilingLevel()</code>, <code>db.getProfilingStatus()</code>, <code>db.setProfilingLevel()</code></li>
+<li>sharding: <code>db.getSiblingDB(name)</code>, <code>db.hostInfo()</code>, <code>db.isMaster()</code>, <code>db.printReplicationInfo()</code>, <code>db.printSlaveReplicationInfo()</code>, <code>db.serverStatus()</code></li>
+</ul>
+</li>
+<li>user:
+
+<ul>
+<li>db: <code>db.cloneDatabase()</code>, <code>db.dropDatabase()</code>, <code>db.getName()</code>, <code>db.logout()</code>, <code>db.stats()</code></li>
+<li>collection: <code>db.createCollection()</code>, <code>db.getCollection()</code>, <code>db.getCollectionNames()</code>, <code>db.printCollectionStats()</code></li>
+</ul>
+</li>
+<li>shell: <code>db.commandHelp()</code>, <code>db.listCommands()</code>, <code>db.setVerboseShell(flag)</code>, <code>db.version()</code></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>&gt; show dbs
+</span><span class='line'>&gt; use <span class="nb">test</span>
+</span><span class='line'>
+</span><span class='line'>&gt; db.help<span class="o">()</span>
+</span><span class='line'>DB methods:
+</span><span class='line'>  db.addUser<span class="o">(</span>userDocument<span class="o">)</span>
+</span><span class='line'>  db.adminCommand<span class="o">(</span>nameOrDocument<span class="o">)</span> - switches to <span class="s1">&#39;admin&#39;</span> db, and runs <span class="nb">command</span> <span class="o">[</span> just calls db.runCommand<span class="o">(</span>...<span class="o">)</span> <span class="o">]</span>
+</span><span class='line'>  db.auth<span class="o">(</span>username, password<span class="o">)</span>
+</span><span class='line'>  db.cloneDatabase<span class="o">(</span>fromhost<span class="o">)</span>
+</span><span class='line'>  db.commandHelp<span class="o">(</span>name<span class="o">)</span> returns the <span class="nb">help </span><span class="k">for</span> the <span class="nb">command</span>
+</span><span class='line'><span class="nb"> </span>db.copyDatabase<span class="o">(</span>fromdb, todb, fromhost<span class="o">)</span>
+</span><span class='line'>  db.createCollection<span class="o">(</span>name, <span class="o">{</span> size : ..., capped : ..., max : ... <span class="o">}</span> <span class="o">)</span>
+</span><span class='line'>  db.currentOp<span class="o">()</span> displays currently executing operations in the db
+</span><span class='line'>  db.dropDatabase<span class="o">()</span>
+</span><span class='line'>  db.eval<span class="o">(</span>func, args<span class="o">)</span> run code server-side
+</span><span class='line'>  db.fsyncLock<span class="o">()</span> flush data to disk and lock server <span class="k">for</span> backups
+</span><span class='line'>  db.fsyncUnlock<span class="o">()</span> unlocks server following a db.fsyncLock<span class="o">()</span>
+</span><span class='line'>  db.getCollection<span class="o">(</span>cname<span class="o">)</span> same as db<span class="o">[</span><span class="s1">&#39;cname&#39;</span><span class="o">]</span> or db.cname
+</span><span class='line'>  db.getCollectionNames<span class="o">()</span>
+</span><span class='line'>  db.getLastError<span class="o">()</span> - just returns the err msg string
+</span><span class='line'>  db.getLastErrorObj<span class="o">()</span> - <span class="k">return</span> full status object
+</span><span class='line'>  db.getMongo<span class="o">()</span> get the server connection object
+</span><span class='line'>  db.getMongo<span class="o">()</span>.setSlaveOk<span class="o">()</span> allow queries on a replication slave server
+</span><span class='line'>  db.getName<span class="o">()</span>
+</span><span class='line'>  db.getPrevError<span class="o">()</span>
+</span><span class='line'>  db.getProfilingLevel<span class="o">()</span> - deprecated
+</span><span class='line'>  db.getProfilingStatus<span class="o">()</span> - returns <span class="k">if</span> profiling is on and slow threshold
+</span><span class='line'>  db.getReplicationInfo<span class="o">()</span>
+</span><span class='line'>  db.getSiblingDB<span class="o">(</span>name<span class="o">)</span> get the db at the same server as this one
+</span><span class='line'>  db.hostInfo<span class="o">()</span> get details about the server<span class="err">&#39;</span>s host
+</span><span class='line'>  db.isMaster<span class="o">()</span> check replica primary status
+</span><span class='line'>  db.killOp<span class="o">(</span>opid<span class="o">)</span> kills the current operation in the db
+</span><span class='line'>  db.listCommands<span class="o">()</span> lists all the db commands
+</span><span class='line'>  db.loadServerScripts<span class="o">()</span> loads all the scripts in db.system.js
+</span><span class='line'>  db.logout<span class="o">()</span>
+</span><span class='line'>  db.printCollectionStats<span class="o">()</span>
+</span><span class='line'>  db.printReplicationInfo<span class="o">()</span>
+</span><span class='line'>  db.printShardingStatus<span class="o">()</span>
+</span><span class='line'>  db.printSlaveReplicationInfo<span class="o">()</span>
+</span><span class='line'>  db.removeUser<span class="o">(</span>username<span class="o">)</span>
+</span><span class='line'>  db.repairDatabase<span class="o">()</span>
+</span><span class='line'>  db.resetError<span class="o">()</span>
+</span><span class='line'>  db.runCommand<span class="o">(</span>cmdObj<span class="o">)</span> run a database command.  <span class="k">if</span> cmdObj is a string, turns it into <span class="o">{</span> cmdObj : <span class="m">1</span> <span class="o">}</span>
+</span><span class='line'>  db.serverStatus<span class="o">()</span>
+</span><span class='line'>  db.setProfilingLevel<span class="o">(</span>level,&lt;slowms&gt;<span class="o">)</span> <span class="nv">0</span><span class="o">=</span>off <span class="nv">1</span><span class="o">=</span>slow <span class="nv">2</span><span class="o">=</span>all
+</span><span class='line'>  db.setVerboseShell<span class="o">(</span>flag<span class="o">)</span> display extra information in shell output
+</span><span class='line'>  db.shutdownServer<span class="o">()</span>
+</span><span class='line'>  db.stats<span class="o">()</span>
+</span><span class='line'>  db.version<span class="o">()</span> current version of the server
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>DBCollection</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>&gt; db.mycoll.help<span class="o">()</span>
+</span><span class='line'>DBCollection <span class="nb">help</span>
+</span><span class='line'><span class="nb"> </span>db.mycoll.find<span class="o">()</span>.help<span class="o">()</span> - show DBCursor <span class="nb">help</span>
+</span><span class='line'><span class="nb"> </span>db.mycoll.count<span class="o">()</span>
+</span><span class='line'>  db.mycoll.copyTo<span class="o">(</span>newColl<span class="o">)</span> - duplicates collection by copying all documents to newColl<span class="p">;</span> no indexes are copied.
+</span><span class='line'>  db.mycoll.convertToCapped<span class="o">(</span>maxBytes<span class="o">)</span> - calls <span class="o">{</span>convertToCapped:<span class="s1">&#39;mycoll&#39;</span>, size:maxBytes<span class="o">}}</span> <span class="nb">command</span>
+</span><span class='line'><span class="nb"> </span>db.mycoll.dataSize<span class="o">()</span>
+</span><span class='line'>  db.mycoll.distinct<span class="o">(</span> key <span class="o">)</span> - e.g. db.mycoll.distinct<span class="o">(</span> <span class="s1">&#39;x&#39;</span> <span class="o">)</span>
+</span><span class='line'>  db.mycoll.drop<span class="o">()</span> drop the collection
+</span><span class='line'>  db.mycoll.dropIndex<span class="o">(</span>index<span class="o">)</span> - e.g. db.mycoll.dropIndex<span class="o">(</span> <span class="s2">&quot;indexName&quot;</span> <span class="o">)</span> or db.mycoll.dropIndex<span class="o">(</span> <span class="o">{</span> <span class="s2">&quot;indexKey&quot;</span> : <span class="m">1</span> <span class="o">}</span> <span class="o">)</span>
+</span><span class='line'>  db.mycoll.dropIndexes<span class="o">()</span>
+</span><span class='line'>  db.mycoll.ensureIndex<span class="o">(</span>keypattern<span class="o">[</span>,options<span class="o">])</span> - options is an object with these possible fields: name, unique, dropDups
+</span><span class='line'>  db.mycoll.reIndex<span class="o">()</span>
+</span><span class='line'>  db.mycoll.find<span class="o">([</span>query<span class="o">]</span>,<span class="o">[</span>fields<span class="o">])</span> - query is an optional query filter. fields is optional <span class="nb">set </span>of fields to <span class="k">return</span>.
+</span><span class='line'>                                                e.g. db.mycoll.find<span class="o">(</span> <span class="o">{</span>x:77<span class="o">}</span> , <span class="o">{</span>name:1, x:1<span class="o">}</span> <span class="o">)</span>
+</span><span class='line'>  db.mycoll.find<span class="o">(</span>...<span class="o">)</span>.count<span class="o">()</span>
+</span><span class='line'>  db.mycoll.find<span class="o">(</span>...<span class="o">)</span>.limit<span class="o">(</span>n<span class="o">)</span>
+</span><span class='line'>  db.mycoll.find<span class="o">(</span>...<span class="o">)</span>.skip<span class="o">(</span>n<span class="o">)</span>
+</span><span class='line'>  db.mycoll.find<span class="o">(</span>...<span class="o">)</span>.sort<span class="o">(</span>...<span class="o">)</span>
+</span><span class='line'>  db.mycoll.findOne<span class="o">([</span>query<span class="o">])</span>
+</span><span class='line'>  db.mycoll.findAndModify<span class="o">(</span> <span class="o">{</span> update : ... , remove : bool <span class="o">[</span>, query: <span class="o">{}</span>, sort: <span class="o">{}</span>, <span class="s1">&#39;new&#39;</span>: <span class="nb">false</span><span class="o">]</span> <span class="o">}</span> <span class="o">)</span>
+</span><span class='line'>  db.mycoll.getDB<span class="o">()</span> get DB object associated with collection
+</span><span class='line'>  db.mycoll.getIndexes<span class="o">()</span>
+</span><span class='line'>  db.mycoll.group<span class="o">(</span> <span class="o">{</span> key : ..., initial: ..., reduce : ...<span class="o">[</span>, cond: ...<span class="o">]</span> <span class="o">}</span> <span class="o">)</span>
+</span><span class='line'>  db.mycoll.insert<span class="o">(</span>obj<span class="o">)</span>
+</span><span class='line'>  db.mycoll.mapReduce<span class="o">(</span> mapFunction , reduceFunction , &lt;optional params&gt; <span class="o">)</span>
+</span><span class='line'>  db.mycoll.remove<span class="o">(</span>query<span class="o">)</span>
+</span><span class='line'>  db.mycoll.renameCollection<span class="o">(</span> newName , &lt;dropTarget&gt; <span class="o">)</span> renames the collection.
+</span><span class='line'>  db.mycoll.runCommand<span class="o">(</span> name , &lt;options&gt; <span class="o">)</span> runs a db <span class="nb">command </span>with the given name where the first param is the collection name
+</span><span class='line'>  db.mycoll.save<span class="o">(</span>obj<span class="o">)</span>
+</span><span class='line'>  db.mycoll.stats<span class="o">()</span>
+</span><span class='line'>  db.mycoll.storageSize<span class="o">()</span> - includes free space allocated to this collection
+</span><span class='line'>  db.mycoll.totalIndexSize<span class="o">()</span> - size in bytes of all the indexes
+</span><span class='line'>  db.mycoll.totalSize<span class="o">()</span> - storage allocated <span class="k">for</span> all data and indexes
+</span><span class='line'>  db.mycoll.update<span class="o">(</span>query, object<span class="o">[</span>, upsert_bool, multi_bool<span class="o">])</span> - instead of two flags, you can pass an object with fields: upsert, multi
+</span><span class='line'>  db.mycoll.validate<span class="o">(</span> &lt;full&gt; <span class="o">)</span> - SLOW
+</span><span class='line'>  db.mycoll.getShardVersion<span class="o">()</span> - only <span class="k">for</span> use with sharding
+</span><span class='line'>  db.mycoll.getShardDistribution<span class="o">()</span> - prints statistics about data distribution in the cluster
+</span><span class='line'>  db.mycoll.getSplitKeysForChunks<span class="o">(</span> &lt;maxChunkSize&gt; <span class="o">)</span> - calculates split points over all chunks and returns splitter <span class="k">function</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>sharding</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>&gt; sh.help<span class="o">()</span>
+</span><span class='line'>  sh.addShard<span class="o">(</span> host <span class="o">)</span>                       server:port OR setname/server:port
+</span><span class='line'>  sh.enableSharding<span class="o">(</span>dbname<span class="o">)</span>                 enables sharding on the database dbname
+</span><span class='line'>  sh.shardCollection<span class="o">(</span>fullName,key,unique<span class="o">)</span>   shards the collection
+</span><span class='line'>  sh.splitFind<span class="o">(</span>fullName,find<span class="o">)</span>               splits the chunk that find is in at the median
+</span><span class='line'>  sh.splitAt<span class="o">(</span>fullName,middle<span class="o">)</span>               splits the chunk that middle is in at middle
+</span><span class='line'>  sh.moveChunk<span class="o">(</span>fullName,find,to<span class="o">)</span>            move the chunk where <span class="s1">&#39;find&#39;</span> is to <span class="s1">&#39;to&#39;</span> <span class="o">(</span>name of shard<span class="o">)</span>
+</span><span class='line'>  sh.setBalancerState<span class="o">(</span> &lt;bool on or not&gt; <span class="o">)</span>   turns the balancer on or off <span class="nb">true</span><span class="o">=</span>on, <span class="nb">false</span><span class="o">=</span>off
+</span><span class='line'>  sh.getBalancerState<span class="o">()</span>                     <span class="k">return</span> <span class="nb">true </span><span class="k">if</span> enabled
+</span><span class='line'>  sh.isBalancerRunning<span class="o">()</span>                    <span class="k">return</span> <span class="nb">true </span><span class="k">if</span> the balancer has work in progress on any mongos
+</span><span class='line'>  sh.addShardTag<span class="o">(</span>shard,tag<span class="o">)</span>                 adds the tag to the shard
+</span><span class='line'>  sh.removeShardTag<span class="o">(</span>shard,tag<span class="o">)</span>              removes the tag from the shard
+</span><span class='line'>  sh.addTagRange<span class="o">(</span>fullName,min,max,tag<span class="o">)</span>      tags the specified range of the given collection
+</span><span class='line'>  sh.status<span class="o">()</span>                               prints a general overview of the cluster
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Replica</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>&gt; rs.help<span class="o">()</span>
+</span><span class='line'>  rs.status<span class="o">()</span>                     <span class="o">{</span> replSetGetStatus : <span class="m">1</span> <span class="o">}</span> checks repl <span class="nb">set </span>status
+</span><span class='line'>  rs.initiate<span class="o">()</span>                   <span class="o">{</span> replSetInitiate : null <span class="o">}</span> initiates <span class="nb">set </span>with default settings
+</span><span class='line'>  rs.initiate<span class="o">(</span>cfg<span class="o">)</span>                <span class="o">{</span> replSetInitiate : cfg <span class="o">}</span> initiates <span class="nb">set </span>with configuration cfg
+</span><span class='line'>  rs.conf<span class="o">()</span>                       get the current configuration object from local.system.replset
+</span><span class='line'>  rs.reconfig<span class="o">(</span>cfg<span class="o">)</span>                updates the configuration of a running replica <span class="nb">set </span>with cfg <span class="o">(</span>disconnects<span class="o">)</span>
+</span><span class='line'>  rs.add<span class="o">(</span>hostportstr<span class="o">)</span>             add a new member to the <span class="nb">set </span>with default attributes <span class="o">(</span>disconnects<span class="o">)</span>
+</span><span class='line'>  rs.add<span class="o">(</span>membercfgobj<span class="o">)</span>            add a new member to the <span class="nb">set </span>with extra attributes <span class="o">(</span>disconnects<span class="o">)</span>
+</span><span class='line'>  rs.addArb<span class="o">(</span>hostportstr<span class="o">)</span>          add a new member which is arbiterOnly:true <span class="o">(</span>disconnects<span class="o">)</span>
+</span><span class='line'>  rs.stepDown<span class="o">([</span>secs<span class="o">])</span>             step down as primary <span class="o">(</span>momentarily<span class="o">)</span> <span class="o">(</span>disconnects<span class="o">)</span>
+</span><span class='line'>  rs.syncFrom<span class="o">(</span>hostportstr<span class="o">)</span>        make a secondary to sync from the given member
+</span><span class='line'>  rs.freeze<span class="o">(</span>secs<span class="o">)</span>                 make a node ineligible to become primary <span class="k">for</span> the <span class="nb">time </span>specified
+</span><span class='line'>  rs.remove<span class="o">(</span>hostportstr<span class="o">)</span>          remove a host from the replica <span class="nb">set</span> <span class="o">(</span>disconnects<span class="o">)</span>
+</span><span class='line'>  rs.slaveOk<span class="o">()</span>                    shorthand <span class="k">for</span> db.getMongo<span class="o">()</span>.setSlaveOk<span class="o">()</span>
+</span><span class='line'>
+</span><span class='line'>  db.isMaster<span class="o">()</span>                   check who is primary
+</span><span class='line'>  db.printReplicationInfo<span class="o">()</span>       check oplog size and <span class="nb">time </span>range
+</span><span class='line'>
+</span><span class='line'>  reconfiguration helpers disconnect from the database so the shell will display
+</span><span class='line'>  an error, even <span class="k">if</span> the <span class="nb">command </span>succeeds.
+</span><span class='line'>  see also http://&lt;mongod_host&gt;:28017/_replSet <span class="k">for</span> additional diagnostic info
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Best Practices</h4>
+
+<ul>
+<li>query optimization</li>
+</ul>
+
+
+<h4>Performances</h4>
+
+<h4>Scalability</h4>
+
+<h2>Mongo Drivers</h2>
+
+<h2>MongoDB Development Level</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>COMPONENTS
+</span><span class='line'>
+</span><span class='line'>  mongod - The database process.
+</span><span class='line'>  mongos - Sharding controller.
+</span><span class='line'>  mongo  - The database shell <span class="o">(</span>uses interactive javascript<span class="o">)</span>.
+</span><span class='line'>
+</span><span class='line'>UTILITIES
+</span><span class='line'>
+</span><span class='line'>  mongodump         - MongoDB dump tool - <span class="k">for</span> backups, snapshots, etc.
+</span><span class='line'>  mongorestore      - MongoDB restore a dump
+</span><span class='line'>  mongoexport       - Export a single collection to <span class="nb">test</span> <span class="o">(</span>JSON, CSV<span class="o">)</span>
+</span><span class='line'>  mongoimport       - Import from JSON or CSV
+</span><span class='line'>  mongofiles        - Utility <span class="k">for</span> putting and getting files from MongoDB GridFS
+</span><span class='line'>  mongostat         - Show performance statistics
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>References</h2>
+
+<ul>
+<li><a href="https://2013.nosql-matters.org/bcn/wp-content/uploads/2013/12/storage-talk-mongodb.pdf">A Journey through the MongoDB Internals</a></li>
+<li><a href="https://docs.mongodb.org/manual/core/distributed-write-operations/">MongoDB Documentation</a></li>
+</ul>
+
+</div>
+
+
+
+  <script type="text/javascript">
+  jQuery(document).ready(function() {
+    // Put a TOC right before the entry content.
+    generateTOC('.entry-content', 'Table of Contents');
+  });
+  </script>
+
+
+
+
+  <footer>
+
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">K</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2016-03-10T23:13:54+08:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>11:13 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/tech/'>tech</a>
+  
+</span>
+
+
+      
+
+<span class="categories">
+  
+    <a class='tag' href='/tags/db/'>db</a>, <a class='tag' href='/tags/mongo/'>mongo</a>
+  
+</span>
+
+
+    </p>
+
+    
+      <div class="sharing">
+
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://k.arttechresearch.com/tech/2016/03/10/mongodb/" data-via="kwailamchan" data-counturl="http://k.arttechresearch.com/tech/2016/03/10/mongodb/" >Tweet</a>
+  
+
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+
+  
+
+</div>
+
+    
+
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/tech/2016/03/10/troubleshooting-a-slow-database/" title="Previous Post: Troubleshooting A Slow Database">&laquo; Troubleshooting A Slow Database</a>
+      
+      
+        <a class="basic-alignment right" href="/tech/2016/03/13/databases/" title="Next Post: Databases">Databases &raquo;</a>
+      
+    </p>
+
+  </footer>
+
+</article>
+
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Tech</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/tech/2016/03/24/mongodb-sharding/">MongoDB Sharding</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2016/03/24/mongodb-replication/">MongoDB Replication</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2016/03/24/mongodb-security/">MongoDB Security</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2016/03/24/mongodb-storage/">MongoDB Storage</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2016/03/24/mongodb-indexes/">MongoDB Indexes</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2016/03/24/mongodb-administration/">MongoDB Administration</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2016/03/24/mongodb-data-model/">MongoDB Data Model</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2016/03/24/mongodb-aggregation/">MongoDB Aggregation</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2016/03/24/mongodb-crud/">MongoDB CRUD</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2016/03/24/mongo-shell/">Mongo Shell</a>
+      </li>
+    
+  </ul>
+</section>
+<section class="category-list">
+    <h1>Projects</h1>
+    <ul id="category-list">
+        <li>
+            <span><a href="/tags/edx">edX</a></span> / 
+            <span><a href="/tags/will">Will</a></span>
+        </li>
+    </ul>
+
+    <h1>Programming</h1>
+    <ul id="category-list">
+        <li>
+            <span><a href="/tags/python">Python</a></span> /
+            <span><a href="/tags/ruby">Ruby</a></span> /
+            <span><a href="/tags/nodejs">Node.js</a></span>
+        </li>
+    </ul>
+
+</section>
+<section class="tag-cloud">
+
+
+  <h1>Tags</h1>
+    <ul id="category-list"><a href='/tags/ai' style='font-size: 90.0%'>ai(1)</a> <a href='/tags/aldebaran' style='font-size: 90.0%'>aldebaran(1)</a> <a href='/tags/algorithm' style='font-size: 118.13953488372093%'>algorithm(12)</a> <a href='/tags/ansible' style='font-size: 92.55813953488372%'>ansible(2)</a> <a href='/tags/apache' style='font-size: 92.55813953488372%'>apache(2)</a> <a href='/tags/api' style='font-size: 97.67441860465117%'>api(4)</a> <a href='/tags/ascii' style='font-size: 90.0%'>ascii(1)</a> <a href='/tags/beautifulsoup' style='font-size: 90.0%'>beautifulsoup(1)</a> <a href='/tags/beeline' style='font-size: 90.0%'>beeline(1)</a> <a href='/tags/butter' style='font-size: 90.0%'>butter(1)</a> <a href='/tags/caffe' style='font-size: 92.55813953488372%'>caffe(2)</a> <a href='/tags/career' style='font-size: 92.55813953488372%'>career(2)</a> <a href='/tags/cassandra' style='font-size: 90.0%'>cassandra(1)</a> <a href='/tags/cg' style='font-size: 92.55813953488372%'>cg(2)</a> <a href='/tags/chatbot' style='font-size: 95.11627906976744%'>chatbot(3)</a> <a href='/tags/choregraphe' style='font-size: 90.0%'>choregraphe(1)</a> <a href='/tags/classification' style='font-size: 92.55813953488372%'>classification(2)</a> <a href='/tags/cloud' style='font-size: 90.0%'>cloud(1)</a> <a href='/tags/cloudera' style='font-size: 107.90697674418604%'>cloudera(8)</a> <a href='/tags/cloudera-manager' style='font-size: 95.11627906976744%'>cloudera manager(3)</a> <a href='/tags/cluster' style='font-size: 141.1627906976744%'>cluster(21)</a> <a href='/tags/computer-vision' style='font-size: 90.0%'>computer vision(1)</a> <a href='/tags/cpp' style='font-size: 90.0%'>cpp(1)</a> <a href='/tags/crawler' style='font-size: 92.55813953488372%'>crawler(2)</a> <a href='/tags/css' style='font-size: 92.55813953488372%'>css(2)</a> <a href='/tags/cuda' style='font-size: 90.0%'>cuda(1)</a> <a href='/tags/d3' style='font-size: 90.0%'>d3(1)</a> <a href='/tags/data' style='font-size: 90.0%'>data(1)</a> <a href='/tags/db' style='font-size: 120.69767441860465%'>db(13)</a> <a href='/tags/debian' style='font-size: 90.0%'>debian(1)</a> <a href='/tags/deepdream' style='font-size: 90.0%'>deepdream(1)</a> <a href='/tags/design-patterns' style='font-size: 90.0%'>design patterns(1)</a> <a href='/tags/devops' style='font-size: 97.67441860465117%'>devops(4)</a> <a href='/tags/django' style='font-size: 92.55813953488372%'>django(2)</a> <a href='/tags/dns' style='font-size: 90.0%'>dns(1)</a> <a href='/tags/docker' style='font-size: 95.11627906976744%'>docker(3)</a> <a href='/tags/edx' style='font-size: 120.69767441860465%'>edX(13)</a> <a href='/tags/edx-ai' style='font-size: 90.0%'>edX AI(1)</a> <a href='/tags/edx-analytics' style='font-size: 107.90697674418604%'>edX Analytics(8)</a> <a href='/tags/edx-platform' style='font-size: 95.11627906976744%'>edX Platform(3)</a> <a href='/tags/elasticsearch' style='font-size: 90.0%'>elasticsearch(1)</a> <a href='/tags/emacs' style='font-size: 92.55813953488372%'>emacs(2)</a> <a href='/tags/exhibition' style='font-size: 92.55813953488372%'>exhibition(2)</a> <a href='/tags/fiction' style='font-size: 105.34883720930233%'>fiction(7)</a> <a href='/tags/filebeat' style='font-size: 90.0%'>filebeat(1)</a> <a href='/tags/flask' style='font-size: 90.0%'>flask(1)</a> <a href='/tags/flume' style='font-size: 90.0%'>flume(1)</a> <a href='/tags/forever' style='font-size: 92.55813953488372%'>forever(2)</a> <a href='/tags/framework' style='font-size: 90.0%'>framework(1)</a> <a href='/tags/freetds' style='font-size: 90.0%'>freetds(1)</a> <a href='/tags/french' style='font-size: 90.0%'>french(1)</a> <a href='/tags/ghost' style='font-size: 97.67441860465117%'>ghost(4)</a> <a href='/tags/git' style='font-size: 102.79069767441861%'>git(6)</a> <a href='/tags/github' style='font-size: 92.55813953488372%'>github(2)</a> <a href='/tags/gitosis' style='font-size: 90.0%'>gitosis(1)</a> <a href='/tags/gitweb' style='font-size: 90.0%'>gitweb(1)</a> <a href='/tags/gunicorn' style='font-size: 90.0%'>gunicorn(1)</a> <a href='/tags/hadoop' style='font-size: 128.37209302325581%'>hadoop(16)</a> <a href='/tags/hbase' style='font-size: 100.23255813953489%'>hbase(5)</a> <a href='/tags/hdfs' style='font-size: 92.55813953488372%'>hdfs(2)</a> <a href='/tags/hipchat' style='font-size: 95.11627906976744%'>hipchat(3)</a> <a href='/tags/hive' style='font-size: 97.67441860465117%'>hive(4)</a> <a href='/tags/html' style='font-size: 92.55813953488372%'>html(2)</a> <a href='/tags/hue' style='font-size: 92.55813953488372%'>hue(2)</a> <a href='/tags/ide' style='font-size: 95.11627906976744%'>ide(3)</a> <a href='/tags/impala' style='font-size: 90.0%'>impala(1)</a> <a href='/tags/iterm' style='font-size: 90.0%'>iterm(1)</a> <a href='/tags/java' style='font-size: 100.23255813953489%'>java(5)</a> <a href='/tags/javascript' style='font-size: 100.23255813953489%'>javascript(5)</a> <a href='/tags/jekyll' style='font-size: 92.55813953488372%'>jekyll(2)</a> <a href='/tags/jenkins' style='font-size: 90.0%'>jenkins(1)</a> <a href='/tags/kibana' style='font-size: 90.0%'>kibana(1)</a> <a href='/tags/leisure' style='font-size: 141.1627906976744%'>leisure(21)</a> <a href='/tags/library' style='font-size: 90.0%'>library(1)</a> <a href='/tags/linux' style='font-size: 113.02325581395348%'>linux(10)</a> <a href='/tags/logstack' style='font-size: 90.0%'>logstack(1)</a> <a href='/tags/machine-learning' style='font-size: 123.25581395348837%'>machine learning(14)</a> <a href='/tags/mapreduce' style='font-size: 92.55813953488372%'>mapreduce(2)</a> <a href='/tags/markdown' style='font-size: 90.0%'>markdown(1)</a> <a href='/tags/mathjax' style='font-size: 92.55813953488372%'>mathjax(2)</a> <a href='/tags/maven' style='font-size: 90.0%'>maven(1)</a> <a href='/tags/mongo' style='font-size: 105.34883720930233%'>mongo(7)</a> <a href='/tags/mongovue' style='font-size: 90.0%'>mongovue(1)</a> <a href='/tags/mssql' style='font-size: 90.0%'>mssql(1)</a> <a href='/tags/mysql' style='font-size: 107.90697674418604%'>mysql(8)</a> <a href='/tags/mysql-workbench' style='font-size: 92.55813953488372%'>mysql workbench(2)</a> <a href='/tags/nao' style='font-size: 92.55813953488372%'>nao(2)</a> <a href='/tags/naoqi' style='font-size: 90.0%'>naoqi(1)</a> <a href='/tags/network' style='font-size: 90.0%'>network(1)</a> <a href='/tags/nginx' style='font-size: 97.67441860465117%'>nginx(4)</a> <a href='/tags/nlp' style='font-size: 102.79069767441861%'>nlp(6)</a> <a href='/tags/nltk' style='font-size: 90.0%'>nltk(1)</a> <a href='/tags/nodejs' style='font-size: 105.34883720930233%'>nodejs(7)</a> <a href='/tags/octopress' style='font-size: 107.90697674418604%'>octopress(8)</a> <a href='/tags/odbc' style='font-size: 90.0%'>odbc(1)</a> <a href='/tags/oil-painting' style='font-size: 90.0%'>oil painting(1)</a> <a href='/tags/opencv' style='font-size: 92.55813953488372%'>opencv(2)</a> <a href='/tags/openstack' style='font-size: 90.0%'>openstack(1)</a> <a href='/tags/painting' style='font-size: 90.0%'>painting(1)</a> <a href='/tags/pandas' style='font-size: 92.55813953488372%'>pandas(2)</a> <a href='/tags/photos' style='font-size: 125.81395348837209%'>photos(15)</a> <a href='/tags/poem' style='font-size: 97.67441860465117%'>poem(4)</a> <a href='/tags/prediction' style='font-size: 90.0%'>prediction(1)</a> <a href='/tags/programming' style='font-size: 100.23255813953489%'>programming(5)</a> <a href='/tags/pycharm' style='font-size: 90.0%'>pycharm(1)</a> <a href='/tags/python' style='font-size: 200.0%'>python(44)</a> <a href='/tags/python-challenge' style='font-size: 95.11627906976744%'>Python Challenge(3)</a> <a href='/tags/reading' style='font-size: 90.0%'>reading(1)</a> <a href='/tags/redis' style='font-size: 90.0%'>redis(1)</a> <a href='/tags/redmine' style='font-size: 90.0%'>redmine(1)</a> <a href='/tags/regex' style='font-size: 90.0%'>regex(1)</a> <a href='/tags/rest' style='font-size: 92.55813953488372%'>rest(2)</a> <a href='/tags/robotics' style='font-size: 102.79069767441861%'>robotics(6)</a> <a href='/tags/ros' style='font-size: 90.0%'>ros(1)</a> <a href='/tags/ruby' style='font-size: 115.5813953488372%'>ruby(11)</a> <a href='/tags/scala' style='font-size: 95.11627906976744%'>scala(3)</a> <a href='/tags/servlet' style='font-size: 90.0%'>servlet(1)</a> <a href='/tags/shell' style='font-size: 92.55813953488372%'>shell(2)</a> <a href='/tags/soap' style='font-size: 90.0%'>soap(1)</a> <a href='/tags/solr' style='font-size: 90.0%'>solr(1)</a> <a href='/tags/spark' style='font-size: 90.0%'>spark(1)</a> <a href='/tags/sphinx' style='font-size: 90.0%'>sphinx(1)</a> <a href='/tags/spring' style='font-size: 90.0%'>spring(1)</a> <a href='/tags/sql' style='font-size: 90.0%'>sql(1)</a> <a href='/tags/sqoop' style='font-size: 97.67441860465117%'>sqoop(4)</a> <a href='/tags/ssl' style='font-size: 92.55813953488372%'>ssl(2)</a> <a href='/tags/supervisor' style='font-size: 90.0%'>supervisor(1)</a> <a href='/tags/tech-talks' style='font-size: 90.0%'>tech talks(1)</a> <a href='/tags/threading' style='font-size: 90.0%'>threading(1)</a> <a href='/tags/time-series' style='font-size: 90.0%'>time series(1)</a> <a href='/tags/tomcat' style='font-size: 90.0%'>tomcat(1)</a> <a href='/tags/translation' style='font-size: 90.0%'>translation(1)</a> <a href='/tags/ubuntu' style='font-size: 118.13953488372093%'>ubuntu(12)</a> <a href='/tags/unicode' style='font-size: 90.0%'>unicode(1)</a> <a href='/tags/vagrant' style='font-size: 95.11627906976744%'>vagrant(3)</a> <a href='/tags/vim' style='font-size: 92.55813953488372%'>vim(2)</a> <a href='/tags/virtualbox' style='font-size: 97.67441860465117%'>virtualbox(4)</a> <a href='/tags/virtualenv' style='font-size: 90.0%'>virtualenv(1)</a> <a href='/tags/virtualenvwrapper' style='font-size: 90.0%'>virtualenvwrapper(1)</a> <a href='/tags/vm' style='font-size: 92.55813953488372%'>vm(2)</a> <a href='/tags/web' style='font-size: 105.34883720930233%'>web(7)</a> <a href='/tags/webots' style='font-size: 90.0%'>webots(1)</a> <a href='/tags/will' style='font-size: 95.11627906976744%'>will(3)</a> <a href='/tags/yarn' style='font-size: 90.0%'>yarn(1)</a> <a href='/tags/zookeeper' style='font-size: 100.23255813953489%'>zookeeper(5)</a> </ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2006-2016 - K
+</p>
+
+
+
+<script type="text/javascript">
+
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-53625944-7', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'kwailamc';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://k.arttechresearch.com/tech/2016/03/10/mongodb/';
+        var disqus_url = 'http://k.arttechresearch.com/tech/2016/03/10/mongodb/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

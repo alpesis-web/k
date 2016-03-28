@@ -1,0 +1,887 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Troubleshooting a Slow Database - K</title>
+  <meta name="author" content="K">
+
+  
+  <meta name="description" content="Troubleshooting a Slow Database Mar 10th, 2016 1:55 pm | Comments SQL Server The causes for performance problems can be various, but the most common &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://k.arttechresearch.com/tech/2016/03/10/troubleshooting-a-slow-database/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="K" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/libs/jquery-1.9.1.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+
+  <script src="/javascripts/libs/jquery.tableofcontents.min.js" type="text/javascript"></script>
+  <script src="/javascripts/toc_generator.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  <!-- MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+</head>
+
+<body   >
+  <header role="banner"><ul class="soc">
+
+  
+    <li><a class="soc-github" href="https://github.com/KellyChan"></a></li>
+  
+
+  
+    <li><a class="soc-twitter" href="https://twitter.com/kwailamchan"></a></li>
+  
+
+  
+    <li><a class="soc-pinterest" href="https://www.pinterest.com/wailamchan/"></a></li>
+  
+
+  
+    <li><a class="soc-slideshare" href="http://www.slideshare.net/wailamchan"></a></li>
+  
+
+  
+    <li><a class="soc-email1 soc-icon-last" href="mailto:support@arttechresearch.com"></a></li>
+  
+</ul>
+
+<hgroup>
+  <h1><a href="/">K</a></h1>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="k.arttechresearch.com">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/tech">Tech</a></li>
+  <li><a href="/art">Art</a></li>
+  <li><a href="/life">Life</a></li>
+  <li><a href="/archives">Archives</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <li><a href="/devkits">Devkits</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+
+    
+      <h1 class="entry-title">Troubleshooting a Slow Database</h1>
+    
+
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2016-03-10T13:55:12+08:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>1:55 pm</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://k.arttechresearch.com">Comments</a>
+        
+      </p>
+    
+
+  </header>
+
+
+
+  <div class="entry-content"><h2>SQL Server</h2>
+
+<p>The causes for performance problems can be various, but the most common are a poorly designed databse, incorrectly configured system, insufficient disk space or other system resources, excessive query complication and recomplication, bad execution plans due to missing or outdated statistics, and queries or stored procedures that have long execution times due to improper design.</p>
+
+<p>The most common SQL Server performance symptoms are</p>
+
+<ul>
+<li>CPU</li>
+<li>Memory</li>
+<li>Network</li>
+<li>I/O</li>
+<li>Slow running queries</li>
+</ul>
+
+
+<h3>CPU</h3>
+
+<p>CPU bottlenecks are cuased by insufficient hardware resources. Troubleshooting starts with identifying the biggest CPU resource users. Occasional peaks in processor usage can be ignored, but if the processor is constantly under pressure, investigation is needed. Adding additional processors or using a more powerful one might not fix the problem, as badly designed processes can always use all CPU time. Query tuning, improving execution plans, and system reconfiguration can help. To avoid bottlenecks, it&rsquo;s recommended to have a dedicated server that will run only SQL Server, and to remove all other software to another machine.</p>
+
+<p>To start troubleshooting the most common CPU performance issues, monitor % Processor Time. This counter is available in Performance Monitor. If its value is constantly higher than 80%, the processor is under pressure.</p>
+
+<p>The counters that indicate most common causes for processor pressure are Batch Requests/sec, SQL Complications/sec, and SQL Recomplications/sec. These counters are available in Performance Monitor and in the <code>sys.dm_os_performance_counters</code> view.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">sys</span><span class="p">.</span><span class="n">dm_os_performance_counters</span>
+</span><span class='line'><span class="k">where</span> <span class="n">counter_name</span> <span class="k">in</span> <span class="p">(</span><span class="s1">&#39;Batch Requests/sec&#39;</span><span class="p">,</span> <span class="s1">&#39;SQL Complications/sec&#39;</span><span class="p">,</span> <span class="s1">&#39;SQL Re-Compilations/sec&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">///////////////////////////////////////////</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">DECLARE</span> <span class="o">@</span><span class="n">BatchRequests</span> <span class="nb">BIGINT</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">SELECT</span> <span class="o">@</span><span class="n">BatchRequests</span> <span class="o">=</span> <span class="n">cntr_value</span>
+</span><span class='line'><span class="k">FROM</span> <span class="n">sys</span><span class="p">.</span><span class="n">dm_os_performance_counters</span>
+</span><span class='line'><span class="k">WHERE</span> <span class="n">counter_name</span> <span class="o">=</span> <span class="s1">&#39;Batch Requests/sec&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">WAITFOR</span> <span class="n">DELAY</span> <span class="s1">&#39;00:00:10&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">SELECT</span> <span class="p">(</span><span class="n">cntr_value</span> <span class="o">-</span> <span class="o">@</span><span class="n">BatchRequests</span><span class="p">)</span> <span class="o">/</span> <span class="mi">10</span> <span class="k">AS</span> <span class="s1">&#39;Batch Requests/sec&#39;</span>
+</span><span class='line'><span class="k">FROM</span> <span class="n">sys</span><span class="p">.</span><span class="n">dm_os_performance_counters</span>
+</span><span class='line'><span class="k">WHERE</span> <span class="n">counter_name</span> <span class="o">=</span> <span class="s1">&#39;Batch Requests/sec&#39;</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Evaluations</p>
+
+<ul>
+<li>Batch Requests/sec value depends on hardware used, but it should be under 1000</li>
+<li>SQL Complications/sec is less than 10% of Batch Requests/sec</li>
+<li>SQL Re-Complications/sec is less than 10% of SQL Complications/sec</li>
+</ul>
+
+
+<h3>Memory</h3>
+
+<p>Memory bottlenecks can result in slow application responsiveness, overall system slowdown, or even application crashing. It&rsquo;s recommended to identify when the system runs with insufficient memory, what applications use most of memory resources, whether there are bottlenecks for other system resources. Reviewing and tuning queries, memory reconfiguration, and adding more physical memory can help.</p>
+
+<p>Memory bottlenecks are caused by limitations in available memory and memory pressure caused by SQL Server, system, or other application activity. Poor indexing requires table scans which in case of large tables means that a large number of rows is read from disk and handled in memory.</p>
+
+<p>For memory problems, monitor the Memory Available KB performance counter. The normal values should be over 200 MB. If the value of Memory Available KB counter is lower than 100 MB for long time, it&rsquo;s a clear indication of insufficient memory on the server. This counter is available in Performance Monitor, and two more useful counters - Total Server Memory (KB) and Target Server Memory (KB) are available via the <code>sys.dm_os_performance_counters</code> view.</p>
+
+<p>Another counter to monitor is Pages/sec, it is available in Performance Monitor. It shows the rate at which the pages are written from disk to RAM and read froom RAM to disk. The values higher than 50 show intensive memory activity and possible overhead and memory pressure that can lead to SQL Server performance degradation.</p>
+
+<p>Checkpoint pages/sec and Lazy writes/sec indicate whether dirty pages are flushed to disk too often. Dirty pages are automatically flushed to disk at a checkpoint. If the available free space in the buffer cache between two checkpoints is low, a lazy write will occur to flush the pages from buffer to disk and free up memory. The Lazy Writes/sec value should be below 20. Both counters are available in Performance Monitor and the <code>sys.dm_os_performance_counters</code> view.</p>
+
+<p>If the Lazy Writes/sec value is constantly above the threshold, check the Page Life Expectancy value. Values below 300 seconds indicate memory pressure. The counter is available in Performance Monitor and the <code>sys.dm_os_performance_counters</code> view.</p>
+
+<p>Buffer Cache Hit Ratio shows the ratio of the data pages found and read from the SQL Server buffer cache and all data page requests.. If a page doesn&rsquo;t exist in the buffer cache, it has to be read disk, which downgrades performance. The recommended value is over 90. The counter is available in Perforamnce Monitor and the <code>sys.dm_os_performance_counter</code> view.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="n">Buffer</span> <span class="k">Cache</span> <span class="n">Hit</span> <span class="n">Ratio</span> <span class="o">%</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">Buffer</span> <span class="k">Cache</span> <span class="n">Hit</span> <span class="n">Ratio</span> <span class="o">/</span> <span class="n">Buffer</span> <span class="k">Cache</span> <span class="n">Hit</span> <span class="n">Ratio</span> <span class="n">Base</span>
+</span><span class='line'>                         <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="mi">1797</span> <span class="o">/</span> <span class="mi">1975</span>
+</span><span class='line'>                         <span class="o">=</span> <span class="mi">90</span><span class="p">.</span><span class="mi">98</span><span class="o">%</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Evaluations</p>
+
+<ul>
+<li>Memory Available KB > 200 MB</li>
+<li>Total Server Memory</li>
+<li>Target Server Memory</li>
+<li>Pages/sec &lt; 50</li>
+<li>Writes/sec &lt; 20</li>
+<li>Page Life Expectancy > 300 seconds</li>
+<li>Buffer Cache Hit Ratio > 90</li>
+</ul>
+
+
+<h3>Network</h3>
+
+<p>Network bottlenecks might not be instantly recognized, as they can at a first glance be considered as SQL Server performance issues caused by other resources. For example, a delay of data sent over a network can look like SQL Server slow response.</p>
+
+<p>Network bottlenecks are caused by overload on a server or network, so the data cannot flow as expected.</p>
+
+<p>Troubleshooting network problems should start with finding queries, functions, and stored procedures that have slow response time. If they are executed quickly, but with a large delay between two calls, it can be an indication of a network issue. SQL Server Profiler can be used to determine which queries, functions and stored procedures were executed.</p>
+
+<h3>I/O</h3>
+
+<p>I/O bottlenecks are caused by excessive reading and writing of database pages from and onto disk. A bottleneck is manifested through long response times, application slowdowns and tasks time-outs. If other applications use disk resources excessively, SQL Server might not get enogh disk reources for its normal operation and would have to wait to be able to read and write to disk.</p>
+
+<p>I/O issues can be caused by slow hardware used, bad storage solution design, and configuration. Besides hardware components, such as disk types, disk array type, and RAID configuration that affect I/O performance, unnecessary requests made by a database also affect I/O traffic. Frequent index scans, inefficient queries, and out of date statistics can also cause I/O workload and bottlenecks.</p>
+
+<p>For I/O problems, monitor disk-related counters: Average Disk Queue Length, Average Disk Sec/Read, Average Disk Sec/Write, % Disk Time, Average Disk Reads/Sec, and Average Disk Writes/Sec. All counters are available in Performance Monitor.</p>
+
+<p>Average Disk Queue Length shows the average number of I/O operations that are waiting to be written to or read from disk and the number of currently processed reads and writes. The recommended value is below 2 per individual disk, and higher values indicate I/O bottlenecks.</p>
+
+<p>Average Disk Sec/Read shows the average time in seconds needed to read data from disk. The recommended values are given for categories, where under 8ms is excellent performance, and higher than 20ms is a serious I/O issue.</p>
+
+<p>Average Disk Sec/Write shows the average time in seconds needed to write data to disk. The performance is excellent if the value is below 1ms and bad if the counter value is higher than 4ms.</p>
+
+<p>Average Disk Reads/Sec and Average Disk Writes/Sec show the rate of read and write operations on disk, respectively. Low values indicate slow disk I/O processing, and checking processor usage and disk-expensive queries is recommended. The normal values depend on disk specification and server configuration. These counters don&rsquo;t have a specific threshold, so it&rsquo;s recommended to monitor these metrics for a while and to determine treads and set a baseline.</p>
+
+<p>Evaluations</p>
+
+<ul>
+<li>Average Disk Queue Length &lt; 2 per individual disk</li>
+<li>Average Disk Sec/Read &lt; 8ms (if > 20ms -> serious I/O issue)</li>
+<li>Average Disk Sec/Write &lt; 1ms (if > 4ms -> serious I/O issue)</li>
+<li>% Disk Time</li>
+<li>Average Disk Reads/Sec</li>
+<li>Average Disk Writes/Sec</li>
+</ul>
+
+
+<h3>Slow running queries</h3>
+
+<p>SQL Server performance is affected by many factors, the most common SQL Server performance killer are</p>
+
+<ul>
+<li>poor database design</li>
+<li>poor indexing</li>
+<li>poor query design</li>
+<li>not reusable execution plans</li>
+<li>frequent query recompilation</li>
+<li>excessive fragmentation</li>
+</ul>
+
+
+<p>Slow running queries can be result of missing indexes, poor execution plans, bad application and schema design, etc.</p>
+
+<p>An index is used to speed up data search and SQL query performance. The database indexes reduce the number of data pages that have to be read in order to find the specific record.</p>
+
+<p>A table without a clustered index is called a heap, due to its unordered structure. Data in a heap table isn&rsquo;t sorted, usually the records are added one after another, as they are inserted into the table. They can also be rearranged by the database engine, but again, without a specific order. When you insert a lot of rows into a heap table, the new records are written on data pages without a specific order. Finding a record in a heap table can be compared to finding a specific leaf in a heap of leaves. It is inefficient and requires time.</p>
+
+<p>A heap can have one or several nonclustered indexes, or no indexes at all.</p>
+
+<p>A nonclustered index is made only of index pages that contain row locators (pointers) for records in data pages. It doesn&rsquo;t contain data pages, like clustered indexes.</p>
+
+<p>A clustered index organizes table data, so data is queried quicker and more efficiently. A clustered index conosists of both index and data pages, while a heap table has no index pages; it consists only of data pages. In other words, it is not just an index, i.e. a pointer to the data row that contains the key value, but it also contains table data. The data in the clustered table is sorted using the values of the columns the clustered index is made of.</p>
+
+<p>Finding a record from a table with a proper clustered index is quick and easy like finding a name in an alphabetically ordered list. A general recommendation for all SQL tables is to have a proper clustered index.</p>
+
+<p>While there can be only one clustered index on a table, a table can have up to 999 nonclustered indexes.</p>
+
+<p>Indexes can be created using T-SQL.</p>
+
+<figure class='code'><figcaption><span>clustered index</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="p">[</span><span class="n">Person</span><span class="p">].[</span><span class="n">Address</span><span class="p">](</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">AddressID</span><span class="p">]</span> <span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="k">IDENTITY</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">FOR</span> <span class="n">REPLICATION</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">AddressLine1</span><span class="p">]</span> <span class="p">[</span><span class="n">nvarchar</span><span class="p">](</span><span class="mi">60</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">AddressLine2</span><span class="p">]</span> <span class="p">[</span><span class="n">nvarchar</span><span class="p">](</span><span class="mi">60</span><span class="p">)</span> <span class="k">NULL</span><span class="p">,</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">City</span><span class="p">]</span> <span class="p">[</span><span class="n">nvarchar</span><span class="p">](</span><span class="mi">30</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">CONSTRAINT</span> <span class="p">[</span><span class="n">PK_Address_AddressID</span><span class="p">]</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">CLUSTERED</span><span class="p">(</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">AddressID</span><span class="p">]</span> <span class="k">ASC</span>
+</span><span class='line'><span class="p">)</span> <span class="k">ON</span> <span class="p">[</span><span class="k">PRIMARY</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>When you execute the select statement on a clustered table where an ascending clustered index
+is created, the results will be ordered ascending by the clustered key column. In this example,
+it&rsquo;s the AddressID column.</p>
+
+<figure class='code'><figcaption><span>nonclustered index</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="p">[</span><span class="n">Person</span><span class="p">].[</span><span class="n">Address4</span><span class="p">](</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">AddressID</span><span class="p">]</span> <span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="k">IDENTITY</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">FOR</span> <span class="n">REPLICATION</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">AddressLine1</span><span class="p">]</span> <span class="p">[</span><span class="n">nvarchar</span><span class="p">](</span><span class="mi">60</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">AddressLine2</span><span class="p">]</span> <span class="p">[</span><span class="n">nvarchar</span><span class="p">](</span><span class="mi">60</span><span class="p">)</span> <span class="k">NULL</span><span class="p">,</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">City</span><span class="p">]</span> <span class="p">[</span><span class="n">nvarchar</span><span class="p">](</span><span class="mi">30</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span>
+</span><span class='line'><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">CREATE</span> <span class="n">NONCLUSTERED</span> <span class="k">INDEX</span> <span class="p">[</span><span class="n">IX_Address_StateProvinceID4</span><span class="p">]</span> <span class="k">ON</span> <span class="p">[</span><span class="n">Person</span><span class="p">].[</span><span class="n">Address4</span><span class="p">](</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">AddressID</span><span class="p">]</span> <span class="k">ASC</span>
+</span><span class='line'><span class="p">)</span> <span class="k">ON</span> <span class="p">[</span><span class="k">PRIMARY</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>When searching for a specific record in a heap table, SQL Server has to go through all table
+rows. This can be acceptable on a table with a small number of records.</p>
+
+<p>As rows in a heap table are unordered, they are identified by a row identifier (RID) which
+consists of the file number, page number, and slot number of the row.</p>
+
+<p>It&rsquo;s not recommended to use a heap table if you&rsquo;re going to store a large number of records
+in the table. SQL query execution on a table with millions of records without a clustered
+index requires a lot of time. Also, if you need to get a sorted results list, it&rsquo;s easier
+to define an ascending or descending clustered index, as shown in the examples above, than
+to sort the unsorted reuslts set retrieved from a heap table. The same goes for grouping,
+filtering by a value range.</p>
+
+<p>Indexing strategy is complex; it depends on many factors, including</p>
+
+<ul>
+<li>database structure</li>
+<li>queries</li>
+<li>stored procedures used</li>
+</ul>
+
+
+<p>One of general recommendations is to create a clustered index on tables where data is frequently
+queried. Although some DBAs and developers don&rsquo;t prefer having clustered indexes on tables frequently inserted or updated, others consider that a clustered index on the right column can improve
+performance in these situations.</p>
+
+<p>Creating a clustered index on every table is highly recommended, the challenge is to create
+the right index. With a proper clustered index, less reads are required to retrieve the
+records the records requested by a query or stored procedure. Therefore, fewer disk I/O
+are performed and the operation is completed faster.</p>
+
+<p>A clustered index provides more efficient search for values in a specific range. When you
+already have a table where the records are sorted ascending by e.g. AddressID, it&rsquo;s easy
+to find the rows where AddressID is between 100 and 200, or lower than 500.</p>
+
+<p>One of the rare scenarios where a heap table can be a good practice is when the row
+identifier is smaller than the clustered index.</p>
+
+<p>Poor Indexing</p>
+
+<p>Any SQL Server table configuration where performance suffers due to excessive, improper,
+or missing indexes is considered to be poor indexing.</p>
+
+<p>If indexes are not properly created, SQL Server has to go through more records in order
+to retrieve the data requested by a query. Therefore, it uses more hardware resources
+(proessor, memory, disk, and network) and obtaining the data lasts longer.</p>
+
+<p>A wrong index can be an index created on a column that doesn&rsquo;t provide easier data
+manipulation or an index created on multiple columns which instead of speeding up
+queries, slows them down.</p>
+
+<p>A table without a clustered index can also be considered as a poor indexing practice.
+Execution of a SELECT statement, inserting, updating and deleting records is in most
+cases slower on a heap table than on a clustered one.</p>
+
+<p>Which columns to use to build an index?</p>
+
+<p>Both clustered and nonclustered indexes can be built from one or more table columns.</p>
+
+<p>When you create a new table with a primary key in a SQL Server database, a unique clustered
+index is automatically created on the primary key column. Although this default action is
+acceptable in most cases, this might not be the optimal clustered index.</p>
+
+<p>The column used for a clustered index should be a unique, identity, or primary key, or
+any other column where the value is increased for each new entry. As clustered indexes
+sort the records based on the value, using a column already ordered ascending, such
+as an identity column, is a good solution.</p>
+
+<p>If a column where new values are not higher than previous is used for a clustered index,
+adding each new row would require re-ordering, i.e. moving the whole row and placing it
+to its proper location in accordance with clustered index ordering, thus splitting data
+pages and affecting SQL Server performance. If such clustered index is created on a table
+with frequent inserts and updates, it can cause performance degradation.</p>
+
+<p>It&rsquo;s not recommended to use the primary key as a clustered key without checking whether
+that is the optimal solution in your scenario first. Also, note the difference between
+a primary key and clustered index - a primary key can&rsquo;t have duplicate or null values,
+while a clustered index can.</p>
+
+<p>Using a unique column for a clustered index enables more efficient search for a specifc
+value. On the other hand, a column that frequently changes its value should not used
+for a clustered index. Each change of of the column used for the clustered index
+requires the records to be reordered. This re-ordering can easily be avoided by using
+a column that is not updated frequently, or not updated at all.</p>
+
+<p>Using a column that stores large data, such as BLOB columns (text, nvarchar(max), image, etc.),
+and GUID columns is not recommended. Using large values to sort the data is not efficient,
+and in case of GUID and image columns doesn&rsquo;t seem to make sense.</p>
+
+<p>A clustered index should not be built on a column already used in a unique index.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="p">[</span><span class="n">Person</span><span class="p">].[</span><span class="n">Address</span><span class="p">](</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">AddressID</span><span class="p">]</span> <span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="k">IDENTITY</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">FOR</span> <span class="n">REPLICATION</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">AddressLine1</span><span class="p">]</span> <span class="p">[</span><span class="n">nvarchar</span><span class="p">](</span><span class="mi">60</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">AddressLine2</span><span class="p">]</span> <span class="p">[</span><span class="n">nvarchar</span><span class="p">](</span><span class="mi">60</span><span class="p">)</span> <span class="k">NULL</span><span class="p">,</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">City</span><span class="p">]</span> <span class="p">[</span><span class="n">nvarchar</span><span class="p">](</span><span class="mi">30</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">StateProvinceID</span><span class="p">]</span> <span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">PostalCode</span><span class="p">]</span> <span class="p">[</span><span class="n">nvarchar</span><span class="p">](</span><span class="mi">15</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">SpatialLocation</span><span class="p">]</span> <span class="p">[</span><span class="n">geography</span><span class="p">]</span> <span class="k">NULL</span><span class="p">,</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">rowguid</span><span class="p">]</span> <span class="p">[</span><span class="n">uniqueidentifier</span><span class="p">]</span> <span class="n">ROWGUIDCOL</span> <span class="k">NOT</span> <span class="n">BULL</span><span class="p">,</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">ModifiedDate</span><span class="p">]</span> <span class="p">[</span><span class="n">datetime</span><span class="p">]</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+</span><span class='line'>    <span class="k">CONSTRAINT</span> <span class="p">[</span><span class="n">PK_Address_AddressID</span><span class="p">]</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">CLUSTERED</span> <span class="p">([</span><span class="n">AddressID</span> <span class="k">ASC</span><span class="p">]</span> <span class="k">WITH</span><span class="p">(</span>
+</span><span class='line'>        <span class="n">PAD_INDEX</span> <span class="o">=</span> <span class="k">OFF</span><span class="p">,</span>
+</span><span class='line'>        <span class="n">STATISTICS_NORECOMPUTE</span> <span class="o">=</span> <span class="k">OFF</span><span class="p">,</span>
+</span><span class='line'>        <span class="n">IGNORE_DUP_KEY</span> <span class="o">=</span> <span class="k">OFF</span><span class="p">,</span>
+</span><span class='line'>        <span class="n">ALLOW_ROW_LOCKS</span> <span class="o">=</span> <span class="k">ON</span><span class="p">,</span>
+</span><span class='line'>        <span class="n">ALLOW_PAGE_LOCKS</span> <span class="o">=</span> <span class="k">ON</span>
+</span><span class='line'>        <span class="p">)</span> <span class="k">ON</span> <span class="p">[</span><span class="k">PRIMARY</span><span class="p">]</span>
+</span><span class='line'>    <span class="p">)</span> <span class="k">ON</span> <span class="p">[</span><span class="k">PRIMARY</span><span class="p">]</span> <span class="n">TEXTIMAGE_ON</span> <span class="p">[</span><span class="k">PRIMARY</span><span class="p">]</span>
+</span><span class='line'><span class="p">)</span>
+</span><span class='line'><span class="k">GO</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">CREATE</span> <span class="n">CLUSTERED</span> <span class="k">INDEX</span> <span class="p">[</span><span class="n">Clustered_City_Address1</span><span class="p">]</span> <span class="k">ON</span> <span class="p">[</span><span class="n">Person</span><span class="p">].[</span><span class="n">Address1</span><span class="p">](</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">City</span><span class="p">]</span> <span class="k">ASC</span>
+</span><span class='line'><span class="p">)</span> <span class="k">WITH</span> <span class="p">(</span>
+</span><span class='line'>        <span class="n">PAD_INDEX</span> <span class="o">=</span> <span class="k">OFF</span><span class="p">,</span>
+</span><span class='line'>        <span class="n">STATISTICS_NORECOMPUTE</span> <span class="o">=</span> <span class="k">OFF</span><span class="p">,</span>
+</span><span class='line'>        <span class="n">SORT_IN_TEMPDB</span> <span class="o">=</span> <span class="k">OFF</span><span class="p">,</span>
+</span><span class='line'>        <span class="n">DROP_EXISTING</span> <span class="o">=</span> <span class="k">OFF</span><span class="p">,</span>
+</span><span class='line'>        <span class="n">ONLINE</span> <span class="o">=</span> <span class="k">OFF</span><span class="p">,</span>
+</span><span class='line'>        <span class="n">ALLOW_ROW_LOCKS</span> <span class="o">=</span> <span class="k">ON</span><span class="p">,</span>
+</span><span class='line'>        <span class="n">ALLOW_PAGE_LOCKS</span> <span class="o">=</span> <span class="k">ON</span>
+</span><span class='line'>    <span class="p">)</span> <span class="k">ON</span> <span class="p">[</span><span class="k">PRIMARY</span><span class="p">]</span>
+</span><span class='line'><span class="k">GO</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Disadvantages of using indexes</p>
+
+<p>As noted above, wrong indexes can significantly slow down SQL Server Performance.
+But even the indexes that provide better performance for some operations, can
+add overhead for others.</p>
+
+<p>While executing a SELECT statement is faster on a clustered table, INSERTs, UPDATEs,
+and DELETEs require more time, as not only data is updated, but the indexes are updated also.
+For clustered indexes, the time increase is more significant, as the records have to maintain
+the correct order in data pages. Whether a new record is inserted, or an existing deleted or
+updated, this usually requires the records to be reordered.</p>
+
+<p>Another cost of having indexes on tables is that more data pages and memory is used.</p>
+
+<p>The operator costs from the Actual Query Execution Plan for the tables mentioned above
+are shown below. The table with the clustered index on the primary key column is
+[Person].[Address], the table with the clustered index on a non-primary key column
+is [Person].[Address1]. We created two more copies of the the same table, one with
+a nonclustered index on the primary key column and the other without any indexes.
+The data in all four tables is identical.</p>
+
+<p>When it comes to executing a SELECT statement, the cost is the lowest when the list
+of returned columns is specified and the statement is executed on the table where
+the clustered index is created on the primary key column. The cost can be higher
+for a table with a non-optimal clustered index, then on tables with a nonclustered index
+or no indexes at all.</p>
+
+<p>While executing a SELECT statement is faster on a clustered table, executing DELETEs
+and UPDATEs requires more time. For the latter statements, the performance of a table
+with a nonclustered index is the same as for the table with a clustered index on a
+column other than the primary key.</p>
+
+<p>Note that INSERTs on a table without indexes is the fastest of all - this is expected
+as neither re-ordering nor index updating is required. On the same table, executing
+UPDATEs and DELETEs is the most expensive. Again, this is expected, as SQL Server
+requires most time to find the specific records in such table.</p>
+
+<p>As shown, indexes can speed up some queries and slow down others.</p>
+
+<h4>queries</h4>
+
+<ul>
+<li>T-SQL</li>
+<li>DML: SELECT, INSERT, DELETE, UPDATE</li>
+<li>conditional statements: IF&hellip;THEN&hellip;ELSE</li>
+<li>relational operators: table scans, aggregations, joins</li>
+<li>declare cursor</li>
+</ul>
+
+
+<p>T-SQL statements and stored procedures are presented as tree roots. Statements called
+by the stored procedure are presented as children in the tree.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">EXEC</span> <span class="n">sp_who2</span> <span class="mi">243</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Data manipulation language (DML) statements SELECT, INSERT, DELETE, and UPDATE are
+also presented as tree roots. The first child represents the execution plan for
+the statement. If the statement fires a trigger, it&rsquo;s represented as the second child.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">DELETE</span> <span class="k">FROM</span> <span class="p">[</span><span class="n">dbo</span><span class="p">].[</span><span class="n">AUDIT_LOG_TRANSACTIONS</span><span class="p">]</span>
+</span><span class='line'><span class="k">WHERE</span> <span class="p">[</span><span class="n">AUDIT_LOG_TRANSACTION_ID</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The conditional statements, such as <code>IF...THEN...ELSE</code> are presented with 3 children.
+WHILE and DO-UNTIL statements are represented similarly.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="n">IF</span>
+</span><span class='line'>    <span class="p">(</span><span class="k">SELECT</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">FROM</span> <span class="p">[</span><span class="n">Person</span><span class="p">].[</span><span class="n">Address</span><span class="p">]</span> <span class="k">WHERE</span> <span class="n">City</span> <span class="k">LIKE</span> <span class="s1">&#39;Bothell&#39;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+</span><span class='line'>    <span class="p">(</span><span class="k">SELECT</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">FROM</span> <span class="p">[</span><span class="n">Person</span><span class="p">].[</span><span class="n">Address</span><span class="p">]</span> <span class="k">WHERE</span> <span class="n">City</span> <span class="k">LIKE</span> <span class="s1">&#39;Bothell&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="k">Else</span>
+</span><span class='line'>    <span class="p">(</span><span class="k">SELECT</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">FROM</span> <span class="p">[</span><span class="n">Person</span><span class="p">].[</span><span class="n">Address</span><span class="p">]</span> <span class="k">WHERE</span> <span class="n">AddressLine2</span> <span class="k">is</span> <span class="k">null</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Relational operators, such as table scans, aggregations, and joins are presented in the tree
+as nodes.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SELECT</span> <span class="n">PrV</span><span class="p">.</span><span class="n">Standardprice</span><span class="p">,</span> <span class="n">V</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">V</span><span class="p">.</span><span class="n">CreditRating</span>
+</span><span class='line'><span class="k">FROM</span> <span class="n">Purchasing</span><span class="p">.</span><span class="n">ProductVendor</span> <span class="k">AS</span> <span class="n">PrV</span>
+</span><span class='line'><span class="k">JOIN</span> <span class="n">Purchasing</span><span class="p">.</span><span class="n">Vendor</span> <span class="k">AS</span> <span class="n">V</span>
+</span><span class='line'><span class="k">ON</span> <span class="p">(</span><span class="n">PrV</span><span class="p">.</span><span class="n">BusinessEntityID</span> <span class="o">=</span> <span class="n">V</span><span class="p">.</span><span class="n">BusinessEntityID</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The DECLARE CURSOR statement is shown as the tree root. The statement it refers to is
+shown as a child.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">DECLARE</span> <span class="n">vend_cursor</span> <span class="k">CURSOR</span>
+</span><span class='line'><span class="k">FOR</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">Purchasing</span><span class="p">.</span><span class="n">Vendor</span>
+</span><span class='line'><span class="k">OPEN</span> <span class="n">vend_cursor</span>
+</span><span class='line'><span class="k">FETCH</span> <span class="k">NEXT</span> <span class="k">FROM</span> <span class="n">vend_cursor</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>References</h2>
+
+<ul>
+<li><a href="http://www.sqlshack.com/dba-guide-sql-server-performance-troubleshooting-part-1-problems-performance-metrics/">DBA Guide: SQL Server Performance Troubleshooting</a></li>
+</ul>
+
+</div>
+
+
+
+  <script type="text/javascript">
+  jQuery(document).ready(function() {
+    // Put a TOC right before the entry content.
+    generateTOC('.entry-content', 'Table of Contents');
+  });
+  </script>
+
+
+
+
+  <footer>
+
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">K</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2016-03-10T13:55:12+08:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>1:55 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/tech/'>tech</a>
+  
+</span>
+
+
+      
+
+<span class="categories">
+  
+    <a class='tag' href='/tags/db/'>db</a>
+  
+</span>
+
+
+    </p>
+
+    
+      <div class="sharing">
+
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://k.arttechresearch.com/tech/2016/03/10/troubleshooting-a-slow-database/" data-via="kwailamchan" data-counturl="http://k.arttechresearch.com/tech/2016/03/10/troubleshooting-a-slow-database/" >Tweet</a>
+  
+
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+
+  
+
+</div>
+
+    
+
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/tech/2016/02/27/installing-caffe-on-ubuntu-with-virtualbox/" title="Previous Post: Installing Caffe on Ubuntu with VirtualBox">&laquo; Installing Caffe on Ubuntu with VirtualBox</a>
+      
+      
+        <a class="basic-alignment right" href="/tech/2016/03/10/mongodb/" title="Next Post: MongoDB">MongoDB &raquo;</a>
+      
+    </p>
+
+  </footer>
+
+</article>
+
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Tech</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/tech/2016/03/24/mongodb-sharding/">MongoDB Sharding</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2016/03/24/mongodb-replication/">MongoDB Replication</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2016/03/24/mongodb-security/">MongoDB Security</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2016/03/24/mongodb-storage/">MongoDB Storage</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2016/03/24/mongodb-indexes/">MongoDB Indexes</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2016/03/24/mongodb-administration/">MongoDB Administration</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2016/03/24/mongodb-data-model/">MongoDB Data Model</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2016/03/24/mongodb-aggregation/">MongoDB Aggregation</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2016/03/24/mongodb-crud/">MongoDB CRUD</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2016/03/24/mongo-shell/">Mongo Shell</a>
+      </li>
+    
+  </ul>
+</section>
+<section class="category-list">
+    <h1>Projects</h1>
+    <ul id="category-list">
+        <li>
+            <span><a href="/tags/edx">edX</a></span> / 
+            <span><a href="/tags/will">Will</a></span>
+        </li>
+    </ul>
+
+    <h1>Programming</h1>
+    <ul id="category-list">
+        <li>
+            <span><a href="/tags/python">Python</a></span> /
+            <span><a href="/tags/ruby">Ruby</a></span> /
+            <span><a href="/tags/nodejs">Node.js</a></span>
+        </li>
+    </ul>
+
+</section>
+<section class="tag-cloud">
+
+
+  <h1>Tags</h1>
+    <ul id="category-list"><a href='/tags/ai' style='font-size: 90.0%'>ai(1)</a> <a href='/tags/aldebaran' style='font-size: 90.0%'>aldebaran(1)</a> <a href='/tags/algorithm' style='font-size: 118.13953488372093%'>algorithm(12)</a> <a href='/tags/ansible' style='font-size: 92.55813953488372%'>ansible(2)</a> <a href='/tags/apache' style='font-size: 92.55813953488372%'>apache(2)</a> <a href='/tags/api' style='font-size: 97.67441860465117%'>api(4)</a> <a href='/tags/ascii' style='font-size: 90.0%'>ascii(1)</a> <a href='/tags/beautifulsoup' style='font-size: 90.0%'>beautifulsoup(1)</a> <a href='/tags/beeline' style='font-size: 90.0%'>beeline(1)</a> <a href='/tags/butter' style='font-size: 90.0%'>butter(1)</a> <a href='/tags/caffe' style='font-size: 92.55813953488372%'>caffe(2)</a> <a href='/tags/career' style='font-size: 92.55813953488372%'>career(2)</a> <a href='/tags/cassandra' style='font-size: 90.0%'>cassandra(1)</a> <a href='/tags/cg' style='font-size: 92.55813953488372%'>cg(2)</a> <a href='/tags/chatbot' style='font-size: 95.11627906976744%'>chatbot(3)</a> <a href='/tags/choregraphe' style='font-size: 90.0%'>choregraphe(1)</a> <a href='/tags/classification' style='font-size: 92.55813953488372%'>classification(2)</a> <a href='/tags/cloud' style='font-size: 90.0%'>cloud(1)</a> <a href='/tags/cloudera' style='font-size: 107.90697674418604%'>cloudera(8)</a> <a href='/tags/cloudera-manager' style='font-size: 95.11627906976744%'>cloudera manager(3)</a> <a href='/tags/cluster' style='font-size: 141.1627906976744%'>cluster(21)</a> <a href='/tags/computer-vision' style='font-size: 90.0%'>computer vision(1)</a> <a href='/tags/cpp' style='font-size: 90.0%'>cpp(1)</a> <a href='/tags/crawler' style='font-size: 92.55813953488372%'>crawler(2)</a> <a href='/tags/css' style='font-size: 92.55813953488372%'>css(2)</a> <a href='/tags/cuda' style='font-size: 90.0%'>cuda(1)</a> <a href='/tags/d3' style='font-size: 90.0%'>d3(1)</a> <a href='/tags/data' style='font-size: 90.0%'>data(1)</a> <a href='/tags/db' style='font-size: 120.69767441860465%'>db(13)</a> <a href='/tags/debian' style='font-size: 90.0%'>debian(1)</a> <a href='/tags/deepdream' style='font-size: 90.0%'>deepdream(1)</a> <a href='/tags/design-patterns' style='font-size: 90.0%'>design patterns(1)</a> <a href='/tags/devops' style='font-size: 97.67441860465117%'>devops(4)</a> <a href='/tags/django' style='font-size: 92.55813953488372%'>django(2)</a> <a href='/tags/dns' style='font-size: 90.0%'>dns(1)</a> <a href='/tags/docker' style='font-size: 95.11627906976744%'>docker(3)</a> <a href='/tags/edx' style='font-size: 120.69767441860465%'>edX(13)</a> <a href='/tags/edx-ai' style='font-size: 90.0%'>edX AI(1)</a> <a href='/tags/edx-analytics' style='font-size: 107.90697674418604%'>edX Analytics(8)</a> <a href='/tags/edx-platform' style='font-size: 95.11627906976744%'>edX Platform(3)</a> <a href='/tags/elasticsearch' style='font-size: 90.0%'>elasticsearch(1)</a> <a href='/tags/emacs' style='font-size: 92.55813953488372%'>emacs(2)</a> <a href='/tags/exhibition' style='font-size: 92.55813953488372%'>exhibition(2)</a> <a href='/tags/fiction' style='font-size: 105.34883720930233%'>fiction(7)</a> <a href='/tags/filebeat' style='font-size: 90.0%'>filebeat(1)</a> <a href='/tags/flask' style='font-size: 90.0%'>flask(1)</a> <a href='/tags/flume' style='font-size: 90.0%'>flume(1)</a> <a href='/tags/forever' style='font-size: 92.55813953488372%'>forever(2)</a> <a href='/tags/framework' style='font-size: 90.0%'>framework(1)</a> <a href='/tags/freetds' style='font-size: 90.0%'>freetds(1)</a> <a href='/tags/french' style='font-size: 90.0%'>french(1)</a> <a href='/tags/ghost' style='font-size: 97.67441860465117%'>ghost(4)</a> <a href='/tags/git' style='font-size: 102.79069767441861%'>git(6)</a> <a href='/tags/github' style='font-size: 92.55813953488372%'>github(2)</a> <a href='/tags/gitosis' style='font-size: 90.0%'>gitosis(1)</a> <a href='/tags/gitweb' style='font-size: 90.0%'>gitweb(1)</a> <a href='/tags/gunicorn' style='font-size: 90.0%'>gunicorn(1)</a> <a href='/tags/hadoop' style='font-size: 128.37209302325581%'>hadoop(16)</a> <a href='/tags/hbase' style='font-size: 100.23255813953489%'>hbase(5)</a> <a href='/tags/hdfs' style='font-size: 92.55813953488372%'>hdfs(2)</a> <a href='/tags/hipchat' style='font-size: 95.11627906976744%'>hipchat(3)</a> <a href='/tags/hive' style='font-size: 97.67441860465117%'>hive(4)</a> <a href='/tags/html' style='font-size: 92.55813953488372%'>html(2)</a> <a href='/tags/hue' style='font-size: 92.55813953488372%'>hue(2)</a> <a href='/tags/ide' style='font-size: 95.11627906976744%'>ide(3)</a> <a href='/tags/impala' style='font-size: 90.0%'>impala(1)</a> <a href='/tags/iterm' style='font-size: 90.0%'>iterm(1)</a> <a href='/tags/java' style='font-size: 100.23255813953489%'>java(5)</a> <a href='/tags/javascript' style='font-size: 100.23255813953489%'>javascript(5)</a> <a href='/tags/jekyll' style='font-size: 92.55813953488372%'>jekyll(2)</a> <a href='/tags/jenkins' style='font-size: 90.0%'>jenkins(1)</a> <a href='/tags/kibana' style='font-size: 90.0%'>kibana(1)</a> <a href='/tags/leisure' style='font-size: 141.1627906976744%'>leisure(21)</a> <a href='/tags/library' style='font-size: 90.0%'>library(1)</a> <a href='/tags/linux' style='font-size: 113.02325581395348%'>linux(10)</a> <a href='/tags/logstack' style='font-size: 90.0%'>logstack(1)</a> <a href='/tags/machine-learning' style='font-size: 123.25581395348837%'>machine learning(14)</a> <a href='/tags/mapreduce' style='font-size: 92.55813953488372%'>mapreduce(2)</a> <a href='/tags/markdown' style='font-size: 90.0%'>markdown(1)</a> <a href='/tags/mathjax' style='font-size: 92.55813953488372%'>mathjax(2)</a> <a href='/tags/maven' style='font-size: 90.0%'>maven(1)</a> <a href='/tags/mongo' style='font-size: 105.34883720930233%'>mongo(7)</a> <a href='/tags/mongovue' style='font-size: 90.0%'>mongovue(1)</a> <a href='/tags/mssql' style='font-size: 90.0%'>mssql(1)</a> <a href='/tags/mysql' style='font-size: 107.90697674418604%'>mysql(8)</a> <a href='/tags/mysql-workbench' style='font-size: 92.55813953488372%'>mysql workbench(2)</a> <a href='/tags/nao' style='font-size: 92.55813953488372%'>nao(2)</a> <a href='/tags/naoqi' style='font-size: 90.0%'>naoqi(1)</a> <a href='/tags/network' style='font-size: 90.0%'>network(1)</a> <a href='/tags/nginx' style='font-size: 97.67441860465117%'>nginx(4)</a> <a href='/tags/nlp' style='font-size: 102.79069767441861%'>nlp(6)</a> <a href='/tags/nltk' style='font-size: 90.0%'>nltk(1)</a> <a href='/tags/nodejs' style='font-size: 105.34883720930233%'>nodejs(7)</a> <a href='/tags/octopress' style='font-size: 107.90697674418604%'>octopress(8)</a> <a href='/tags/odbc' style='font-size: 90.0%'>odbc(1)</a> <a href='/tags/oil-painting' style='font-size: 90.0%'>oil painting(1)</a> <a href='/tags/opencv' style='font-size: 92.55813953488372%'>opencv(2)</a> <a href='/tags/openstack' style='font-size: 90.0%'>openstack(1)</a> <a href='/tags/painting' style='font-size: 90.0%'>painting(1)</a> <a href='/tags/pandas' style='font-size: 92.55813953488372%'>pandas(2)</a> <a href='/tags/photos' style='font-size: 125.81395348837209%'>photos(15)</a> <a href='/tags/poem' style='font-size: 97.67441860465117%'>poem(4)</a> <a href='/tags/prediction' style='font-size: 90.0%'>prediction(1)</a> <a href='/tags/programming' style='font-size: 100.23255813953489%'>programming(5)</a> <a href='/tags/pycharm' style='font-size: 90.0%'>pycharm(1)</a> <a href='/tags/python' style='font-size: 200.0%'>python(44)</a> <a href='/tags/python-challenge' style='font-size: 95.11627906976744%'>Python Challenge(3)</a> <a href='/tags/reading' style='font-size: 90.0%'>reading(1)</a> <a href='/tags/redis' style='font-size: 90.0%'>redis(1)</a> <a href='/tags/redmine' style='font-size: 90.0%'>redmine(1)</a> <a href='/tags/regex' style='font-size: 90.0%'>regex(1)</a> <a href='/tags/rest' style='font-size: 92.55813953488372%'>rest(2)</a> <a href='/tags/robotics' style='font-size: 102.79069767441861%'>robotics(6)</a> <a href='/tags/ros' style='font-size: 90.0%'>ros(1)</a> <a href='/tags/ruby' style='font-size: 115.5813953488372%'>ruby(11)</a> <a href='/tags/scala' style='font-size: 95.11627906976744%'>scala(3)</a> <a href='/tags/servlet' style='font-size: 90.0%'>servlet(1)</a> <a href='/tags/shell' style='font-size: 92.55813953488372%'>shell(2)</a> <a href='/tags/soap' style='font-size: 90.0%'>soap(1)</a> <a href='/tags/solr' style='font-size: 90.0%'>solr(1)</a> <a href='/tags/spark' style='font-size: 90.0%'>spark(1)</a> <a href='/tags/sphinx' style='font-size: 90.0%'>sphinx(1)</a> <a href='/tags/spring' style='font-size: 90.0%'>spring(1)</a> <a href='/tags/sql' style='font-size: 90.0%'>sql(1)</a> <a href='/tags/sqoop' style='font-size: 97.67441860465117%'>sqoop(4)</a> <a href='/tags/ssl' style='font-size: 92.55813953488372%'>ssl(2)</a> <a href='/tags/supervisor' style='font-size: 90.0%'>supervisor(1)</a> <a href='/tags/tech-talks' style='font-size: 90.0%'>tech talks(1)</a> <a href='/tags/threading' style='font-size: 90.0%'>threading(1)</a> <a href='/tags/time-series' style='font-size: 90.0%'>time series(1)</a> <a href='/tags/tomcat' style='font-size: 90.0%'>tomcat(1)</a> <a href='/tags/translation' style='font-size: 90.0%'>translation(1)</a> <a href='/tags/ubuntu' style='font-size: 118.13953488372093%'>ubuntu(12)</a> <a href='/tags/unicode' style='font-size: 90.0%'>unicode(1)</a> <a href='/tags/vagrant' style='font-size: 95.11627906976744%'>vagrant(3)</a> <a href='/tags/vim' style='font-size: 92.55813953488372%'>vim(2)</a> <a href='/tags/virtualbox' style='font-size: 97.67441860465117%'>virtualbox(4)</a> <a href='/tags/virtualenv' style='font-size: 90.0%'>virtualenv(1)</a> <a href='/tags/virtualenvwrapper' style='font-size: 90.0%'>virtualenvwrapper(1)</a> <a href='/tags/vm' style='font-size: 92.55813953488372%'>vm(2)</a> <a href='/tags/web' style='font-size: 105.34883720930233%'>web(7)</a> <a href='/tags/webots' style='font-size: 90.0%'>webots(1)</a> <a href='/tags/will' style='font-size: 95.11627906976744%'>will(3)</a> <a href='/tags/yarn' style='font-size: 90.0%'>yarn(1)</a> <a href='/tags/zookeeper' style='font-size: 100.23255813953489%'>zookeeper(5)</a> </ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2006-2016 - K
+</p>
+
+
+
+<script type="text/javascript">
+
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-53625944-7', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'kwailamc';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://k.arttechresearch.com/tech/2016/03/10/troubleshooting-a-slow-database/';
+        var disqus_url = 'http://k.arttechresearch.com/tech/2016/03/10/troubleshooting-a-slow-database/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,829 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Databases - K</title>
+  <meta name="author" content="K">
+
+  
+  <meta name="description" content="Databases Mar 13th, 2016 9:23 pm | Comments Database Overviews What is Database Database - any collection of related data, a persistent, logically &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://k.arttechresearch.com/tech/2016/03/13/databases/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="K" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/libs/jquery-1.9.1.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+
+  <script src="/javascripts/libs/jquery.tableofcontents.min.js" type="text/javascript"></script>
+  <script src="/javascripts/toc_generator.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  <!-- MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+</head>
+
+<body   >
+  <header role="banner"><ul class="soc">
+
+  
+    <li><a class="soc-github" href="https://github.com/KellyChan"></a></li>
+  
+
+  
+    <li><a class="soc-twitter" href="https://twitter.com/kwailamchan"></a></li>
+  
+
+  
+    <li><a class="soc-pinterest" href="https://www.pinterest.com/wailamchan/"></a></li>
+  
+
+  
+    <li><a class="soc-slideshare" href="http://www.slideshare.net/wailamchan"></a></li>
+  
+
+  
+    <li><a class="soc-email1 soc-icon-last" href="mailto:support@arttechresearch.com"></a></li>
+  
+</ul>
+
+<hgroup>
+  <h1><a href="/">K</a></h1>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="k.arttechresearch.com">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/tech">Tech</a></li>
+  <li><a href="/art">Art</a></li>
+  <li><a href="/life">Life</a></li>
+  <li><a href="/archives">Archives</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <li><a href="/devkits">Devkits</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+
+    
+      <h1 class="entry-title">Databases</h1>
+    
+
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2016-03-13T21:23:22+08:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>9:23 pm</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://k.arttechresearch.com">Comments</a>
+        
+      </p>
+    
+
+  </header>
+
+
+
+  <div class="entry-content"><h2>Database Overviews</h2>
+
+<h3>What is Database</h3>
+
+<p>Database - any collection of related data, a persistent, logically coherent collection of inherently meaningful data, relevant to some aspects of the real world.</p>
+
+<p>Database Management System (DBMS) - a collection of programs that enables useres to create and maintain a database.</p>
+
+<p>Relational Database Management System (RDBMS) - a database that treats all of its data as a collection of relations:</p>
+
+<ul>
+<li>SET: A = {1,2,3,4}</li>
+<li>Cartesian Product: B * C = {&lt;H,R>, &lt;H,B>, &lt;T,R>, &lt;T,B>}</li>
+<li>Relation: Q = {&lt;H,R>, &lt;H,B>}</li>
+</ul>
+
+
+<p>Non-Relational Database Management System (NoRDBMS) - xxx</p>
+
+<h3>Types of Databases</h3>
+
+<h4>SQL</h4>
+
+<h4>NoSQL</h4>
+
+<p>General</p>
+
+<ul>
+<li><strong>Key-Value/Ordered Key-Value</strong>: the simplest NoSQL databases, every single item in the database is stored as an attribute name or key, together with its value.</li>
+<li><strong>BigTable (wide-column)</strong>: optimized for queries over large datasetes, and store columns of data together, instead of rows.</li>
+<li><strong>Document, Full-Text Search</strong>: pair each key with a complex data structure known as a document, documents can contain many diffferent key-value pairs, or key-array pairs, or even nested documents.</li>
+<li><strong>Graph</strong>: used to store information about networks, such as social connections.</li>
+</ul>
+
+
+<p>Others</p>
+
+<ul>
+<li>Multimodel</li>
+<li>Object</li>
+<li>Grid &amp; Cloud</li>
+<li>XML</li>
+<li>Multidimensional</li>
+<li>Network Model</li>
+</ul>
+
+
+<table>
+<thead>
+<tr>
+<th style="text-align:left;"> Type                       </th>
+<th style="text-align:left;"> Databases                                               </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> Key-Value/Ordered Key-Value</td>
+<td style="text-align:left;"> Amazon DynamoDB, Azure Table storage, Riak, Redis, Oracle NoSQL Database, MemcacheDB, PickleDB, Aerospike, FoundationDB, Berkeley DB, GenieDB, BangDB, Scalaris, Tokyo Cabnit/Tyrant, Voldemort, Dynomite, c-treeACE database, KitaroDB, hamsterdb, STSdb, Tarantool, quasardb, RaptorDB, TIBCO ActiveSpaces DB, NessDB, HyperDex, Symas Lightning Memory Mapped Database (LMDB), Light Cloud, Hibari, Genome </td>
+</tr>
+<tr>
+<td style="text-align:left;"> BigTable (column-based)    </td>
+<td style="text-align:left;"> Hadoop/HBase, Cassandra, Hypertable, Accumulo, Amazon SimpleDB, Cloud Data, HPCC, Flink, Splice </td>
+</tr>
+<tr>
+<td style="text-align:left;"> Document, Full-Text Search </td>
+<td style="text-align:left;"> MongoDB, Elastic Search, Couchbase Server, CouchDB, RethinkDB, RavenDB, MarkLogic Server, Clusterpoint Server, NeDB, Terrastore, JasDB, RaptorDB, Djondb, EDB, Amisa Server, DensoDB, SisoDB, SDB, UnQLite, ThruDB </td>
+</tr>
+<tr>
+<td style="text-align:left;"> Graph                       </td>
+<td style="text-align:left;"> Neo4J, InfiniteGraph, DEX, Titan, Infogrid, HypergraphDB, Trinity, AllegroGraph, WHITE Database, Virtuoso, VertxDB, FlockDB, BrightstarDB </td>
+</tr>
+<tr>
+<td style="text-align:left;"> Multimodel                 </td>
+<td style="text-align:left;"> ArangoDB, OrientDB, DatomicDB, FatDB, AlchemyDB, coretxDB </td>
+</tr>
+<tr>
+<td style="text-align:left;"> Object                     </td>
+<td style="text-align:left;"> VersantDB, Objectivity, Gemstone, NinjaDB, ObjectDB, Starcounter, HSS Database, ZODB, Magma, NEODB, Streling, EyeDB, FarmerD </td>
+</tr>
+<tr>
+<td style="text-align:left;"> Grid &amp; Cloud               </td>
+<td style="text-align:left;"> Oracle Coherence, GemfireDB, Infinispan, Hazelcast </td>
+</tr>
+<tr>
+<td style="text-align:left;"> XML                        </td>
+<td style="text-align:left;"> EMC Documentum xDB, eXist, Sedna, BaseX, Qizx/db, BerkeleyDB </td>
+</tr>
+<tr>
+<td style="text-align:left;"> Multidimensional           </td>
+<td style="text-align:left;"> Global, Intersystem cache, GT.M, SciDB, Rasdaman </td>
+</tr>
+<tr>
+<td style="text-align:left;"> Network Model              </td>
+<td style="text-align:left;"> Vyhodb </td>
+</tr>
+</tbody>
+</table>
+
+
+<h3>Database Systems</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(fontend) SQL user interface     forms interface     report generation tools     data mining & analysis
+</span><span class='line'>--------------------------------------------------------------------------------------------------------
+</span><span class='line'>(SQL API) interface
+</span><span class='line'>--------------------------------------------------------------------------------------------------------
+</span><span class='line'>(backend) SQL Engine</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Frontend: User Level</h2>
+
+<h3>Database Design</h3>
+
+<p>steps:</p>
+
+<ul>
+<li>entities &ndash;> relationships (1..1, 1..n, n..1, n..m) &ndash;> ERM (entity-relationship model)</li>
+<li>attributes &ndash;> keys &ndash;> data type</li>
+<li><p>normalization (normal forms: 1NF, 2NF, 3NF)</p></li>
+<li><p>identifying entities: (types of entities) people, things, events, locations.</p></li>
+<li>identifying relationships: 1:1, 1:N, M:1, and M:N</li>
+<li>normalization:
+
+<ul>
+<li>1NF: there may be no repeating grouops of columns in an entity.</li>
+<li>2NF: all attributes of an entity shoudl be fully dependent on the whole primary key.</li>
+<li>3NF: all sttributes need to be directly dependent on the primary key, and not on other attributes. 2NF you point out attributes through the PK, in 3NF every attribute needs to be dependent on the PK, and nothing else.</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Database Languages</h3>
+
+<ul>
+<li>Data Languages
+
+<ul>
+<li>DDL (Data Definition Language): create/drop/alter/rename table</li>
+<li>DML (Data Manipulation Langauge): CRUD - select, insert, update, delete</li>
+<li>DQL (Data Query Language): select, show, help</li>
+<li>DCL (Data Control Language): grant, revoke</li>
+<li>DTL (Data Transaction Language): ACID - start transaction, savepoint, commit, rollback</li>
+</ul>
+</li>
+<li>VDL (View Definition Language): user views</li>
+<li>SDL (Storage Definition Language): internal schemas</li>
+</ul>
+
+
+<h4>Data Languages</h4>
+
+<h5>DDL</h5>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="p">[</span><span class="k">table</span> <span class="n">name</span><span class="p">]</span> <span class="p">(</span> <span class="p">[</span><span class="k">column</span> <span class="n">definitions</span><span class="p">]</span> <span class="p">)</span> <span class="p">[</span><span class="k">table</span> <span class="k">parameters</span><span class="p">]</span>
+</span><span class='line'><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">employees</span> <span class="p">(</span>
+</span><span class='line'>    <span class="n">id</span>            <span class="nb">INTEGER</span>      <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
+</span><span class='line'>    <span class="n">first_name</span>    <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="k">not</span> <span class="k">null</span><span class="p">,</span>
+</span><span class='line'>    <span class="n">last_name</span>     <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">75</span><span class="p">)</span> <span class="k">not</span> <span class="k">null</span><span class="p">,</span>
+</span><span class='line'>    <span class="n">fname</span>         <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="k">not</span> <span class="k">null</span><span class="p">,</span>
+</span><span class='line'>    <span class="n">dateofbirth</span>   <span class="nb">DATE</span>         <span class="k">not</span> <span class="k">null</span>
+</span><span class='line'><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">DROP</span> <span class="n">objecttype</span> <span class="n">objectname</span>
+</span><span class='line'><span class="k">DROP</span> <span class="k">TABLE</span> <span class="n">employees</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">ALTER</span> <span class="n">objecttype</span> <span class="n">objectname</span> <span class="k">parameters</span>
+</span><span class='line'><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">sink</span> <span class="k">ADD</span> <span class="n">bubbles</span> <span class="nb">INTEGER</span><span class="p">;</span>
+</span><span class='line'><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">sink</span> <span class="k">DROP</span> <span class="k">COLUMN</span> <span class="n">bubbles</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">RENAME</span> <span class="k">TABLE</span> <span class="n">old_name</span> <span class="k">TO</span> <span class="n">new_name</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h5>DML</h5>
+
+<p>CRUD: Create, Read, Update, Delete</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">Operation</span>          <span class="k">SQL</span>      <span class="n">HTTP</span>              <span class="n">DDS</span>
+</span><span class='line'><span class="k">Create</span>             <span class="k">INSERT</span>   <span class="n">PUT</span><span class="o">/</span><span class="n">POST</span>          <span class="k">write</span>
+</span><span class='line'><span class="k">Read</span> <span class="p">(</span><span class="n">Retrieve</span><span class="p">)</span>    <span class="k">SELECT</span>   <span class="k">GET</span>               <span class="k">read</span><span class="o">/</span><span class="n">take</span>
+</span><span class='line'><span class="k">Update</span> <span class="p">(</span><span class="k">Modify</span><span class="p">)</span>    <span class="k">UPDATE</span>   <span class="n">POST</span><span class="o">/</span><span class="n">PUT</span><span class="o">/</span><span class="n">PATCH</span>    <span class="k">write</span>
+</span><span class='line'><span class="k">Delete</span> <span class="p">(</span><span class="k">Destroy</span><span class="p">)</span>   <span class="k">DELETE</span>   <span class="k">DELETE</span>            <span class="n">dispose</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Syntax</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SELECT</span> <span class="p">...</span> <span class="k">FROM</span> <span class="p">...</span> <span class="k">WHERE</span> <span class="p">...</span>
+</span><span class='line'><span class="k">INSERT</span> <span class="k">INTO</span> <span class="p">...</span> <span class="k">VALUES</span> <span class="p">...</span>
+</span><span class='line'><span class="k">UPDATE</span> <span class="p">...</span> <span class="k">SET</span> <span class="p">...</span> <span class="k">WHERE</span> <span class="p">...</span>
+</span><span class='line'><span class="k">DELETE</span> <span class="k">FROM</span> <span class="p">...</span> <span class="k">WHERE</span> <span class="p">...</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">SELECT</span> <span class="n">nom</span><span class="p">,</span> <span class="n">service</span>
+</span><span class='line'><span class="k">FROM</span> <span class="n">employe</span>
+</span><span class='line'><span class="k">WHERE</span> <span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;stagiaire&#39;</span>
+</span><span class='line'><span class="k">ORDER</span> <span class="k">BY</span> <span class="n">nom</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">employees</span><span class="p">(</span><span class="n">first_name</span><span class="p">,</span> <span class="n">last_name</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="s1">&#39;Capita&#39;</span><span class="p">,</span> <span class="s1">&#39;xcapit00&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="k">UPDATE</span> <span class="n">a_table</span> <span class="k">SET</span> <span class="n">field1</span> <span class="o">=</span> <span class="s1">&#39;updated value&#39;</span> <span class="k">WHERE</span> <span class="n">field2</span> <span class="o">=</span> <span class="s1">&#39;N&#39;</span><span class="p">;</span>
+</span><span class='line'><span class="k">DELETE</span> <span class="k">FROM</span> <span class="n">a_table</span> <span class="k">WHERE</span> <span class="n">field2</span> <span class="o">=</span> <span class="s1">&#39;N&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">MERGE</span> <span class="k">INTO</span> <span class="k">table_name</span> <span class="k">USING</span> <span class="n">table_reference</span> <span class="k">ON</span> <span class="p">(</span><span class="n">condition</span><span class="p">)</span>
+</span><span class='line'>   <span class="k">WHEN</span> <span class="n">MATCHED</span> <span class="k">THEN</span>
+</span><span class='line'>   <span class="k">UPDATE</span> <span class="k">SET</span> <span class="n">column1</span> <span class="o">=</span> <span class="n">value1</span> <span class="p">[,</span> <span class="n">column2</span> <span class="o">=</span> <span class="n">value2</span> <span class="p">...]</span>
+</span><span class='line'>   <span class="k">WHEN</span> <span class="k">NOT</span> <span class="n">MATCHED</span> <span class="k">THEN</span>
+</span><span class='line'>   <span class="k">INSERT</span> <span class="p">(</span><span class="n">column1</span> <span class="p">[,</span> <span class="n">column2</span> <span class="p">...])</span> <span class="k">VALUES</span> <span class="p">(</span><span class="n">value1</span> <span class="p">[,</span> <span class="n">value2</span> <span class="p">...</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h5>DQL</h5>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="o">-</span> <span class="n">functions</span><span class="p">:</span> <span class="k">COUNT</span><span class="p">,</span> <span class="k">AVG</span><span class="p">,</span> <span class="k">MIN</span><span class="p">,</span> <span class="k">MAX</span><span class="p">,</span> <span class="k">SUM</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">SELECT</span> <span class="o">*</span>    <span class="k">column</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</span><span class='line'><span class="k">FROM</span> <span class="o">*</span>
+</span><span class='line'>            <span class="k">table</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</span><span class='line'>            <span class="k">FULL</span> <span class="k">OUTER</span> <span class="k">JOIN</span>
+</span><span class='line'>            <span class="k">RIGHT</span> <span class="k">OUTER</span> <span class="k">JOIN</span>
+</span><span class='line'>            <span class="k">LEFT</span> <span class="k">OUTER</span> <span class="k">JOIN</span>
+</span><span class='line'>            <span class="k">INNER</span> <span class="k">JOIN</span>
+</span><span class='line'>            <span class="k">Alias</span> <span class="p">(</span><span class="k">AS</span><span class="p">)</span>
+</span><span class='line'><span class="k">WHERE</span> <span class="o">*</span>
+</span><span class='line'>            <span class="n">Predicate</span> <span class="p">(</span><span class="o">=</span><span class="p">,</span><span class="o">&lt;&gt;</span><span class="p">,</span><span class="o">&lt;</span><span class="p">,</span><span class="o">&lt;=</span><span class="p">,</span><span class="o">&gt;</span><span class="p">,</span><span class="o">&gt;=</span><span class="p">)</span>
+</span><span class='line'>            <span class="n">Operators</span> <span class="p">(</span><span class="k">AND</span><span class="p">,</span> <span class="k">OR</span><span class="p">,</span> <span class="k">NOT</span><span class="p">)</span>
+</span><span class='line'>            <span class="k">LIKE</span> <span class="p">(</span><span class="o">%</span><span class="p">,</span><span class="n">_</span><span class="p">)</span>
+</span><span class='line'>            <span class="k">BETWEEN</span> <span class="p">...</span> <span class="k">IN</span> <span class="p">...</span>
+</span><span class='line'>            <span class="k">EXISTS</span>
+</span><span class='line'>            <span class="k">IS</span> <span class="k">NULL</span>
+</span><span class='line'><span class="k">ORDER</span> <span class="k">BY</span> <span class="o">*</span>
+</span><span class='line'>            <span class="k">ASC</span><span class="o">/</span><span class="k">DESC</span>
+</span><span class='line'><span class="k">GROUP</span> <span class="k">BY</span> <span class="o">*</span>
+</span><span class='line'>            <span class="k">column</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</span><span class='line'><span class="k">HAVING</span> <span class="o">*</span>
+</span><span class='line'>            <span class="n">clause</span>
+</span><span class='line'><span class="k">FETCH</span> <span class="o">*</span>
+</span><span class='line'>            <span class="n">clause</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h5>DCL</h5>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">GRANT</span> <span class="k">SELECT</span><span class="p">,</span> <span class="k">UPDATE</span>
+</span><span class='line'><span class="k">ON</span> <span class="n">example</span>
+</span><span class='line'><span class="k">TO</span> <span class="n">some_user</span><span class="p">,</span> <span class="n">another_user</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">REVOKE</span> <span class="k">SELECT</span><span class="p">,</span> <span class="k">UPDATE</span>
+</span><span class='line'><span class="k">ON</span> <span class="n">example</span>
+</span><span class='line'><span class="k">FROM</span> <span class="n">some_user</span><span class="p">,</span> <span class="n">another_user</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h5>DTL</h5>
+
+<p>ACID: Atomicity, Consistency, Isolation, Durability</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">commit</span><span class="p">;</span>
+</span><span class='line'><span class="n">savepoint</span><span class="p">;</span>
+</span><span class='line'><span class="k">rollback</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>VDL</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">CREATE</span> <span class="k">VIEW</span> <span class="ss">&quot;VIEW_NAME&quot;</span> <span class="k">AS</span> <span class="ss">&quot;SQL Statement&quot;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">CREATE</span> <span class="k">VIEW</span> <span class="n">V_Customer</span>
+</span><span class='line'><span class="k">AS</span> <span class="k">SELECT</span> <span class="n">First_Name</span><span class="p">,</span> <span class="n">Last_Name</span><span class="p">,</span> <span class="n">Country</span>
+</span><span class='line'><span class="k">FROM</span> <span class="n">Customer</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">CREATE</span> <span class="k">VIEW</span> <span class="n">V_REGION_SALES</span>
+</span><span class='line'><span class="k">AS</span> <span class="k">SELECT</span> <span class="n">A1</span><span class="p">.</span><span class="n">Region_Name</span> <span class="n">REGION</span><span class="p">,</span> <span class="k">SUM</span><span class="p">(</span><span class="n">A2</span><span class="p">.</span><span class="n">Sales</span><span class="p">)</span> <span class="n">SALES</span>
+</span><span class='line'><span class="k">FROM</span> <span class="n">Geography</span> <span class="n">A1</span><span class="p">,</span> <span class="n">Store_Information</span> <span class="n">A2</span>
+</span><span class='line'><span class="k">WHERE</span> <span class="n">A1</span><span class="p">.</span><span class="n">Store_Name</span> <span class="o">=</span> <span class="n">A2</span><span class="p">.</span><span class="n">Store_Name</span>
+</span><span class='line'><span class="k">GROUP</span> <span class="k">BY</span> <span class="n">A1</span><span class="p">.</span><span class="n">Region_Name</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">V_REGION_SALES</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>SDL</h4>
+
+<pre><code class="sql"></code></pre>
+
+<h3>Database Management</h3>
+
+<h4>Best Practice</h4>
+
+<h4>Performance</h4>
+
+<h4>Scalability</h4>
+
+<h4>Troubleshooting</h4>
+
+<p>The causes for performance problems can be various, but the most common are a poorly designed databse, incorrectly configured system, insufficient disk space or other system resources, excessive query complication and recomplication, bad execution plans due to missing or outdated statistics, and queries or stored procedures that have long execution times due to improper design.</p>
+
+<p>The most common SQL Server performance symptoms are</p>
+
+<ul>
+<li>CPU</li>
+<li>Memory</li>
+<li>Network</li>
+<li>I/O</li>
+<li>Slow running queries</li>
+</ul>
+
+
+<h3>Database Users</h3>
+
+<ul>
+<li>designer: database design</li>
+<li>Developer: write programs to CRUB from/to database</li>
+<li>DBA: admin database of information, users, security/integrity, backup/recovery, performance</li>
+<li>Analyst: Modeling</li>
+<li>Users: query and manipulation</li>
+</ul>
+
+
+<h2>Middleware: API Level</h2>
+
+<h3>Types of API</h3>
+
+<h2>Backend: Database Level</h2>
+
+<h3>Database Architecture</h3>
+
+<h2>References</h2>
+
+<h3>SQL</h3>
+
+<ul>
+<li><a href="http://www.esp.org/db-fund.pdf">Database Fundamentals</a></li>
+<li><a href="http://db.cs.berkeley.edu/papers/fntdb07-architecture.pdf">Architecture of A Database System</a></li>
+<li><a href="http://codex.cs.yale.edu/avi/db-book/db6/slide-dir/PDF-dir/ch17.pdf">Database System Architectures</a></li>
+</ul>
+
+
+<h3>NoSQL</h3>
+
+<p>databases:</p>
+
+<ul>
+<li><a href="http://bigdata-madesimple.com/a-deep-dive-into-nosql-a-complete-list-of-nosql-databases/">A Deep Dive Into NoSQL: A Complete List of NoSQL Databases</a></li>
+</ul>
+
+
+<h3>Database Design and Modeling</h3>
+
+<ul>
+<li><a href="http://www.datanamic.com/support/lt-dez005-introduction-db-modeling.html">Introuction DB Modeling</a></li>
+<li><a href="https://highlyscalable.wordpress.com/2012/03/01/nosql-data-modeling-techniques/">NoSQL Data Modeling Techniques</a></li>
+</ul>
+
+</div>
+
+
+
+  <script type="text/javascript">
+  jQuery(document).ready(function() {
+    // Put a TOC right before the entry content.
+    generateTOC('.entry-content', 'Table of Contents');
+  });
+  </script>
+
+
+
+
+  <footer>
+
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">K</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2016-03-13T21:23:22+08:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>9:23 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/tech/'>tech</a>
+  
+</span>
+
+
+      
+
+<span class="categories">
+  
+    <a class='tag' href='/tags/db/'>db</a>
+  
+</span>
+
+
+    </p>
+
+    
+      <div class="sharing">
+
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://k.arttechresearch.com/tech/2016/03/13/databases/" data-via="kwailamchan" data-counturl="http://k.arttechresearch.com/tech/2016/03/13/databases/" >Tweet</a>
+  
+
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+
+  
+
+</div>
+
+    
+
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/tech/2016/03/10/mongodb/" title="Previous Post: MongoDB">&laquo; MongoDB</a>
+      
+      
+        <a class="basic-alignment right" href="/tech/2016/03/14/complexity-of-python-operations/" title="Next Post: Complexity of Python Operations">Complexity of Python Operations &raquo;</a>
+      
+    </p>
+
+  </footer>
+
+</article>
+
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Tech</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/tech/2016/03/24/mongodb-sharding/">MongoDB Sharding</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2016/03/24/mongodb-replication/">MongoDB Replication</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2016/03/24/mongodb-security/">MongoDB Security</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2016/03/24/mongodb-storage/">MongoDB Storage</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2016/03/24/mongodb-indexes/">MongoDB Indexes</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2016/03/24/mongodb-administration/">MongoDB Administration</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2016/03/24/mongodb-data-model/">MongoDB Data Model</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2016/03/24/mongodb-aggregation/">MongoDB Aggregation</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2016/03/24/mongodb-crud/">MongoDB CRUD</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2016/03/24/mongo-shell/">Mongo Shell</a>
+      </li>
+    
+  </ul>
+</section>
+<section class="category-list">
+    <h1>Projects</h1>
+    <ul id="category-list">
+        <li>
+            <span><a href="/tags/edx">edX</a></span> / 
+            <span><a href="/tags/will">Will</a></span>
+        </li>
+    </ul>
+
+    <h1>Programming</h1>
+    <ul id="category-list">
+        <li>
+            <span><a href="/tags/python">Python</a></span> /
+            <span><a href="/tags/ruby">Ruby</a></span> /
+            <span><a href="/tags/nodejs">Node.js</a></span>
+        </li>
+    </ul>
+
+</section>
+<section class="tag-cloud">
+
+
+  <h1>Tags</h1>
+    <ul id="category-list"><a href='/tags/ai' style='font-size: 90.0%'>ai(1)</a> <a href='/tags/aldebaran' style='font-size: 90.0%'>aldebaran(1)</a> <a href='/tags/algorithm' style='font-size: 118.13953488372093%'>algorithm(12)</a> <a href='/tags/ansible' style='font-size: 92.55813953488372%'>ansible(2)</a> <a href='/tags/apache' style='font-size: 92.55813953488372%'>apache(2)</a> <a href='/tags/api' style='font-size: 97.67441860465117%'>api(4)</a> <a href='/tags/ascii' style='font-size: 90.0%'>ascii(1)</a> <a href='/tags/beautifulsoup' style='font-size: 90.0%'>beautifulsoup(1)</a> <a href='/tags/beeline' style='font-size: 90.0%'>beeline(1)</a> <a href='/tags/butter' style='font-size: 90.0%'>butter(1)</a> <a href='/tags/caffe' style='font-size: 92.55813953488372%'>caffe(2)</a> <a href='/tags/career' style='font-size: 92.55813953488372%'>career(2)</a> <a href='/tags/cassandra' style='font-size: 90.0%'>cassandra(1)</a> <a href='/tags/cg' style='font-size: 92.55813953488372%'>cg(2)</a> <a href='/tags/chatbot' style='font-size: 95.11627906976744%'>chatbot(3)</a> <a href='/tags/choregraphe' style='font-size: 90.0%'>choregraphe(1)</a> <a href='/tags/classification' style='font-size: 92.55813953488372%'>classification(2)</a> <a href='/tags/cloud' style='font-size: 90.0%'>cloud(1)</a> <a href='/tags/cloudera' style='font-size: 107.90697674418604%'>cloudera(8)</a> <a href='/tags/cloudera-manager' style='font-size: 95.11627906976744%'>cloudera manager(3)</a> <a href='/tags/cluster' style='font-size: 141.1627906976744%'>cluster(21)</a> <a href='/tags/computer-vision' style='font-size: 90.0%'>computer vision(1)</a> <a href='/tags/cpp' style='font-size: 90.0%'>cpp(1)</a> <a href='/tags/crawler' style='font-size: 92.55813953488372%'>crawler(2)</a> <a href='/tags/css' style='font-size: 92.55813953488372%'>css(2)</a> <a href='/tags/cuda' style='font-size: 90.0%'>cuda(1)</a> <a href='/tags/d3' style='font-size: 90.0%'>d3(1)</a> <a href='/tags/data' style='font-size: 90.0%'>data(1)</a> <a href='/tags/db' style='font-size: 120.69767441860465%'>db(13)</a> <a href='/tags/debian' style='font-size: 90.0%'>debian(1)</a> <a href='/tags/deepdream' style='font-size: 90.0%'>deepdream(1)</a> <a href='/tags/design-patterns' style='font-size: 90.0%'>design patterns(1)</a> <a href='/tags/devops' style='font-size: 97.67441860465117%'>devops(4)</a> <a href='/tags/django' style='font-size: 92.55813953488372%'>django(2)</a> <a href='/tags/dns' style='font-size: 90.0%'>dns(1)</a> <a href='/tags/docker' style='font-size: 95.11627906976744%'>docker(3)</a> <a href='/tags/edx' style='font-size: 120.69767441860465%'>edX(13)</a> <a href='/tags/edx-ai' style='font-size: 90.0%'>edX AI(1)</a> <a href='/tags/edx-analytics' style='font-size: 107.90697674418604%'>edX Analytics(8)</a> <a href='/tags/edx-platform' style='font-size: 95.11627906976744%'>edX Platform(3)</a> <a href='/tags/elasticsearch' style='font-size: 90.0%'>elasticsearch(1)</a> <a href='/tags/emacs' style='font-size: 92.55813953488372%'>emacs(2)</a> <a href='/tags/exhibition' style='font-size: 92.55813953488372%'>exhibition(2)</a> <a href='/tags/fiction' style='font-size: 105.34883720930233%'>fiction(7)</a> <a href='/tags/filebeat' style='font-size: 90.0%'>filebeat(1)</a> <a href='/tags/flask' style='font-size: 90.0%'>flask(1)</a> <a href='/tags/flume' style='font-size: 90.0%'>flume(1)</a> <a href='/tags/forever' style='font-size: 92.55813953488372%'>forever(2)</a> <a href='/tags/framework' style='font-size: 90.0%'>framework(1)</a> <a href='/tags/freetds' style='font-size: 90.0%'>freetds(1)</a> <a href='/tags/french' style='font-size: 90.0%'>french(1)</a> <a href='/tags/ghost' style='font-size: 97.67441860465117%'>ghost(4)</a> <a href='/tags/git' style='font-size: 102.79069767441861%'>git(6)</a> <a href='/tags/github' style='font-size: 92.55813953488372%'>github(2)</a> <a href='/tags/gitosis' style='font-size: 90.0%'>gitosis(1)</a> <a href='/tags/gitweb' style='font-size: 90.0%'>gitweb(1)</a> <a href='/tags/gunicorn' style='font-size: 90.0%'>gunicorn(1)</a> <a href='/tags/hadoop' style='font-size: 128.37209302325581%'>hadoop(16)</a> <a href='/tags/hbase' style='font-size: 100.23255813953489%'>hbase(5)</a> <a href='/tags/hdfs' style='font-size: 92.55813953488372%'>hdfs(2)</a> <a href='/tags/hipchat' style='font-size: 95.11627906976744%'>hipchat(3)</a> <a href='/tags/hive' style='font-size: 97.67441860465117%'>hive(4)</a> <a href='/tags/html' style='font-size: 92.55813953488372%'>html(2)</a> <a href='/tags/hue' style='font-size: 92.55813953488372%'>hue(2)</a> <a href='/tags/ide' style='font-size: 95.11627906976744%'>ide(3)</a> <a href='/tags/impala' style='font-size: 90.0%'>impala(1)</a> <a href='/tags/iterm' style='font-size: 90.0%'>iterm(1)</a> <a href='/tags/java' style='font-size: 100.23255813953489%'>java(5)</a> <a href='/tags/javascript' style='font-size: 100.23255813953489%'>javascript(5)</a> <a href='/tags/jekyll' style='font-size: 92.55813953488372%'>jekyll(2)</a> <a href='/tags/jenkins' style='font-size: 90.0%'>jenkins(1)</a> <a href='/tags/kibana' style='font-size: 90.0%'>kibana(1)</a> <a href='/tags/leisure' style='font-size: 141.1627906976744%'>leisure(21)</a> <a href='/tags/library' style='font-size: 90.0%'>library(1)</a> <a href='/tags/linux' style='font-size: 113.02325581395348%'>linux(10)</a> <a href='/tags/logstack' style='font-size: 90.0%'>logstack(1)</a> <a href='/tags/machine-learning' style='font-size: 123.25581395348837%'>machine learning(14)</a> <a href='/tags/mapreduce' style='font-size: 92.55813953488372%'>mapreduce(2)</a> <a href='/tags/markdown' style='font-size: 90.0%'>markdown(1)</a> <a href='/tags/mathjax' style='font-size: 92.55813953488372%'>mathjax(2)</a> <a href='/tags/maven' style='font-size: 90.0%'>maven(1)</a> <a href='/tags/mongo' style='font-size: 105.34883720930233%'>mongo(7)</a> <a href='/tags/mongovue' style='font-size: 90.0%'>mongovue(1)</a> <a href='/tags/mssql' style='font-size: 90.0%'>mssql(1)</a> <a href='/tags/mysql' style='font-size: 107.90697674418604%'>mysql(8)</a> <a href='/tags/mysql-workbench' style='font-size: 92.55813953488372%'>mysql workbench(2)</a> <a href='/tags/nao' style='font-size: 92.55813953488372%'>nao(2)</a> <a href='/tags/naoqi' style='font-size: 90.0%'>naoqi(1)</a> <a href='/tags/network' style='font-size: 90.0%'>network(1)</a> <a href='/tags/nginx' style='font-size: 97.67441860465117%'>nginx(4)</a> <a href='/tags/nlp' style='font-size: 102.79069767441861%'>nlp(6)</a> <a href='/tags/nltk' style='font-size: 90.0%'>nltk(1)</a> <a href='/tags/nodejs' style='font-size: 105.34883720930233%'>nodejs(7)</a> <a href='/tags/octopress' style='font-size: 107.90697674418604%'>octopress(8)</a> <a href='/tags/odbc' style='font-size: 90.0%'>odbc(1)</a> <a href='/tags/oil-painting' style='font-size: 90.0%'>oil painting(1)</a> <a href='/tags/opencv' style='font-size: 92.55813953488372%'>opencv(2)</a> <a href='/tags/openstack' style='font-size: 90.0%'>openstack(1)</a> <a href='/tags/painting' style='font-size: 90.0%'>painting(1)</a> <a href='/tags/pandas' style='font-size: 92.55813953488372%'>pandas(2)</a> <a href='/tags/photos' style='font-size: 125.81395348837209%'>photos(15)</a> <a href='/tags/poem' style='font-size: 97.67441860465117%'>poem(4)</a> <a href='/tags/prediction' style='font-size: 90.0%'>prediction(1)</a> <a href='/tags/programming' style='font-size: 100.23255813953489%'>programming(5)</a> <a href='/tags/pycharm' style='font-size: 90.0%'>pycharm(1)</a> <a href='/tags/python' style='font-size: 200.0%'>python(44)</a> <a href='/tags/python-challenge' style='font-size: 95.11627906976744%'>Python Challenge(3)</a> <a href='/tags/reading' style='font-size: 90.0%'>reading(1)</a> <a href='/tags/redis' style='font-size: 90.0%'>redis(1)</a> <a href='/tags/redmine' style='font-size: 90.0%'>redmine(1)</a> <a href='/tags/regex' style='font-size: 90.0%'>regex(1)</a> <a href='/tags/rest' style='font-size: 92.55813953488372%'>rest(2)</a> <a href='/tags/robotics' style='font-size: 102.79069767441861%'>robotics(6)</a> <a href='/tags/ros' style='font-size: 90.0%'>ros(1)</a> <a href='/tags/ruby' style='font-size: 115.5813953488372%'>ruby(11)</a> <a href='/tags/scala' style='font-size: 95.11627906976744%'>scala(3)</a> <a href='/tags/servlet' style='font-size: 90.0%'>servlet(1)</a> <a href='/tags/shell' style='font-size: 92.55813953488372%'>shell(2)</a> <a href='/tags/soap' style='font-size: 90.0%'>soap(1)</a> <a href='/tags/solr' style='font-size: 90.0%'>solr(1)</a> <a href='/tags/spark' style='font-size: 90.0%'>spark(1)</a> <a href='/tags/sphinx' style='font-size: 90.0%'>sphinx(1)</a> <a href='/tags/spring' style='font-size: 90.0%'>spring(1)</a> <a href='/tags/sql' style='font-size: 90.0%'>sql(1)</a> <a href='/tags/sqoop' style='font-size: 97.67441860465117%'>sqoop(4)</a> <a href='/tags/ssl' style='font-size: 92.55813953488372%'>ssl(2)</a> <a href='/tags/supervisor' style='font-size: 90.0%'>supervisor(1)</a> <a href='/tags/tech-talks' style='font-size: 90.0%'>tech talks(1)</a> <a href='/tags/threading' style='font-size: 90.0%'>threading(1)</a> <a href='/tags/time-series' style='font-size: 90.0%'>time series(1)</a> <a href='/tags/tomcat' style='font-size: 90.0%'>tomcat(1)</a> <a href='/tags/translation' style='font-size: 90.0%'>translation(1)</a> <a href='/tags/ubuntu' style='font-size: 118.13953488372093%'>ubuntu(12)</a> <a href='/tags/unicode' style='font-size: 90.0%'>unicode(1)</a> <a href='/tags/vagrant' style='font-size: 95.11627906976744%'>vagrant(3)</a> <a href='/tags/vim' style='font-size: 92.55813953488372%'>vim(2)</a> <a href='/tags/virtualbox' style='font-size: 97.67441860465117%'>virtualbox(4)</a> <a href='/tags/virtualenv' style='font-size: 90.0%'>virtualenv(1)</a> <a href='/tags/virtualenvwrapper' style='font-size: 90.0%'>virtualenvwrapper(1)</a> <a href='/tags/vm' style='font-size: 92.55813953488372%'>vm(2)</a> <a href='/tags/web' style='font-size: 105.34883720930233%'>web(7)</a> <a href='/tags/webots' style='font-size: 90.0%'>webots(1)</a> <a href='/tags/will' style='font-size: 95.11627906976744%'>will(3)</a> <a href='/tags/yarn' style='font-size: 90.0%'>yarn(1)</a> <a href='/tags/zookeeper' style='font-size: 100.23255813953489%'>zookeeper(5)</a> </ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2006-2016 - K
+</p>
+
+
+
+<script type="text/javascript">
+
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-53625944-7', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'kwailamc';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://k.arttechresearch.com/tech/2016/03/13/databases/';
+        var disqus_url = 'http://k.arttechresearch.com/tech/2016/03/13/databases/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

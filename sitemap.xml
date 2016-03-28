@@ -1,6 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://k.arttechresearch.com/tech/2016/03/24/mongodb-sharding/</loc>
+    <lastmod>2016-03-24T10:59:40+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2016/03/24/mongodb-replication/</loc>
+    <lastmod>2016-03-24T10:59:23+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2016/03/24/mongodb-security/</loc>
+    <lastmod>2016-03-24T10:59:17+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2016/03/24/mongodb-storage/</loc>
+    <lastmod>2016-03-24T10:59:08+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2016/03/24/mongodb-indexes/</loc>
+    <lastmod>2016-03-24T10:59:00+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2016/03/24/mongodb-administration/</loc>
+    <lastmod>2016-03-24T10:58:48+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2016/03/24/mongodb-data-model/</loc>
+    <lastmod>2016-03-24T10:58:18+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2016/03/24/mongodb-aggregation/</loc>
+    <lastmod>2016-03-24T10:58:12+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2016/03/24/mongodb-crud/</loc>
+    <lastmod>2016-03-24T10:49:19+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2016/03/24/mongo-shell/</loc>
+    <lastmod>2016-03-24T09:54:30+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/art/2016/03/22/seasons/</loc>
+    <lastmod>2016-03-22T22:16:16+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2016/03/16/data-structure-and-algorithms/</loc>
+    <lastmod>2016-03-16T19:28:11+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2016/03/15/gil-in-python/</loc>
+    <lastmod>2016-03-15T17:57:57+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2016/03/15/an-array-to-balanced-binary-tree/</loc>
+    <lastmod>2016-03-15T02:02:23+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2016/03/14/python-cool-features-you-may-not-know/</loc>
+    <lastmod>2016-03-14T22:22:48+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2016/03/14/complexity-of-python-operations/</loc>
+    <lastmod>2016-03-14T21:25:46+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2016/03/13/databases/</loc>
+    <lastmod>2016-03-13T21:23:22+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2016/03/10/mongodb/</loc>
+    <lastmod>2016-03-10T23:13:54+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tech/2016/03/10/troubleshooting-a-slow-database/</loc>
+    <lastmod>2016-03-10T13:55:12+08:00</lastmod>
+  </url>
+  <url>
     <loc>http://k.arttechresearch.com/tech/2016/02/27/installing-caffe-on-ubuntu-with-virtualbox/</loc>
     <lastmod>2016-02-27T22:47:46+08:00</lastmod>
   </url>
@@ -1240,6 +1316,9 @@
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/cuda/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/tags/threading/</loc>
   </url>
   <url>
     <loc>http://k.arttechresearch.com/categories/life/</loc>
