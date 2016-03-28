@@ -1,0 +1,238 @@
+---
+layout: post_tech
+title: "SQL"
+date: 2016-03-28 18:46:05 +0800
+comments: true
+categories: [tech]
+tags: [db, sql]
+toc: true
+---
+
+Types of SQL queries:
+
+- DDL: data definition language
+  - DML: data manipulation laugnage
+  - DQL: data query language
+  - DCL: data control language
+  - DTL: data transaction language
+- VDL: view definition language
+- SDL: storage definition language
+
+## DDL
+
+```sql
+CREATE TABLE [table name] ( [column definitions] ) [table parameters]
+CREATE TABLE employees (
+    id            INTEGER      PRIMARY KEY,
+    first_name    VARCHAR(50) not null,
+    last_name     VARCHAR(75) not null,
+    fname         VARCHAR(50) not null,
+    dateofbirth   DATE         not null
+);
+
+DROP objecttype objectname
+DROP TABLE employees;
+
+ALTER objecttype objectname parameters
+ALTER TABLE sink ADD bubbles INTEGER;
+ALTER TABLE sink DROP COLUMN bubbles;
+
+RENAME TABLE old_name TO new_name;
+```
+
+## DML
+
+```sql
+SELECT ... FROM ... WHERE ...
+INSERT INTO ... VALUES ...
+UPDATE ... SET ... WHERE ...
+DELETE FROM ... WHERE ...
+
+SELECT nom, service
+FROM employe
+WHERE status = 'stagiaire'
+ORDER BY nom;
+
+INSERT INTO employees(first_name, last_name, fname) VALUES ('John', 'Capita', 'xcapit00');
+UPDATE a_table SET field1 = 'updated value' WHERE field2 = 'N';
+DELETE FROM a_table WHERE field2 = 'N';
+
+MERGE INTO table_name USING table_reference ON (condition)
+   WHEN MATCHED THEN
+   UPDATE SET column1 = value1 [, column2 = value2 ...]
+   WHEN NOT MATCHED THEN
+   INSERT (column1 [, column2 ...]) VALUES (value1 [, value2 ...
+```
+
+### UPDATE
+
+Update top 10 state in the table authors.
+
+```sql
+UPDATE state
+SET state.saleprice = state.saleprice + 2
+FROM (
+         SELECT TOP 10 *
+         FROM sales ORDER BY saleid
+     ) AS t1, sales state
+WHERE state.saleid = t1.saleid
+
+
+UPDATE state
+SET state.saleprice = state.saleprice + 2
+FROM sales state
+WHERE state.sale.id in (
+                           SELECT TOP 10 saleid
+                           FROM sales
+                           ORDER BY saleid
+                       )
+```
+
+## DQL
+
+```sql
+- functions: COUNT, AVG, MIN, MAX, SUM
+
+SELECT *    column(s)
+FROM *
+            table(s)
+            FULL OUTER JOIN
+            RIGHT OUTER JOIN
+            LEFT OUTER JOIN
+            INNER JOIN
+            Alias (AS)
+WHERE *
+            Predicate (=,<>,<,<=,>,>=)
+            Operators (AND, OR, NOT)
+            LIKE (%,_)
+            BETWEEN ... IN ...
+            EXISTS
+            IS NULL
+ORDER BY *
+            ASC/DESC
+GROUP BY *
+            column(s)
+HAVING *
+            clause
+FETCH *
+            clause
+```
+
+### JOIN/UNION
+
+- inner join: A && B, # of rows = (A&&B)
+- left join: A (full) && B (null), # of rows = rows(A)
+- right join: A (null) && B (full), # of rows = rows(B)
+- full join: union, # of rows = rows(A) + rows(B) - rows (A&&B) 
+
+join
+
+```sql
+SELECT orders.orderid, customers.customerid, customers.customername, orders.orderdate
+FROM orders
+INNER JOIN customers
+ON orders.customerid = customers.customerid;
+
+SELECT orders.orderid, customers.customerid, customers.customername, orders.orderdate
+FROM orders
+LEFT JOIN customers
+ON orders.customerid = customers.customerid;
+
+SELECT orders.orderid, customers.customerid, customers.customername, orders.orderdate
+FROM orders
+RIGHT JOIN customers
+ON orders.customerid = customers.customerid;
+```
+
+union
+
+```sql
+SELECT customerid FROM customers
+UNION
+SELECT customerid FROM orders
+ORDER BY customerid
+```
+
+### TOP
+
+Display all fields of the last record.
+
+```sql
+SELECT top 1 *
+FROM table_name
+RODER BY ID DESC
+
+# mysql
+SELECT * 
+FROM table_name
+ORDER BY field_name DESC/ASC
+LIMIT 1;
+
+SELECT MAX(ID) AS MAXID
+FROM table_name;
+
+SELECT id, otherfields, ..., ...
+FROM table_name
+WHERE id=(SELECT MAX(id) FROM table)
+```
+
+
+## DCL 
+
+```sql
+GRANT SELECT, UPDATE
+ON example
+TO some_user, another_user;
+
+REVOKE SELECT, UPDATE
+ON example
+FROM some_user, another_user;
+```
+
+## DTL
+
+```sql
+commit;
+savepoint;
+rollback;
+``` 
+
+### ROLLBACK 
+
+NULL is allowed in a column which is all of the non-null values should be unique. 
+
+```sql
+CREATE trigger mytrigger on t1 for insert, update as
+
+BEGIN
+    IF (
+            SELECT MAX(cnt)
+            FROM (
+                     SELECT COUNT(i.c1) as cnt
+                     FROM t1, iinserted i
+                     WHERE t1.c1 = i.c1
+                     GROUP BY i.c1
+                 ) x
+       ) > 1
+    ROLLBACK TRAN
+END
+```
+
+
+## VDL
+
+```sql
+CREATE VIEW "VIEW_NAME" AS "SQL Statement";
+
+CREATE VIEW V_Customer
+AS SELECT First_Name, Last_Name, Country
+FROM Customer;
+
+CREATE VIEW V_REGION_SALES
+AS SELECT A1.Region_Name REGION, SUM(A2.Sales) SALES
+FROM Geography A1, Store_Information A2
+WHERE A1.Store_Name = A2.Store_Name
+GROUP BY A1.Region_Name;
+
+SELECT * FROM V_REGION_SALES;
+```
