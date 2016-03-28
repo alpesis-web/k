@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tech | K]]></title>
   <link href="http://k.arttechresearch.com/categories/tech/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2016-03-28T22:09:15+08:00</updated>
+  <updated>2016-03-28T22:21:20+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[K]]></name>
@@ -22,23 +22,81 @@
 
 <h2>Data Structure</h2>
 
-<h3>Searching and Sorting</h3>
+<h3>Array: Searching and Sorting</h3>
 
-<p>Binary Search
-Selection Sort
-Bubble Sort
-Insertion Sort
-Merge Sort
-Heap Sort
-QuickSort
-Radix Sort
-Counting Sort
-Bucket Sort
-ShellSort
-Comb Sort
-Pigeonhole Sort</p>
+<p>searching:</p>
 
-<h3>Graph Algorithms</h3>
+<ul>
+<li>Binary Search</li>
+</ul>
+
+
+<p>sorting:</p>
+
+<ul>
+<li>Selection Sort</li>
+<li>Bubble Sort</li>
+<li>Insertion Sort</li>
+<li>Merge Sort</li>
+<li>Heap Sort</li>
+<li>Quick Sort</li>
+<li>Radix Sort</li>
+<li>Counting Sort</li>
+<li>Bucket Sort</li>
+<li>Shell Sort</li>
+<li>Comb Sort</li>
+<li>Pigeonhole Sort</li>
+</ul>
+
+
+<h3>Tree &amp; Graph: Greedy and Graph</h3>
+
+<h4>Search</h4>
+
+<ul>
+<li>DFS</li>
+<li>BFS</li>
+</ul>
+
+
+<h4>Greedy Algorithms</h4>
+
+<ul>
+<li>Activity selectioin problem</li>
+<li>spanning tree
+
+<ul>
+<li>Kruskal’s minimum spanning tree</li>
+<li>Prim’s minimum spanning tree</li>
+<li>Prim’s MST for Adjacency list representation</li>
+</ul>
+</li>
+<li>path
+
+<ul>
+<li>Dijkstra’s shortest path algorithm</li>
+<li>Dijkstra’s algorithm for Adjacency list representation</li>
+</ul>
+</li>
+<li>value
+
+<ul>
+<li>Huffman coding</li>
+<li>Efficient Huffman coding for sorted input</li>
+</ul>
+</li>
+</ul>
+
+
+<h4>Graph Algorithms</h4>
+
+<ul>
+<li>Connectivity</li>
+<li>Hard Problems</li>
+<li>Maximum Flow</li>
+<li>Misc</li>
+</ul>
+
 
 <h2>String</h2>
 
@@ -48,13 +106,9 @@ Pigeonhole Sort</p>
 
 <h2>strategics</h2>
 
-<h3>Greedy Algorithms</h3>
-
 <h3>Divide and Conquer</h3>
 
 <h2>Mathematics</h2>
-
-<h3>Greedy Algorithms</h3>
 
 <h3>Backtracking</h3>
 
