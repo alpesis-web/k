@@ -1,0 +1,358 @@
+---
+layout: post_tech
+title: "MongoDB"
+date: 2016-03-10 23:13:54 +0800
+comments: true
+categories: [tech]
+tags: [db, mongo]
+toc: true
+---
+
+This article aims at overviewing the MongoDB.
+
+## What is MongoDB
+
+MongoDB is a NoSQL document database that is apdating to the agile application development.
+
+MongoDB Components
+
+- user level: MongoShell, MongoCompass, MongoBI
+- develop level: Mongo Drivers, MongoDB
+
+
+```
+Developers        DBA                     Users                      Analyst
+---------------------------------------------------------------------------------
+Mongo Drivers     MongoShell               MongoCompass               MongoBI
+---------------------------------------------------------------------------------
+MongoDB
+---------------------------------------------------------------------------------
+```
+
+### Installation
+
+```bash
+# mongodb
+$ sudo apt-get install mongodb
+$ mongo
+> help
+	db.help()                    help on db methods
+	db.mycoll.help()             help on collection methods
+	sh.help()                    sharding helpers
+	rs.help()                    replica set helpers
+	help admin                   administrative help
+	help connect                 connecting to a db help
+	help keys                    key shortcuts
+	help misc                    misc things to know
+	help mr                      mapreduce
+
+	show dbs                     show database names
+	show collections             show collections in current database
+	show users                   show users in current database
+	show profile                 show most recent system.profile entries with time >= 1ms
+	show logs                    show the accessible logger names
+	show log [name]              prints out the last segment of log in memory, 'global' is default
+	use <db_name>                set current database
+	db.foo.find()                list objects in collection foo
+	db.foo.find( { a : 1 } )     list objects in foo where a == 1
+	it                           result of the last line evaluated; use to further iterate
+	DBQuery.shellBatchSize = x   set default number of items to display on shell
+	exit                         quit the mongo shell
+
+> show dbs
+> use demo
+```
+
+## MongoDB User Level
+
+### Database Design
+
+
+### Database Languages
+
+- DML
+- DQL
+
+#### DML
+
+CRUD
+
+- Create:
+- Read: 
+- Update:
+- Delete:
+
+```sql
+db.collection.insertOne()
+db.collection.insertMany()
+db.collection.insert()
+
+db.collection.updateOne()
+db.collection.updateMany()
+db.collection.replaceOne()
+db.collection.update()
+
+
+db.collection.deleteOne()
+db.collection.deleteMany()
+db.collection.remove()
+
+db.users.insert(
+   {
+      name: "sue",
+      age: 26,
+      status: "A"
+   }
+)
+
+db.users.find(
+    { age: { $gt: 18  } },
+    { name: 1, address: 1 }
+).limit(5)
+```
+
+#### DQL
+
+queries
+
+- key-value:
+- range: greater than, less than, equal to, between
+- geospatial: point, line, circle, polygon
+- text search: AND, OR, NOT
+- aggregation: count, min, max, average, $lookup
+- mapreduce: complex data processing
+
+```sql
+$
+```
+
+
+### Database Management
+
+#### Mongo Shell
+
+help
+
+- xxx.help(): db/coll methods, sharding, replica
+- help xxx: admin, connect, keys, misc, mr
+- show xxx: dbs, collections, users, profile, logs, log [name]
+- db: use xxx, db.foo.find(), it
+- shell: DBQuery.shellBatchSize, exit
+
+```bash
+> help
+	db.help()                    help on db methods
+	db.mycoll.help()             help on collection methods
+	sh.help()                    sharding helpers
+	rs.help()                    replica set helpers
+	help admin                   administrative help
+	help connect                 connecting to a db help
+	help keys                    key shortcuts
+	help misc                    misc things to know
+	help mr                      mapreduce
+
+	show dbs                     show database names
+	show collections             show collections in current database
+	show users                   show users in current database
+	show profile                 show most recent system.profile entries with time >= 1ms
+	show logs                    show the accessible logger names
+	show log [name]              prints out the last segment of log in memory, 'global' is default
+	use <db_name>                set current database
+	db.foo.find()                list objects in collection foo
+	db.foo.find( { a : 1 } )     list objects in foo where a == 1
+	it                           result of the last line evaluated; use to further iterate
+	DBQuery.shellBatchSize = x   set default number of items to display on shell
+	exit                         quit the mongo shell
+```
+
+DB methods
+
+- admin: 
+  - admin: `db.adminCommand()`, 
+  - user: `db.addUser()`, `db.auth()`, `db.removeUser()`
+  - operation: `db.currentOp()`, `db.eval()`, `db.killOp()`, `db.loadServerScripts()`, `db.runCommand(cmdObj)`
+  - lock: `db.fsyncLock()`, `db.fsyncUnlock()`, `db.repairDatabase()`
+  - err: `db.getLastError()`, `db.getLastErrorObj()`, `db.getPrevError()`, `db.resetError()`
+  - connection: `db.getMongo()`, `db.getMongo().setSlaveOk()`, `db.shutdownServer()`
+  - profiling: `db.getProfilingLevel()`, `db.getProfilingStatus()`, `db.setProfilingLevel()`
+  - sharding: `db.getSiblingDB(name)`, `db.hostInfo()`, `db.isMaster()`, `db.printReplicationInfo()`, `db.printSlaveReplicationInfo()`, `db.serverStatus()`
+- user:
+  - db: `db.cloneDatabase()`, `db.dropDatabase()`, `db.getName()`, `db.logout()`, `db.stats()`
+  - collection: `db.createCollection()`, `db.getCollection()`, `db.getCollectionNames()`, `db.printCollectionStats()`
+- shell: `db.commandHelp()`, `db.listCommands()`, `db.setVerboseShell(flag)`, `db.version()`
+
+```
+> show dbs
+> use test
+
+> db.help()
+DB methods:
+	db.addUser(userDocument)
+	db.adminCommand(nameOrDocument) - switches to 'admin' db, and runs command [ just calls db.runCommand(...) ]
+	db.auth(username, password)
+	db.cloneDatabase(fromhost)
+	db.commandHelp(name) returns the help for the command
+	db.copyDatabase(fromdb, todb, fromhost)
+	db.createCollection(name, { size : ..., capped : ..., max : ... } )
+	db.currentOp() displays currently executing operations in the db
+	db.dropDatabase()
+	db.eval(func, args) run code server-side
+	db.fsyncLock() flush data to disk and lock server for backups
+	db.fsyncUnlock() unlocks server following a db.fsyncLock()
+	db.getCollection(cname) same as db['cname'] or db.cname
+	db.getCollectionNames()
+	db.getLastError() - just returns the err msg string
+	db.getLastErrorObj() - return full status object
+	db.getMongo() get the server connection object
+	db.getMongo().setSlaveOk() allow queries on a replication slave server
+	db.getName()
+	db.getPrevError()
+	db.getProfilingLevel() - deprecated
+	db.getProfilingStatus() - returns if profiling is on and slow threshold
+	db.getReplicationInfo()
+	db.getSiblingDB(name) get the db at the same server as this one
+	db.hostInfo() get details about the server's host
+	db.isMaster() check replica primary status
+	db.killOp(opid) kills the current operation in the db
+	db.listCommands() lists all the db commands
+	db.loadServerScripts() loads all the scripts in db.system.js
+	db.logout()
+	db.printCollectionStats()
+	db.printReplicationInfo()
+	db.printShardingStatus()
+	db.printSlaveReplicationInfo()
+	db.removeUser(username)
+	db.repairDatabase()
+	db.resetError()
+	db.runCommand(cmdObj) run a database command.  if cmdObj is a string, turns it into { cmdObj : 1 }
+	db.serverStatus()
+	db.setProfilingLevel(level,<slowms>) 0=off 1=slow 2=all
+	db.setVerboseShell(flag) display extra information in shell output
+	db.shutdownServer()
+	db.stats()
+	db.version() current version of the server
+```
+
+DBCollection
+
+```
+> db.mycoll.help()
+DBCollection help
+	db.mycoll.find().help() - show DBCursor help
+	db.mycoll.count()
+	db.mycoll.copyTo(newColl) - duplicates collection by copying all documents to newColl; no indexes are copied.
+	db.mycoll.convertToCapped(maxBytes) - calls {convertToCapped:'mycoll', size:maxBytes}} command
+	db.mycoll.dataSize()
+	db.mycoll.distinct( key ) - e.g. db.mycoll.distinct( 'x' )
+	db.mycoll.drop() drop the collection
+	db.mycoll.dropIndex(index) - e.g. db.mycoll.dropIndex( "indexName" ) or db.mycoll.dropIndex( { "indexKey" : 1 } )
+	db.mycoll.dropIndexes()
+	db.mycoll.ensureIndex(keypattern[,options]) - options is an object with these possible fields: name, unique, dropDups
+	db.mycoll.reIndex()
+	db.mycoll.find([query],[fields]) - query is an optional query filter. fields is optional set of fields to return.
+	                                              e.g. db.mycoll.find( {x:77} , {name:1, x:1} )
+	db.mycoll.find(...).count()
+	db.mycoll.find(...).limit(n)
+	db.mycoll.find(...).skip(n)
+	db.mycoll.find(...).sort(...)
+	db.mycoll.findOne([query])
+	db.mycoll.findAndModify( { update : ... , remove : bool [, query: {}, sort: {}, 'new': false] } )
+	db.mycoll.getDB() get DB object associated with collection
+	db.mycoll.getIndexes()
+	db.mycoll.group( { key : ..., initial: ..., reduce : ...[, cond: ...] } )
+	db.mycoll.insert(obj)
+	db.mycoll.mapReduce( mapFunction , reduceFunction , <optional params> )
+	db.mycoll.remove(query)
+	db.mycoll.renameCollection( newName , <dropTarget> ) renames the collection.
+	db.mycoll.runCommand( name , <options> ) runs a db command with the given name where the first param is the collection name
+	db.mycoll.save(obj)
+	db.mycoll.stats()
+	db.mycoll.storageSize() - includes free space allocated to this collection
+	db.mycoll.totalIndexSize() - size in bytes of all the indexes
+	db.mycoll.totalSize() - storage allocated for all data and indexes
+	db.mycoll.update(query, object[, upsert_bool, multi_bool]) - instead of two flags, you can pass an object with fields: upsert, multi
+	db.mycoll.validate( <full> ) - SLOW
+	db.mycoll.getShardVersion() - only for use with sharding
+	db.mycoll.getShardDistribution() - prints statistics about data distribution in the cluster
+	db.mycoll.getSplitKeysForChunks( <maxChunkSize> ) - calculates split points over all chunks and returns splitter function
+```
+
+sharding
+
+```
+> sh.help()
+	sh.addShard( host )                       server:port OR setname/server:port
+	sh.enableSharding(dbname)                 enables sharding on the database dbname
+	sh.shardCollection(fullName,key,unique)   shards the collection
+	sh.splitFind(fullName,find)               splits the chunk that find is in at the median
+	sh.splitAt(fullName,middle)               splits the chunk that middle is in at middle
+	sh.moveChunk(fullName,find,to)            move the chunk where 'find' is to 'to' (name of shard)
+	sh.setBalancerState( <bool on or not> )   turns the balancer on or off true=on, false=off
+	sh.getBalancerState()                     return true if enabled
+	sh.isBalancerRunning()                    return true if the balancer has work in progress on any mongos
+	sh.addShardTag(shard,tag)                 adds the tag to the shard
+	sh.removeShardTag(shard,tag)              removes the tag from the shard
+	sh.addTagRange(fullName,min,max,tag)      tags the specified range of the given collection
+	sh.status()                               prints a general overview of the cluster
+```
+
+Replica
+
+```
+> rs.help()
+	rs.status()                     { replSetGetStatus : 1 } checks repl set status
+	rs.initiate()                   { replSetInitiate : null } initiates set with default settings
+	rs.initiate(cfg)                { replSetInitiate : cfg } initiates set with configuration cfg
+	rs.conf()                       get the current configuration object from local.system.replset
+	rs.reconfig(cfg)                updates the configuration of a running replica set with cfg (disconnects)
+	rs.add(hostportstr)             add a new member to the set with default attributes (disconnects)
+	rs.add(membercfgobj)            add a new member to the set with extra attributes (disconnects)
+	rs.addArb(hostportstr)          add a new member which is arbiterOnly:true (disconnects)
+	rs.stepDown([secs])             step down as primary (momentarily) (disconnects)
+	rs.syncFrom(hostportstr)        make a secondary to sync from the given member
+	rs.freeze(secs)                 make a node ineligible to become primary for the time specified
+	rs.remove(hostportstr)          remove a host from the replica set (disconnects)
+	rs.slaveOk()                    shorthand for db.getMongo().setSlaveOk()
+
+	db.isMaster()                   check who is primary
+	db.printReplicationInfo()       check oplog size and time range
+
+	reconfiguration helpers disconnect from the database so the shell will display
+	an error, even if the command succeeds.
+	see also http://<mongod_host>:28017/_replSet for additional diagnostic info
+```
+
+#### Best Practices
+
+- query optimization
+
+#### Performances
+
+#### Scalability
+
+
+## Mongo Drivers
+
+## MongoDB Development Level
+
+```
+COMPONENTS
+
+  mongod - The database process.
+  mongos - Sharding controller.
+  mongo  - The database shell (uses interactive javascript).
+
+UTILITIES
+
+  mongodump         - MongoDB dump tool - for backups, snapshots, etc.
+  mongorestore      - MongoDB restore a dump
+  mongoexport       - Export a single collection to test (JSON, CSV)
+  mongoimport       - Import from JSON or CSV
+  mongofiles        - Utility for putting and getting files from MongoDB GridFS
+  mongostat         - Show performance statistics
+```
+
+## References
+
+- [A Journey through the MongoDB Internals](https://2013.nosql-matters.org/bcn/wp-content/uploads/2013/12/storage-talk-mongodb.pdf)
+- [MongoDB Documentation](https://docs.mongodb.org/manual/core/distributed-write-operations/)
