@@ -9,7 +9,9 @@
   <meta name="author" content="K">
 
   
-  <meta name="description" content="Data Structure and Algorithms Mar 16th, 2016 7:28 pm | Comments Graph Data Structures Algorithms Tree Data Structures Algorithms Heap Data &hellip;">
+  <meta name="description" content="Data Structure and Algorithms Mar 16th, 2016 7:28 pm | Comments Compositions: Graph &lt;- Tree &lt;- List Graph
+Tree: Binary Tree, Heap, Hash
+List: &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -144,31 +146,556 @@
 
 
 
-  <div class="entry-content"><h2>Graph</h2>
+  <div class="entry-content"><p>Compositions: Graph &lt;- Tree &lt;- List</p>
 
-<h3>Data Structures</h3>
+<ul>
+<li>Graph</li>
+<li>Tree: Binary Tree, Heap, Hash</li>
+<li>List: Array, Stack, Queue</li>
+</ul>
 
-<h3>Algorithms</h3>
+
+<p>Case Study:</p>
+
+<p>Supose we want to design a system for storing employee records keyed using phone numbers.
+And we want following queries to be performed efficiently:</p>
+
+<ul>
+<li>insert a phone number and corresponding information</li>
+<li>search a phone number and fetch the information</li>
+<li>delete a phone number and related information</li>
+</ul>
+
+
+<p>We can think of using the following data structures to maintain information about different
+phone numbers.</p>
+
+<ul>
+<li>array of phone numbers and records</li>
+<li>linked list of phone numbers and records</li>
+<li>balanced binary search tree with phone number as keys</li>
+<li>direct access table</li>
+</ul>
+
+
+<p>Comparisons:</p>
+
+<ul>
+<li><strong>arrays and linked lists</strong>: if search in a linear fashion, which can be costly in practice. If we
+use arrays and keep the data sorted, then a phone number can be searched in O(logn) time using
+Binary Search, but insert and delete operations become costly as we have to maintain sorted
+order.</li>
+<li><strong>balanced binary search tree</strong>: we get moderate search, insert and elete times. All
+of these operations can be guaranteed to be in O(logn) time.</li>
+<li><strong>direct access table</strong>: we make a big array and use phone numbers as index in the array. An entry
+in array is NIL if phone number is not present, else the array entry stores pointer to records
+corresponding to phone number. Time complexity wise this solution is the best among all, we
+can do all operations in O(1) time. For example, to insert a phone number, we create a record
+with details of given phone number, use phone number as index and store the pointer to the
+created record in table. This solution has many practical limitations. First problem with this
+solution is extra space required is huge. For example, if phone number is n digits, we need
+O(m * 10n) spae for table where m is size of a pointer to record. Another problem is an integer
+in a programming language may not store n digits.</li>
+<li><strong>Hashing</strong>: we get O(1) search time on average (unser reasonable assumptions) and O(n) in worst
+case. Hashing is an improvement over Direct Access Table. The idea is to use hash function that
+converts a given phone number or any other key to a smaller number and uses the small number as
+index in a table called hash table.</li>
+</ul>
+
+
+<h2>Graph</h2>
+
+<h3>Graph</h3>
+
+<h4>Data Structure</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="sd">&quot;&quot;&quot;</span>
+</span><span class='line'><span class="sd">Graph</span>
+</span><span class='line'>
+</span><span class='line'><span class="sd"> {&#39;A&#39;: {&#39;B&#39;},</span>
+</span><span class='line'><span class="sd">  &#39;B&#39;: {&#39;D&#39;, &#39;C&#39;},</span>
+</span><span class='line'><span class="sd">  &#39;C&#39;: {&#39;D&#39;},</span>
+</span><span class='line'><span class="sd">  &#39;E&#39;: {&#39;F&#39;},</span>
+</span><span class='line'><span class="sd">  &#39;F&#39;: {&#39;C&#39;}}</span>
+</span><span class='line'><span class="sd">&quot;&quot;&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">Graph</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+</span><span class='line'>    <span class="sd">&quot;&quot;&quot;</span>
+</span><span class='line'><span class="sd">    Graph data structure, undirected by default.</span>
+</span><span class='line'><span class="sd">    &quot;&quot;&quot;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connections</span><span class="p">,</span> <span class="n">directed</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">_graph</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">_directed</span> <span class="o">=</span> <span class="n">directed</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">add_connections</span><span class="p">(</span><span class="n">connections</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Algorithms</h4>
+
+<ul>
+<li>DFS/BFS</li>
+<li>Minimum Spanning Tree</li>
+<li>Shortest Paths</li>
+<li>Connectivity</li>
+<li>Hard Problems</li>
+<li>Maximum Flow</li>
+<li>Misc</li>
+</ul>
+
+
+<h3>Hash</h3>
+
+<h4>Data Structure</h4>
+
+<p>Hash Function:</p>
+
+<p>A function that converts a given big phone number to a small practical integer value.
+The mappd integer value is used as an index in hash table. In simple terms, a hash function
+maps a big number or string to a small integer that can be used as index in hash table.</p>
+
+<p>A good hash function should have following properties:</p>
+
+<ul>
+<li>efficiently computable</li>
+<li>should uniformly distribute the keys (each table position equally likely for each key)</li>
+</ul>
+
+
+<p>For example, for phone numbers, a bad hash function is to take first three digits, a better
+function is consider last three digits, please note that this may not be the best hash function.
+There may be better ways.</p>
+
+<p>Hash Table:</p>
+
+<p>An array that stores pointers to records corresponding to a given phone number. An entry
+in hash table is NIL if no existing phone number has hash function value equal to the
+index for the entry.</p>
+
+<p>Collision Handling</p>
+
+<p>Since a hash function gets us a small number for a key which is a big integer or string,
+there is possibility that two keys result in same value. The situation where a newly inserted
+key maps to an already occupied slot in hash table is called collision and must be handled using
+some collision handling technique. Following are the ways to handle collisioins:</p>
+
+<ul>
+<li>chaining: the idea is to make each cell of hash table point to a linked list of records that
+have same hash function value. Chaining is simple, but requires additional memory outside
+the table.</li>
+<li>Open Addressing: in open addressing, all elements are stored in the hash table itself. Each
+table entry contains either a record or NIL. When searching for an element, we one by one examine
+table slots until the desired element is found or it is clear that the element is not in the table.</li>
+</ul>
+
+
+<h4>Algorithms</h4>
 
 <h2>Tree</h2>
 
-<h3>Data Structures</h3>
+<h3>Binary Tree</h3>
 
-<h3>Algorithms</h3>
+<h4>Data Structure</h4>
 
-<h2>Heap</h2>
+<p>Properties</p>
 
-<h3>Data Structures</h3>
+<ul>
+<li>the left subtree of a node contains only nodes with keys less than the node&rsquo;s key</li>
+<li>the right subtree of a node contains only nodes with keys greater than the node&rsquo;s key</li>
+<li>the left and right subtree each must also be a binary search tree</li>
+<li>there must be no duplicate nodes</li>
+</ul>
 
-<h3>Algorithms</h3>
 
-<h2>Hash</h2>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="sd">&quot;&quot;&quot;</span>
+</span><span class='line'><span class="sd">Binary Tree:</span>
+</span><span class='line'>
+</span><span class='line'><span class="sd">           1</span>
+</span><span class='line'><span class="sd">       /       \</span>
+</span><span class='line'><span class="sd">      2          3</span>
+</span><span class='line'><span class="sd">    /   \       /  \</span>
+</span><span class='line'><span class="sd">   4    None  None  None</span>
+</span><span class='line'><span class="sd">  /  \</span>
+</span><span class='line'><span class="sd">None None</span>
+</span><span class='line'>
+</span><span class='line'><span class="sd">&quot;&quot;&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">Node</span><span class="p">:</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="bp">None</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="bp">None</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">key</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">root</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">root</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">root</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<h2>Stack</h2>
 
-<h2>List</h2>
+<h4>Algorithms</h4>
+
+<p>Greedy algorithms</p>
+
+<ul>
+<li>Activity selectioin problem</li>
+<li>Kruskal&rsquo;s minimum spanning tree</li>
+<li>Prim&rsquo;s minimum spanning tree</li>
+<li>Prim&rsquo;s MST for Adjacency list representation</li>
+<li>Dijkstra&rsquo;s shortest path algorithm</li>
+<li>Dijkstra&rsquo;s algorithm for Adjacency list representation</li>
+<li>Huffman coding</li>
+<li>Efficient Huffman coding for sorted input</li>
+</ul>
+
+
+<h3>Binary Heap</h3>
+
+<h4>Data Structure</h4>
+
+<p>Properties:</p>
+
+<ul>
+<li>It is a complete tree (All levels are completely filled except possibly the last level and
+the last level has all keys as left as possible)> This property of Binary Heap makes them
+suitable to be stored in an array.</li>
+<li>A binary heap is either Min Heap or Max Heap. In a Min Binary Heap, the key at root must be
+minimum among all keys present in Binary Heap. The same property must be recursively true for
+all nodes in Binary Tree. Max Binary Heap is similar to Min Heap.</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'>        <span class="mi">10</span>                      <span class="mi">10</span>
+</span><span class='line'>     <span class="o">/</span>      \               <span class="o">/</span>       \
+</span><span class='line'>   <span class="mi">20</span>        <span class="mi">100</span>          <span class="mi">15</span>         <span class="mi">30</span>
+</span><span class='line'>  <span class="o">/</span>                      <span class="o">/</span>  \        <span class="o">/</span>  \
+</span><span class='line'><span class="mi">30</span>                     <span class="mi">40</span>    <span class="mi">50</span>    <span class="mi">100</span>   <span class="mi">40</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Algorithms</h4>
+
+<h2>Lists</h2>
+
+<h3>LinkedList</h3>
+
+<h4>Data Structure</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="sd">&quot;&quot;&quot;</span>
+</span><span class='line'><span class="sd">Linked List</span>
+</span><span class='line'>
+</span><span class='line'><span class="sd">  DS</span>
+</span><span class='line'>
+</span><span class='line'><span class="sd">       LinkedList       First Node          Nodes</span>
+</span><span class='line'>
+</span><span class='line'><span class="sd">       +------+         +------+------+     +------+------+</span>
+</span><span class='line'><span class="sd">       | head | &lt;-----  | data | next | &lt;-- | data | next |</span>
+</span><span class='line'><span class="sd">       +------+         +------+------+     +------+------+</span>
+</span><span class='line'>
+</span><span class='line'><span class="sd">  e.g.</span>
+</span><span class='line'>
+</span><span class='line'><span class="sd">    class Node</span>
+</span><span class='line'>
+</span><span class='line'><span class="sd">        +----+------+    +----+------+    +----+------+</span>
+</span><span class='line'><span class="sd">        | 1  | None |    | 2  | None |    | 3  | None |</span>
+</span><span class='line'><span class="sd">        +----+------+    +----+------+    +----+------+</span>
+</span><span class='line'>
+</span><span class='line'><span class="sd">    class LinkedList</span>
+</span><span class='line'>
+</span><span class='line'><span class="sd">        +----+------+    +----+------+    +----+------+</span>
+</span><span class='line'><span class="sd">        | 1  |    -----&gt; | 2  |   ------&gt; | 3  | None |</span>
+</span><span class='line'><span class="sd">        +----+------+    +----+------+    +----+------+</span>
+</span><span class='line'><span class="sd">&quot;&quot;&quot;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">LinkedList</span><span class="p">:</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="bp">None</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">traverse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">temp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span>
+</span><span class='line'>        <span class="k">while</span> <span class="p">(</span><span class="n">temp</span><span class="p">):</span>
+</span><span class='line'>            <span class="k">print</span> <span class="n">temp</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+</span><span class='line'>            <span class="n">temp</span> <span class="o">=</span> <span class="n">temp</span><span class="o">.</span><span class="n">next</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">Node</span><span class="p">:</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="bp">None</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">first</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">second</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">third</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">linked_list</span> <span class="o">=</span> <span class="n">LinkedList</span><span class="p">()</span>
+</span><span class='line'>    <span class="n">linked_list</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="n">first</span>
+</span><span class='line'>    <span class="n">linked_list</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">second</span>
+</span><span class='line'>    <span class="n">second</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">third</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">linked_list</span><span class="o">.</span><span class="n">traverse</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Algorithm</h4>
+
+<h3>Stack</h3>
+
+<h4>Data Structure</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="sd">&quot;&quot;&quot;</span>
+</span><span class='line'><span class="sd">Stack</span>
+</span><span class='line'><span class="sd">&quot;&quot;&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">maxsize</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">createStack</span><span class="p">():</span>
+</span><span class='line'>    <span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">stack</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">isEmpty</span><span class="p">(</span><span class="n">stack</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">stack</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">push</span><span class="p">(</span><span class="n">stack</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+</span><span class='line'>    <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">print</span><span class="p">(</span><span class="s">&quot;pushed to stack &quot;</span> <span class="o">+</span> <span class="n">item</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">pop</span><span class="p">(</span><span class="n">stack</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">isEmpty</span><span class="p">(</span><span class="n">stack</span><span class="p">)):</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="o">-</span><span class="n">maxsize</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>  <span class="c"># return minus infinite</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">peek</span><span class="p">(</span><span class="n">stack</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">isEmpty</span><span class="p">(</span><span class="n">stack</span><span class="p">)):</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="o">-</span><span class="n">maxsize</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">stack</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">stack</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">stack</span> <span class="o">=</span> <span class="n">createStack</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">push</span><span class="p">(</span><span class="n">stack</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+</span><span class='line'>    <span class="n">push</span><span class="p">(</span><span class="n">stack</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="mi">20</span><span class="p">))</span>
+</span><span class='line'>    <span class="n">push</span><span class="p">(</span><span class="n">stack</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="mi">30</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">print</span><span class="p">(</span><span class="n">pop</span><span class="p">(</span><span class="n">stack</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot; popped from stack&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Top item is &quot;</span> <span class="o">+</span> <span class="n">peek</span><span class="p">(</span><span class="n">stack</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Algorithms</h4>
+
+<h3>Queue</h3>
+
+<h4>Data Structure</h4>
+
+<h4>Algorithms</h4>
+
+<h3>Array</h3>
+
+<h4>Data Structure</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">people</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;Bob&#39;</span><span class="p">,</span> <span class="s">&#39;Alice&#39;</span><span class="p">,</span> <span class="s">&#39;John&#39;</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Algorithms</h4>
+
+<p>searching</p>
+
+<ul>
+<li>binary search</li>
+</ul>
+
+
+<p>sorting</p>
+
+<ul>
+<li>selection sort</li>
+<li>bubble sort</li>
+<li>insertion sort</li>
+<li>merge sort</li>
+<li>heap sort</li>
+<li>quick sort</li>
+<li>radix sort</li>
+<li>counting sort</li>
+<li>bucket sort</li>
+<li>shell sort</li>
+<li>comb sort</li>
+<li>pigeonhole sort</li>
+</ul>
+
 
 <h2>References</h2>
+
+<ul>
+<li><a href="http://www.geeksforgeeks.org">Geeks for Geeks</a></li>
+</ul>
+
 </div>
 
 
@@ -264,6 +791,22 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/tech/2016/03/28/algorithms/">Algorithms</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2016/03/28/sql/">SQL</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2016/03/28/interview-questions-of-mongodb/">Interview Questions of MongoDB</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2016/03/28/interview-questions-of-rdbms/">Interview Questions of RDBMS</a>
+      </li>
+    
+      <li class="post">
         <a href="/tech/2016/03/24/mongodb-sharding/">MongoDB Sharding</a>
       </li>
     
@@ -285,22 +828,6 @@
     
       <li class="post">
         <a href="/tech/2016/03/24/mongodb-administration/">MongoDB Administration</a>
-      </li>
-    
-      <li class="post">
-        <a href="/tech/2016/03/24/mongodb-data-model/">MongoDB Data Model</a>
-      </li>
-    
-      <li class="post">
-        <a href="/tech/2016/03/24/mongodb-aggregation/">MongoDB Aggregation</a>
-      </li>
-    
-      <li class="post">
-        <a href="/tech/2016/03/24/mongodb-crud/">MongoDB CRUD</a>
-      </li>
-    
-      <li class="post">
-        <a href="/tech/2016/03/24/mongo-shell/">Mongo Shell</a>
       </li>
     
   </ul>
@@ -328,7 +855,7 @@
 
 
   <h1>Tags</h1>
-    <ul id="category-list"><a href='/tags/ai' style='font-size: 90.0%'>ai(1)</a> <a href='/tags/aldebaran' style='font-size: 90.0%'>aldebaran(1)</a> <a href='/tags/algorithm' style='font-size: 118.13953488372093%'>algorithm(12)</a> <a href='/tags/ansible' style='font-size: 92.55813953488372%'>ansible(2)</a> <a href='/tags/apache' style='font-size: 92.55813953488372%'>apache(2)</a> <a href='/tags/api' style='font-size: 97.67441860465117%'>api(4)</a> <a href='/tags/ascii' style='font-size: 90.0%'>ascii(1)</a> <a href='/tags/beautifulsoup' style='font-size: 90.0%'>beautifulsoup(1)</a> <a href='/tags/beeline' style='font-size: 90.0%'>beeline(1)</a> <a href='/tags/butter' style='font-size: 90.0%'>butter(1)</a> <a href='/tags/caffe' style='font-size: 92.55813953488372%'>caffe(2)</a> <a href='/tags/career' style='font-size: 92.55813953488372%'>career(2)</a> <a href='/tags/cassandra' style='font-size: 90.0%'>cassandra(1)</a> <a href='/tags/cg' style='font-size: 92.55813953488372%'>cg(2)</a> <a href='/tags/chatbot' style='font-size: 95.11627906976744%'>chatbot(3)</a> <a href='/tags/choregraphe' style='font-size: 90.0%'>choregraphe(1)</a> <a href='/tags/classification' style='font-size: 92.55813953488372%'>classification(2)</a> <a href='/tags/cloud' style='font-size: 90.0%'>cloud(1)</a> <a href='/tags/cloudera' style='font-size: 107.90697674418604%'>cloudera(8)</a> <a href='/tags/cloudera-manager' style='font-size: 95.11627906976744%'>cloudera manager(3)</a> <a href='/tags/cluster' style='font-size: 141.1627906976744%'>cluster(21)</a> <a href='/tags/computer-vision' style='font-size: 90.0%'>computer vision(1)</a> <a href='/tags/cpp' style='font-size: 90.0%'>cpp(1)</a> <a href='/tags/crawler' style='font-size: 92.55813953488372%'>crawler(2)</a> <a href='/tags/css' style='font-size: 92.55813953488372%'>css(2)</a> <a href='/tags/cuda' style='font-size: 90.0%'>cuda(1)</a> <a href='/tags/d3' style='font-size: 90.0%'>d3(1)</a> <a href='/tags/data' style='font-size: 90.0%'>data(1)</a> <a href='/tags/db' style='font-size: 120.69767441860465%'>db(13)</a> <a href='/tags/debian' style='font-size: 90.0%'>debian(1)</a> <a href='/tags/deepdream' style='font-size: 90.0%'>deepdream(1)</a> <a href='/tags/design-patterns' style='font-size: 90.0%'>design patterns(1)</a> <a href='/tags/devops' style='font-size: 97.67441860465117%'>devops(4)</a> <a href='/tags/django' style='font-size: 92.55813953488372%'>django(2)</a> <a href='/tags/dns' style='font-size: 90.0%'>dns(1)</a> <a href='/tags/docker' style='font-size: 95.11627906976744%'>docker(3)</a> <a href='/tags/edx' style='font-size: 120.69767441860465%'>edX(13)</a> <a href='/tags/edx-ai' style='font-size: 90.0%'>edX AI(1)</a> <a href='/tags/edx-analytics' style='font-size: 107.90697674418604%'>edX Analytics(8)</a> <a href='/tags/edx-platform' style='font-size: 95.11627906976744%'>edX Platform(3)</a> <a href='/tags/elasticsearch' style='font-size: 90.0%'>elasticsearch(1)</a> <a href='/tags/emacs' style='font-size: 92.55813953488372%'>emacs(2)</a> <a href='/tags/exhibition' style='font-size: 92.55813953488372%'>exhibition(2)</a> <a href='/tags/fiction' style='font-size: 105.34883720930233%'>fiction(7)</a> <a href='/tags/filebeat' style='font-size: 90.0%'>filebeat(1)</a> <a href='/tags/flask' style='font-size: 90.0%'>flask(1)</a> <a href='/tags/flume' style='font-size: 90.0%'>flume(1)</a> <a href='/tags/forever' style='font-size: 92.55813953488372%'>forever(2)</a> <a href='/tags/framework' style='font-size: 90.0%'>framework(1)</a> <a href='/tags/freetds' style='font-size: 90.0%'>freetds(1)</a> <a href='/tags/french' style='font-size: 90.0%'>french(1)</a> <a href='/tags/ghost' style='font-size: 97.67441860465117%'>ghost(4)</a> <a href='/tags/git' style='font-size: 102.79069767441861%'>git(6)</a> <a href='/tags/github' style='font-size: 92.55813953488372%'>github(2)</a> <a href='/tags/gitosis' style='font-size: 90.0%'>gitosis(1)</a> <a href='/tags/gitweb' style='font-size: 90.0%'>gitweb(1)</a> <a href='/tags/gunicorn' style='font-size: 90.0%'>gunicorn(1)</a> <a href='/tags/hadoop' style='font-size: 128.37209302325581%'>hadoop(16)</a> <a href='/tags/hbase' style='font-size: 100.23255813953489%'>hbase(5)</a> <a href='/tags/hdfs' style='font-size: 92.55813953488372%'>hdfs(2)</a> <a href='/tags/hipchat' style='font-size: 95.11627906976744%'>hipchat(3)</a> <a href='/tags/hive' style='font-size: 97.67441860465117%'>hive(4)</a> <a href='/tags/html' style='font-size: 92.55813953488372%'>html(2)</a> <a href='/tags/hue' style='font-size: 92.55813953488372%'>hue(2)</a> <a href='/tags/ide' style='font-size: 95.11627906976744%'>ide(3)</a> <a href='/tags/impala' style='font-size: 90.0%'>impala(1)</a> <a href='/tags/iterm' style='font-size: 90.0%'>iterm(1)</a> <a href='/tags/java' style='font-size: 100.23255813953489%'>java(5)</a> <a href='/tags/javascript' style='font-size: 100.23255813953489%'>javascript(5)</a> <a href='/tags/jekyll' style='font-size: 92.55813953488372%'>jekyll(2)</a> <a href='/tags/jenkins' style='font-size: 90.0%'>jenkins(1)</a> <a href='/tags/kibana' style='font-size: 90.0%'>kibana(1)</a> <a href='/tags/leisure' style='font-size: 141.1627906976744%'>leisure(21)</a> <a href='/tags/library' style='font-size: 90.0%'>library(1)</a> <a href='/tags/linux' style='font-size: 113.02325581395348%'>linux(10)</a> <a href='/tags/logstack' style='font-size: 90.0%'>logstack(1)</a> <a href='/tags/machine-learning' style='font-size: 123.25581395348837%'>machine learning(14)</a> <a href='/tags/mapreduce' style='font-size: 92.55813953488372%'>mapreduce(2)</a> <a href='/tags/markdown' style='font-size: 90.0%'>markdown(1)</a> <a href='/tags/mathjax' style='font-size: 92.55813953488372%'>mathjax(2)</a> <a href='/tags/maven' style='font-size: 90.0%'>maven(1)</a> <a href='/tags/mongo' style='font-size: 105.34883720930233%'>mongo(7)</a> <a href='/tags/mongovue' style='font-size: 90.0%'>mongovue(1)</a> <a href='/tags/mssql' style='font-size: 90.0%'>mssql(1)</a> <a href='/tags/mysql' style='font-size: 107.90697674418604%'>mysql(8)</a> <a href='/tags/mysql-workbench' style='font-size: 92.55813953488372%'>mysql workbench(2)</a> <a href='/tags/nao' style='font-size: 92.55813953488372%'>nao(2)</a> <a href='/tags/naoqi' style='font-size: 90.0%'>naoqi(1)</a> <a href='/tags/network' style='font-size: 90.0%'>network(1)</a> <a href='/tags/nginx' style='font-size: 97.67441860465117%'>nginx(4)</a> <a href='/tags/nlp' style='font-size: 102.79069767441861%'>nlp(6)</a> <a href='/tags/nltk' style='font-size: 90.0%'>nltk(1)</a> <a href='/tags/nodejs' style='font-size: 105.34883720930233%'>nodejs(7)</a> <a href='/tags/octopress' style='font-size: 107.90697674418604%'>octopress(8)</a> <a href='/tags/odbc' style='font-size: 90.0%'>odbc(1)</a> <a href='/tags/oil-painting' style='font-size: 90.0%'>oil painting(1)</a> <a href='/tags/opencv' style='font-size: 92.55813953488372%'>opencv(2)</a> <a href='/tags/openstack' style='font-size: 90.0%'>openstack(1)</a> <a href='/tags/painting' style='font-size: 90.0%'>painting(1)</a> <a href='/tags/pandas' style='font-size: 92.55813953488372%'>pandas(2)</a> <a href='/tags/photos' style='font-size: 125.81395348837209%'>photos(15)</a> <a href='/tags/poem' style='font-size: 97.67441860465117%'>poem(4)</a> <a href='/tags/prediction' style='font-size: 90.0%'>prediction(1)</a> <a href='/tags/programming' style='font-size: 100.23255813953489%'>programming(5)</a> <a href='/tags/pycharm' style='font-size: 90.0%'>pycharm(1)</a> <a href='/tags/python' style='font-size: 200.0%'>python(44)</a> <a href='/tags/python-challenge' style='font-size: 95.11627906976744%'>Python Challenge(3)</a> <a href='/tags/reading' style='font-size: 90.0%'>reading(1)</a> <a href='/tags/redis' style='font-size: 90.0%'>redis(1)</a> <a href='/tags/redmine' style='font-size: 90.0%'>redmine(1)</a> <a href='/tags/regex' style='font-size: 90.0%'>regex(1)</a> <a href='/tags/rest' style='font-size: 92.55813953488372%'>rest(2)</a> <a href='/tags/robotics' style='font-size: 102.79069767441861%'>robotics(6)</a> <a href='/tags/ros' style='font-size: 90.0%'>ros(1)</a> <a href='/tags/ruby' style='font-size: 115.5813953488372%'>ruby(11)</a> <a href='/tags/scala' style='font-size: 95.11627906976744%'>scala(3)</a> <a href='/tags/servlet' style='font-size: 90.0%'>servlet(1)</a> <a href='/tags/shell' style='font-size: 92.55813953488372%'>shell(2)</a> <a href='/tags/soap' style='font-size: 90.0%'>soap(1)</a> <a href='/tags/solr' style='font-size: 90.0%'>solr(1)</a> <a href='/tags/spark' style='font-size: 90.0%'>spark(1)</a> <a href='/tags/sphinx' style='font-size: 90.0%'>sphinx(1)</a> <a href='/tags/spring' style='font-size: 90.0%'>spring(1)</a> <a href='/tags/sql' style='font-size: 90.0%'>sql(1)</a> <a href='/tags/sqoop' style='font-size: 97.67441860465117%'>sqoop(4)</a> <a href='/tags/ssl' style='font-size: 92.55813953488372%'>ssl(2)</a> <a href='/tags/supervisor' style='font-size: 90.0%'>supervisor(1)</a> <a href='/tags/tech-talks' style='font-size: 90.0%'>tech talks(1)</a> <a href='/tags/threading' style='font-size: 90.0%'>threading(1)</a> <a href='/tags/time-series' style='font-size: 90.0%'>time series(1)</a> <a href='/tags/tomcat' style='font-size: 90.0%'>tomcat(1)</a> <a href='/tags/translation' style='font-size: 90.0%'>translation(1)</a> <a href='/tags/ubuntu' style='font-size: 118.13953488372093%'>ubuntu(12)</a> <a href='/tags/unicode' style='font-size: 90.0%'>unicode(1)</a> <a href='/tags/vagrant' style='font-size: 95.11627906976744%'>vagrant(3)</a> <a href='/tags/vim' style='font-size: 92.55813953488372%'>vim(2)</a> <a href='/tags/virtualbox' style='font-size: 97.67441860465117%'>virtualbox(4)</a> <a href='/tags/virtualenv' style='font-size: 90.0%'>virtualenv(1)</a> <a href='/tags/virtualenvwrapper' style='font-size: 90.0%'>virtualenvwrapper(1)</a> <a href='/tags/vm' style='font-size: 92.55813953488372%'>vm(2)</a> <a href='/tags/web' style='font-size: 105.34883720930233%'>web(7)</a> <a href='/tags/webots' style='font-size: 90.0%'>webots(1)</a> <a href='/tags/will' style='font-size: 95.11627906976744%'>will(3)</a> <a href='/tags/yarn' style='font-size: 90.0%'>yarn(1)</a> <a href='/tags/zookeeper' style='font-size: 100.23255813953489%'>zookeeper(5)</a> </ul>
+    <ul id="category-list"><a href='/tags/ai' style='font-size: 90.0%'>ai(1)</a> <a href='/tags/aldebaran' style='font-size: 90.0%'>aldebaran(1)</a> <a href='/tags/algorithm' style='font-size: 120.69767441860465%'>algorithm(13)</a> <a href='/tags/ansible' style='font-size: 92.55813953488372%'>ansible(2)</a> <a href='/tags/apache' style='font-size: 92.55813953488372%'>apache(2)</a> <a href='/tags/api' style='font-size: 97.67441860465117%'>api(4)</a> <a href='/tags/ascii' style='font-size: 90.0%'>ascii(1)</a> <a href='/tags/beautifulsoup' style='font-size: 90.0%'>beautifulsoup(1)</a> <a href='/tags/beeline' style='font-size: 90.0%'>beeline(1)</a> <a href='/tags/butter' style='font-size: 90.0%'>butter(1)</a> <a href='/tags/caffe' style='font-size: 92.55813953488372%'>caffe(2)</a> <a href='/tags/career' style='font-size: 92.55813953488372%'>career(2)</a> <a href='/tags/cassandra' style='font-size: 90.0%'>cassandra(1)</a> <a href='/tags/cg' style='font-size: 92.55813953488372%'>cg(2)</a> <a href='/tags/chatbot' style='font-size: 95.11627906976744%'>chatbot(3)</a> <a href='/tags/choregraphe' style='font-size: 90.0%'>choregraphe(1)</a> <a href='/tags/classification' style='font-size: 92.55813953488372%'>classification(2)</a> <a href='/tags/cloud' style='font-size: 90.0%'>cloud(1)</a> <a href='/tags/cloudera' style='font-size: 107.90697674418604%'>cloudera(8)</a> <a href='/tags/cloudera-manager' style='font-size: 95.11627906976744%'>cloudera manager(3)</a> <a href='/tags/cluster' style='font-size: 141.1627906976744%'>cluster(21)</a> <a href='/tags/computer-vision' style='font-size: 90.0%'>computer vision(1)</a> <a href='/tags/cpp' style='font-size: 90.0%'>cpp(1)</a> <a href='/tags/crawler' style='font-size: 92.55813953488372%'>crawler(2)</a> <a href='/tags/css' style='font-size: 92.55813953488372%'>css(2)</a> <a href='/tags/cuda' style='font-size: 90.0%'>cuda(1)</a> <a href='/tags/d3' style='font-size: 90.0%'>d3(1)</a> <a href='/tags/data' style='font-size: 90.0%'>data(1)</a> <a href='/tags/db' style='font-size: 141.1627906976744%'>db(21)</a> <a href='/tags/debian' style='font-size: 90.0%'>debian(1)</a> <a href='/tags/deepdream' style='font-size: 90.0%'>deepdream(1)</a> <a href='/tags/design-patterns' style='font-size: 90.0%'>design patterns(1)</a> <a href='/tags/devops' style='font-size: 97.67441860465117%'>devops(4)</a> <a href='/tags/django' style='font-size: 92.55813953488372%'>django(2)</a> <a href='/tags/dns' style='font-size: 90.0%'>dns(1)</a> <a href='/tags/docker' style='font-size: 95.11627906976744%'>docker(3)</a> <a href='/tags/edx' style='font-size: 120.69767441860465%'>edX(13)</a> <a href='/tags/edx-ai' style='font-size: 90.0%'>edX AI(1)</a> <a href='/tags/edx-analytics' style='font-size: 107.90697674418604%'>edX Analytics(8)</a> <a href='/tags/edx-platform' style='font-size: 95.11627906976744%'>edX Platform(3)</a> <a href='/tags/elasticsearch' style='font-size: 90.0%'>elasticsearch(1)</a> <a href='/tags/emacs' style='font-size: 92.55813953488372%'>emacs(2)</a> <a href='/tags/exhibition' style='font-size: 92.55813953488372%'>exhibition(2)</a> <a href='/tags/fiction' style='font-size: 105.34883720930233%'>fiction(7)</a> <a href='/tags/filebeat' style='font-size: 90.0%'>filebeat(1)</a> <a href='/tags/flask' style='font-size: 90.0%'>flask(1)</a> <a href='/tags/flume' style='font-size: 90.0%'>flume(1)</a> <a href='/tags/forever' style='font-size: 92.55813953488372%'>forever(2)</a> <a href='/tags/framework' style='font-size: 90.0%'>framework(1)</a> <a href='/tags/freetds' style='font-size: 90.0%'>freetds(1)</a> <a href='/tags/french' style='font-size: 90.0%'>french(1)</a> <a href='/tags/ghost' style='font-size: 97.67441860465117%'>ghost(4)</a> <a href='/tags/git' style='font-size: 102.79069767441861%'>git(6)</a> <a href='/tags/github' style='font-size: 92.55813953488372%'>github(2)</a> <a href='/tags/gitosis' style='font-size: 90.0%'>gitosis(1)</a> <a href='/tags/gitweb' style='font-size: 90.0%'>gitweb(1)</a> <a href='/tags/gunicorn' style='font-size: 90.0%'>gunicorn(1)</a> <a href='/tags/hadoop' style='font-size: 128.37209302325581%'>hadoop(16)</a> <a href='/tags/hbase' style='font-size: 100.23255813953489%'>hbase(5)</a> <a href='/tags/hdfs' style='font-size: 92.55813953488372%'>hdfs(2)</a> <a href='/tags/hipchat' style='font-size: 95.11627906976744%'>hipchat(3)</a> <a href='/tags/hive' style='font-size: 97.67441860465117%'>hive(4)</a> <a href='/tags/html' style='font-size: 92.55813953488372%'>html(2)</a> <a href='/tags/hue' style='font-size: 92.55813953488372%'>hue(2)</a> <a href='/tags/ide' style='font-size: 95.11627906976744%'>ide(3)</a> <a href='/tags/impala' style='font-size: 90.0%'>impala(1)</a> <a href='/tags/iterm' style='font-size: 90.0%'>iterm(1)</a> <a href='/tags/java' style='font-size: 100.23255813953489%'>java(5)</a> <a href='/tags/javascript' style='font-size: 100.23255813953489%'>javascript(5)</a> <a href='/tags/jekyll' style='font-size: 92.55813953488372%'>jekyll(2)</a> <a href='/tags/jenkins' style='font-size: 90.0%'>jenkins(1)</a> <a href='/tags/kibana' style='font-size: 90.0%'>kibana(1)</a> <a href='/tags/leisure' style='font-size: 141.1627906976744%'>leisure(21)</a> <a href='/tags/library' style='font-size: 90.0%'>library(1)</a> <a href='/tags/linux' style='font-size: 113.02325581395348%'>linux(10)</a> <a href='/tags/logstack' style='font-size: 90.0%'>logstack(1)</a> <a href='/tags/machine-learning' style='font-size: 123.25581395348837%'>machine learning(14)</a> <a href='/tags/mapreduce' style='font-size: 92.55813953488372%'>mapreduce(2)</a> <a href='/tags/markdown' style='font-size: 90.0%'>markdown(1)</a> <a href='/tags/mathjax' style='font-size: 92.55813953488372%'>mathjax(2)</a> <a href='/tags/maven' style='font-size: 90.0%'>maven(1)</a> <a href='/tags/mongo' style='font-size: 120.69767441860465%'>mongo(13)</a> <a href='/tags/mongovue' style='font-size: 90.0%'>mongovue(1)</a> <a href='/tags/mssql' style='font-size: 90.0%'>mssql(1)</a> <a href='/tags/mysql' style='font-size: 107.90697674418604%'>mysql(8)</a> <a href='/tags/mysql-workbench' style='font-size: 92.55813953488372%'>mysql workbench(2)</a> <a href='/tags/nao' style='font-size: 92.55813953488372%'>nao(2)</a> <a href='/tags/naoqi' style='font-size: 90.0%'>naoqi(1)</a> <a href='/tags/network' style='font-size: 90.0%'>network(1)</a> <a href='/tags/nginx' style='font-size: 97.67441860465117%'>nginx(4)</a> <a href='/tags/nlp' style='font-size: 102.79069767441861%'>nlp(6)</a> <a href='/tags/nltk' style='font-size: 90.0%'>nltk(1)</a> <a href='/tags/nodejs' style='font-size: 105.34883720930233%'>nodejs(7)</a> <a href='/tags/octopress' style='font-size: 107.90697674418604%'>octopress(8)</a> <a href='/tags/odbc' style='font-size: 90.0%'>odbc(1)</a> <a href='/tags/oil-painting' style='font-size: 90.0%'>oil painting(1)</a> <a href='/tags/opencv' style='font-size: 92.55813953488372%'>opencv(2)</a> <a href='/tags/openstack' style='font-size: 90.0%'>openstack(1)</a> <a href='/tags/painting' style='font-size: 90.0%'>painting(1)</a> <a href='/tags/pandas' style='font-size: 92.55813953488372%'>pandas(2)</a> <a href='/tags/photos' style='font-size: 125.81395348837209%'>photos(15)</a> <a href='/tags/poem' style='font-size: 97.67441860465117%'>poem(4)</a> <a href='/tags/prediction' style='font-size: 90.0%'>prediction(1)</a> <a href='/tags/programming' style='font-size: 100.23255813953489%'>programming(5)</a> <a href='/tags/pycharm' style='font-size: 90.0%'>pycharm(1)</a> <a href='/tags/python' style='font-size: 200.0%'>python(44)</a> <a href='/tags/python-challenge' style='font-size: 95.11627906976744%'>Python Challenge(3)</a> <a href='/tags/rdbms' style='font-size: 90.0%'>rdbms(1)</a> <a href='/tags/reading' style='font-size: 90.0%'>reading(1)</a> <a href='/tags/redis' style='font-size: 90.0%'>redis(1)</a> <a href='/tags/redmine' style='font-size: 90.0%'>redmine(1)</a> <a href='/tags/regex' style='font-size: 90.0%'>regex(1)</a> <a href='/tags/rest' style='font-size: 92.55813953488372%'>rest(2)</a> <a href='/tags/robotics' style='font-size: 102.79069767441861%'>robotics(6)</a> <a href='/tags/ros' style='font-size: 90.0%'>ros(1)</a> <a href='/tags/ruby' style='font-size: 115.5813953488372%'>ruby(11)</a> <a href='/tags/scala' style='font-size: 95.11627906976744%'>scala(3)</a> <a href='/tags/servlet' style='font-size: 90.0%'>servlet(1)</a> <a href='/tags/shell' style='font-size: 92.55813953488372%'>shell(2)</a> <a href='/tags/soap' style='font-size: 90.0%'>soap(1)</a> <a href='/tags/solr' style='font-size: 90.0%'>solr(1)</a> <a href='/tags/spark' style='font-size: 90.0%'>spark(1)</a> <a href='/tags/sphinx' style='font-size: 90.0%'>sphinx(1)</a> <a href='/tags/spring' style='font-size: 90.0%'>spring(1)</a> <a href='/tags/sql' style='font-size: 92.55813953488372%'>sql(2)</a> <a href='/tags/sqoop' style='font-size: 97.67441860465117%'>sqoop(4)</a> <a href='/tags/ssl' style='font-size: 92.55813953488372%'>ssl(2)</a> <a href='/tags/supervisor' style='font-size: 90.0%'>supervisor(1)</a> <a href='/tags/tech-talks' style='font-size: 90.0%'>tech talks(1)</a> <a href='/tags/threading' style='font-size: 90.0%'>threading(1)</a> <a href='/tags/time-series' style='font-size: 90.0%'>time series(1)</a> <a href='/tags/tomcat' style='font-size: 90.0%'>tomcat(1)</a> <a href='/tags/translation' style='font-size: 90.0%'>translation(1)</a> <a href='/tags/ubuntu' style='font-size: 118.13953488372093%'>ubuntu(12)</a> <a href='/tags/unicode' style='font-size: 90.0%'>unicode(1)</a> <a href='/tags/vagrant' style='font-size: 95.11627906976744%'>vagrant(3)</a> <a href='/tags/vim' style='font-size: 92.55813953488372%'>vim(2)</a> <a href='/tags/virtualbox' style='font-size: 97.67441860465117%'>virtualbox(4)</a> <a href='/tags/virtualenv' style='font-size: 90.0%'>virtualenv(1)</a> <a href='/tags/virtualenvwrapper' style='font-size: 90.0%'>virtualenvwrapper(1)</a> <a href='/tags/vm' style='font-size: 92.55813953488372%'>vm(2)</a> <a href='/tags/web' style='font-size: 105.34883720930233%'>web(7)</a> <a href='/tags/webots' style='font-size: 90.0%'>webots(1)</a> <a href='/tags/will' style='font-size: 95.11627906976744%'>will(3)</a> <a href='/tags/yarn' style='font-size: 90.0%'>yarn(1)</a> <a href='/tags/zookeeper' style='font-size: 100.23255813953489%'>zookeeper(5)</a> </ul>
 </section>
 
   

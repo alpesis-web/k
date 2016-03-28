@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tech | K]]></title>
   <link href="http://k.arttechresearch.com/categories/tech/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2016-03-28T16:21:14+08:00</updated>
+  <updated>2016-03-28T22:09:15+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[K]]></name>
@@ -12,6 +12,693 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Algorithms]]></title>
+    <link href="http://k.arttechresearch.com/tech/2016/03/28/algorithms/"/>
+    <updated>2016-03-28T21:50:20+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2016/03/28/algorithms</id>
+    <content type="html"><![CDATA[<h2>Analysis of Algorithms</h2>
+
+<h2>Data Structure</h2>
+
+<h3>Searching and Sorting</h3>
+
+<p>Binary Search
+Selection Sort
+Bubble Sort
+Insertion Sort
+Merge Sort
+Heap Sort
+QuickSort
+Radix Sort
+Counting Sort
+Bucket Sort
+ShellSort
+Comb Sort
+Pigeonhole Sort</p>
+
+<h3>Graph Algorithms</h3>
+
+<h2>String</h2>
+
+<h3>Pattern Searching</h3>
+
+<h3>String Algorithms</h3>
+
+<h2>strategics</h2>
+
+<h3>Greedy Algorithms</h3>
+
+<h3>Divide and Conquer</h3>
+
+<h2>Mathematics</h2>
+
+<h3>Greedy Algorithms</h3>
+
+<h3>Backtracking</h3>
+
+<h3>Geometric Algorithms</h3>
+
+<h3>Mathematical Algorithms</h3>
+
+<h3>Bit Algorithms</h3>
+
+<h2>Reference</h2>
+
+<ul>
+<li><a href="http://www.geeksforgeeks.org/fundamentals-of-algorithms/#SearchingandSorting">Algorithms</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[SQL]]></title>
+    <link href="http://k.arttechresearch.com/tech/2016/03/28/sql/"/>
+    <updated>2016-03-28T18:46:05+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2016/03/28/sql</id>
+    <content type="html"><![CDATA[<p>Types of SQL queries:</p>
+
+<ul>
+<li>DDL: data definition language
+
+<ul>
+<li>DML: data manipulation laugnage</li>
+<li>DQL: data query language</li>
+<li>DCL: data control language</li>
+<li>DTL: data transaction language</li>
+</ul>
+</li>
+<li>VDL: view definition language</li>
+<li>SDL: storage definition language</li>
+</ul>
+
+
+<h2>DDL</h2>
+
+<pre><code class="sql">CREATE TABLE [table name] ( [column definitions] ) [table parameters]
+CREATE TABLE employees (
+    id            INTEGER      PRIMARY KEY,
+    first_name    VARCHAR(50) not null,
+    last_name     VARCHAR(75) not null,
+    fname         VARCHAR(50) not null,
+    dateofbirth   DATE         not null
+);
+
+DROP objecttype objectname
+DROP TABLE employees;
+
+ALTER objecttype objectname parameters
+ALTER TABLE sink ADD bubbles INTEGER;
+ALTER TABLE sink DROP COLUMN bubbles;
+
+RENAME TABLE old_name TO new_name;
+</code></pre>
+
+<h2>DML</h2>
+
+<pre><code class="sql">SELECT ... FROM ... WHERE ...
+INSERT INTO ... VALUES ...
+UPDATE ... SET ... WHERE ...
+DELETE FROM ... WHERE ...
+
+SELECT nom, service
+FROM employe
+WHERE status = 'stagiaire'
+ORDER BY nom;
+
+INSERT INTO employees(first_name, last_name, fname) VALUES ('John', 'Capita', 'xcapit00');
+UPDATE a_table SET field1 = 'updated value' WHERE field2 = 'N';
+DELETE FROM a_table WHERE field2 = 'N';
+
+MERGE INTO table_name USING table_reference ON (condition)
+   WHEN MATCHED THEN
+   UPDATE SET column1 = value1 [, column2 = value2 ...]
+   WHEN NOT MATCHED THEN
+   INSERT (column1 [, column2 ...]) VALUES (value1 [, value2 ...
+</code></pre>
+
+<h3>UPDATE</h3>
+
+<p>Update top 10 state in the table authors.</p>
+
+<pre><code class="sql">UPDATE state
+SET state.saleprice = state.saleprice + 2
+FROM (
+         SELECT TOP 10 *
+         FROM sales ORDER BY saleid
+     ) AS t1, sales state
+WHERE state.saleid = t1.saleid
+
+
+UPDATE state
+SET state.saleprice = state.saleprice + 2
+FROM sales state
+WHERE state.sale.id in (
+                           SELECT TOP 10 saleid
+                           FROM sales
+                           ORDER BY saleid
+                       )
+</code></pre>
+
+<h2>DQL</h2>
+
+<pre><code class="sql">- functions: COUNT, AVG, MIN, MAX, SUM
+
+SELECT *    column(s)
+FROM *
+            table(s)
+            FULL OUTER JOIN
+            RIGHT OUTER JOIN
+            LEFT OUTER JOIN
+            INNER JOIN
+            Alias (AS)
+WHERE *
+            Predicate (=,&lt;&gt;,&lt;,&lt;=,&gt;,&gt;=)
+            Operators (AND, OR, NOT)
+            LIKE (%,_)
+            BETWEEN ... IN ...
+            EXISTS
+            IS NULL
+ORDER BY *
+            ASC/DESC
+GROUP BY *
+            column(s)
+HAVING *
+            clause
+FETCH *
+            clause
+</code></pre>
+
+<h3>JOIN/UNION</h3>
+
+<ul>
+<li>inner join: A &amp;&amp; B, # of rows = (A&amp;&amp;B)</li>
+<li>left join: A (full) &amp;&amp; B (null), # of rows = rows(A)</li>
+<li>right join: A (null) &amp;&amp; B (full), # of rows = rows(B)</li>
+<li>full join: union, # of rows = rows(A) + rows(B) - rows (A&amp;&amp;B)</li>
+</ul>
+
+
+<p>join</p>
+
+<pre><code class="sql">SELECT orders.orderid, customers.customerid, customers.customername, orders.orderdate
+FROM orders
+INNER JOIN customers
+ON orders.customerid = customers.customerid;
+
+SELECT orders.orderid, customers.customerid, customers.customername, orders.orderdate
+FROM orders
+LEFT JOIN customers
+ON orders.customerid = customers.customerid;
+
+SELECT orders.orderid, customers.customerid, customers.customername, orders.orderdate
+FROM orders
+RIGHT JOIN customers
+ON orders.customerid = customers.customerid;
+</code></pre>
+
+<p>union</p>
+
+<pre><code class="sql">SELECT customerid FROM customers
+UNION
+SELECT customerid FROM orders
+ORDER BY customerid
+</code></pre>
+
+<h3>TOP</h3>
+
+<p>Display all fields of the last record.</p>
+
+<pre><code class="sql">SELECT top 1 *
+FROM table_name
+RODER BY ID DESC
+
+# mysql
+SELECT * 
+FROM table_name
+ORDER BY field_name DESC/ASC
+LIMIT 1;
+
+SELECT MAX(ID) AS MAXID
+FROM table_name;
+
+SELECT id, otherfields, ..., ...
+FROM table_name
+WHERE id=(SELECT MAX(id) FROM table)
+</code></pre>
+
+<h2>DCL</h2>
+
+<pre><code class="sql">GRANT SELECT, UPDATE
+ON example
+TO some_user, another_user;
+
+REVOKE SELECT, UPDATE
+ON example
+FROM some_user, another_user;
+</code></pre>
+
+<h2>DTL</h2>
+
+<pre><code class="sql">commit;
+savepoint;
+rollback;
+</code></pre>
+
+<h3>ROLLBACK</h3>
+
+<p>NULL is allowed in a column which is all of the non-null values should be unique.</p>
+
+<pre><code class="sql">CREATE trigger mytrigger on t1 for insert, update as
+
+BEGIN
+    IF (
+            SELECT MAX(cnt)
+            FROM (
+                     SELECT COUNT(i.c1) as cnt
+                     FROM t1, iinserted i
+                     WHERE t1.c1 = i.c1
+                     GROUP BY i.c1
+                 ) x
+       ) &gt; 1
+    ROLLBACK TRAN
+END
+</code></pre>
+
+<h2>VDL</h2>
+
+<pre><code class="sql">CREATE VIEW "VIEW_NAME" AS "SQL Statement";
+
+CREATE VIEW V_Customer
+AS SELECT First_Name, Last_Name, Country
+FROM Customer;
+
+CREATE VIEW V_REGION_SALES
+AS SELECT A1.Region_Name REGION, SUM(A2.Sales) SALES
+FROM Geography A1, Store_Information A2
+WHERE A1.Store_Name = A2.Store_Name
+GROUP BY A1.Region_Name;
+
+SELECT * FROM V_REGION_SALES;
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Interview Questions of MongoDB]]></title>
+    <link href="http://k.arttechresearch.com/tech/2016/03/28/interview-questions-of-mongodb/"/>
+    <updated>2016-03-28T16:50:08+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2016/03/28/interview-questions-of-mongodb</id>
+    <content type="html"><![CDATA[<h2>Concepts</h2>
+
+<h3>Define NoSQL.</h3>
+
+<p>A NoSQL database provides a mechanism for storage and retrieval of data that is modeled
+in means other than the tabular relations used in relational database (like SQL, Oracle, etc.)</p>
+
+<p>Types of NoSQL databases:</p>
+
+<ul>
+<li>key-value: Redis, Memcache</li>
+<li>column based: HBase, Cassandra</li>
+<li>document: MongoDB, ElasticSearch</li>
+<li>Graph: Neo4j</li>
+</ul>
+
+
+<p>Differences between SQL databases and NoSQL databases:</p>
+
+<ul>
+<li>SQL databases store data in form of tables, rows, columns and records. This data is stored in a pre-defined data model which is not very much flexible for today&rsquo;s real-world highly growing
+applications.</li>
+<li>MongoDB uses a flexible structure which can be easily modified and extended. MongoDB allows a
+highly flexible and scalable document structure. For example, one data document in MongoDB can have five columns and the other one in the same collection can have ten columns. Also, MongoDB
+database are faster as compared to SQL databases due to efficient indexing and storage techniques.</li>
+</ul>
+
+
+<h3>Define MongoDB.</h3>
+
+<p>MongoDB is a document oriented database, it stores data in the form of BSON structure based
+documents. These documents are stored in a collection.</p>
+
+<p>Features:</p>
+
+<ul>
+<li>flexible data model in form of documents</li>
+<li>agile and highly scalable database</li>
+<li>faster than traditional databases</li>
+<li>expressive query language</li>
+</ul>
+
+
+<h3>Define namespace.</h3>
+
+<p>A namespace is the concatenation of the database name and collection name.</p>
+
+<pre><code>school.students       # school - database, students - collection
+</code></pre>
+
+<h3>Define ObjectID.</h3>
+
+<p>ObjectID is a 12-byte BSON type with:</p>
+
+<ul>
+<li>4 bytes value representing seconds</li>
+<li>3 bytes machine identifier</li>
+<li>2 bytes process id</li>
+<li>3 bytes counter</li>
+</ul>
+
+
+<h2>Database Design</h2>
+
+<h3>Define embeded documents.</h3>
+
+<p>When should consider embeding documents:</p>
+
+<ul>
+<li>&lsquo;contains&rsquo; relationships between entities</li>
+<li>one-to-many relationships</li>
+<li>performance reasons</li>
+</ul>
+
+
+<h2>Database Languages</h2>
+
+<h3>Define indexes.</h3>
+
+<p>Indexes support the efficient execution of queries in MongoDB. Without indexes, MongoDB
+must perform a collection scan, i.e., scan every document in a collection, to select those
+documents that match the query statement. If an appropriate index exists for a query, MongoDB
+can use the index to limit the number of documents it must inspect.</p>
+
+<p>Types of indexes:</p>
+
+<ul>
+<li>default index: <code>_id</code></li>
+</ul>
+
+
+<h3>Define queries.</h3>
+
+<ul>
+<li>covered query: fields used in the query are part of an index used in the query, the fields
+returned in the results are in the same index.</li>
+</ul>
+
+
+<p>Importance of covered query:</p>
+
+<ul>
+<li>since all the fields are covered in the index itself, MongoDB can match the query condition
+as we&rsquo;ll as return the result fields using the same index without looking inside the documents.
+Since indexes are stored in RAM or sequentially located on disk, such access is a lot faster.</li>
+</ul>
+
+
+<p>Types of queries:</p>
+
+<ul>
+<li>text-search:</li>
+</ul>
+
+
+<h3>Define operators.</h3>
+
+<ul>
+<li>aggregation: processes data records and return computed results. Aggreation operations group
+values from multiple documents together, and can perform a variety of operations on the grouped
+data to return a signle result. MongoDB provides 3 ways to perform aggregation: the aggregation pipeline, the map-reduce function, and single purpose aggregation methods and commands.</li>
+</ul>
+
+
+<h3>Define transactions.</h3>
+
+<h3>Define lock.</h3>
+
+<p>MongoDB uses reader-writer locks that allow concurrent readers shared access to a resource,
+such as a database or collection, but give exclusive access to a single write operation.</p>
+
+<h2>Database Admin</h2>
+
+<h3>Define replication.</h3>
+
+<p>Replication is the process of synchronizing data across multiple servers. Replication provides
+redundancy and increases data availability. With multiple copies of data on different database
+servers, replication protects a database from the loss of a single server. Replication also
+allows you to recover from hardware failure and service interruptions.</p>
+
+<ul>
+<li>Primary and master nodes are the nodes that can accept writes. MongoDB&rsquo;s replications is
+signle-master: only one node can accept write operations at a time.</li>
+<li>Secondary and slave nodes are read-only nodes that replicate from the primary.</li>
+</ul>
+
+
+<h3>Define sharding.</h3>
+
+<p>Sharding is a method for storing data across multiple machines. MongoDB uses sharding to
+support deployments with very large data sets and high throughput operations.</p>
+
+<h3>Define GridFS.</h3>
+
+<p>GridFS is a specification for storing and retrieving files that exceed the BSON-document
+size limit of 16 MB. Instead of storing a file in a single document, GridFS divides a file
+into parts, or chunks, and stores each of those chunks as a separate document.</p>
+
+<h3>Define journaling.</h3>
+
+<p>When running with journaling, MongoDB stores and applies write operations in memory and
+in the on-disk journal before the changes are present in the data files on disk.</p>
+
+<p>Writes to the journal are atomic, ensuring the consistency of the on-disk journal files.
+With journaling enabled, MongoDB creates a journal subdirectory within the directory defined by
+dbPath, which is <code>/data/db</code> by default.</p>
+
+<h2>Database Architecture</h2>
+
+<h3>Define storage engine.</h3>
+
+<p>A storage engine is the part of a database that is responsible for managing how data is
+stored on disk. For example, one storage engine might offer better performance for read-heavy
+workloads, and another might support a higher-throughput for write operations.</p>
+
+<p>Types of storage engines:</p>
+
+<ul>
+<li>WiredTiger: specify the maximum size of the cache that WiredTiger will use for all data. This
+can be done using <code>storage.wiredTiger.engineConfig.cacheSizeGB</code> option.</li>
+<li>MMAPv1: does not allow configuring the cache size.</li>
+</ul>
+
+
+<h3>Define profiler.</h3>
+
+<p>The database profiler collects fine grained data about MongoDB write operations, cursors,
+database commands on a running mongod instance. You can enable profiling on a per-database or
+per-instance basis.</p>
+
+<p>The database profiler writes all the data it collects to the system.profile collection, which
+is a capped collection.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Interview Questions of RDBMS]]></title>
+    <link href="http://k.arttechresearch.com/tech/2016/03/28/interview-questions-of-rdbms/"/>
+    <updated>2016-03-28T16:49:53+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2016/03/28/interview-questions-of-rdbms</id>
+    <content type="html"><![CDATA[<h2>Concepts</h2>
+
+<h3>Define database.</h3>
+
+<h3>Define data warehousing.</h3>
+
+<p>Storage and access of data from the central location in order to take some strategic decision is
+called data warehousing. Enterprise management is used for managing the information whose framework is known as Data Warehousing.</p>
+
+<h2>Database Design</h2>
+
+<h3>Database Modeling.</h3>
+
+<ul>
+<li>entities -> relationships -> ERM</li>
+<li>attributes -> types</li>
+<li>normalization</li>
+</ul>
+
+
+<h3>Enlist the various relationships of database.</h3>
+
+<ul>
+<li>one-to-one: single table having drawn relationship with another table having similar kind of columns.</li>
+<li>one-to-many: two tables having primary and foreign key relation.</li>
+<li>many-to-many: junction table having many tables relatd to many tables.</li>
+</ul>
+
+
+<h3>Define normalization.</h3>
+
+<p>Organized data void of inconsistent dependency and redundancy within a database is called normalization.</p>
+
+<ul>
+<li>1NF (attribute):</li>
+<li>2NF (record):</li>
+<li>3NF (table):</li>
+</ul>
+
+
+<p>Advantages of normalization:</p>
+
+<ul>
+<li>non duplicate entries</li>
+<li>saves storage space</li>
+<li>boasts the query performances</li>
+</ul>
+
+
+<h3>Define denormalization.</h3>
+
+<p>Boosting up database performance, adding of redundant data which in turn helps rid of complex data is called denormalization.</p>
+
+<h2>Database Languages</h2>
+
+<h3>Define DDL.</h3>
+
+<p>Managing properties and attributes of database is called data definition language (DDL).</p>
+
+<ul>
+<li>CREATE: create is used in <code>CREATE TABLE [column name] ([ column definitions ]) [table parameters]</code></li>
+<li>ALTER: it helps in modification of an existing object of database.</li>
+<li>DROP: it destroys an exisiting database, index, table or view.</li>
+</ul>
+
+
+<pre><code class="sql">CREATE TABLE [column name] ([column definitions]) [table parameters]
+ALTER objecttype objectname parameters
+DROP objecttype objectname
+</code></pre>
+
+<h3>Define DML.</h3>
+
+<p>Manipulating data in a database such as inserting, updating, deleting is defined as Data Manipulation Language (DML).</p>
+
+<h3>Define cursor.</h3>
+
+<p>A database object which helps in manipulating data row by row representing a result set is called cursor.</p>
+
+<p>cursor types:</p>
+
+<ul>
+<li>dynamic: it relects changes while scrolling.</li>
+<li>static: doesn&rsquo;t reflect changes while scrolling and works on recording of snapshot.</li>
+<li>keyset: data modification without reflection of new data is seen.</li>
+</ul>
+
+
+<p>types of cursor:</p>
+
+<ul>
+<li>implicit cursor: declared automatically as soon as the execution of SQL takes place without the wareness of the user.</li>
+<li>explicit cursor: defined by PL/SQL which handles query in more than one row.</li>
+</ul>
+
+
+<h3>Define operators.</h3>
+
+<ul>
+<li>union all: full recordings of two tables</li>
+<li><p>union: a distinct recording of two tables</p></li>
+<li><p>group: uses aggregrate values to be derived by collecting similar data.</p></li>
+<li><p>aggregation: operates against a collection of values and returning single value</p></li>
+<li><p>join: helps in explaining the relation between different tables. They also enable you to select data with relation to data in another table.</p>
+
+<ul>
+<li>inner joins: blank rows are left in the middle while more than equal to two tables are joined.</li>
+<li>outer joins: devided into left outer join and right outer join. Blank rows are left at the specified side by joining tables in other side.</li>
+<li>ohter joins: cross joins, natural joins, equi join, non-equi join.</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Define indexes.</h3>
+
+<ul>
+<li>non-clustered index: B-tree structure, has data pointers enabling one table many non-clustered indexes.</li>
+<li>clustered index: B-tree structure, distinct for every table.</li>
+</ul>
+
+
+<p>Index hunting: Indexes help in improving the speed as well as the query performance of database.
+The procedure of boosting the collection of indexes is named as Index hunting.</p>
+
+<ul>
+<li>the query optimizer is used to coordinate the study of queries with the workload and the best
+use of queries suggested based on this.</li>
+<li>Index, query distribution along with their performance is observed to check the effect.
+Tuning databases to a small collection of problem queries is also recommended.</li>
+</ul>
+
+
+<h3>Define view.</h3>
+
+<p>Restrictions of views:</p>
+
+<ul>
+<li>only the current database can have views.</li>
+<li>you have not liable to change any computed value in any particular view.</li>
+<li>integrity constants decide the functionality of INSERT and DELETE.</li>
+<li>temporary views cannot be created.</li>
+<li>temporary tables cannot contain views.</li>
+<li>non association with DEFAULT definitions.</li>
+<li>triggers such as INSTEAD OF is associated with views.</li>
+</ul>
+
+
+<h3>Define transactions.</h3>
+
+<p>Transaction phases:</p>
+
+<ul>
+<li>analysis phase</li>
+<li>redo phase</li>
+<li>undo phase</li>
+</ul>
+
+
+<p>ACID:</p>
+
+<ul>
+<li>Atomicity</li>
+<li>Consistence</li>
+<li>Isolation</li>
+<li>Durability</li>
+</ul>
+
+
+<h2>Database Admin</h2>
+
+<h3>Define partitioning.</h3>
+
+<p>Database partitioning: division of logical database into independent complete units for
+improving its management, availability and performance. Splitting of one table which is
+large into smaller database entities logically.</p>
+
+<p>The importance of partitioning:</p>
+
+<ul>
+<li>to improve query performance in situations dramatically when mostly rows which are heavily
+accessed are in one partition.</li>
+<li>accessing large parts of a single partition.</li>
+<li>slower and cheaper storage media can be used for data which is seldom used.</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[MongoDB Sharding]]></title>
@@ -162,115 +849,6 @@ targeting:
 <li><a href="https://docs.mongodb.org/manual/core/sharding-introduction/">Sharding</a></li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[MongoDB Replication]]></title>
-    <link href="http://k.arttechresearch.com/tech/2016/03/24/mongodb-replication/"/>
-    <updated>2016-03-24T10:59:23+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2016/03/24/mongodb-replication</id>
-    <content type="html"><![CDATA[<h2>Definitions</h2>
-
-<p>Replication is the process of synchronizing data across multiple servers.</p>
-
-<p>Purposes of replication</p>
-
-<ul>
-<li>provides redundancy and increases data availability. With multiple copies of data on different database servers, replication provides a level of fault tolerance against the loss of a signle database server.</li>
-<li>provides increased read capacity as clients can send read operations to different servers. Maintaining copies of data in different data centers can increase data locality and availability for distributed applications.</li>
-<li>dedicated purposes, such as disaster recovery, reporting, or backup.</li>
-</ul>
-
-
-<h2>Concepts</h2>
-
-<h3>Replica Set: Members</h3>
-
-<h3>Replica Set: Deployment Architectures</h3>
-
-<h3>Replica Set: High Availability</h3>
-
-<h3>Replica Set: Read and Write Senmantics</h3>
-
-<p><img src="https://docs.mongodb.org/manual/_images/crud-write-concern-w2.png" /></p>
-
-<p>image source: MongoDB official site</p>
-
-<p><img src="https://docs.mongodb.org/manual/_images/replica-set-read-preference.png" /></p>
-
-<p>image source: MongoDB official site</p>
-
-<h3>Replication Processes</h3>
-
-<h3>Master Slave Replication</h3>
-
-<h2>Tutorials</h2>
-
-<h2>Reference</h2>
-
-<ul>
-<li><a href="https://docs.mongodb.org/manual/core/replication-introduction/">Replication</a></li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[MongoDB Security]]></title>
-    <link href="http://k.arttechresearch.com/tech/2016/03/24/mongodb-security/"/>
-    <updated>2016-03-24T10:59:17+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2016/03/24/mongodb-security</id>
-    <content type="html"><![CDATA[
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[MongoDB Storage]]></title>
-    <link href="http://k.arttechresearch.com/tech/2016/03/24/mongodb-storage/"/>
-    <updated>2016-03-24T10:59:08+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2016/03/24/mongodb-storage</id>
-    <content type="html"><![CDATA[<h2>Definitions</h2>
-
-<ul>
-<li>storage engine: the primary component of MongoDB responsible for managing data.</li>
-<li>journal: a log that helps the database recover in the event of a hard shutdown.</li>
-<li>GridFS: a versatile storage system that is suited to handling large files, such as those exceeding the 16 MB document size limit.</li>
-</ul>
-
-
-<h2>Concepts</h2>
-
-<h3>Storage Engine</h3>
-
-<ul>
-<li>WiredTiger: the default storage engine. It is well-suited for most workloads and is recommended for new deployments. WiredTiger provides a document-level concurrency model, checkpointing, and compression, among other features.</li>
-<li>MMAPv1: the original storage engine. It performs well on workloads with high volumes of reads and writes, as well as in-place updates.</li>
-<li>In-Memory Storage Engine: rather than storing documents on-disk, it retains them in-memory for more predictable data latencies. This storage engine is in beta.</li>
-</ul>
-
-
-<h3>Journal</h3>
-
-<h3>GridFS</h3>
-
-<h2>Tutorials</h2>
-
-<h2>Reference</h2>
-
-<ul>
-<li><a href="https://docs.mongodb.org/manual/storage/">Storage</a></li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[MongoDB Indexes]]></title>
-    <link href="http://k.arttechresearch.com/tech/2016/03/24/mongodb-indexes/"/>
-    <updated>2016-03-24T10:59:00+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2016/03/24/mongodb-indexes</id>
-    <content type="html"><![CDATA[
 ]]></content>
   </entry>
   
