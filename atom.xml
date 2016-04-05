@@ -4,7 +4,7 @@
   <title><![CDATA[K]]></title>
   <link href="http://k.arttechresearch.com/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2016-03-29T00:17:35+08:00</updated>
+  <updated>2016-04-05T17:22:45+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[K]]></name>
@@ -12,6 +12,187 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Programming Languages Comparison: Print]]></title>
+    <link href="http://k.arttechresearch.com/tech/2016/04/05/programming-languages-comparison-print/"/>
+    <updated>2016-04-05T17:08:53+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2016/04/05/programming-languages-comparison-print</id>
+    <content type="html"><![CDATA[<h2>Task</h2>
+
+<ul>
+<li>Save a line of input from stdin to a variable</li>
+<li>Print <code>Hello, World</code> on a single line</li>
+<li>Print the value of the variable on a second line</li>
+</ul>
+
+
+<h2>Solutions</h2>
+
+<h3>C</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &lt;stdio.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;string.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;math.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;stdlib.h&gt;</span>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>   <span class="kt">char</span> <span class="n">inputString</span><span class="p">[</span><span class="mi">105</span><span class="p">];</span> <span class="c1">// declare a variable to hold our input</span>
+</span><span class='line'>   <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%[^</span><span class="se">\n</span><span class="s">]&quot;</span><span class="p">,</span> <span class="n">inputString</span><span class="p">);</span> <span class="c1">// get a line of input from stdin and save it to our variable</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="c1">// Your first line of output goes here</span>
+</span><span class='line'>   <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hello, World.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="c1">// Write the second line of output</span>
+</span><span class='line'>   <span class="n">printf</span><span class="p">(</span><span class="n">inputString</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>C++</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="cp">#include &lt;cmath&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;cstdio&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;vector&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;iostream&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;algorithm&gt;</span>
+</span><span class='line'><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>   <span class="n">string</span> <span class="n">inputString</span><span class="p">;</span> <span class="c1">// declare a variable to hold our input</span>
+</span><span class='line'>   <span class="n">getline</span><span class="p">(</span><span class="n">cin</span><span class="p">,</span> <span class="n">inputString</span><span class="p">);</span> <span class="c1">// get a line of input from cin and save it to our variable</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="c1">// Your first line of output goes here</span>
+</span><span class='line'>   <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Hello, World.&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="c1">// Write the second line of output</span>
+</span><span class='line'>   <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">inputString</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Java</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">import</span> <span class="nn">java.io.*</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.text.*</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.math.*</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.regex.*</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
+</span><span class='line'>   <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">Scanner</span> <span class="n">scan</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Scanner</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">in</span><span class="o">);</span> <span class="c1">// use the Scanner class to read from stdin</span>
+</span><span class='line'>      <span class="n">String</span> <span class="n">inputString</span> <span class="o">=</span> <span class="n">scan</span><span class="o">.</span><span class="na">nextLine</span><span class="o">();</span> <span class="c1">// read a line of input and save it to a variable</span>
+</span><span class='line'>      <span class="n">scan</span><span class="o">.</span><span class="na">close</span><span class="o">();</span> <span class="c1">// close the scanner</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="c1">// Your first line of output goes here</span>
+</span><span class='line'>      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Hello, World.&quot;</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="c1">// Write the second line of output</span>
+</span><span class='line'>      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">inputString</span><span class="o">);</span>
+</span><span class='line'>   <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Python</h3>
+
+<p>python2</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">inputString</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">()</span> <span class="c"># get a line of input from stdin and save it to our variable</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Your first line of output goes here</span>
+</span><span class='line'><span class="k">print</span> <span class="s">&#39;Hello, World.&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Write the second line of output</span>
+</span><span class='line'><span class="k">print</span> <span class="n">inputString</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>python3</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">inputString</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span> <span class="c"># get a line of input from stdin and save it to our variable</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Your first line of output goes here</span>
+</span><span class='line'><span class="k">print</span><span class="p">(</span><span class="s">&#39;Hello, World.&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Write the second line of output</span>
+</span><span class='line'><span class="k">print</span><span class="p">(</span><span class="n">inputString</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Algorithms]]></title>
@@ -2626,371 +2807,6 @@ all nodes in Binary Tree. Max Binary Heap is similar to Min Heap.</li>
 </span><span class='line'><span class="n">If</span> <span class="n">the</span> <span class="n">implementation</span> <span class="ow">is</span> <span class="n">easy</span> <span class="n">to</span> <span class="n">explain</span><span class="p">,</span> <span class="n">it</span> <span class="n">may</span> <span class="n">be</span> <span class="n">a</span> <span class="n">good</span> <span class="n">idea</span><span class="o">.</span>
 </span><span class='line'><span class="n">Namespaces</span> <span class="n">are</span> <span class="n">one</span> <span class="n">honking</span> <span class="n">great</span> <span class="n">idea</span> <span class="o">--</span> <span class="n">let</span><span class="s">&#39;s do more of those!</span>
 </span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Complexity of Python Operations]]></title>
-    <link href="http://k.arttechresearch.com/tech/2016/03/14/complexity-of-python-operations/"/>
-    <updated>2016-03-14T21:25:46+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2016/03/14/complexity-of-python-operations</id>
-    <content type="html"><![CDATA[<p>Types of the operations:</p>
-
-<ul>
-<li>lists</li>
-<li>sets</li>
-<li>dictionary</li>
-</ul>
-
-
-<h2>Lists</h2>
-
-<table>
-<thead>
-<tr>
-<th> Operation     </th>
-<th> Example      </th>
-<th> Class         </th>
-<th> Notes                             </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td> Index         </td>
-<td> l[i]         </td>
-<td> O(1)          </td>
-<td>                                   </td>
-</tr>
-<tr>
-<td> Store         </td>
-<td> l[i] = 0     </td>
-<td> O(1)          </td>
-<td>                                   </td>
-</tr>
-<tr>
-<td> Length        </td>
-<td> len(l)       </td>
-<td> O(1)          </td>
-<td>                                   </td>
-</tr>
-<tr>
-<td> Append        </td>
-<td> l.append(5)  </td>
-<td> O(1)          </td>
-<td>                                   </td>
-</tr>
-<tr>
-<td> Pop           </td>
-<td> l.pop()      </td>
-<td> O(1)          </td>
-<td> same as l.pop(-1), popping at end </td>
-</tr>
-<tr>
-<td> Clear         </td>
-<td> l.clear()    </td>
-<td> O(1)          </td>
-<td> similar to l = []                 </td>
-</tr>
-<tr>
-<td> Slice         </td>
-<td> l[a:b]       </td>
-<td> O(b-a)        </td>
-<td> l[1:5]:O(l)/l[:]:O(len(l)-0)=O(N) </td>
-</tr>
-<tr>
-<td> Extend        </td>
-<td> l.extend(&hellip;)</td>
-<td> O(len(&hellip;))   </td>
-<td> depends only on len of extension  </td>
-</tr>
-<tr>
-<td> Construction  </td>
-<td> list(&hellip;)    </td>
-<td> O(len(&hellip;))   </td>
-<td> depends on length of argument     </td>
-</tr>
-<tr>
-<td> check ==, !=  </td>
-<td> l1 == l2     </td>
-<td> O(N)          </td>
-<td>                                   </td>
-</tr>
-<tr>
-<td> Insert        </td>
-<td> l[a:b] = &hellip; </td>
-<td> O(N)          </td>
-<td>                                   </td>
-</tr>
-<tr>
-<td> Delete        </td>
-<td> del l[i]     </td>
-<td> O(N)          </td>
-<td>                                   </td>
-</tr>
-<tr>
-<td> Remove        </td>
-<td> l.remove(&hellip;)</td>
-<td> O(N)          </td>
-<td>                                   </td>
-</tr>
-<tr>
-<td> Containment   </td>
-<td> x in/not in l</td>
-<td> O(N)          </td>
-<td> searches list                     </td>
-</tr>
-<tr>
-<td> Copy          </td>
-<td> l.copy()     </td>
-<td> O(N)          </td>
-<td> Same as l[:] which is O(N)        </td>
-</tr>
-<tr>
-<td> Pop           </td>
-<td> l.pop(0)     </td>
-<td> O(N)          </td>
-<td>                                   </td>
-</tr>
-<tr>
-<td> Extreme value </td>
-<td> min(l)/max(l)</td>
-<td> O(N)          </td>
-<td>                                   </td>
-</tr>
-<tr>
-<td> Reverse       </td>
-<td> l.reverse()  </td>
-<td> O(N)          </td>
-<td>                                   </td>
-</tr>
-<tr>
-<td> Iteration     </td>
-<td> for v in l:  </td>
-<td> O(N)          </td>
-<td>                                   </td>
-</tr>
-<tr>
-<td> Sort          </td>
-<td> l.sort()     </td>
-<td> O(N Log N)    </td>
-<td> key/reverse doesn&rsquo;t change this   </td>
-</tr>
-<tr>
-<td> Multiply      </td>
-<td> k*l          </td>
-<td> O(k N)        </td>
-<td> 5<em>l is O(N): len(l)</em>l is O(N**2)  </td>
-</tr>
-</tbody>
-</table>
-
-
-<h2>Sets</h2>
-
-<table>
-<thead>
-<tr>
-<th> Operation     </th>
-<th> Example      </th>
-<th> Class         </th>
-<th> Notes                         </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td> Length        </td>
-<td> len(s)       </td>
-<td> O(1)          </td>
-<td>                               </td>
-</tr>
-<tr>
-<td> Add           </td>
-<td> s.add(5)     </td>
-<td> O(1)          </td>
-<td>                               </td>
-</tr>
-<tr>
-<td> Containment   </td>
-<td> x in/not in s</td>
-<td> O(1)          </td>
-<td> compare to list/tuple - O(N)  </td>
-</tr>
-<tr>
-<td> Remove        </td>
-<td> s.remove(5)  </td>
-<td> O(1)          </td>
-<td> compare to list/tuple - O(N)  </td>
-</tr>
-<tr>
-<td> Discard       </td>
-<td> s.discard(5) </td>
-<td> O(1)          </td>
-<td>                               </td>
-</tr>
-<tr>
-<td> Pop           </td>
-<td> s.pop()      </td>
-<td> O(1)          </td>
-<td> compare to list - O(N)        </td>
-</tr>
-<tr>
-<td> Clear         </td>
-<td> s.clear()    </td>
-<td> O(1)          </td>
-<td> similar to s = set()          </td>
-</tr>
-<tr>
-<td> Construction  </td>
-<td> set(&hellip;)     </td>
-<td> len(&hellip;)      </td>
-<td>                               </td>
-</tr>
-<tr>
-<td> check ==, !=  </td>
-<td> s != t       </td>
-<td> O(min(len(s),lent(t))</td>
-<td>                        </td>
-</tr>
-<tr>
-<td> &lt;=/&lt;          </td>
-<td> s &lt;= t       </td>
-<td> O(len(s1))    </td>
-<td> issubset                      </td>
-</tr>
-<tr>
-<td> >=/>          </td>
-<td> s >= t       </td>
-<td> O(len(s2))    </td>
-<td> issuperset s &lt;= t == t >= s   </td>
-</tr>
-<tr>
-<td> Union         </td>
-<td> s </td>
-<td> t        </td>
-<td> O(len(s)+len(t))|                             </td>
-</tr>
-<tr>
-<td> Intersection  </td>
-<td> s &amp; t        </td>
-<td> O(min(len(s),lent(t))</td>
-<td>                        </td>
-</tr>
-<tr>
-<td> Difference    </td>
-<td> s - t        </td>
-<td> O(len(t))     </td>
-<td>                               </td>
-</tr>
-<tr>
-<td> Symmetric Diff</td>
-<td> s ^ t        </td>
-<td> O(len(s))     </td>
-<td>                               </td>
-</tr>
-<tr>
-<td> Iteration     </td>
-<td> for v in s:  </td>
-<td> O(N)          </td>
-<td>                               </td>
-</tr>
-<tr>
-<td> Copy          </td>
-<td> s.copy()     </td>
-<td> O(N)          </td>
-<td>                               </td>
-</tr>
-</tbody>
-</table>
-
-
-<h2>Dictionary</h2>
-
-<table>
-<thead>
-<tr>
-<th> Operation     </th>
-<th> Example      </th>
-<th> Class         </th>
-<th> Notes                         </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td> Index         </td>
-<td> d[k]         </td>
-<td> O(1)          </td>
-<td>                               </td>
-</tr>
-<tr>
-<td> Store         </td>
-<td> d[k] = v     </td>
-<td> O(1)          </td>
-<td>                               </td>
-</tr>
-<tr>
-<td> Length        </td>
-<td> len(d)       </td>
-<td> O(1)          </td>
-<td>                               </td>
-</tr>
-<tr>
-<td> Delete        </td>
-<td> del d[k]     </td>
-<td> O(1)          </td>
-<td>                               </td>
-</tr>
-<tr>
-<td> get/setdefault</td>
-<td> d.method     </td>
-<td> O(1)          </td>
-<td>                               </td>
-</tr>
-<tr>
-<td> Pop           </td>
-<td> d.pop(k)     </td>
-<td> O(1)          </td>
-<td>                               </td>
-</tr>
-<tr>
-<td> Pop item      </td>
-<td> d.popitem()  </td>
-<td> O(1)          </td>
-<td>                               </td>
-</tr>
-<tr>
-<td> Clear         </td>
-<td> d.clear()    </td>
-<td> O(1)          </td>
-<td> similar to s = {} or = dict() </td>
-</tr>
-<tr>
-<td> Views         </td>
-<td> d.keys()     </td>
-<td> O(1)          </td>
-<td>                               </td>
-</tr>
-<tr>
-<td> Construction  </td>
-<td> dict(&hellip;)    </td>
-<td> len(&hellip;)      </td>
-<td>                               </td>
-</tr>
-<tr>
-<td> Iteration     </td>
-<td> for k in d:  </td>
-<td> O(N)          </td>
-<td> all forms: keys, values, items</td>
-</tr>
-</tbody>
-</table>
-
-
-<h2>References</h2>
-
-<ul>
-<li><a href="https://www.ics.uci.edu/~pattis/ICS-33/lectures/complexitypython.txt">Complexity of Python Operations</a></li>
-</ul>
 
 ]]></content>
   </entry>
