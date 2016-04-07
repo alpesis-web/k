@@ -4,7 +4,7 @@
   <title><![CDATA[K]]></title>
   <link href="http://k.arttechresearch.com/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2016-04-05T17:22:45+08:00</updated>
+  <updated>2016-04-08T01:34:58+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[K]]></name>
@@ -12,6 +12,541 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Programming Languages Comparison: Operators]]></title>
+    <link href="http://k.arttechresearch.com/tech/2016/04/07/programming-languages-comparison-operators/"/>
+    <updated>2016-04-07T23:57:09+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2016/04/07/programming-languages-comparison-operators</id>
+    <content type="html"><![CDATA[<h2>Task</h2>
+
+<ul>
+<li>get the input: mealCost, tipPercent, taxPercent</li>
+<li>calculate the tip: tip = mealCost * tipPercent / 100</li>
+<li>calculate the tax: tax = mealCost * taxPercent / 100</li>
+<li>calculate the totalCost: totalCost = mealCost + tip + tax</li>
+<li>round the totalCost</li>
+<li>print the output</li>
+</ul>
+
+
+<h2>Solutions</h2>
+
+<h3>C</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &lt;stdio.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;string.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;math.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;stdlib.h&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="cm">/* Enter your code here. Read input from STDIN. Print output to STDOUT */</span>
+</span><span class='line'>    <span class="kt">float</span> <span class="n">mealCost</span><span class="p">;</span>
+</span><span class='line'>    <span class="kt">float</span> <span class="n">tipPercent</span><span class="p">;</span>
+</span><span class='line'>    <span class="kt">float</span> <span class="n">taxPercent</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%f&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">mealCost</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">%f</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">tipPercent</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%f&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">taxPercent</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kt">double</span> <span class="n">tip</span> <span class="o">=</span> <span class="n">mealCost</span> <span class="o">*</span> <span class="n">tipPercent</span> <span class="o">/</span> <span class="mf">100.0</span><span class="p">;</span>
+</span><span class='line'>    <span class="kt">double</span> <span class="n">tax</span> <span class="o">=</span> <span class="n">mealCost</span> <span class="o">*</span> <span class="n">taxPercent</span> <span class="o">/</span> <span class="mf">100.0</span><span class="p">;</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">totalCost</span> <span class="o">=</span> <span class="n">round</span><span class="p">(</span><span class="n">mealCost</span> <span class="o">+</span> <span class="n">tip</span> <span class="o">+</span> <span class="n">tax</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;The total meal cost is %d dollars.&quot;</span><span class="p">,</span> <span class="n">totalCost</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>C++</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="cp">#include &lt;cmath&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;cstdio&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;vector&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;iostream&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;algorithm&gt;</span>
+</span><span class='line'><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="cm">/* Enter your code here. Read input from STDIN. Print output to STDOUT */</span>
+</span><span class='line'>    <span class="kt">double</span> <span class="n">mealCost</span><span class="p">;</span>
+</span><span class='line'>    <span class="kt">double</span> <span class="n">tipPercent</span><span class="p">;</span>
+</span><span class='line'>    <span class="kt">double</span> <span class="n">taxPercent</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">mealCost</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">tipPercent</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">taxPercent</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kt">double</span> <span class="n">tip</span> <span class="o">=</span> <span class="n">mealCost</span> <span class="o">*</span> <span class="n">tipPercent</span> <span class="o">/</span> <span class="mi">100</span><span class="p">;</span>
+</span><span class='line'>    <span class="kt">double</span> <span class="n">tax</span> <span class="o">=</span> <span class="n">mealCost</span> <span class="o">*</span> <span class="n">taxPercent</span> <span class="o">/</span> <span class="mi">100</span><span class="p">;</span>
+</span><span class='line'>    <span class="kt">double</span> <span class="n">totalCost</span> <span class="o">=</span> <span class="n">mealCost</span> <span class="o">+</span> <span class="n">tip</span> <span class="o">+</span> <span class="n">tax</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;The total meal cost is &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">round</span><span class="p">(</span><span class="n">totalCost</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; dollars.&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Java</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">import</span> <span class="nn">java.io.*</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.text.*</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.math.*</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.regex.*</span><span class="o">;</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Arithmetic</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">Scanner</span> <span class="n">scan</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Scanner</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">in</span><span class="o">);</span>
+</span><span class='line'>        <span class="kt">double</span> <span class="n">mealCost</span> <span class="o">=</span> <span class="n">scan</span><span class="o">.</span><span class="na">nextDouble</span><span class="o">();</span> <span class="c1">// original meal price</span>
+</span><span class='line'>        <span class="kt">double</span> <span class="n">tipPercent</span> <span class="o">=</span> <span class="n">scan</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span> <span class="c1">// tip percentage</span>
+</span><span class='line'>        <span class="kt">double</span> <span class="n">taxPercent</span> <span class="o">=</span> <span class="n">scan</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span> <span class="c1">// tax percentage</span>
+</span><span class='line'>        <span class="n">scan</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c1">// Write your calculation code here.</span>
+</span><span class='line'>        <span class="kt">double</span> <span class="n">tip</span> <span class="o">=</span> <span class="n">mealCost</span> <span class="o">*</span> <span class="o">(</span><span class="n">tipPercent</span><span class="o">/</span><span class="mi">100</span><span class="o">);</span>
+</span><span class='line'>        <span class="kt">double</span> <span class="n">tax</span> <span class="o">=</span> <span class="n">mealCost</span> <span class="o">*</span> <span class="o">(</span><span class="n">taxPercent</span><span class="o">/</span><span class="mi">100</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c1">// cast the result of the rounding operation to an int and save it as totalCost</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">totalCost</span> <span class="o">=</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="n">Math</span><span class="o">.</span><span class="na">round</span><span class="o">(</span><span class="n">mealCost</span><span class="o">+</span><span class="n">tip</span><span class="o">+</span><span class="n">tax</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c1">// Print your result</span>
+</span><span class='line'>        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;The total meal cost is &quot;</span> <span class="o">+</span> <span class="n">totalCost</span> <span class="o">+</span> <span class="s">&quot; dollars.&quot;</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Python</h3>
+
+<p>Python 2</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">mealCost</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">raw_input</span><span class="p">())</span>
+</span><span class='line'><span class="n">tipPercent</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">raw_input</span><span class="p">())</span>
+</span><span class='line'><span class="n">taxPercent</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">raw_input</span><span class="p">())</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">tip</span> <span class="o">=</span> <span class="n">mealCost</span> <span class="o">*</span> <span class="p">(</span> <span class="n">tipPercent</span><span class="o">/</span><span class="mi">100</span><span class="p">)</span>
+</span><span class='line'><span class="n">tax</span> <span class="o">=</span> <span class="n">mealCost</span> <span class="o">*</span> <span class="p">(</span><span class="n">taxPercent</span><span class="o">/</span><span class="mi">100</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">totalCost</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">mealCost</span> <span class="o">+</span> <span class="n">tip</span> <span class="o">+</span> <span class="n">tax</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">print</span> <span class="s">&quot;The total meal cost is </span><span class="si">%d</span><span class="s"> dollars.&quot;</span> <span class="o">%</span> <span class="n">totalCost</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Python 3</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">mealCost</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span>
+</span><span class='line'><span class="n">tipPercent</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span>
+</span><span class='line'><span class="n">taxPercent</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">tip</span> <span class="o">=</span> <span class="n">mealCost</span> <span class="o">*</span> <span class="p">(</span><span class="n">tipPercent</span><span class="o">/</span><span class="mi">100</span><span class="p">)</span>
+</span><span class='line'><span class="n">tax</span> <span class="o">=</span> <span class="n">mealCost</span> <span class="o">*</span> <span class="p">(</span><span class="n">taxPercent</span><span class="o">/</span><span class="mi">100</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">totalCost</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">mealCost</span> <span class="o">+</span> <span class="n">tip</span> <span class="o">+</span> <span class="n">tax</span><span class="p">)</span>
+</span><span class='line'><span class="k">print</span><span class="p">(</span><span class="s">&quot;The total meal cost is </span><span class="si">%d</span><span class="s"> dollars.&quot;</span> <span class="o">%</span> <span class="n">totalCost</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Programming Languages Comparison: Data Types]]></title>
+    <link href="http://k.arttechresearch.com/tech/2016/04/07/programming-languages-comparison-data-types/"/>
+    <updated>2016-04-07T01:55:32+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2016/04/07/programming-languages-comparison-data-types</id>
+    <content type="html"><![CDATA[<h2>Task</h2>
+
+<ul>
+<li>get the variables: int, double, string</li>
+<li>calculate the sum of the digits and concat the strings</li>
+<li>print the results</li>
+</ul>
+
+
+<h2>Solutions</h2>
+
+<h3>C</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &lt;stdio.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;string.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;math.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;stdlib.h&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+</span><span class='line'>    <span class="kt">double</span> <span class="n">d</span> <span class="o">=</span> <span class="mf">4.0</span><span class="p">;</span>
+</span><span class='line'>    <span class="kt">char</span> <span class="n">s</span><span class="p">[]</span> <span class="o">=</span> <span class="s">&quot;HackerRank &quot;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Declare second integer, double, and String variables.</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">num</span><span class="p">;</span>
+</span><span class='line'>    <span class="kt">float</span> <span class="n">digit</span><span class="p">;</span>
+</span><span class='line'>    <span class="kt">char</span> <span class="n">string</span><span class="p">[</span><span class="mi">100</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Read and save an integer, double, and String to your variables.</span>
+</span><span class='line'>    <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">num</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">%f</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">digit</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%[^</span><span class="se">\n</span><span class="s">]&quot;</span><span class="p">,</span> <span class="n">string</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Print the sum of both integer variables on a new line.</span>
+</span><span class='line'>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="n">num</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Print the sum of the double variables on a new line.</span>
+</span><span class='line'>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%.1f</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">d</span><span class="o">+</span><span class="n">digit</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Concatenate and print the String variables on a new line</span>
+</span><span class='line'>    <span class="c1">// The &#39;s&#39; variable above should be printed first.</span>
+</span><span class='line'>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%s%s&quot;</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">string</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>C++</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="cp">#include &lt;iostream&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;iomanip&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;limits&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+</span><span class='line'>    <span class="kt">double</span> <span class="n">d</span> <span class="o">=</span> <span class="mf">4.0</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">string</span> <span class="n">s</span> <span class="o">=</span> <span class="s">&quot;HackerRank &quot;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Java</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">import</span> <span class="nn">java.io.*</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.text.*</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.math.*</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.regex.*</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
+</span><span class='line'>  
+</span><span class='line'>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">4</span><span class="o">;</span>
+</span><span class='line'>        <span class="kt">double</span> <span class="n">d</span> <span class="o">=</span> <span class="mf">4.0</span><span class="o">;</span>
+</span><span class='line'>        <span class="n">String</span> <span class="n">s</span> <span class="o">=</span> <span class="s">&quot;HackerRank &quot;</span><span class="o">;</span>
+</span><span class='line'>      
+</span><span class='line'>        <span class="n">Scanner</span> <span class="n">scan</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Scanner</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">in</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="cm">/* Declare second integer, double, and String variables. */</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">i2</span> <span class="o">=</span> <span class="n">scan</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
+</span><span class='line'>        <span class="kt">double</span> <span class="n">d2</span> <span class="o">=</span> <span class="n">scan</span><span class="o">.</span><span class="na">nextDouble</span><span class="o">();</span>
+</span><span class='line'>        <span class="n">String</span> <span class="n">empty</span> <span class="o">=</span> <span class="n">scan</span><span class="o">.</span><span class="na">nextLine</span><span class="o">();</span>
+</span><span class='line'>        <span class="n">String</span> <span class="n">s2</span> <span class="o">=</span> <span class="n">scan</span><span class="o">.</span><span class="na">nextLine</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="cm">/* Read and save an integer, double, and String to your variables.*/</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">int_sum</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="n">i2</span><span class="o">;</span>
+</span><span class='line'>        <span class="kt">double</span> <span class="n">double_sum</span> <span class="o">=</span> <span class="n">d</span> <span class="o">+</span> <span class="n">d2</span><span class="o">;</span>
+</span><span class='line'>        <span class="n">String</span> <span class="n">combine_s</span> <span class="o">=</span> <span class="n">s</span> <span class="o">+</span> <span class="n">s2</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="cm">/* Print the sum of both integer variables on a new line. */</span>
+</span><span class='line'>        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">int_sum</span><span class="o">);</span>
+</span><span class='line'>        <span class="cm">/* Print the sum of the double variables on a new line. */</span>
+</span><span class='line'>        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">double_sum</span><span class="o">);</span>
+</span><span class='line'>        <span class="cm">/* Concatenate and print the String variables on a new line; </span>
+</span><span class='line'><span class="cm">         the &#39;s&#39; variable above should be printed first. */</span>
+</span><span class='line'>        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">combine_s</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">scan</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Python</h3>
+
+<p>python 2</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">i</span> <span class="o">=</span> <span class="mi">4</span>
+</span><span class='line'><span class="n">d</span> <span class="o">=</span> <span class="mf">4.0</span>
+</span><span class='line'><span class="n">s</span> <span class="o">=</span> <span class="s">&#39;HackerRank &#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Declare second integer, double, and String variables.</span>
+</span><span class='line'><span class="n">i2</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">raw_input</span><span class="p">())</span>
+</span><span class='line'><span class="n">d2</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">raw_input</span><span class="p">())</span>
+</span><span class='line'><span class="n">s2</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">raw_input</span><span class="p">())</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Read and save an integer, double, and String to your variables.</span>
+</span><span class='line'><span class="n">total_i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="n">i2</span>
+</span><span class='line'><span class="n">total_d</span> <span class="o">=</span> <span class="n">d</span> <span class="o">+</span> <span class="n">d2</span>
+</span><span class='line'><span class="n">strings</span> <span class="o">=</span> <span class="n">s</span> <span class="o">+</span> <span class="n">s2</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Print the sum of both integer variables on a new line.</span>
+</span><span class='line'><span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">total_i</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Print the sum of the double variables on a new line.</span>
+</span><span class='line'><span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">total_d</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Concatenate and print the String variables on a new line</span>
+</span><span class='line'><span class="c"># The &#39;s&#39; variable above should be printed first.</span>
+</span><span class='line'><span class="k">print</span> <span class="n">strings</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>python 3</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">i</span> <span class="o">=</span> <span class="mi">4</span>
+</span><span class='line'><span class="n">d</span> <span class="o">=</span> <span class="mf">4.0</span>
+</span><span class='line'><span class="n">s</span> <span class="o">=</span> <span class="s">&#39;HackerRank &#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Declare second integer, double, and String variables.</span>
+</span><span class='line'><span class="n">i2</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span>
+</span><span class='line'><span class="n">d2</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span>
+</span><span class='line'><span class="n">s2</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Read and save an integer, double, and String to your variables.</span>
+</span><span class='line'><span class="n">total_i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="n">i2</span>
+</span><span class='line'><span class="n">total_d</span> <span class="o">=</span> <span class="n">d</span> <span class="o">+</span> <span class="n">d2</span>
+</span><span class='line'><span class="n">strings</span> <span class="o">=</span> <span class="n">s</span> <span class="o">+</span> <span class="n">s2</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Print the sum of both integer variables on a new line.</span>
+</span><span class='line'><span class="k">print</span><span class="p">(</span><span class="n">total_i</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Print the sum of the double variables on a new line.</span>
+</span><span class='line'><span class="k">print</span><span class="p">(</span><span class="n">total_d</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Concatenate and print the String variables on a new line</span>
+</span><span class='line'><span class="c"># The &#39;s&#39; variable above should be printed first.</span>
+</span><span class='line'><span class="k">print</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Programming Languages Comparison: Print]]></title>
@@ -2406,407 +2941,6 @@ all nodes in Binary Tree. Max Binary Heap is similar to Min Heap.</li>
 <ul>
 <li><a href="http://www.dabeaz.com/python/UnderstandingGIL.pdf">Understanding the Python GIL</a></li>
 </ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[An Array to Balanced Binary Tree]]></title>
-    <link href="http://k.arttechresearch.com/tech/2016/03/15/an-array-to-balanced-binary-tree/"/>
-    <updated>2016-03-15T02:02:23+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2016/03/15/an-array-to-balanced-binary-tree</id>
-    <content type="html"><![CDATA[<p>Write a function to convert a non-decreasing list of ints to a balanced binary tree.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">Input</span><span class="p">:</span>  <span class="n">Linked</span> <span class="n">List</span> <span class="mi">1</span><span class="o">-&gt;</span><span class="mi">2</span><span class="o">-&gt;</span><span class="mi">3</span>
-</span><span class='line'><span class="n">Output</span><span class="p">:</span> <span class="n">A</span> <span class="n">Balanced</span> <span class="n">BST</span>
-</span><span class='line'>     <span class="mi">2</span>
-</span><span class='line'>   <span class="o">/</span>  \
-</span><span class='line'>  <span class="mi">1</span>    <span class="mi">3</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="n">Input</span><span class="p">:</span> <span class="n">Linked</span> <span class="n">List</span> <span class="mi">1</span><span class="o">-&gt;</span><span class="mi">2</span><span class="o">-&gt;</span><span class="mi">3</span><span class="o">-&gt;</span><span class="mi">4</span><span class="o">-&gt;</span><span class="mi">5</span><span class="o">-&gt;</span><span class="mi">6</span><span class="o">-&gt;</span><span class="mi">7</span>
-</span><span class='line'><span class="n">Output</span><span class="p">:</span> <span class="n">A</span> <span class="n">Balanced</span> <span class="n">BST</span>
-</span><span class='line'>        <span class="mi">4</span>
-</span><span class='line'>      <span class="o">/</span>   \
-</span><span class='line'>     <span class="mi">2</span>     <span class="mi">6</span>
-</span><span class='line'>   <span class="o">/</span>  \   <span class="o">/</span> \
-</span><span class='line'>  <span class="mi">1</span>   <span class="mi">3</span>  <span class="mi">5</span>   <span class="mi">7</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">Preorder</span> <span class="n">traversal</span> <span class="n">of</span> <span class="n">constructed</span> <span class="n">BST</span>
-</span><span class='line'><span class="mi">4</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">3</span> <span class="mi">6</span> <span class="mi">5</span> <span class="mi">7</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">Input</span><span class="p">:</span> <span class="n">Linked</span> <span class="n">List</span> <span class="mi">1</span><span class="o">-&gt;</span><span class="mi">2</span><span class="o">-&gt;</span><span class="mi">3</span><span class="o">-&gt;</span><span class="mi">4</span>
-</span><span class='line'><span class="n">Output</span><span class="p">:</span> <span class="n">A</span> <span class="n">Balanced</span> <span class="n">BST</span>
-</span><span class='line'>      <span class="mi">3</span>
-</span><span class='line'>    <span class="o">/</span>  \
-</span><span class='line'>   <span class="mi">2</span>    <span class="mi">4</span>
-</span><span class='line'> <span class="o">/</span>
-</span><span class='line'><span class="mi">1</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">Input</span><span class="p">:</span>  <span class="n">Linked</span> <span class="n">List</span> <span class="mi">1</span><span class="o">-&gt;</span><span class="mi">2</span><span class="o">-&gt;</span><span class="mi">3</span><span class="o">-&gt;</span><span class="mi">4</span><span class="o">-&gt;</span><span class="mi">5</span><span class="o">-&gt;</span><span class="mi">6</span>
-</span><span class='line'><span class="n">Output</span><span class="p">:</span> <span class="n">A</span> <span class="n">Balanced</span> <span class="n">BST</span>
-</span><span class='line'>      <span class="mi">4</span>
-</span><span class='line'>    <span class="o">/</span>   \
-</span><span class='line'>   <span class="mi">2</span>     <span class="mi">6</span>
-</span><span class='line'> <span class="o">/</span>  \   <span class="o">/</span>
-</span><span class='line'><span class="mi">1</span>   <span class="mi">3</span>  <span class="mi">5</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="mi">1</span><span class="p">)</span> <span class="n">Get</span> <span class="n">the</span> <span class="n">Middle</span> <span class="n">of</span> <span class="n">the</span> <span class="n">linked</span> <span class="nb">list</span> <span class="ow">and</span> <span class="n">make</span> <span class="n">it</span> <span class="n">root</span><span class="o">.</span>
-</span><span class='line'><span class="mi">2</span><span class="p">)</span> <span class="n">Recursively</span> <span class="n">do</span> <span class="n">same</span> <span class="k">for</span> <span class="n">left</span> <span class="n">half</span> <span class="ow">and</span> <span class="n">right</span> <span class="n">half</span><span class="o">.</span>
-</span><span class='line'>       <span class="n">a</span><span class="p">)</span> <span class="n">Get</span> <span class="n">the</span> <span class="n">middle</span> <span class="n">of</span> <span class="n">left</span> <span class="n">half</span> <span class="ow">and</span> <span class="n">make</span> <span class="n">it</span> <span class="n">left</span> <span class="n">child</span> <span class="n">of</span> <span class="n">the</span> <span class="n">root</span>
-</span><span class='line'>          <span class="n">created</span> <span class="ow">in</span> <span class="n">step</span> <span class="mf">1.</span>
-</span><span class='line'>       <span class="n">b</span><span class="p">)</span> <span class="n">Get</span> <span class="n">the</span> <span class="n">middle</span> <span class="n">of</span> <span class="n">right</span> <span class="n">half</span> <span class="ow">and</span> <span class="n">make</span> <span class="n">it</span> <span class="n">right</span> <span class="n">child</span> <span class="n">of</span> <span class="n">the</span>
-</span><span class='line'>          <span class="n">root</span> <span class="n">created</span> <span class="ow">in</span> <span class="n">step</span> <span class="mf">1.</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Coding</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">class</span> <span class="nc">Node</span><span class="p">:</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="bp">None</span>
-</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="bp">None</span>
-</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="k">def</span> <span class="nf">list2BST</span><span class="p">(</span><span class="n">num_list</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
-</span><span class='line'>    <span class="k">if</span> <span class="n">start</span> <span class="o">&gt;</span> <span class="n">end</span><span class="p">:</span>
-</span><span class='line'>        <span class="k">return</span> <span class="bp">None</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">middle</span> <span class="o">=</span> <span class="p">(</span><span class="n">start</span> <span class="o">+</span> <span class="n">end</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
-</span><span class='line'>    <span class="c">#print start, end, middle</span>
-</span><span class='line'>    <span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">num_list</span><span class="p">[</span><span class="n">middle</span><span class="p">])</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">node</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">list2BST</span><span class="p">(</span><span class="n">num_list</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">middle</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">node</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">list2BST</span><span class="p">(</span><span class="n">num_list</span><span class="p">,</span> <span class="n">middle</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">node</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">def</span> <span class="nf">traverse</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
-</span><span class='line'>    <span class="k">if</span> <span class="n">node</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
-</span><span class='line'>        <span class="k">return</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">traverse</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">traverse</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">num_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">]</span>
-</span><span class='line'>    <span class="n">list_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">num_list</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">root</span> <span class="o">=</span> <span class="n">list2BST</span><span class="p">(</span><span class="n">num_list</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">list_len</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">traverse</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Time Complexity: O(n)</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'>  <span class="n">T</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">=</span> <span class="mi">2</span><span class="n">T</span><span class="p">(</span><span class="n">n</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">C</span>
-</span><span class='line'>  <span class="n">T</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">--&gt;</span>  <span class="n">Time</span> <span class="n">taken</span> <span class="k">for</span> <span class="n">an</span> <span class="n">array</span> <span class="n">of</span> <span class="n">size</span> <span class="n">n</span>
-</span><span class='line'>   <span class="n">C</span>   <span class="o">--&gt;</span>  <span class="n">Constant</span> <span class="p">(</span><span class="n">Finding</span> <span class="n">middle</span> <span class="n">of</span> <span class="n">array</span> <span class="ow">and</span> <span class="n">linking</span> <span class="n">root</span> <span class="n">to</span> <span class="n">left</span>
-</span><span class='line'>                      <span class="ow">and</span> <span class="n">right</span> <span class="n">subtrees</span> <span class="n">take</span> <span class="n">constant</span> <span class="n">time</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Python Cool Features You May Not Know]]></title>
-    <link href="http://k.arttechresearch.com/tech/2016/03/14/python-cool-features-you-may-not-know/"/>
-    <updated>2016-03-14T22:22:48+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2016/03/14/python-cool-features-you-may-not-know</id>
-    <content type="html"><![CDATA[<h2>Lists</h2>
-
-<h3>Reverse</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">num_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">num_list</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">num_list</span>
-</span><span class='line'><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Set</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">num_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="nb">set</span><span class="p">(</span><span class="n">num_list</span><span class="p">)</span>
-</span><span class='line'><span class="nb">set</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>iter</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="nb">iter</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">listiterator</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x106caab90</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">iter</span><span class="p">(</span><span class="n">l</span><span class="p">)]</span>
-</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Zip</h3>
-
-<p>This function returns a list of tuples, where the i-th tuple contains the i-th element from each of the argument sequences or iterables.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="nb">zip</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
-</span><span class='line'><span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">)]</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">num_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="nb">iter</span><span class="p">(</span><span class="n">num_list</span><span class="p">)]</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
-</span><span class='line'><span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)]</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="nb">iter</span><span class="p">(</span><span class="n">num_list</span><span class="p">)]</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span>
-</span><span class='line'><span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)]</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="nb">iter</span><span class="p">(</span><span class="n">num_list</span><span class="p">)]</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span>
-</span><span class='line'><span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)]</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">make_ngrams</span><span class="p">(</span><span class="n">alist</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
-</span><span class='line'><span class="o">...</span>     <span class="k">return</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">alist</span><span class="p">[</span><span class="n">i</span><span class="p">:]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n</span><span class="p">)))</span>
-</span><span class='line'><span class="o">...</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">make_ngrams</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">],</span><span class="mi">2</span><span class="p">)</span>
-</span><span class='line'><span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)]</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">make_ngrams</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">],</span><span class="mi">3</span><span class="p">)</span>
-</span><span class='line'><span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Join</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;John&#39;</span><span class="p">,</span> <span class="s">&#39;Bob&#39;</span><span class="p">,</span> <span class="s">&#39;Alice&#39;</span><span class="p">]</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="s">&#39;+&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
-</span><span class='line'><span class="s">&#39;John+Bob+Alice&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Next</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">num_list</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">**</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="nb">next</span><span class="p">(</span><span class="n">num_list</span><span class="p">)</span>
-</span><span class='line'><span class="mi">0</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="nb">next</span><span class="p">(</span><span class="n">num_list</span><span class="p">)</span>
-</span><span class='line'><span class="mi">1</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="nb">next</span><span class="p">(</span><span class="n">num_list</span><span class="p">)</span>
-</span><span class='line'><span class="mi">4</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="nb">next</span><span class="p">(</span><span class="n">num_list</span><span class="p">)</span>
-</span><span class='line'><span class="mi">9</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="nb">next</span><span class="p">(</span><span class="n">num_list</span><span class="p">)</span>
-</span><span class='line'><span class="mi">16</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="nb">next</span><span class="p">(</span><span class="n">num_list</span><span class="p">)</span>
-</span><span class='line'><span class="mi">25</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Unpacking</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">):</span>
-</span><span class='line'><span class="o">...</span>     <span class="k">print</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span>
-</span><span class='line'><span class="o">...</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">mydict</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
-</span><span class='line'><span class="n">mylist</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;John&#39;</span><span class="p">,</span> <span class="s">&#39;Bob&#39;</span><span class="p">,</span> <span class="s">&#39;Alice&#39;</span><span class="p">]</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">foo</span><span class="p">(</span><span class="o">*</span><span class="n">mydict</span><span class="p">)</span>
-</span><span class='line'><span class="n">a</span> <span class="n">c</span> <span class="n">b</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">foo</span><span class="p">(</span><span class="o">**</span><span class="n">mydict</span><span class="p">)</span>
-</span><span class='line'><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">foo</span><span class="p">(</span><span class="o">*</span><span class="n">mylist</span><span class="p">)</span>
-</span><span class='line'><span class="n">John</span> <span class="n">Bob</span> <span class="n">Alice</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Libraries</h2>
-
-<h3>import this</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">this</span>
-</span><span class='line'><span class="n">The</span> <span class="n">Zen</span> <span class="n">of</span> <span class="n">Python</span><span class="p">,</span> <span class="n">by</span> <span class="n">Tim</span> <span class="n">Peters</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">Beautiful</span> <span class="ow">is</span> <span class="n">better</span> <span class="n">than</span> <span class="n">ugly</span><span class="o">.</span>
-</span><span class='line'><span class="n">Explicit</span> <span class="ow">is</span> <span class="n">better</span> <span class="n">than</span> <span class="n">implicit</span><span class="o">.</span>
-</span><span class='line'><span class="n">Simple</span> <span class="ow">is</span> <span class="n">better</span> <span class="n">than</span> <span class="nb">complex</span><span class="o">.</span>
-</span><span class='line'><span class="n">Complex</span> <span class="ow">is</span> <span class="n">better</span> <span class="n">than</span> <span class="n">complicated</span><span class="o">.</span>
-</span><span class='line'><span class="n">Flat</span> <span class="ow">is</span> <span class="n">better</span> <span class="n">than</span> <span class="n">nested</span><span class="o">.</span>
-</span><span class='line'><span class="n">Sparse</span> <span class="ow">is</span> <span class="n">better</span> <span class="n">than</span> <span class="n">dense</span><span class="o">.</span>
-</span><span class='line'><span class="n">Readability</span> <span class="n">counts</span><span class="o">.</span>
-</span><span class='line'><span class="n">Special</span> <span class="n">cases</span> <span class="n">aren</span><span class="s">&#39;t special enough to break the rules.</span>
-</span><span class='line'><span class="n">Although</span> <span class="n">practicality</span> <span class="n">beats</span> <span class="n">purity</span><span class="o">.</span>
-</span><span class='line'><span class="n">Errors</span> <span class="n">should</span> <span class="n">never</span> <span class="k">pass</span> <span class="n">silently</span><span class="o">.</span>
-</span><span class='line'><span class="n">Unless</span> <span class="n">explicitly</span> <span class="n">silenced</span><span class="o">.</span>
-</span><span class='line'><span class="n">In</span> <span class="n">the</span> <span class="n">face</span> <span class="n">of</span> <span class="n">ambiguity</span><span class="p">,</span> <span class="n">refuse</span> <span class="n">the</span> <span class="n">temptation</span> <span class="n">to</span> <span class="n">guess</span><span class="o">.</span>
-</span><span class='line'><span class="n">There</span> <span class="n">should</span> <span class="n">be</span> <span class="n">one</span><span class="o">--</span> <span class="ow">and</span> <span class="n">preferably</span> <span class="n">only</span> <span class="n">one</span> <span class="o">--</span><span class="n">obvious</span> <span class="n">way</span> <span class="n">to</span> <span class="n">do</span> <span class="n">it</span><span class="o">.</span>
-</span><span class='line'><span class="n">Although</span> <span class="n">that</span> <span class="n">way</span> <span class="n">may</span> <span class="ow">not</span> <span class="n">be</span> <span class="n">obvious</span> <span class="n">at</span> <span class="n">first</span> <span class="n">unless</span> <span class="n">you</span><span class="s">&#39;re Dutch.</span>
-</span><span class='line'><span class="n">Now</span> <span class="ow">is</span> <span class="n">better</span> <span class="n">than</span> <span class="n">never</span><span class="o">.</span>
-</span><span class='line'><span class="n">Although</span> <span class="n">never</span> <span class="ow">is</span> <span class="n">often</span> <span class="n">better</span> <span class="n">than</span> <span class="o">*</span><span class="n">right</span><span class="o">*</span> <span class="n">now</span><span class="o">.</span>
-</span><span class='line'><span class="n">If</span> <span class="n">the</span> <span class="n">implementation</span> <span class="ow">is</span> <span class="n">hard</span> <span class="n">to</span> <span class="n">explain</span><span class="p">,</span> <span class="n">it</span><span class="s">&#39;s a bad idea.</span>
-</span><span class='line'><span class="n">If</span> <span class="n">the</span> <span class="n">implementation</span> <span class="ow">is</span> <span class="n">easy</span> <span class="n">to</span> <span class="n">explain</span><span class="p">,</span> <span class="n">it</span> <span class="n">may</span> <span class="n">be</span> <span class="n">a</span> <span class="n">good</span> <span class="n">idea</span><span class="o">.</span>
-</span><span class='line'><span class="n">Namespaces</span> <span class="n">are</span> <span class="n">one</span> <span class="n">honking</span> <span class="n">great</span> <span class="n">idea</span> <span class="o">--</span> <span class="n">let</span><span class="s">&#39;s do more of those!</span>
-</span></code></pre></td></tr></table></div></figure>
 
 ]]></content>
   </entry>

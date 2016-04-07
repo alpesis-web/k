@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tech | K]]></title>
   <link href="http://k.arttechresearch.com/categories/tech/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2016-04-05T17:22:45+08:00</updated>
+  <updated>2016-04-08T01:34:58+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[K]]></name>
@@ -12,6 +12,310 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Programming Languages Comparison: Operators]]></title>
+    <link href="http://k.arttechresearch.com/tech/2016/04/07/programming-languages-comparison-operators/"/>
+    <updated>2016-04-07T23:57:09+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2016/04/07/programming-languages-comparison-operators</id>
+    <content type="html"><![CDATA[<h2>Task</h2>
+
+<ul>
+<li>get the input: mealCost, tipPercent, taxPercent</li>
+<li>calculate the tip: tip = mealCost * tipPercent / 100</li>
+<li>calculate the tax: tax = mealCost * taxPercent / 100</li>
+<li>calculate the totalCost: totalCost = mealCost + tip + tax</li>
+<li>round the totalCost</li>
+<li>print the output</li>
+</ul>
+
+
+<h2>Solutions</h2>
+
+<h3>C</h3>
+
+<pre><code class="c">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;math.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */
+    float mealCost;
+    float tipPercent;
+    float taxPercent;
+
+    scanf("%f", &amp;mealCost);
+    scanf("\n%f\n", &amp;tipPercent);
+    scanf("%f", &amp;taxPercent);
+
+    double tip = mealCost * tipPercent / 100.0;
+    double tax = mealCost * taxPercent / 100.0;
+    int totalCost = round(mealCost + tip + tax);
+
+    printf("The total meal cost is %d dollars.", totalCost);
+
+    return 0;
+}
+</code></pre>
+
+<h3>C++</h3>
+
+<pre><code class="cpp">#include &lt;cmath&gt;
+#include &lt;cstdio&gt;
+#include &lt;vector&gt;
+#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */ 
+    double mealCost;
+    double tipPercent;
+    double taxPercent;
+
+    cin &gt;&gt; mealCost;
+    cin &gt;&gt; tipPercent;
+    cin &gt;&gt; taxPercent;
+
+    double tip = mealCost * tipPercent / 100;
+    double tax = mealCost * taxPercent / 100;
+    double totalCost = mealCost + tip + tax;
+    cout &lt;&lt; "The total meal cost is " &lt;&lt; round(totalCost) &lt;&lt; " dollars." &lt;&lt; endl;
+
+    return 0;
+}
+</code></pre>
+
+<h3>Java</h3>
+
+<pre><code class="java">import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+public class Arithmetic {
+
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        double mealCost = scan.nextDouble(); // original meal price
+        double tipPercent = scan.nextInt(); // tip percentage
+        double taxPercent = scan.nextInt(); // tax percentage
+        scan.close();
+
+        // Write your calculation code here.
+        double tip = mealCost * (tipPercent/100);
+        double tax = mealCost * (taxPercent/100);
+
+        // cast the result of the rounding operation to an int and save it as totalCost
+        int totalCost = (int) Math.round(mealCost+tip+tax);
+
+        // Print your result
+        System.out.println("The total meal cost is " + totalCost + " dollars.");
+    }
+}
+</code></pre>
+
+<h3>Python</h3>
+
+<p>Python 2</p>
+
+<pre><code class="python">mealCost = float(raw_input())
+tipPercent = float(raw_input())
+taxPercent = float(raw_input())
+
+tip = mealCost * ( tipPercent/100)
+tax = mealCost * (taxPercent/100)
+
+totalCost = round(mealCost + tip + tax)
+
+print "The total meal cost is %d dollars." % totalCost
+</code></pre>
+
+<p>Python 3</p>
+
+<pre><code class="python">mealCost = float(input())
+tipPercent = float(input())
+taxPercent = float(input())
+
+tip = mealCost * (tipPercent/100)
+tax = mealCost * (taxPercent/100)
+
+totalCost = round(mealCost + tip + tax)
+print("The total meal cost is %d dollars." % totalCost)
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Programming Languages Comparison: Data Types]]></title>
+    <link href="http://k.arttechresearch.com/tech/2016/04/07/programming-languages-comparison-data-types/"/>
+    <updated>2016-04-07T01:55:32+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2016/04/07/programming-languages-comparison-data-types</id>
+    <content type="html"><![CDATA[<h2>Task</h2>
+
+<ul>
+<li>get the variables: int, double, string</li>
+<li>calculate the sum of the digits and concat the strings</li>
+<li>print the results</li>
+</ul>
+
+
+<h2>Solutions</h2>
+
+<h3>C</h3>
+
+<pre><code class="c">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;math.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    int i = 4;
+    double d = 4.0;
+    char s[] = "HackerRank ";
+
+    // Declare second integer, double, and String variables.
+    int num;
+    float digit;
+    char string[100];
+
+    // Read and save an integer, double, and String to your variables.
+    scanf("%d", &amp;num);
+    scanf("\n%f\n", &amp;digit);
+    scanf("%[^\n]", string);
+
+    // Print the sum of both integer variables on a new line.
+    printf("%d\n", i+num);    
+
+    // Print the sum of the double variables on a new line.
+    printf("%.1f\n", d+digit);    
+
+    // Concatenate and print the String variables on a new line
+    // The 's' variable above should be printed first.
+    printf("%s%s", s, string);
+
+    return 0;
+}
+</code></pre>
+
+<h3>C++</h3>
+
+<pre><code class="cpp">#include &lt;iostream&gt;
+#include &lt;iomanip&gt;
+#include &lt;limits&gt;
+
+using namespace std;
+
+int main() {
+    int i = 4;
+    double d = 4.0;
+    string s = "HackerRank ";
+
+    return 0;
+}
+</code></pre>
+
+<h3>Java</h3>
+
+<pre><code class="java">import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        int i = 4;
+        double d = 4.0;
+        String s = "HackerRank ";
+
+        Scanner scan = new Scanner(System.in);
+
+        /* Declare second integer, double, and String variables. */
+        int i2 = scan.nextInt();
+        double d2 = scan.nextDouble();
+        String empty = scan.nextLine();
+        String s2 = scan.nextLine();
+
+        /* Read and save an integer, double, and String to your variables.*/
+        int int_sum = i + i2;
+        double double_sum = d + d2;
+        String combine_s = s + s2;
+
+        /* Print the sum of both integer variables on a new line. */
+        System.out.println(int_sum);
+        /* Print the sum of the double variables on a new line. */
+        System.out.println(double_sum);
+        /* Concatenate and print the String variables on a new line; 
+            the 's' variable above should be printed first. */
+        System.out.println(combine_s);
+
+        scan.close();
+    }
+}
+</code></pre>
+
+<h3>Python</h3>
+
+<p>python 2</p>
+
+<pre><code class="python">i = 4
+d = 4.0
+s = 'HackerRank '
+
+# Declare second integer, double, and String variables.
+i2 = int(raw_input())
+d2 = float(raw_input())
+s2 = str(raw_input())
+
+# Read and save an integer, double, and String to your variables.
+total_i = i + i2
+total_d = d + d2
+strings = s + s2
+
+# Print the sum of both integer variables on a new line.
+print str(total_i)
+
+# Print the sum of the double variables on a new line.
+print str(total_d)
+
+# Concatenate and print the String variables on a new line
+# The 's' variable above should be printed first.
+print strings
+</code></pre>
+
+<p>python 3</p>
+
+<pre><code>i = 4
+d = 4.0
+s = 'HackerRank '
+
+# Declare second integer, double, and String variables.
+i2 = int(input())
+d2 = float(input())
+s2 = str(input())
+
+# Read and save an integer, double, and String to your variables.
+total_i = i + i2
+total_d = d + d2
+strings = s + s2
+
+# Print the sum of both integer variables on a new line.
+print(total_i)
+
+# Print the sum of the double variables on a new line.
+print(total_d)
+
+# Concatenate and print the String variables on a new line
+# The 's' variable above should be printed first.
+print(strings)
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Programming Languages Comparison: Print]]></title>
@@ -465,400 +769,6 @@ GROUP BY A1.Region_Name;
 
 SELECT * FROM V_REGION_SALES;
 </code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Interview Questions of MongoDB]]></title>
-    <link href="http://k.arttechresearch.com/tech/2016/03/28/interview-questions-of-mongodb/"/>
-    <updated>2016-03-28T16:50:08+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2016/03/28/interview-questions-of-mongodb</id>
-    <content type="html"><![CDATA[<h2>Concepts</h2>
-
-<h3>Define NoSQL.</h3>
-
-<p>A NoSQL database provides a mechanism for storage and retrieval of data that is modeled
-in means other than the tabular relations used in relational database (like SQL, Oracle, etc.)</p>
-
-<p>Types of NoSQL databases:</p>
-
-<ul>
-<li>key-value: Redis, Memcache</li>
-<li>column based: HBase, Cassandra</li>
-<li>document: MongoDB, ElasticSearch</li>
-<li>Graph: Neo4j</li>
-</ul>
-
-
-<p>Differences between SQL databases and NoSQL databases:</p>
-
-<ul>
-<li>SQL databases store data in form of tables, rows, columns and records. This data is stored in a pre-defined data model which is not very much flexible for today&rsquo;s real-world highly growing
-applications.</li>
-<li>MongoDB uses a flexible structure which can be easily modified and extended. MongoDB allows a
-highly flexible and scalable document structure. For example, one data document in MongoDB can have five columns and the other one in the same collection can have ten columns. Also, MongoDB
-database are faster as compared to SQL databases due to efficient indexing and storage techniques.</li>
-</ul>
-
-
-<h3>Define MongoDB.</h3>
-
-<p>MongoDB is a document oriented database, it stores data in the form of BSON structure based
-documents. These documents are stored in a collection.</p>
-
-<p>Features:</p>
-
-<ul>
-<li>flexible data model in form of documents</li>
-<li>agile and highly scalable database</li>
-<li>faster than traditional databases</li>
-<li>expressive query language</li>
-</ul>
-
-
-<h3>Define namespace.</h3>
-
-<p>A namespace is the concatenation of the database name and collection name.</p>
-
-<pre><code>school.students       # school - database, students - collection
-</code></pre>
-
-<h3>Define ObjectID.</h3>
-
-<p>ObjectID is a 12-byte BSON type with:</p>
-
-<ul>
-<li>4 bytes value representing seconds</li>
-<li>3 bytes machine identifier</li>
-<li>2 bytes process id</li>
-<li>3 bytes counter</li>
-</ul>
-
-
-<h2>Database Design</h2>
-
-<h3>Define embeded documents.</h3>
-
-<p>When should consider embeding documents:</p>
-
-<ul>
-<li>&lsquo;contains&rsquo; relationships between entities</li>
-<li>one-to-many relationships</li>
-<li>performance reasons</li>
-</ul>
-
-
-<h2>Database Languages</h2>
-
-<h3>Define indexes.</h3>
-
-<p>Indexes support the efficient execution of queries in MongoDB. Without indexes, MongoDB
-must perform a collection scan, i.e., scan every document in a collection, to select those
-documents that match the query statement. If an appropriate index exists for a query, MongoDB
-can use the index to limit the number of documents it must inspect.</p>
-
-<p>Types of indexes:</p>
-
-<ul>
-<li>default index: <code>_id</code></li>
-</ul>
-
-
-<h3>Define queries.</h3>
-
-<ul>
-<li>covered query: fields used in the query are part of an index used in the query, the fields
-returned in the results are in the same index.</li>
-</ul>
-
-
-<p>Importance of covered query:</p>
-
-<ul>
-<li>since all the fields are covered in the index itself, MongoDB can match the query condition
-as we&rsquo;ll as return the result fields using the same index without looking inside the documents.
-Since indexes are stored in RAM or sequentially located on disk, such access is a lot faster.</li>
-</ul>
-
-
-<p>Types of queries:</p>
-
-<ul>
-<li>text-search:</li>
-</ul>
-
-
-<h3>Define operators.</h3>
-
-<ul>
-<li>aggregation: processes data records and return computed results. Aggreation operations group
-values from multiple documents together, and can perform a variety of operations on the grouped
-data to return a signle result. MongoDB provides 3 ways to perform aggregation: the aggregation pipeline, the map-reduce function, and single purpose aggregation methods and commands.</li>
-</ul>
-
-
-<h3>Define transactions.</h3>
-
-<h3>Define lock.</h3>
-
-<p>MongoDB uses reader-writer locks that allow concurrent readers shared access to a resource,
-such as a database or collection, but give exclusive access to a single write operation.</p>
-
-<h2>Database Admin</h2>
-
-<h3>Define replication.</h3>
-
-<p>Replication is the process of synchronizing data across multiple servers. Replication provides
-redundancy and increases data availability. With multiple copies of data on different database
-servers, replication protects a database from the loss of a single server. Replication also
-allows you to recover from hardware failure and service interruptions.</p>
-
-<ul>
-<li>Primary and master nodes are the nodes that can accept writes. MongoDB&rsquo;s replications is
-signle-master: only one node can accept write operations at a time.</li>
-<li>Secondary and slave nodes are read-only nodes that replicate from the primary.</li>
-</ul>
-
-
-<h3>Define sharding.</h3>
-
-<p>Sharding is a method for storing data across multiple machines. MongoDB uses sharding to
-support deployments with very large data sets and high throughput operations.</p>
-
-<h3>Define GridFS.</h3>
-
-<p>GridFS is a specification for storing and retrieving files that exceed the BSON-document
-size limit of 16 MB. Instead of storing a file in a single document, GridFS divides a file
-into parts, or chunks, and stores each of those chunks as a separate document.</p>
-
-<h3>Define journaling.</h3>
-
-<p>When running with journaling, MongoDB stores and applies write operations in memory and
-in the on-disk journal before the changes are present in the data files on disk.</p>
-
-<p>Writes to the journal are atomic, ensuring the consistency of the on-disk journal files.
-With journaling enabled, MongoDB creates a journal subdirectory within the directory defined by
-dbPath, which is <code>/data/db</code> by default.</p>
-
-<h2>Database Architecture</h2>
-
-<h3>Define storage engine.</h3>
-
-<p>A storage engine is the part of a database that is responsible for managing how data is
-stored on disk. For example, one storage engine might offer better performance for read-heavy
-workloads, and another might support a higher-throughput for write operations.</p>
-
-<p>Types of storage engines:</p>
-
-<ul>
-<li>WiredTiger: specify the maximum size of the cache that WiredTiger will use for all data. This
-can be done using <code>storage.wiredTiger.engineConfig.cacheSizeGB</code> option.</li>
-<li>MMAPv1: does not allow configuring the cache size.</li>
-</ul>
-
-
-<h3>Define profiler.</h3>
-
-<p>The database profiler collects fine grained data about MongoDB write operations, cursors,
-database commands on a running mongod instance. You can enable profiling on a per-database or
-per-instance basis.</p>
-
-<p>The database profiler writes all the data it collects to the system.profile collection, which
-is a capped collection.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Interview Questions of RDBMS]]></title>
-    <link href="http://k.arttechresearch.com/tech/2016/03/28/interview-questions-of-rdbms/"/>
-    <updated>2016-03-28T16:49:53+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2016/03/28/interview-questions-of-rdbms</id>
-    <content type="html"><![CDATA[<h2>Concepts</h2>
-
-<h3>Define database.</h3>
-
-<h3>Define data warehousing.</h3>
-
-<p>Storage and access of data from the central location in order to take some strategic decision is
-called data warehousing. Enterprise management is used for managing the information whose framework is known as Data Warehousing.</p>
-
-<h2>Database Design</h2>
-
-<h3>Database Modeling.</h3>
-
-<ul>
-<li>entities -> relationships -> ERM</li>
-<li>attributes -> types</li>
-<li>normalization</li>
-</ul>
-
-
-<h3>Enlist the various relationships of database.</h3>
-
-<ul>
-<li>one-to-one: single table having drawn relationship with another table having similar kind of columns.</li>
-<li>one-to-many: two tables having primary and foreign key relation.</li>
-<li>many-to-many: junction table having many tables relatd to many tables.</li>
-</ul>
-
-
-<h3>Define normalization.</h3>
-
-<p>Organized data void of inconsistent dependency and redundancy within a database is called normalization.</p>
-
-<ul>
-<li>1NF (attribute):</li>
-<li>2NF (record):</li>
-<li>3NF (table):</li>
-</ul>
-
-
-<p>Advantages of normalization:</p>
-
-<ul>
-<li>non duplicate entries</li>
-<li>saves storage space</li>
-<li>boasts the query performances</li>
-</ul>
-
-
-<h3>Define denormalization.</h3>
-
-<p>Boosting up database performance, adding of redundant data which in turn helps rid of complex data is called denormalization.</p>
-
-<h2>Database Languages</h2>
-
-<h3>Define DDL.</h3>
-
-<p>Managing properties and attributes of database is called data definition language (DDL).</p>
-
-<ul>
-<li>CREATE: create is used in <code>CREATE TABLE [column name] ([ column definitions ]) [table parameters]</code></li>
-<li>ALTER: it helps in modification of an existing object of database.</li>
-<li>DROP: it destroys an exisiting database, index, table or view.</li>
-</ul>
-
-
-<pre><code class="sql">CREATE TABLE [column name] ([column definitions]) [table parameters]
-ALTER objecttype objectname parameters
-DROP objecttype objectname
-</code></pre>
-
-<h3>Define DML.</h3>
-
-<p>Manipulating data in a database such as inserting, updating, deleting is defined as Data Manipulation Language (DML).</p>
-
-<h3>Define cursor.</h3>
-
-<p>A database object which helps in manipulating data row by row representing a result set is called cursor.</p>
-
-<p>cursor types:</p>
-
-<ul>
-<li>dynamic: it relects changes while scrolling.</li>
-<li>static: doesn&rsquo;t reflect changes while scrolling and works on recording of snapshot.</li>
-<li>keyset: data modification without reflection of new data is seen.</li>
-</ul>
-
-
-<p>types of cursor:</p>
-
-<ul>
-<li>implicit cursor: declared automatically as soon as the execution of SQL takes place without the wareness of the user.</li>
-<li>explicit cursor: defined by PL/SQL which handles query in more than one row.</li>
-</ul>
-
-
-<h3>Define operators.</h3>
-
-<ul>
-<li>union all: full recordings of two tables</li>
-<li><p>union: a distinct recording of two tables</p></li>
-<li><p>group: uses aggregrate values to be derived by collecting similar data.</p></li>
-<li><p>aggregation: operates against a collection of values and returning single value</p></li>
-<li><p>join: helps in explaining the relation between different tables. They also enable you to select data with relation to data in another table.</p>
-
-<ul>
-<li>inner joins: blank rows are left in the middle while more than equal to two tables are joined.</li>
-<li>outer joins: devided into left outer join and right outer join. Blank rows are left at the specified side by joining tables in other side.</li>
-<li>ohter joins: cross joins, natural joins, equi join, non-equi join.</li>
-</ul>
-</li>
-</ul>
-
-
-<h3>Define indexes.</h3>
-
-<ul>
-<li>non-clustered index: B-tree structure, has data pointers enabling one table many non-clustered indexes.</li>
-<li>clustered index: B-tree structure, distinct for every table.</li>
-</ul>
-
-
-<p>Index hunting: Indexes help in improving the speed as well as the query performance of database.
-The procedure of boosting the collection of indexes is named as Index hunting.</p>
-
-<ul>
-<li>the query optimizer is used to coordinate the study of queries with the workload and the best
-use of queries suggested based on this.</li>
-<li>Index, query distribution along with their performance is observed to check the effect.
-Tuning databases to a small collection of problem queries is also recommended.</li>
-</ul>
-
-
-<h3>Define view.</h3>
-
-<p>Restrictions of views:</p>
-
-<ul>
-<li>only the current database can have views.</li>
-<li>you have not liable to change any computed value in any particular view.</li>
-<li>integrity constants decide the functionality of INSERT and DELETE.</li>
-<li>temporary views cannot be created.</li>
-<li>temporary tables cannot contain views.</li>
-<li>non association with DEFAULT definitions.</li>
-<li>triggers such as INSTEAD OF is associated with views.</li>
-</ul>
-
-
-<h3>Define transactions.</h3>
-
-<p>Transaction phases:</p>
-
-<ul>
-<li>analysis phase</li>
-<li>redo phase</li>
-<li>undo phase</li>
-</ul>
-
-
-<p>ACID:</p>
-
-<ul>
-<li>Atomicity</li>
-<li>Consistence</li>
-<li>Isolation</li>
-<li>Durability</li>
-</ul>
-
-
-<h2>Database Admin</h2>
-
-<h3>Define partitioning.</h3>
-
-<p>Database partitioning: division of logical database into independent complete units for
-improving its management, availability and performance. Splitting of one table which is
-large into smaller database entities logically.</p>
-
-<p>The importance of partitioning:</p>
-
-<ul>
-<li>to improve query performance in situations dramatically when mostly rows which are heavily
-accessed are in one partition.</li>
-<li>accessing large parts of a single partition.</li>
-<li>slower and cheaper storage media can be used for data which is seldom used.</li>
-</ul>
-
 ]]></content>
   </entry>
   
