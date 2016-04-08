@@ -4,7 +4,7 @@
   <title><![CDATA[K]]></title>
   <link href="http://k.arttechresearch.com/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2016-04-08T01:34:58+08:00</updated>
+  <updated>2016-04-09T00:30:45+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[K]]></name>
@@ -12,6 +12,296 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Programming Languages Comparison: Conditional Statements]]></title>
+    <link href="http://k.arttechresearch.com/tech/2016/04/09/programming-languages-comparison-conditional-statements/"/>
+    <updated>2016-04-09T00:05:56+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2016/04/09/programming-languages-comparison-conditional-statements</id>
+    <content type="html"><![CDATA[<h2>Task</h2>
+
+<p>Given an integer n, perform the following conditonal actions:</p>
+
+<ul>
+<li>if n is odd, print <code>Weird</code>;</li>
+<li>if n is even, and in the inclusive range of 2 to 5, print <code>Not Weird</code>;</li>
+<li>if n is even, and in the inclusive range of 6 to 20, print <code>Weird</code>;</li>
+<li>if n is even, and greater than 20, print <code>Not Weird</code>.</li>
+</ul>
+
+
+<h2>Solutions</h2>
+
+<h3>C</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &lt;math.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;stdio.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;string.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;stdlib.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;assert.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;limits.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;stdbool.h&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">N</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">N</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">N</span><span class="o">%</span><span class="mi">2</span><span class="o">==</span><span class="mi">1</span><span class="p">){</span>
+</span><span class='line'>        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Weird&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">else</span><span class="p">{</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="n">N</span><span class="o">%</span><span class="mi">2</span><span class="o">==</span><span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">N</span><span class="o">&gt;=</span><span class="mi">6</span> <span class="o">&amp;&amp;</span> <span class="n">N</span><span class="o">&lt;=</span><span class="mi">20</span><span class="p">){</span>
+</span><span class='line'>            <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Weird&quot;</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">else</span><span class="p">{</span>
+</span><span class='line'>            <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Not Weird&quot;</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>C++</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="cp">#include &lt;map&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;set&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;list&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;cmath&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;ctime&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;deque&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;queue&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;stack&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;string&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;bitset&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;cstdio&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;limits&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;vector&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;climits&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;cstring&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;cstdlib&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;fstream&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;numeric&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;sstream&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;iostream&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;algorithm&gt;</span>
+</span><span class='line'><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">N</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">N</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">string</span> <span class="n">ans</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">N</span><span class="o">%</span><span class="mi">2</span><span class="o">==</span><span class="mi">1</span><span class="p">){</span>
+</span><span class='line'>        <span class="n">ans</span> <span class="o">=</span> <span class="s">&quot;Weird&quot;</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="n">N</span><span class="o">%</span><span class="mi">2</span><span class="o">==</span><span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">N</span> <span class="o">&gt;=</span> <span class="mi">6</span> <span class="o">&amp;&amp;</span> <span class="n">N</span> <span class="o">&lt;=</span> <span class="mi">20</span><span class="p">)){</span>
+</span><span class='line'>            <span class="n">ans</span> <span class="o">=</span> <span class="s">&quot;Weird&quot;</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">else</span><span class="p">{</span>
+</span><span class='line'>            <span class="n">ans</span> <span class="o">=</span> <span class="s">&quot;Not Weird&quot;</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">ans</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Java</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">import</span> <span class="nn">java.io.*</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.text.*</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.math.*</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.regex.*</span><span class="o">;</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">Scanner</span> <span class="n">scan</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Scanner</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">in</span><span class="o">);</span>
+</span><span class='line'>      <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">scan</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
+</span><span class='line'>      <span class="n">scan</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+</span><span class='line'>      <span class="n">String</span> <span class="n">ans</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="c1">// if &#39;n&#39; is NOT evenly divisible by 2 (i.e.: n is odd)</span>
+</span><span class='line'>      <span class="k">if</span><span class="o">(</span><span class="n">n</span><span class="o">%</span><span class="mi">2</span><span class="o">==</span><span class="mi">1</span><span class="o">){</span>
+</span><span class='line'>         <span class="n">ans</span> <span class="o">=</span> <span class="s">&quot;Weird&quot;</span><span class="o">;</span>
+</span><span class='line'>      <span class="o">}</span>
+</span><span class='line'>      <span class="k">else</span><span class="o">{</span>
+</span><span class='line'>         <span class="c1">// Complete the code </span>
+</span><span class='line'>         <span class="k">if</span> <span class="o">(</span><span class="n">n</span><span class="o">%</span><span class="mi">2</span><span class="o">==</span><span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">n</span> <span class="o">&gt;=</span><span class="mi">6</span> <span class="o">&amp;&amp;</span> <span class="n">n</span> <span class="o">&lt;=</span><span class="mi">20</span><span class="o">)){</span>
+</span><span class='line'>             <span class="n">ans</span> <span class="o">=</span> <span class="s">&quot;Weird&quot;</span><span class="o">;</span>
+</span><span class='line'>         <span class="o">}</span>
+</span><span class='line'>         <span class="k">else</span> <span class="o">{</span>
+</span><span class='line'>             <span class="n">ans</span> <span class="o">=</span> <span class="s">&quot;Not Weird&quot;</span><span class="o">;</span>
+</span><span class='line'>         <span class="o">}</span>
+</span><span class='line'>      <span class="o">}</span>
+</span><span class='line'>      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">ans</span><span class="o">);</span>
+</span><span class='line'>   <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Python</h3>
+
+<p>Python 2</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c">#!/bin/python</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">sys</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="n">N</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">raw_input</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">N</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="p">(</span><span class="mi">2</span> <span class="o">&lt;=</span> <span class="n">N</span> <span class="o">&lt;=</span> <span class="mi">5</span> <span class="ow">or</span> <span class="n">N</span> <span class="o">&gt;</span> <span class="mi">20</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">print</span> <span class="s">&quot;Not Weird&quot;</span>
+</span><span class='line'><span class="k">else</span><span class="p">:</span>
+</span><span class='line'>    <span class="k">print</span> <span class="s">&quot;Weird&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Python 3</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c">#!/bin/python3</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">sys</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="n">N</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">N</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="p">(</span><span class="mi">2</span> <span class="o">&lt;=</span> <span class="n">N</span> <span class="o">&lt;=</span> <span class="mi">5</span> <span class="ow">or</span> <span class="n">N</span> <span class="o">&gt;</span> <span class="mi">20</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Not Weird&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="k">else</span><span class="p">:</span>
+</span><span class='line'>    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Weird&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Programming Languages Comparison: Operators]]></title>
@@ -2894,52 +3184,6 @@ all nodes in Binary Tree. Max Binary Heap is similar to Min Heap.</li>
 
 <ul>
 <li><a href="http://www.geeksforgeeks.org">Geeks for Geeks</a></li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[GIL in Python]]></title>
-    <link href="http://k.arttechresearch.com/tech/2016/03/15/gil-in-python/"/>
-    <updated>2016-03-15T17:57:57+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2016/03/15/gil-in-python</id>
-    <content type="html"><![CDATA[<h2>GIL</h2>
-
-<p>GIL: Global Interpreter Lock</p>
-
-<ul>
-<li>it limits thread performance</li>
-</ul>
-
-
-<h2>GIL and Python Threads</h2>
-
-<p>GIL</p>
-
-<ul>
-<li>parallel execution is forbidden</li>
-<li>there is a &ldquo;global interpreter lock&rdquo;</li>
-<li>the GIL ensures that only one thread runs in the interpreter at once</li>
-<li>simplified many low-level details (memory management, callouts to C extensions, etc.)</li>
-</ul>
-
-
-<p>Python Threads</p>
-
-<ul>
-<li>Python threads are real system threads</li>
-<li>fully managed by the host operating system</li>
-<li>represent threaded execution of the Python interpreter process (written in C)</li>
-</ul>
-
-
-<p>Thread execution model</p>
-
-<h2>References</h2>
-
-<ul>
-<li><a href="http://www.dabeaz.com/python/UnderstandingGIL.pdf">Understanding the Python GIL</a></li>
 </ul>
 
 ]]></content>

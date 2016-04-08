@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tech | K]]></title>
   <link href="http://k.arttechresearch.com/categories/tech/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2016-04-08T01:34:58+08:00</updated>
+  <updated>2016-04-09T00:30:45+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[K]]></name>
@@ -12,6 +12,170 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Programming Languages Comparison: Conditional Statements]]></title>
+    <link href="http://k.arttechresearch.com/tech/2016/04/09/programming-languages-comparison-conditional-statements/"/>
+    <updated>2016-04-09T00:05:56+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2016/04/09/programming-languages-comparison-conditional-statements</id>
+    <content type="html"><![CDATA[<h2>Task</h2>
+
+<p>Given an integer n, perform the following conditonal actions:</p>
+
+<ul>
+<li>if n is odd, print <code>Weird</code>;</li>
+<li>if n is even, and in the inclusive range of 2 to 5, print <code>Not Weird</code>;</li>
+<li>if n is even, and in the inclusive range of 6 to 20, print <code>Weird</code>;</li>
+<li>if n is even, and greater than 20, print <code>Not Weird</code>.</li>
+</ul>
+
+
+<h2>Solutions</h2>
+
+<h3>C</h3>
+
+<pre><code class="c">#include &lt;math.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;assert.h&gt;
+#include &lt;limits.h&gt;
+#include &lt;stdbool.h&gt;
+
+int main(){
+    int N; 
+    scanf("%d",&amp;N);
+
+    if (N%2==1){
+        printf("Weird");
+    }
+    else{
+        if (N%2==0 &amp;&amp; N&gt;=6 &amp;&amp; N&lt;=20){
+            printf("Weird");
+        }
+        else{
+            printf("Not Weird");
+        }
+    }
+
+    return 0;
+}
+</code></pre>
+
+<h3>C++</h3>
+
+<pre><code class="cpp">#include &lt;map&gt;
+#include &lt;set&gt;
+#include &lt;list&gt;
+#include &lt;cmath&gt;
+#include &lt;ctime&gt;
+#include &lt;deque&gt;
+#include &lt;queue&gt;
+#include &lt;stack&gt;
+#include &lt;string&gt;
+#include &lt;bitset&gt;
+#include &lt;cstdio&gt;
+#include &lt;limits&gt;
+#include &lt;vector&gt;
+#include &lt;climits&gt;
+#include &lt;cstring&gt;
+#include &lt;cstdlib&gt;
+#include &lt;fstream&gt;
+#include &lt;numeric&gt;
+#include &lt;sstream&gt;
+#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+
+int main(){
+    int N;
+    cin &gt;&gt; N;
+
+    string ans = "";
+    if (N%2==1){
+        ans = "Weird";
+    }
+    else {
+        if (N%2==0 &amp;&amp; (N &gt;= 6 &amp;&amp; N &lt;= 20)){
+            ans = "Weird";
+        }
+        else{
+            ans = "Not Weird";
+        }
+    }
+    cout &lt;&lt; ans &lt;&lt; endl;
+
+    return 0;
+}
+</code></pre>
+
+<h3>Java</h3>
+
+<pre><code class="java">import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+public class Solution {
+
+   public static void main(String[] args) {
+      Scanner scan = new Scanner(System.in);
+      int n = scan.nextInt(); 
+      scan.close();
+      String ans="";
+
+      // if 'n' is NOT evenly divisible by 2 (i.e.: n is odd)
+      if(n%2==1){
+         ans = "Weird";
+      }
+      else{
+         // Complete the code 
+         if (n%2==0 &amp;&amp; (n &gt;=6 &amp;&amp; n &lt;=20)){
+             ans = "Weird";
+         }
+         else {
+             ans = "Not Weird";
+         }
+      }
+      System.out.println(ans);
+   }
+}
+</code></pre>
+
+<h3>Python</h3>
+
+<p>Python 2</p>
+
+<pre><code class="python">#!/bin/python
+
+import sys
+
+
+N = int(raw_input().strip())
+
+if N % 2 == 0 and (2 &lt;= N &lt;= 5 or N &gt; 20):
+    print "Not Weird"
+else:
+    print "Weird"
+</code></pre>
+
+<p>Python 3</p>
+
+<pre><code class="python">#!/bin/python3
+
+import sys
+
+
+N = int(input().strip())
+
+if N % 2 == 0 and (2 &lt;= N &lt;= 5 or N &gt; 20):
+    print("Not Weird")
+else:
+    print("Weird")
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Programming Languages Comparison: Operators]]></title>
@@ -536,239 +700,6 @@ print(inputString)
 <li><a href="http://www.geeksforgeeks.org/fundamentals-of-algorithms/#SearchingandSorting">Algorithms</a></li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[SQL]]></title>
-    <link href="http://k.arttechresearch.com/tech/2016/03/28/sql/"/>
-    <updated>2016-03-28T18:46:05+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2016/03/28/sql</id>
-    <content type="html"><![CDATA[<p>Types of SQL queries:</p>
-
-<ul>
-<li>DDL: data definition language
-
-<ul>
-<li>DML: data manipulation laugnage</li>
-<li>DQL: data query language</li>
-<li>DCL: data control language</li>
-<li>DTL: data transaction language</li>
-</ul>
-</li>
-<li>VDL: view definition language</li>
-<li>SDL: storage definition language</li>
-</ul>
-
-
-<h2>DDL</h2>
-
-<pre><code class="sql">CREATE TABLE [table name] ( [column definitions] ) [table parameters]
-CREATE TABLE employees (
-    id            INTEGER      PRIMARY KEY,
-    first_name    VARCHAR(50) not null,
-    last_name     VARCHAR(75) not null,
-    fname         VARCHAR(50) not null,
-    dateofbirth   DATE         not null
-);
-
-DROP objecttype objectname
-DROP TABLE employees;
-
-ALTER objecttype objectname parameters
-ALTER TABLE sink ADD bubbles INTEGER;
-ALTER TABLE sink DROP COLUMN bubbles;
-
-RENAME TABLE old_name TO new_name;
-</code></pre>
-
-<h2>DML</h2>
-
-<pre><code class="sql">SELECT ... FROM ... WHERE ...
-INSERT INTO ... VALUES ...
-UPDATE ... SET ... WHERE ...
-DELETE FROM ... WHERE ...
-
-SELECT nom, service
-FROM employe
-WHERE status = 'stagiaire'
-ORDER BY nom;
-
-INSERT INTO employees(first_name, last_name, fname) VALUES ('John', 'Capita', 'xcapit00');
-UPDATE a_table SET field1 = 'updated value' WHERE field2 = 'N';
-DELETE FROM a_table WHERE field2 = 'N';
-
-MERGE INTO table_name USING table_reference ON (condition)
-   WHEN MATCHED THEN
-   UPDATE SET column1 = value1 [, column2 = value2 ...]
-   WHEN NOT MATCHED THEN
-   INSERT (column1 [, column2 ...]) VALUES (value1 [, value2 ...
-</code></pre>
-
-<h3>UPDATE</h3>
-
-<p>Update top 10 state in the table authors.</p>
-
-<pre><code class="sql">UPDATE state
-SET state.saleprice = state.saleprice + 2
-FROM (
-         SELECT TOP 10 *
-         FROM sales ORDER BY saleid
-     ) AS t1, sales state
-WHERE state.saleid = t1.saleid
-
-
-UPDATE state
-SET state.saleprice = state.saleprice + 2
-FROM sales state
-WHERE state.sale.id in (
-                           SELECT TOP 10 saleid
-                           FROM sales
-                           ORDER BY saleid
-                       )
-</code></pre>
-
-<h2>DQL</h2>
-
-<pre><code class="sql">- functions: COUNT, AVG, MIN, MAX, SUM
-
-SELECT *    column(s)
-FROM *
-            table(s)
-            FULL OUTER JOIN
-            RIGHT OUTER JOIN
-            LEFT OUTER JOIN
-            INNER JOIN
-            Alias (AS)
-WHERE *
-            Predicate (=,&lt;&gt;,&lt;,&lt;=,&gt;,&gt;=)
-            Operators (AND, OR, NOT)
-            LIKE (%,_)
-            BETWEEN ... IN ...
-            EXISTS
-            IS NULL
-ORDER BY *
-            ASC/DESC
-GROUP BY *
-            column(s)
-HAVING *
-            clause
-FETCH *
-            clause
-</code></pre>
-
-<h3>JOIN/UNION</h3>
-
-<ul>
-<li>inner join: A &amp;&amp; B, # of rows = (A&amp;&amp;B)</li>
-<li>left join: A (full) &amp;&amp; B (null), # of rows = rows(A)</li>
-<li>right join: A (null) &amp;&amp; B (full), # of rows = rows(B)</li>
-<li>full join: union, # of rows = rows(A) + rows(B) - rows (A&amp;&amp;B)</li>
-</ul>
-
-
-<p>join</p>
-
-<pre><code class="sql">SELECT orders.orderid, customers.customerid, customers.customername, orders.orderdate
-FROM orders
-INNER JOIN customers
-ON orders.customerid = customers.customerid;
-
-SELECT orders.orderid, customers.customerid, customers.customername, orders.orderdate
-FROM orders
-LEFT JOIN customers
-ON orders.customerid = customers.customerid;
-
-SELECT orders.orderid, customers.customerid, customers.customername, orders.orderdate
-FROM orders
-RIGHT JOIN customers
-ON orders.customerid = customers.customerid;
-</code></pre>
-
-<p>union</p>
-
-<pre><code class="sql">SELECT customerid FROM customers
-UNION
-SELECT customerid FROM orders
-ORDER BY customerid
-</code></pre>
-
-<h3>TOP</h3>
-
-<p>Display all fields of the last record.</p>
-
-<pre><code class="sql">SELECT top 1 *
-FROM table_name
-RODER BY ID DESC
-
-# mysql
-SELECT * 
-FROM table_name
-ORDER BY field_name DESC/ASC
-LIMIT 1;
-
-SELECT MAX(ID) AS MAXID
-FROM table_name;
-
-SELECT id, otherfields, ..., ...
-FROM table_name
-WHERE id=(SELECT MAX(id) FROM table)
-</code></pre>
-
-<h2>DCL</h2>
-
-<pre><code class="sql">GRANT SELECT, UPDATE
-ON example
-TO some_user, another_user;
-
-REVOKE SELECT, UPDATE
-ON example
-FROM some_user, another_user;
-</code></pre>
-
-<h2>DTL</h2>
-
-<pre><code class="sql">commit;
-savepoint;
-rollback;
-</code></pre>
-
-<h3>ROLLBACK</h3>
-
-<p>NULL is allowed in a column which is all of the non-null values should be unique.</p>
-
-<pre><code class="sql">CREATE trigger mytrigger on t1 for insert, update as
-
-BEGIN
-    IF (
-            SELECT MAX(cnt)
-            FROM (
-                     SELECT COUNT(i.c1) as cnt
-                     FROM t1, iinserted i
-                     WHERE t1.c1 = i.c1
-                     GROUP BY i.c1
-                 ) x
-       ) &gt; 1
-    ROLLBACK TRAN
-END
-</code></pre>
-
-<h2>VDL</h2>
-
-<pre><code class="sql">CREATE VIEW "VIEW_NAME" AS "SQL Statement";
-
-CREATE VIEW V_Customer
-AS SELECT First_Name, Last_Name, Country
-FROM Customer;
-
-CREATE VIEW V_REGION_SALES
-AS SELECT A1.Region_Name REGION, SUM(A2.Sales) SALES
-FROM Geography A1, Store_Information A2
-WHERE A1.Store_Name = A2.Store_Name
-GROUP BY A1.Region_Name;
-
-SELECT * FROM V_REGION_SALES;
-</code></pre>
 ]]></content>
   </entry>
   
