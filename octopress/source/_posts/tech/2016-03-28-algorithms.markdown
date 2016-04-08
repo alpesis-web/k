@@ -68,7 +68,7 @@ sorting:
 
 ### String Algorithms
 
-## strategics
+## Strategics
 
 ### Divide and Conquer
 
