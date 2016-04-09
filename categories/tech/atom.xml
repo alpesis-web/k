@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tech | K]]></title>
   <link href="http://k.arttechresearch.com/categories/tech/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2016-04-09T00:30:45+08:00</updated>
+  <updated>2016-04-10T03:18:16+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[K]]></name>
@@ -12,6 +12,235 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Programming Languages Comparison: Class and Instance]]></title>
+    <link href="http://k.arttechresearch.com/tech/2016/04/10/programming-languages-comparison-class-and-instance/"/>
+    <updated>2016-04-10T02:54:41+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2016/04/10/programming-languages-comparison-class-and-instance</id>
+    <content type="html"><![CDATA[<h2>Task</h2>
+
+<ul>
+<li>Write a class <code>Person</code> with an instance variable <code>InitialAge</code> with type <code>int</code>:
+
+<ul>
+<li>if <code>initialAge</code> &lt;= 0, set <code>age</code> = 0;</li>
+<li>if <code>initialAge</code> > 0, set <code>age</code> = <code>initialAge</code>.</li>
+</ul>
+</li>
+<li>Write a method <code>amIOld</code>:
+
+<ul>
+<li>if <code>age</code> &lt; 13, print <code>You are young.</code>;</li>
+<li>if <code>age</code> >= 13 and <code>age</code> &lt; 18, print &ldquo;You are a teenager.&rdquo;;</li>
+<li>if <code>age</code> > 18, print &ldquo;You are old.&rdquo;</li>
+</ul>
+</li>
+<li>Write a method <code>yearPasses</code>:
+
+<ul>
+<li>increases the instance variable <code>age</code> by 1.</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>Solutions</h2>
+
+<h3>C</h3>
+
+<p>Not Valid</p>
+
+<h3>C++</h3>
+
+<pre><code class="cpp">using namespace std;
+#include &lt;iostream&gt;
+
+class Person{
+public:
+   int age ;
+   Person(int initialAge);
+   void amIOld();
+   void yearPasses();
+};
+Person::Person(int initialAge){
+  // Add some more code to run some checks on initialAge
+    if (initialAge &lt;= 0) {
+        cout &lt;&lt; "Age is not valid, setting age to 0." &lt;&lt; endl;
+        age = 0;
+    }
+    else {
+        age = initialAge;
+    }
+
+}
+void Person::amIOld(){
+    // Do some computations in here and print out the correct statement to the console 
+    if (age &lt; 13) {
+        cout &lt;&lt; "You are young." &lt;&lt; endl;
+    }
+    else if (age &gt;= 13 &amp;&amp; age &lt; 18) {
+        cout &lt;&lt; "You are a teenager." &lt;&lt; endl;
+    }
+    else {
+        cout &lt;&lt; "You are old." &lt;&lt; endl;
+    }
+}
+
+
+void Person::yearPasses(){
+  // Increment the age of the person in here
+  age += 1;
+
+}
+
+int main(){
+    int T,age;
+    cin&gt;&gt;T;
+    for(int i=0;i&lt;T;i++)
+    {
+        cin&gt;&gt;age;
+        Person p(age);
+        p.amIOld();
+        for(int j=0;j&lt;3;j++)
+        {
+            p.yearPasses();
+
+        }
+        p.amIOld();
+        cout&lt;&lt;"\n";
+    }
+    return 0;
+}
+</code></pre>
+
+<h3>Java</h3>
+
+<pre><code class="java">public class Person {
+    private int age;    
+
+    public Person(int initialAge) {
+        // Add some more code to run some checks on initialAge
+        if (initialAge &lt;= 0){
+            System.out.println("Age is not valid, setting age to 0.");
+            age = 0;
+        }
+        else {
+            age = initialAge;
+        }
+    }
+
+    public void amIOld() {
+        // Write code determining if this person's age is old and print the correct statement:
+        String output;
+        if (age &lt; 13) {
+            output = "You are young.";
+        } 
+        else if (age &gt;= 13 &amp;&amp; age &lt; 18) {
+            output = "You are a teenager.";
+        }
+        else {
+            output = "You are old.";
+        }
+        System.out.println(output);
+    }
+
+    public void yearPasses() {
+        // Increment this person's age.
+        age += 1;
+    }
+
+    public static void main(String[] args) {
+            Scanner sc = new Scanner(System.in);
+            int T = sc.nextInt();
+            for (int i = 0; i &lt; T; i++) {
+                int age = sc.nextInt();
+                Person p = new Person(age);
+                p.amIOld();
+                for (int j = 0; j &lt; 3; j++) {
+                    p.yearPasses();
+                }
+                p.amIOld();
+                System.out.println();
+        }
+    }
+}
+</code></pre>
+
+<h3>Python</h3>
+
+<p>Python 2</p>
+
+<pre><code class="python">class Person:
+    def __init__(self,initialAge):
+        # Add some more code to run some checks on initialAge
+        if initialAge &lt;= 0:
+            print "Age is not valid, setting age to 0."
+            self.age = 0
+        else:
+            self.age = initialAge
+
+    def amIOld(self):
+        # Do some computations in here and print out the correct statement to the console
+        if self.age &lt; 13:
+            print "You are young."
+        elif 13 &lt;= self.age &lt; 18:
+            print "You are a teenager."
+        else:
+            print "You are old."
+
+    def yearPasses(self):
+        # Increment the age of the person in here  
+        self.age += 1
+        return self.age
+
+T=int(raw_input())
+for i in range(0,T):
+    age=int(raw_input())         
+    p=Person(age)  
+    p.amIOld()
+    for j in range(0,3):
+        p.yearPasses();        
+    p.amIOld();
+    print ""
+</code></pre>
+
+<p>Python 3</p>
+
+<pre><code class="python">class Person:
+        def __init__(self,initialAge):
+            # Add some more code to run some checks on initialAge
+            if initialAge &lt;= 0:
+                print("Age is not valid, setting age to 0.")
+                self.age = 0
+            else:
+                self.age = initialAge
+
+        def amIOld(self):
+            # Do some computations in here and print out the correct statement to the console
+            if self.age &lt; 13:
+                print("You are young.")
+            elif 13 &lt;= self.age &lt; 18:
+                print("You are a teenager.")
+            else:
+                print("You are old.")
+
+        def yearPasses(self):
+            # Increment the age of the person in here     
+            self.age += 1
+
+T=int(input())
+for i in range(0,T):
+    age=int(input())         
+    p=Person(age)  
+    p.amIOld()
+    for j in range(0,3):
+        p.yearPasses();        
+    p.amIOld();
+    print ("")
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Programming Languages Comparison: Conditional Statements]]></title>
@@ -586,120 +815,6 @@ print('Hello, World.')
 # Write the second line of output
 print(inputString)
 </code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Algorithms]]></title>
-    <link href="http://k.arttechresearch.com/tech/2016/03/28/algorithms/"/>
-    <updated>2016-03-28T21:50:20+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2016/03/28/algorithms</id>
-    <content type="html"><![CDATA[<h2>Analysis of Algorithms</h2>
-
-<h2>Data Structure</h2>
-
-<h3>Array: Searching and Sorting</h3>
-
-<p>searching:</p>
-
-<ul>
-<li>Binary Search</li>
-</ul>
-
-
-<p>sorting:</p>
-
-<ul>
-<li>Selection Sort</li>
-<li>Bubble Sort</li>
-<li>Insertion Sort</li>
-<li>Merge Sort</li>
-<li>Heap Sort</li>
-<li>Quick Sort</li>
-<li>Radix Sort</li>
-<li>Counting Sort</li>
-<li>Bucket Sort</li>
-<li>Shell Sort</li>
-<li>Comb Sort</li>
-<li>Pigeonhole Sort</li>
-</ul>
-
-
-<h3>Tree &amp; Graph: Greedy and Graph</h3>
-
-<h4>Search</h4>
-
-<ul>
-<li>DFS</li>
-<li>BFS</li>
-</ul>
-
-
-<h4>Greedy Algorithms</h4>
-
-<ul>
-<li>Activity selectioin problem</li>
-<li>spanning tree
-
-<ul>
-<li>Kruskal’s minimum spanning tree</li>
-<li>Prim’s minimum spanning tree</li>
-<li>Prim’s MST for Adjacency list representation</li>
-</ul>
-</li>
-<li>path
-
-<ul>
-<li>Dijkstra’s shortest path algorithm</li>
-<li>Dijkstra’s algorithm for Adjacency list representation</li>
-</ul>
-</li>
-<li>value
-
-<ul>
-<li>Huffman coding</li>
-<li>Efficient Huffman coding for sorted input</li>
-</ul>
-</li>
-</ul>
-
-
-<h4>Graph Algorithms</h4>
-
-<ul>
-<li>Connectivity</li>
-<li>Hard Problems</li>
-<li>Maximum Flow</li>
-<li>Misc</li>
-</ul>
-
-
-<h2>String</h2>
-
-<h3>Pattern Searching</h3>
-
-<h3>String Algorithms</h3>
-
-<h2>Strategics</h2>
-
-<h3>Divide and Conquer</h3>
-
-<h2>Mathematics</h2>
-
-<h3>Backtracking</h3>
-
-<h3>Geometric Algorithms</h3>
-
-<h3>Mathematical Algorithms</h3>
-
-<h3>Bit Algorithms</h3>
-
-<h2>Reference</h2>
-
-<ul>
-<li><a href="http://www.geeksforgeeks.org/fundamentals-of-algorithms/#SearchingandSorting">Algorithms</a></li>
-</ul>
-
 ]]></content>
   </entry>
   
