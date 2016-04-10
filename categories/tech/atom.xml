@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tech | K]]></title>
   <link href="http://k.arttechresearch.com/categories/tech/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2016-04-10T03:18:16+08:00</updated>
+  <updated>2016-04-11T01:02:11+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[K]]></name>
@@ -12,6 +12,129 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Programming Languages Comparison: Loops]]></title>
+    <link href="http://k.arttechresearch.com/tech/2016/04/11/programming-languages-comparison-loops/"/>
+    <updated>2016-04-11T00:43:16+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2016/04/11/programming-languages-comparison-loops</id>
+    <content type="html"><![CDATA[<h2>Task</h2>
+
+<ul>
+<li>Calculate N * [1..10]</li>
+<li>Print the result</li>
+</ul>
+
+
+<h2>Solutions</h2>
+
+<h3>C</h3>
+
+<pre><code class="c">#include &lt;math.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;assert.h&gt;
+#include &lt;limits.h&gt;
+#include &lt;stdbool.h&gt;
+
+int main(){
+    int N; 
+    scanf("%d",&amp;N);
+
+    int endOfRange = 10;
+    for (int i=1; i &lt;= endOfRange; i++) {
+        int product = N * i;
+        printf("%d x %d = %d\n", N, i, product);
+    }
+
+    return 0;
+}
+</code></pre>
+
+<h3>C++</h3>
+
+<pre><code class="cpp">#include &lt;map&gt;
+#include &lt;set&gt;
+#include &lt;list&gt;
+#include &lt;cmath&gt;
+#include &lt;ctime&gt;
+#include &lt;deque&gt;
+#include &lt;queue&gt;
+#include &lt;stack&gt;
+#include &lt;string&gt;
+#include &lt;bitset&gt;
+#include &lt;cstdio&gt;
+#include &lt;limits&gt;
+#include &lt;vector&gt;
+#include &lt;climits&gt;
+#include &lt;cstring&gt;
+#include &lt;cstdlib&gt;
+#include &lt;fstream&gt;
+#include &lt;numeric&gt;
+#include &lt;sstream&gt;
+#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;unordered_map&gt;
+
+using namespace std;
+
+
+int main(){
+    int N;
+    cin &gt;&gt; N;
+
+    int endOfRange = 10;
+    for (int i=1; i &lt;= endOfRange; i++) {
+        int product = N * i;
+        printf("%d x %d = %d\n", N, i, product);
+    }
+
+    return 0;
+}
+</code></pre>
+
+<h3>Java</h3>
+
+<pre><code class="java">import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int N = in.nextInt();
+
+        int endOfRange = 10;
+        int product;
+        for (int i = 1; i &lt;= endOfRange; i++) { 
+            product = N * i;
+            System.out.printf("%d x %d = %d\n", N, i, product);
+        }
+
+    }
+}
+</code></pre>
+
+<h3>Python</h3>
+
+<p>Python 2</p>
+
+<pre><code class="python">#!/bin/python
+
+import sys
+
+
+N = int(raw_input().strip())
+
+for num in range(10):
+    print "%d x %d = %d" % (N, num+1, N*(num+1))
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Programming Languages Comparison: Class and Instance]]></title>
@@ -706,114 +829,6 @@ print(total_d)
 # Concatenate and print the String variables on a new line
 # The 's' variable above should be printed first.
 print(strings)
-</code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Programming Languages Comparison: Print]]></title>
-    <link href="http://k.arttechresearch.com/tech/2016/04/05/programming-languages-comparison-print/"/>
-    <updated>2016-04-05T17:08:53+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2016/04/05/programming-languages-comparison-print</id>
-    <content type="html"><![CDATA[<h2>Task</h2>
-
-<ul>
-<li>Save a line of input from stdin to a variable</li>
-<li>Print <code>Hello, World</code> on a single line</li>
-<li>Print the value of the variable on a second line</li>
-</ul>
-
-
-<h2>Solutions</h2>
-
-<h3>C</h3>
-
-<pre><code class="c">#include &lt;stdio.h&gt;
-#include &lt;string.h&gt;
-#include &lt;math.h&gt;
-#include &lt;stdlib.h&gt;
-int main() {
-   char inputString[105]; // declare a variable to hold our input
-   scanf("%[^\n]", inputString); // get a line of input from stdin and save it to our variable
-
-   // Your first line of output goes here
-   printf("Hello, World.\n");
-
-   // Write the second line of output
-   printf(inputString);
-
-   return 0;
-}
-</code></pre>
-
-<h3>C++</h3>
-
-<pre><code class="cpp">#include &lt;cmath&gt;
-#include &lt;cstdio&gt;
-#include &lt;vector&gt;
-#include &lt;iostream&gt;
-#include &lt;algorithm&gt;
-using namespace std;
-
-int main() {
-   string inputString; // declare a variable to hold our input
-   getline(cin, inputString); // get a line of input from cin and save it to our variable
-
-   // Your first line of output goes here
-   cout &lt;&lt; "Hello, World." &lt;&lt; endl;
-
-   // Write the second line of output
-   cout &lt;&lt; inputString &lt;&lt; endl;
-
-   return 0;
-}
-</code></pre>
-
-<h3>Java</h3>
-
-<pre><code class="java">import java.io.*;
-import java.util.*;
-import java.text.*;
-import java.math.*;
-import java.util.regex.*;
-
-public class Solution {
-   public static void main(String[] args) {
-      Scanner scan = new Scanner(System.in); // use the Scanner class to read from stdin
-      String inputString = scan.nextLine(); // read a line of input and save it to a variable
-      scan.close(); // close the scanner
-
-      // Your first line of output goes here
-      System.out.println("Hello, World.");
-
-      // Write the second line of output
-      System.out.println(inputString);
-   }
-}
-</code></pre>
-
-<h3>Python</h3>
-
-<p>python2</p>
-
-<pre><code class="python">inputString = raw_input() # get a line of input from stdin and save it to our variable
-
-# Your first line of output goes here
-print 'Hello, World.'
-
-# Write the second line of output
-print inputString
-</code></pre>
-
-<p>python3</p>
-
-<pre><code class="python">inputString = input() # get a line of input from stdin and save it to our variable
-
-# Your first line of output goes here
-print('Hello, World.')
-
-# Write the second line of output
-print(inputString)
 </code></pre>
 ]]></content>
   </entry>

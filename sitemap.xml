@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://k.arttechresearch.com/tech/2016/04/11/programming-languages-comparison-loops/</loc>
+    <lastmod>2016-04-11T00:43:16+08:00</lastmod>
+  </url>
+  <url>
     <loc>http://k.arttechresearch.com/tech/2016/04/10/programming-languages-comparison-class-and-instance/</loc>
     <lastmod>2016-04-10T02:54:41+08:00</lastmod>
   </url>
@@ -1373,5 +1377,71 @@
   </url>
   <url>
     <loc>http://k.arttechresearch.com/tags/c-plus-plus/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/posts/2/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/posts/3/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/posts/4/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/posts/5/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/posts/6/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/posts/7/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/posts/8/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/posts/9/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/posts/10/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/posts/11/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/posts/12/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/posts/13/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/posts/14/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/posts/15/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/posts/16/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/posts/17/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/posts/18/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/posts/19/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/posts/20/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/posts/21/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/posts/22/</loc>
+  </url>
+  <url>
+    <loc>http://k.arttechresearch.com/posts/23/</loc>
   </url>
 </urlset>
