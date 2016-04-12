@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tech | K]]></title>
   <link href="http://k.arttechresearch.com/categories/tech/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2016-04-11T01:02:11+08:00</updated>
+  <updated>2016-04-12T23:57:57+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[K]]></name>
@@ -12,6 +12,127 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Programming Languages Comparison: Array]]></title>
+    <link href="http://k.arttechresearch.com/tech/2016/04/12/programming-languages-comparison-array/"/>
+    <updated>2016-04-12T23:29:46+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2016/04/12/programming-languages-comparison-array</id>
+    <content type="html"><![CDATA[<h2>Task</h2>
+
+<ul>
+<li>Reverse an array.</li>
+</ul>
+
+
+<h2>Solutions</h2>
+
+<h3>C</h3>
+
+<pre><code class="c">#include &lt;math.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;assert.h&gt;
+#include &lt;limits.h&gt;
+#include &lt;stdbool.h&gt;
+
+int main(){
+    int n; 
+    scanf("%d",&amp;n);
+    int *arr = malloc(sizeof(int) * n);
+    for(int arr_i = 0; arr_i &lt; n; arr_i++){
+       scanf("%d",&amp;arr[arr_i]);
+    }
+
+    for (int arr_i=n-1; arr_i&gt;=0; arr_i--){
+        printf("%d ", arr[arr_i]);
+    }
+    return 0;
+}
+</code></pre>
+
+<h3>C++</h3>
+
+<pre><code class="cpp">#include &lt;map&gt;
+#include &lt;set&gt;
+#include &lt;list&gt;
+#include &lt;cmath&gt;
+#include &lt;ctime&gt;
+#include &lt;deque&gt;
+#include &lt;queue&gt;
+#include &lt;stack&gt;
+#include &lt;string&gt;
+#include &lt;bitset&gt;
+#include &lt;cstdio&gt;
+#include &lt;limits&gt;
+#include &lt;vector&gt;
+#include &lt;climits&gt;
+#include &lt;cstring&gt;
+#include &lt;cstdlib&gt;
+#include &lt;fstream&gt;
+#include &lt;numeric&gt;
+#include &lt;sstream&gt;
+#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;unordered_map&gt;
+
+using namespace std;
+
+
+int main(){
+    int n;
+    cin &gt;&gt; n;
+    vector&lt;int&gt; arr(n);
+    for(int arr_i = 0;arr_i &lt; n;arr_i++){
+       cin &gt;&gt; arr[arr_i];
+    }
+
+    for (int arr_i = n-1; arr_i &gt;=0; arr_i--){
+        printf("%d ", arr[arr_i]);
+    }
+    return 0;
+}
+</code></pre>
+
+<h3>Java</h3>
+
+<pre><code class="java">mport java.io.*;
+import java.util.*;
+
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int n = in.nextInt();
+        int[] arr = new int[n];
+        for(int i=0; i &lt; n; i++){
+            arr[i] = in.nextInt();
+        }
+        for (int i=n-1; i &gt;= 0; i--) {
+            System.out.print(arr[i]+" ");
+        }
+
+        in.close();
+    }
+}
+</code></pre>
+
+<h3>Python</h3>
+
+<pre><code class="python">#!/bin/python
+
+import sys
+
+
+n = int(raw_input().strip())
+arr = map(int,raw_input().strip().split(' '))
+
+print " ".join(map(str, arr[::-1]))
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Programming Languages Comparison: Loops]]></title>
@@ -661,174 +782,6 @@ tax = mealCost * (taxPercent/100)
 
 totalCost = round(mealCost + tip + tax)
 print("The total meal cost is %d dollars." % totalCost)
-</code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Programming Languages Comparison: Data Types]]></title>
-    <link href="http://k.arttechresearch.com/tech/2016/04/07/programming-languages-comparison-data-types/"/>
-    <updated>2016-04-07T01:55:32+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2016/04/07/programming-languages-comparison-data-types</id>
-    <content type="html"><![CDATA[<h2>Task</h2>
-
-<ul>
-<li>get the variables: int, double, string</li>
-<li>calculate the sum of the digits and concat the strings</li>
-<li>print the results</li>
-</ul>
-
-
-<h2>Solutions</h2>
-
-<h3>C</h3>
-
-<pre><code class="c">#include &lt;stdio.h&gt;
-#include &lt;string.h&gt;
-#include &lt;math.h&gt;
-#include &lt;stdlib.h&gt;
-
-int main() {
-    int i = 4;
-    double d = 4.0;
-    char s[] = "HackerRank ";
-
-    // Declare second integer, double, and String variables.
-    int num;
-    float digit;
-    char string[100];
-
-    // Read and save an integer, double, and String to your variables.
-    scanf("%d", &amp;num);
-    scanf("\n%f\n", &amp;digit);
-    scanf("%[^\n]", string);
-
-    // Print the sum of both integer variables on a new line.
-    printf("%d\n", i+num);    
-
-    // Print the sum of the double variables on a new line.
-    printf("%.1f\n", d+digit);    
-
-    // Concatenate and print the String variables on a new line
-    // The 's' variable above should be printed first.
-    printf("%s%s", s, string);
-
-    return 0;
-}
-</code></pre>
-
-<h3>C++</h3>
-
-<pre><code class="cpp">#include &lt;iostream&gt;
-#include &lt;iomanip&gt;
-#include &lt;limits&gt;
-
-using namespace std;
-
-int main() {
-    int i = 4;
-    double d = 4.0;
-    string s = "HackerRank ";
-
-    return 0;
-}
-</code></pre>
-
-<h3>Java</h3>
-
-<pre><code class="java">import java.io.*;
-import java.util.*;
-import java.text.*;
-import java.math.*;
-import java.util.regex.*;
-
-public class Solution {
-
-    public static void main(String[] args) {
-        int i = 4;
-        double d = 4.0;
-        String s = "HackerRank ";
-
-        Scanner scan = new Scanner(System.in);
-
-        /* Declare second integer, double, and String variables. */
-        int i2 = scan.nextInt();
-        double d2 = scan.nextDouble();
-        String empty = scan.nextLine();
-        String s2 = scan.nextLine();
-
-        /* Read and save an integer, double, and String to your variables.*/
-        int int_sum = i + i2;
-        double double_sum = d + d2;
-        String combine_s = s + s2;
-
-        /* Print the sum of both integer variables on a new line. */
-        System.out.println(int_sum);
-        /* Print the sum of the double variables on a new line. */
-        System.out.println(double_sum);
-        /* Concatenate and print the String variables on a new line; 
-            the 's' variable above should be printed first. */
-        System.out.println(combine_s);
-
-        scan.close();
-    }
-}
-</code></pre>
-
-<h3>Python</h3>
-
-<p>python 2</p>
-
-<pre><code class="python">i = 4
-d = 4.0
-s = 'HackerRank '
-
-# Declare second integer, double, and String variables.
-i2 = int(raw_input())
-d2 = float(raw_input())
-s2 = str(raw_input())
-
-# Read and save an integer, double, and String to your variables.
-total_i = i + i2
-total_d = d + d2
-strings = s + s2
-
-# Print the sum of both integer variables on a new line.
-print str(total_i)
-
-# Print the sum of the double variables on a new line.
-print str(total_d)
-
-# Concatenate and print the String variables on a new line
-# The 's' variable above should be printed first.
-print strings
-</code></pre>
-
-<p>python 3</p>
-
-<pre><code>i = 4
-d = 4.0
-s = 'HackerRank '
-
-# Declare second integer, double, and String variables.
-i2 = int(input())
-d2 = float(input())
-s2 = str(input())
-
-# Read and save an integer, double, and String to your variables.
-total_i = i + i2
-total_d = d + d2
-strings = s + s2
-
-# Print the sum of both integer variables on a new line.
-print(total_i)
-
-# Print the sum of the double variables on a new line.
-print(total_d)
-
-# Concatenate and print the String variables on a new line
-# The 's' variable above should be printed first.
-print(strings)
 </code></pre>
 ]]></content>
   </entry>

@@ -4,7 +4,7 @@
   <title><![CDATA[K]]></title>
   <link href="http://k.arttechresearch.com/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2016-04-11T01:01:23+08:00</updated>
+  <updated>2016-04-12T23:57:43+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[K]]></name>
@@ -12,6 +12,220 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Programming Languages Comparison: Array]]></title>
+    <link href="http://k.arttechresearch.com/tech/2016/04/12/programming-languages-comparison-array/"/>
+    <updated>2016-04-12T23:29:46+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2016/04/12/programming-languages-comparison-array</id>
+    <content type="html"><![CDATA[<h2>Task</h2>
+
+<ul>
+<li>Reverse an array.</li>
+</ul>
+
+
+<h2>Solutions</h2>
+
+<h3>C</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &lt;math.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;stdio.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;string.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;stdlib.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;assert.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;limits.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;stdbool.h&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">n</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">n</span><span class="p">);</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="o">*</span><span class="n">arr</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="o">*</span> <span class="n">n</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">arr_i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">arr_i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">arr_i</span><span class="o">++</span><span class="p">){</span>
+</span><span class='line'>       <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">arr</span><span class="p">[</span><span class="n">arr_i</span><span class="p">]);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">arr_i</span><span class="o">=</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="n">arr_i</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">;</span> <span class="n">arr_i</span><span class="o">--</span><span class="p">){</span>
+</span><span class='line'>        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d &quot;</span><span class="p">,</span> <span class="n">arr</span><span class="p">[</span><span class="n">arr_i</span><span class="p">]);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>C++</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="cp">#include &lt;map&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;set&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;list&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;cmath&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;ctime&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;deque&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;queue&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;stack&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;string&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;bitset&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;cstdio&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;limits&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;vector&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;climits&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;cstring&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;cstdlib&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;fstream&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;numeric&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;sstream&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;iostream&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;algorithm&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;unordered_map&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">n</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">n</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">arr</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">arr_i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="n">arr_i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span><span class="n">arr_i</span><span class="o">++</span><span class="p">){</span>
+</span><span class='line'>       <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">arr</span><span class="p">[</span><span class="n">arr_i</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">arr_i</span> <span class="o">=</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="n">arr_i</span> <span class="o">&gt;=</span><span class="mi">0</span><span class="p">;</span> <span class="n">arr_i</span><span class="o">--</span><span class="p">){</span>
+</span><span class='line'>        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d &quot;</span><span class="p">,</span> <span class="n">arr</span><span class="p">[</span><span class="n">arr_i</span><span class="p">]);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Java</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">mport</span> <span class="n">java</span><span class="o">.</span><span class="na">io</span><span class="o">.*;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">Scanner</span> <span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Scanner</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">in</span><span class="o">);</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
+</span><span class='line'>        <span class="kt">int</span><span class="o">[]</span> <span class="n">arr</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">n</span><span class="o">];</span>
+</span><span class='line'>        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
+</span><span class='line'>            <span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">--)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">]+</span><span class="s">&quot; &quot;</span><span class="o">);</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">in</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Python</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c">#!/bin/python</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">sys</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">raw_input</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+</span><span class='line'><span class="n">arr</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="nb">raw_input</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39; &#39;</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">print</span> <span class="s">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">arr</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Programming Languages Comparison: Loops]]></title>
@@ -2923,315 +3137,6 @@ accessed are in one partition.</li>
 
 <ul>
 <li><a href="https://docs.mongodb.org/manual/core/crud-introduction/">MongoDB CRUD Operations</a></li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Mongo Shell]]></title>
-    <link href="http://k.arttechresearch.com/tech/2016/03/24/mongo-shell/"/>
-    <updated>2016-03-24T09:54:30+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2016/03/24/mongo-shell</id>
-    <content type="html"><![CDATA[<h2>What is Mongo Shell</h2>
-
-<p>The Mongo Shell is an interactive Javascript interface to MongoDB.</p>
-
-<p>How to user Mongo Shell:</p>
-
-<ul>
-<li>query and update data</li>
-<li>perform administrative operations</li>
-</ul>
-
-
-<h3>Start Shell</h3>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ mongo
-</span><span class='line'>&gt; show dbs
-</span><span class='line'>&gt; use &lt;dbname&gt;
-</span><span class='line'>&gt; db.&lt;mycollection&gt;.insert({&lt;key&gt;: &lt;value&gt;});
-</span><span class='line'>&gt; db[&lt;mycollection&gt;].find();
-</span><span class='line'>&gt; db.getCollection(&lt;mycollection&gt;).find();
-</span><span class='line'>&gt; db.&lt;mycollection&gt;.find().pretty();
-</span><span class='line'>&gt; quit()</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Customizing Mongo Shell</h2>
-
-<ul>
-<li>config file: <code>.mongorc.js</code></li>
-</ul>
-
-
-<p>display # of operations</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">cmdCount</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class='line'><span class="nx">prompt</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>             <span class="k">return</span> <span class="p">(</span><span class="nx">cmdCount</span><span class="o">++</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;&gt; &quot;</span><span class="p">;</span>
-</span><span class='line'>         <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="mi">1</span><span class="o">&gt;</span>
-</span><span class='line'><span class="mi">2</span><span class="o">&gt;</span>
-</span><span class='line'><span class="mi">3</span><span class="o">&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>display database and hostname</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">host</span> <span class="o">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">serverStatus</span><span class="p">().</span><span class="nx">host</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">prompt</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>             <span class="k">return</span> <span class="nx">db</span><span class="o">+</span><span class="s2">&quot;@&quot;</span><span class="o">+</span><span class="nx">host</span><span class="o">+</span><span class="s2">&quot;$ &quot;</span><span class="p">;</span>
-</span><span class='line'>         <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">test</span><span class="err">@</span><span class="nx">myHost1$</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>display up time and document count</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">prompt</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>           <span class="k">return</span> <span class="s2">&quot;Uptime:&quot;</span><span class="o">+</span><span class="nx">db</span><span class="p">.</span><span class="nx">serverStatus</span><span class="p">().</span><span class="nx">uptime</span><span class="o">+</span><span class="s2">&quot; Documents:&quot;</span><span class="o">+</span><span class="nx">db</span><span class="p">.</span><span class="nx">stats</span><span class="p">().</span><span class="nx">objects</span><span class="o">+</span><span class="s2">&quot; &gt; &quot;</span><span class="p">;</span>
-</span><span class='line'>         <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">Uptime</span><span class="o">:</span><span class="mi">5897</span> <span class="nx">Documents</span><span class="o">:</span><span class="mi">6</span> <span class="o">&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>editor and batch size</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># editor</span>
-</span><span class='line'><span class="nb">export </span><span class="nv">EDITOR</span><span class="o">=</span>vim
-</span><span class='line'>mongo
-</span><span class='line'>
-</span><span class='line'><span class="c"># batch size</span>
-</span><span class='line'>DBQuery.shellBatchSize <span class="o">=</span> 10<span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Shell Help</h2>
-
-<ul>
-<li>command line</li>
-<li>shell</li>
-<li>database</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># command line</span>
-</span><span class='line'>&gt; mongo --help
-</span><span class='line'>
-</span><span class='line'><span class="c"># shell</span>
-</span><span class='line'>&gt; <span class="nb">help</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>database help</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># mongo</span>
-</span><span class='line'>&gt; show dbs
-</span><span class='line'>&gt; db.help<span class="o">()</span>
-</span><span class='line'>&gt; db.updateUser
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="c"># collections</span>
-</span><span class='line'>&gt; show collections
-</span><span class='line'>&gt; db.collection.help<span class="o">()</span>
-</span><span class='line'>&gt; db.collection.save
-</span><span class='line'>
-</span><span class='line'><span class="c"># cursor</span>
-</span><span class='line'>&gt; db.collection.find<span class="o">()</span>.help<span class="o">()</span>
-</span><span class='line'>&gt; db.collection.find<span class="o">()</span>.toArray
-</span><span class='line'>
-</span><span class='line'><span class="c"># wrapper object</span>
-</span><span class='line'>&gt; <span class="nb">help </span>misc
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Scripting</h2>
-
-<p>sripts: <code>*.js</code></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="k">new</span> <span class="nx">Mongo</span><span class="p">()</span>
-</span><span class='line'><span class="k">new</span> <span class="nx">Mongo</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">host</span><span class="o">&gt;</span><span class="p">)</span>
-</span><span class='line'><span class="k">new</span> <span class="nx">Mongo</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">host</span><span class="o">:</span><span class="nx">port</span><span class="o">&gt;</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">conn</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Mongo</span><span class="p">();</span>
-</span><span class='line'><span class="nx">db</span> <span class="o">=</span> <span class="nx">conn</span><span class="p">.</span><span class="nx">getDB</span><span class="p">(</span><span class="s2">&quot;myDatabase&quot;</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">db</span> <span class="o">=</span> <span class="nx">connect</span><span class="p">(</span><span class="s2">&quot;localhost:27020/myDatabase&quot;</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">cursor</span> <span class="o">=</span> <span class="nx">db</span><span class="p">.</span><span class="nx">collection</span><span class="p">.</span><span class="nx">find</span><span class="p">();</span>
-</span><span class='line'><span class="k">while</span> <span class="p">(</span> <span class="nx">cursor</span><span class="p">.</span><span class="nx">hasNext</span><span class="p">()</span> <span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>   <span class="nx">printjson</span><span class="p">(</span> <span class="nx">cursor</span><span class="p">.</span><span class="nx">next</span><span class="p">()</span> <span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>how to run</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>&gt; mongo <span class="nb">test</span> --eval <span class="s2">&quot;printjson(db.getCollectionNames())&quot;</span>
-</span><span class='line'>&gt; mongo localhost:27017/test myjsfile.js
-</span><span class='line'>&gt; load<span class="o">(</span><span class="s2">&quot;myjstest.js&quot;</span><span class="o">)</span>
-</span><span class='line'>&gt; load<span class="o">(</span><span class="s2">&quot;scripts/myjstest.js&quot;</span><span class="o">)</span>
-</span><span class='line'>&gt; load<span class="o">(</span><span class="s2">&quot;/data/db/scripts/myjstest.js&quot;</span><span class="o">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Data Types</h2>
-
-<p>Date</p>
-
-<ul>
-<li>Date() method which returns the current date as a string.</li>
-<li>new Date() constructor which returns a Date object using the ISODate() wrapper.</li>
-<li>ISODate() constructor which returns a Date object using the ISODate() wrapper.</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&gt;</span> <span class="kd">var</span> <span class="nx">myDateString</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">();</span>
-</span><span class='line'><span class="o">&gt;</span> <span class="nx">myDateString</span>
-</span><span class='line'><span class="nx">Wed</span> <span class="nx">Dec</span> <span class="mi">19</span> <span class="mi">2012</span> <span class="mi">01</span><span class="o">:</span><span class="mi">03</span><span class="o">:</span><span class="mi">25</span> <span class="nx">GMT</span><span class="o">-</span><span class="mi">0500</span> <span class="p">(</span><span class="nx">EST</span><span class="p">)</span>
-</span><span class='line'><span class="o">&gt;</span> <span class="k">typeof</span> <span class="nx">myDateString</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&gt;</span> <span class="kd">var</span> <span class="nx">myDate</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">();</span>
-</span><span class='line'><span class="o">&gt;</span> <span class="kd">var</span> <span class="nx">myDateInitUsingISODateWrapper</span> <span class="o">=</span> <span class="nx">ISODate</span><span class="p">();</span>
-</span><span class='line'><span class="o">&gt;</span> <span class="nx">myDate</span>
-</span><span class='line'><span class="nx">ISODate</span><span class="p">(</span><span class="s2">&quot;2012-12-19T06:01:17.171Z&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="o">&gt;</span> <span class="nx">myDate</span> <span class="k">instanceof</span> <span class="nb">Date</span>
-</span><span class='line'><span class="o">&gt;</span> <span class="nx">myDateInitUsingISODateWrapper</span> <span class="k">instanceof</span> <span class="nb">Date</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>ObjectId</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="k">new</span> <span class="nx">ObjectId</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>NumberLong</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">NumberLong</span><span class="p">(</span><span class="s2">&quot;2090845886852&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="nx">db</span><span class="p">.</span><span class="nx">collection</span><span class="p">.</span><span class="nx">insert</span><span class="p">(</span> <span class="p">{</span> <span class="nx">_id</span><span class="o">:</span> <span class="mi">10</span><span class="p">,</span> <span class="nx">calc</span><span class="o">:</span> <span class="nx">NumberLong</span><span class="p">(</span><span class="s2">&quot;2090845886852&quot;</span><span class="p">)</span> <span class="p">}</span> <span class="p">)</span>
-</span><span class='line'><span class="nx">db</span><span class="p">.</span><span class="nx">collection</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span> <span class="p">{</span> <span class="nx">_id</span><span class="o">:</span> <span class="mi">10</span> <span class="p">},</span>
-</span><span class='line'>                      <span class="p">{</span> <span class="nx">$set</span><span class="o">:</span>  <span class="p">{</span> <span class="nx">calc</span><span class="o">:</span> <span class="nx">NumberLong</span><span class="p">(</span><span class="s2">&quot;2555555000000&quot;</span><span class="p">)</span> <span class="p">}</span> <span class="p">}</span> <span class="p">)</span>
-</span><span class='line'><span class="nx">db</span><span class="p">.</span><span class="nx">collection</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span> <span class="p">{</span> <span class="nx">_id</span><span class="o">:</span> <span class="mi">10</span> <span class="p">},</span>
-</span><span class='line'>                      <span class="p">{</span> <span class="nx">$inc</span><span class="o">:</span> <span class="p">{</span> <span class="nx">calc</span><span class="o">:</span> <span class="nx">NumberLong</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="p">}</span> <span class="p">}</span> <span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">db</span><span class="p">.</span><span class="nx">collection</span><span class="p">.</span><span class="nx">findOne</span><span class="p">(</span> <span class="p">{</span> <span class="nx">_id</span><span class="o">:</span> <span class="mi">10</span> <span class="p">}</span> <span class="p">)</span>
-</span><span class='line'><span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;calc&quot;</span> <span class="o">:</span> <span class="nx">NumberLong</span><span class="p">(</span><span class="s2">&quot;2555555000005&quot;</span><span class="p">)</span> <span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>typeof</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">mydoc</span><span class="p">.</span><span class="nx">_id</span> <span class="k">instanceof</span> <span class="nx">ObjectId</span>
-</span><span class='line'><span class="k">typeof</span> <span class="nx">mydoc</span><span class="p">.</span><span class="nx">_id</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Reference</h2>
-
-<ul>
-<li><a href="https://docs.mongodb.org/manual/mongo/">The Mongo Shell</a></li>
 </ul>
 
 ]]></content>
