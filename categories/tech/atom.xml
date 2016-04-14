@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tech | K]]></title>
   <link href="http://k.arttechresearch.com/categories/tech/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2016-04-12T23:57:57+08:00</updated>
+  <updated>2016-04-14T23:28:52+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[K]]></name>
@@ -12,6 +12,118 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Programming Languages Comparison: Recursion]]></title>
+    <link href="http://k.arttechresearch.com/tech/2016/04/14/programming-languages-comparison-recursion/"/>
+    <updated>2016-04-14T23:15:50+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2016/04/14/programming-languages-comparison-recursion</id>
+    <content type="html"><![CDATA[<h2>Task</h2>
+
+<ul>
+<li>implement the factorial N = 1 if N &lt;= 1, else N * factorial(n-1)</li>
+</ul>
+
+
+<h2>Solutions</h2>
+
+<h3>C</h3>
+
+<pre><code class="c">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;math.h&gt;
+#include &lt;stdlib.h&gt;
+
+int factorial(int n) {
+    if (n == 1) {
+        return 1;
+    }
+    else {
+        return n * factorial(n-1);
+    }
+}
+
+int main() {
+
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */ 
+    int n;
+    scanf("%d", &amp;n);
+    printf("%d\n", factorial(n));
+
+    return 0;
+}
+</code></pre>
+
+<h3>C++</h3>
+
+<pre><code class="cpp">#include &lt;cmath&gt;
+#include &lt;cstdio&gt;
+#include &lt;vector&gt;
+#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+int factorial(int n) {
+    if (n == 1) {
+        return 1;
+    }
+    else {
+        return n * factorial(n-1);
+    }
+}
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */
+    int n;
+    cin &gt;&gt; n;
+    cout &lt;&lt; factorial(n) &lt;&lt; endl;
+    return 0;
+}
+</code></pre>
+
+<h3>Java</h3>
+
+<pre><code class="java">import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution.
+        */
+        Scanner in = new Scanner(System.in);
+        int n = in.nextInt();
+        System.out.println(factorial(n));
+    }
+
+    private static int factorial(int n) {
+        if (n == 1){
+            return 1;
+        }
+        else {
+            return n * factorial(n-1);
+        }
+    }
+}
+</code></pre>
+
+<h3>Python</h3>
+
+<pre><code class="python">def factorial(n):
+
+    if n == 1:
+        return 1
+    else:
+        return n * factorial(n-1)
+
+n = int(raw_input())
+print factorial(n)
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Programming Languages Comparison: Array]]></title>
@@ -646,142 +758,6 @@ if N % 2 == 0 and (2 &lt;= N &lt;= 5 or N &gt; 20):
     print("Not Weird")
 else:
     print("Weird")
-</code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Programming Languages Comparison: Operators]]></title>
-    <link href="http://k.arttechresearch.com/tech/2016/04/07/programming-languages-comparison-operators/"/>
-    <updated>2016-04-07T23:57:09+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2016/04/07/programming-languages-comparison-operators</id>
-    <content type="html"><![CDATA[<h2>Task</h2>
-
-<ul>
-<li>get the input: mealCost, tipPercent, taxPercent</li>
-<li>calculate the tip: tip = mealCost * tipPercent / 100</li>
-<li>calculate the tax: tax = mealCost * taxPercent / 100</li>
-<li>calculate the totalCost: totalCost = mealCost + tip + tax</li>
-<li>round the totalCost</li>
-<li>print the output</li>
-</ul>
-
-
-<h2>Solutions</h2>
-
-<h3>C</h3>
-
-<pre><code class="c">#include &lt;stdio.h&gt;
-#include &lt;string.h&gt;
-#include &lt;math.h&gt;
-#include &lt;stdlib.h&gt;
-
-int main() {
-
-    /* Enter your code here. Read input from STDIN. Print output to STDOUT */
-    float mealCost;
-    float tipPercent;
-    float taxPercent;
-
-    scanf("%f", &amp;mealCost);
-    scanf("\n%f\n", &amp;tipPercent);
-    scanf("%f", &amp;taxPercent);
-
-    double tip = mealCost * tipPercent / 100.0;
-    double tax = mealCost * taxPercent / 100.0;
-    int totalCost = round(mealCost + tip + tax);
-
-    printf("The total meal cost is %d dollars.", totalCost);
-
-    return 0;
-}
-</code></pre>
-
-<h3>C++</h3>
-
-<pre><code class="cpp">#include &lt;cmath&gt;
-#include &lt;cstdio&gt;
-#include &lt;vector&gt;
-#include &lt;iostream&gt;
-#include &lt;algorithm&gt;
-using namespace std;
-
-
-int main() {
-    /* Enter your code here. Read input from STDIN. Print output to STDOUT */ 
-    double mealCost;
-    double tipPercent;
-    double taxPercent;
-
-    cin &gt;&gt; mealCost;
-    cin &gt;&gt; tipPercent;
-    cin &gt;&gt; taxPercent;
-
-    double tip = mealCost * tipPercent / 100;
-    double tax = mealCost * taxPercent / 100;
-    double totalCost = mealCost + tip + tax;
-    cout &lt;&lt; "The total meal cost is " &lt;&lt; round(totalCost) &lt;&lt; " dollars." &lt;&lt; endl;
-
-    return 0;
-}
-</code></pre>
-
-<h3>Java</h3>
-
-<pre><code class="java">import java.io.*;
-import java.util.*;
-import java.text.*;
-import java.math.*;
-import java.util.regex.*;
-public class Arithmetic {
-
-    public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
-        double mealCost = scan.nextDouble(); // original meal price
-        double tipPercent = scan.nextInt(); // tip percentage
-        double taxPercent = scan.nextInt(); // tax percentage
-        scan.close();
-
-        // Write your calculation code here.
-        double tip = mealCost * (tipPercent/100);
-        double tax = mealCost * (taxPercent/100);
-
-        // cast the result of the rounding operation to an int and save it as totalCost
-        int totalCost = (int) Math.round(mealCost+tip+tax);
-
-        // Print your result
-        System.out.println("The total meal cost is " + totalCost + " dollars.");
-    }
-}
-</code></pre>
-
-<h3>Python</h3>
-
-<p>Python 2</p>
-
-<pre><code class="python">mealCost = float(raw_input())
-tipPercent = float(raw_input())
-taxPercent = float(raw_input())
-
-tip = mealCost * ( tipPercent/100)
-tax = mealCost * (taxPercent/100)
-
-totalCost = round(mealCost + tip + tax)
-
-print "The total meal cost is %d dollars." % totalCost
-</code></pre>
-
-<p>Python 3</p>
-
-<pre><code class="python">mealCost = float(input())
-tipPercent = float(input())
-taxPercent = float(input())
-
-tip = mealCost * (tipPercent/100)
-tax = mealCost * (taxPercent/100)
-
-totalCost = round(mealCost + tip + tax)
-print("The total meal cost is %d dollars." % totalCost)
 </code></pre>
 ]]></content>
   </entry>
