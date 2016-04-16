@@ -1,0 +1,678 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Programming Languages Comparison: 2D Array - K</title>
+  <meta name="author" content="K">
+
+  
+  <meta name="description" content="Programming Languages Comparison: 2D Array Apr 17th, 2016 3:32 am | Comments Task Given a 2D array
+Calulate the hourglass: val = a[i-1][j-1] + a[i-1 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://k.arttechresearch.com/tech/2016/04/17/programming-languages-comparison-2d-array/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="K" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/libs/jquery-1.9.1.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+
+  <script src="/javascripts/libs/jquery.tableofcontents.min.js" type="text/javascript"></script>
+  <script src="/javascripts/toc_generator.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  <!-- MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+</head>
+
+<body   >
+  <header role="banner"><ul class="soc">
+
+  
+    <li><a class="soc-github" href="https://github.com/KellyChan"></a></li>
+  
+
+  
+    <li><a class="soc-twitter" href="https://twitter.com/kwailamchan"></a></li>
+  
+
+  
+    <li><a class="soc-pinterest" href="https://www.pinterest.com/wailamchan/"></a></li>
+  
+
+  
+    <li><a class="soc-slideshare" href="http://www.slideshare.net/wailamchan"></a></li>
+  
+
+  
+    <li><a class="soc-email1 soc-icon-last" href="mailto:support@arttechresearch.com"></a></li>
+  
+</ul>
+
+<hgroup>
+  <h1><a href="/">K</a></h1>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="k.arttechresearch.com">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/tech">Tech</a></li>
+  <li><a href="/art">Art</a></li>
+  <li><a href="/life">Life</a></li>
+  <li><a href="/archives">Archives</a></li>
+  <li><a href="/projects">Projects</a></li>
+  <li><a href="/devkits">Devkits</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+
+    
+      <h1 class="entry-title">Programming Languages Comparison: 2D Array</h1>
+    
+
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2016-04-17T03:32:32+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>17</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>3:32 am</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://k.arttechresearch.com">Comments</a>
+        
+      </p>
+    
+
+  </header>
+
+
+
+  <div class="entry-content"><h2>Task</h2>
+
+<ul>
+<li>Given a 2D array</li>
+<li>Calulate the hourglass: val = a[i-1][j-1] + a[i-1][j] + a[i-1][j+1] + a[i][j] + a[i+1][j-1] + a[i+1][j] + a[i+1][j+1]</li>
+<li>Print the maxVal</li>
+</ul>
+
+
+<h2>Solutions</h2>
+
+<h3>C</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &lt;math.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;stdio.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;string.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;stdlib.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;assert.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;limits.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;stdbool.h&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">arr</span><span class="p">[</span><span class="mi">6</span><span class="p">][</span><span class="mi">6</span><span class="p">];</span>
+</span><span class='line'>    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">arr_i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">arr_i</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">;</span> <span class="n">arr_i</span><span class="o">++</span><span class="p">){</span>
+</span><span class='line'>       <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">arr_j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">arr_j</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">;</span> <span class="n">arr_j</span><span class="o">++</span><span class="p">){</span>
+</span><span class='line'>
+</span><span class='line'>          <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">arr</span><span class="p">[</span><span class="n">arr_i</span><span class="p">][</span><span class="n">arr_j</span><span class="p">]);</span>
+</span><span class='line'>       <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">val</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">maxVal</span> <span class="o">=</span> <span class="o">-</span><span class="mi">63</span><span class="p">;</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">arrLen</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span><span class="o">/</span><span class="k">sizeof</span><span class="p">(</span><span class="n">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;=</span><span class="n">arrLen</span><span class="o">-</span><span class="mi">2</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+</span><span class='line'>        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="n">j</span><span class="o">&lt;=</span><span class="n">arrLen</span><span class="o">-</span><span class="mi">2</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">){</span>
+</span><span class='line'>            <span class="n">val</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
+</span><span class='line'>            <span class="k">if</span> <span class="p">(</span><span class="n">val</span> <span class="o">&gt;</span> <span class="n">maxVal</span><span class="p">){</span>
+</span><span class='line'>                <span class="n">maxVal</span> <span class="o">=</span> <span class="n">val</span><span class="p">;</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">maxVal</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>C++</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="cp">#include &lt;map&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;set&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;list&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;cmath&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;ctime&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;deque&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;queue&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;stack&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;string&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;bitset&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;cstdio&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;limits&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;vector&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;climits&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;cstring&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;cstdlib&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;fstream&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;numeric&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;sstream&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;iostream&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;algorithm&gt;</span>
+</span><span class='line'><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+</span><span class='line'>    <span class="n">vector</span><span class="o">&lt;</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">arr</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">6</span><span class="p">));</span>
+</span><span class='line'>    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">arr_i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="n">arr_i</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">;</span><span class="n">arr_i</span><span class="o">++</span><span class="p">){</span>
+</span><span class='line'>       <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">arr_j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="n">arr_j</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">;</span><span class="n">arr_j</span><span class="o">++</span><span class="p">){</span>
+</span><span class='line'>          <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">arr</span><span class="p">[</span><span class="n">arr_i</span><span class="p">][</span><span class="n">arr_j</span><span class="p">];</span>
+</span><span class='line'>       <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">val</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">maxVal</span> <span class="o">=</span> <span class="o">-</span><span class="mi">63</span><span class="p">;</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">arrLen</span> <span class="o">=</span> <span class="n">arr</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;=</span><span class="n">arrLen</span><span class="o">-</span><span class="mi">2</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="n">j</span><span class="o">&lt;=</span><span class="n">arrLen</span><span class="o">-</span><span class="mi">2</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">){</span>
+</span><span class='line'>            <span class="n">val</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
+</span><span class='line'>            <span class="k">if</span> <span class="p">(</span><span class="n">val</span> <span class="o">&gt;</span> <span class="n">maxVal</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                <span class="n">maxVal</span> <span class="o">=</span> <span class="n">val</span><span class="p">;</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">maxVal</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Java</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">import</span> <span class="nn">java.io.*</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.text.*</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.math.*</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.regex.*</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">Scanner</span> <span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Scanner</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">in</span><span class="o">);</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">arr</span><span class="o">[][]</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="mi">6</span><span class="o">][</span><span class="mi">6</span><span class="o">];</span>
+</span><span class='line'>        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
+</span><span class='line'>            <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="o">;</span> <span class="n">j</span><span class="o">++){</span>
+</span><span class='line'>                <span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">curSum</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">maxSum</span> <span class="o">=</span> <span class="o">-</span><span class="mi">63</span><span class="o">;</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">arrLen</span> <span class="o">=</span> <span class="n">arr</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;=(</span><span class="n">arrLen</span><span class="o">-</span><span class="mi">2</span><span class="o">);</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="o">;</span> <span class="n">j</span><span class="o">&lt;=(</span><span class="n">arrLen</span><span class="o">-</span><span class="mi">2</span><span class="o">);</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
+</span><span class='line'>                <span class="n">curSum</span> <span class="o">=</span> <span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="o">][</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="o">]</span> <span class="o">+</span> <span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="o">][</span><span class="n">j</span><span class="o">]</span> <span class="o">+</span> <span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="o">][</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="o">]</span> <span class="o">+</span> <span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span> <span class="o">+</span> <span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="o">][</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="o">]</span> <span class="o">+</span> <span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="o">][</span><span class="n">j</span><span class="o">]</span> <span class="o">+</span> <span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="o">][</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="o">];</span>
+</span><span class='line'>                <span class="k">if</span> <span class="o">(</span><span class="n">curSum</span> <span class="o">&gt;</span> <span class="n">maxSum</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>                    <span class="n">maxSum</span> <span class="o">=</span> <span class="n">curSum</span><span class="o">;</span>
+</span><span class='line'>                <span class="o">}</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">maxSum</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Python</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c">#!/bin/python</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">sys</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="n">arr</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class='line'><span class="k">for</span> <span class="n">arr_i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+</span><span class='line'>   <span class="n">arr_temp</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="nb">raw_input</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39; &#39;</span><span class="p">))</span>
+</span><span class='line'>   <span class="n">arr</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arr_temp</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="n">maxVal</span> <span class="o">=</span> <span class="o">-</span><span class="mi">63</span>
+</span><span class='line'><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">val</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+</span><span class='line'>        <span class="k">if</span> <span class="n">val</span> <span class="o">&gt;</span> <span class="n">maxVal</span><span class="p">:</span>
+</span><span class='line'>            <span class="n">maxVal</span> <span class="o">=</span> <span class="n">val</span>
+</span><span class='line'><span class="k">print</span> <span class="n">maxVal</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+
+
+
+  <script type="text/javascript">
+  jQuery(document).ready(function() {
+    // Put a TOC right before the entry content.
+    generateTOC('.entry-content', 'Table of Contents');
+  });
+  </script>
+
+
+
+
+  <footer>
+
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">K</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2016-04-17T03:32:32+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>17</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>3:32 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/tech/'>tech</a>
+  
+</span>
+
+
+      
+
+<span class="categories">
+  
+    <a class='tag' href='/tags/c/'>c</a>, <a class='tag' href='/tags/c-plus-plus/'>c++</a>, <a class='tag' href='/tags/java/'>java</a>, <a class='tag' href='/tags/programming/'>programming</a>, <a class='tag' href='/tags/python/'>python</a>
+  
+</span>
+
+
+    </p>
+
+    
+      <div class="sharing">
+
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://k.arttechresearch.com/tech/2016/04/17/programming-languages-comparison-2d-array/" data-via="kwailamchan" data-counturl="http://k.arttechresearch.com/tech/2016/04/17/programming-languages-comparison-2d-array/" >Tweet</a>
+  
+
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+
+  
+
+</div>
+
+    
+
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/tech/2016/04/14/programming-languages-comparison-recursion/" title="Previous Post: Programming Languages Comparison: Recursion">&laquo; Programming Languages Comparison: Recursion</a>
+      
+      
+    </p>
+
+  </footer>
+
+</article>
+
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Tech</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/tech/2016/04/17/programming-languages-comparison-2d-array/">Programming Languages Comparison: 2D Array</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2016/04/14/programming-languages-comparison-recursion/">Programming Languages Comparison: Recursion</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2016/04/12/programming-languages-comparison-array/">Programming Languages Comparison: Array</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2016/04/11/programming-languages-comparison-loops/">Programming Languages Comparison: Loops</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2016/04/10/programming-languages-comparison-class-and-instance/">Programming Languages Comparison: Class and Instance</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2016/04/09/programming-languages-comparison-conditional-statements/">Programming Languages Comparison: Conditional Statements</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2016/04/07/programming-languages-comparison-operators/">Programming Languages Comparison: Operators</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2016/04/07/programming-languages-comparison-data-types/">Programming Languages Comparison: Data Types</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2016/04/05/programming-languages-comparison-print/">Programming Languages Comparison: Print</a>
+      </li>
+    
+      <li class="post">
+        <a href="/tech/2016/03/28/algorithms/">Algorithms</a>
+      </li>
+    
+  </ul>
+</section>
+<section class="category-list">
+    <h1>Projects</h1>
+    <ul id="category-list">
+        <li>
+            <span><a href="/tags/edx">edX</a></span> / 
+            <span><a href="/tags/will">Will</a></span>
+        </li>
+    </ul>
+
+    <h1>Programming</h1>
+    <ul id="category-list">
+        <li>
+            <span><a href="/tags/python">Python</a></span> /
+            <span><a href="/tags/ruby">Ruby</a></span> /
+            <span><a href="/tags/nodejs">Node.js</a></span>
+        </li>
+    </ul>
+
+</section>
+<section class="tag-cloud">
+
+
+  <h1>Tags</h1>
+    <ul id="category-list"><a href='/tags/ai' style='font-size: 90.0%'>ai(1)</a> <a href='/tags/aldebaran' style='font-size: 90.0%'>aldebaran(1)</a> <a href='/tags/algorithm' style='font-size: 115.38461538461539%'>algorithm(13)</a> <a href='/tags/ansible' style='font-size: 92.11538461538461%'>ansible(2)</a> <a href='/tags/apache' style='font-size: 92.11538461538461%'>apache(2)</a> <a href='/tags/api' style='font-size: 96.34615384615384%'>api(4)</a> <a href='/tags/ascii' style='font-size: 90.0%'>ascii(1)</a> <a href='/tags/beautifulsoup' style='font-size: 90.0%'>beautifulsoup(1)</a> <a href='/tags/beeline' style='font-size: 90.0%'>beeline(1)</a> <a href='/tags/butter' style='font-size: 90.0%'>butter(1)</a> <a href='/tags/c' style='font-size: 106.92307692307692%'>c(9)</a> <a href='/tags/c-' style='font-size: 106.92307692307692%'>c++(9)</a> <a href='/tags/caffe' style='font-size: 92.11538461538461%'>caffe(2)</a> <a href='/tags/career' style='font-size: 92.11538461538461%'>career(2)</a> <a href='/tags/cassandra' style='font-size: 90.0%'>cassandra(1)</a> <a href='/tags/cg' style='font-size: 92.11538461538461%'>cg(2)</a> <a href='/tags/chatbot' style='font-size: 94.23076923076923%'>chatbot(3)</a> <a href='/tags/choregraphe' style='font-size: 90.0%'>choregraphe(1)</a> <a href='/tags/classification' style='font-size: 92.11538461538461%'>classification(2)</a> <a href='/tags/cloud' style='font-size: 90.0%'>cloud(1)</a> <a href='/tags/cloudera' style='font-size: 104.8076923076923%'>cloudera(8)</a> <a href='/tags/cloudera-manager' style='font-size: 94.23076923076923%'>cloudera manager(3)</a> <a href='/tags/cluster' style='font-size: 132.30769230769232%'>cluster(21)</a> <a href='/tags/computer-vision' style='font-size: 90.0%'>computer vision(1)</a> <a href='/tags/cpp' style='font-size: 90.0%'>cpp(1)</a> <a href='/tags/crawler' style='font-size: 92.11538461538461%'>crawler(2)</a> <a href='/tags/css' style='font-size: 92.11538461538461%'>css(2)</a> <a href='/tags/cuda' style='font-size: 90.0%'>cuda(1)</a> <a href='/tags/d3' style='font-size: 90.0%'>d3(1)</a> <a href='/tags/data' style='font-size: 90.0%'>data(1)</a> <a href='/tags/db' style='font-size: 132.30769230769232%'>db(21)</a> <a href='/tags/debian' style='font-size: 90.0%'>debian(1)</a> <a href='/tags/deepdream' style='font-size: 90.0%'>deepdream(1)</a> <a href='/tags/design-patterns' style='font-size: 90.0%'>design patterns(1)</a> <a href='/tags/devops' style='font-size: 96.34615384615384%'>devops(4)</a> <a href='/tags/django' style='font-size: 92.11538461538461%'>django(2)</a> <a href='/tags/dns' style='font-size: 90.0%'>dns(1)</a> <a href='/tags/docker' style='font-size: 94.23076923076923%'>docker(3)</a> <a href='/tags/edx' style='font-size: 115.38461538461539%'>edX(13)</a> <a href='/tags/edx-ai' style='font-size: 90.0%'>edX AI(1)</a> <a href='/tags/edx-analytics' style='font-size: 104.8076923076923%'>edX Analytics(8)</a> <a href='/tags/edx-platform' style='font-size: 94.23076923076923%'>edX Platform(3)</a> <a href='/tags/elasticsearch' style='font-size: 90.0%'>elasticsearch(1)</a> <a href='/tags/emacs' style='font-size: 92.11538461538461%'>emacs(2)</a> <a href='/tags/exhibition' style='font-size: 92.11538461538461%'>exhibition(2)</a> <a href='/tags/fiction' style='font-size: 102.6923076923077%'>fiction(7)</a> <a href='/tags/filebeat' style='font-size: 90.0%'>filebeat(1)</a> <a href='/tags/flask' style='font-size: 90.0%'>flask(1)</a> <a href='/tags/flume' style='font-size: 90.0%'>flume(1)</a> <a href='/tags/forever' style='font-size: 92.11538461538461%'>forever(2)</a> <a href='/tags/framework' style='font-size: 90.0%'>framework(1)</a> <a href='/tags/freetds' style='font-size: 90.0%'>freetds(1)</a> <a href='/tags/french' style='font-size: 90.0%'>french(1)</a> <a href='/tags/ghost' style='font-size: 96.34615384615384%'>ghost(4)</a> <a href='/tags/git' style='font-size: 100.57692307692308%'>git(6)</a> <a href='/tags/github' style='font-size: 92.11538461538461%'>github(2)</a> <a href='/tags/gitosis' style='font-size: 90.0%'>gitosis(1)</a> <a href='/tags/gitweb' style='font-size: 90.0%'>gitweb(1)</a> <a href='/tags/gunicorn' style='font-size: 90.0%'>gunicorn(1)</a> <a href='/tags/hadoop' style='font-size: 121.73076923076923%'>hadoop(16)</a> <a href='/tags/hbase' style='font-size: 98.46153846153847%'>hbase(5)</a> <a href='/tags/hdfs' style='font-size: 92.11538461538461%'>hdfs(2)</a> <a href='/tags/hipchat' style='font-size: 94.23076923076923%'>hipchat(3)</a> <a href='/tags/hive' style='font-size: 96.34615384615384%'>hive(4)</a> <a href='/tags/html' style='font-size: 92.11538461538461%'>html(2)</a> <a href='/tags/hue' style='font-size: 92.11538461538461%'>hue(2)</a> <a href='/tags/ide' style='font-size: 94.23076923076923%'>ide(3)</a> <a href='/tags/impala' style='font-size: 90.0%'>impala(1)</a> <a href='/tags/iterm' style='font-size: 90.0%'>iterm(1)</a> <a href='/tags/java' style='font-size: 117.5%'>java(14)</a> <a href='/tags/javascript' style='font-size: 98.46153846153847%'>javascript(5)</a> <a href='/tags/jekyll' style='font-size: 92.11538461538461%'>jekyll(2)</a> <a href='/tags/jenkins' style='font-size: 90.0%'>jenkins(1)</a> <a href='/tags/kibana' style='font-size: 90.0%'>kibana(1)</a> <a href='/tags/leisure' style='font-size: 132.30769230769232%'>leisure(21)</a> <a href='/tags/library' style='font-size: 90.0%'>library(1)</a> <a href='/tags/linux' style='font-size: 109.03846153846155%'>linux(10)</a> <a href='/tags/logstack' style='font-size: 90.0%'>logstack(1)</a> <a href='/tags/machine-learning' style='font-size: 117.5%'>machine learning(14)</a> <a href='/tags/mapreduce' style='font-size: 92.11538461538461%'>mapreduce(2)</a> <a href='/tags/markdown' style='font-size: 90.0%'>markdown(1)</a> <a href='/tags/mathjax' style='font-size: 92.11538461538461%'>mathjax(2)</a> <a href='/tags/maven' style='font-size: 90.0%'>maven(1)</a> <a href='/tags/mongo' style='font-size: 115.38461538461539%'>mongo(13)</a> <a href='/tags/mongovue' style='font-size: 90.0%'>mongovue(1)</a> <a href='/tags/mssql' style='font-size: 90.0%'>mssql(1)</a> <a href='/tags/mysql' style='font-size: 104.8076923076923%'>mysql(8)</a> <a href='/tags/mysql-workbench' style='font-size: 92.11538461538461%'>mysql workbench(2)</a> <a href='/tags/nao' style='font-size: 92.11538461538461%'>nao(2)</a> <a href='/tags/naoqi' style='font-size: 90.0%'>naoqi(1)</a> <a href='/tags/network' style='font-size: 90.0%'>network(1)</a> <a href='/tags/nginx' style='font-size: 96.34615384615384%'>nginx(4)</a> <a href='/tags/nlp' style='font-size: 100.57692307692308%'>nlp(6)</a> <a href='/tags/nltk' style='font-size: 90.0%'>nltk(1)</a> <a href='/tags/nodejs' style='font-size: 102.6923076923077%'>nodejs(7)</a> <a href='/tags/octopress' style='font-size: 104.8076923076923%'>octopress(8)</a> <a href='/tags/odbc' style='font-size: 90.0%'>odbc(1)</a> <a href='/tags/oil-painting' style='font-size: 90.0%'>oil painting(1)</a> <a href='/tags/opencv' style='font-size: 92.11538461538461%'>opencv(2)</a> <a href='/tags/openstack' style='font-size: 90.0%'>openstack(1)</a> <a href='/tags/painting' style='font-size: 90.0%'>painting(1)</a> <a href='/tags/pandas' style='font-size: 92.11538461538461%'>pandas(2)</a> <a href='/tags/photos' style='font-size: 119.61538461538461%'>photos(15)</a> <a href='/tags/poem' style='font-size: 96.34615384615384%'>poem(4)</a> <a href='/tags/prediction' style='font-size: 90.0%'>prediction(1)</a> <a href='/tags/programming' style='font-size: 117.5%'>programming(14)</a> <a href='/tags/pycharm' style='font-size: 90.0%'>pycharm(1)</a> <a href='/tags/python' style='font-size: 200.0%'>python(53)</a> <a href='/tags/python-challenge' style='font-size: 94.23076923076923%'>Python Challenge(3)</a> <a href='/tags/rdbms' style='font-size: 90.0%'>rdbms(1)</a> <a href='/tags/reading' style='font-size: 90.0%'>reading(1)</a> <a href='/tags/redis' style='font-size: 90.0%'>redis(1)</a> <a href='/tags/redmine' style='font-size: 90.0%'>redmine(1)</a> <a href='/tags/regex' style='font-size: 90.0%'>regex(1)</a> <a href='/tags/rest' style='font-size: 92.11538461538461%'>rest(2)</a> <a href='/tags/robotics' style='font-size: 100.57692307692308%'>robotics(6)</a> <a href='/tags/ros' style='font-size: 90.0%'>ros(1)</a> <a href='/tags/ruby' style='font-size: 111.15384615384616%'>ruby(11)</a> <a href='/tags/scala' style='font-size: 94.23076923076923%'>scala(3)</a> <a href='/tags/servlet' style='font-size: 90.0%'>servlet(1)</a> <a href='/tags/shell' style='font-size: 92.11538461538461%'>shell(2)</a> <a href='/tags/soap' style='font-size: 90.0%'>soap(1)</a> <a href='/tags/solr' style='font-size: 90.0%'>solr(1)</a> <a href='/tags/spark' style='font-size: 90.0%'>spark(1)</a> <a href='/tags/sphinx' style='font-size: 90.0%'>sphinx(1)</a> <a href='/tags/spring' style='font-size: 90.0%'>spring(1)</a> <a href='/tags/sql' style='font-size: 92.11538461538461%'>sql(2)</a> <a href='/tags/sqoop' style='font-size: 96.34615384615384%'>sqoop(4)</a> <a href='/tags/ssl' style='font-size: 92.11538461538461%'>ssl(2)</a> <a href='/tags/supervisor' style='font-size: 90.0%'>supervisor(1)</a> <a href='/tags/tech-talks' style='font-size: 90.0%'>tech talks(1)</a> <a href='/tags/threading' style='font-size: 90.0%'>threading(1)</a> <a href='/tags/time-series' style='font-size: 90.0%'>time series(1)</a> <a href='/tags/tomcat' style='font-size: 90.0%'>tomcat(1)</a> <a href='/tags/translation' style='font-size: 90.0%'>translation(1)</a> <a href='/tags/ubuntu' style='font-size: 113.26923076923077%'>ubuntu(12)</a> <a href='/tags/unicode' style='font-size: 90.0%'>unicode(1)</a> <a href='/tags/vagrant' style='font-size: 94.23076923076923%'>vagrant(3)</a> <a href='/tags/vim' style='font-size: 92.11538461538461%'>vim(2)</a> <a href='/tags/virtualbox' style='font-size: 96.34615384615384%'>virtualbox(4)</a> <a href='/tags/virtualenv' style='font-size: 90.0%'>virtualenv(1)</a> <a href='/tags/virtualenvwrapper' style='font-size: 90.0%'>virtualenvwrapper(1)</a> <a href='/tags/vm' style='font-size: 92.11538461538461%'>vm(2)</a> <a href='/tags/web' style='font-size: 102.6923076923077%'>web(7)</a> <a href='/tags/webots' style='font-size: 90.0%'>webots(1)</a> <a href='/tags/will' style='font-size: 94.23076923076923%'>will(3)</a> <a href='/tags/yarn' style='font-size: 90.0%'>yarn(1)</a> <a href='/tags/zookeeper' style='font-size: 98.46153846153847%'>zookeeper(5)</a> </ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2006-2016 - K
+</p>
+
+
+
+<script type="text/javascript">
+
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-53625944-7', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'kwailamc';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://k.arttechresearch.com/tech/2016/04/17/programming-languages-comparison-2d-array/';
+        var disqus_url = 'http://k.arttechresearch.com/tech/2016/04/17/programming-languages-comparison-2d-array/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

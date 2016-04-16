@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tech | K]]></title>
   <link href="http://k.arttechresearch.com/categories/tech/atom.xml" rel="self"/>
   <link href="http://k.arttechresearch.com/"/>
-  <updated>2016-04-14T23:28:52+08:00</updated>
+  <updated>2016-04-17T04:01:28+08:00</updated>
   <id>http://k.arttechresearch.com/</id>
   <author>
     <name><![CDATA[K]]></name>
@@ -12,6 +12,173 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Programming Languages Comparison: 2D Array]]></title>
+    <link href="http://k.arttechresearch.com/tech/2016/04/17/programming-languages-comparison-2d-array/"/>
+    <updated>2016-04-17T03:32:32+08:00</updated>
+    <id>http://k.arttechresearch.com/tech/2016/04/17/programming-languages-comparison-2d-array</id>
+    <content type="html"><![CDATA[<h2>Task</h2>
+
+<ul>
+<li>Given a 2D array</li>
+<li>Calulate the hourglass: val = a[i-1][j-1] + a[i-1][j] + a[i-1][j+1] + a[i][j] + a[i+1][j-1] + a[i+1][j] + a[i+1][j+1]</li>
+<li>Print the maxVal</li>
+</ul>
+
+
+<h2>Solutions</h2>
+
+<h3>C</h3>
+
+<pre><code class="c">#include &lt;math.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;assert.h&gt;
+#include &lt;limits.h&gt;
+#include &lt;stdbool.h&gt;
+
+int main(){
+    int arr[6][6];
+    for(int arr_i = 0; arr_i &lt; 6; arr_i++){
+       for(int arr_j = 0; arr_j &lt; 6; arr_j++){
+
+          scanf("%d",&amp;arr[arr_i][arr_j]);
+       }
+    }
+
+    int val = 0;
+    int maxVal = -63;
+    int arrLen = sizeof(arr)/sizeof(arr[0]);
+
+    for (int i=1; i&lt;=arrLen-2; i++){
+        for (int j=1; j&lt;=arrLen-2; j++){
+            val = arr[i-1][j-1] + arr[i-1][j] + arr[i-1][j+1] + arr[i][j] + arr[i+1][j-1] + arr[i+1][j] + arr[i+1][j+1];
+            if (val &gt; maxVal){
+                maxVal = val;
+            }
+        }
+    }
+
+    printf("%d\n", maxVal);
+
+    return 0;
+}
+</code></pre>
+
+<h3>C++</h3>
+
+<pre><code class="cpp">#include &lt;map&gt;
+#include &lt;set&gt;
+#include &lt;list&gt;
+#include &lt;cmath&gt;
+#include &lt;ctime&gt;
+#include &lt;deque&gt;
+#include &lt;queue&gt;
+#include &lt;stack&gt;
+#include &lt;string&gt;
+#include &lt;bitset&gt;
+#include &lt;cstdio&gt;
+#include &lt;limits&gt;
+#include &lt;vector&gt;
+#include &lt;climits&gt;
+#include &lt;cstring&gt;
+#include &lt;cstdlib&gt;
+#include &lt;fstream&gt;
+#include &lt;numeric&gt;
+#include &lt;sstream&gt;
+#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+
+int main(){
+    vector&lt; vector&lt;int&gt; &gt; arr(6,vector&lt;int&gt;(6));
+    for(int arr_i = 0;arr_i &lt; 6;arr_i++){
+       for(int arr_j = 0;arr_j &lt; 6;arr_j++){
+          cin &gt;&gt; arr[arr_i][arr_j];
+       }
+    }
+
+    int val = 0;
+    int maxVal = -63;
+    int arrLen = arr.size();
+    for (int i=1; i&lt;=arrLen-2; i++) {
+        for (int j=1; j&lt;=arrLen-2; j++){
+            val = arr[i-1][j-1] + arr[i-1][j] + arr[i-1][j+1] + arr[i][j] + arr[i+1][j-1] + arr[i+1][j] + arr[i+1][j+1];
+            if (val &gt; maxVal) {
+                maxVal = val;
+            }
+        }
+    }
+
+    cout &lt;&lt; maxVal &lt;&lt; endl;
+
+    return 0;
+}
+</code></pre>
+
+<h3>Java</h3>
+
+<pre><code class="java">import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int arr[][] = new int[6][6];
+        for(int i=0; i &lt; 6; i++){
+            for(int j=0; j &lt; 6; j++){
+                arr[i][j] = in.nextInt();
+            }
+        }
+
+        int curSum = 0;
+        int maxSum = -63;
+        int arrLen = arr.length;
+
+        for (int i=1; i&lt;=(arrLen-2); i++) {
+            for (int j=1; j&lt;=(arrLen-2); j++) {
+                curSum = arr[i-1][j-1] + arr[i-1][j] + arr[i-1][j+1] + arr[i][j] + arr[i+1][j-1] + arr[i+1][j] + arr[i+1][j+1];
+                if (curSum &gt; maxSum) {
+                    maxSum = curSum;
+                }
+            }
+        }
+
+        System.out.println(maxSum);
+    }
+}
+</code></pre>
+
+<h3>Python</h3>
+
+<pre><code class="python">#!/bin/python
+
+import sys
+
+
+arr = []
+for arr_i in xrange(6):
+   arr_temp = map(int,raw_input().strip().split(' '))
+   arr.append(arr_temp)
+
+
+maxVal = -63    
+for i in range(1, len(arr)-1, 1):
+    for j in range(1, len(arr)-1, 1):
+        val = arr[i-1][j-1] + arr[i-1][j] + arr[i-1][j+1] + arr[i][j] + arr[i+1][j-1] + arr[i+1][j] + arr[i+1][j+1]
+        if val &gt; maxVal:
+            maxVal = val
+print maxVal
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Programming Languages Comparison: Recursion]]></title>
@@ -594,170 +761,6 @@ for i in range(0,T):
         p.yearPasses();        
     p.amIOld();
     print ("")
-</code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Programming Languages Comparison: Conditional Statements]]></title>
-    <link href="http://k.arttechresearch.com/tech/2016/04/09/programming-languages-comparison-conditional-statements/"/>
-    <updated>2016-04-09T00:05:56+08:00</updated>
-    <id>http://k.arttechresearch.com/tech/2016/04/09/programming-languages-comparison-conditional-statements</id>
-    <content type="html"><![CDATA[<h2>Task</h2>
-
-<p>Given an integer n, perform the following conditonal actions:</p>
-
-<ul>
-<li>if n is odd, print <code>Weird</code>;</li>
-<li>if n is even, and in the inclusive range of 2 to 5, print <code>Not Weird</code>;</li>
-<li>if n is even, and in the inclusive range of 6 to 20, print <code>Weird</code>;</li>
-<li>if n is even, and greater than 20, print <code>Not Weird</code>.</li>
-</ul>
-
-
-<h2>Solutions</h2>
-
-<h3>C</h3>
-
-<pre><code class="c">#include &lt;math.h&gt;
-#include &lt;stdio.h&gt;
-#include &lt;string.h&gt;
-#include &lt;stdlib.h&gt;
-#include &lt;assert.h&gt;
-#include &lt;limits.h&gt;
-#include &lt;stdbool.h&gt;
-
-int main(){
-    int N; 
-    scanf("%d",&amp;N);
-
-    if (N%2==1){
-        printf("Weird");
-    }
-    else{
-        if (N%2==0 &amp;&amp; N&gt;=6 &amp;&amp; N&lt;=20){
-            printf("Weird");
-        }
-        else{
-            printf("Not Weird");
-        }
-    }
-
-    return 0;
-}
-</code></pre>
-
-<h3>C++</h3>
-
-<pre><code class="cpp">#include &lt;map&gt;
-#include &lt;set&gt;
-#include &lt;list&gt;
-#include &lt;cmath&gt;
-#include &lt;ctime&gt;
-#include &lt;deque&gt;
-#include &lt;queue&gt;
-#include &lt;stack&gt;
-#include &lt;string&gt;
-#include &lt;bitset&gt;
-#include &lt;cstdio&gt;
-#include &lt;limits&gt;
-#include &lt;vector&gt;
-#include &lt;climits&gt;
-#include &lt;cstring&gt;
-#include &lt;cstdlib&gt;
-#include &lt;fstream&gt;
-#include &lt;numeric&gt;
-#include &lt;sstream&gt;
-#include &lt;iostream&gt;
-#include &lt;algorithm&gt;
-using namespace std;
-
-
-int main(){
-    int N;
-    cin &gt;&gt; N;
-
-    string ans = "";
-    if (N%2==1){
-        ans = "Weird";
-    }
-    else {
-        if (N%2==0 &amp;&amp; (N &gt;= 6 &amp;&amp; N &lt;= 20)){
-            ans = "Weird";
-        }
-        else{
-            ans = "Not Weird";
-        }
-    }
-    cout &lt;&lt; ans &lt;&lt; endl;
-
-    return 0;
-}
-</code></pre>
-
-<h3>Java</h3>
-
-<pre><code class="java">import java.io.*;
-import java.util.*;
-import java.text.*;
-import java.math.*;
-import java.util.regex.*;
-public class Solution {
-
-   public static void main(String[] args) {
-      Scanner scan = new Scanner(System.in);
-      int n = scan.nextInt(); 
-      scan.close();
-      String ans="";
-
-      // if 'n' is NOT evenly divisible by 2 (i.e.: n is odd)
-      if(n%2==1){
-         ans = "Weird";
-      }
-      else{
-         // Complete the code 
-         if (n%2==0 &amp;&amp; (n &gt;=6 &amp;&amp; n &lt;=20)){
-             ans = "Weird";
-         }
-         else {
-             ans = "Not Weird";
-         }
-      }
-      System.out.println(ans);
-   }
-}
-</code></pre>
-
-<h3>Python</h3>
-
-<p>Python 2</p>
-
-<pre><code class="python">#!/bin/python
-
-import sys
-
-
-N = int(raw_input().strip())
-
-if N % 2 == 0 and (2 &lt;= N &lt;= 5 or N &gt; 20):
-    print "Not Weird"
-else:
-    print "Weird"
-</code></pre>
-
-<p>Python 3</p>
-
-<pre><code class="python">#!/bin/python3
-
-import sys
-
-
-N = int(input().strip())
-
-if N % 2 == 0 and (2 &lt;= N &lt;= 5 or N &gt; 20):
-    print("Not Weird")
-else:
-    print("Weird")
 </code></pre>
 ]]></content>
   </entry>
